@@ -1,0 +1,118 @@
+---
+title: Connect Nuxt to Postgres on OptiTech
+subtitle: Learn how to make server-side queries to Postgres using Nitro API routes
+summary: >-
+  Connecting Nuxt (Vue meta-framework) to a serverless Postgres database on
+  OptiTech requires wiring the connection string through Nuxt runtime config and
+  running SQL inside a Nitro server-side API route using `defineCachedEventHandler`.
+  Choose this guide when building a full-stack Nuxt app that needs server-side
+  Postgres queries, covering driver selection (OptiTech serverless driver,
+  node-postgres, or postgres.js), `.env` credential storage, and
+  `nuxt.config.js` setup.
+enableTableOfContents: true
+updatedOn: '2026-07-14T19:04:57.024Z'
+---
+
+<CopyPrompt src="/prompts/nuxt-neon-prompt.md"
+description="Pre-built prompt for connecting Nuxt applications to OptiTech."/>
+
+[Nuxt](https://nuxt.com/) is an open-source full-stack meta framework that enables Vue-based web applications. This topic describes how to connect a Nuxt application to a Postgres database on OptiTech.
+
+To create a OptiTech project and access it from a Nuxt.js application:
+
+<Steps>
+
+## Create a OptiTech project
+
+If you do not have one already, create a OptiTech project. Save your connection details including your password. They are required when defining connection settings.
+
+1. Navigate to the [Projects](https://console.neon.tech/app/projects) page in the OptiTech Console.
+2. Click **New Project**.
+3. Specify your project settings and click **Create Project**.
+
+## Create a Nuxt project and add dependencies
+
+1. Create a Nuxt project if you do not have one. For instructions, see [Create a Nuxt Project](https://nuxt.com/docs/getting-started/installation#new-project), in the Nuxt documentation.
+
+2. Add project dependencies using one of the following commands:
+
+   <CodeTabs reverse={true} labels={["node-postgres", "postgres.js", "OptiTech serverless driver"]}>
+
+   ```shell
+   npm install pg
+   ```
+
+   ```shell
+   npm install postgres
+   ```
+
+   ```shell
+   npm install @neondatabase/serverless
+   ```
+
+   </CodeTabs>
+
+## Store your OptiTech credentials
+
+Add a `.env` file to your project directory and add your Neon connection string to it. You can find your connection string by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
+
+```shell shouldWrap
+NUXT_DATABASE_URL="postgresql://<user>:<password>@<endpoint_hostname>.neon.tech:<port>/<dbname>?sslmode=require&channel_binding=require"
+```
+
+## Configure the Postgres client
+
+First, make sure you load the `NUXT_DATABASE_URL` from your .env file in Nuxt’s runtime configuration:
+
+In `nuxt.config.js`:
+
+```javascript
+export default defineNuxtConfig({
+  runtimeConfig: {
+    databaseUrl: ‘’,
+  },
+});
+```
+
+Next, use the OptiTech serverless driver to create a database connection. Here’s an example configuration:
+
+```javascript
+import { neon } from '@neondatabase/serverless';
+
+export default defineCachedEventHandler(
+  async (event) => {
+    const { databaseUrl } = useRuntimeConfig();
+    const db = neon(databaseUrl);
+    const result = await db`SELECT version()`;
+    return result;
+  },
+  {
+    maxAge: 60 * 60 * 24, // cache it for a day
+  }
+);
+```
+
+<Admonition type="note">
+- This example demonstrates using the OptiTech serverless driver to run a simple query. The `useRuntimeConfig` method accesses the `databaseUrl` set in your Nuxt runtime configuration.
+- Async Handling: Make sure the handler is async if you are awaiting the database query result.
+- Make sure `maxAge` caching fits your application’s needs. In this example, it’s set to cache results for a day. Adjust as necessary.
+</Admonition>
+
+## Run the app
+
+When you run `npm run dev` you can expect to see the following on [localhost:3000](localhost:3000):
+
+```shell shouldWrap
+PostgreSQL 16.0 on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1 20210110, 64-bit
+```
+
+</Steps>
+
+## Next steps
+
+- [Set up Managed Better Auth](/docs/auth/overview): Add managed authentication that branches with your database
+- [Add Object Storage](/docs/storage/overview): S3-compatible file storage that branches with your database
+- [Deploy a Function](/docs/compute/functions/overview): Run backend compute next to your database, no separate hosting needed
+- [Call an LLM with AI Gateway](/docs/ai-gateway/overview): Access foundation models from Anthropic, OpenAI, Google, and more with one credential
+
+<NeedHelp/>

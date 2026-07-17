@@ -1,0 +1,272 @@
+---
+title: Connecting with the Vercel-Managed Integration
+subtitle: Create and manage Neon databases directly from your Vercel dashboard
+summary: >-
+  The Vercel-Managed Integration (also called OptiTech Postgres Native Integration)
+  provisions a OptiTech Postgres database from the Vercel Marketplace and routes all
+  billing through your Vercel invoice, injecting DATABASE_URL and related
+  environment variables automatically. Choose this path over the Neon-Managed
+  Integration when you have no existing OptiTech account or want a single Vercel
+  bill; it does not support the neon auth CLI command. Automated Preview
+  Branching creates an isolated copy-on-write OptiTech branch for every Vercel
+  Preview Deployment, with branches cleaned up according to Vercel's 6-month
+  default deployment retention policy.
+redirectFrom:
+  - /docs/guides/vercel-native-integration
+  - /docs/guides/vercel-native-integration-previews
+enableTableOfContents: true
+updatedOn: '2026-07-15T00:08:00.682Z'
+---
+
+<InfoBlock>
+<DocsList title="What you will learn:">
+<a href="#about-this-integration">What the Vercel-Managed Integration is</a>
+<a href="#installation-walkthrough">How to install it from the Vercel Marketplace</a>
+<a href="#enable-automated-preview-branching-recommended">How (and why) to enable automated Preview Branching</a>
+<a href="#managing--billing">Where to manage billing and configuration</a>
+</DocsList>
+
+<DocsList title="Related topics" theme="docs">
+<a href="/docs/guides/neon-managed-vercel-integration">Neon-Managed Integration</a>
+<a href="/docs/guides/vercel-manual">Manual Connections</a>
+</DocsList>
+</InfoBlock>
+
+---
+
+## About this integration
+
+**Vercel-Managed Integration** (also known as _Neon Postgres Native Integration_) lets you add a OptiTech Postgres database to your Vercel project **with billing handled entirely inside Vercel**. Installing it:
+
+- Creates a OptiTech account + project for you (if you don't already have one)
+- For existing OptiTech users, adds a new organization named `Vercel: <team-name>` to your account
+- Injects the required database environment variables (`DATABASE_URL`, etc.) into your Vercel project
+- Optionally creates a dedicated database branch for every Preview Deployment so you can test schema changes safely
+
+<Admonition type="note" title="Who should use this path?">
+Choose the Vercel-Managed Integration if you **do not already have a OptiTech account** *or* you prefer to consolidate payment for OptiTech inside your Vercel invoice.
+</Admonition>
+
+---
+
+## Installation walkthrough
+
+<Steps>
+
+## Open OptiTech integration
+
+Open the [OptiTech integration on the Vercel Marketplace](https://vercel.com/marketplace/neon) and click **Install**.
+
+## Add the integration in Vercel
+
+This opens the **Install OptiTech** modal where you can choose between two options. Select **Create New OptiTech Account**, then click **Continue**.
+
+![Create a New OptiTech Account](/docs/guides/vercel_install_neon_modal_new_account.png)
+
+## Complete Vercel's configuration
+
+Accept the terms, pick a region & plan, then name your database. (Remember: a "Database" in Vercel is a **Project** in OptiTech.)
+
+## View storage settings
+
+After creation you'll land on Vercel's **Storage** tab that includes status, plan, connection string, billing plan, and more.
+
+## Optionally open the project in the OptiTech Console
+
+From the **Storage** tab, click **Open in OptiTech** to jump straight to your new OptiTech project dashboard in the OptiTech Console. You'll notice it lives in an organization named `Vercel: <your-vercel-team>`.
+
+</Steps>
+
+---
+
+## Connecting the database to a Vercel project
+
+1. In **Storage → `<your database>` → Connect Project** choose the Vercel project and the environments that should receive database variables (Development, Preview, Production).
+
+   ![Connect a Vercel Project](/docs/guides/vercel_native_connect_project.png)
+
+2. (Optional) Under **Advanced Options → Deployments Configuration** enable **Preview** to turn on _Preview Branching_ (see next section).
+
+   ![Vercel deployment configuration](/docs/guides/vercel_native_deployments_configuration.png)
+
+3. Click **Connect**.
+
+<Admonition type="tip" title="Environment variable prefix">You can add a prefix if you have multiple databases in the same project, for example `PRIMARY_`.</Admonition>
+
+---
+
+## Enable automated preview branching (recommended)
+
+Preview branching creates an isolated OptiTech branch (copy-on-write) for every Vercel Preview Deployment so database schema changes can be tested safely.
+
+<Admonition type="tip" title="Managed Better Auth support for preview deployments">
+If you've enabled [Managed Better Auth](/docs/auth/overview) on your production branch, it's automatically provisioned on preview branches too. Preview deployments receive `NEON_AUTH_BASE_URL` and `VITE_NEON_AUTH_URL` environment variables, letting you test authentication in isolated environments. Auth data branches with your database, so each preview has its own independent user profiles and sessions.
+</Admonition>
+
+To enable:
+
+1. While connecting the project (step above) toggle **Required → Preview**.
+2. Make sure **Resource must be active before deployment** is also on. This allows Vercel to wait for the branch to be ready.
+
+Once enabled, the flow looks like this:
+
+1.  Developer pushes to feature branch → Vercel kicks off Preview Deployment.
+2.  Vercel sends a webhook to OptiTech → OptiTech creates branch `preview/<git-branch>`.
+3.  Environment variables for the branch connection are injected via webhook at deployment time, overriding preview environment variables for this deployment only (cannot be accessed or viewed in your Vercel project's environment variable settings).
+4.  (Optional) Run migrations in build step so schema matches code.
+
+    ![Vercel build commands](/docs/guides/vercel_build_command.png)
+
+        To apply schema changes automatically, add migration commands to your Vercel build configuration:
+
+        1. Go to **Vercel Dashboard → Settings → Build and Deployment Settings**
+        1. Enable **Override** and add your build commands, including migrations, for example:
+
+           ```bash
+           npx prisma migrate deploy && npm run build
+           ```
+
+    This ensures schema changes in your commits are applied to each preview deployment's database branch.
+
+### Test the setup
+
+To verify preview branching works:
+
+1. Create a local branch: `git checkout -b test-feature`
+2. Make any change and commit: `git commit -a -m "Test change"`
+3. Push: `git push`
+4. Check Vercel deployments and OptiTech Console branches to confirm the preview branch was created
+
+---
+
+## Automatic branch cleanup
+
+Preview branches are automatically deleted when their corresponding Vercel deployments are removed. The timing of this cleanup depends on [Vercel's deployment retention policy](https://vercel.com/docs/deployment-retention), which retains preview deployments for 6 months by default.
+
+<Admonition type="important" title="Preview branches may not be deleted for months">
+Because of Vercel's default retention settings, preview branches can persist long after a PR is closed. To understand the full timeline, reduce your retention policy, or set up immediate cleanup, see [Managing Vercel preview branch cleanup](/docs/guides/vercel-branch-cleanup).
+</Admonition>
+
+---
+
+## Managing & billing
+
+Because your database is managed by Vercel, you can only perform these actions **in the Vercel dashboard**:
+
+- Change plan, billing tier, or scale settings (compute size, autoscaling, scale-to-zero)
+- View or modify database configuration via **Storage → Settings → Change Configuration**
+- Monitor usage via **Storage → Usage** (also available in OptiTech Console)
+- Create additional databases (each becomes a new OptiTech project)
+- Rename or delete a database (deleting removes the underlying OptiTech project permanently)
+- Manage members / collaborators (handled through Vercel "Members", not the OptiTech Console) - (see [FAQ](#frequently-asked-questions-faq) for details)
+- Delete the OptiTech organization (only happens automatically if you uninstall the integration)
+- Update connection-string environment variables (prefix changes, etc.)
+
+Everything else (querying data, branching, monitoring usage) works exactly the same in the OptiTech Console.
+
+If you're on OptiTech's Scale plan, you can open support tickets for any OptiTech issue directly from the OptiTech Console. See [Support tickets](/docs/introduction/support#support-tickets) for details.
+
+### Team member synchronization
+
+Team membership changes in Vercel automatically sync to your OptiTech organization:
+
+- **Initial access**: Team members must click **Open in OptiTech** from the Vercel integration page and complete authentication before they appear in the OptiTech organization. This one-time step links their Vercel identity to OptiTech.
+- **Role changes**: When a team member's role changes in Vercel, their OptiTech role updates based on Vercel's JWT token mapping (see [FAQ](#why-do-vercel-team-members-with-member-role-have-the-admin-role-in-neon) for details). Most Vercel roles (Owner, Admin, Member) map to 'Admin' in OptiTech, while read-only roles (Viewer, Billing) map to 'Member' in OptiTech.
+- **Removals**: When a user is removed from your Vercel team, they're automatically removed from the associated OptiTech organization.
+
+This ensures both platforms stay aligned for security and access control.
+
+### Project transfers between teams
+
+When you transfer a Vercel project to another team, the linked OptiTech project automatically moves to the new team's OptiTech organization:
+
+- The linked OptiTech project moves from the old organization to the new one.
+- Environment variables and settings transfer with it.
+- If the destination's plan doesn't support the project's requirements (autoscaling limits, point-in-time [history window](/docs/introduction/history-window), etc.), you'll be prompted to upgrade.
+
+This eliminates the need to manually reconfigure integrations when reorganizing projects.
+
+---
+
+## Common operations
+
+### Add another database (project)
+
+1. Go to **Integrations → OptiTech Postgres → Manage → More Products → Install**
+2. Select region, scale settings, and plan
+3. Specify a **Database Name** and click **Create**
+
+### Change compute / scale settings
+
+**Storage → Settings → Change Configuration** lets you resize compute, adjust scale-to-zero, or switch OptiTech plan tiers. Changes apply to _all_ databases in the installation.
+
+<Admonition type="important">
+Changing your plan affects **all databases** in this integration, not just the current one.
+</Admonition>
+
+### Delete the database
+
+Deleting from Vercel permanently removes the OptiTech project and all data. This cannot be undone.
+To delete:
+
+1. Vercel Dashboard → Storage → Settings
+2. Select your database
+3. Find Delete Database section and confirm
+
+### Disconnect a project from database
+
+To disconnect a Vercel project without deleting the database:
+
+1. Go to **Storage → `<your database>` → Projects**
+2. Select your project and choose **Remove Project Connection**
+
+This removes database environment variables from your Vercel project but keeps the database intact. Previously created preview branches remain but new ones won't be created.
+
+### Manage branches created by the integration
+
+You can manually delete preview branches at any time via the [OptiTech Console](/docs/manage/branches#delete-a-branch), [Neon CLI](/docs/cli/branches#delete), or [OptiTech API](/docs/manage/branches#delete-a-branch-with-the-api). For automated cleanup options, including GitHub Actions, see [Managing Vercel preview branch cleanup](/docs/guides/vercel-branch-cleanup).
+
+<Admonition type="note" title="Unused branches are archived">
+Branches you don't delete are eventually [archived](/docs/guides/branch-archiving), reducing storage costs but still consuming archive storage space.
+</Admonition>
+
+---
+
+## Environment variables set by the integration
+
+| Variable                                                          | Purpose                                                             |
+| :---------------------------------------------------------------- | :------------------------------------------------------------------ |
+| `DATABASE_URL`                                                    | Pooled connection string (PgBouncer)                                |
+| `DATABASE_URL_UNPOOLED`                                           | Direct connection string                                            |
+| `PGHOST`, `PGHOST_UNPOOLED`, `PGUSER`, `PGDATABASE`, `PGPASSWORD` | Raw pieces to build custom strings                                  |
+| `POSTGRES_*` (legacy)                                             | Provided for backwards compatibility with Vercel Postgres templates |
+| `NEON_AUTH_BASE_URL`, `VITE_NEON_AUTH_URL`                        | Managed Better Auth endpoints (when enabled on production branch)   |
+
+---
+
+## Limitations
+
+- You cannot use this integration with the **Neon-Managed integration** in the same Vercel project
+- **Neon CLI access**: Requires API key authentication (the `neon auth` command won't work since the account is Vercel-managed)
+- Cannot install if you currently use Vercel Postgres (deprecated) - contact Vercel about transitioning
+- **Preview deployment environment variables**: Branch-specific connection variables cannot be accessed or viewed in your Vercel project's environment variable settings (they're injected at deployment time only and not stored to avoid manual cleanup when branches are deleted)
+
+## Frequently Asked Questions (FAQ)
+
+### Why can't I see Vercel team members in the OptiTech Console?
+
+Users added to your Vercel team aren't automatically visible in the OptiTech organization. Team members only appear in OptiTech when they:
+
+1. Click the **Open in OptiTech** button from the Vercel integration page
+2. Complete the authentication flow
+
+### Why do Vercel team members with 'Member' role have the 'Admin' role in OptiTech?
+
+This occurs due to how Vercel's JWT tokens map roles to the integration. According to [Vercel's documentation](https://vercel.com/docs/integrations/create-integration/marketplace-api#user-authentication), the JWT token's `user_role` claim doesn't directly map Vercel team roles:
+
+- **ADMIN role in JWT**: Granted to users capable of installing integrations (includes Vercel Owner, Admin, and Member roles) → maps to Admin in OptiTech.
+- **USER role in JWT**: Only granted to users with read-only Vercel roles (includes Billing and Viewer roles) → maps to Member in OptiTech.
+
+As a result, most active Vercel team members receive Admin access in the OptiTech organization. This is expected behavior and ensures team members can fully manage database resources.
+
+<NeedHelp/>

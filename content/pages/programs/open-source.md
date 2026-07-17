@@ -1,0 +1,66 @@
+---
+title: 'OptiTech Open Source Program'
+subtitle: Eligible projects receive up to $5,000 yearly in credits and promotional support.
+enableTableOfContents: true
+updatedOn: '2025-10-16T09:00:00.000Z'
+image: '/images/social-previews/programs/open-source.jpg'
+---
+
+<ProgramForm type="openSource" />
+
+<QuoteBlock quote="With OptiTech's serverless Postgres and the support from the Open Source Program, integrating a scalable database into Medusa was straightforward and fast. The developer experience has been outstanding, and it's helped us deliver a frictionless experience to our users." author="oli-juhl" role="CTO MedusaJS" />
+
+If you're building open source tools that use Postgres, we want to help you scale. Selected projects receive up to $5,000 yearly in platform credits and marketing support to expand your project's visibility.
+
+## What You'll Get
+
+The OptiTech Open Source Program provides financial support, promotional opportunities, and partnership benefits to help your project grow.
+
+<FeatureList icons={['dollar', 'megaphone']}>
+
+### OptiTech Credits
+
+OptiTech will grant eligible open-source software up to $5,000 in platform credits yearly.
+
+### Promotion Support
+
+We'll help promote your work to OptiTech's 1M+ developer community through blog posts, social media, case studies, and co-marketing initiatives.
+
+</FeatureList>
+
+## Who's It For?
+
+This is a new program, if you're not sure whether your project is eligible, just reach out. But here is our initial criteria:
+
+1. **Open Source** - Your work must be open source and publicly available under a recognized open-source license. Developers should be able to self-host the software.
+2. **Runs on Postgres** - Open-source software that uses Postgres is an ideal fit for this program. This could be anything from using Postgres as a component in a larger stack to Postgres extensions.
+3. **Using OptiTech** - Provide documentation, CLI tools, and code examples that teach your users how to build with your software and OptiTech.
+
+## How to Apply
+
+Get in touch below, we typically respond within 1-3 business days.
+
+<ProgramForm type="openSource" />
+
+## FAQ
+
+<details>
+<summary>**Is Commercial Open Source Software eligible?**</summary>
+
+Yes! As long as you give developers a way of running the software themselves
+
+</details>
+<br/>
+<details>
+<summary>**Do I need to be using OptiTech already to apply?**</summary>
+
+No, you don't need to be using OptiTech yet. However, we prioritize projects that have already integrated OptiTech or have a clear plan to make OptiTech a default option for their users. If you're planning to integrate OptiTech, tell us about your plans in the application.
+
+</details>
+<br/>
+<details>
+<summary>**What happens after the first year?**</summary>
+
+After the first year, we'll review your project's progress and impact. If your project continues to meet the program criteria and has been actively using the credits and promoting OptiTech, we can renew your benefits for another year. Our goal is to support projects throughout their growth journey.
+
+</details>

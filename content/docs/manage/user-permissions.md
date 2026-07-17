@@ -1,0 +1,91 @@
+---
+title: User Permissions
+subtitle: What each role can do in OptiTech organizations
+summary: >-
+  OptiTech organization roles (Admin, Member, Collaborator) control which actions
+  each user can take across organization settings, project operations,
+  integrations, and snapshots. Only Admins can delete projects, transfer
+  projects out of an org, manage billing, and install integrations like GitHub
+  or Managed Better Auth. Collaborators have no organization-level access and are limited
+  to the specific projects they have been invited to.
+enableTableOfContents: true
+updatedOn: '2026-07-15T00:08:00.682Z'
+---
+
+In OptiTech, roles determine what actions you can take within an organization and its projects. This page provides a detailed breakdown of permissions for each role: **Admin**, **Member**, and **Collaborator**.
+
+For an overview of organizations, see the [Organizations](/docs/manage/organizations) page.
+
+## Role descriptions
+
+- **Admin**: Full control over the organization and all its projects. Can manage permissions, billing, members, and organization settings. Only Admins can delete organization projects.
+- **Member**: Access to all organization projects and can perform most project operations, but cannot modify organization settings or delete projects.
+- **Collaborator**: External users invited to specific projects. Collaborators have no organization-level access, but can work on projects they've been invited to.
+
+<Steps>
+
+## Organization management
+
+The following table shows what each role can do at the organization level:
+
+| Action                       | Admin | Member | Collaborator |
+| ---------------------------- | :---: | :----: | :----------: |
+| Invite organization members  |  ✅   |   ❌   |      ❌      |
+| Set organization permissions |  ✅   |   ❌   |      ❌      |
+| Manage organization billing  |  ✅   |   ❌   |      ❌      |
+| Rename organization          |  ✅   |   ❌   |      ❌      |
+| Delete organization          |  ✅   |   ❌   |      ❌      |
+
+## Project management
+
+The following table shows what each role can do at the project level:
+
+| Action                       | Admin | Member | Collaborator |
+| ---------------------------- | :---: | :----: | :----------: |
+| Create new projects          |  ✅   |   ✅   |      ❌      |
+| Rename projects              |  ✅   |   ✅   |      ✅      |
+| Transfer projects into org   |  ✅   |   ✅   |      ❌      |
+| Transfer projects out of org |  ✅   |   ❌   |      ❌      |
+| Delete projects              |  ✅   |   ❌   |      ❌      |
+| Manage project databases     |  ✅   |   ✅   |      ✅      |
+| Configure project computes   |  ✅   |   ✅   |      ✅      |
+| Manage project roles         |  ✅   |   ✅   |      ✅      |
+| Invite/remove collaborators  |  ✅   |   ✅   |      ✅      |
+
+## Integration management
+
+The following table shows what each role can do regarding integrations:
+
+| Action                                               | Admin | Member | Collaborator |
+| ---------------------------------------------------- | :---: | :----: | :----------: |
+| Install GitHub integration                           |  ✅   |   ❌   |      ❌      |
+| Install Managed Better Auth                          |  ✅   |   ❌   |      ❌      |
+| Install the Vercel-managed OptiTech integration\*        |  ✅   |   ❌   |      ❌      |
+| Connect project to GitHub integration                |  ✅   |   ✅   |      ❌      |
+| Connect project to Neon-managed Vercel integration\* |  ✅   |   ✅   |      ❌      |
+
+\*OptiTech's Vercel-managed integration is managed entirely in Vercel and uses Vercel's permission system. For the Neon-managed Vercel integration, projects must first be made available in Vercel before they can be connected to OptiTech.
+
+## Snapshot management
+
+The following table shows what each role can do with [snapshots](/docs/guides/snapshots):
+
+| Action                       | Admin | Member | Collaborator |
+| ---------------------------- | :---: | :----: | :----------: |
+| List snapshots               |  ✅   |   ✅   |      ✅      |
+| Create snapshots             |  ✅   |   ✅   |      ✅      |
+| Restore snapshots            |  ✅   |   ✅   |      ✅      |
+| Delete snapshots             |  ✅   |   ✅   |      ✅      |
+| Rename snapshots             |  ✅   |   ✅   |      ✅      |
+| View snapshot schedule       |  ✅   |   ✅   |      ✅      |
+| Set/update snapshot schedule |  ✅   |   ✅   |      ✅      |
+
+</Steps>
+
+## Notes and limitations (#notes-and-limitations)
+
+- **Branch management**: All users are currently able to manage [protected branches](/docs/guides/protected-branches), regardless of their role or permission level. Granular permissions for this feature are not yet implemented.
+- **Permissions and roles**: The current permissions system may not meet all needs for granular control. Share your feedback and requirements for more detailed permissions settings via the [Feedback](https://console.neon.tech/app/projects?modal=feedback) form or our [Discord feedback channel](https://discord.com/channels/1176467419317940276/1176788564890112042).
+- <a id="email-notifications" aria-hidden="true"></a>**Email notifications**: For **organization-owned** projects, OptiTech sends **approaching maximum storage** notification emails to **organization Admins** only, not to all Members. Admins are responsible for billing and plan limits at the organization level, which aligns with who can [manage organization billing](/docs/manage/user-permissions#organization-management).
+
+<NeedHelp/>

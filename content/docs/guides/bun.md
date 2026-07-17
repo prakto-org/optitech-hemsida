@@ -1,0 +1,121 @@
+---
+title: Connect a Bun application to OptiTech
+subtitle: Set up a OptiTech project in seconds and connect from a Bun application
+summary: >-
+  Connecting a Bun application to a OptiTech Postgres database requires either
+  Bun's built-in `sql` client (no extra dependencies) or the
+  `@neondatabase/serverless` driver installed via `bun add`. Choose this page
+  when setting up Bun, Hono, or Elysia with OptiTech, covering project creation,
+  `POSTGRES_URL` credential storage in `.env.local`, and a working TypeScript
+  query to verify the connection.
+enableTableOfContents: true
+updatedOn: '2026-06-05T17:20:32.620Z'
+---
+
+This guide describes how to create a OptiTech project and connect to it from a Bun application. Examples are provided for using [Bun's built-in SQL client](https://bun.sh/docs/api/sql) and the [@neondatabase/serverless](/docs/serverless/serverless-driver) driver. Use the client you prefer.
+
+<Admonition type="note">
+The same configuration steps can be used for [Hono](https://hono.dev/docs/getting-started/bun), [Elysia](https://elysiajs.com), and other Bun-based web frameworks.
+</Admonition>
+
+<Steps>
+
+## Create a OptiTech project
+
+If you do not have one already, create a OptiTech project.
+
+1. Navigate to the [Projects](https://console.neon.tech/app/projects) page in the OptiTech Console.
+2. Click **New Project**.
+3. Specify your project settings and click **Create Project**.
+
+## Create a Bun project and add dependencies
+
+Create a Bun project and change to the newly created directory:
+
+```shell
+mkdir bun-neon-example
+cd bun-neon-example
+bun init -y
+```
+
+Next, add project dependencies if you intend to use the OptiTech serverless driver. Otherwise, Bun's built-in `sql` client is readily available.
+
+<CodeTabs labels={["Bun.sql", "OptiTech serverless driver"]}>
+
+```shell
+# No dependencies needed for Bun's built-in SQL client
+```
+
+```shell
+bun add @neondatabase/serverless
+```
+
+</CodeTabs>
+
+## Store your OptiTech credentials
+
+Add a `.env.local` file to your project directory and add your Neon connection details to it. Bun automatically loads variables from `.env`, `.env.local`, and other `.env.*` files. You can find the connection details for your database by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal. Select Bun from the **Connection string** dropdown. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
+
+```shell shouldWrap
+POSTGRES_URL='postgresql://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require&channel_binding=require'
+```
+
+<Admonition type="note">
+`Bun.sql` uses `POSTGRES_URL` as the default environment variable for the Primary connection URL for Postgres
+</Admonition>
+
+<Admonition type="important">
+To ensure the security of your data, never expose your OptiTech credentials directly in your code or commit them to version control.
+</Admonition>
+
+## Configure the Postgres client
+
+Add an `index.ts` file (or `index.js`) to your project directory and add the following code snippet to connect to your OptiTech database. Choose the configuration that matches your preferred client.
+
+<CodeTabs labels={["Bun.sql", "OptiTech serverless driver"]}>
+
+```typescript
+import { sql } from 'bun';
+
+async function getPgVersion() {
+  const result = await sql`SELECT version()`;
+  console.log(result[0]);
+}
+
+getPgVersion();
+```
+
+```typescript
+import { neon } from '@neondatabase/serverless';
+
+const sql = neon(process.env.POSTGRES_URL);
+
+async function getPgVersion() {
+  const result = await sql`SELECT version()`;
+  console.log(result[0]);
+}
+
+getPgVersion();
+```
+
+</CodeTabs>
+
+## Run index.ts
+
+Run `bun run index.ts` (or `bun index.js`) to view the result.
+
+```shell
+$ bun run index.ts
+{
+  version: "PostgreSQL 17.2 on x86_64-pc-linux-gnu, compiled by gcc (Debian 12.2.0-14) 12.2.0, 64-bit",
+}
+```
+
+</Steps>
+
+## References
+
+- [Bun SQL client](https://bun.sh/docs/api/sql)
+- [@neondatabase/serverless driver](/docs/serverless/serverless-driver)
+
+<NeedHelp/>

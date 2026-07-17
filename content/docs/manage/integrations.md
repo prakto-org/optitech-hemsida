@@ -1,0 +1,43 @@
+---
+title: Manage integrations
+summary: >-
+  The Integrations page in the OptiTech Console is the central hub for adding,
+  configuring, and removing third-party integrations with a OptiTech project.
+  Automated and manual setup flows are both supported. Use this page to connect
+  a new service, update an existing integration, or request one that is not yet
+  available. Unavailable integrations offer a Request button to register
+  interest and inform the OptiTech team's rollout priorities.
+enableTableOfContents: true
+isDraft: false
+updatedOn: '2026-06-05T17:20:32.620Z'
+---
+
+The **Integrations** page in the OptiTech Console provides a hub for managing third-party integrations with your OptiTech project. You can use these supported integrations to optimize and extend OptiTech's functionality and streamline your workflow.
+
+When visiting the **Integrations** page, you'll notice different categories of integrations, which you can browse to find the one you need.
+
+## Manage integrations
+
+For integrations listed as **Added**, you can click **Manage** on the integration card to configure or remove the integration.
+
+## Add integrations
+
+For integrations that are not added, you can click **Add** and follow the instructions to get started. Some integrations support an automated integration setup. Others are documented integrations, which involve a manual setup procedure.
+
+## Manual integrations
+
+Integrations currently requiring a manual setup have a **Read** button, which opens a modal where you can read about how to integrate the selected platform or service with OptiTech.
+
+## Express interest in future integrations
+
+Integrations that are not yet available have a **Request** button, which opens a modal where you can express your interest and share your use case. This information helps the OptiTech team prioritize integration rollouts and build exactly what you need.
+
+## Suggest an integration
+
+If you can't find the integration you're looking for:
+
+1. Click the **Suggest an integration** button on the **Integrations** page.
+2. Fill out the necessary details for the integration you'd like to see added.
+3. Click **Suggest integration**.
+
+The OptiTech team will review your request.
