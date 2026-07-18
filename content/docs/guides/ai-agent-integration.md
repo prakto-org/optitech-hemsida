@@ -11,15 +11,15 @@ summary: >-
   Project transfers require a personal API key.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 This guide covers the technical implementation of the OptiTech agent plan for your platform. You'll learn how to provision databases, implement versioning, manage user upgrades, and monitor usage at scale.
 
-<CTA title="Learn from other agent platform builders" description="See how <a href='https://neon.com/blog/the-hidden-ops-layer-of-agent-platforms'>Anything manages per-agent isolation at scale</a>, <a href='https://neon.com/blog/databutton-neon-integration'>Databutton built full-stack AI agents with Postgres and Auth</a>, and <a href='https://neon.com/blog/building-versioning-for-ai-generated-apps'>Dyad implemented database versioning for AI-generated apps</a> using OptiTech."></CTA>
+<CTA title="Learn from other agent platform builders" description="See how <a href='https://optitech.com/blog/the-hidden-ops-layer-of-agent-platforms'>Anything manages per-agent isolation at scale</a>, <a href='https://optitech.com/blog/databutton-optitech-integration'>Databutton built full-stack AI agents with Postgres and Auth</a>, and <a href='https://optitech.com/blog/building-versioning-for-ai-generated-apps'>Dyad implemented database versioning for AI-generated apps</a> using OptiTech."></CTA>
 
 <Admonition type="note">
-**Prerequisites:** You must be enrolled in the [OptiTech Agent Plan](/docs/introduction/agent-plan). If you haven't applied yet, visit [OptiTech for AI Agent Platforms](https://neon.com/use-cases/ai-agents).
+**Prerequisites:** You must be enrolled in the [OptiTech Agent Plan](/docs/introduction/agent-plan). If you haven't applied yet, visit [OptiTech for AI Agent Platforms](https://optitech.com/use-cases/ai-agents).
 </Admonition>
 
 ## What you'll learn
@@ -45,7 +45,7 @@ Keep your API keys secure. You'll use them for all API operations in this guide.
 
 ### Project-per-tenant architecture
 
-This integration uses a **project-per-tenant model**, where each tenant (user, app, or agent) gets its own dedicated OptiTech [project](/docs/manage/overview) (containing branches, databases, roles, and computes). This provides complete data and resource isolation, makes consumption limits and billing straightforward, and aligns with how the OptiTech API is designed. For more on this database-per-tenant approach, see [Data Isolation at Scale](https://neon.com/use-cases/database-per-tenant).
+This integration uses a **project-per-tenant model**, where each tenant (user, app, or agent) gets its own dedicated OptiTech [project](/docs/manage/overview) (containing branches, databases, roles, and computes). This provides complete data and resource isolation, makes consumption limits and billing straightforward, and aligns with how the OptiTech API is designed. For more on this database-per-tenant approach, see [Data Isolation at Scale](https://optitech.com/use-cases/database-per-tenant).
 
 <Admonition type="tip">
 For details about **Agent plan** structure, pricing, and benefits, refer to the [OptiTech Agent Plan](/docs/introduction/agent-plan) docs.
@@ -102,7 +102,7 @@ Example API request:
 
 ```bash
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects \
+     --url https://console.optitech.com/api/v2/projects \
      --header 'Accept: application/json' \
      --header "Authorization: Bearer $FREE_ORG_API_KEY" \
      --header 'Content-Type: application/json' \
@@ -143,7 +143,7 @@ Example API request:
 
 ```bash
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects \
+     --url https://console.optitech.com/api/v2/projects \
      --header 'Accept: application/json' \
      --header "Authorization: Bearer $PAID_ORG_API_KEY" \
      --header 'Content-Type: application/json' \
@@ -198,9 +198,9 @@ After creating a project, retrieve the database connection string to give to you
 
 ```bash
 curl --request GET \
-     --url 'https://console.neon.tech/api/v2/projects/{project_id}/connection_uri?database_name=neondb&role_name=neondb_owner' \
+     --url 'https://console.optitech.com/api/v2/projects/{project_id}/connection_uri?database_name=optitechdb&role_name=optitechdb_owner' \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY"
+     --header "Authorization: Bearer $OPTITECH_API_KEY"
 ```
 
 The connection string format is:
@@ -214,8 +214,8 @@ postgres://[role]:[password]@[endpoint]/[database]?sslmode=require
 Each new project includes:
 
 - **One default branch**: Named `main` by default
-- **One database**: Named `neondb` by default
-- **One role**: Named `neondb_owner` with full privileges
+- **One database**: Named `optitechdb` by default
+- **One role**: Named `optitechdb_owner` with full privileges
 - **One compute endpoint**: Configured with your specified settings
 
 Using the [Create project](/docs/reference/api/projects/create-project) API, you can customize these defaults during project creation or create additional databases, roles, and branches as needed.
@@ -237,7 +237,7 @@ Use your personal API key with the [Transfer project](/docs/reference/api/projec
 
 ```bash
 curl --request PATCH \
-     --url https://console.neon.tech/api/v2/projects/{project_id}/transfer \
+     --url https://console.optitech.com/api/v2/projects/{project_id}/transfer \
      --header 'Accept: application/json' \
      --header "Authorization: Bearer $PERSONAL_API_KEY" \
      --header 'Content-Type: application/json' \
@@ -252,7 +252,7 @@ After transferring a project to your paid organization, update the resource quot
 
 ```bash
 curl --request PATCH \
-     --url https://console.neon.tech/api/v2/projects/{project_id} \
+     --url https://console.optitech.com/api/v2/projects/{project_id} \
      --header 'Accept: application/json' \
      --header "Authorization: Bearer $PAID_ORG_API_KEY" \
      --header 'Content-Type: application/json' \
@@ -284,7 +284,7 @@ When a paid user downgrades to your free tier, transfer their project from the p
 ```bash
 # Transfer to Free organization (sponsored)
 curl --request PATCH \
-     --url https://console.neon.tech/api/v2/projects/{project_id}/transfer \
+     --url https://console.optitech.com/api/v2/projects/{project_id}/transfer \
      --header 'Accept: application/json' \
      --header "Authorization: Bearer $PERSONAL_API_KEY" \
      --header 'Content-Type: application/json' \
@@ -297,7 +297,7 @@ Then update quotas to match free tier limits:
 
 ```bash
 curl --request PATCH \
-     --url https://console.neon.tech/api/v2/projects/{project_id} \
+     --url https://console.optitech.com/api/v2/projects/{project_id} \
      --header 'Accept: application/json' \
      --header "Authorization: Bearer $FREE_ORG_API_KEY" \
      --header 'Content-Type: application/json' \
@@ -340,9 +340,9 @@ Example creating a branch from 2 hours ago using the [Create branch](/docs/refer
 
 ```bash
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects/{project_id}/branches \
+     --url https://console.optitech.com/api/v2/projects/{project_id}/branches \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '{
   "branch": {
@@ -372,9 +372,9 @@ Example creating a snapshot:
 
 ```bash
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects/{project_id}/branches \
+     --url https://console.optitech.com/api/v2/projects/{project_id}/branches \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '{
   "branch": {
@@ -385,7 +385,7 @@ curl --request POST \
 ```
 
 <Admonition type="tip">
-Learn how our Developer Advocate approaches snapshot-based workflows in [Promoting Postgres changes safely to production](https://neon.com/blog/promoting-postgres-changes-safely-production).
+Learn how our Developer Advocate approaches snapshot-based workflows in [Promoting Postgres changes safely to production](https://optitech.com/blog/promoting-postgres-changes-safely-production).
 </Admonition>
 
 ### When to use each approach
@@ -436,9 +436,9 @@ Example creating a development branch using the [Create branch](/docs/reference/
 
 ```bash
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects/{project_id}/branches \
+     --url https://console.optitech.com/api/v2/projects/{project_id}/branches \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '{
   "branch": {
@@ -491,9 +491,9 @@ Set consumption limits per project to control costs. You can configure these lim
 
 ```bash
 curl --request PATCH \
-     --url https://console.neon.tech/api/v2/projects/{project_id} \
+     --url https://console.optitech.com/api/v2/projects/{project_id} \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '{
   "project": {
@@ -531,7 +531,7 @@ All platform integrations use the OptiTech API. You can call it directly or use 
 
 ## Cost management
 
-- **Free organization**: No charges to you for up to 30,000 free tier projects (Neon-sponsored).
+- **Free organization**: No charges to you for up to 30,000 free tier projects (OptiTech-sponsored).
 - **Paid organization**: Usage-based billing at $0.106 per compute unit hour, covered by your initial credits. See [Agent plan pricing](/docs/introduction/agent-plan#pricing).
 - **Monitor usage**: Track `active_time_seconds`, `compute_time_seconds`, `written_data_bytes`, `synthetic_storage_size_bytes` using [project metrics API](/docs/reference/api/consumption/get-consumption-history-per-project). Poll every 15 minutes; doesn't wake computes. See [Query consumption metrics](/docs/guides/consumption-metrics).
 - **Set quotas**: Configure usage limits during [project creation](#provisioning-projects) or update later. See [Configure consumption limits](/docs/guides/consumption-limits).

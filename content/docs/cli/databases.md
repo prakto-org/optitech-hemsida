@@ -1,26 +1,26 @@
 ---
-title: 'Neon CLI command: databases'
-subtitle: 'List, create, and delete databases in a Neon project'
+title: 'OptiTech CLI command: databases'
+subtitle: 'List, create, and delete databases in a OptiTech project'
 summary: >-
-  The Neon CLI `databases` command lists, creates, and deletes Postgres
-  databases within a Neon project branch directly from the terminal. Use
-  `neon databases create --name <db> --owner-name <role>` to provision a
+  The OptiTech CLI `databases` command lists, creates, and deletes Postgres
+  databases within a OptiTech project branch directly from the terminal. Use
+  `optitech databases create --name <db> --owner-name <role>` to provision a
   database on a named branch, or omit `--branch` to target the project's
   default branch. Each subcommand accepts `--project-id` (required only for
   accounts with multiple projects) and `--context-file` for reusable context.
 enableTableOfContents: true
-updatedOn: '2026-07-01T13:41:48.668Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 redirectFrom:
   - /docs/reference/cli-databases
   - /docs/cli/database
   - /docs/cli/db
 ---
 
-The `databases` command lists, creates, and deletes databases in a Neon project from the terminal. For information about databases in Neon, see [Manage databases](/docs/manage/databases). If `--project-id` is omitted, the CLI resolves it from your [context file](/docs/cli/set-context), auto-selects when your account has only one project, and prompts otherwise.
+The `databases` command lists, creates, and deletes databases in a OptiTech project from the terminal. For information about databases in OptiTech, see [Manage databases](/docs/manage/databases). If `--project-id` is omitted, the CLI resolves it from your [context file](/docs/cli/set-context), auto-selects when your account has only one project, and prompts otherwise.
 
 <CliSubcommands command="databases" />
 
-## neon databases list (#list)
+## optitech databases list (#list)
 
 Lists databases. If you don't specify a branch ID or name with `--branch`, the command targets the project's default branch. This applies to all `databases` subcommands.
 
@@ -29,18 +29,18 @@ Lists databases. If you don't specify a branch ID or name with `--branch`, the c
 <CliOptions command="databases list" />
 
 ```bash
-neon databases list --branch br-autumn-dust-190886
+optitech databases list --branch br-autumn-dust-190886
 ```
 
 ```text filename="Output"
 ┌────────┬────────────┬──────────────────────┐
 │ Name   │ Owner Name │ Created At           │
 ├────────┼────────────┼──────────────────────┤
-│ neondb │ daniel     │ 2023-06-19T18:27:19Z │
+│ optitechdb │ daniel     │ 2023-06-19T18:27:19Z │
 └────────┴────────────┴──────────────────────┘
 ```
 
-## neon databases create (#create)
+## optitech databases create (#create)
 
 Creates a database. If you don't specify `--owner-name`, the current user becomes the database owner.
 
@@ -49,7 +49,7 @@ Creates a database. If you don't specify `--owner-name`, the current user become
 <CliOptions command="databases create" />
 
 ```bash
-neon databases create --name mynewdb --owner-name john
+optitech databases create --name mynewdb --owner-name john
 ```
 
 ```text filename="Output"
@@ -60,7 +60,7 @@ neon databases create --name mynewdb --owner-name john
 └─────────┴────────────┴──────────────────────┘
 ```
 
-## neon databases delete (#delete)
+## optitech databases delete (#delete)
 
 Deletes a database. The `<database>` is the database name.
 
@@ -69,7 +69,7 @@ Deletes a database. The `<database>` is the database name.
 <CliOptions command="databases delete" />
 
 ```bash
-neon databases delete mydb
+optitech databases delete mydb
 ```
 
 ```text filename="Output"

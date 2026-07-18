@@ -6,7 +6,7 @@ page_description: >-
   tables in the PostgreSQL database using PHP PDO.
 prev_url: 'https://www.postgresqltutorial.com/postgresql-php/query/'
 ogImage: /postgresqltutorial/PostgreSQL-PHP-Query-Example.png
-updatedOn: '2026-06-19T17:44:03.964Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: 'PostgreSQL PHP: Updating Data In a Table'
@@ -17,7 +17,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-Querying PostgreSQL from PHP with PDO works the same wherever your database runs, so the patterns here apply to any Postgres deployment. If you're an enterprise looking for managed Postgres built for the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers high performance, strong security, and native integration with the Lakehouse. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+Querying PostgreSQL from PHP with PDO works the same wherever your database runs, so the patterns here apply to any Postgres deployment. If you're an enterprise looking for managed Postgres built for the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers high performance, strong security, and native integration with the Lakehouse. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: in this tutorial, you will learn to query data from the PostgreSQL database in PHP using PDO.

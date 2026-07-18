@@ -7,10 +7,10 @@ summary: >-
   track schema history in a flyway_schema_history table. Use this page to
   install the Flyway CLI, write a flyway.conf file with OptiTech credentials, and
   run your first migrations against a OptiTech project. For applying the same
-  migration workflow across multiple Neon branches or environments, see the
+  migration workflow across multiple OptiTech branches or environments, see the
   companion guide on multiple database environments.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 Flyway is a database migration tool that provides version control for databases. It allows developers to manage and track changes to the database schema, ensuring that the database evolves consistently across different environments.
@@ -21,7 +21,7 @@ This guide steps you through installing the Flyway command-line tool, configurin
 
 - A OptiTech account. See [Sign up](/docs/get-started/signing-up).
 - A OptiTech project. See [Create your first project](/docs/get-started/signing-up).
-- A database. This guide uses the ready-to-use `neondb` database. You can create your own database if you like. See [Create a database](/docs/manage/databases#create-a-database) for instructions.
+- A database. This guide uses the ready-to-use `optitechdb` database. You can create your own database if you like. See [Create a database](/docs/manage/databases#create-a-database) for instructions.
 
 ## Download and extract Flyway
 
@@ -68,7 +68,7 @@ Find your database connection string by clicking the **Connect** button on your 
 Your Java connection string should look something like this:
 
 ```bash shouldWrap
-jdbc:postgresql://ep-cool-darkness-123456.us-east-2.aws.neon.tech/neondb?user=alex&password=AbC123dEf
+jdbc:postgresql://ep-cool-darkness-123456.us-east-2.aws.optitech.com/optitechdb?user=alex&password=AbC123dEf
 ```
 
 ## Configure flyway
@@ -76,7 +76,7 @@ jdbc:postgresql://ep-cool-darkness-123456.us-east-2.aws.neon.tech/neondb?user=al
 To configure Flyway to connect to your OptiTech database, create a `flyway.conf` file in the /conf directory. Include the following items, modified to use the connection details you retrieved in the previous step.
 
 ```bash shouldWrap
-flyway.url=jdbc:postgresql://ep-cool-darkness-123456.us-east-2.aws.neon.tech:5432/neondb
+flyway.url=jdbc:postgresql://ep-cool-darkness-123456.us-east-2.aws.optitech.com:5432/optitechdb
 
 flyway.user=alex
 
@@ -136,7 +136,7 @@ flyway migrate
 If the command was successful, you’ll see output similar to the following:
 
 ```bash
-Database: jdbc:postgresql://ep-red-credit-85617375.us-east-2.aws.neon.tech/neondb (PostgreSQL 15.4)
+Database: jdbc:postgresql://ep-red-credit-85617375.us-east-2.aws.optitech.com/optitechdb (PostgreSQL 15.4)
 Successfully validated 2 migrations (execution time 00:00.225s)
 Current version of schema "public": 1
 Migrating schema "public" to version "2 - Add people"
@@ -152,7 +152,7 @@ When you run the `flyway migrate` command, Flyway registers the schema changes i
 
 ```bash
 flyway info
-Database: jdbc:postgresql://ep-red-credit-85617375.us-east-2.aws.neon.tech/neondb (PostgreSQL 15.4)
+Database: jdbc:postgresql://ep-red-credit-85617375.us-east-2.aws.optitech.com/optitechdb (PostgreSQL 15.4)
 Schema version: 2
 +-----------+---------+---------------------+------+---------------------+---------+----------+
 | Category  | Version | Description         | Type | Installed On        | State   | Undoable |

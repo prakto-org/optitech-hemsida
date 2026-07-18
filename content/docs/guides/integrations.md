@@ -1,220 +1,140 @@
 ---
 title: OptiTech integration guides
-subtitle: Find detailed instructions for integration across various platforms and
-  services.
+subtitle: Connect the systems OptiTech collects evidence from, and migrate from other compliance platforms.
 summary: >-
-  Index of OptiTech integration guides organized by category: authentication,
-  deployment, schema migration, replication, monitoring, and serverless.
-  Use this page to find setup instructions for connecting OptiTech Postgres to a
-  specific platform or tool.
+  Index of OptiTech integration guides organized by category: identity and
+  access, productivity suites, cloud platforms, developer tools, device
+  management, endpoint security, Swedish business systems, and automation.
+  Also covers migrating from other compliance platforms like Vanta, Drata,
+  Secureframe, Sprinto, and Cyberday.
 enableTableOfContents: true
 redirectFrom:
   - /docs/integrations/integrations-list/
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
-## Authentication
+Every integration uses read-only API access wherever the provider supports it, feeds [automated checks](/docs/reference/glossary#check), and keeps your [asset inventory](/docs/reference/glossary#asset-inventory) current. Connect the identity provider and cloud platform first; they feed the most controls.
+
+## Identity and access
 
 <TechCards>
 
-<a href="/docs/guides/auth-auth0" title="Auth0" description="Authenticate OptiTech Postgres application users with Auth0" icon="auth0"></a>
+<a href="/docs/guides/microsoft-entra-id" title="Microsoft Entra ID" description="Verify MFA coverage, admin roles, and offboarding from Entra ID" icon="entra-id"></a>
 
-<a href="/docs/guides/auth-authjs" title="Auth.js" description="Authenticate OptiTech Postgres application users with Auth.js" icon="auth"></a>
+<a href="/docs/guides/auth-okta" title="Okta" description="Set up SSO and SCIM, and verify MFA and offboarding from Okta" icon="okta"></a>
 
-<a href="/docs/guides/auth-clerk" title="Clerk" description="Authenticate OptiTech Postgres application users with Clerk" icon="clerk"></a>
+<a href="/docs/guides/google-workspace" title="Google Workspace" description="Verify 2-step verification, dormant accounts, and access from Google Workspace" icon="google-workspace"></a>
 
-<a href="/docs/guides/auth-okta" title="Okta" description="Authenticate OptiTech Postgres application users with Okta" icon="okta"></a>
+<a href="/docs/guides/bankid" title="BankID" description="Sign in to OptiTech with BankID and use it for policy e-signing" icon="bankid"></a>
 
 </TechCards>
 
-## Deploy
+## Productivity and collaboration
 
 <TechCards>
 
-<a href="/docs/guides/cloudflare-pages" title="Cloudflare Pages" description="Use OptiTech with Cloudflare Pages" icon="cloudflare"></a>
+<a href="/docs/guides/microsoft-365" title="Microsoft 365" description="Collect sharing, mailbox, and tenant configuration evidence from Microsoft 365" icon="microsoft-365"></a>
 
-<a href="/docs/guides/cloudflare-workers" title="Cloudflare Workers" description="Use OptiTech with Cloudflare Workers" icon="cloudflare"></a>
+<a href="/docs/guides/microsoft-teams" title="Microsoft Teams" description="Route findings and incident alerts to Teams channels" icon="microsoft-teams"></a>
 
-<a href="/docs/guides/deno" title="Deno Deploy" description="Use OptiTech with Deno Deploy" icon="deno"></a>
-
-<a href="/docs/guides/heroku" title="Heroku" description="Deploy Your App with OptiTech Postgres on Heroku" icon="heroku"></a>
-
-<a href="/docs/guides/koyeb" title="Koyeb" description="Use OptiTech with Koyeb" icon="koyeb"></a>
-
-<a href="/docs/guides/netlify-functions" title="Netlify Functions" description="Connect a OptiTech Postgres database to your Netlify Functions application" icon="netlify"></a>
-
-<a href="/docs/guides/railway" title="Railway" description="Use OptiTech Postgres with Railway" icon="railway"></a>
-
-<a href="/docs/guides/render" title="Render" description="Use OptiTech Postgres with Render" icon="render"></a>
-
-<a href="/docs/guides/vercel-overview" title="Vercel" description="Learn how to integrate OptiTech with Vercel" icon="vercel"></a>
+<a href="/docs/guides/slack" title="Slack" description="Route findings and incident alerts to Slack channels" icon="slack"></a>
 
 </TechCards>
 
-## Develop
+## Cloud platforms
 
 <TechCards>
 
-<a href="/guides/convex-neon" title="Convex" description="Integrate Convex with OptiTech Postgres" icon="convex"></a>
+<a href="/docs/guides/aws" title="AWS" description="Verify encryption, public exposure, logging, and backups across AWS accounts" icon="aws"></a>
 
-<a href="/docs/guides/neon-github-app" title="GitHub integration" description="Use the OptiTech GitHub integration" icon="github"></a>
-
-<a href="/docs/guides/knex" title="Knex" description="Connect from Knex to OptiTech" icon="knex"></a>
-
-<a href="/docs/guides/prisma" title="Prisma" description="Connect from Prisma to OptiTech" icon="prisma"></a>
-
-<a href="/docs/guides/typeorm" title="TypeORM" description="Connect from TypeORM to OptiTech" icon="typeorm"></a>
+<a href="/docs/guides/azure" title="Microsoft Azure" description="Verify encryption, network exposure, logging, and backups across Azure subscriptions" icon="azure"></a>
 
 </TechCards>
 
-## File & media storage
+## Developer tools
 
 <TechCards>
 
-<a href="/docs/guides/file-storage" title="File storage" description="Integrate file storage with OptiTech" icon="database"></a>
+<a href="/docs/guides/neon-github-integration" title="GitHub" description="Verify branch protection, reviews, and secret scanning across your org" icon="github"></a>
 
-<a href="/docs/guides/aws-s3" title="AWS S3" description="Integrate AWS S3 with OptiTech Postgres" icon="aws-s3-bucket"></a>
+<a href="/docs/guides/gitlab" title="GitLab" description="Verify merge request approvals and protected branches from GitLab" icon="gitlab"></a>
 
-<a href="/docs/guides/azure-blob-storage" title="Azure Blob Storage" description="Integrate Azure Blob Storage with OptiTech" icon="azure"></a>
-
-<a href="/docs/guides/backblaze-b2" title="Backblaze B2" description="Integrate Backblaze B2 with OptiTech" icon="backblaze"></a>
-
-<a href="/docs/guides/cloudflare-r2" title="Cloudflare R2" description="Integrate Cloudflare R2 with OptiTech" icon="cloudflare"></a>
-
-<a href="/docs/guides/cloudinary" title="Cloudinary" description="Integrate Cloudinary with OptiTech" icon="cloudinary"></a>
-
-<a href="/docs/guides/imagekit" title="ImageKit" description="Integrate ImageKit with OptiTech" icon="imagekit"></a>
-
-<a href="/docs/guides/uploadcare" title="Uploadcare" description="Integrate Uploadcare with OptiTech" icon="uploadcare"></a>
+<a href="/docs/guides/jira" title="Jira" description="Create tickets from findings and track remediation in Jira" icon="jira"></a>
 
 </TechCards>
 
-## Monitor
+## Device management
 
 <TechCards>
 
-<a href="/docs/guides/datadog" title="Datadog" description="Send metrics and events from OptiTech Postgres to Datadog" icon="datadog"></a>
+<a href="/docs/guides/intune" title="Microsoft Intune" description="Verify disk encryption, screen lock, and patch level per device" icon="intune"></a>
 
-<a href="/docs/guides/grafana-cloud" title="Grafana Cloud" description="Send metrics and logs from OptiTech Postgres to Grafana Cloud" icon="grafana"></a>
-
-<a href="/docs/guides/opentelemetry" title="OpenTelemetry" description="Send metrics and events from OptiTech to any OpenTelemetry compatible backend" icon="opentelemetry"></a>
+<a href="/docs/guides/jamf" title="Jamf" description="Verify macOS device encryption and compliance from Jamf" icon="jamf"></a>
 
 </TechCards>
 
-## Query
+## Endpoint security
 
 <TechCards>
 
-<a href="/docs/guides/askyourdatabase" title="Ask Your Database" description="Chat with your OptiTech Postgres database with AskYourDatabase" icon="database"></a>
+<a href="/docs/guides/crowdstrike" title="CrowdStrike" description="Verify endpoint protection coverage from CrowdStrike Falcon" icon="crowdstrike"></a>
 
-<a href="/docs/guides/cloudflare-hyperdrive" title="Cloudflare Hyperdrive" description="Use OptiTech with Cloudflare Hyperdrive" icon="cloudflare"></a>
-
-<a href="/docs/guides/draxlr" title="Draxlr" description="Connect Draxlr to OptiTech" icon="draxlr"></a>
-
-<a href="/docs/guides/exograph" title="Exograph" description="Use Exograph with OptiTech" icon="exograph"></a>
-
-<a href="/docs/guides/grafbase" title="Grafbase" description="Use Grafbase Edge Resolvers with OptiTech" icon="grafbase"></a>
-
-<a href="/docs/guides/hasura" title="Hasura" description="Connect from Hasura Cloud to OptiTech" icon="hasura"></a>
-
-<a href="/docs/guides/postgrest" title="PostgREST" description="Create a REST API from your OptiTech database" icon="postgresql"></a>
-
-<a href="/docs/guides/wundergraph" title="Wundergraph" description="Use Wundergraph with OptiTech" icon="wundergraph"></a>
+<a href="/docs/guides/microsoft-defender" title="Microsoft Defender" description="Verify endpoint protection and alerts from Defender for Endpoint" icon="microsoft-defender"></a>
 
 </TechCards>
 
-## Replicate from OptiTech
+## Swedish business systems
 
 <TechCards>
 
-<a href="/docs/guides/logical-replication-airbyte" title="Airbyte" description="Replicate data from OptiTech with Airbyte" icon="airbyte"></a>
+<a href="/docs/guides/fortnox" title="Fortnox" description="Sync the employee register to drive on- and offboarding checks" icon="fortnox"></a>
 
-<a href="/docs/guides/bemi" title="Bemi" description="Create an automatic audit trail with Bemi" icon="bemi"></a>
+<a href="/docs/guides/visma" title="Visma" description="Sync the employee register from Visma for joiner and leaver checks" icon="visma"></a>
 
-<a href="/docs/guides/logical-replication-clickhouse" title="ClickHouse" description="Replicate data from OptiTech to ClickHouse using ClickPipes" icon="clickhouse"></a>
-
-<a href="/docs/guides/logical-replication-kafka-confluent" title="Confluent (Kafka)" description="Replicate data from OptiTech with Confluent (Kafka)" icon="confluent"></a>
-
-<a href="/docs/guides/logical-replication-databricks" title="Databricks" description="Replicate data from OptiTech to Databricks with Lakeflow Connect" icon="databricks"></a>
-
-<a href="/docs/guides/logical-replication-decodable" title="Decodable" description="Replicate data from OptiTech with Decodable" icon="decodable"></a>
-
-<a href="/docs/guides/logical-replication-estuary-flow" title="Estuary Flow" description="Replicate data from OptiTech with Estuary Flow" icon="estuary"></a>
-
-<a href="/docs/guides/logical-replication-fivetran" title="Fivetran" description="Replicate data from OptiTech with Fivetran" icon="fivetran"></a>
-
-<a href="/docs/guides/logical-replication-inngest" title="Inngest" description="Replicate data from OptiTech to Inngest" icon="inngest"></a>
-
-<a href="/docs/guides/logical-replication-materialize" title="Materialize" description="Replicate data from OptiTech to Materialize" icon="materialize"></a>
-
-<a href="/docs/guides/logical-replication-neon-to-neon" title="Neon to OptiTech" description="Replicate data from OptiTech to OptiTech" icon="neon"></a>
-
-<a href="/docs/guides/logical-replication-postgres" title="OptiTech to PostgreSQL" description="Replicate data from OptiTech to PostgreSQL" icon="postgresql"></a>
-
-<a href="/docs/guides/logical-replication-prisma-pulse" title="Prisma Pulse" description="Stream database changes in real-time with Prisma Pulse" icon="prisma"></a>
-
-<a href="/docs/guides/sequin" title="Sequin" description="Stream changes and rows from your database to anywhere with Sequin" icon="sequin"></a>
-
-<a href="/docs/guides/logical-replication-airbyte-snowflake" title="Snowflake" description="Replicate data from OptiTech to Snowflake with Airbyte" icon="snowflake"></a>
-
-<a href="/docs/guides/logical-replication-stacksync" title="Stacksync" description="Replicate data from OptiTech with Stacksync" icon="stacksync"></a>
+<a href="/docs/guides/kivra" title="Kivra" description="Send policy documents for signing through Kivra" icon="kivra"></a>
 
 </TechCards>
 
-## Replicate to OptiTech
+## Monitoring and alerting
 
 <TechCards>
 
-<a href="/docs/guides/logical-replication-alloydb" title="AlloyDB" description="Replicate data from AlloyDB to OptiTech" icon="alloydb"></a>
+<a href="/docs/guides/datadog" title="Datadog" description="Send compliance alerts and events from OptiTech to Datadog" icon="datadog"></a>
 
-<a href="/docs/guides/logical-replication-rds-to-neon" title="AWS RDS" description="Replicate data from AWS RDS PostgreSQL to OptiTech" icon="aws-rds"></a>
+<a href="/docs/guides/grafana-cloud" title="Grafana Cloud" description="Send alerts and events from OptiTech to Grafana Cloud" icon="grafana"></a>
 
-<a href="/docs/guides/logical-replication-cloud-sql" title="Cloud SQL" description="Replicate data from Cloud SQL to OptiTech" icon="google-cloud-sql"></a>
-
-<a href="/docs/guides/logical-replication-neon-to-neon" title="Neon to OptiTech" description="Replicate data from OptiTech to OptiTech" icon="neon"></a>
-
-<a href="/docs/guides/logical-replication-postgres-to-neon" title="PostgreSQL to OptiTech" description="Replicate data from PostgreSQL to OptiTech" icon="postgresql"></a>
-
-<a href="/docs/import/migrate-from-azure-postgres" title="Replicate from Azure" description="Replicate data from Azure to OptiTech" icon="azure"></a>
-
-<a href="/docs/guides/logical-replication-supabase-to-neon" title="Replicate from Supabase" description="Replicate data from Supabase to OptiTech" icon="supabase"></a>
+<a href="/docs/guides/opentelemetry" title="OpenTelemetry" description="Send events from OptiTech to any OpenTelemetry compatible backend" icon="opentelemetry"></a>
 
 </TechCards>
 
-## Schema Migration
+## Migrate from another compliance platform
+
+Switching tools? These guides cover exporting your history, importing it as baseline data, and keeping the audit trail unbroken. The general playbook is in [switching platforms without losing audit history](/faqs/best-managed-postgres-services-risky-migration).
 
 <TechCards>
 
-<a href="/docs/guides/django-migrations" title="Django" description="Connect a Django application to OptiTech" icon="django"></a>
+<a href="/docs/guides/migrate-from-vanta" title="Vanta" description="Move your controls, evidence, and policies from Vanta to OptiTech" icon="vanta"></a>
 
-<a href="/docs/guides/drizzle-migrations" title="Drizzle" description="Schema migration with OptiTech Postgres and Drizzle ORM" icon="drizzle"></a>
+<a href="/docs/guides/migrate-from-drata" title="Drata" description="Move your compliance program from Drata to OptiTech" icon="drata"></a>
 
-<a href="/docs/guides/entity-migrations" title="Entity Framework" description="Schema migration with OptiTech and Entity Framework" icon="entity"></a>
+<a href="/docs/guides/migrate-from-secureframe" title="Secureframe" description="Move your compliance program from Secureframe to OptiTech" icon="secureframe"></a>
 
-<a href="/docs/guides/flyway" title="Flyway" description="Use Flyway with OptiTech" icon="flyway"></a>
+<a href="/docs/guides/migrate-from-sprinto" title="Sprinto" description="Move your compliance program from Sprinto to OptiTech" icon="sprinto"></a>
 
-<a href="/docs/guides/laravel" title="Laravel" description="Connect from Laravel to OptiTech" icon="laravel"></a>
+<a href="/docs/guides/migrate-from-cyberday" title="Cyberday" description="Move your ISMS from Cyberday to OptiTech" icon="cyberday"></a>
 
-<a href="/docs/guides/liquibase" title="Liquibase" description="Use Liquibase with OptiTech" icon="liquibase"></a>
-
-<a href="/docs/guides/prisma-migrations" title="Prisma" description="Schema migration with OptiTech Postgres and Prisma ORM" icon="prisma"></a>
-
-<a href="/docs/guides/rails-migrations" title="Rails" description="Connect a Rails application to OptiTech" icon="rails"></a>
-
-<a href="/docs/guides/sequelize" title="Sequelize" description="Schema migration with OptiTech Postgres and Sequelize" icon="sequelize"></a>
-
-<a href="/docs/guides/sqlalchemy" title="SQLAlchemy" description="Connect an SQLAlchemy application to OptiTech" icon="sqlalchemy"></a>
+<a href="/docs/guides/migrate-from-spreadsheets" title="Excel and SharePoint" description="Import risks, suppliers, and assets from spreadsheets" icon="microsoft-excel"></a>
 
 </TechCards>
 
-## Serverless
+## Automation and compliance as code
 
 <TechCards>
 
-<a href="/docs/guides/aws-lambda" title="AWS Lambda" description="Connect from AWS Lambda to OptiTech" icon="aws-lambda"></a>
+<a href="/docs/guides/branching-github-actions" title="GitHub Actions" description="Run compliance checks on every pull request" icon="github"></a>
 
-<a href="/guides/query-postgres-azure-functions" title="Azure Functions" description="Connect from Azure Functions to OptiTech" icon="azure"></a>
+<a href="/docs/reference/terraform" title="Terraform" description="Manage workspaces, integrations, and controls as code" icon="terraform"></a>
 
-<a href="/docs/serverless/serverless-driver" title="OptiTech" description="Connect with the OptiTech serverless driver" icon="neon"></a>
+<a href="/docs/guides/aws-lambda" title="AWS Lambda" description="Run scheduled compliance checks from AWS Lambda" icon="aws-lambda"></a>
 
 </TechCards>

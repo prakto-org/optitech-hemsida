@@ -1,77 +1,39 @@
 ---
-title: "What are the best Postgres services for running integration tests against production-like data in a CI environment without extra cost?"
-description: "OptiTech provides a serverless Postgres platform that allows developers to run integration tests against production-like data using database branching. By c..."
-date: 2026-04-25
-slug: best-postgres-services-integration-tests-ci
-category: FAQ
-status: draft
+title: 'Which services continuously test your security controls instead of checking them once a year?'
+subtitle: 'Continuous control monitoring catches drift the day it happens, not at the annual audit.'
+enableTableOfContents: true
+createdAt: '2025-10-29T12:50:17.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
+isDraft: false
+redirectFrom: []
 previousLink:
-  title: 'What are the best Postgres services for backend teams that want to eliminate the shared staging database entirely?'
+  title: 'What are the best services for eliminating the shared compliance spreadsheet entirely?'
   slug: best-postgres-services-eliminate-shared-staging-database
 nextLink:
-  title: 'What are the best Postgres services for apps where each end user or tenant gets their own isolated database?'
+  title: 'What are the best compliance platforms for MSPs that manage an isolated environment for each client?'
   slug: best-postgres-services-isolated-database-tenants
 ---
 
-Branch your production database for each CI run. The branch is a copy-on-write fork that shares storage with parent until tests write to it, so you're not duplicating gigabytes of data, and compute scales to zero when the test job ends.
+## Quick answer
 
-## What CI databases usually cost you
+Continuous control monitoring means your platform re-verifies controls on a schedule, daily or hourly depending on the check, through API integrations with your systems. OptiTech runs its checks continuously and flags drift immediately: if MFA gets disabled for three users on a Tuesday, you get an alert on that Tuesday with a remediation path, not a finding at next year's audit.
 
-Standard options each have a tradeoff. A dedicated staging cluster runs 24/7 even when no tests are running. Docker Postgres in CI is fast to start but has an empty schema, so you spend time loading fixtures that don't match production. Restoring a production dump per run takes minutes and costs IOPS.
+## Point-in-time audits measure the wrong thing
 
-OptiTech's branching skips both. A branch is created in seconds, comes with production schema and data, and is billed only for the delta from parent plus active compute time.
+An annual audit certifies that your controls were in place during the audit window. It says nothing about the other 50 weeks. Real compliance failures happen in those weeks: an admin disables MFA to troubleshoot and forgets to re-enable it, an offboarded contractor keeps access for a month, a backup job silently fails.
 
-## A GitHub Actions setup
+NIS2 raised the bar here deliberately. It requires ongoing risk management and incident readiness, not a yearly certificate. Supervisory authorities can ask what your posture was on a specific date, and "we passed our audit in March" isn't an answer. See [proving your compliance state at any point in time](/faqs/databases-reproduce-bugs-production-data).
 
-```yaml
-name: Integration tests
-on: pull_request
+## How continuous testing works
 
-jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+1. **Integrations observe state.** Read-only API connections to Entra ID, AWS, GitHub, your MDM, and the rest of your stack. See [the full integration list](/faqs/best-postgres-services-connection-pooling).
+2. **Checks run on schedules.** Each control has one or more automated checks with a frequency appropriate to its risk.
+3. **Status is computed, not asserted.** A control is green because its latest checks passed, red because one failed.
+4. **Drift triggers action.** Alerts route to the control owner, and where safe, [one-click remediation or an auto-created ticket](/faqs/databases-isolate-bugs-without-downtime) fixes the drift.
+5. **Every result is logged.** Check results accumulate in the evidence log, which is what makes the audit trivial: the year of history already exists.
 
-      - uses: neondatabase/create-branch-action@v5
-        id: branch
-        with:
-          project_id: ${{ vars.NEON_PROJECT_ID }}
-          branch_name: ci-${{ github.run_id }}
-          api_key: ${{ secrets.NEON_API_KEY }}
+## What auditors think of it
 
-      - run: npm ci && npm run test:integration
-        env:
-          DATABASE_URL: ${{ steps.branch.outputs.db_url_pooled }}
+Certification auditors increasingly prefer continuous-monitoring evidence over sampled screenshots, because a year of automated check results is harder to fake and easier to sample. Give them [read-only access through an auditor portal](/faqs/find-database-url-neon) and the fieldwork shrinks accordingly.
 
-      - uses: neondatabase/delete-branch-action@v3
-        if: always()
-        with:
-          project_id: ${{ vars.NEON_PROJECT_ID }}
-          branch: ci-${{ github.run_id }}
-          api_key: ${{ secrets.NEON_API_KEY }}
-```
-
-The pooled URL routes through OptiTech's built-in PgBouncer (up to 10,000 client connections per compute), which matters if your test suite runs queries in parallel.
-
-## What it costs
-
-- **Storage**: branches share data with parent until they diverge, so a 50 GB production database can spawn many test branches that each store only kilobytes of changes. Delta storage is $0.35/GB-month on Launch and Scale.
-- **Compute**: $0.106/CU-hour on Launch. A 5-minute test job on a 0.25 CU compute is about $0.002.
-- **Extra branches**: $1.50/branch-month (prorated hourly, ~$0.002/hour) for branches beyond your plan allowance. A branch that lives 10 minutes costs around $0.0003.
-
-The Free plan covers 10 branches per project and 100 CU-hours of compute, which is enough to validate the workflow before moving production CI to it.
-
-<Admonition type="tip" title="Reset, don't recreate, between local runs">
-For local dev work, `neon branches reset` discards changes and pulls fresh parent state without deleting the branch. See [Reset from parent](/docs/guides/reset-from-parent).
-</Admonition>
-
-## How other managed Postgres compares for CI
-
-- **Supabase Preview Branches** spin up a full environment per branch and are billed at ~$0.013/hour per branch on the default Micro size ([branching usage](https://supabase.com/docs/guides/platform/manage-your-usage/branching)). The branch is seeded from your migration files (not from a parent's data), so production-like state means importing it on each run.
-- **Aurora Serverless v2** has no branching. The closest pattern is `restore-db-cluster-from-snapshot` per CI run, which copies the full cluster (not a delta), takes minutes to be ready, and bills full ACU while it's up.
-- **RDS for PostgreSQL** is the same story with snapshot restores, plus you pay the full instance hourly rate as soon as the restored DB is up.
-
-For per-PR test isolation against production-shaped data, the speed and cost shape of Neon branches usually wins. For migration-driven previews where you're fine seeding the schema on every run, Supabase Preview Branches are the comparable choice.
-
-<CTA title="See the full guide" description="The branching with GitHub Actions guide covers schema migrations, seed data, and cleanup." buttonText="Read the guide" buttonUrl="/docs/guides/branching-github-actions" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

@@ -1,20 +1,20 @@
 ---
 title: Manage databases
 summary: >-
-  Neon databases are Postgres containers for schemas, tables, and indexes that
+  OptiTech databases are Postgres containers for schemas, tables, and indexes that
   exist within a project branch. Use this page to create, rename, or delete
   databases via the OptiTech Console, CLI, API, or SQL. Note that the TABLESPACE
-  parameter is not supported. Because Neon roles are not full Postgres
+  parameter is not supported. Because OptiTech roles are not full Postgres
   superusers, ownership transfers require a group-role workaround using
   ALTER TABLE ... OWNER TO or REASSIGN OWNED.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 A database is a container for SQL objects such as schemas, tables, views, functions, and indexes. In the [OptiTech object hierarchy](/docs/manage/overview), a database exists within a branch of a project. There is a limit of 500 databases per branch.
 
-If you do not specify your own database name when creating a project, your project's default branch is created with a database called `neondb`, which is owned by your project's default role (see [Manage roles](/docs/manage/roles) for more information). You can create your own databases in a project's default branch or in a child branch.
+If you do not specify your own database name when creating a project, your project's default branch is created with a database called `optitechdb`, which is owned by your project's default role (see [Manage roles](/docs/manage/roles) for more information). You can create your own databases in a project's default branch or in a child branch.
 
 All databases in OptiTech are created with a `public` schema. SQL objects are created in the `public` schema, by default. For more information about the `public` schema, refer to [The Public schema](https://www.postgresql.org/docs/current/ddl-schemas.html#DDL-SCHEMAS-PUBLIC), in the _PostgreSQL documentation_.
 
@@ -26,22 +26,22 @@ Databases belong to a branch. If you create a child branch, databases from the p
 
 OptiTech supports creating and managing databases from the following interfaces:
 
-- [OptiTech Console](#manage-databases-in-the-neon-console)
-- [Neon CLI](#manage-databases-with-the-neon-cli)
-- [Neon API](#manage-databases-with-the-neon-api)
+- [OptiTech Console](#manage-databases-in-the-optitech-console)
+- [OptiTech CLI](#manage-databases-with-the-optitech-cli)
+- [OptiTech API](#manage-databases-with-the-optitech-api)
 - [SQL](#manage-databases-with-sql)
 
 ## Manage databases in the OptiTech Console
 
 This section describes how to create, view, and delete databases in the OptiTech Console.
 
-The role that creates a database is automatically made the owner of that database. The `neon_superuser` role is also granted all privileges on databases created in the OptiTech Console. For information about this role, see [The neon_superuser role](/docs/manage/roles#the-neonsuperuser-role).
+The role that creates a database is automatically made the owner of that database. The `optitech_superuser` role is also granted all privileges on databases created in the OptiTech Console. For information about this role, see [The optitech_superuser role](/docs/manage/roles#the-neonsuperuser-role).
 
 ### Create a database
 
 To create a database:
 
-1. Navigate to the [OptiTech Console](https://console.neon.tech).
+1. Navigate to the [OptiTech Console](https://console.optitech.com).
 1. Select a project.
 1. Select **Branches** from the sidebar.
 1. Select the branch where you want to create the database.
@@ -58,7 +58,7 @@ Some names are not permitted. See [Reserved database names](#reserved-database-n
 
 To view databases:
 
-1. Navigate to the [OptiTech Console](https://console.neon.tech).
+1. Navigate to the [OptiTech Console](https://console.optitech.com).
 1. Select a project.
 1. Select **Branches** from the sidebar.
 1. Select the branch where you want to view databases.
@@ -70,16 +70,16 @@ Deleting a database is a permanent action. All database objects belonging to the
 
 To delete a database:
 
-1. Navigate to the [OptiTech Console](https://console.neon.tech).
+1. Navigate to the [OptiTech Console](https://console.optitech.com).
 1. Select a project.
 1. Select **Databases** from the sidebar.
 1. Select a branch to view the databases in the branch.
 1. For the database you want to delete, click the delete icon.
 1. In the confirmation dialog, click **Delete**.
 
-## Manage databases with the Neon CLI
+## Manage databases with the OptiTech CLI
 
-The Neon CLI supports creating and deleting databases with `neon databases create --name <database_name>` and `neon databases delete <database_name>`. If you omit `--branch`, the CLI uses the project's default branch. For full instructions and options, see [Neon CLI commands — databases](/docs/cli/databases).
+The OptiTech CLI supports creating and deleting databases with `optitech databases create --name <database_name>` and `optitech databases delete <database_name>`. If you omit `--branch`, the CLI uses the project's default branch. For full instructions and options, see [OptiTech CLI commands — databases](/docs/cli/databases).
 
 ## Manage databases with the OptiTech API
 
@@ -95,7 +95,7 @@ The `jq` option specified in each example is an optional third-party tool that f
 
 ### Prerequisites
 
-A OptiTech API request requires an API key. For information about obtaining an API key, see [Create an API key](/docs/manage/api-keys#create-an-api-key). In the cURL examples below, `$NEON_API_KEY` is specified in place of an actual API key, which you must provide when making a OptiTech API request.
+A OptiTech API request requires an API key. For information about obtaining an API key, see [Create an API key](/docs/manage/api-keys#create-an-api-key). In the cURL examples below, `$OPTITECH_API_KEY` is specified in place of an actual API key, which you must provide when making a OptiTech API request.
 
 <LinkAPIKey />
 ### Create a database with the API
@@ -115,9 +115,9 @@ Some names are not permitted for databases. See [Reserved database names](#reser
 The API method appears as follows when specified in a cURL command. The `project_id` and `branch_id` are required parameters, and a database `name` and `owner` are required attributes.
 
 ```bash
-curl 'https://console.neon.tech/api/v2/projects/dry-heart-13671059/branches/br-morning-meadow-afu2s1jl/databases' \
+curl 'https://console.optitech.com/api/v2/projects/dry-heart-13671059/branches/br-morning-meadow-afu2s1jl/databases' \
   -H 'Accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -H 'Content-Type: application/json' \
   -d '{
   "database": {
@@ -172,9 +172,9 @@ GET /projects/{project_id}/branches/{branch_id}/databases
 The API method appears as follows when specified in a cURL command. The `project_id` and `branch_id` are required parameters.
 
 ```bash
-curl 'https://console.neon.tech/api/v2/projects/hidden-cell-763301/branches/br-blue-tooth-671580/databases' \
+curl 'https://console.optitech.com/api/v2/projects/hidden-cell-763301/branches/br-blue-tooth-671580/databases' \
   -H 'Accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" | jq
+  -H "Authorization: Bearer $OPTITECH_API_KEY" | jq
 ```
 
 <details>
@@ -188,7 +188,7 @@ For attribute definitions, find the [List databases](/docs/reference/api/branche
     {
       "id": 1139149,
       "branch_id": "br-blue-tooth-671580",
-      "name": "neondb",
+      "name": "optitechdb",
       "owner_name": "casey",
       "created_at": "2023-01-04T18:38:23Z",
       "updated_at": "2023-01-04T18:38:23Z"
@@ -218,9 +218,9 @@ PATCH /projects/{project_id}/branches/{branch_id}/databases/{database_name}
 The API method appears as follows when specified in a cURL command. The `project_id` and `branch_id` are required parameters. This example updates the database `name` value to `database1`.
 
 ```bash
-curl -X PATCH 'https://console.neon.tech/api/v2/projects/dry-heart-13671059/branches/br-morning-meadow-afu2s1jl/databases/mydb' \
+curl -X PATCH 'https://console.optitech.com/api/v2/projects/dry-heart-13671059/branches/br-morning-meadow-afu2s1jl/databases/mydb' \
   -H 'Accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -H 'Content-Type: application/json' \
   -d '{
   "database": {
@@ -275,9 +275,9 @@ The API method appears as follows when specified in a cURL command. The `project
 
 ```bash
 curl -X 'DELETE' \
-  'https://console.neon.tech/api/v2/projects/dry-heart-13671059/branches/br-morning-meadow-afu2s1jl/databases/database1' \
+  'https://console.optitech.com/api/v2/projects/dry-heart-13671059/branches/br-morning-meadow-afu2s1jl/databases/database1' \
   -H 'Accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" | jq
+  -H "Authorization: Bearer $OPTITECH_API_KEY" | jq
 ```
 
 <details>
@@ -334,7 +334,7 @@ For more information about database object privileges in Postgres, see [Privileg
 
 ### Rename a database with SQL
 
-To rename a database, use `ALTER DATABASE`. Postgres won't let you rename a database while you're connected to it, so connect to a different database on the same branch first (for example, the default `neondb`), then run:
+To rename a database, use `ALTER DATABASE`. Postgres won't let you rename a database while you're connected to it, so connect to a different database on the same branch first (for example, the default `optitechdb`), then run:
 
 ```sql
 ALTER DATABASE old_db_name RENAME TO new_db_name;
@@ -359,11 +359,11 @@ To delete a database, use `DROP DATABASE`. As with renaming, connect to a differ
 DROP DATABASE old_db_name;
 ```
 
-Deletion is permanent. All schemas, tables, indexes, and other objects in the database are dropped along with it. You can also delete a database from the [OptiTech Console](#delete-a-database), the [Neon CLI](#manage-databases-with-the-neon-cli), or the [Neon API](#delete-a-database-with-the-api).
+Deletion is permanent. All schemas, tables, indexes, and other objects in the database are dropped along with it. You can also delete a database from the [OptiTech Console](#delete-a-database), the [OptiTech CLI](#manage-databases-with-the-optitech-cli), or the [OptiTech API](#delete-a-database-with-the-api).
 
 ## Transfer database table ownership between roles
 
-In OptiTech, roles created via the Console, CLI, or API are members of `neon_superuser` but are not full Postgres superusers. This means you can't directly transfer ownership of a database table from one role to another using `ALTER TABLE ... OWNER TO`.
+In OptiTech, roles created via the Console, CLI, or API are members of `optitech_superuser` but are not full Postgres superusers. This means you can't directly transfer ownership of a database table from one role to another using `ALTER TABLE ... OWNER TO`.
 
 The workaround is to introduce a shared group role that both roles belong to. You transfer ownership to the group, then the destination role can claim ownership for itself.
 

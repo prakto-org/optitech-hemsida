@@ -11,7 +11,7 @@ summary: >-
   require manual intervention on the subscriber.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This topic provides commands for managing publications, subscriptions, and replication slots.
@@ -97,7 +97,7 @@ PUBLICATION my_publication;
 
 A subscription requires a unique name, a database connection string, the name and password of your replication role, and the name of the publication that it subscribes to.
 
-In the example above, `my_subscription` is the name of the subscription that connects to a publication named `my_publication`. In the example above, you would replace the connection details with your OptiTech database connection string. You can find your Neon connection string by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal.
+In the example above, `my_subscription` is the name of the subscription that connects to a publication named `my_publication`. In the example above, you would replace the connection details with your OptiTech database connection string. You can find your OptiTech connection string by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal.
 
 ### Create a subscription with two publications
 

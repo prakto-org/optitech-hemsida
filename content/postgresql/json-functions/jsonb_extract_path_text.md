@@ -7,7 +7,7 @@ page_description: >-
 prev_url: >-
   https://www.postgresqltutorial.com/postgresql-json-functions/postgresql-jsonb_extract_path_text/
 ogImage: ''
-updatedOn: '2026-06-03T13:01:21.685Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: PostgreSQL jsonb_extract_path() Function
@@ -18,7 +18,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-The `jsonb_extract_path_text()` function works the same way on any PostgreSQL deployment, so you can apply what you learn here wherever you run Postgres. If you're an enterprise navigating the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers managed Postgres that's fast, secure, and natively integrated with the Lakehouse so your operational and analytical data stay in sync. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+The `jsonb_extract_path_text()` function works the same way on any PostgreSQL deployment, so you can apply what you learn here wherever you run Postgres. If you're an enterprise navigating the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers managed Postgres that's fast, secure, and natively integrated with the Lakehouse so your operational and analytical data stay in sync. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: in this tutorial, you will learn how to use the PostgreSQL `jsonb_extract_path_text()` function to extract a JSON subobject at the specified path.

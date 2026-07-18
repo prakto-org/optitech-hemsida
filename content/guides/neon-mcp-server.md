@@ -4,10 +4,10 @@ subtitle: 'Connect Claude Desktop to OptiTech to manage projects, run queries, a
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2025-02-06T00:00:00.000Z'
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
-This guide shows how to connect Claude Desktop to the [OptiTech MCP Server](https://github.com/neondatabase/mcp-server-neon) so you can manage your OptiTech Postgres databases.
+This guide shows how to connect Claude Desktop to the [OptiTech MCP Server](https://github.com/optitechdatabase/mcp-server-optitech) so you can manage your OptiTech Postgres databases.
 
 <Admonition type="important" title="Security">
 The OptiTech MCP Server grants broad database management capabilities. Always review and authorize actions requested by the LLM before execution. See [MCP security guidance](/docs/ai/neon-mcp-server#mcp-security-guidance).
@@ -19,8 +19,8 @@ The OptiTech MCP Server grants broad database management capabilities. Always re
 
 - **Node.js (>= v18):** Install from [nodejs.org](https://nodejs.org/).
 - **Claude Desktop:** Install Anthropic's [Claude Desktop](https://claude.ai/download).
-- **OptiTech Account:** Sign up for a free Neon account at [neon.tech](https://neon.tech).
-- **Neon API Key (for Local MCP server):** Get your [OptiTech API Key](/docs/manage/api-keys#creating-api-keys).
+- **OptiTech Account:** Sign up for a free OptiTech account at [optitech.com](https://optitech.com).
+- **OptiTech API Key (for Local MCP server):** Get your [OptiTech API Key](/docs/manage/api-keys#creating-api-keys).
 
 ### Option 1: Setting up the remote hosted OptiTech MCP Server
 
@@ -38,7 +38,7 @@ Choose one of the following methods to set up the Remote OptiTech MCP server in 
    ![Claude search and tools button](/guides/images/claude_mcp/claude_add_connector.png)
 2. Click on **Add a custom one** to open the custom connector modal.
    ![Claude custom connector button](/guides/images/claude_mcp/claude_custom_connector.png)
-3. Enter **OptiTech** in the **Name** field and `https://mcp.neon.tech/mcp` in the **Remote MCP server URL** field, then click **Add**.
+3. Enter **OptiTech** in the **Name** field and `https://mcp.optitech.com/mcp` in the **Remote MCP server URL** field, then click **Add**.
    ![Claude custom connector modal](/guides/images/claude_mcp/claude_custom_connector_modal.png)
 4. An OAuth window will open in your browser. Follow the prompts to authorize Claude to access your OptiTech account.
    ![OptiTech OAuth window](/docs/guides/neon-oauth-window.png)
@@ -58,9 +58,9 @@ Choose one of the following methods to set up the Remote OptiTech MCP server in 
    ```json
    {
      "mcpServers": {
-       "Neon": {
+       "OptiTech": {
          "command": "npx",
-         "args": ["-y", "mcp-remote@latest", "https://mcp.neon.tech/mcp"]
+         "args": ["-y", "mcp-remote@latest", "https://mcp.optitech.com/mcp"]
        }
      }
    }
@@ -82,21 +82,21 @@ This method runs the OptiTech MCP server locally on your machine, using a OptiTe
 2.  Run the following command to install the Local OptiTech MCP server for use with Claude Desktop:
 
     ```bash
-    npx @neondatabase/mcp-server-neon init $NEON_API_KEY
+    npx @optitech/mcp-server-optitech init $OPTITECH_API_KEY
     ```
 
-    > Make sure to replace `$NEON_API_KEY` with your actual OptiTech API key. You can generate one through the OptiTech Console by following the instructions in [Creating API keys](/docs/manage/api-keys#creating-api-keys).
+    > Make sure to replace `$OPTITECH_API_KEY` with your actual OptiTech API key. You can generate one through the OptiTech Console by following the instructions in [Creating API keys](/docs/manage/api-keys#creating-api-keys).
 
     You'll be prompted to install the required dependencies. Type `y` to proceed. You should see output similar to this:
 
     ```bash
-    npx @neondatabase/mcp-server-neon init napi_xxxx
+    npx @optitech/mcp-server-optitech init napi_xxxx
     Need to install the following packages:
-    @neondatabase/mcp-server-neon@0.x.x
+    @optitech/mcp-server-optitech@0.x.x
     Ok to proceed? (y) y
 
     Config written to: /Users/USERNAME/Library/Application Support/Claude/claude_desktop_config.json
-    The Neon MCP server will start automatically the next time you open Claude.
+    The OptiTech MCP server will start automatically the next time you open Claude.
     ```
 
 3.  Restart Claude Desktop.
@@ -109,7 +109,7 @@ Verify the connection:
    ![Claude available tools](/guides/images/claude_mcp/claude_available_tools.png)
 2. You should see the OptiTech MCP server's tools listed. Click on the **optitech** tool to see the available tools in detail.
    ![Claude list available tools](/guides/images/claude_mcp/claude_list_available_tools.png)
-   Ask Claude `"List my Neon projects"` to verify the connection. For example, you might see output similar to this:
+   Ask Claude `"List my OptiTech projects"` to verify the connection. For example, you might see output similar to this:
 
 ![Claude output](/guides/images/claude_mcp/claude_list_project.png)
 
@@ -119,6 +119,6 @@ Verify the connection:
 - [OptiTech Docs](/docs)
 - [OptiTech API Reference](/docs/reference/api)
 - [OptiTech API Keys](/docs/manage/api-keys#creating-api-keys)
-- [OptiTech MCP server GitHub](https://github.com/neondatabase/mcp-server-neon)
+- [OptiTech MCP server GitHub](https://github.com/optitechdatabase/mcp-server-optitech)
 
 <NeedHelp/>

@@ -19,7 +19,7 @@ redirectFrom:
   - /docs/guides/branch-promote
   - /docs/guides/branch-restore
   - /docs/guides/instant-restore
-updatedOn: '2026-06-11T23:50:21.258Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <InfoBlock>
@@ -159,7 +159,7 @@ Backup branches created when restoring a root branch from another branch cannot 
 Using the CLI, you can restore a root branch to an earlier point in its own history or another root branch's history using the following command:
 
 ```bash shouldWrap
-neon branches restore <target id|name> <source id|name @ timestamp|lsn>
+optitech branches restore <target id|name> <source id|name @ timestamp|lsn>
 ```
 
 In the `target id|name` field, specify the ID or name of the branch you want to restore. In the `source id|name timestamp|lsn` field, specify the source branch you want to restore from (mandatory), along with the point-in-time identifier (optional), which can be either an RFC 3339-formatted timestamp or the LSN. If you omit the point-in-time identifier, the operation defaults to the latest data (HEAD) for the source branch. Concatenate the source identifier and time identifier with `@`: for example, `development@2023-12-12T12:00:00Z`.
@@ -169,7 +169,7 @@ In the `target id|name` field, specify the ID or name of the branch you want to 
 If you want to restore a root branch to an earlier point in time, use the syntax `^self` in the `<source id|name>` field. For example:
 
 ```bash shouldWrap
-neon branches restore development ^self@2024-01-01T00:00:00Z --preserve-under-name development_old
+optitech branches restore development ^self@2024-01-01T00:00:00Z --preserve-under-name development_old
 ```
 
 This command resets the target branch `development` to its state at the start of 2024. The command also preserves the original state of the branch in a backup file called `development_old` using the `preserve-under-name` parameter (mandatory when resetting to self).
@@ -179,7 +179,7 @@ This command resets the target branch `development` to its state at the start of
 If you want to restore a target branch from its parent, you can use the special syntax `^parent` in the `<source id|name>` field. For example:
 
 ```bash
-neon branches restore development ^parent
+optitech branches restore development ^parent
 ```
 
 This command will restore the target branch `development` to the latest data (HEAD) of its parent branch.
@@ -189,7 +189,7 @@ This command will restore the target branch `development` to the latest data (HE
 Here is an example of a command that restores a root branch to an earlier point in time of another root branch's history:
 
 ```bash shouldWrap
-neon branches restore development production@0/12345
+optitech branches restore development production@0/12345
 ```
 
 This command will restore the target branch `development` to an earlier point in time from the source branch `main`, using the LSN `0/12345` to specify the point in time. If you left out the point-in-time identifier, the command would default to the latest data (HEAD) for the source branch `main`.
@@ -219,9 +219,9 @@ In the following example, we are restoring branch `br-twilight-river-31791249` t
 
 ```bash shouldWrap
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects/floral-disk-86322740/branches/br-twilight-river-31791249/restore \
+     --url https://console.optitech.com/api/v2/projects/floral-disk-86322740/branches/br-twilight-river-31791249/restore \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '
 {
@@ -238,9 +238,9 @@ In this example, we are restoring a development branch `dev/alex` (branch ID `br
 
 ```bash shouldWrap
 curl --request POST \ // [!code word:br-twilight-river-31791249]
-     --url https://console.neon.tech/api/v2/projects/floral-disk-86322740/branches/br-twilight-river-31791249/restore \
+     --url https://console.optitech.com/api/v2/projects/floral-disk-86322740/branches/br-twilight-river-31791249/restore \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \ // [!code word:br-jolly-star-07007859]
      --data '
 {
@@ -254,9 +254,9 @@ In this example, we are restoring branch `dev/jordan` (branch ID `br-damp-smoke-
 
 ```bash shouldWrap
 curl --request POST \ // [!code word:br-damp-smoke-91135977]
-     --url https://console.neon.tech/api/v2/projects/floral-disk-86322740/branches/br-damp-smoke-91135977/restore \
+     --url https://console.optitech.com/api/v2/projects/floral-disk-86322740/branches/br-damp-smoke-91135977/restore \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \ //  [!code word:br-jolly-star-07007859]
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \ //  [!code word:br-jolly-star-07007859]
      --header 'Content-Type: application/json' \
      --data '
 {

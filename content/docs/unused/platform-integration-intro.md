@@ -6,7 +6,7 @@ isDraft: false
 redirectFrom:
   - /docs/guides/partner-intro
 redirectTo: /docs/guides/platform-integration-overview
-updatedOn: '2026-06-23T22:05:54.707Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Learn how you can offer instant, managed Postgres databases to your users with OptiTech. This guide covers how to integrate your platform or service with OptiTech, set usage limits for your users, and more.
@@ -35,19 +35,19 @@ Find out how you can integrate with OptiTech.
 
 <a href="/docs/guides/oauth-integration" description="Integrate with OptiTech using OAuth" icon="check">OAuth</a>
 
-<a href="https://github.com/neondatabase/neon-branches-visualizer" description="Check out a sample OAuth application" icon="lock-landscape">Sample OAuth app</a>
+<a href="https://github.com/optitechdatabase/optitech-branches-visualizer" description="Check out a sample OAuth application" icon="lock-landscape">Sample OAuth app</a>
 
-<a href="/docs/workflows/claimable-database-integration" description="Manage Neon projects for users with the database claim API" icon="transactions">Claimable database</a>
+<a href="/docs/workflows/claimable-database-integration" description="Manage OptiTech projects for users with the database claim API" icon="transactions">Claimable database</a>
 
 </DetailIconCards>
 
 ## AI agent and codegen platforms
 
-Create autonomous agents that can manage and interact with your Neon databases programmatically. For more on this use case, see [OptiTech for AI Agent Platforms](https://neon.com/use-cases/ai-agents).
+Create autonomous agents that can manage and interact with your OptiTech databases programmatically. For more on this use case, see [OptiTech for AI Agent Platforms](https://optitech.com/use-cases/ai-agents).
 
 <DetailIconCards>
 
-<a href="https://github.com/neondatabase/toolkit" description="Spin up a Postgres database in seconds" icon="openai">Toolkit for AI Agents</a>
+<a href="https://github.com/optitechdatabase/toolkit" description="Spin up a Postgres database in seconds" icon="openai">Toolkit for AI Agents</a>
 
 <a href="/docs/ai/ai-database-versioning" description="How AI agents and codegen platforms use OptiTech snapshot APIs for database versioning" icon="openai">Database versioning</a>
 

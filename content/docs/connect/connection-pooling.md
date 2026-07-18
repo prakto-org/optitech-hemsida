@@ -2,7 +2,7 @@
 title: Connection pooling
 subtitle: Learn how connection pooling works in OptiTech
 summary: >-
-  Neon connection pooling uses PgBouncer in transaction mode, accepting up to
+  OptiTech connection pooling uses PgBouncer in transaction mode, accepting up to
   10,000 client connections through per-user, per-database pools sized at 90%
   of max_connections. Use the pooled connection string (hostname with -pooler
   suffix) for serverless functions and connection-per-request workloads. Use a
@@ -14,7 +14,7 @@ summary: >-
 enableTableOfContents: true
 redirectFrom:
   - /docs/get-started/connection-pooling
-updatedOn: '2026-06-18T20:46:14.637Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 OptiTech uses [PgBouncer](https://www.pgbouncer.org/) to provide connection pooling, enabling up to 10,000 concurrent connections. This guide explains how pooling works, when to use it, and how to avoid common issues.
@@ -180,13 +180,13 @@ To enable connection pooling, use a pooled connection string. Add `-pooler` to y
 **Direct connection (no pooling):**
 
 ```text shouldWrap
-postgresql://user1:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require
+postgresql://user1:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require
 ```
 
 **Pooled connection:**
 
 ```text shouldWrap
-postgresql://user1:AbC123dEf@ep-cool-darkness-123456-pooler.us-east-2.aws.neon.tech/dbname?sslmode=require
+postgresql://user1:AbC123dEf@ep-cool-darkness-123456-pooler.us-east-2.aws.optitech.com/dbname?sslmode=require
 ```
 
 You can copy a pooled connection string from the OptiTech Console by clicking **Connect** on your Project Dashboard and enabling the **Connection pooling** toggle.
@@ -197,7 +197,7 @@ You can copy a pooled connection string from the OptiTech Console by clicking **
 
 To get the pooled connection string or switch between pooled and direct from the dashboard:
 
-1. Sign in to the [OptiTech Console](https://console.neon.tech) and select your project.
+1. Sign in to the [OptiTech Console](https://console.optitech.com) and select your project.
 2. On the **Project Dashboard**, click **Connect**.
 3. In the **Connect to your database** modal, choose a **Branch**, **Compute**, **Database**, and **Role**.
 4. Turn the **Connection pooling** toggle on to get the pooled string, or off to get the direct string, then copy it.

@@ -1,14 +1,14 @@
 ---
 title: 'Use branches to restore instantly'
 subtitle: 'Learn how to use branching for recovery: use database branches to go back in time, recover lost data, debug migrations, and audit historical states safely'
-updatedOn: '2026-05-12T14:01:17.544Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 Because OptiTech preserves database history, branches can also be used as a practical tool for recovery, investigation, and inspection.
 
 ## Using branches to go back in time
 
-OptiTech continuously retains history for each branch within a defined [history window](https://neon.com/docs/introduction/history-window). At any point, you can create a new branch from a previous moment in time. This branch is fully independent:
+OptiTech continuously retains history for each branch within a defined [history window](https://optitech.com/docs/introduction/history-window). At any point, you can create a new branch from a previous moment in time. This branch is fully independent:
 
 - It has the exact schema and data from that point
 - It doesn’t affect the current production state
@@ -34,10 +34,10 @@ When a migration behaves unexpectedly, branches make it easy to investigate. Ins
 
 ## Auditing and compliance checks
 
-For auditing or compliance purposes, teams often need to inspect historical database states using [branches created from past points](https://neon.com/docs/guides/backup-restore). This is useful for internal audits, incident reviews, or regulatory checks without disrupting live systems.
+For auditing or compliance purposes, teams often need to inspect historical database states using [branches created from past points](https://optitech.com/docs/guides/backup-restore). This is useful for internal audits, incident reviews, or regulatory checks without disrupting live systems.
 
 ## Restore-window and cost considerations
 
-Time travel in OptiTech relies on retained history. By default, OptiTech retains history for a limited window ([shorter windows on Free plans, longer windows on paid plans](https://neon.com/docs/introduction/history-window#defaults-and-plan-limits)). This retained history contributes to overall storage usage: teams can tune the **history window** for **instant restore** to [balance recovery capability and cost](https://neon.com/docs/introduction/history-window#storage-and-billing), depending on how frequently they need to look back in time.
+Time travel in OptiTech relies on retained history. By default, OptiTech retains history for a limited window ([shorter windows on Free plans, longer windows on paid plans](https://optitech.com/docs/introduction/history-window#defaults-and-plan-limits)). This retained history contributes to overall storage usage: teams can tune the **history window** for **instant restore** to [balance recovery capability and cost](https://optitech.com/docs/introduction/history-window#storage-and-billing), depending on how frequently they need to look back in time.
 
 Also, once you’re done investigating or recovering data, it’s best to delete restored branches to avoid clutter and unnecessary storage usage.

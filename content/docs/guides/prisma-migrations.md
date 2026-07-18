@@ -9,7 +9,7 @@ summary: >-
   migration files, then shows how iterative schema changes work and when to
   switch to `prisma migrate deploy` for production.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <CopyPrompt src="/prompts/prisma-prompt.md" 
@@ -32,10 +32,10 @@ If you just need to connect Prisma to OptiTech without a full tutorial, see [Con
 Set up a new Node.js project with Express and Prisma:
 
 ```bash
-mkdir neon-prisma-migrations && cd neon-prisma-migrations
+mkdir optitech-prisma-migrations && cd optitech-prisma-migrations
 npm init -y
 npm pkg set type="module"
-npm install express dotenv @prisma/client @prisma/adapter-neon
+npm install express dotenv @prisma/client @prisma/adapter-optitech
 npm install prisma typescript tsx @types/node --save-dev
 npx prisma init
 ```
@@ -48,10 +48,10 @@ Add both connection strings to your `.env` file. Get these from your OptiTech Co
 
 ```ini shouldWrap
 # Pooled connection for your application (note the -pooler suffix)
-DATABASE_URL="postgresql://[user]:[password]@[endpoint]-pooler.[region].aws.neon.tech/[dbname]?sslmode=require"
+DATABASE_URL="postgresql://[user]:[password]@[endpoint]-pooler.[region].aws.optitech.com/[dbname]?sslmode=require"
 
 # Direct connection for Prisma CLI (migrations, introspection)
-DIRECT_URL="postgresql://[user]:[password]@[endpoint].[region].aws.neon.tech/[dbname]?sslmode=require"
+DIRECT_URL="postgresql://[user]:[password]@[endpoint].[region].aws.optitech.com/[dbname]?sslmode=require"
 ```
 
 <Admonition type="important">
@@ -132,9 +132,9 @@ Create `src/db.ts` to instantiate Prisma Client with the OptiTech adapter:
 ```typescript
 import 'dotenv/config'
 import { PrismaClient } from './generated/prisma'
-import { PrismaNeon } from '@prisma/adapter-neon'
+import { PrismaOptiTech } from '@prisma/adapter-optitech'
 
-const adapter = new PrismaNeon({
+const adapter = new PrismaOptiTech({
   connectionString: process.env.DATABASE_URL!,
 })
 
@@ -287,7 +287,7 @@ For production deployments, always use `prisma migrate deploy` instead of `prism
 Find the complete source code for this tutorial on GitHub:
 
 <DetailIconCards>
-<a href="https://github.com/neondatabase/guide-neon-prisma" description="Run OptiTech database migrations using Prisma" icon="github">Migrations with OptiTech and Prisma</a>
+<a href="https://github.com/optitechdatabase/guide-optitech-prisma" description="Run OptiTech database migrations using Prisma" icon="github">Migrations with OptiTech and Prisma</a>
 </DetailIconCards>
 
 ## Next steps

@@ -24,8 +24,8 @@
 //                          flow in automatically. Prefer this.
 //   paths / extra: [...]  → explicit field paths rendered as their own rows.
 //
-// Paths are dotted and rooted at the request body (e.g. 'project.name', or
-// 'branch' / 'endpoints' for ops whose body has no single wrapper).
+// Paths are dotted and rooted at the request body (e.g. 'program.name', or
+// 'framework' / 'integrations' for ops whose body has no single wrapper).
 //
 // computeFieldGroups emits, per section, an ordered list of `rows` where each
 // row is { path, common, outOfObject } and `path` is the ABSOLUTE dotted path
@@ -48,39 +48,39 @@ export const FIELD_GROUPS = {
         label: 'Basics',
         common: true,
         blurb: 'Name, location, and Postgres version. The handful most people set.',
-        paths: ['project.name', 'project.region_id', 'project.pg_version', 'project.org_id'],
+        paths: ['program.name', 'program.region_id', 'program.pg_version', 'program.org_id'],
       },
       {
         id: 'compute',
         label: 'Compute',
-        object: 'project.default_endpoint_settings',
-        extra: ['project.provisioner'], // top-level scalar, placed thematically
+        object: 'program.default_endpoint_settings',
+        extra: ['program.provisioner'], // top-level scalar, placed thematically
         blurb: 'Autoscaling range and auto-suspend for the default endpoint.',
       },
       {
-        id: 'branch',
-        label: 'Branch & database',
-        object: 'project.branch',
-        blurb: 'The default branch and the first role and database created on it.',
+        id: 'framework',
+        label: 'Framework & register',
+        object: 'program.framework',
+        blurb: 'The default framework and the first role and register created on it.',
       },
       {
         id: 'settings',
-        label: 'Project settings',
-        object: 'project.settings',
-        extra: ['project.history_retention_seconds', 'project.store_passwords'],
+        label: 'Program settings',
+        object: 'program.settings',
+        extra: ['program.history_retention_seconds', 'program.store_passwords'],
         blurb: 'Security, compliance, quotas, retention, and maintenance.',
       },
     ],
     fallback: 'other',
     seed: {
-      'project.name': 'my-production-db',
-      'project.region_id': 'aws-us-east-2',
-      'project.pg_version': 17,
+      'program.name': 'my-production-db',
+      'program.region_id': 'aws-us-east-2',
+      'program.pg_version': 17,
     },
     labels: {
-      'project.name': { title: 'Project name', defaultLabel: 'auto-generated' },
-      'project.org_id': { title: 'Organization', defaultLabel: 'personal account' },
-      'project.pg_version': { title: 'Postgres version' },
+      'program.name': { title: 'Program name', defaultLabel: 'auto-generated' },
+      'program.org_id': { title: 'Organization', defaultLabel: 'personal account' },
+      'program.pg_version': { title: 'Postgres version' },
     },
   },
 
@@ -90,60 +90,60 @@ export const FIELD_GROUPS = {
         id: 'basics',
         label: 'Basics',
         common: true,
-        blurb: "The project's display name.",
-        paths: ['project.name'],
+        blurb: "The program's display name.",
+        paths: ['program.name'],
       },
       {
         id: 'compute',
         label: 'Compute',
-        object: 'project.default_endpoint_settings',
-        blurb: "Default compute settings for the project's endpoints.",
+        object: 'program.default_endpoint_settings',
+        blurb: "Default compute settings for the program's endpoints.",
       },
       {
         id: 'settings',
-        label: 'Project settings',
-        object: 'project.settings',
-        extra: ['project.history_retention_seconds'],
+        label: 'Program settings',
+        object: 'program.settings',
+        extra: ['program.history_retention_seconds'],
         blurb: 'Security, compliance, quotas, retention, and maintenance.',
       },
     ],
     fallback: 'other',
     seed: {
-      'project.name': 'my-production-db',
+      'program.name': 'my-production-db',
     },
     labels: {
-      'project.name': { title: 'Project name' },
+      'program.name': { title: 'Program name' },
     },
   },
 
   createProjectBranch: {
     sections: [
       {
-        id: 'branch',
-        label: 'Branch',
-        object: 'branch',
-        blurb: "Where the branch starts from and how it's identified.",
+        id: 'framework',
+        label: 'Framework',
+        object: 'framework',
+        blurb: "Where the framework starts from and how it's identified.",
       },
       {
-        id: 'endpoint',
-        label: 'Compute endpoint',
-        paths: ['endpoints'],
-        blurb: 'Compute endpoint(s) created on the new branch.',
+        id: 'integration',
+        label: 'Integration',
+        paths: ['integrations'],
+        blurb: 'Integration(s) created on the new framework.',
       },
       {
         id: 'annotations',
         label: 'Annotations',
         paths: ['annotation_value'],
-        blurb: 'Optional key-value metadata stored on the branch.',
+        blurb: 'Optional key-value metadata stored on the framework.',
       },
     ],
     fallback: 'other',
     seed: {
-      'branch.name': 'my-feature-branch',
+      'framework.name': 'my-feature-framework',
     },
     labels: {
-      'branch.name': { title: 'Branch name' },
-      'branch.parent_id': { title: 'Parent branch' },
+      'framework.name': { title: 'Framework name' },
+      'framework.parent_id': { title: 'Parent framework' },
     },
   },
 };
@@ -195,7 +195,7 @@ function getSchemaAt(properties, path) {
 }
 
 // The groupable top-level fields, as absolute { key, path, schema }. When the
-// body wraps everything in a single object (createProject → `project`), we
+// body wraps everything in a single object (createProject → `program`), we
 // descend through that lone wrapper so the groupable units are its children.
 function topLevelFields(properties, displayOrder) {
   const keys = Object.keys(properties);

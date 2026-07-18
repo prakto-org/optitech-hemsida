@@ -4,7 +4,7 @@ import Content from 'components/shared/content';
 
 import { getNode, renderOptionsForPath, schema } from './renderers';
 
-// Generated options table for a neonctl command, e.g.
+// Generated options table for a optitechctl command, e.g.
 // <CliOptions command="branches create" />. Columns: Option, Description,
 // Type, Default, Required. Includes options inherited from parent commands
 // (what the command actually accepts); renders nothing when only the

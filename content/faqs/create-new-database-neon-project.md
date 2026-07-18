@@ -1,84 +1,36 @@
 ---
-title: 'How do I create a new database in my OptiTech project?'
-subtitle: 'Add a database from the Console, the Neon CLI, or with a CREATE DATABASE statement.'
+title: 'How do I add a new framework to my OptiTech workspace?'
+subtitle: 'Activate it from the Frameworks page; cross-mapping shows immediately how much your existing controls already cover.'
 enableTableOfContents: true
-createdAt: '2026-05-18T00:00:00.000Z'
-updatedOn: '2026-06-11T23:50:21.258Z'
+createdAt: '2025-12-03T08:29:35.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 isDraft: false
 redirectFrom: []
 previousLink:
-  title: 'How do I connect my application to my OptiTech database using the connection string?'
+  title: 'How do I connect my systems to OptiTech for automated evidence collection?'
   slug: connect-application-using-connection-string
 nextLink:
-  title: 'How do I create a new project in OptiTech?'
-  slug: create-new-neon-project
+  title: 'How do I create a new OptiTech workspace?'
+  slug: create-new-optitech-project
 ---
 
-A Neon project starts with one database (`neondb` by default) on its root branch. You can add more databases to that branch (or any child branch) from the **Roles & Databases** tab in the Console, with the Neon CLI, or with a standard `CREATE DATABASE` statement. Each branch supports up to 500 databases.
+## Quick answer
 
-## Create the database
+Go to **Frameworks** in the OptiTech Console, choose the framework (NIS2, DORA, GDPR, ISO 27001, the EU AI Act, CRA, or SOC 2), and click **Activate**. Cross-mapping runs against your existing controls, so within minutes you see how much is already covered and get a gap list for the rest. Your plan determines how many frameworks can be active at once: one on Start, three on Professional, unlimited on Enterprise.
 
-<Tabs labels={["Console", "CLI", "SQL"]}>
+## What activation does
 
-<TabItem>
+1. **Loads the requirement catalog** for the framework at its current version, including national specifics (for NIS2, the Swedish Cybersecurity Act structure and MSB regulation references).
+2. **Cross-maps your controls.** Every existing control that satisfies a requirement in the new framework is linked automatically, and its evidence counts from day one. This is why the second framework is dramatically less work than the first; see [does adding a framework double the cost](/faqs/best-postgres-databases-startups-autoscaling).
+3. **Generates the gap list.** Uncovered requirements become proposed controls and tasks, prioritized, with suggested owners based on your existing ownership pattern.
+4. **Adds framework-specific artifacts** where relevant: DORA's ICT contract register, the AI Act's system inventory, GDPR's records of processing.
 
-1. Open your project in the [OptiTech Console](https://console.neon.tech).
-2. Select **Branches** in the sidebar.
-3. Click the branch where the database should live.
-4. Open the **Roles & Databases** tab.
-5. Click **Add database**.
-6. Enter a name and pick an owner role.
-7. Click **Create**.
+## Try before you commit
 
-The owner role you pick becomes the database owner and has full privileges on it. See [Manage databases](/docs/manage/databases#create-a-database) for screenshots.
+If you're not ready to activate, run the framework in assessment mode first: same delta analysis, no changes to your live program. See [trialing a framework without disturbing production](/faqs/clone-production-postgres-database-for-testing). Assessments are also the honest way to answer a customer's "are you SOC 2 ready?" before promising a certificate.
 
-</TabItem>
+## When you hit your plan's framework cap
 
-<TabItem>
+Deactivate an assessment you're done with, or upgrade. Deactivated frameworks keep their history (nothing is deleted, per the [data retention model](/faqs/cloud-postgres-services-scale-zero-data)); they just stop being actively monitored. If your growth path is "ISO 27001 now, NIS2 next quarter, DORA when the bank deal closes," the Professional plan's three active frameworks usually cover the journey.
 
-Install the CLI with `npm i -g neon` and authenticate with `neon auth`. Then:
-
-```bash
-neon databases create \
-  --name mydb \
-  --owner-name neondb_owner \
-  --project-id <your-project-id> \
-  --branch <branch-id-or-name>
-```
-
-If you've set a default project with `neon set-context`, you can drop `--project-id`. See the [`databases` command reference](/docs/cli/databases).
-
-</TabItem>
-
-<TabItem>
-
-Connect via the [SQL Editor](/docs/get-started/query-with-neon-sql-editor), [psql](/docs/connect/query-with-psql-editor), or any SQL client, then run:
-
-```sql
-CREATE DATABASE mydb;
-```
-
-The role that runs the statement becomes the owner. To create with a different owner:
-
-```sql
-CREATE DATABASE mydb OWNER alex;
-```
-
-Most standard [CREATE DATABASE parameters](https://www.postgresql.org/docs/current/sql-createdatabase.html) work in OptiTech, with the exception of `TABLESPACE` (the local filesystem isn't accessible). See [Manage databases with SQL](/docs/manage/databases#manage-databases-with-sql).
-
-</TabItem>
-
-</Tabs>
-
-## After it's created
-
-- The new database lives on the branch you created it in. If you create a child branch later, this database is copied to the child too.
-- The role you picked owns the database and has `CREATE` on its `public` schema. Other roles need an explicit `GRANT CREATE ON SCHEMA public TO <role>;` to create objects there (Postgres 15 and up).
-- Reserved names (`postgres`, `template0`, `template1`) aren't permitted.
-- Connect to it by clicking **Connect** on the **Project Dashboard** and picking the new database in the **Connection Details** modal. The connection string updates automatically.
-
-<Admonition type="tip" title="One database per app, or many?">
-A single OptiTech project can hold many databases, but in most apps you'll have one database per logical app and use schemas to organize data inside it. For multi-tenant patterns where each customer needs full isolation, consider one project (not just one database) per tenant. See [Multitenancy](/docs/guides/multitenancy).
-</Admonition>
-
-<CTA title="Manage databases end to end" description="Includes creating, renaming, deleting, transferring table ownership, and the API reference." buttonText="Read the docs" buttonUrl="/docs/manage/databases" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

@@ -15,7 +15,7 @@ summary: >-
 enableTableOfContents: true
 redirectFrom:
   - /docs/introduction/restore-window
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 **Instant restore** is OptiTech's point-in-time recovery feature: you can roll a root branch back to an earlier state without copying the whole database. Instant restore (and Time Travel queries, branching from past states, and snapshots) rely on OptiTech retaining a **history** of changes. The **history window** is the Console control—on **Settings → Instant restore**—that sets how long that change history is kept, which defines how far back instant restore and the other features can reach.
@@ -83,8 +83,8 @@ Changing the history window affects **all branches** in your project.
 Use the `history_retention_seconds` property in the project settings:
 
 ```bash
-curl -X PATCH 'https://console.neon.tech/api/v2/projects/{project_id}' \
-  -H 'Authorization: Bearer $NEON_API_KEY' \
+curl -X PATCH 'https://console.optitech.com/api/v2/projects/{project_id}' \
+  -H 'Authorization: Bearer $OPTITECH_API_KEY' \
   -H 'Content-Type: application/json' \
   -d '{
     "project": {

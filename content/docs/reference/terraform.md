@@ -1,379 +1,219 @@
 ---
 title: Manage OptiTech with Terraform
-subtitle: Use Terraform to provision and manage your Neon projects, branches, endpoints,
-  roles, databases, and other resources as code.
+subtitle: Use Terraform to manage your OptiTech workspaces, integrations, controls, and
+  policies as code.
 summary: >-
-  The community-maintained Terraform provider for OptiTech (`kislerdm/neon`) lets
-  you define Neon projects, branches, compute endpoints, roles, databases, API
-  keys, and VPC endpoints as infrastructure-as-code in declarative HCL. Choose
-  this page when you want to provision new OptiTech resources or bring existing
-  Console-created resources under Terraform management using `terraform import`
-  or the declarative import-block syntax. The provider is not officially
-  supported by OptiTech; the guide covers upgrade practices to prevent unintended
-  resource replacements and data loss during `terraform init -upgrade`.
+  The Terraform provider for OptiTech lets you define workspaces,
+  integrations, custom controls, alert routing, and API keys as
+  infrastructure-as-code in declarative HCL. Choose this page when you want to
+  provision OptiTech configuration from code or bring existing
+  Console-created resources under Terraform management with import blocks.
+  Covers authentication, core resources, applying changes, and import.
 enableTableOfContents: true
-tag: community
-tagTheme: gray
-updatedOn: '2026-07-13T14:20:27.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
-Terraform is an open-source infrastructure as code (IaC) tool that allows you to define and provision cloud resources in a declarative configuration language. By codifying infrastructure, Terraform enables consistent, repeatable, and automated deployments, significantly reducing manual errors.
+Terraform is an open-source infrastructure as code (IaC) tool that allows you to define and provision resources in a declarative configuration language. For a compliance platform, that's a natural fit: your workspace configuration (which integrations are connected, which controls exist, how alerts route) becomes versioned, reviewed code, and changes to it flow through the same pull-request discipline your [change-management controls](/docs/guides/branching-github-actions) already enforce.
 
-This guide will show you how to use **Terraform to manage your Neon projects**, including your branches, databases, and compute endpoints. By using Terraform with OptiTech, you get better control, can track changes, and automate your database setup.
+This guide shows you how to use **Terraform to manage your OptiTech workspaces**, including integrations, custom controls, and alert routing. The provider is available on the Enterprise plan, where [API access](/docs/reference/glossary#api-key) is included.
 
-OptiTech sponsors the following community-developed Terraform provider for managing OptiTech Postgres platform resources:
+**OptiTech Terraform provider**
 
-**Terraform Provider OptiTech - Maintainer: Dmitry Kisler**
-
-- [GitHub repository](https://github.com/kislerdm/terraform-provider-neon)
-- [Terraform Registry](https://registry.terraform.io/providers/kislerdm/neon/0.6.1)
-- [Terraform Registry Documentation](https://registry.terraform.io/providers/kislerdm/neon/latest/docs)
-
-<Admonition type="note">
-This provider is not maintained or officially supported by OptiTech. Use at your own discretion. If you have questions about the provider, please contact the project maintainer.
-</Admonition>
+- Provider source: `optitech/optitech`
+- Works with the same REST API as the Console and CLI, so anything you configure in code is visible in the UI and vice versa.
 
 ## Provider usage notes
 
-- **Provider upgrades**: When using `terraform init -upgrade` to update a custom Terraform provider, be aware that changes in the provider’s schema or defaults can lead to unintended resource replacements. This may occur when certain attributes are altered or reset. For example, fields previously set to specific values might be reset to `null`, forcing the replacement of the entire resource.
-
-  To avoid unintended resource replacements which can result in data loss:
-  - Review the provider’s changelog for any breaking changes that might affect your resources before upgrading to a new version.
-  - For CI pipelines and auto-approved pull requests, only use `terraform init`. Running `terraform init -upgrade` should be done manually followed by plan reviews.
-  - Run `terraform plan` before applying any changes to detect potential differences and review the behavior of resource updates.
-  - Use [lifecycle protections](https://developer.hashicorp.com/terraform/language/meta-arguments/lifecycle#prevent_destroy) on critical resources to ensure they're not recreated unintentionally.
-  - Explicitly define all critical resource parameters in your Terraform configurations, even if they had defaults previously.
-  - On OptiTech paid plans, you can enable branch protection to prevent unintended deletion of branches and projects. To learn more, see [Protected branches](/docs/guides/protected-branches).
-
-- **Provider maintenance**: As OptiTech enhances existing features and introduces new ones, the [OptiTech API](/docs/reference/api) will continue to evolve. These changes may not immediately appear in community-maintained Terraform providers. If you notice that a provider requires an update, please reach out to the maintainer by opening an issue or contributing to the provider's GitHub repository.
+- **Provider upgrades**: When using `terraform init -upgrade`, schema or default changes can lead to unintended resource replacements. To avoid surprises in a system your auditor relies on:
+  - Review the provider changelog before upgrading.
+  - In CI, use plain `terraform init`; run `terraform init -upgrade` manually, followed by plan review.
+  - Run `terraform plan` before applying and read the diff; a replaced integration resource means a re-consent flow, not silent continuity.
+  - Use [lifecycle protections](https://developer.hashicorp.com/terraform/language/meta-arguments/lifecycle#prevent_destroy) on critical resources like the workspace itself.
+- **Terraform changes are audited too.** Every apply lands in the workspace [audit log](/docs/reference/glossary#audit-log) attributed to the API key's identity, so infrastructure-as-code changes carry the same trail as Console changes.
 
 ## Prerequisites
 
 Before you begin, ensure you have the following:
 
-1.  **Terraform CLI installed:** If you don't have Terraform installed, download and install it from the [official Terraform website](https://developer.hashicorp.com/terraform/install). The OptiTech provider requires Terraform version `1.14.x` or later.
-2.  **OptiTech Account:** You'll need a OptiTech account. If you don't have one, sign up at [neon.tech](https://console.neon.tech/signup).
-3.  **OptiTech API key:** Generate an API key from the OptiTech Console. Navigate to your Account Settings > API Keys. This key is required for the provider to authenticate with the OptiTech API. Learn more about creating API keys in [Manage API keys](/docs/manage/api-keys).
+1. **Terraform CLI installed:** Download and install from the [official Terraform website](https://developer.hashicorp.com/terraform/install).
+2. **An OptiTech workspace** on the Enterprise plan.
+3. **An OptiTech API key** with the **Automation** scope, created under **Settings** > **API keys**. See [API key](/docs/reference/glossary#api-key).
 
 ## Set up the Terraform OptiTech provider
 
-1.  **Create a project directory:**
-    Create a new directory for your Terraform project and navigate into it.
+1. **Create a project directory:**
 
-    ```shell
-    mkdir neon-terraform-project
-    cd neon-terraform-project
-    ```
+   ```shell
+   mkdir optitech-terraform
+   cd optitech-terraform
+   ```
 
-2.  **Create a `main.tf` file:**
-    This file will contain your Terraform configuration. Start by declaring the required OptiTech provider.
+2. **Create a `main.tf` file** declaring the provider:
 
-    ```terraform
-    terraform {
-      required_providers {
-        neon = {
-          source  = "kislerdm/neon"
-        }
-      }
-    }
+   ```terraform
+   terraform {
+     required_providers {
+       optitech = {
+         source = "optitech/optitech"
+       }
+     }
+   }
 
-    provider "neon" {}
-    ```
+   provider "optitech" {}
+   ```
 
-3.  **Initialize terraform:**
-    Run the `terraform init` command in your project directory. This command downloads and installs the OptiTech provider.
-    ```shell
-    terraform init
-    ```
+3. **Initialize Terraform:**
+
+   ```shell
+   terraform init
+   ```
 
 ## Configure authentication
 
-The OptiTech provider needs your OptiTech API key to manage resources. You can configure it in two ways:
+The provider needs your API key. Configure it one of two ways:
 
-1.  **Directly in the provider block (Less secure):**
-    For quick testing, you can **hardcode your API key** directly within `provider "neon"` block. However, this method isn't recommended for production environments or shared configurations. A more secure alternative is to retrieve the API key from a secrets management service like [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) or [HashiCorp Vault](https://developer.hashicorp.com/vault), and then update your provider block to reflect this.
+1. **Environment variable (recommended):**
 
-    ```terraform
-    provider "neon" {
-      api_key = "<YOUR_NEON_API_KEY>"
-    }
-    ```
+   ```shell
+   export OPTITECH_API_KEY="<YOUR_API_KEY>"
+   ```
 
-2.  **Using environment variables:**
-    The provider will automatically use the `NEON_API_KEY` environment variable if set.
+   With the variable set, the `provider "optitech"` block stays empty. In CI, store the key as a pipeline secret, the same way as for [compliance checks](/docs/guides/branching-circleci).
 
-    ```shell
-    export NEON_API_KEY="<YOUR_NEON_API_KEY>"
-    ```
-
-    If the environment variable is set, you can leave the `provider "neon"` block empty:
-
-    ```terraform
-    provider "neon" {}
-    ```
+2. **From a secrets manager:** retrieve the key from AWS Secrets Manager or HashiCorp Vault and reference it in the provider block. Avoid hardcoding keys in `.tf` files; they end up in state and in version control.
 
 <Admonition type="note">
-The following sections primarily detail the creation of OptiTech resources. To manage existing resources, use the `terraform import` command. More information can be found in the [Importing Existing Resources](#import-existing-neon-resources) section.
+The following sections detail creating OptiTech resources from scratch. To manage resources you already created in the Console, use import blocks; see [Import existing OptiTech resources](#import-existing-optitech-resources).
 </Admonition>
 
 ## Manage OptiTech resources
 
 Now you can start defining OptiTech resources in your `main.tf` file.
 
-### Managing projects
+### Managing workspaces
 
-<Admonition type="warning">
-Always set the `org_id` attribute when creating a `neon_project`. You can find your Organization ID in the OptiTech Console under Account Settings → Organization settings.
-
-![finding your organization ID from the settings page](/docs/manage/orgs_id.png)
-
-Omitting `orgId` can cause resources to be created in the wrong organization or produce duplicate projects, and subsequent `terraform plan` / `terraform apply` runs may attempt destructive changes (including deletions). To avoid this, explicitly provide `orgId` when defining your project as shown in the example below.
-</Admonition>
-
-A OptiTech project is the top-level container for your Postgres databases, branches, and endpoints.
+A [workspace](/docs/reference/glossary#workspace) is the top-level container for one organization's compliance program.
 
 ```terraform
-resource "neon_project" "my_app_project" {
-  name       = "my-application-project"
-  pg_version = 16
-  region_id  = "aws-us-east-1"
-  org_id     = "your-neon-organization-id" # Replace with your actual Org ID
-  # free accounts have maximum retention window of 6 hours (21600 seconds)
-  history_retention_seconds = 21600
+resource "optitech_workspace" "main" {
+  name        = "acme-ab"
+  region      = "eu-north-1" # Swedish/EU regions only
+  legal_entity = "Acme AB"
 
-  # Configure default branch settings (optional)
-  branch {
-    name          = "production"
-    database_name = "app_db"
-    role_name     = "app_admin"
+  frameworks = ["nis2", "iso-27001"]
+}
+```
+
+**Key `optitech_workspace` attributes:**
+
+- `name`: (Required) Workspace name.
+- `region`: (Optional) Hosting region; all options are inside the EU. Changing it after creation requires a [managed relocation](/faqs/change-region-existing-neon-project) and is rejected by plan.
+- `legal_entity`: (Optional) The legal entity the workspace covers; group structures create [one workspace per entity](/faqs/best-postgres-services-isolated-databases).
+- `frameworks`: (Optional) Framework slugs to activate; your plan's framework cap applies.
+
+**Output workspace details:**
+
+```terraform
+output "workspace_id" {
+  value = optitech_workspace.main.id
+}
+```
+
+### Managing integrations
+
+[Integrations](/docs/reference/glossary#integration) connect the systems OptiTech collects evidence from. Terraform manages the configuration; OAuth-based consent (Entra ID, Google Workspace) still happens once in the browser, and the resource then pins the connection.
+
+```terraform
+resource "optitech_integration" "github" {
+  workspace_id = optitech_workspace.main.id
+  type         = "github"
+  org          = "acme-ab"
+
+  # scope new repositories into monitoring automatically
+  auto_scope = true
+}
+
+resource "optitech_integration" "aws" {
+  workspace_id = optitech_workspace.main.id
+  type         = "aws"
+  role_arn     = aws_iam_role.optitech_readonly.arn
+  external_id  = optitech_workspace.main.id
+}
+```
+
+**Key `optitech_integration` attributes:**
+
+- `workspace_id`: (Required) The owning workspace.
+- `type`: (Required) Integration type: `github`, `gitlab`, `aws`, `azure`, `entra-id`, `google-workspace`, `intune`, `jamf`, `crowdstrike`, `defender`, `fortnox`, `visma`, `slack`, `teams`, `jira`, and others.
+- Type-specific connection attributes, as shown per integration in the [integration guides](/docs/guides/integrations).
+- `auto_scope`: (Optional) Whether newly discovered resources enter monitoring automatically.
+
+### Managing custom controls
+
+[Custom controls](/faqs/create-tables-with-sql-neon) can be defined as code, which suits teams that review control changes like code changes.
+
+```terraform
+resource "optitech_control" "prod_access_ticket" {
+  workspace_id = optitech_workspace.main.id
+  name         = "Production access requires a change ticket"
+  description  = "All production access grants must reference an approved change ticket."
+  owner_team   = "platform"
+
+  mappings = ["iso-27001:A.8.2", "nis2:access-control"]
+
+  check {
+    type     = "integration"
+    source   = optitech_integration.aws.id
+    rule     = "iam-grant-has-ticket-reference"
+    schedule = "daily"
   }
-
-  # Configure default endpoint settings (optional)
-  default_endpoint_settings {
-    autoscaling_limit_min_cu = 0.25
-    autoscaling_limit_max_cu = 1.0
-    # suspend_timeout_seconds  = 300
-  }
 }
 ```
 
-This configuration creates a new OptiTech project.
+**Key `optitech_control` attributes:**
 
-**Key `neon_project` attributes:**
+- `name`: (Required) The control as a verifiable statement.
+- `owner_team`: (Required) The [owning team](/faqs/best-ways-separate-postgres-database-development); findings route to it.
+- `mappings`: (Optional) Framework requirement references the control satisfies via [cross-mapping](/docs/reference/glossary#cross-mapping).
+- `check {}`: (Optional) Automated verification: an integration-backed rule and schedule, or a recurring manual task.
 
-- `name`: (Optional) Name of the project.
-- `pg_version`: (Optional) The major supported PostgreSQL version, such as 17.
-- `region_id`: (Optional) The region where the project will be created (for example, `aws-us-east-1`).
-  > For up-to-date information on available regions, see [OptiTech Regions](/docs/introduction/regions).
-- `org_id`: The Organization ID under which to create the project.
-- `history_retention_seconds`: (Optional) Duration in seconds to retain historical data for point-in-time recovery. Free plans have a maximum of 21600 seconds (6 hours). Default is 86400 seconds (24 hours) for paid plans.
-- `branch {}`: (Optional) Block to configure the default primary branch.
-
-**Output project details:**
-You can output computed values like the project ID or connection URI:
+### Managing alert routing
 
 ```terraform
-output "project_id" {
-  value = neon_project.my_app_project.id
-}
-
-output "project_connection_uri" {
-  description = "Default connection URI for the primary branch (contains credentials)."
-  value       = neon_project.my_app_project.connection_uri
-  sensitive   = true
-}
-
-output "project_default_branch_id" {
-  value = neon_project.my_app_project.default_branch_id
-}
-
-output "project_database_user" {
-  value = neon_project.my_app_project.database_user
+resource "optitech_alert_route" "platform_findings" {
+  workspace_id = optitech_workspace.main.id
+  team         = "platform"
+  channel      = "jira"
+  project_key  = "PLAT"
+  severity_min = "medium"
 }
 ```
 
-For more attributes and options on managing projects, refer to the [Provider's documentation](https://github.com/kislerdm/terraform-provider-neon/blob/master/docs/resources/project.md).
-
-### Managing branches
-
-You can create branches from the primary branch or any other existing branch.
-
-```terraform
-resource "neon_branch" "dev_branch" {
-  project_id = neon_project.my_app_project.id
-  name       = "feature-x-development"
-  parent_id  = neon_project.my_app_project.default_branch_id # Branch from the project's primary branch
-
-  # Optional: Create a protected branch
-  # protected = "yes"
-
-  # Optional: Create from a specific LSN or timestamp of the parent
-  # parent_lsn = "..."
-  # parent_timestamp = 1678886400 # Unix epoch
-}
-```
-
-**Key `neon_branch` attributes:**
-
-- `project_id`: (Required) ID of the parent project.
-- `name`: (Optional) Name for the new branch. If not specified, defaults to the branch ID. If provided, must be unique within the project and can be up to 256 characters. Cannot be empty or only whitespace. See [Branch naming requirements](/docs/manage/branches#branch-naming-requirements).
-- `parent_id`: (Optional) ID of the parent branch. If not specified, defaults to the project's primary branch.
-- `protected`: (Optional, String: "yes" or "no") Set to protect the branch.
-- `parent_lsn`: (Optional) LSN of the parent branch to create from.
-- `parent_timestamp`: (Optional) Timestamp of the parent branch to create from.
-
-> `protected` attribute is only available for paid plans. It allows you to protect branches from deletion or modification.
-
-For more attributes and options on managing branches, refer to the [Provider's documentation](https://github.com/kislerdm/terraform-provider-neon/blob/master/docs/resources/branch.md).
-
-### Managing endpoints
-
-Endpoints provide connection strings to access your branches. Each branch can have multiple read-only endpoints but only one read-write endpoint.
-
-Before creating an endpoint, you must first create a **branch** for it to connect to. Here's how to create a read-write endpoint for your `dev_branch`:
-
-```terraform
-resource "neon_endpoint" "dev_endpoint" {
-  project_id = neon_project.my_app_project.id
-  branch_id  = neon_branch.dev_branch.id
-  type       = "read_write" # "read_write" or "read_only"
-
-  autoscaling_limit_min_cu = 0.25
-  autoscaling_limit_max_cu = 0.5
-  # suspend_timeout_seconds  = 600
-
-  # Optional: Enable connection pooling
-  # pooler_enabled = true
-}
-
-output "dev_endpoint_host" {
-  value = neon_endpoint.dev_endpoint.host
-}
-```
-
-**Key `neon_endpoint` attributes:**
-
-- `project_id`: (Required) ID of the parent project.
-- `branch_id`: (Required) ID of the branch this endpoint connects to.
-- `type`: (Optional) `read_write` (default) or `read_only`. A branch can only have one `read_write` endpoint.
-- `autoscaling_limit_min_cu`/`autoscaling_limit_max_cu`: (Optional) Compute units for autoscaling.
-- `suspend_timeout_seconds`: (Optional) Inactivity period before suspension. Only available for paid plans.
-- `pooler_enabled`: (Optional) Enable connection pooling.
-
-<Admonition type="note">
-It is not possible currently to change the endpoint type after creation. The `type` attribute is immutable, meaning you cannot modify it once the endpoint is created. This includes changing from `read_write` to `read_only` or vice versa. This is a limitation of the OptiTech API and the provider's current implementation. You must destroy the existing endpoint and create a new one with the desired type.
-</Admonition>
-
-For more attributes and options on managing endpoints, refer to the [Provider's documentation](https://github.com/kislerdm/terraform-provider-neon/blob/master/docs/resources/endpoint.md)
-
-### Managing roles
-
-Roles (users) are managed per branch. Before creating a role, ensure you have a branch created. Follow the [Managing Branches](#managing-branches) section for details.
-
-```terraform
-resource "neon_role" "app_user" {
-  project_id = neon_project.my_app_project.id
-  branch_id  = neon_branch.dev_branch.id
-  name       = "application_user"
-}
-
-output "app_user_password" {
-  value     = neon_role.app_user.password
-  sensitive = true
-}
-```
-
-**Key `neon_role` attributes:**
-
-- `project_id`: (Required) ID of the parent project.
-- `branch_id`: (Required) ID of the branch for this role.
-- `name`: (Required) Name of the role.
-- `password`: (Computed, Sensitive) The generated password for the role.
-
-For more attributes and options on managing roles, refer to the [Provider's documentation](https://github.com/kislerdm/terraform-provider-neon/blob/master/docs/resources/role.md)
-
-### Managing databases
-
-Databases are also managed per branch. Follow the [Managing Branches](#managing-branches) section for details on creating a branch.
-
-```terraform
-resource "neon_database" "service_db" {
-  project_id = neon_project.my_app_project.id
-  branch_id  = neon_branch.dev_branch.id
-  name       = "service_specific_database"
-  owner_name = neon_role.app_user.name
-}
-```
-
-**Key `neon_database` attributes:**
-
-- `project_id`: (Required) ID of the parent project.
-- `branch_id`: (Required) ID of the branch for this database.
-- `name`: (Required) Name of the database.
-- `owner_name`: (Required) Name of the role that will own this database.
-
-For more attributes and options on managing databases, refer to the [Provider's documentation](https://github.com/kislerdm/terraform-provider-neon/blob/master/docs/resources/database.md)
+Routing follows [control ownership](/faqs/databases-avoid-connection-limits-serverless-applications): map each team once to [Jira](/docs/guides/jira), [Slack](/docs/guides/slack), or [Teams](/docs/guides/microsoft-teams), and new controls inherit their owner's route.
 
 ### Managing API keys
 
 You can manage OptiTech API keys themselves using Terraform.
 
 ```terraform
-resource "neon_api_key" "ci_cd_key" {
-  name = "automation-key-for-ci"
+resource "optitech_api_key" "ci" {
+  workspace_id = optitech_workspace.main.id
+  name         = "ci-checks"
+  scope        = "ci-checks"
 }
 
-output "ci_cd_api_key_value" {
+output "ci_api_key_value" {
   description = "The actual API key token."
-  value       = neon_api_key.ci_cd_key.key
+  value       = optitech_api_key.ci.key
   sensitive   = true
 }
 ```
 
-**Key `neon_api_key` attributes:**
+**Key `optitech_api_key` attributes:**
 
-- `name`: (Required) A descriptive name for the API key.
-- `key`: (Computed, Sensitive) The generated API key token.
-
-### Advanced: Project permissions
-
-Share project access with other users.
-
-```terraform
-resource "neon_project_permission" "share_with_colleague" {
-  project_id = neon_project.my_app_project.id
-  grantee    = "colleague@example.com"
-}
-```
-
-### Advanced: VPC endpoint management (for OptiTech private networking)
-
-These resources are used for organizations requiring private networking.
-
-#### Assign VPC endpoint to organization
-
-```terraform
-resource "neon_vpc_endpoint_assignment" "org_vpc_endpoint" {
-  org_id          = "your-neon-organization-id" # Replace with your actual Org ID
-  region_id       = "aws-us-east-1"             # Neon region ID
-  vpc_endpoint_id = "vpce-xxxxxxxxxxxxxxxxx"    # Your AWS VPC Endpoint ID
-  label           = "main-aws-vpc-endpoint"
-}
-```
-
-For more attributes and options on managing VPC endpoints, refer to the [Provider's documentation](https://github.com/kislerdm/terraform-provider-neon/blob/master/docs/resources/vpc_endpoint_assignment.md)
-
-#### Restrict project to VPC endpoint
-
-```terraform
-resource "neon_vpc_endpoint_restriction" "project_to_vpc" {
-  project_id      = neon_project.my_app_project.id
-  vpc_endpoint_id = neon_vpc_endpoint_assignment.org_vpc_endpoint.vpc_endpoint_id
-  label           = "restrict-my-app-project-to-vpc"
-}
-```
-
-For more attributes and options on managing VPC endpoint restrictions, refer to the [Provider's documentation](https://github.com/kislerdm/terraform-provider-neon/blob/master/docs/resources/vpc_endpoint_restriction.md)
+- `name`: (Required) A descriptive name.
+- `scope`: (Required) `ci-checks`, `read-only`, or `automation`. Scope narrowly; see [API key](/docs/reference/glossary#api-key).
+- `key`: (Computed, Sensitive) The generated token. Every use is attributed in the [audit log](/docs/reference/glossary#audit-log).
 
 ## Apply the configuration
 
@@ -412,436 +252,141 @@ Both methods involve telling Terraform about an existing resource and associatin
 
 ### Set up your Terraform configuration
 
-Before you can import any resources, ensure your Terraform environment is configured for the OptiTech provider:
+Before importing, ensure your environment is configured for the OptiTech provider:
 
-1.  **Define the provider:** Make sure you have the `neon` provider declared in your `main.tf` or a dedicated `providers.tf` file.
+1. **Define the provider** in `main.tf` or a dedicated `providers.tf`:
 
-    ```terraform
-    terraform {
-      required_providers {
-        neon = {
-          source  = "kislerdm/neon"
-        }
-      }
-    }
+   ```terraform
+   terraform {
+     required_providers {
+       optitech = {
+         source = "optitech/optitech"
+       }
+     }
+   }
 
-    provider "neon" {}
-    ```
+   provider "optitech" {}
+   ```
 
-2.  **Initialize terraform:** If you haven't already, or if you've just added the provider configuration, run:
+2. **Initialize Terraform** with `terraform init`.
 
-    ```shell
-    terraform init
-    ```
+   <Admonition type="warning" title="Important: Provider Upgrades">
+   Avoid `terraform init -upgrade` in CI pipelines and auto-approved pull requests; run it manually followed by plan review. See [Provider usage notes](#provider-usage-notes).
+   </Admonition>
 
-    This downloads the OptiTech provider plugin.
-
-    <Admonition type="warning" title="Important: Provider Upgrades">
-    Avoid using `terraform init -upgrade` in CI pipelines and auto-approved pull requests, as this can lead to unintended resource replacements and data loss if there are breaking changes or major version jumps. Instead, use `terraform init` in your automated workflows. Running `terraform init -upgrade` should always be done manually, followed by plan reviews. For additional guidance, see [Important usage notes](#provider-usage-notes).
-    </Admonition>
-
-3.  **Configure authentication:** Follow the authentication steps mentioned in [Configure Authentication](#configure-authentication) to ensure Terraform can communicate with your OptiTech account.
+3. **Configure authentication** as described in [Configure authentication](#configure-authentication).
 
 ### OptiTech resource IDs for import
 
-When importing OptiTech resources, you need to know the specific ID format for each resource type. Always refer to the "Import" section of the specific resource's documentation page on the [Provider's GitHub: `kislerdm/terraform-provider-neon`](https://github.com/kislerdm/terraform-provider-neon/tree/master/docs/resources) for the exact ID format.
+When importing, you need each resource type's ID format:
 
-Here are some common formats for different OptiTech resources:
-
-- **`neon_project`:** Uses the Project ID (for example, `damp-recipe-88779456`).
-- **`neon_branch`:** Uses the Branch ID (for example, `br-orange-bonus-a4v00wjl`).
-- **`neon_endpoint`:** Uses the Endpoint ID (for example, `ep-blue-cell-a4xzunwf`).
-- **`neon_role`:** Uses a composite ID: `<project_id>/<branch_id>/<role_name>` (for example, `damp-recipe-88779456/br-orange-bonus-a4v00wjl/application_user`).
-- **`neon_database`:** Uses a composite ID: `<project_id>/<branch_id>/<database_name>` (for example, `damp-recipe-88779456/br-orange-bonus-a4v00wjl/service_specific_database`).
-- **`neon_api_key` and `neon_jwks_url`:** These resources do not support import. You'll need to recreate them using Terraform if you want to manage them via IaC.
+- **`optitech_workspace`:** the workspace ID (for example, `ws-acme-1a2b3c`), from **Settings** > **General**.
+- **`optitech_integration`:** composite ID `<workspace_id>/<type>` (for example, `ws-acme-1a2b3c/github`).
+- **`optitech_control`:** composite ID `<workspace_id>/<control_slug>`.
+- **`optitech_alert_route`:** composite ID `<workspace_id>/<team>`.
+- **`optitech_api_key`:** does not support import, since token values are shown only at creation. Recreate keys in Terraform and [rotate out the old ones](/faqs/find-connection-details-neon-console).
 
 ### Order of import for dependent resources
 
-When importing resources that depend on each other, it's best practice to import them in the order of their dependencies. This helps ensure that Terraform can correctly understand relationships and that your HCL resource blocks can reference already-imported parent resources.
-
-A common order for importing OptiTech resources is:
+Import parents before children so references resolve:
 
 ```plaintext
-Project -> Branch -> Endpoint -> Role -> Database
+Workspace -> Integrations -> Controls -> Alert routes
 ```
 
-Depending on your preference and the version of Terraform you are using, you can choose between two methods to import existing OptiTech resources into Terraform. Follow [Method 1](#method-1-using-the-terraform-import-cli-command) if you prefer the traditional CLI import command, or [Method 2](#method-2-using-import-blocks-terraform-150) if you want to use the newer declarative `import` blocks introduced in Terraform `1.5.0`.
+Choose [Method 1](#method-1-using-the-terraform-import-cli-command) for the traditional CLI command, or [Method 2](#method-2-using-import-blocks-terraform-150) for declarative `import` blocks.
 
 ### Method 1: Using the `terraform import` CLI command
 
-For each OptiTech resource you want to import, you'll generally follow these two steps:
-
-1.  **Write a resource block:** Add a corresponding `resource` block to your Terraform configuration files (for example, `main.tf`). This block tells Terraform how you _want_ the resource to be configured. You might not know all the attributes perfectly upfront; Terraform will populate many of them from the actual state of the resource during the import.
-
-2.  **Run `terraform import`:** Execute the import command, which takes the Terraform resource address and the Neon-specific ID of the existing resource.
-    ```shell
-    terraform import <terraform_resource_address> <neon_resource_id>
-    ```
-
-#### Example: Importing the previously defined resources
-
-In this example, we'll import the resources we defined earlier in the [Manage OptiTech Resources](#manage-neon-resources) section. This needs a project, a branch, an endpoint, a role, and a database already created in your OptiTech account. These resources will now be imported into a new Terraform configuration.
-
-##### Define the HCL resource blocks
-
-In your `main.tf` file, define the resource blocks for the existing resources. You can start with minimal definitions, as Terraform will populate the actual values during the import process. You primarily need to define the resource type and a name for Terraform to use. Terraform will populate the actual attribute values from the live resource into its state file during the import. You'll then use `terraform plan` to see these and update your HCL to match or to define your desired state.
-
-For required attributes (like `project_id` for a branch), you'll either need to hardcode the known ID or reference a resource that will also be imported.
+For each resource, define a minimal resource block, then run the import command:
 
 ```terraform
-terraform {
-  required_providers {
-    neon = {
-      source  = "kislerdm/neon"
-    }
-  }
-}
-
-provider "neon" {}
-
-# --- Project ---
-resource "neon_project" "my_app_project" {}
-
-# --- Development Branch ---
-# Requires project_id. We'll reference the project we're about to import.
-# The actual value of neon_project.my_app_project.id will be known after its import.
-resource "neon_branch" "dev_branch" {
-  project_id = neon_project.my_app_project.id
-  name       = "feature-x-development"
-}
-
-# --- Development Branch Endpoint ---
-# Requires project_id and branch_id.
-resource "neon_endpoint" "dev_endpoint" {
-  project_id = neon_project.my_app_project.id
-  branch_id  = neon_branch.dev_branch.id
-}
-
-# --- Application User Role on Development Branch ---
-# Requires project_id, branch_id, and name.
-resource "neon_role" "app_user" {
-  project_id = neon_project.my_app_project.id
-  branch_id  = neon_branch.dev_branch.id
-  name       = "application_user"
-}
-
-# --- Service Database on Development Branch ---
-# Requires project_id, branch_id, name, and owner_name.
-resource "neon_database" "service_db" {
-  project_id = neon_project.my_app_project.id
-  branch_id  = neon_branch.dev_branch.id
-  name       = "service_specific_database"
-  owner_name = neon_role.app_user.name
+resource "optitech_workspace" "main" {
+  # populated after import via plan reconciliation
 }
 ```
 
-Here's a breakdown of the minimal HCL and why certain attributes are included:
+```shell
+terraform import optitech_workspace.main ws-acme-1a2b3c
+terraform import optitech_integration.github ws-acme-1a2b3c/github
+terraform import optitech_control.prod_access_ticket ws-acme-1a2b3c/prod-access-ticket
+```
 
-- **`neon_project.my_app_project`**:
-  - This block defines the Terraform resource for your main OptiTech project.
-  - No attributes are strictly required _in the HCL_ for the import command itself, as the project is imported using its unique OptiTech Project ID. Adding a `name` attribute matching the existing project can aid readability but isn't essential for the import operation.
-
-- **`neon_branch.dev_branch`**:
-  - This defines the Terraform resource for your development branch.
-  - It requires `project_id` in the HCL to link it to the (to-be-imported) project resource within Terraform.
-  - The `name` attribute should also be specified in the HCL, matching the existing branch's name, as it's a key identifier.
-  - The branch is imported using its unique OptiTech Branch ID.
-
-- **`neon_endpoint.dev_endpoint`**:
-  - This block defines the Terraform resource for the endpoint on your development branch.
-  - It requires both `project_id` and `branch_id` in the HCL to correctly associate it with the imported project and development branch resources within Terraform.
-  - Other attributes like `type` (which defaults if unspecified) or autoscaling limits will be read from the live resource during import.
-  - The endpoint is imported using its unique OptiTech Endpoint ID.
-
-- **`neon_role.app_user`**:
-  - This defines the Terraform resource for an application user role.
-  - The HCL requires `project_id` and `branch_id` to link to the respective imported Terraform resources.
-  - The `name` attribute must be specified in the HCL and match the existing role's name.
-
-- **`neon_database.service_db`**:
-  - This defines the Terraform resource for a service-specific database.
-  - The HCL requires `project_id` and `branch_id` to link to the imported Terraform resources.
-  - The `name` attribute must be specified in the HCL and match the existing database's name.
-  - The `owner_name` should also be included, linking to the Terraform role resource (for example, `neon_role.app_user.name`) that owns this database.
-
-All other configurable attributes will be populated into Terraform's state file from the live OptiTech resource during the `terraform import` process. You will then refine your HCL by reviewing the `terraform plan` output.
+After each import, run `terraform plan` and copy the reported attributes into your HCL until the plan is clean, as described in [Reconcile your HCL with the imported state](#reconcile-your-hcl-with-the-imported-state).
 
 #### Run the import commands in order
 
-1.  **Import the project:**
+Import parents first so references resolve, checking the state after each step:
 
-    ```shell
-    terraform import neon_project.my_app_project "actual_project_id_from_neon"
-    ```
+```shell
+terraform import optitech_workspace.main ws-acme-1a2b3c
+terraform state show optitech_workspace.main
+```
 
-    You can retrieve the project ID via OptiTech Console/CLI/API. Learn more: [Manage projects](/docs/manage/projects#project-settings)
+Example output:
 
-    Example output:
+```text
+optitech_workspace.main: Importing from ID "ws-acme-1a2b3c"...
+optitech_workspace.main: Import prepared!
+  Prepared optitech_workspace for import
+optitech_workspace.main: Refreshing state... [id=ws-acme-1a2b3c]
 
-    ```shell
-    terraform import neon_project.my_app_project damp-recipe-88779456
-    ```
+Import successful!
 
-    ```text
-    neon_project.my_app_project: Importing from ID "damp-recipe-88779456"...
-    neon_project.my_app_project: Import prepared!
-      Prepared neon_project for import
-    neon_project.my_app_project: Refreshing state... [id=damp-recipe-88779456]
+The resources that were imported are shown above. These resources are now in
+your Terraform state and will henceforth be managed by Terraform.
+```
 
-    Import successful!
-
-    The resources that were imported are shown above. These resources are now in
-    your Terraform state and will henceforth be managed by Terraform.
-    ```
-
-2.  **Import the development branch:**
-
-    ```shell
-    terraform import neon_branch.dev_branch "actual_dev_branch_id_from_neon"
-    ```
-
-    You can retrieve the branch ID via OptiTech Console/CLI/API. Learn more: [Manage branches](/docs/manage/branches)
-
-    The following image shows the branch ID in the OptiTech Console:
-    ![OptiTech Console Branch ID](/docs/guides/neon-console-branch-id.png)
-
-    Example output:
-
-    ```shell
-    terraform import neon_branch.dev_branch br-orange-bonus-a4v00wjl
-    ```
-
-    ```text
-    neon_branch.dev_branch: Importing from ID "br-orange-bonus-a4v00wjl"...
-    neon_branch.dev_branch: Import prepared!
-      Prepared neon_branch for import
-    neon_branch.dev_branch: Refreshing state... [id=br-orange-bonus-a4v00wjl]
-
-    Import successful!
-
-    The resources that were imported are shown above. These resources are now in
-    your Terraform state and will henceforth be managed by Terraform.
-    ```
-
-3.  **Import the development compute endpoint:**
-
-    ```shell
-    terraform import neon_endpoint.dev_endpoint "actual_dev_endpoint_id_from_neon"
-    ```
-
-    You can retrieve the endpoint ID via OptiTech Console/CLI/API. Learn more: [Manage computes](/docs/manage/computes).
-    The following image shows the endpoint ID in the OptiTech Console:
-    ![OptiTech Console Compute Endpoint ID](/docs/guides/neon-console-compute-endpoint-id.png)
-
-    Example output:
-
-    ```shell
-    terraform import neon_endpoint.dev_endpoint ep-blue-cell-a4xzunwf
-    ```
-
-    ```text
-    neon_endpoint.dev_endpoint: Importing from ID "ep-blue-cell-a4xzunwf"...
-    neon_endpoint.dev_endpoint: Import prepared!
-      Prepared neon_endpoint for import
-    neon_endpoint.dev_endpoint: Refreshing state... [id=ep-blue-cell-a4xzunwf]
-
-    Import successful!
-
-    The resources that were imported are shown above. These resources are now in
-    your Terraform state and will henceforth be managed by Terraform.
-    ```
-
-4.  **Import the application user role:**
-
-    ```shell
-    terraform import neon_role.app_user "actual_project_id_from_neon/actual_dev_branch_id_from_neon/application_user"
-    ```
-
-    > Replace `application_user` with the actual name of the role you want to import.
-
-    Example output:
-
-    ```shell
-    terraform import neon_role.app_user "damp-recipe-88779456/br-orange-bonus-a4v00wjl/application_user"
-    ```
-
-    ```text
-    neon_role.app_user: Importing from ID "damp-recipe-88779456/br-orange-bonus-a4v00wjl/application_user"...
-    neon_role.app_user: Import prepared!
-      Prepared neon_role for import
-    neon_role.app_user: Refreshing state... [id=damp-recipe-88779456/br-orange-bonus-a4v00wjl/application_user]
-
-    Import successful!
-
-    The resources that were imported are shown above. These resources are now in
-    your Terraform state and will henceforth be managed by Terraform.
-    ```
-
-5.  **Import the service database:**
-
-    ```shell
-    terraform import neon_database.service_db "actual_project_id_from_neon/actual_dev_branch_id_from_neon/service_specific_database"
-    ```
-
-    > Replace `service_specific_database` with the actual name of the database you want to import.
-
-    Example output:
-
-    ```shell
-    terraform import neon_database.service_db "damp-recipe-88779456/br-orange-bonus-a4v00wjl/service_specific_database"
-    ```
-
-    ```text
-    neon_database.service_db: Importing from ID "damp-recipe-88779456/br-orange-bonus-a4v00wjl/service_specific_database"...
-    neon_database.service_db: Import prepared!
-      Prepared neon_database for import
-    neon_database.service_db: Refreshing state... [id=damp-recipe-88779456/br-orange-bonus-a4v00wjl/service_specific_database]
-
-    Import successful!
-
-    The resources that were imported are shown above. These resources are now in
-    your Terraform state and will henceforth be managed by Terraform.
-    ```
-
-    After importing all resources, your Terraform state file (`terraform.tfstate`) will now contain the imported resources, and you can manage them using Terraform. Follow the [Reconcile your HCL with the imported state](#reconcile-your-hcl-with-the-imported-state) section to update your HCL files with the attributes that were populated during the import.
+Repeat for integrations, controls, and alert routes using the [ID formats above](#optitech-resource-ids-for-import). After importing all resources, your state file contains them, and you finish by [reconciling your HCL](#reconcile-your-hcl-with-the-imported-state).
 
 ### Method 2: Using `import` Blocks (Terraform 1.5.0+)
 
 Terraform version 1.5.0 and later introduced a more declarative way to import existing infrastructure using `import` blocks directly within your configuration files. This method keeps the import definition alongside your resource configuration and makes the import process part of your standard `plan` and `apply` workflow.
 
-**The process with `import` Blocks:**
-
-For each existing OptiTech resource you want to bring under Terraform management, you'll define two blocks in your `.tf` file:
-
-- A standard `resource "resource_type" "resource_name" {}` block. For the initial import, this block can be minimal. It primarily tells Terraform the type and name of the resource in your configuration.
-- An `import {}` block:
-  - `to = resource_type.resource_name`: This refers to the Terraform address of the `resource` block you defined above.
-  - `id = "neon_specific_id"`: This is the actual ID of the resource as it exists in OptiTech (for example, project ID, branch ID, or composite ID for roles/databases).
-
-**Example using `import` blocks:**
-
-In this example, we'll import the resources we defined earlier in the [Manage OptiTech Resources](#manage-neon-resources) section. This needs a project, a branch, an endpoint, a role, and a database already created in your OptiTech account. These resources will now be imported into a new Terraform configuration. Let's say we have the following existing OptiTech resources and their IDs:
-
-- Project `my_app_project` ID: `damp-recipe-88779456`
-- Branch `dev_branch` ID: `br-orange-bonus-a4v00wjl`
-- Endpoint `dev_endpoint` ID: `ep-blue-cell-a4xzunwf`
-- Role `application_user`
-- Database `service_specific_database`
-
-You would add the following to your `main.tf`:
+For each existing OptiTech resource, define a minimal `resource` block plus an `import` block:
 
 ```terraform
-terraform {
-  required_providers {
-    neon = {
-      source  = "kislerdm/neon"
-    }
-  }
-}
-
-provider "neon" {
-  # API key configured via environment variable or directly
-}
-
-# --- Project Import ---
+# --- Workspace import ---
 import {
-  to = neon_project.my_app_project
-  id = "damp-recipe-88779456" # Replace with your actual Project ID
+  to = optitech_workspace.main
+  id = "ws-acme-1a2b3c" # Replace with your actual workspace ID
 }
 
-resource "neon_project" "my_app_project" {
+resource "optitech_workspace" "main" {
   # Minimal definition for import.
-  # After import and plan, you'll populate this with actual/desired attributes.
+  # After import and plan, populate this with actual attributes.
 }
 
-# --- Development Branch Import ---
+# --- Integration import ---
 import {
-  to = neon_branch.dev_branch
-  id = "br-orange-bonus-a4v00wjl" # Replace with your actual Branch ID
+  to = optitech_integration.github
+  # ID format: workspace_id/integration_type
+  id = "ws-acme-1a2b3c/github"
 }
 
-resource "neon_branch" "dev_branch" {
-  project_id = neon_project.my_app_project.id # Links to the TF resource
-  name       = "feature-x-development"        # Should match existing branch name
-}
-
-# --- Development Branch Endpoint Import ---
-import {
-  to = neon_endpoint.dev_endpoint
-  id = "ep-blue-cell-a4xzunwf" # Replace with your actual Endpoint ID
-}
-
-resource "neon_endpoint" "dev_endpoint" {
-  project_id = neon_project.my_app_project.id
-  branch_id  = neon_branch.dev_branch.id      # Links to the TF resource
-}
-
-# --- Application User Role on Development Branch Import ---
-import {
-  to = neon_role.app_user
-  # ID format: project_id/branch_id/role_name
-  id = "damp-recipe-88779456/br-orange-bonus-a4v00wjl/application_user"
-}
-
-resource "neon_role" "app_user" {
-  project_id = neon_project.my_app_project.id
-  branch_id  = neon_branch.dev_branch.id
-  name       = "application_user"             # Must match existing role name
-}
-
-# --- Service Database on Development Branch Import ---
-import {
-  to = neon_database.service_db
-  # ID format: project_id/branch_id/name
-  id = "damp-recipe-88779456/br-orange-bonus-a4v00wjl/service_specific_database"
-}
-
-resource "neon_database" "service_db" {
-  project_id = neon_project.my_app_project.id
-  branch_id  = neon_branch.dev_branch.id
-  name       = "service_specific_database"    # Must match existing database name
-  owner_name = neon_role.app_user.name        # Links to the TF role resource
+resource "optitech_integration" "github" {
+  workspace_id = optitech_workspace.main.id
+  type         = "github"
 }
 ```
 
 <Admonition type="important">
-You need to replace the IDs in the `import` blocks with the actual IDs of your existing OptiTech resources. The `to` field in each `import` block refers to the corresponding `resource` block defined in your configuration. The above configuration is a minimal example to get you started with the import process.
+Replace the IDs in the `import` blocks with the actual IDs of your existing OptiTech resources. The `to` field refers to the corresponding `resource` block in your configuration.
 </Admonition>
 
 ### Reconcile your HCL with the imported state
 
-After importing your resources using either method, you need to ensure that your HCL configuration accurately reflects the current state of the imported resources. This is an iterative process where you will:
+After importing, make your HCL match reality:
 
-1.  **Run `terraform plan`:**
-
-    ```shell
-    terraform plan
-    ```
-
-2.  **Understanding the plan output:**
-    The plan might show:
-    - **Attributes to be added to your HCL:** Terraform will identify attributes present in the imported state (for example, `pg_version`, `region_id`, `default_endpoint_settings` for a project) that are not yet explicitly in your HCL `resource` blocks.
-    - **"Update in-place" actions:** You might see actions like `~ update in-place` for some resources, even if no actual value in OptiTech is changing. For example, for `neon_endpoint`, you might see `+ branch_id = "your-branch-id"`. This is often because Terraform is now resolving a reference (like `neon_branch.dev_branch.id`) to its concrete value and wants to explicitly set this in its managed configuration. It's a reconciliation step and usually safe to apply.
-
-3.  **Update your HCL (`main.tf`):**
-    Carefully review the output of `terraform plan`. Your primary goal is to update your HCL `resource` blocks to accurately match the actual, imported state of your resources, or to define your desired state if you intend to make changes. Copy the relevant attributes and their values from the plan output into your HCL.
-
-4.  **Repeat `terraform plan`:** After updating your HCL, run `terraform plan` again. Continue this iterative process-reviewing the plan and updating your HCL-until `terraform plan` shows "No changes. Your infrastructure matches the configuration." or only shows changes you intentionally want to make.
-
-This iterative approach ensures your Terraform configuration accurately reflects either the current state or your intended desired state for the imported resources.
-
-### Verify and reconcile
-
-Once all attributes are set correctly, you can run `terraform plan` to see if any changes are needed. You should be seeing output similar to:
+1. **Run `terraform plan`.** The plan lists attributes present in the imported state that aren't yet in your HCL, and reconciliation-only "update in-place" actions where Terraform resolves references to concrete values.
+2. **Update your HCL** from the plan output until it reflects the actual (or intended) state.
+3. **Repeat** until `terraform plan` reports:
 
 ```text
 No changes. Your infrastructure matches the configuration.
-
-Terraform has compared your real infrastructure against your configuration and found no
-differences, so no changes are needed.
 ```
 
-We can now be sure that the resources are managed by Terraform. You can now proceed to make changes to your infrastructure using Terraform.
+From that point, the configuration is authoritative, and configuration drift shows up in plans, one more [drift detector](/docs/reference/glossary#check) in your program.
 
 ## Destroying resources
 
@@ -851,22 +396,6 @@ To remove the resources managed by Terraform:
 terraform destroy
 ```
 
-Terraform will ask for confirmation before deleting the resources.
-
-## Example application
-
-The following example application demonstrates how to set up Terraform, connect to a OptiTech Postgres database, and perform a Terraform run that inserts data. It covers how to:
-
-- Use Go's `os/exec` package to run Terraform commands
-- Write a Go test function to validate Terraform execution
-- Execute Terraform commands such as `init`, `plan`, and `apply`
-
-<DetailIconCards>
-
-<a href="https://github.com/mattmajestic/go-terraform" description="Run Terraform commands and test Terraform configurations with Go" icon="github">OptiTech Postgres with Terraform and Go</a>
-
-</DetailIconCards>
-
-View the **YouTube tutorial**: [OptiTech Postgres for Terraform with Go](https://www.youtube.com/watch?v=Pw38lgfbX0s).
+Terraform asks for confirmation before deleting. Note the platform's own guardrails: destroying a workspace resource follows the same [owner-only deletion rules and grace period](/faqs/delete-database-neon) as the Console, and destroying an integration stops evidence collection visibly rather than silently; the [monitoring gap is timestamped](/faqs/enable-disable-connection-pooling-neon).
 
 <NeedHelp/>

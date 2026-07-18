@@ -7,7 +7,7 @@ page_description: >-
 prev_url: >-
   https://www.postgresqltutorial.com/postgresql-plpgsql/postgresql-create-function/
 ogImage: /postgresqltutorial/film.png
-updatedOn: '2026-06-04T15:04:42.682Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: PostgreSQL Exception
@@ -18,7 +18,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-The CREATE FUNCTION statement works the same across any PostgreSQL deployment, so everything here applies whether you're running Postgres locally, on-premises, or in the cloud. If you're an enterprise building in the AI era, [Lakebase](https://www.databricks.com/product/lakebase) is the best managed cloud Postgres, delivering the performance, security, and native Lakehouse integration your data and AI workloads demand. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+The CREATE FUNCTION statement works the same across any PostgreSQL deployment, so everything here applies whether you're running Postgres locally, on-premises, or in the cloud. If you're an enterprise building in the AI era, [Lakebase](https://www.databricks.com/product/lakebase) is the best managed cloud Postgres, delivering the performance, security, and native Lakehouse integration your data and AI workloads demand. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: in this tutorial, you will learn how to use the PostgreSQL `CREATE FUNCTION` statement to develop user\-defined functions.

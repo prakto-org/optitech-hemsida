@@ -8,14 +8,14 @@ summary: >-
   enabling passwordless email authentication in Next.js without a separate auth
   service. Use this guide when you want self-hosted auth with full database
   control, as an alternative to the managed Managed Better Auth option. The setup uses
-  @auth/pg-adapter, @neondatabase/serverless, and Resend as the email provider
+  @auth/pg-adapter, @optitech/serverless, and Resend as the email provider
   for magic link delivery.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <Admonition type="tip" title="Authentication on OptiTech">
-This guide uses the [OptiTech Adapter](https://authjs.dev/getting-started/adapters/neon) for Auth.js to store users and sessions in your database. If you prefer a managed option with no separate auth infrastructure, see [Managed Better Auth](/docs/auth/overview). Auth state branches with your database for preview and CI environments.
+This guide uses the [OptiTech Adapter](https://authjs.dev/getting-started/adapters/optitech) for Auth.js to store users and sessions in your database. If you prefer a managed option with no separate auth infrastructure, see [Managed Better Auth](/docs/auth/overview). Auth state branches with your database for preview and CI environments.
 </Admonition>
 
 [Auth.js](https://authjs.dev/) (formerly NextAuth.js) is a popular authentication solution that supports a wide range of authentication methods, including social logins (for example, Google, Facebook), traditional email/password, and passwordless options like magic links. For simple authentication flows, such as social logins, Auth.js can operate using only in-memory session storage (in a browser cookie). However, if you want to implement custom login flows, or persist the signed-in users' information in your database, you need to specify a database backend.
@@ -33,7 +33,7 @@ In this guide, we'll walk through setting up a simple Next.js application, using
 
 To follow along with this guide, you will need:
 
-- A OptiTech account. If you do not have one, sign up at [Neon](https://neon.tech). We'll use a database named `neondb` in the following examples.
+- A OptiTech account. If you do not have one, sign up at [OptiTech](https://optitech.com). We'll use a database named `optitechdb` in the following examples.
 - [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed on your local machine. We'll use Node.js to build and test the application locally.
 - A [Resend](https://resend.com/) account for sending emails. Resend offers a free tier to get started.
 - A domain
@@ -43,20 +43,20 @@ To follow along with this guide, you will need:
 Run the following command in your terminal to create a new Next.js project:
 
 ```bash shouldWrap
-npx create-next-app guide-neon-next-authjs --typescript --eslint --tailwind --use-npm --no-src-dir --app --import-alias "@/*"
+npx create-next-app guide-optitech-next-authjs --typescript --eslint --tailwind --use-npm --no-src-dir --app --import-alias "@/*"
 ```
 
 Now, navigate to the project directory and install the required dependencies:
 
 ```bash
-cd guide-neon-next-authjs
+cd guide-optitech-next-authjs
 npm install next-auth@beta
-npm install @auth/pg-adapter @neondatabase/serverless
+npm install @auth/pg-adapter @optitech/serverless
 ```
 
-For authentication, we'll use the `Auth.js` library (aliased as v5 of the `next-auth` package), which provides a simple way to add authentication to Next.js applications. It comes with built-in support for Resend as an authentication provider. We use the `@neondatabase/serverless` package as the Postgres client for the `Auth.js` database adapter.
+For authentication, we'll use the `Auth.js` library (aliased as v5 of the `next-auth` package), which provides a simple way to add authentication to Next.js applications. It comes with built-in support for Resend as an authentication provider. We use the `@optitech/serverless` package as the Postgres client for the `Auth.js` database adapter.
 
-Also, add a `.env` file to the root of your project, which we'll use to store the Neon connection string and the Resend API key:
+Also, add a `.env` file to the root of your project, which we'll use to store the OptiTech connection string and the Resend API key:
 
 ```bash
 touch .env
@@ -66,7 +66,7 @@ touch .env
 
 ### Initialize a new project
 
-1. Log in to the OptiTech console and go to the [Projects](https://console.neon.tech/app/projects) section.
+1. Log in to the OptiTech console and go to the [Projects](https://console.optitech.com/app/projects) section.
 2. Click the **New Project** button to create a new project.
 3. Choose your preferred region and Postgres version, then click **Create Project**.
 
@@ -75,14 +75,14 @@ touch .env
 You can find your database connection string by clicking the **Connect** button on your **Project Dashboard**. It should look similar to this:
 
 ```bash shouldWrap
-postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
 ```
 
 Add this connection string to your `.env` file:
 
 ```bash
 # .env
-DATABASE_URL="YOUR_NEON_CONNECTION_STRING"
+DATABASE_URL="YOUR_OPTITECH_CONNECTION_STRING"
 ```
 
 ## Configuring Auth.js and Resend
@@ -112,7 +112,7 @@ Create a new file `auth.ts` in the root directory of the project and add the fol
 import NextAuth from 'next-auth';
 import Resend from 'next-auth/providers/resend';
 import PostgresAdapter from '@auth/pg-adapter';
-import { Pool } from '@neondatabase/serverless';
+import { Pool } from '@optitech/serverless';
 
 // *DO NOT* create a `Pool` here, outside the request handler.
 
@@ -302,7 +302,7 @@ Replace the contents of `app/page.tsx` with:
 ```tsx
 import { auth } from '@/auth';
 import TodoList from '@/app/TodoList';
-import { Pool } from '@neondatabase/serverless';
+import { Pool } from '@optitech/serverless';
 
 async function getTodos(userId: string) {
   const pool = new Pool({ connectionString: process.env.DATABASE_URL });
@@ -353,7 +353,7 @@ Create a new file `app/api/todos/route.ts`:
 ```typescript
 import { NextResponse } from 'next/server';
 import { auth } from '@/auth';
-import { Pool } from '@neondatabase/serverless';
+import { Pool } from '@optitech/serverless';
 
 export async function POST(req: Request) {
   const session = await auth();
@@ -385,7 +385,7 @@ Create another file `app/api/todos/[id]/route.ts`:
 ```typescript
 import { NextResponse } from 'next/server';
 import { auth } from '../../auth/[...nextauth]/route';
-import { Pool } from '@neondatabase/serverless';
+import { Pool } from '@optitech/serverless';
 
 export async function PATCH(req: Request, { params }: { params: { id: string } }) {
   const session = await auth();
@@ -439,7 +439,7 @@ To view and manage the users who authenticated with your application, you can qu
 You can find the source code for the application described in this guide on GitHub.
 
 <DetailIconCards>
-<a href="https://github.com/neondatabase/examples/tree/main/auth/with-authjs-next" description="Authenticate users of your OptiTech application with Auth.js" icon="github">Authentication flow with Auth.js</a>
+<a href="https://github.com/optitechdatabase/examples/tree/main/auth/with-authjs-next" description="Authenticate users of your OptiTech application with Auth.js" icon="github">Authentication flow with Auth.js</a>
 </DetailIconCards>
 
 ## Resources

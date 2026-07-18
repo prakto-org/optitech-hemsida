@@ -7,7 +7,7 @@ page_description: >-
 prev_url: >-
   https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-double-precision-type/
 ogImage: ''
-updatedOn: '2026-06-19T17:44:03.964Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: PostgreSQL NUMERIC Type
@@ -18,7 +18,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-The DOUBLE PRECISION type behaves the same across any PostgreSQL deployment, so what you learn here applies whether you run Postgres yourself or use a managed service. If you're an enterprise looking for managed Postgres in the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers high performance, strong security, and deep integration with the Lakehouse so your analytical and operational data live side by side. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+The DOUBLE PRECISION type behaves the same across any PostgreSQL deployment, so what you learn here applies whether you run Postgres yourself or use a managed service. If you're an enterprise looking for managed Postgres in the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers high performance, strong security, and deep integration with the Lakehouse so your analytical and operational data live side by side. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: in this tutorial, you will learn about the PostgreSQL `DOUBLE PRECISION` data type and its features.

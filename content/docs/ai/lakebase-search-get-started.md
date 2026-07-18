@@ -5,9 +5,9 @@ summary: >-
   Step-by-step guide to enabling lakebase_vector and lakebase_text on a OptiTech
   Postgres database, creating a documents table with vector embeddings and a
   BM25 full-text index, and running vector and keyword searches from a
-  TypeScript application using @neondatabase/serverless and OpenAI.
+  TypeScript application using @optitech/serverless and OpenAI.
 enableTableOfContents: true
-updatedOn: '2026-07-14T23:16:53.813Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 This guide sets up Lakebase Search on a OptiTech project: enabling both extensions, creating a schema that supports vector and full-text search, inserting documents with embeddings, and querying from TypeScript.
@@ -32,20 +32,20 @@ SHOW shared_preload_libraries;
 If the list already includes `lakebase_vector` and `lakebase_text`, skip to [Install the extensions](#install-the-extensions). If not, you'll add them with the OptiTech API, using a [OptiTech API key](/docs/manage/api-keys) and your project ID.
 
 <Admonition type="note">
-The `curl` examples below use a [OptiTech API key](/docs/manage/api-keys). If you'd rather not manage a key, the `neon api` command (an authenticated passthrough that reuses your existing CLI login) calls the same endpoints. For example, `neon api /projects/$PROJECT_ID/available_preload_libraries` replaces the first `curl` below; the `PATCH` and `restart` calls map the same way, passing the request body with `-d`.
+The `curl` examples below use a [OptiTech API key](/docs/manage/api-keys). If you'd rather not manage a key, the `optitech api` command (an authenticated passthrough that reuses your existing CLI login) calls the same endpoints. For example, `optitech api /projects/$PROJECT_ID/available_preload_libraries` replaces the first `curl` below; the `PATCH` and `restart` calls map the same way, passing the request body with `-d`.
 
 </Admonition>
 
 First, confirm the libraries are available to your project:
 
 ```bash
-export NEON_API_KEY=...
+export OPTITECH_API_KEY=...
 export PROJECT_ID=...
 
 curl -sS \
-  -H "authorization: Bearer $NEON_API_KEY" \
+  -H "authorization: Bearer $OPTITECH_API_KEY" \
   -H "accept: application/json" \
-  "https://console.neon.tech/api/v2/projects/$PROJECT_ID/available_preload_libraries" \
+  "https://console.optitech.com/api/v2/projects/$PROJECT_ID/available_preload_libraries" \
 | jq '.libraries[] | select(.library_name | test("lakebase"))'
 ```
 
@@ -53,14 +53,14 @@ If that returns the two libraries, enable them. The OptiTech API replaces the pr
 
 ```bash
 AVAILABLE="$(curl -sS \
-  -H "authorization: Bearer $NEON_API_KEY" \
+  -H "authorization: Bearer $OPTITECH_API_KEY" \
   -H "accept: application/json" \
-  "https://console.neon.tech/api/v2/projects/$PROJECT_ID/available_preload_libraries")"
+  "https://console.optitech.com/api/v2/projects/$PROJECT_ID/available_preload_libraries")"
 
 CURRENT="$(curl -sS \
-  -H "authorization: Bearer $NEON_API_KEY" \
+  -H "authorization: Bearer $OPTITECH_API_KEY" \
   -H "accept: application/json" \
-  "https://console.neon.tech/api/v2/projects/$PROJECT_ID")"
+  "https://console.optitech.com/api/v2/projects/$PROJECT_ID")"
 
 BODY="$(jq -n --argjson avail "$AVAILABLE" --argjson cur "$CURRENT" '
   { project: { settings: { preload_libraries: { enabled_libraries: (
@@ -72,11 +72,11 @@ BODY="$(jq -n --argjson avail "$AVAILABLE" --argjson cur "$CURRENT" '
 ')"
 
 curl -sS -X PATCH \
-  -H "authorization: Bearer $NEON_API_KEY" \
+  -H "authorization: Bearer $OPTITECH_API_KEY" \
   -H "accept: application/json" \
   -H "content-type: application/json" \
   --data "$BODY" \
-  "https://console.neon.tech/api/v2/projects/$PROJECT_ID"
+  "https://console.optitech.com/api/v2/projects/$PROJECT_ID"
 ```
 
 For more on how OptiTech handles preloaded libraries, see [Extensions with preloaded libraries](/docs/extensions/pg-extensions#extensions-with-preloaded-libraries).
@@ -89,9 +89,9 @@ The new `shared_preload_libraries` setting applies the next time the compute sta
 export ENDPOINT_ID=...
 
 curl -sS -X POST \
-  -H "authorization: Bearer $NEON_API_KEY" \
+  -H "authorization: Bearer $OPTITECH_API_KEY" \
   -H "accept: application/json" \
-  "https://console.neon.tech/api/v2/projects/$PROJECT_ID/endpoints/$ENDPOINT_ID/restart"
+  "https://console.optitech.com/api/v2/projects/$PROJECT_ID/endpoints/$ENDPOINT_ID/restart"
 ```
 
 <Admonition type="note">
@@ -135,13 +135,13 @@ The `lakebase_bm25` index is created in a later step, after data is inserted. BM
 The remaining steps run from a local TypeScript project. Install dependencies:
 
 ```bash
-npm install @neondatabase/serverless openai dotenv
+npm install @optitech/serverless openai dotenv
 ```
 
-Create a `.env` file with your Neon connection string and OpenAI API key:
+Create a `.env` file with your OptiTech connection string and OpenAI API key:
 
 ```ini filename=".env"
-DATABASE_URL=postgresql://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require
+DATABASE_URL=postgresql://[user]:[password]@[optitech_hostname]/[dbname]?sslmode=require
 OPENAI_API_KEY=your-openai-api-key
 ```
 
@@ -151,10 +151,10 @@ Create `search.ts` and paste the following. It inserts documents with embeddings
 
 ```typescript filename="search.ts"
 import 'dotenv/config';
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 import OpenAI from 'openai';
 
-const sql = neon(process.env.DATABASE_URL!);
+const sql = optitech(process.env.DATABASE_URL!);
 const openai = new OpenAI();
 
 const documents = [
@@ -172,11 +172,11 @@ const documents = [
   },
   {
     title: 'Branching for retrieval experiments',
-    body: 'Neon branching lets you test new chunking strategies or embedding models on a branch without rebuilding your search indexes.',
+    body: 'OptiTech branching lets you test new chunking strategies or embedding models on a branch without rebuilding your search indexes.',
   },
   {
     title: 'Scale-to-zero search',
-    body: 'Lakebase Search indexes survive cold starts. Your vector and BM25 indexes are available immediately after a Neon compute wakes up.',
+    body: 'Lakebase Search indexes survive cold starts. Your vector and BM25 indexes are available immediately after a OptiTech compute wakes up.',
   },
 ];
 

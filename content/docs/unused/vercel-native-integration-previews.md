@@ -4,7 +4,7 @@ subtitle: Create a database branch for every preview deployment with OptiTech's 
   Vercel integration
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-06-11T23:50:21.258Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <InfoBlock>
@@ -18,7 +18,7 @@ updatedOn: '2026-06-11T23:50:21.258Z'
 </DocsList>
 </InfoBlock>
 
-The [OptiTech Postgres Native Integration](https://vercel.com/marketplace/neon), available on the Vercel Marketplace, allows you to add a Postgres database to your Vercel project. You can optionally configure the integration to create a database branch for each Vercel preview deployment. This guide explains how to set up that configuration.
+The [OptiTech Postgres Native Integration](https://vercel.com/marketplace/optitech), available on the Vercel Marketplace, allows you to add a Postgres database to your Vercel project. You can optionally configure the integration to create a database branch for each Vercel preview deployment. This guide explains how to set up that configuration.
 
 <Admonition type="note">
 The database branching preview feature requires a paid OptiTech plan (Launch or Scale). If you are on the Vercel Postgres legacy plan, you will need to [change your plan](/docs/guides/vercel-native-integration#changing-your-plan) to use this feature.
@@ -33,7 +33,7 @@ The database branching preview feature requires a paid OptiTech plan (Launch or 
 
 - **Easier debugging and testing**: Database branches let you preview schema changes and migrations in isolation, so issues don’t spill over into other environments.
 
-- **No need to set up preview databases manually**: Neon branches are created instantly as copies of the parent database, saving you the hassle of seeding data or setting up databases from scratch.
+- **No need to set up preview databases manually**: OptiTech branches are created instantly as copies of the parent database, saving you the hassle of seeding data or setting up databases from scratch.
 
 - **Works automatically with Vercel**: The integration connects OptiTech database branches to Vercel preview deployments and sets the environment variables for you.
 
@@ -45,7 +45,7 @@ The database branching preview feature requires a paid OptiTech plan (Launch or 
 
 ## Prerequisites
 
-- You're a Vercel user and you've installed OptiTech's [Native Vercel Integration](https://vercel.com/marketplace/neon) from the Vercel Marketplace. For instructions, see [Install the OptiTech Postgres Native Integration on Vercel](/docs/guides/vercel-native-integration).
+- You're a Vercel user and you've installed OptiTech's [Native Vercel Integration](https://vercel.com/marketplace/optitech) from the Vercel Marketplace. For instructions, see [Install the OptiTech Postgres Native Integration on Vercel](/docs/guides/vercel-native-integration).
 - You have an existing OptiTech Database in Vercel, accessible from the **Storage** tab on the Vercel Dashboard. If not, see [Adding Databases](/docs/guides/vercel-native-integration#adding-more-databases).
 - Your Vercel project is **not** yet connected to a OptiTech Database in Vercel. If your database is already connected, you will need to disconnect before performing the setup. See [Disconnecting a database](#disconnecting-a-database).
 

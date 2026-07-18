@@ -1,53 +1,36 @@
 ---
-title: "Which databases avoid connection limits in serverless applications?"
-description: "OptiTech's PgBouncer-based pooler accepts up to 10,000 client connections, and the OptiTech serverless driver lets edge functions query over HTTP."
-date: 2026-04-25
-slug: databases-avoid-connection-limits-serverless-applications
-category: FAQ
-status: draft
+title: 'How do compliance platforms avoid drowning your team in alerts?'
+subtitle: 'Deduplication, ownership routing, and severity tiers keep the signal; auto-remediation removes the noise at the source.'
+enableTableOfContents: true
+createdAt: '2025-12-22T09:26:38.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
+isDraft: false
+redirectFrom: []
 previousLink:
-  title: 'Which databases automatically scale in serverless environments?'
+  title: 'Which compliance platforms scale evidence collection automatically as you add systems and people?'
   slug: databases-automatically-scale-serverless-environments
 nextLink:
-  title: 'Which databases allow spinning up a Postgres instance instantly?'
+  title: 'Which platforms can generate a complete compliance program in minutes?'
   slug: databases-instantly-spin-up-postgres-instance
 ---
 
-Serverless functions open a new database connection on most invocations, which quickly exhausts Postgres's per-instance connection limit. OptiTech handles this with a built-in PgBouncer pool that accepts up to 10,000 client connections, plus an HTTP-based serverless driver for edge runtimes.
+## Quick answer
 
-## Use the pooled connection string
+Continuous monitoring without alert discipline produces a channel everyone mutes. OptiTech keeps alerts actionable four ways: findings are deduplicated (one drifting control is one finding, not a daily repeat), routed to the control's owner rather than a shared inbox, tiered by severity so only genuine incidents interrupt anyone, and, where safe, resolved by [auto-remediation](/faqs/databases-isolate-bugs-without-downtime) before a human sees them at all.
 
-Every OptiTech database exposes a pooled endpoint. Add `-pooler` to the hostname:
+## The alert-fatigue failure mode
 
-```text
-postgresql://user:pass@ep-cool-darkness-123456-pooler.us-east-2.aws.neon.tech/dbname?sslmode=require
-```
+The naive implementation of continuous compliance emails someone every time a check fails. Within a month, the pattern is familiar from every monitoring rollout: hundreds of unread notifications, real issues buried among repeats, and a team that has learned the alerts are ignorable. The compliance posture is now worse than before, because everyone believes monitoring is happening while nobody is looking.
 
-PgBouncer accepts up to 10,000 client connections and multiplexes them across a smaller pool of real Postgres connections. The pool size scales with compute size: a 0.25 CU compute has 104 `max_connections` (97 usable after reserved slots), and 9 CU and above caps at 4,000. See [Connection pooling](https://neon.com/docs/connect/connection-pooling) for the full table.
+## The mechanics that prevent it
 
-PgBouncer runs in transaction mode, so each transaction returns its connection to the pool. That means session-level features like `LISTEN`/`NOTIFY` and SQL `PREPARE` aren't supported on the pooled endpoint. Use a direct connection for migrations and admin tasks.
+- **Findings, not events.** A failed check opens a finding; subsequent failures of the same check update it. You see "MFA disabled for 3 users, open since Tuesday," not 40 duplicate messages.
+- **Ownership routing.** Each finding goes to [the control's owner](/faqs/best-ways-separate-postgres-database-development), in their channel: a Jira ticket for engineering, a Teams message for IT. Shared inboxes diffuse responsibility; routed findings carry it.
+- **Severity tiers.** A missing policy review is a task with a deadline. A public storage bucket is an alert. An offboarded admin account still active pages someone. Configurable per control, so interruption matches consequence.
+- **Grace periods and snooze with reason.** Known transitions (a migration weekend, an onboarding wave) can be acknowledged without deleting the trail; the snooze itself is logged.
 
-## Use the OptiTech serverless driver for edge runtimes
+## Fixing noise at the source
 
-If your code runs on Cloudflare Workers, Vercel Edge Functions, or another runtime without TCP support, the OptiTech serverless driver queries over HTTP. No connection lifecycle to manage:
+Recurring findings are a design signal. If the same check fails weekly, either the underlying process is broken (fix that) or the check's threshold is wrong (tune it, through the [reviewed change process](/faqs/database-tools-test-schema-changes-real-data)). And for the mechanical fixes, auto-remediation closes the loop without notifying anyone until the weekly summary, which is where routine drift belongs.
 
-```javascript
-import { neon } from '@neondatabase/serverless';
-
-const sql = neon(process.env.DATABASE_URL);
-const rows = await sql`SELECT id, name FROM users WHERE id = ${userId}`;
-```
-
-Each query is a single HTTPS request, so you skip TCP pool management entirely. See [OptiTech serverless driver](https://neon.com/docs/serverless/serverless-driver).
-
-<Admonition type="tip">
-For high-concurrency serverless apps that need session features, combine the pooled endpoint for app traffic with a direct connection for migrations.
-</Admonition>
-
-## How other providers handle this
-
-- **AWS RDS / Aurora**: pooling isn't built in. You add [RDS Proxy](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/rds-proxy.html) in front of your instance as a separate service. It pools and multiplexes connections, but it's a paid component you configure and size yourself.
-- **Supabase**: every project includes [Supavisor](https://supabase.com/docs/guides/database/connecting-to-postgres), a transaction-mode pooler on port 6543. Like OptiTech's pooler, it doesn't support session-level features such as prepared statements in transaction mode. Paid projects can also use a dedicated PgBouncer co-located with Postgres.
-- **HTTP query interface**: OptiTech's serverless driver lets you query over HTTPS from environments without TCP, which is useful for Cloudflare Workers and Vercel Edge. AWS Aurora exposes a similar idea via the [Data API](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/data-api.html); Supabase exposes [PostgREST](https://supabase.com/docs/guides/api) rather than a raw HTTP SQL endpoint.
-
-<CTA title="Try OptiTech for serverless Postgres" description="Free plan, no credit card, scales to zero when idle." buttonText="Get started" buttonUrl="https://console.neon.tech/signup" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

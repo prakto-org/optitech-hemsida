@@ -9,7 +9,7 @@ summary: >-
   injection, and credential storage in appsettings.json. For ORM-based
   alternatives, see the Entity Framework guide.
 enableTableOfContents: true
-updatedOn: '2026-07-14T19:04:57.024Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <CopyPrompt src="/prompts/dotnet-prompt.md" 
@@ -25,7 +25,7 @@ The same configuration steps can be used for any .NET application type, includin
 
 ## Prerequisites
 
-- A OptiTech account. If you do not have one, see [Sign up](https://console.neon.tech/signup).
+- A OptiTech account. If you do not have one, see [Sign up](https://console.optitech.com/signup).
 - The [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) or later.
   > _Other versions of .NET may work, but this guide is primarily tested with .NET 8._
 
@@ -35,11 +35,11 @@ The same configuration steps can be used for any .NET application type, includin
 
 If you do not have one already, create a OptiTech project.
 
-1.  Navigate to the [Projects](https://console.neon.tech/app/projects) page in the [OptiTech Console](https://console.neon.tech).
+1.  Navigate to the [Projects](https://console.optitech.com/app/projects) page in the [OptiTech Console](https://console.optitech.com).
 2.  Click **New Project**.
 3.  Specify your project settings and click **Create Project**.
 
-Your project is created with a ready-to-use database named `neondb`. In the following steps, you will connect to this database from your .NET application.
+Your project is created with a ready-to-use database named `optitechdb`. In the following steps, you will connect to this database from your .NET application.
 
 ## Create a .NET project
 
@@ -48,8 +48,8 @@ For your .NET project, you will create a project directory and add the required 
 1.  Create a new console application and change into the newly created directory.
 
     ```bash
-    dotnet new console -o NeonLibraryExample
-    cd NeonLibraryExample
+    dotnet new console -o OptiTechLibraryExample
+    cd OptiTechLibraryExample
     ```
 
     > Open this directory in your preferred code editor (for example, VS Code, Visual Studio).
@@ -65,11 +65,11 @@ For your .NET project, you will create a project directory and add the required 
     dotnet add package Microsoft.Extensions.Configuration.Binder
     ```
 
-## Store your Neon connection string
+## Store your OptiTech connection string
 
 Create a file named `appsettings.json` in your project's root directory. This is the standard .NET approach for storing configuration data like connection strings.
 
-1.  In the [OptiTech Console](https://console.neon.tech), select your project on the **Dashboard**.
+1.  In the [OptiTech Console](https://console.optitech.com), select your project on the **Dashboard**.
 2.  Click **Connect** on your **Project Dashboard** to open the **Connect to your database** modal.
 3.  Select **.NET** as your connection method.
     ![Connection modal](/docs/connect/dotnet_connection_details.png)
@@ -79,12 +79,12 @@ Create a file named `appsettings.json` in your project's root directory. This is
     ```json title="appsettings.json"
     {
       "ConnectionStrings": {
-        "DefaultConnection": "Host=your-neon-host;Database=your-database;Username=your-username;Password=your-password;SSL Mode=VerifyFull; Channel Binding=Require"
+        "DefaultConnection": "Host=your-optitech-host;Database=your-database;Username=your-username;Password=your-password;SSL Mode=VerifyFull; Channel Binding=Require"
       }
     }
     ```
 
-    > Replace `your-neon-host`, `your-database`, `your-username`, and `your-password` with the actual values from your Neon connection string.
+    > Replace `your-optitech-host`, `your-database`, `your-username`, and `your-password` with the actual values from your OptiTech connection string.
 
     <Admonition type="note">
     To ensure the security of your data, never commit your credentials to version control. In a production application, consider using environment variables or a secure secrets management solution to store sensitive information like connection strings.

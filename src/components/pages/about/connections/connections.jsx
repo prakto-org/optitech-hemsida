@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl';
 import PropTypes from 'prop-types';
 
 import Link from 'components/shared/link';
@@ -10,28 +11,10 @@ import DiscordIcon from './images/discord-icon.inline.svg';
 import LinkedInIcon from './images/linkedin-icon.inline.svg';
 import XTwitterIcon from './images/x-twitter-icon.inline.svg';
 
-const CONNECTIONS_DATA = [
-  {
-    platform: 'X (Twitter)',
-    description: 'Stay up to date with the latest news, updates, and insights from our team.',
-    linkText: 'Engage with us',
-    href: LINKS.twitter,
-    icon: XTwitterIcon,
-  },
-  {
-    platform: 'LinkedIn',
-    description: 'Connect, collaborate, and discover opportunities to build and grow.',
-    linkText: 'Follow and learn',
-    href: LINKS.linkedin,
-    icon: LinkedInIcon,
-  },
-  {
-    platform: 'Discord',
-    description: "Join real-time discussions, ask questions, and share what you're building.",
-    linkText: 'Talk to us',
-    href: LINKS.discord,
-    icon: DiscordIcon,
-  },
+const CONNECTIONS_META = [
+  { key: 'twitter', platform: 'X (Twitter)', href: LINKS.twitter, icon: XTwitterIcon },
+  { key: 'linkedin', platform: 'LinkedIn', href: LINKS.linkedin, icon: LinkedInIcon },
+  { key: 'discord', platform: 'Discord', href: LINKS.discord, icon: DiscordIcon },
 ];
 
 const ConnectionCard = ({ platform, description, linkText, href, icon: Icon }) => (
@@ -82,28 +65,41 @@ ConnectionCard.propTypes = {
   icon: PropTypes.elementType.isRequired,
 };
 
-const Connections = () => (
-  <SecondarySection title="Community" className="pb-60 lg:pt-28 lg:pb-40 md:pt-20 md:pb-[104px]">
-    <header className="mb-16 lg:mb-14 md:mb-12">
-      <SectionLabel icon="arrow">Community</SectionLabel>
+const Connections = () => {
+  const t = useTranslations('aboutUs.connections');
+  const CONNECTIONS_DATA = CONNECTIONS_META.map(({ key, ...meta }) => ({
+    ...meta,
+    description: t(`cards.${key}.description`),
+    linkText: t(`cards.${key}.linkText`),
+  }));
 
-      <h3 className="mt-5 max-w-[813px] text-5xl leading-dense font-normal tracking-tighter text-black-pure xl:mt-[18px] xl:max-w-[700px] xl:text-[40px] lg:max-w-[580px] lg:text-[36px] md:max-w-full md:text-[28px]">
-        Connect with us{' '}
-        <span className="text-gray-new-40">wherever you work, build, and share your journey.</span>
-      </h3>
+  return (
+    <SecondarySection
+      title={t('sectionTitle')}
+      className="pb-60 lg:pt-28 lg:pb-40 md:pt-20 md:pb-[104px]"
+    >
+      <header className="mb-16 lg:mb-14 md:mb-12">
+        <SectionLabel icon="arrow">{t('sectionTitle')}</SectionLabel>
 
-      <div className="mt-6 h-px w-full bg-gray-new-50 lg:mt-5 md:mt-[18px]" aria-hidden="true" />
-    </header>
+        <h3 className="mt-5 max-w-[813px] text-5xl leading-dense font-normal tracking-tighter text-black-pure xl:mt-[18px] xl:max-w-[700px] xl:text-[40px] lg:max-w-[580px] lg:text-[36px] md:max-w-full md:text-[28px]">
+          {t.rich('heading', {
+            span: (chunks) => <span className="text-gray-new-40">{chunks}</span>,
+          })}
+        </h3>
 
-    {/* Cards Grid */}
-    <ul className="grid grid-cols-3 gap-[31px] xl:gap-8 lg:gap-7 md:grid-cols-1 md:gap-6">
-      {CONNECTIONS_DATA.map((card) => (
-        <li key={card.platform}>
-          <ConnectionCard {...card} />
-        </li>
-      ))}
-    </ul>
-  </SecondarySection>
-);
+        <div className="mt-6 h-px w-full bg-gray-new-50 lg:mt-5 md:mt-[18px]" aria-hidden="true" />
+      </header>
+
+      {/* Cards Grid */}
+      <ul className="grid grid-cols-3 gap-[31px] xl:gap-8 lg:gap-7 md:grid-cols-1 md:gap-6">
+        {CONNECTIONS_DATA.map((card) => (
+          <li key={card.platform}>
+            <ConnectionCard {...card} />
+          </li>
+        ))}
+      </ul>
+    </SecondarySection>
+  );
+};
 
 export default Connections;

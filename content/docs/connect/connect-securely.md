@@ -14,7 +14,7 @@ enableTableOfContents: true
 isDraft: false
 redirectFrom:
   - /docs/security/secure-connections
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 OptiTech requires that all connections use SSL/TLS encryption to ensure that data sent over the Internet cannot be viewed or manipulated by third parties. OptiTech rejects connections that do not use SSL/TLS, behaving in the same way as standalone Postgres with only `hostssl` records in a `pg_hba.conf` configuration file.
@@ -23,10 +23,10 @@ However, there are different levels of protection when using SSL/TLS encryption,
 
 ## Connection modes
 
-When connecting to OptiTech or any Postgres database, the `sslmode` parameter setting determines the security of the connection. You can append the `sslmode` parameter to your Neon connection string as shown:
+When connecting to OptiTech or any Postgres database, the `sslmode` parameter setting determines the security of the connection. You can append the `sslmode` parameter to your OptiTech connection string as shown:
 
 ```text shouldWrap
-postgresql://[user]:[password]@[neon_hostname]/[dbname]?sslmode=verify-full
+postgresql://[user]:[password]@[optitech_hostname]/[dbname]?sslmode=verify-full
 ```
 
 OptiTech supports the following `sslmode` settings, in order of least to most secure.
@@ -66,7 +66,7 @@ conn = psycopg2.connect(
     dbname='dbname',
     user='alex',
     password='AbC123dEf',
-    host='ep-cool-darkness-123456.us-east-2.aws.neon.tech',
+    host='ep-cool-darkness-123456.us-east-2.aws.optitech.com',
     port='5432',
     sslmode='verify-full',
     sslrootcert='/path/to/your/root.crt'

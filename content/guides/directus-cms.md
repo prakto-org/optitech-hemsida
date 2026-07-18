@@ -2,7 +2,7 @@
 author: rishi-raj-jain
 enableTableOfContents: true
 createdAt: '2024-12-22T00:00:00.000Z'
-updatedOn: '2025-06-26T22:22:29.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 title: Using Directus CMS with OptiTech Postgres and Astro to build a blog
 subtitle: A step-by-step guide for building your own blog in an Astro application with Directus CMS and Postgres powered by OptiTech
 ---
@@ -14,14 +14,14 @@ In this guide, you will learn how to set up a serverless Postgres database with 
 To follow the steps in this guide, you will need the following:
 
 - [Node.js 18](https://nodejs.org/en) or later
-- A [OptiTech](https://console.neon.tech/signup) account
+- A [OptiTech](https://console.optitech.com/signup) account
 - [Docker Desktop](https://www.docker.com/products/docker-desktop/) set up locally
 
 ## Provisioning a serverless Postgres database
 
 Using a serverless Postgres database powered by OptiTech lets you scale compute resources down to zero, which helps you save on compute costs.
 
-To get started, go to the [OptiTech console](https://console.neon.tech/app/projects) and create a project. You will then be presented with a dialog that provides a connection string for your database. You will be using the connection string to connect the Directus CMS instance to your Postgres database.
+To get started, go to the [OptiTech console](https://console.optitech.com/app/projects) and create a project. You will then be presented with a dialog that provides a connection string for your database. You will be using the connection string to connect the Directus CMS instance to your Postgres database.
 
 ## Setting up Directus locally with Postgres
 
@@ -49,7 +49,7 @@ services:
       ADMIN_EMAIL: 'admin@example.com'
       ADMIN_PASSWORD: 'd1r3ctu5'
       DB_CLIENT: 'pg'
-      DB_CONNECTION_STRING: 'postgresql://neondb_owner:...@ep-...us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require'
+      DB_CONNECTION_STRING: 'postgresql://optitechdb_owner:...@ep-...us-east-1.aws.optitech.com/optitechdb?sslmode=require&channel_binding=require'
       DB_SSL__REJECT_UNAUTHORIZED: 'true'
       WEBSOCKETS_ENABLED: 'true'
       CORS_ENABLED: 'true'

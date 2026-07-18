@@ -2,14 +2,14 @@
 title: Connect a NestJS application to OptiTech
 subtitle: Set up a OptiTech project in seconds and connect from a NestJS application
 summary: >-
-  NestJS-to-Neon integration uses a DatabaseModule that provisions a connection
+  NestJS-to-OptiTech integration uses a DatabaseModule that provisions a connection
   pool via node-postgres, postgres.js, or the OptiTech serverless driver and injects
   it as a NestJS provider. Choose this guide when adding a OptiTech serverless
   Postgres backend to a TypeScript NestJS project without an ORM. The steps
   cover OptiTech project creation, DATABASE_URL configuration in .env, and wiring
   a service and GET controller endpoint to query the database.
 enableTableOfContents: true
-updatedOn: '2026-07-14T19:04:57.024Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <CopyPrompt src="/prompts/nestjs-prompt.md"
@@ -25,7 +25,7 @@ To create a OptiTech project and access it from a NestJS application:
 
 If you do not have one already, create a OptiTech project. Save your connection details including your password. They are required when defining connection settings.
 
-1. Navigate to the [Projects](https://console.neon.tech/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
 2. Click **New Project**.
 3. Specify your project settings and click **Create Project**.
 
@@ -46,17 +46,17 @@ If you do not have one already, create a OptiTech project. Save your connection 
    ```
 
    ```shell
-   npm install @neondatabase/serverless
+   npm install @optitech/serverless
    ```
 
    </CodeTabs>
 
 ## Store your OptiTech credentials
 
-Add a `.env` file to your project directory and add your Neon connection string to it. You can find your connection details by clicking **Connect** on the OptiTech **Project Dashboard**. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
+Add a `.env` file to your project directory and add your OptiTech connection string to it. You can find your connection details by clicking **Connect** on the OptiTech **Project Dashboard**. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
 
 ```shell shouldWrap
-DATABASE_URL="postgresql://<user>:<password>@<endpoint_hostname>.neon.tech:<port>/<dbname>?sslmode=require&channel_binding=require"
+DATABASE_URL="postgresql://<user>:<password>@<endpoint_hostname>.optitech.com:<port>/<dbname>?sslmode=require&channel_binding=require"
 ```
 
 ## Configure the Postgres client
@@ -118,14 +118,14 @@ export class DatabaseModule {}
 ```typescript
 import { config } from 'dotenv';
 import { Module } from '@nestjs/common';
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 
 // Load Environment Variables
 config({
   path: ['.env', '.env.production', '.env.local'],
 });
 
-const sql = neon(process.env.DATABASE_URL);
+const sql = optitech(process.env.DATABASE_URL);
 
 const dbProvider = {
   provide: 'POSTGRES_POOL',
@@ -222,7 +222,7 @@ export class AppController {
 
   @Get()
   async getTable() {
-    return this.appService.getTable('playing_with_neon');
+    return this.appService.getTable('playing_with_optitech');
   }
 }
 ```

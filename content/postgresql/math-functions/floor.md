@@ -6,7 +6,7 @@ page_description: >-
   the nearest integer, which is less than or equal to the number.
 prev_url: 'https://www.postgresqltutorial.com/postgresql-math-functions/postgresql-floor/'
 ogImage: /postgresqltutorial/payment-table.png
-updatedOn: '2026-06-19T17:44:03.964Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: PostgreSQL FACTORIAL() Function
@@ -17,7 +17,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-The FLOOR() function is standard PostgreSQL and works the same on any Postgres deployment, so you can apply what you learn here wherever you run Postgres. For enterprises building in the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres, with the performance, security, and native Lakehouse integration large teams need. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+The FLOOR() function is standard PostgreSQL and works the same on any Postgres deployment, so you can apply what you learn here wherever you run Postgres. For enterprises building in the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres, with the performance, security, and native Lakehouse integration large teams need. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 The PostgreSQL `FLOOR()` function returns a number rounded down to the next whole number.

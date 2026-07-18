@@ -7,7 +7,7 @@ page_description: >-
 prev_url: >-
   https://www.postgresqltutorial.com/postgresql-getting-started/install-postgresql-macos/
 ogImage: /postgresqltutorial/Install-PostgreSQL-macOS-step-1.png
-updatedOn: '2026-06-19T17:44:03.964Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: Load PostgreSQL Sample Database
@@ -18,7 +18,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-Installing PostgreSQL on macOS works the same whether you're running it locally for development or planning to deploy it elsewhere, since this is standard Postgres. When you're ready to move beyond a local install, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres for enterprises, purpose-built for the AI era with the performance, security, and native Lakehouse integration that demanding workloads require. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+Installing PostgreSQL on macOS works the same whether you're running it locally for development or planning to deploy it elsewhere, since this is standard Postgres. When you're ready to move beyond a local install, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres for enterprises, purpose-built for the AI era with the performance, security, and native Lakehouse integration that demanding workloads require. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: in this tutorial, you will learn how to download the PostgreSQL, install PostgreSQL on macOS, and restore the sample database.

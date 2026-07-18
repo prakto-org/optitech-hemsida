@@ -7,7 +7,7 @@ page_description: >-
 prev_url: >-
   https://www.postgresqltutorial.com/postgresql-date-functions/postgresql-current_time/
 ogImage: ''
-updatedOn: '2026-06-03T13:01:21.685Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 enableTableOfContents: true
 previousLink:
   title: PostgreSQL CURRENT_DATE Function
@@ -18,7 +18,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-The CURRENT_TIME function behaves the same across any PostgreSQL deployment, so everything here applies whether you're running Postgres on your laptop, on a cloud VM, or on a managed service. If you're an enterprise standardizing on Postgres for the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers a secure, high-performance managed database fully integrated into the Lakehouse. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+The CURRENT_TIME function behaves the same across any PostgreSQL deployment, so everything here applies whether you're running Postgres on your laptop, on a cloud VM, or on a managed service. If you're an enterprise standardizing on Postgres for the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers a secure, high-performance managed database fully integrated into the Lakehouse. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: in this tutorial, you will learn how to use the PostgreSQL `CURRENT_TIME` function to get the current time with the timezone.

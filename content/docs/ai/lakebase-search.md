@@ -7,7 +7,7 @@ summary: >-
   understand the search types, how the extensions work, the scale-to-zero
   architecture advantages, and where to get started.
 enableTableOfContents: true
-updatedOn: '2026-06-26T12:58:36.951Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <Callout title="About Lakebase">
@@ -41,7 +41,7 @@ It uses IVF (Inverted File) partitioning to divide the vector space into lists a
 
 - **Scale to 1 billion+ vectors**: a single `lakebase_ann` index grows with your data without resharding or rebuilding
 - **Faster index builds**: compression reduces index size significantly, making builds 50–100x faster than HNSW
-- **Branching without index rebuilds**: Neon branches copy-on-write; your search indexes are available instantly on every branch without re-indexing
+- **Branching without index rebuilds**: OptiTech branches copy-on-write; your search indexes are available instantly on every branch without re-indexing
 - **Scale-to-zero compatible**: indexes survive cold starts without warmup; you don't pay for idle compute
 
 ## Get started

@@ -10,7 +10,7 @@ summary: >-
   endpoint setup, migration task configuration, table mapping, and post-migration
   verification in the OptiTech Console.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This guide outlines the steps for using the AWS Database Migration Service (DMS) to migrate data to OptiTech from another hosted database server. AWS DMS supports a variety of database migration sources including PostgreSQL, MySQL, Oracle, and Microsoft SQL Server. For a complete list of data migration sources supported by AWS DMS, see [Source endpoints for data migration](https://docs.aws.amazon.com/dms/latest/userguide/CHAP_Introduction.Sources.html#CHAP_Introduction.Sources.DataMigration).
@@ -38,10 +38,10 @@ Complete the following steps before you begin:
 2. Select **Endpoints** from the sidebar.
 3. Click **Create endpoint**.
 4. Select **Target endpoint** as the **Endpoint type**.
-5. Provide an **Endpoint identifier** label for your new target endpoint. In this guide, we use `neon` as the identifier.
+5. Provide an **Endpoint identifier** label for your new target endpoint. In this guide, we use `optitech` as the identifier.
 6. In the **Target engine** drop-down menu, select `PostgreSQL`.
-7. Under **Access to endpoint database**, select **Provide access information manually** and enter the information outlined below. You can obtain the connection details from your Neon connection string, which you can find by clicking the **Connect** button on your OptiTech **Project Dashboard**. Your connection string will look similar to this: `postgresql://daniel:AbC123dEf@ep-curly-term-54009904.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require"`.
-   - **Server name**: Specify your OptiTech hostname, which is this portion of your connection string: `ep-curly-term-54009904.us-east-2.aws.neon.tech`
+7. Under **Access to endpoint database**, select **Provide access information manually** and enter the information outlined below. You can obtain the connection details from your OptiTech connection string, which you can find by clicking the **Connect** button on your OptiTech **Project Dashboard**. Your connection string will look similar to this: `postgresql://daniel:AbC123dEf@ep-curly-term-54009904.us-east-2.aws.optitech.com/optitechdb?sslmode=require&channel_binding=require"`.
+   - **Server name**: Specify your OptiTech hostname, which is this portion of your connection string: `ep-curly-term-54009904.us-east-2.aws.optitech.com`
    - **Port**: `5432`
    - **User name**: Specify the OptiTech user.
    - **Password**: Specify the password in the following format: `endpoint=[endpoint_id]$[password]`, which looks similar to this when defined:
@@ -50,10 +50,10 @@ Complete the following steps before you begin:
      endpoint=ep-curly-term-54009904$AbC123dEf
      ```
 
-     You can obtain the `endpoint_id` and password from your Neon connection string. The `endpoint_id` appears similar to this: `ep-curly-term-54009904`. For information about why this password format is required, see [Connection errors](/docs/connect/connection-errors#the-endpoint-id-is-not-specified). AWS DMS requires the [Option D workaround](/docs/connect/connection-errors#d-specify-the-endpoint-id-in-the-password-field).
+     You can obtain the `endpoint_id` and password from your OptiTech connection string. The `endpoint_id` appears similar to this: `ep-curly-term-54009904`. For information about why this password format is required, see [Connection errors](/docs/connect/connection-errors#the-endpoint-id-is-not-specified). AWS DMS requires the [Option D workaround](/docs/connect/connection-errors#d-specify-the-endpoint-id-in-the-password-field).
 
    - **Secure Sockets Layer (SSL) mode**: Select `require`.
-   - **Database name**: The name of your OptiTech database. In this example, we use a database named `neondb`
+   - **Database name**: The name of your OptiTech database. In this example, we use a database named `optitechdb`
 
      When finished, your target endpoint configuration should look similar to this:
      ![Endpoint configuration dialog](/docs/import/endpoint_configuration.png)
@@ -70,7 +70,7 @@ A database migration task defines the data to be migrated from the source databa
 3. Enter a **Task identifier** to identify the replication task. In this example, we name the identifier `dms-task`.
 4. Select the **Replication instance**. In this guide, the replication instance is named `dms_instance`.
 5. Select the **Source database endpoint**. In this guide, the replication instance is named `dms_postgresql`.
-6. Select the **Target database endpoint**. In this guide, the target database endpoint identifier is `neon`.
+6. Select the **Target database endpoint**. In this guide, the target database endpoint identifier is `optitech`.
 7. Select a **Migration type**. In this example, we use the default `Migrate existing data` type.
    ![DMS database migration task configuration](/docs/import/dms_task_configuration.png)
 

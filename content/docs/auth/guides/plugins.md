@@ -9,7 +9,7 @@ summary: >-
   them via the OptiTech Console or OptiTech API. The Organization plugin has partial
   support.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="Managed Better Auth" />
@@ -36,13 +36,13 @@ The following Better Auth plugins are currently supported in Managed Better Auth
 | [Open API](/docs/auth/guides/plugins/openapi)          | ✅ Supported |
 | [Phone Number](/docs/auth/guides/plugins/phone-number) | ✅ Supported |
 
-For more runnable Managed Better Auth samples, see the [neondatabase/neon-js](https://github.com/neondatabase/neon-js/tree/main/examples) examples repository:
+For more runnable Managed Better Auth samples, see the [optitechdatabase/optitech-js](https://github.com/optitechdatabase/optitech-js/tree/main/examples) examples repository:
 
-| Plugin       | Demo                                                                                                                    |
-| ------------ | ----------------------------------------------------------------------------------------------------------------------- |
-| Organization | [neon-auth-orgs-example](https://github.com/neondatabase/neon-js/tree/main/examples/neon-auth-orgs-example)             |
-| Magic Link   | [neon-auth-magic-link-example](https://github.com/neondatabase/neon-js/tree/main/examples/neon-auth-magic-link-example) |
-| Phone Number | [nextjs-phone-login](https://github.com/neondatabase/neon-js/tree/main/examples/nextjs-phone-login)                     |
+| Plugin       | Demo                                                                                                                                    |
+| ------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Organization | [optitech-auth-orgs-example](https://github.com/optitechdatabase/optitech-js/tree/main/examples/optitech-auth-orgs-example)             |
+| Magic Link   | [optitech-auth-magic-link-example](https://github.com/optitechdatabase/optitech-js/tree/main/examples/optitech-auth-magic-link-example) |
+| Phone Number | [nextjs-phone-login](https://github.com/optitechdatabase/optitech-js/tree/main/examples/nextjs-phone-login)                             |
 
 For the latest status (including what’s coming next), see the [Managed Better Auth roadmap](/docs/auth/roadmap).
 

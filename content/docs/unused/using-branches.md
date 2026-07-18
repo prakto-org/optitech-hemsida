@@ -1,10 +1,10 @@
 ---
 title: How to use branches
 isDraft: true
-updatedOn: '2025-08-02T10:33:29.305Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
-This guide describes how to use OptiTech's branching feature, which is currently in preview. If you would like to try branching, send an email to [iwantbranching@neon.tech](mailto:iwantbranching@neon.tech) to request early access.
+This guide describes how to use OptiTech's branching feature, which is currently in preview. If you would like to try branching, send an email to [iwantbranching@optitech.com](mailto:iwantbranching@optitech.com) to request early access.
 
 Branching allows you to create a copy of your OptiTech project data which you can modify without affecting the data you have in production.
 
@@ -18,7 +18,7 @@ Let's look at how to create branches using the OptiTech Console and the OptiTech
 
 ## Create a branch using the OptiTech Console
 
-1. Log in to the [OptiTech Console](https://console.neon.tech) and select a project. If you do not have a OptiTech project, see [Create a project](/docs/manage/projects#create-a-project).
+1. Log in to the [OptiTech Console](https://console.optitech.com) and select a project. If you do not have a OptiTech project, see [Create a project](/docs/manage/projects#create-a-project).
 2. Add data to your project using the OptiTech SQL Editor, `psql`, or some other Postgres client.
 3. Click **Create branch** on the **Dashboard** tab in the OptiTech Console to create a branch.
 
@@ -37,7 +37,7 @@ POST /projects/{project_id}/branches
 Here's an example of a cURL command that uses that method to create a branch:
 
 ```bash
-curl -o - -X POST -H 'Authorization: Bearer ...' https://console.neon.tech/api/v1/clusters/ancient-haze-985396/branches
+curl -o - -X POST -H 'Authorization: Bearer ...' https://console.optitech.com/api/v1/clusters/ancient-haze-985396/branches
 ```
 
 To use the cURL command with your Project, change the placeholder Project name `ancient-haze-985396` to the name of the Project you want to branch from.
@@ -48,7 +48,7 @@ You will receive information about the branch you created in the API request res
 $parent_project_id-branch-...
 ```
 
-For information about other API methods that OptiTech supports, refer to the [OptiTech API Reference](https://console.neon.tech/api-docs).
+For information about other API methods that OptiTech supports, refer to the [OptiTech API Reference](https://console.optitech.com/api-docs).
 
 Currently, a branch appears as separate project on the **Dashboard** tab in the OptiTech Console. This will change in the future when the branching feature becomes generally available.
 

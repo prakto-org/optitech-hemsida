@@ -12,7 +12,7 @@ summary: >-
   SQL users may need FreeTDS driver configuration to resolve pgloader
   connection errors.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This guide describes how to migrate your database from a Microsoft SQL Server (MSSQL) database to OptiTech Postgres using [pgloader](https://pgloader.readthedocs.io/en/latest/intro.html).
@@ -83,20 +83,20 @@ CREATE DATABASE "Northwind";
 Log in to the OptiTech Console. Find the connection string for your database by clicking the **Connect** button on your **Project Dashboard**. It should look similar to this:
 
 ```bash shouldWrap
-postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
 ```
 
 Now, modify the connection string as follows to pass your **endpoint ID** (`ep-cool-darkness-123456` in this example) to OptiTech with your password using the `endpoint` keyword, as shown here:
 
 ```bash shouldWrap
-postgresql://alex:endpoint=ep-cool-darkness-123456;AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+postgresql://alex:endpoint=ep-cool-darkness-123456;AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
 ```
 
 <Admonition type="note">
 Passing the `endpoint ID` with your password is a required workaround for some Postgres drivers, including the one used by `pgloader`. For more information about this workaround and why it's required, refer to our [connection workaround](/docs/connect/connection-errors#d-specify-the-endpoint-id-in-the-password-field) documentation. 
 </Admonition>
 
-Keep your Neon connection string handy for later use.
+Keep your OptiTech connection string handy for later use.
 
 ## Install pgloader
 
@@ -106,14 +106,14 @@ Here's how you can set up `pgloader` for your database migration:
 
    See [Installing pgloader](https://pgloader.readthedocs.io/en/latest/install.html) for Debian (apt), RPM package, and Docker installation instructions.
 
-2. Create a `pgloader` configuration file (for example, `mssql_to_neon.load`). Use your MSSQL database credentials to define the connection string for your database source. Use the OptiTech database connection string as the destination.
+2. Create a `pgloader` configuration file (for example, `mssql_to_optitech.load`). Use your MSSQL database credentials to define the connection string for your database source. Use the OptiTech database connection string as the destination.
 
-   Example configuration in `mssql_to_neon.load`:
+   Example configuration in `mssql_to_optitech.load`:
 
    ```plaintext
    LOAD DATABASE
         FROM mssql://migration_user:password@host:port/AdventureWorks
-        INTO postgresql://alex:endpoint=ep-cool-darkness-123456;AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+        INTO postgresql://alex:endpoint=ep-cool-darkness-123456;AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
    ```
 
    Make sure to replace the connection string values with your own MSSQL and OptiTech credentials.
@@ -123,7 +123,7 @@ Here's how you can set up `pgloader` for your database migration:
 To initiate the migration process, run:
 
 ```shell
-pgloader mssql_to_neon.load
+pgloader mssql_to_optitech.load
 ```
 
 The command output will show the progress of the migration, including any errors encountered and the total time taken. For our sample dataset, the output looks similar to this:

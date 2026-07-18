@@ -588,6 +588,44 @@ Use `/simple-content` for edits to existing pages, shorter additions, or when yo
 | `/docs-prime`            | Load project structure and key paths into context                           |
 | `/list-doc-tools`        | Print the full list of available commands with descriptions                 |
 
+## VS Code Agent Infrastructure
+
+The `.claude/` agents and commands above have VS Code-native counterparts. Both sets stay in the repo; the `.claude/` files remain the source for Claude Code, while the files below are picked up by VS Code Copilot.
+
+### Custom agents (`.github/agents/*.agent.md`)
+
+Fourteen agents. The docs pipeline agents are ported from `.claude/agents/`; the specialists are new.
+
+| Agent                                                                                                     | Role                                                                                              |
+| --------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| `docs-supervisor`                                                                                           | Orchestrates the docs pipeline: triages, delegates to the five agents below, runs the review loop |
+| `content-planner`, `content-drafter`, `content-refiner`, `syntax-validator`, `ia-specialist`               | Subagent-only docs pipeline: plan, draft, review, validate MDX, check IA and navigation           |
+| `changelog-writer`                                                                                          | Writes `content/changelog/` entries in the standard format                                        |
+| `redirect-manager`                                                                                          | Handles file moves: `redirectFrom`, cross-references, `navigation.yaml`                           |
+| `frontend-dev`                                                                                              | React/Next.js work in `src/` following site conventions                                           |
+| `api-docs-writer`                                                                                           | Hand-written API reference in `content/api-docs/`                                                 |
+| `seo-reviewer`, `consistency-checker`, `humanizer`                                                          | Review specialists: SEO metadata, duplicated content, AI-sounding prose                           |
+| `test-runner`                                                                                               | Runs and fixes vitest, Cypress, and docs checks                                                   |
+
+### Skills (`.agents/skills/<name>/SKILL.md`)
+
+On-demand workflows, invocable as slash commands. Cloned from the corresponding `.claude/commands/` workflows.
+
+| Skill                 | Purpose                                                              |
+| --------------------- | -------------------------------------------------------------------- |
+| `blog-authoring`      | Blog working-copy flow (`npm run blog:*`)                            |
+| `docs-validation`     | Pre-commit checks on changed content markdown                        |
+| `changelog-authoring` | Changelog entry format and voice                                     |
+| `redirect-update`     | Move/rename workflow with worked examples                            |
+| `humanize-content`    | Remove AI writing patterns, apply Neon voice                         |
+| `golden-corpus`       | Exemplary docs by content type for style reference                   |
+| `neon-terminology`    | Terminology and capitalization rules                                 |
+| `skills-sync`         | Vendored skills workflow (`npm run update:skills`)                   |
+
+### Instructions (`.github/instructions/*.instructions.md`)
+
+Auto-attached by `applyTo` glob when matching files are edited: `docs-content`, `writing-style`, `terminology`, `changelog`, `guides`, `navigation` (docs and content rules), `react-components`, `scripts`, `testing`, `vendored-skills` (code and tooling rules).
+
 ## Build Process
 
 1. `predev`/`prebuild`: Generates docs icons config

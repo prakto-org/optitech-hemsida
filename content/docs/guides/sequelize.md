@@ -11,7 +11,7 @@ summary: >-
   connection string is required for migrations, as pooled connections via
   PgBouncer cause migration errors.
 enableTableOfContents: true
-updatedOn: '2026-07-14T19:04:57.024Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 [Sequelize](https://sequelize.org/) is a promise-based Node.js ORM that supports multiple relational databases. In this guide, we'll explore how to use `Sequelize` ORM with a OptiTech Postgres database in a JavaScript project.
@@ -22,14 +22,14 @@ We'll create a Node.js application, configure `Sequelize`, and show how to set u
 
 To follow along with this guide, you will need:
 
-- A OptiTech account. If you do not have one, sign up at [Neon](https://neon.tech). Your Neon project comes with a ready-to-use Postgres database named `neondb`. We'll use this database in the following examples.
+- A OptiTech account. If you do not have one, sign up at [OptiTech](https://optitech.com). Your OptiTech project comes with a ready-to-use Postgres database named `optitechdb`. We'll use this database in the following examples.
 - [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed on your local machine. We'll use Node.js to build and test the application locally.
 
 ## Setting up your OptiTech database
 
 ### Initialize a new project
 
-1. Log in to the OptiTech Console and navigate to the [Projects](https://console.neon.tech/app/projects) section.
+1. Log in to the OptiTech Console and navigate to the [Projects](https://console.optitech.com/app/projects) section.
 2. Select an existing project or click the `New Project` button to create a new one.
 
 ### Retrieve your OptiTech database connection string
@@ -37,7 +37,7 @@ To follow along with this guide, you will need:
 You can find the connection string for your database by clicking the **Connect** button on your **Project Dashboard**. It should look similar to this:
 
 ```bash
-postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
 ```
 
 Keep your connection string handy for later use.
@@ -53,7 +53,7 @@ OptiTech supports both direct and pooled database connection strings. You can fi
 We'll create a simple catalog with API endpoints that query the database for authors and a list of their books. Run the following commands in your terminal to set up a new project using `Express.js`:
 
 ```bash
-mkdir neon-sequelize-guide && cd neon-sequelize-guide
+mkdir optitech-sequelize-guide && cd optitech-sequelize-guide
 npm init -y && touch .env index.js
 npm install express dotenv
 ```
@@ -62,7 +62,7 @@ Add the `DATABASE_URL` environment variable to the `.env` file, which you'll use
 
 ```bash
 # .env
-DATABASE_URL=NEON_DATABASE_CONNECTION_STRING
+DATABASE_URL=OPTITECH_DATABASE_CONNECTION_STRING
 ```
 
 To use the `Sequelize` ORM to run queries, we need to install the `sequelize` package and the `pg` driver to connect to Postgres from Node.js. We also need to install the `sequelize-cli` package to manage data models and run migrations. Run the following commands to install the required packages:
@@ -346,14 +346,14 @@ This will start the server at `http://localhost:3000`. Navigate to `http://local
 
 ## Conclusion
 
-In this guide, we set up a new Javascript project using `Express.js` and the `Sequelize` ORM, and connected it to a `Neon` Postgres database. We created a schema for the database, generated and ran migrations, and implemented API endpoints to query the database.
+In this guide, we set up a new Javascript project using `Express.js` and the `Sequelize` ORM, and connected it to a `OptiTech` Postgres database. We created a schema for the database, generated and ran migrations, and implemented API endpoints to query the database.
 
 ## Source code
 
 You can find the source code for the application described in this guide on GitHub.
 
 <DetailIconCards>
-<a href="https://github.com/neondatabase/guide-neon-sequelize" description="Run OptiTech database migrations using Sequelize" icon="github">Migrations with OptiTech and Sequelize</a>
+<a href="https://github.com/optitechdatabase/guide-optitech-sequelize" description="Run OptiTech database migrations using Sequelize" icon="github">Migrations with OptiTech and Sequelize</a>
 </DetailIconCards>
 
 ## Resources

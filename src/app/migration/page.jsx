@@ -59,7 +59,7 @@ const MigrationPage = () => (
     <CardsSupport />
     <TestimonialNew
       className="pt-[185px] xl:pt-[161px] lg:pt-[136px] md:pt-[97px]"
-      quote="Database migrations are always a headache, but the OptiTech team made it a smooth process. Their support helped us troubleshoot performance issues and get everything running fast."
+      quote="Moving years of compliance work out of spreadsheets felt daunting, but the OptiTech team made it a smooth process. Their support helped us map our old controls and get everything verified fast."
       quoteClassName="max-w-[670px] lg:max-w-[620px] md:max-w-[570px] sm:max-w-[300px] sm:mx-auto"
       author={{
         name: 'Tejas Siripurapu',
@@ -74,7 +74,7 @@ const MigrationPage = () => (
       headerClassName="max-w-[640px] lg:max-w-[560px] md:max-w-[500px]"
       ulClassName="xl:max-w-208 xl:grid-cols-3 lg:mx-16"
       containerSize="960"
-      description="OptiTech provides a serverless, fully managed Postgres built for modern development — fast, reliable, and cost-effective."
+      description="OptiTech replaces spreadsheets, static documents, and legacy GRC tools with continuous, automated compliance."
       items={FEATURES}
     />
     <CTANew

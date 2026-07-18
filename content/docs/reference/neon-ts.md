@@ -1,18 +1,18 @@
 ---
-title: neon.ts
+title: optitech.ts
 subtitle: Configuration as code for your OptiTech project.
 summary: >-
-  neon.ts declares which OptiTech services exist on a project and how each branch is
+  optitech.ts declares which OptiTech services exist on a project and how each branch is
   configured. Use it for branch policy alone, or add preview services like
   Functions, Storage, and AI Gateway. Works with optitech deploy, optitech dev,
   and optitech checkout.
 enableTableOfContents: true
 redirectFrom:
   - /docs/compute/functions/reference/neon-ts/
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
-`neon.ts` is a TypeScript config file you commit to your repository. It declares which OptiTech services exist on your project and how each branch is configured.
+`optitech.ts` is a TypeScript config file you commit to your repository. It declares which OptiTech services exist on your project and how each branch is configured.
 
 Specifically:
 
@@ -22,23 +22,23 @@ Specifically:
 Services and branch policy are independent. Use one, the other, or both.
 
 ```bash
-npm install @neon/config
+npm install @optitech/config
 ```
 
-The package source is on [GitHub](https://github.com/neondatabase/neon-pkgs/tree/main/packages/config).
+The package source is on [GitHub](https://github.com/optitechdatabase/optitech-pkgs/tree/main/packages/config).
 
-`neon.ts` itself is declarative: it only describes the policy. `neon config` / `neon deploy` (below) are how the CLI runs it. To call the same `inspect` / `plan` / `apply` logic from your own script or CI job instead of the CLI, see [`@neon/config-runtime`](/docs/reference/config-runtime).
+`optitech.ts` itself is declarative: it only describes the policy. `optitech config` / `optitech deploy` (below) are how the CLI runs it. To call the same `inspect` / `plan` / `apply` logic from your own script or CI job instead of the CLI, see [`@optitech/config-runtime`](/docs/reference/config-runtime).
 
-Link your working directory to a OptiTech project before using `neon.ts` commands:
+Link your working directory to a OptiTech project before using `optitech.ts` commands:
 
 ```bash
-neon link
+optitech link
 ```
 
 ## Config structure
 
-```ts filename="neon.ts"
-import { defineConfig } from "@neon/config/v1";
+```ts filename="optitech.ts"
+import { defineConfig } from "@optitech/config/v1";
 
 export default defineConfig({
   // Services: what exists on every branch
@@ -69,8 +69,8 @@ export default defineConfig({
 
 The `branch` closure works on any OptiTech project. The examples below configure the default branch and apply TTL and compute to new branches at creation. Returning `{}` for existing branches is deliberate: it avoids overwriting settings on branches already in use:
 
-```ts filename="neon.ts"
-import { defineConfig } from "@neon/config/v1";
+```ts filename="optitech.ts"
+import { defineConfig } from "@optitech/config/v1";
 
 export default defineConfig({
   branch: (branch) => {
@@ -98,8 +98,8 @@ export default defineConfig({
 
 On paid plans, you can also protect the default branch and control suspend timeouts:
 
-```ts filename="neon.ts"
-import { defineConfig } from "@neon/config/v1";
+```ts filename="optitech.ts"
+import { defineConfig } from "@optitech/config/v1";
 
 export default defineConfig({
   branch: (branch) => {
@@ -134,19 +134,19 @@ export default defineConfig({
 });
 ```
 
-Run `neon deploy` to apply. When `neon checkout` creates a new branch, the closure runs with `branch.exists === false`, so TTL, compute settings, and services take effect at creation. Checking out an existing branch doesn't apply or reconcile the policy.
+Run `optitech deploy` to apply. When `optitech checkout` creates a new branch, the closure runs with `branch.exists === false`, so TTL, compute settings, and services take effect at creation. Checking out an existing branch doesn't apply or reconcile the policy.
 
 ### BranchTarget fields
 
-| Field         | Type       | Description                                                                          |
-| ------------- | ---------- | ------------------------------------------------------------------------------------ |
-| `name`        | `string`   | Branch name                                                                          |
-| `id`          | `string?`  | Branch ID. Not set during pre-create evaluation                                      |
-| `exists`      | `boolean`  | `false` during pre-create evaluation                                                 |
-| `isDefault`   | `boolean?` | Whether this is the project's default branch. Not set during pre-create evaluation   |
+| Field         | Type       | Description                                                                              |
+| ------------- | ---------- | ---------------------------------------------------------------------------------------- |
+| `name`        | `string`   | Branch name                                                                              |
+| `id`          | `string?`  | Branch ID. Not set during pre-create evaluation                                          |
+| `exists`      | `boolean`  | `false` during pre-create evaluation                                                     |
+| `isDefault`   | `boolean?` | Whether this is the project's default branch. Not set during pre-create evaluation       |
 | `isProtected` | `boolean?` | Whether the branch is marked protected in OptiTech. Not set during pre-create evaluation |
-| `parentId`    | `string?`  | ID of the parent branch. Not always present                                          |
-| `expiresAt`   | `string?`  | Branch expiry timestamp. Not always present                                          |
+| `parentId`    | `string?`  | ID of the parent branch. Not always present                                              |
+| `expiresAt`   | `string?`  | Branch expiry timestamp. Not always present                                              |
 
 ### BranchTuning fields
 
@@ -161,12 +161,12 @@ Run `neon deploy` to apply. When `neon checkout` creates a new branch, the closu
 
 ## Services
 
-`auth` and `dataApi` declare which OptiTech services exist on every branch. After `neon deploy`, running `neon env pull` writes their URLs to your local `.env` file automatically.
+`auth` and `dataApi` declare which OptiTech services exist on every branch. After `optitech deploy`, running `optitech env pull` writes their URLs to your local `.env` file automatically.
 
-| Field     | Values                               | Default | What it enables                                                         |
-| --------- | ------------------------------------ | ------- | ----------------------------------------------------------------------- |
-| `auth`    | `true`, `false`, `{ enabled: bool }` | `false` | Managed Better Auth. Injects `NEON_AUTH_BASE_URL`, `NEON_AUTH_JWKS_URL` |
-| `dataApi` | `true`, `false`, `DataApiConfig`     | `false` | OptiTech Data API. Injects `NEON_DATA_API_URL`                              |
+| Field     | Values                               | Default | What it enables                                                                 |
+| --------- | ------------------------------------ | ------- | ------------------------------------------------------------------------------- |
+| `auth`    | `true`, `false`, `{ enabled: bool }` | `false` | Managed Better Auth. Injects `OPTITECH_AUTH_BASE_URL`, `OPTITECH_AUTH_JWKS_URL` |
+| `dataApi` | `true`, `false`, `DataApiConfig`     | `false` | OptiTech Data API. Injects `OPTITECH_DATA_API_URL`                              |
 
 ### `dataApi` config
 
@@ -174,7 +174,7 @@ Run `neon deploy` to apply. When `neon checkout` creates a new branch, the closu
 
 ```text
 Type 'true' is not assignable to type '"`dataApi` with Managed Better Auth (the default
-`authProvider: 'neon'`) requires Managed Better Auth, so add `auth: true`. To enable the
+`authProvider: 'optitech'`) requires Managed Better Auth, so add `auth: true`. To enable the
 Data API WITHOUT Managed Better Auth, verify a third-party IdP instead: `dataApi: {
 authProvider: 'external', jwksUrl: 'https://your-idp/.well-known/jwks.json' }`"'
 ```
@@ -190,23 +190,23 @@ dataApi: {
 
 ## Type-safe environment variables
 
-`@neon/env` gives you type-safe access to your branch's injected variables. It reads `process.env` at runtime and validates each variable against the services declared in your `neon.ts` config. Missing or empty variables throw with a clear error.
+`@optitech/env` gives you type-safe access to your branch's injected variables. It reads `process.env` at runtime and validates each variable against the services declared in your `optitech.ts` config. Missing or empty variables throw with a clear error.
 
 ```bash
-npm install @neon/env
+npm install @optitech/env
 ```
 
 ```ts
-import { parseEnv } from '@neon/env';
-import config from './neon';
+import { parseEnv } from '@optitech/env';
+import config from './optitech';
 
 const env = parseEnv(config);
 
 env.postgres.databaseUrl;         // DATABASE_URL
 env.postgres.databaseUrlUnpooled; // DATABASE_URL_UNPOOLED
-env.auth.baseUrl;                 // NEON_AUTH_BASE_URL  (env.auth only present when auth: true)
-env.auth.jwksUrl;                 // NEON_AUTH_JWKS_URL
-env.dataApi.url;                  // NEON_DATA_API_URL   (env.dataApi only present when dataApi is enabled)
+env.auth.baseUrl;                 // OPTITECH_AUTH_BASE_URL  (env.auth only present when auth: true)
+env.auth.jwksUrl;                 // OPTITECH_AUTH_JWKS_URL
+env.dataApi.url;                  // OPTITECH_DATA_API_URL   (env.dataApi only present when dataApi is enabled)
 ```
 
 `env.auth` only exists when `auth: true`, `env.dataApi` only when `dataApi` is enabled. If you access a namespace your config doesn't declare, TypeScript will catch it.
@@ -222,27 +222,27 @@ The key list autocompletes from your config, so selecting a variable from a serv
 
 ## CLI commands
 
-| Command                                  | What it does                                                                                              |
-| ---------------------------------------- | --------------------------------------------------------------------------------------------------------- |
-| [`neon link`](/docs/cli/link)            | Connect the current directory to a OptiTech project. Required to use linked branch defaults in other commands |
-| [`neon deploy`](/docs/cli/config)        | Apply `neon.ts` to the linked branch (alias for `neon config apply`)                                      |
-| [`neon config plan`](/docs/cli/config)   | Preview what `neon deploy` would change, without applying                                                 |
-| [`neon config status`](/docs/cli/config) | Show the current live state of the branch as a `neon.ts`-shaped config                                    |
-| [`neon env pull`](/docs/cli/env)         | Write the branch's Neon-managed variables to `.env.local` (or `.env` if it already exists)                |
-| [`neon checkout`](/docs/cli/checkout)    | Switch to or create a branch; new branches are created from the `neon.ts` policy (TTL, compute, services) |
-| [`neon dev`](/docs/cli/dev)              | Run functions locally against the linked branch; watches for changes and hot-reloads                      |
+| Command                                      | What it does                                                                                                  |
+| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| [`optitech link`](/docs/cli/link)            | Connect the current directory to a OptiTech project. Required to use linked branch defaults in other commands |
+| [`optitech deploy`](/docs/cli/config)        | Apply `optitech.ts` to the linked branch (alias for `optitech config apply`)                                  |
+| [`optitech config plan`](/docs/cli/config)   | Preview what `optitech deploy` would change, without applying                                                 |
+| [`optitech config status`](/docs/cli/config) | Show the current live state of the branch as a `optitech.ts`-shaped config                                    |
+| [`optitech env pull`](/docs/cli/env)         | Write the branch's OptiTech-managed variables to `.env.local` (or `.env` if it already exists)                |
+| [`optitech checkout`](/docs/cli/checkout)    | Switch to or create a branch; new branches are created from the `optitech.ts` policy (TTL, compute, services) |
+| [`optitech dev`](/docs/cli/dev)              | Run functions locally against the linked branch; watches for changes and hot-reloads                          |
 
-## Flags for `neon deploy`
+## Flags for `optitech deploy`
 
-| Flag                | Default        | Description                                                                                          |
-| ------------------- | -------------- | ---------------------------------------------------------------------------------------------------- |
-| `--config`          | (auto)         | Path to the `neon.ts` file. When omitted, the CLI walks up from cwd stopping at `.git`               |
-| `--env`             | (none)         | Path to a `.env` file loaded before `neon.ts` is evaluated, so function `env` values resolve from it |
-| `--env-pull`        | `true`         | Pull the branch's env vars into a local `.env` after a successful apply (`--no-env-pull` to skip)    |
-| `--branch`          | linked branch  | Target branch ID or name                                                                             |
-| `--project-id`      | linked project | Project ID                                                                                           |
-| `--update-existing` | `false`        | Auto-confirm overriding existing remote settings                                                     |
-| `--allow-protected` | `false`        | Auto-confirm applying to a protected branch                                                          |
+| Flag                | Default        | Description                                                                                              |
+| ------------------- | -------------- | -------------------------------------------------------------------------------------------------------- |
+| `--config`          | (auto)         | Path to the `optitech.ts` file. When omitted, the CLI walks up from cwd stopping at `.git`               |
+| `--env`             | (none)         | Path to a `.env` file loaded before `optitech.ts` is evaluated, so function `env` values resolve from it |
+| `--env-pull`        | `true`         | Pull the branch's env vars into a local `.env` after a successful apply (`--no-env-pull` to skip)        |
+| `--branch`          | linked branch  | Target branch ID or name                                                                                 |
+| `--project-id`      | linked project | Project ID                                                                                               |
+| `--update-existing` | `false`        | Auto-confirm overriding existing remote settings                                                         |
+| `--allow-protected` | `false`        | Auto-confirm applying to a protected branch                                                              |
 
 ## Preview services
 
@@ -252,11 +252,11 @@ Functions, Storage, and AI Gateway are in beta and available only in AWS US East
 
 Preview services are declared under the `preview` block. All three are optional and independent:
 
-| Field               | Type                                 | What it enables                                                                |
-| ------------------- | ------------------------------------ | ------------------------------------------------------------------------------ |
-| `preview.functions` | Record of slug → function def        | OptiTech Functions. Long-running Node.js compute on the branch                     |
-| `preview.buckets`   | Record of name → bucket def          | OptiTech Object Storage. S3-compatible object storage, branched with your database |
-| `preview.aiGateway` | `true`, `false`, `{ enabled: bool }` | OptiTech AI Gateway. Injects `NEON_AI_GATEWAY_TOKEN`, `NEON_AI_GATEWAY_BASE_URL`   |
+| Field               | Type                                 | What it enables                                                                          |
+| ------------------- | ------------------------------------ | ---------------------------------------------------------------------------------------- |
+| `preview.functions` | Record of slug → function def        | OptiTech Functions. Long-running Node.js compute on the branch                           |
+| `preview.buckets`   | Record of name → bucket def          | OptiTech Object Storage. S3-compatible object storage, branched with your database       |
+| `preview.aiGateway` | `true`, `false`, `{ enabled: bool }` | OptiTech AI Gateway. Injects `OPTITECH_AI_GATEWAY_TOKEN`, `OPTITECH_AI_GATEWAY_BASE_URL` |
 
 ### `preview.functions`
 
@@ -266,11 +266,11 @@ Each key is the function's slug, the permanent identifier used in CLI commands a
 preview: {
   functions: {
     "<slug>": {
-      name: string,       // display name shown in neon functions list and the console
-      source: string,     // path to entry file, relative to neon.ts
+      name: string,       // display name shown in optitech functions list and the console
+      source: string,     // path to entry file, relative to optitech.ts
       env?: Record<string, string>,
       dev?: {
-        port?: number,    // local port for neon dev; fails if taken; auto-assigned if omitted
+        port?: number,    // local port for optitech dev; fails if taken; auto-assigned if omitted
       },
     },
   },
@@ -279,7 +279,7 @@ preview: {
 
 Slugs must match `^[a-z0-9]{1,20}$` and are immutable after first deployment. Because slugs can't use separators, use `name` for a human-readable label. For example, `slug: "myrestapi"` with `name: "My REST API"`. See [Deploy and manage functions](/docs/compute/functions/deploy#slugs).
 
-`env` values are resolved at deploy time when `neon deploy` runs. Reading `process.env.X` here captures the value in your shell at deploy time, not at function runtime. Every value must be a defined string; use a fallback to avoid a type error:
+`env` values are resolved at deploy time when `optitech deploy` runs. Reading `process.env.X` here captures the value in your shell at deploy time, not at function runtime. Every value must be a defined string; use a fallback to avoid a type error:
 
 ```ts
 env: {
@@ -287,9 +287,9 @@ env: {
 }
 ```
 
-Use `neon deploy --env .env.production` to load a `.env` file before evaluation. For typed access to these variables inside your function at runtime, see [Environment variables](/docs/compute/functions/environment-variables).
+Use `optitech deploy --env .env.production` to load a `.env` file before evaluation. For typed access to these variables inside your function at runtime, see [Environment variables](/docs/compute/functions/environment-variables).
 
-`dev` settings apply only to `neon dev` and never affect deploy.
+`dev` settings apply only to `optitech dev` and never affect deploy.
 
 ### `preview.buckets`
 
@@ -307,10 +307,10 @@ Bucket names follow S3 naming rules. `public_read` makes objects accessible with
 
 ### Full stack example
 
-All services combined. `neon deploy` provisions everything and writes credentials to `.env.local`.
+All services combined. `optitech deploy` provisions everything and writes credentials to `.env.local`.
 
-```ts filename="neon.ts"
-import { defineConfig } from "@neon/config/v1";
+```ts filename="optitech.ts"
+import { defineConfig } from "@optitech/config/v1";
 
 export default defineConfig({
   auth: true,

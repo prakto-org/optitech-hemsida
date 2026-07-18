@@ -9,7 +9,7 @@ summary: >-
   are not superusers. Repacking temporarily doubles storage and increases WAL
   history for the duration of your PITR window.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 Postgres, like any database system, can accumulate bloat over time due to frequent updates and deletes. Bloat refers to wasted space within your tables and indexes, which can lead to decreased query performance and increased storage usage. `pg_repack` is a powerful Postgres extension that allows you to efficiently remove this bloat by rewriting tables and indexes online, with minimal locking. Unlike `VACUUM FULL` or `CLUSTER`, `pg_repack` avoids exclusive locks, ensuring your applications remain available during the reorganization process.
@@ -157,25 +157,25 @@ Here are a few examples of how to use `pg_repack` with different options:
 ### Basic repack of a table
 
     ```bash shouldWrap
-    pg_repack -k -h <your_neon_host> -p 5432 -d <your_neon_database> -U <your_neon_username> --table your_table_name
+    pg_repack -k -h <your_optitech_host> -p 5432 -d <your_optitech_database> -U <your_optitech_username> --table your_table_name
     ```
 
 ### Reordering a table by a column
 
     ```bash shouldWrap
-    pg_repack -k -h <your_neon_host> -p 5432 -d <your_neon_database> -U <your_neon_username> --table your_table_name --order-by "indexed_column DESC"
+    pg_repack -k -h <your_optitech_host> -p 5432 -d <your_optitech_database> -U <your_optitech_username> --table your_table_name --order-by "indexed_column DESC"
     ```
 
 ### Repacking only indexes of a table
 
     ```bash shouldWrap
-    pg_repack -k -h <your_neon_host> -p 5432 -d <your_neon_database> -U <your_neon_username> --table your_table_name --only-indexes
+    pg_repack -k -h <your_optitech_host> -p 5432 -d <your_optitech_database> -U <your_optitech_username> --table your_table_name --only-indexes
     ```
 
 ### Dry run to preview repack operations
 
     ```bash shouldWrap
-    pg_repack -k -N -h <your_neon_host> -p 5432 -d <your_neon_database> -U <your_neon_username> --table your_table_name
+    pg_repack -k -N -h <your_optitech_host> -p 5432 -d <your_optitech_database> -U <your_optitech_username> --table your_table_name
     ```
 
 ## Using `pg_repack` to reorganize tables
@@ -228,15 +228,15 @@ Note the size of the table before repack.
 Now, execute the `pg_repack` command from your terminal
 
 ```bash shouldWrap
-pg_repack -k -h <your_neon_host> -p 5432 -d <your_neon_database> -U <your_neon_username> --table bloated_table
+pg_repack -k -h <your_optitech_host> -p 5432 -d <your_optitech_database> -U <your_optitech_username> --table bloated_table
 ```
 
-Replace the placeholders with your Neon connection details.
+Replace the placeholders with your OptiTech connection details.
 
-- `-h <your_neon_host>`: Your OptiTech hostname.
+- `-h <your_optitech_host>`: Your OptiTech hostname.
 - `-p 5432`: The port (always 5432 for OptiTech Postgres).
-- `-d <your_neon_database>`: Your OptiTech database name.
-- `-U <your_neon_username>`: Your OptiTech username.
+- `-d <your_optitech_database>`: Your OptiTech database name.
+- `-U <your_optitech_username>`: Your OptiTech username.
 - `--table bloated_table`: Specifies the table to repack.
 
 You will be prompted to enter your OptiTech password after running the command.
@@ -253,7 +253,7 @@ Before `pg_repack`:
 ```text
  Schema |      Name       | Type  |    Owner     | Persistence | Access method |   Size   | Description
 --------+-----------------+-------+--------------+-------------+---------------+----------+-------------
- public | bloated_table   | table | neondb_owner | permanent   | heap          | 8192 kB  |
+ public | bloated_table   | table | optitechdb_owner | permanent   | heap          | 8192 kB  |
 (1 row)
 ```
 
@@ -262,7 +262,7 @@ After `pg_repack`:
 ```text
  Schema |      Name       | Type  |    Owner     | Persistence | Access method |   Size   | Description
 --------+-----------------+-------+--------------+-------------+---------------+----------+-------------
- public | bloated_table   | table | neondb_owner | permanent   | heap          | 4096 kB  |
+ public | bloated_table   | table | optitechdb_owner | permanent   | heap          | 4096 kB  |
 (1 row)
 ```
 

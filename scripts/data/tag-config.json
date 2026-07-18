@@ -3,8 +3,8 @@
     {
       "slug": "projects",
       "specName": "project",
-      "display": "Projects",
-      "description": "Create, manage, and delete Neon projects",
+      "display": "Programs",
+      "description": "Create, manage, and delete OptiTech programs",
       "groups": [
         {
           "label": "Core",
@@ -61,8 +61,8 @@
     {
       "slug": "branches",
       "specName": "branch",
-      "display": "Branches",
-      "description": "Copy-on-write database clones for dev, test, and CI/CD",
+      "display": "Frameworks",
+      "description": "Activate, manage, and cross-map frameworks",
       "groups": [
         {
           "label": "Core",
@@ -133,8 +133,8 @@
     {
       "slug": "endpoints",
       "specName": "endpoint",
-      "display": "Endpoints",
-      "description": "Compute instances that run your Postgres workload",
+      "display": "Integrations",
+      "description": "Connections that collect evidence from your systems",
       "groups": [
         {
           "label": "Core",
@@ -160,7 +160,7 @@
       "slug": "auth",
       "specName": "auth",
       "display": "Authentication",
-      "description": "Neon Auth configuration and user management",
+      "description": "Team authentication configuration and user management",
       "groups": [
         {
           "label": "Setup",
@@ -231,7 +231,7 @@
       "slug": "organizations",
       "specName": "organizations",
       "display": "Organizations",
-      "description": "Manage org members, API keys, VPC endpoints, and spending",
+      "description": "Manage org members, API keys, network access, and spending",
       "groups": [
         {
           "label": "Core",
@@ -326,7 +326,7 @@
       "slug": "regions",
       "specName": "region",
       "display": "Regions",
-      "description": "List supported deployment regions",
+      "description": "List supported EU hosting regions",
       "groups": [
         {
           "label": "Core",
@@ -339,8 +339,8 @@
     {
       "slug": "consumption",
       "specName": "consumption",
-      "display": "Consumption",
-      "description": "Query billing and usage metrics",
+      "display": "Usage",
+      "description": "Query plan status and usage",
       "groups": [
         {
           "label": "History",
@@ -371,7 +371,7 @@
       "slug": "snapshots",
       "specName": "snapshot",
       "display": "Snapshots",
-      "description": "Point-in-time backup and restore",
+      "description": "Point-in-time program snapshots for audits",
       "groups": [
         {
           "label": "Core",
@@ -395,8 +395,8 @@
     {
       "slug": "dataapi",
       "specName": "dataapi",
-      "display": "Data API",
-      "description": "RESTful access to your database",
+      "display": "OptiTech API",
+      "description": "RESTful access to your program",
       "groups": [
         {
           "label": "Data API",
@@ -472,27 +472,27 @@
     {
       "slug": "buckets",
       "display": "Buckets",
-      "description": "Manage branch buckets and objects"
+      "description": "Manage document buckets and objects"
     },
     {
       "slug": "storage",
       "display": "Storage",
-      "description": "Inspect branch storage state"
+      "description": "Inspect document storage state"
     },
     {
       "slug": "ai-gateway",
       "display": "AI Gateway",
-      "description": "Retrieve branch AI Gateway endpoints"
+      "description": "Retrieve program AI copilot endpoints"
     },
     {
       "slug": "credentials",
       "display": "Credentials",
-      "description": "Issue and revoke scoped branch credentials"
+      "description": "Issue and revoke scoped program credentials"
     },
     {
       "slug": "functions",
       "display": "Functions",
-      "description": "Manage branch functions and deployments"
+      "description": "Manage automated checks and deployments"
     }
   ],
   "operationOverrides": {

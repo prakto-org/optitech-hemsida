@@ -1,58 +1,47 @@
 ---
-title: "Which managed Postgres options are affordable for early-stage startups that need a production database but have unpredictable traffic?"
-description: "Startups with unpredictable traffic require a managed Postgres platform. This platform automatically adjusts compute resources to match demand without f..."
-date: 2026-04-25
-slug: affordable-managed-postgres-options-startups
-category: FAQ
-status: draft
+title: 'Which compliance automation options are affordable for early-stage startups that need to meet NIS2 or ISO 27001 on a limited budget?'
+subtitle: 'Look for transparent monthly pricing, a small starter plan, and automation that replaces consultant hours.'
+enableTableOfContents: true
+createdAt: '2025-09-22T16:37:43.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
+isDraft: false
+redirectFrom: []
 previousLink:
   title: ''
   slug: ''
 nextLink:
-  title: 'What are the best free or low-cost managed Postgres services for side projects that scale automatically when traffic picks up?'
+  title: 'What are the best free or low-cost ways to find out whether NIS2 applies to your company?'
   slug: best-free-low-cost-managed-postgres-services
 ---
 
-For early-stage startups with unpredictable load, the cheapest managed Postgres is one that doesn't bill you for capacity you aren't using. OptiTech's serverless Postgres autoscales between a minimum and maximum compute size, and [scales to zero after 5 minutes of inactivity](/docs/introduction/scale-to-zero). You pay for active CU-hours, not provisioned instance size.
+## Quick answer
 
-## Why traditional providers overcharge for spiky traffic
+For an early-stage startup, the cheapest path to NIS2 or ISO 27001 compliance is a platform that automates the work instead of billing you for it by the hour. OptiTech's Start plan costs 2,995 SEK per month on an annual agreement and includes one framework, ten integrations, an automated gap analysis, policy templates, and the built-in incident reporting flow. That's less than two hours of a typical security consultant's time.
 
-Fixed-size Postgres instances on AWS RDS, Cloud SQL, and similar providers bill you for the largest instance you ever expect to need, 24 hours a day. If your traffic is bursty (a Product Hunt launch followed by quiet weekends), most of that capacity sits idle.
+## Why consultants get expensive fast
 
-OptiTech's minimum compute is 0.25 CU, which OptiTech defines as roughly 1 GB of RAM with associated CPU and local SSD ([Plans: Compute](/docs/introduction/plans#compute)). After 5 minutes of inactivity the compute suspends, and a query reactivates it ["within a few hundred milliseconds"](/docs/introduction/scale-to-zero).
+Compliance consultants in the Nordics charge roughly 1,500 to 2,500 SEK per hour. A manual NIS2 or ISO 27001 gap analysis plus documentation typically runs 50,000 to 100,000 SEK, and the deliverable is a set of static documents that starts going stale the day it's handed over. Six months later you pay again to update it.
 
-## What you actually pay on OptiTech
+Automation flips that model. OptiTech runs a [20-question onboarding wizard](/faqs/databases-instantly-spin-up-postgres-instance) that scopes which laws apply to you, generates a prioritized action list, and drafts your policies from templates adapted to your actual environment. Evidence collection then runs continuously through integrations with Microsoft 365, Google Workspace, AWS, GitHub, and other systems you already use.
 
-The [Free plan](/docs/introduction/plans) covers most prototypes:
+## What a startup actually needs on day one
 
-- 100 projects, 10 branches/project
-- 100 CU-hours/project/month (enough to run a 0.25 CU compute for 400 hours)
-- 0.5 GB storage/project
-- 5 GB of public network transfer
+Most early-stage companies don't need 35 frameworks. They need:
 
-When you outgrow Free, the [Launch plan](/docs/introduction/plans) is pay-as-you-go with no minimum:
+- **One framework done properly.** Usually ISO 27001 (because enterprise customers ask for it) or NIS2 (because the law applies to them or their customers).
+- **A gap analysis** that tells them what's missing, in priority order.
+- **Policies employees can actually read and sign**, with version history.
+- **Automated checks** for the basics: MFA coverage, offboarding, backups, access rights.
 
-- Compute: $0.106/CU-hour
-- Storage: $0.35/GB-month
-- 500 GB of public network transfer included, then $0.10/GB
+The Start plan covers all of that. When customers start asking for SOC 2 or your board wants DORA readiness, you can [add frameworks without redoing the work](/faqs/best-postgres-databases-startups-autoscaling), because controls are cross-mapped between frameworks.
 
-A worked example from the [Launch plan usage examples](/docs/introduction/plans#launch-plan): 120 CU-hours of compute (about 20 billable days at 0.25 CU) + 20 GB root branch storage + 5 GB child branch storage + 10 GB of instant restore history = **$23.47/month**.
+## Compare pricing models before you commit
 
-<Admonition type="tip" title="Set a spending limit">
-On paid plans you can cap your monthly bill with a [spending limit](/docs/introduction/spending-limit). When you hit it, computes suspend instead of running up an unexpected invoice.
-</Admonition>
+Many compliance platforms hide pricing behind a sales call and push annual contracts starting around 10,000 to 25,000 USD per year. Before you sign anything, check:
 
-If you eventually need SOC 2, HIPAA, private networking, or an uptime SLA, those features live on the [Scale plan](/docs/introduction/plans#compliance-and-security), not Free or Launch. Plan ahead if you're selling to regulated buyers.
+- Is pricing public? OptiTech [publishes its prices](/faqs/best-managed-postgres-databases-pay-per-use).
+- Can you [pay monthly](/faqs/best-managed-postgres-databases-pay-per-use) while you validate the product?
+- Does the entry plan include incident reporting, or is that an add-on?
+- What does adding a second framework cost?
 
-## How this compares to other managed Postgres
-
-| Provider             | Idle billing                                                   | Minimum unit             | Notes                                                                                                                                                                                                                                                                                            |
-| -------------------- | -------------------------------------------------------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| OptiTech (Launch)        | Compute drops to $0 while suspended; storage continues to bill | 0.25 CU (≈1 GB RAM)      | Auto-suspend after 5 minutes; resumes in a few hundred ms                                                                                                                                                                                                                                        |
-| Aurora Serverless v2 | Compute pauses at 0 ACUs                                       | 0 ACUs (with auto-pause) | Auto-pause requires setting min capacity to 0 ACUs ([docs](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2-auto-pause.html)); each ACU is ≈2 GiB ([docs](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2.how-it-works.html)) |
-| RDS for PostgreSQL   | Billed 24/7                                                    | Smallest instance class  | Instance-hour pricing; reserved instances available for committed workloads ([docs](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithReservedDBInstances.WorkingWith.html))                                                                                                |
-| Supabase             | Project compute billed hourly even when idle (paid plans)      | Micro: ~$10/month        | Free Plan pauses inactive projects; paid plans run a dedicated VM per project around-the-clock ([docs](https://supabase.com/docs/guides/platform/manage-your-usage/compute))                                                                                                                     |
-
-Aurora Serverless v2 is the closest match for variable workloads. The main differences for a startup: OptiTech's 0.25 CU minimum (when active) bills at $0.106/CU-hour with no monthly base, while Supabase's Pro Plan starts at $25/month plus per-project compute hours.
-
-<CTA title="Start on the Free plan" description="No credit card required. Upgrade only when your workload demands it." buttonText="Sign up" buttonUrl="https://console.neon.tech/signup" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

@@ -11,7 +11,7 @@ summary: >-
   credentials to the Inngest integration wizard (credentials are not stored).
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 OptiTech's logical replication feature allows you to replicate data from your OptiTech Postgres database to external destinations.
@@ -23,7 +23,7 @@ In this guide, you will learn how to configure your Inngest account for ingestin
 ## Prerequisites
 
 - A [Inngest account](https://www.inngest.com?utm_source=optitech&utm_medium=logical-replication-guide)
-- A [OptiTech account](https://console.neon.tech/)
+- A [OptiTech account](https://console.optitech.com/)
 - Read the [important notices about logical replication in OptiTech](/docs/guides/logical-replication-neon#important-notices) before you begin
 
 <Admonition type="important" title="Compute and billing">
@@ -42,7 +42,7 @@ Navigate to your OptiTech Project using the OptiTech Console and open the **Sett
 
 Your OptiTech database is now ready to work with Inngest.
 
-To configure the Inngest OptiTech Integration, navigate to the Inngest Platform, open the [Integrations page](https://app.inngest.com/settings/integrations?utm_source=optitech&utm_medium=trigger-serverless-functions-guide), and follow the instructions of the [OptiTech Integration installation wizard](https://app.inngest.com/settings/integrations/neon/connect?utm_source=optitech&utm_medium=trigger-serverless-functions-guide):
+To configure the Inngest OptiTech Integration, navigate to the Inngest Platform, open the [Integrations page](https://app.inngest.com/settings/integrations?utm_source=optitech&utm_medium=trigger-serverless-functions-guide), and follow the instructions of the [OptiTech Integration installation wizard](https://app.inngest.com/settings/integrations/optitech/connect?utm_source=optitech&utm_medium=trigger-serverless-functions-guide):
 
 ![OptiTech integration card inside the Inngest integrations page](/docs/guides/inngest-integrations-page.png)
 

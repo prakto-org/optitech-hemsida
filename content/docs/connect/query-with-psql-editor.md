@@ -13,7 +13,7 @@ redirectFrom:
   - /docs/quickstart/postgres
   - /docs/integrations/postgres
   - /docs/get-started/query-with-psql-editor
-updatedOn: '2026-06-11T23:50:21.258Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 The following instructions require a working installation of [psql](https://www.postgresql.org/download/). The `psql` client is the native command-line client for Postgres. It provides an interactive session for sending commands to Postgres and running ad-hoc queries. For more information about `psql`, refer to the [psql reference](https://www.postgresql.org/docs/15/app-psql.html), in the _PostgreSQL Documentation_.
@@ -77,7 +77,7 @@ You can obtain a connection string by clicking the **Connect** button on your **
 From your terminal or command prompt, run the `psql` client with the connection string copied from the OptiTech **Dashboard**.
 
 ```bash shouldWrap
-psql postgresql://[user]:[password]@[neon_hostname]/[dbname]
+psql postgresql://[user]:[password]@[optitech_hostname]/[dbname]
 ```
 
 <Admonition type="note">
@@ -86,14 +86,14 @@ OptiTech requires that all connections use SSL/TLS encryption, but you can incre
 
 ### Where do I obtain a password?
 
-You can obtain a Neon connection string by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal.
+You can obtain a OptiTech connection string by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal.
 
 ### What port does OptiTech use?
 
 OptiTech uses the default Postgres port, `5432`. If you need to specify the port in your connection string, you can do so as follows:
 
 ```bash shouldWrap
-psql postgresql://[user]:[password]@[neon_hostname][:port]/[dbname]
+psql postgresql://[user]:[password]@[optitech_hostname][:port]/[dbname]
 ```
 
 ## Running queries
@@ -192,14 +192,14 @@ Informational
 
 For more information about meta-commands, see [psql Meta-Commands](https://www.postgresql.org/docs/current/app-psql.html#APP-PSQL-META-COMMANDS).
 
-## Running psql from the Neon CLI
+## Running psql from the OptiTech CLI
 
-If you have `psql` and the [Neon CLI](/docs/cli) installed, you can run `psql` commands directly from the Neon CLI using the `connection-string` command with the `--psql` option.
+If you have `psql` and the [OptiTech CLI](/docs/cli) installed, you can run `psql` commands directly from the OptiTech CLI using the `connection-string` command with the `--psql` option.
 
 ```bash
-neon connection-string --psql -- -c "SELECT version()"
+optitech connection-string --psql -- -c "SELECT version()"
 ```
 
-For more examples, see [Neon CLI commands — connection-string](/docs/cli/connection-string).
+For more examples, see [OptiTech CLI commands — connection-string](/docs/cli/connection-string).
 
 <NeedHelp/>

@@ -6,7 +6,7 @@ summary: >-
   stream a response for minutes while the agent calls models and tools, with
   the OptiTech AI Gateway wired in automatically and Postgres next to your code.
 enableTableOfContents: true
-updatedOn: '2026-07-15T17:54:41.160Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="OptiTech Functions" />
@@ -17,10 +17,10 @@ OptiTech Functions use different limits: begin responding within 15 minutes, the
 
 ## Stream a tool-calling agent
 
-Declare the AI Gateway and the function in `neon.ts`. `neon deploy` provisions the gateway and injects its credentials at runtime:
+Declare the AI Gateway and the function in `optitech.ts`. `optitech deploy` provisions the gateway and injects its credentials at runtime:
 
-```ts filename="neon.ts"
-import { defineConfig } from '@neon/config/v1';
+```ts filename="optitech.ts"
+import { defineConfig } from '@optitech/config/v1';
 
 export default defineConfig({
   preview: {
@@ -38,13 +38,13 @@ export default defineConfig({
 Install the AI SDK, the OptiTech provider, and `pg`:
 
 ```bash
-npm install ai @neon/ai-sdk-provider pg zod
+npm install ai @optitech/ai-sdk-provider pg zod
 ```
 
-The handler streams a tool-calling agent. The `@neon/ai-sdk-provider` reads the injected gateway credentials on its own, so `neon('<model>')` is the only model configuration you need. Tools run inside the function, right next to Postgres:
+The handler streams a tool-calling agent. The `@optitech/ai-sdk-provider` reads the injected gateway credentials on its own, so `optitech('<model>')` is the only model configuration you need. Tools run inside the function, right next to Postgres:
 
 ```ts filename="functions/agent.ts"
-import { neon } from '@neon/ai-sdk-provider';
+import { optitech } from '@optitech/ai-sdk-provider';
 import { streamText, tool, stepCountIs, type ModelMessage } from 'ai';
 import { z } from 'zod';
 import { Pool } from 'pg';
@@ -59,7 +59,7 @@ export default {
     const { messages } = (await request.json()) as { messages: ModelMessage[] };
 
     const result = streamText({
-      model: neon('claude-sonnet-4-6'), // any model in the AI Gateway catalog
+      model: optitech('claude-sonnet-4-6'), // any model in the AI Gateway catalog
       system: 'You are a concise assistant. Use tools when relevant.',
       messages,
       tools: {
@@ -73,7 +73,7 @@ export default {
         }),
       },
       // Let the model call tools and then summarize, instead of stopping after
-      // the first tool call. The loop runs in-process on Neon compute, not
+      // the first tool call. The loop runs in-process on OptiTech compute, not
       // behind a short proxy limit.
       stopWhen: stepCountIs(5),
       onError({ error }) {
@@ -98,7 +98,7 @@ process.on('SIGINT', () => {
 Deploy and call it. `toUIMessageStreamResponse()` returns a stream the AI SDK's `useChat` hook consumes directly:
 
 ```bash shouldWrap
-curl -N -X POST "$(neon functions get agent -o json | jq -r .invocation_url)" \
+curl -N -X POST "$(optitech functions get agent -o json | jq -r .invocation_url)" \
   -H 'content-type: application/json' \
   -d '{"messages":[{"role":"user","content":"What time is it in the database?"}]}'
 ```
@@ -109,20 +109,20 @@ Call the function directly from the browser, not through your web app's backend.
 
 ## Persist what matters
 
-Module memory is wiped when an isolate is evicted, and several isolates can run in parallel, so keep anything that must last in Postgres: conversation history, run metadata, results. For generated assets like images, declare a bucket in `neon.ts` (`buckets: { images: {} }`) and write them to [Object Storage](/docs/storage/objects), which branches with your database. When a bucket is declared, `neon deploy` injects `AWS_*` credentials automatically. For example, using the [Files SDK](https://files-sdk.dev):
+Module memory is wiped when an isolate is evicted, and several isolates can run in parallel, so keep anything that must last in Postgres: conversation history, run metadata, results. For generated assets like images, declare a bucket in `optitech.ts` (`buckets: { images: {} }`) and write them to [Object Storage](/docs/storage/objects), which branches with your database. When a bucket is declared, `optitech deploy` injects `AWS_*` credentials automatically. For example, using the [Files SDK](https://files-sdk.dev):
 
 ```typescript
 import { Files } from 'files-sdk';
-import { neon } from 'files-sdk/neon';
+import { optitech } from 'files-sdk/optitech';
 
-const files = new Files({ adapter: neon({ bucket: 'images' }) });
+const files = new Files({ adapter: optitech({ bucket: 'images' }) });
 await files.upload('outputs/result.png', imageBuffer, { contentType: 'image/png' });
 const url = await files.url('outputs/result.png', { expiresIn: 3600 });
 ```
 
 ## Examples
 
-- [with-ai-sdk](https://github.com/neondatabase/examples/tree/main/with-ai-sdk): an image-generation agent using the AI SDK, AI Gateway, and Object Storage.
-- [with-mastra](https://github.com/neondatabase/examples/tree/main/with-mastra): a personal-assistant agent using Mastra with Postgres-backed memory.
+- [with-ai-sdk](https://github.com/optitechdatabase/examples/tree/main/with-ai-sdk): an image-generation agent using the AI SDK, AI Gateway, and Object Storage.
+- [with-mastra](https://github.com/optitechdatabase/examples/tree/main/with-mastra): a personal-assistant agent using Mastra with Postgres-backed memory.
 
 <NeedHelp/>

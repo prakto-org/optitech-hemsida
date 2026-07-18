@@ -14,7 +14,7 @@ redirectFrom:
 tag: new
 tagTheme: green
 enableTableOfContents: true
-updatedOn: '2026-07-13T14:20:27.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <FeatureBeta />
@@ -60,14 +60,14 @@ Use the [Create anonymized branch](/docs/reference/api/branches/create-project-b
 
 ```bash
 curl -X POST \
-  'https://console.neon.tech/api/v2/projects/{project_id}/branch_anonymized' \
-  -H 'Authorization: Bearer $NEON_API_KEY' \
+  'https://console.optitech.com/api/v2/projects/{project_id}/branch_anonymized' \
+  -H 'Authorization: Bearer $OPTITECH_API_KEY' \
   -H 'Accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
     "masking_rules": [
       {
-        "database_name": "neondb",
+        "database_name": "optitechdb",
         "schema_name": "public",
         "table_name": "users",
         "column_name": "email",
@@ -149,12 +149,12 @@ Example request to mask an email column:
 
 ```bash
 curl -X PATCH \
-  'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/masking_rules' \
-  -H 'Authorization: Bearer $NEON_API_KEY' \
+  'https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/masking_rules' \
+  -H 'Authorization: Bearer $OPTITECH_API_KEY' \
   -H 'Content-Type: application/json' \
   -d '{
     "masking_rules": [{
-      "database_name": "neondb",
+      "database_name": "optitechdb",
       "schema_name": "public",
       "table_name": "users",
       "column_name": "email",
@@ -224,8 +224,8 @@ Use the [Get masking rules](/docs/reference/api/branches/get-masking-rules) endp
 
 ```bash
 curl -X GET \
-  'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/masking_rules' \
-  -H 'Authorization: Bearer $NEON_API_KEY' \
+  'https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/masking_rules' \
+  -H 'Authorization: Bearer $OPTITECH_API_KEY' \
   -H 'Accept: application/json'
 ```
 
@@ -235,21 +235,21 @@ Example response:
 {
   "masking_rules": [
     {
-      "database_name": "neondb",
+      "database_name": "optitechdb",
       "schema_name": "public",
       "table_name": "users",
       "column_name": "email",
       "masking_function": "anon.dummy_free_email()"
     },
     {
-      "database_name": "neondb",
+      "database_name": "optitechdb",
       "schema_name": "public",
       "table_name": "users",
       "column_name": "phone",
       "masking_function": "anon.partial(phone, 2, 'XXX-XXXX', 2)"
     },
     {
-      "database_name": "neondb",
+      "database_name": "optitechdb",
       "schema_name": "public",
       "table_name": "users",
       "column_name": "address",

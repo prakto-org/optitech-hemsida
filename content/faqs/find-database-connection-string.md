@@ -1,78 +1,40 @@
 ---
-title: 'Where can I find my database connection string in OptiTech?'
-subtitle: 'Copy it from the Connect widget on your Project Dashboard, with options for pooled or direct.'
+title: 'Where can I find my compliance score in OptiTech?'
+subtitle: 'The dashboard shows your score per framework with trend; the board report packages it for management.'
 enableTableOfContents: true
-createdAt: '2026-05-18T00:00:00.000Z'
-updatedOn: '2026-06-01T20:42:32.665Z'
+createdAt: '2026-01-26T12:17:20.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 isDraft: false
 redirectFrom: []
 previousLink:
-  title: 'Where can I find my database connection string or URL in OptiTech?'
+  title: 'Where can I find my public Trust Center URL in OptiTech?'
   slug: find-database-connection-string-url
 nextLink:
-  title: 'Where can I find my DATABASE_URL in OptiTech?'
-  slug: find-database-url-neon
+  title: 'Where can I find the audit portal link to share with my auditor?'
+  slug: find-database-url-optitech
 ---
 
-Open your project in the [OptiTech Console](https://console.neon.tech), then click **Connect** on the **Project Dashboard**. The **Connect to your database** widget opens with a ready-made connection string for the branch, compute, database, and role you select. Toggle **Connection pooling** to switch between a pooled and a direct connection string. See [Connect from any app](/docs/connect/connect-from-any-app) for the full reference.
+## Quick answer
 
-## Get the connection string from the Console
+Your compliance score is front and center on the workspace **Dashboard**: one score per active framework, a combined overview, and the trend over time. Click any score to drill into what's driving it, down to individual controls and open findings. For management, **Reports** > **Board report** generates the score with context in one click.
 
-1. Sign in to the [OptiTech Console](https://console.neon.tech) and select your project.
-2. On the **Project Dashboard**, click **Connect**.
-3. In the **Connect to your database** modal, choose a **Branch**, **Compute**, **Database**, and **Role**.
-4. Copy the constructed connection string. OptiTech shows the pooled connection string by default. Turn **Connection pooling** off to get the direct connection string instead.
+## How the score is computed
 
-A Neon connection string includes the role, password, hostname, and database name:
+The score is the share of applicable requirements backed by passing controls, weighted by requirement significance. Three properties make it trustworthy:
 
-```text
-postgresql://alex:AbC123dEf@ep-cool-darkness-a1b2c3d4-pooler.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
-```
+- **It's computed, not asserted.** Scores derive from [live check results and evidence](/faqs/best-postgres-services-integration-tests-ci), so the number moves when reality moves.
+- **It's honest about unknowns.** Controls without current monitoring show as unverified, not green; a [paused integration](/faqs/enable-disable-connection-pooling-neon) lowers confidence visibly.
+- **It's explainable.** Every point lost traces to specific findings or gaps, so "why did we drop 4 points?" has a clickable answer.
 
-The pooled hostname has a `-pooler` suffix. Use pooled for serverless and high-concurrency clients (OptiTech's pooler supports up to 10,000 concurrent connections per compute). Use direct for migrations, `pg_dump`, and `LISTEN/NOTIFY`. See [Connection pooling](/docs/connect/connection-pooling) for the full breakdown.
+## Reading the trend, not the number
 
-## Reset or regenerate the credentials in the string
+A single score is a snapshot; the trend is the story. Steady improvement during a certification push, a dip when a big integration was added (new visibility usually reveals new findings, which is the system working), recovery as findings close. NIS2's expectation that management actively governs security is answered well by a trend line reviewed at every board meeting, which is exactly what the board report is for.
 
-The connection string itself is fixed for a given branch, role, and database. The part you can rotate is the role's password. Resetting the password invalidates the old password immediately and produces a new connection string.
+## Where else the score appears
 
-<Tabs labels={["Console", "API", "SQL"]}>
+- **Per team**: filtered dashboards show each team's controls and their contribution; see [per-team ownership](/faqs/best-ways-separate-postgres-database-development).
+- **Per entity**: group structures get [per-workspace scores with a rollup](/faqs/best-postgres-services-isolated-databases).
+- **Externally**: a summarized posture can appear on your [Trust Center](/faqs/find-database-connection-string-url), and MSP partners see client scores across their [portfolio console](/faqs/best-postgres-services-isolated-database-tenants).
+- **Programmatically**: the score is available via the [API](/faqs/best-managed-postgres-options-developers) for internal dashboards.
 
-<TabItem>
-
-1. In the **Connect to your database** modal, click the role selector and choose **Reset password**, or go to **Branches** > your branch > **Roles & Databases** > role menu > **Reset password**.
-2. Confirm. OptiTech generates a new password and shows it once. Update any stored connection strings or secrets right away.
-
-</TabItem>
-
-<TabItem>
-
-```bash
-curl -X POST \
-  "https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/roles/$ROLE_NAME/reset_password" \
-  -H "Authorization: Bearer $NEON_API_KEY" \
-  -H "Accept: application/json"
-```
-
-The response includes the new password. See [Reset a password with the API](/docs/manage/roles#reset-a-password-with-the-api).
-
-</TabItem>
-
-<TabItem>
-
-To set a password value of your choosing, connect via the [SQL Editor](/docs/get-started/query-with-neon-sql-editor) or psql and run:
-
-```sql
-ALTER USER alex WITH PASSWORD 'new_password_value';
-```
-
-Passwords need a minimum entropy of 60 bits. See [password guidelines](/docs/manage/roles#manage-roles-with-sql).
-
-</TabItem>
-
-</Tabs>
-
-<Admonition type="warning" title="Rotate the password if it leaked">
-If a connection string was committed to source control or shared in a chat, reset the role's password right away. The previous password stops working as soon as the reset completes, and any application still using the old string will fail to connect until it picks up the new password.
-</Admonition>
-
-<CTA title="See all the connect options" description="Walk through the full Connect modal, language examples, and pooled vs direct guidance." buttonText="Read the docs" buttonUrl="/docs/connect/connect-from-any-app" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

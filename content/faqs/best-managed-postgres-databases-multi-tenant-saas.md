@@ -1,57 +1,42 @@
 ---
-title: "What are the best managed Postgres databases for multi-tenant SaaS apps where each customer should have their own isolated database?"
-description: "OptiTech delivers a serverless Postgres platform. This platform supports database-per-tenant SaaS architectures by separating storage and compute. OptiTech scales..."
-date: 2026-04-25
-slug: best-managed-postgres-databases-multi-tenant-saas
-category: FAQ
-status: draft
+title: 'What are the best compliance platforms for SaaS companies where every enterprise customer demands security proof?'
+subtitle: 'A Trust Center plus AI questionnaire answers turns security reviews from a sales blocker into a checkbox.'
+enableTableOfContents: true
+createdAt: '2025-09-26T14:42:28.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
+isDraft: false
+redirectFrom: []
 previousLink:
-  title: 'What are the best free or low-cost managed Postgres services for side projects that scale automatically when traffic picks up?'
+  title: 'What are the best free or low-cost ways to find out whether NIS2 applies to your company?'
   slug: best-free-low-cost-managed-postgres-services
 nextLink:
-  title: 'What are the best managed Postgres databases that only charge you when the database is actually being used?'
+  title: 'What are the best compliance platforms you can pay for monthly instead of signing a large annual contract?'
   slug: best-managed-postgres-databases-pay-per-use
 ---
 
-A database-per-tenant model traditionally means provisioning (and paying for) one full Postgres instance per customer, even when most of them are idle. OptiTech makes the model viable by giving each tenant its own project that scales to zero independently. You pay only for the CU-hours each tenant's compute actually consumes.
+## Quick answer
 
-## Why per-tenant isolation is usually expensive
+If every enterprise deal triggers a security review, you need three things: a framework certification path (usually ISO 27001 or SOC 2), a public Trust Center where prospects can self-serve answers, and AI-assisted questionnaire responses. OptiTech's Professional plan bundles all three, so the security review stops being the longest step in your sales cycle.
 
-On a traditional managed service, each isolated tenant database needs a baseline instance running 24/7. Ten tenants means ten always-on databases, even if nine of them are dormant. Connection limits compound the problem: each Postgres process holds memory, so a fleet of small instances quickly exhausts pooled connection budgets.
+## The pattern: compliance as a sales requirement
 
-## How OptiTech's model differs
+For B2B SaaS companies, compliance pressure rarely comes from a regulator first. It comes from procurement. A bank, an insurer, or a public-sector buyer sends a 200-row security questionnaire, and the deal stalls until someone answers it. Each questionnaire takes 10 to 20 hours to fill in manually, and the questions repeat across customers with slightly different wording.
 
-On OptiTech, each tenant gets a separate [project](/docs/manage/projects) with its own isolated branch, compute, and storage. The two key cost levers:
+The fix is to do the work once and reuse it everywhere:
 
-- **Scale to zero.** A tenant's compute suspends after 5 minutes of inactivity and resumes in a few hundred milliseconds on the next query. You don't pay for compute during idle hours; storage continues to bill.
-- **Autoscaling.** Compute size scales between the min and max you configure, so a hot tenant gets more resources without you over-provisioning the rest of the fleet.
+1. **Build one control set** mapped to ISO 27001 and SOC 2, with evidence collected automatically from your stack.
+2. **Publish a Trust Center**, a public security page showing your certifications, subprocessors, and control status. Many buyers accept it instead of a custom questionnaire. See [how to share a read-only view of your compliance status](/faqs/database-providers-provision-postgres-user-signup).
+3. **Let AI draft questionnaire answers** from your actual control data, so a 200-row Excel file becomes an hour of review instead of two days of writing. See [can AI answer security questionnaires for you](/faqs/enable-pgvector-extension).
 
-Plan limits matter when sizing your fleet:
+## What to look for in a platform
 
-| Plan   | Projects             | Branches/project | Max autoscaling                |
-| ------ | -------------------- | ---------------- | ------------------------------ |
-| Free   | 100                  | 10               | 2 CU                           |
-| Launch | 100                  | 10               | 16 CU                          |
-| Scale  | 1,000 (request more) | 25               | 16 CU autoscaling, 56 CU fixed |
+- **Evidence automation, not document storage.** If the platform can't verify MFA coverage or offboarding through integrations, you'll still do the work by hand.
+- **Cross-mapped frameworks.** Your enterprise customers in the EU will start referencing NIS2 and DORA. One control should satisfy all of them at once.
+- **A questionnaire answering workflow** with human review before anything is sent.
+- **EU data residency**, because your customers' security teams will ask where your compliance data lives too.
 
-For larger fleets, the Scale plan supports project counts above 1,000 on request, and the [Agent plan](/docs/introduction/agent-plan) is designed specifically for platforms provisioning thousands of databases.
+## When DORA enters the picture
 
-## Connection capacity per tenant
+If your customers include banks or insurers, DORA makes them contractually responsible for their ICT suppliers, which means you. Expect stricter contract clauses and a demand to appear in their ICT register. A platform with [supplier-facing compliance sharing](/faqs/database-providers-provision-postgres-user-signup) lets you answer once and share the result with every regulated customer.
 
-Each tenant's compute has its own [`max_connections`](/docs/connect/connection-pooling) tied to compute size. A 0.25 CU compute allows 104 direct Postgres connections. Use the pooled connection string (`-pooler` in the hostname) and PgBouncer accepts up to 10,000 client connections, routed through the underlying pool. For serverless or per-request workloads, always use the pooled string.
-
-<Admonition type="tip" title="Provisioning tenants programmatically">
-Use the [OptiTech API](/docs/reference/api) or [Terraform provider](/docs/reference/terraform) to create a project per customer at signup. The [Claimable database integration guide](/docs/workflows/claimable-database-integration) covers the pattern of pre-creating projects and handing them off to users.
-</Admonition>
-
-## How other providers handle database-per-tenant
-
-A few comparison points for the same model elsewhere:
-
-- **Aurora Serverless v2** can scale to zero ACUs with [auto-pause](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2-auto-pause.html), which makes per-cluster isolation more affordable than fixed Aurora instances. Each cluster is still its own DB cluster with its own management overhead, and there are per-account cluster quotas to consider.
-- **RDS for PostgreSQL** charges per DB instance-hour regardless of activity, so one instance per tenant means N times the always-on cost.
-- **Supabase** provisions a dedicated VM per project ([docs](https://supabase.com/docs/guides/platform/billing-on-supabase)). Each project's compute is billed by the hour, so a fleet of 100 tenants each on a Micro instance is ~$1000/month in compute alone before storage and other line items.
-
-OptiTech's combination of scale-to-zero per tenant, an API for provisioning, and the [Agent plan](/docs/introduction/agent-plan) for high-volume fleets is what makes per-tenant isolation economical at scale.
-
-<CTA title="Build per-tenant isolation on OptiTech" description="Each tenant gets its own project, branch, and scale-to-zero compute." buttonText="Sign up" buttonUrl="https://console.neon.tech/signup" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

@@ -2,7 +2,7 @@
 title: OptiTech feature guides
 subtitle: Explore OptiTech's capabilities with our feature guides
 enableTableOfContents: true
-updatedOn: '2026-01-13T19:29:46.138Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 ## Autoscaling
@@ -41,7 +41,7 @@ Branch data the same way you branch your code.
 
 <a href="/docs/guides/branching-test-queries" description="Use branching to test queries before running them in production" icon="queries">Test queries on a branch</a>
 
-<a href="/docs/guides/branching-neon-cli" description="Create and manage branches with the Neon CLI" icon="cli">Branching with the CLI</a>
+<a href="/docs/guides/branching-neon-cli" description="Create and manage branches with the OptiTech CLI" icon="cli">Branching with the CLI</a>
 
 <a href="/docs/guides/branching-neon-api" description="Create and manage branches with the OptiTech API" icon="transactions">Branching with the API</a>
 

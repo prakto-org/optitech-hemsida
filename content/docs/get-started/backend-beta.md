@@ -20,17 +20,17 @@ Three new services join Postgres and Managed Better Auth, all scoped to your bra
 - **OptiTech Object Storage**: S3-compatible object storage that branches with your data.
 - **OptiTech AI Gateway**: one credential for frontier and open-source models (Claude, GPT, Gemini, and more).
 
-You declare all of it in one `neon.ts` file, and it branches together: fork a branch and you get an isolated copy of your database, files, storage, functions, and gateway.
+You declare all of it in one `optitech.ts` file, and it branches together: fork a branch and you get an isolated copy of your database, files, storage, functions, and gateway.
 
 ## Check your access
 
-To confirm access, go to [console.neon.tech](https://console.neon.tech), open a project in **US East (Ohio)**, and check the left navigation for **Storage**, **Credentials**, **AI Gateway**, and **Functions**. For what AI Gateway costs once billing begins, see [AI Gateway pricing](/docs/ai-gateway/overview#pricing).
+To confirm access, go to [console.optitech.com](https://console.optitech.com), open a project in **US East (Ohio)**, and check the left navigation for **Storage**, **Credentials**, **AI Gateway**, and **Functions**. For what AI Gateway costs once billing begins, see [AI Gateway pricing](/docs/ai-gateway/overview#pricing).
 
 <img src="/docs/get-started/neon_app_backend.png" alt="OptiTech app backend navigation" width="240" />
 
-Not seeing the services? The most common reason is region: the project isn't in `us-east-2`. Create a new project in **US East (Ohio)**, or switch to an existing one there. If AI Gateway is the only thing missing, check your plan, it requires Launch or Scale. If a service is still missing after that, post in [#neon-platform-beta](https://discord.com/channels/1176467419317940276/1525919714541437058) on Discord.
+Not seeing the services? The most common reason is region: the project isn't in `us-east-2`. Create a new project in **US East (Ohio)**, or switch to an existing one there. If AI Gateway is the only thing missing, check your plan, it requires Launch or Scale. If a service is still missing after that, post in [#optitech-platform-beta](https://discord.com/channels/1176467419317940276/1525919714541437058) on Discord.
 
-Using the CLI? Keep it current, the beta CLI updates frequently. Run `npm i -g neon@latest` before each session and before reporting a bug.
+Using the CLI? Keep it current, the beta CLI updates frequently. Run `npm i -g optitech@latest` before each session and before reporting a bug.
 
 ## Start building
 
@@ -40,26 +40,25 @@ The fastest path is to hand the setup to your AI assistant. Open Cursor or Claud
 
 For a guided path instead, pick the one that fits how you work:
 
-- [Tour the OptiTech backend](/docs/get-started/backend-overview): how Postgres, Object Storage, Functions, the AI Gateway, and Auth fit together in one `neon.ts`, with a copyable prompt to hand your AI assistant.
-- [Full backend quickstart](/docs/get-started/full-backend-quickstart): build a working Next.js backend end-to-end, wiring Postgres, Object Storage, and a OptiTech Function that calls the AI Gateway.
+- [Get audit-ready quickstart](/docs/get-started/full-backend-quickstart): from sign-up to a running compliance program, one step at a time.
 
 ### Bootstrap from a template
 
-Run `neon bootstrap` in an empty folder to scaffold a ready-made app, then follow its README. Pick from the templates below, or browse them all at [github.com/neondatabase/examples](https://github.com/neondatabase/examples). See the [`bootstrap` reference](/docs/cli/bootstrap) for command options.
+Run `optitech bootstrap` in an empty folder to scaffold a ready-made app, then follow its README. Pick from the templates below, or browse them all at [github.com/optitechdatabase/examples](https://github.com/optitechdatabase/examples). See the [`bootstrap` reference](/docs/cli/bootstrap) for command options.
 
-| Template            | What it builds                                                                                                                                                                                                     |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `hono`              | A todo CRUD API using Hono and Drizzle ORM, deployed as a OptiTech Function. Includes pre-configured schema and migrations. A good starting point for any HTTP API on OptiTech Functions.                                  |
+| Template            | What it builds                                                                                                                                                                                                                 |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `hono`              | A todo CRUD API using Hono and Drizzle ORM, deployed as a OptiTech Function. Includes pre-configured schema and migrations. A good starting point for any HTTP API on OptiTech Functions.                                      |
 | `ai-sdk`            | A streaming AI chat agent on OptiTech Functions that generates images on demand, stores them in OptiTech Object Storage, and indexes metadata in Postgres via Drizzle. Uses OptiTech AI Gateway for model access.              |
 | `mastra`            | A personal-assistant chatbot on OptiTech Functions that remembers you across conversations. Streams responses through OptiTech AI Gateway and persists context across threads using Mastra Memory backed by OptiTech Postgres. |
-| `mcp`               | An MCP server on OptiTech Functions that exposes contact management tools (create, update, delete, search) to AI agents via streamable HTTP. Compatible with Cursor, Claude Desktop, and other MCP clients.            |
-| `realtime-chat`     | A full-stack realtime chat app: Next.js frontend with Managed Better Auth, a WebSocket server on OptiTech Functions, and messages persisted and fanned out across isolates with Postgres LISTEN/NOTIFY.                |
-| `realtime-sse`      | A realtime shared counter: TanStack Router SPA connected to a Hono server on OptiTech Functions via server-sent events. State persists in Postgres and broadcasts across isolates with LISTEN/NOTIFY.                  |
-| `discord-bot-http`  | A Discord interactions bot on OptiTech Functions: slash commands, embeds, Components v2 buttons, and user profiles with command usage tracked in Postgres.                                                             |
-| `telegram-bot-http` | A Telegram webhook bot on OptiTech Functions: bot commands, inline keyboard buttons, and user profiles with command usage tracked in Postgres.                                                                         |
-| `whatsapp-bot-http` | A WhatsApp Cloud API webhook bot on OptiTech Functions: bot commands, interactive reply buttons, and user profiles with command usage tracked in Postgres.                                                             |
+| `mcp`               | An MCP server on OptiTech Functions that exposes contact management tools (create, update, delete, search) to AI agents via streamable HTTP. Compatible with Cursor, Claude Desktop, and other MCP clients.                    |
+| `realtime-chat`     | A full-stack realtime chat app: Next.js frontend with Managed Better Auth, a WebSocket server on OptiTech Functions, and messages persisted and fanned out across isolates with Postgres LISTEN/NOTIFY.                        |
+| `realtime-sse`      | A realtime shared counter: TanStack Router SPA connected to a Hono server on OptiTech Functions via server-sent events. State persists in Postgres and broadcasts across isolates with LISTEN/NOTIFY.                          |
+| `discord-bot-http`  | A Discord interactions bot on OptiTech Functions: slash commands, embeds, Components v2 buttons, and user profiles with command usage tracked in Postgres.                                                                     |
+| `telegram-bot-http` | A Telegram webhook bot on OptiTech Functions: bot commands, inline keyboard buttons, and user profiles with command usage tracked in Postgres.                                                                                 |
+| `whatsapp-bot-http` | A WhatsApp Cloud API webhook bot on OptiTech Functions: bot commands, interactive reply buttons, and user profiles with command usage tracked in Postgres.                                                                     |
 
-For per-service details, see [OptiTech Functions](/docs/compute/functions/overview), [OptiTech Object Storage](/docs/storage/overview), and [OptiTech AI Gateway](/docs/ai-gateway/overview). For inspiration, [Build on OptiTech](https://build-on-neon.vercel.app/) indexes demo apps built on the full platform stack.
+For per-service details, see [OptiTech Functions](/docs/compute/functions/overview), [OptiTech Object Storage](/docs/storage/overview), and [OptiTech AI Gateway](/docs/ai-gateway/overview). For inspiration, [Build on OptiTech](https://build-on-optitech.vercel.app/) indexes demo apps built on the full platform stack.
 
 ## Known limitations
 
@@ -67,7 +66,7 @@ For per-service details, see [OptiTech Functions](/docs/compute/functions/overvi
 
 ## Feedback
 
-Post in [#neon-platform-beta](https://discord.com/channels/1176467419317940276/1525919714541437058) on Discord: bugs, confusion, docs gaps, feature requests, and what you build. We run office hours and user interviews throughout the beta. Details in the channel.
+Post in [#optitech-platform-beta](https://discord.com/channels/1176467419317940276/1525919714541437058) on Discord: bugs, confusion, docs gaps, feature requests, and what you build. We run office hours and user interviews throughout the beta. Details in the channel.
 
 Tell us what you build. We'd love to feature it.
 

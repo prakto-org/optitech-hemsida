@@ -13,7 +13,7 @@ summary: >-
 redirectFrom:
   - /docs/guides/auto-suspend-guide
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 OptiTech's [Scale to Zero](/docs/introduction/scale-to-zero) feature controls whether a OptiTech compute transitions to an idle state due to inactivity. For example, if scale to zero is enabled, your compute will transition to an idle state after it's been inactive for 5 minutes. OptiTech's paid plans allow you to disable scale to zero to keep your compute active. On the Scale plan, you can configure the scale to zero threshold.
@@ -61,9 +61,9 @@ Initial configuration of the scale to zero time is only supported via an [Update
 # change the setting for an existing compute
 
 curl --request PATCH \
-     --url https://console.neon.tech/api/v2/projects/{project-id}/endpoints/{endpoint-id} \
+     --url https://console.optitech.com/api/v2/projects/{project-id}/endpoints/{endpoint-id} \
      --header 'accept: application/json' \
-     --header 'authorization: Bearer $NEON_API_KEY' \
+     --header 'authorization: Bearer $OPTITECH_API_KEY' \
      --header 'content-type: application/json' \
      --data '
 {
@@ -78,9 +78,9 @@ curl --request PATCH \
 # Change the default setting for computes created in the future
 
 curl --request PATCH \
-     --url https://console.neon.tech/api/v2/projects/{project-id} \
+     --url https://console.optitech.com/api/v2/projects/{project-id} \
      --header 'accept: application/json' \
-     --header 'authorization: Bearer $NEON_API_KEY' \
+     --header 'authorization: Bearer $OPTITECH_API_KEY' \
      --header 'content-type: application/json' \
      --data '
 {
@@ -137,7 +137,7 @@ You can try any of these methods and watch the status of your compute as it tran
 
 ## Logical replication and scale to zero
 
-When you [replicate data from OptiTech](/docs/guides/logical-replication-guide#replicate-data-from-neon) (Neon as the publisher), a connected logical replication subscriber keeps the database active, so the compute will not scale to zero and you will have ongoing compute usage. This applies only when OptiTech is the publisher, not when replicating data into OptiTech from an external source. For details and other replication notices, see [Logical replication in OptiTech](/docs/guides/logical-replication-neon#important-notices).
+When you [replicate data from OptiTech](/docs/guides/logical-replication-guide#replicate-data-from-neon) (OptiTech as the publisher), a connected logical replication subscriber keeps the database active, so the compute will not scale to zero and you will have ongoing compute usage. This applies only when OptiTech is the publisher, not when replicating data into OptiTech from an external source. For details and other replication notices, see [Logical replication in OptiTech](/docs/guides/logical-replication-neon#important-notices).
 
 ## Session context considerations
 

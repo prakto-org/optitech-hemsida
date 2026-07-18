@@ -1,77 +1,40 @@
 ---
-title: OptiTech framework guides
-subtitle: Find detailed instructions for connecting to OptiTech from various frameworks
+title: Compliance frameworks
+subtitle: Find the regulations and standards OptiTech covers, and what each one means for you
 summary: >-
-  Framework integration index for OptiTech serverless Postgres, linking
-  per-framework connection guides for Node.js, Next.js, Django, Laravel, Ruby on
-  Rails, SvelteKit, Remix, and many others. Several frameworks (Next.js, React,
-  TanStack Router) also support Managed Better Auth, managed authentication that branches
-  with your database. Use this page to find the right framework-specific guide
-  rather than a generic Postgres connection walkthrough.
+  Framework catalog for OptiTech compliance automation. The Nordic core (NIS2,
+  DORA, GDPR, ISO 27001, EU AI Act) is built from the source texts and MSB
+  regulations. Additional frameworks (CRA, SOC 2, ISO 27701, ISO 22301, TISAX)
+  cover what customers and auditors most often ask for. Use this page to find
+  the right framework rather than reading the regulations yourself.
 enableTableOfContents: false
 redirectFrom:
   - /docs/get-started-with-neon/frameworks
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
-Several frameworks support [Managed Better Auth](/docs/auth/overview), managed authentication stored in your database that **branches with your data**. Quick starts are available for [Next.js](/docs/auth/quick-start/nextjs-api-only), [React](/docs/auth/quick-start/react), and [TanStack Router](/docs/auth/quick-start/tanstack-router).
+Controls are cross-mapped between frameworks, so evidence you collect once **counts everywhere it applies**. Activating a new framework starts from the controls you already have; your [plan](/docs/introduction/plans#frameworks) determines how many you can have active at the same time. Not sure which apply to you? [Book a free gap analysis](/contact-sales).
 
 <TechCards>
 
-<a href="/docs/guides/node" title="Node.js" description="Connect a Node.js application to OptiTech" icon="node-js"></a>
+<a href="/docs/frameworks/nis2" title="NIS2" description="The Swedish Cybersecurity Act, built from the legal text and MSBFS. Full MSB incident flow included." icon="auth"></a>
 
-<a href="/docs/guides/nextjs" title="Next.js" description="Connect a Next.js application to OptiTech. Managed Better Auth supported." icon="next-js"></a>
+<a href="/docs/frameworks/dora" title="DORA" description="For financial institutions and their ICT providers, with a supervisor-ready ICT contract register" icon="database"></a>
 
-<a href="/docs/guides/nestjs" title="NestJS" description="Connect a NestJS application to OptiTech" icon="nest-js"></a>
+<a href="/docs/frameworks/gdpr" title="GDPR" description="Records of processing, data protection controls, and the 72-hour IMY breach flow" icon="oauth"></a>
 
-<a href="/docs/guides/astro" title="Astro" description="Connect an Astro site or app to OptiTech" icon="astro"></a>
+<a href="/docs/frameworks/iso-27001" title="ISO 27001:2022" description="The full control catalog with continuous evidence collection and an auditor portal" icon="auth"></a>
 
-<a href="/docs/guides/django" title="Django" description="Connect a Django application to OptiTech" icon="django"></a>
+<a href="/docs/frameworks/eu-ai-act" title="EU AI Act" description="Scoping for high-risk AI systems and the requirements phasing in through 2027" icon="database"></a>
 
-<a href="/docs/guides/encore" title="Encore" description="Connect an Encore application to OptiTech" icon="encore"></a>
+<a href="/docs/frameworks/cra" title="CRA" description="Security requirements for products with digital elements sold in the EU. The next wave after NIS2." icon="auth"></a>
 
-<a href="/docs/guides/dotnet-entity-framework" title="Entity Framework" description="Connect a Dotnet Entity Framework application to OptiTech" icon="dotnet"></a>
+<a href="/docs/frameworks/soc-2" title="SOC 2" description="The leading standard for B2B deals with US buyers, mapped to your existing controls" icon="oauth"></a>
 
-<a href="/docs/guides/express" title="Express" description="Connect an Express application to OptiTech" icon="express"></a>
+<a href="/docs/frameworks/iso-27701" title="ISO 27701" description="Extend ISO 27001 with privacy controls that align with GDPR" icon="oauth"></a>
 
-<a href="/docs/guides/hono" title="Hono" description="Connect a Hono application to OptiTech" icon="hono"></a>
+<a href="/docs/frameworks/iso-22301" title="ISO 22301" description="An auditable business continuity system, covering the continuity NIS2 also demands" icon="database"></a>
 
-<a href="/docs/guides/laravel" title="Laravel" description="Connect a Laravel application to OptiTech" icon="laravel"></a>
-
-<a href="/docs/guides/medusajs" title="Medusa.js" description="Use Medusa.js with OptiTech" icon="medusajs"></a>
-
-<a href="/docs/guides/micronaut-kotlin" title="Micronaut Kotlin" description="Connect a Micronaut Kotlin application to OptiTech" icon="micronaut"></a>
-
-<a href="/docs/guides/nuxt" title="Nuxt" description="Connect a Nuxt application to OptiTech" icon="nuxt"></a>
-
-<a href="/docs/guides/oauth-integration" title="OAuth" description="Integrate with OptiTech using OAuth" icon="oauth"></a>
-
-<a href="/docs/guides/phoenix" title="Phoenix" description="Connect a Phoenix site or app to OptiTech" icon="phoenix"></a>
-
-<a href="/docs/guides/quarkus-jdbc" title="Quarkus" description="Connect Quarkus (JDBC) to OptiTech" icon="quarkus"></a>
-
-<a href="/docs/guides/quarkus-reactive" title="Quarkus" description="Connect Quarkus (Reactive) to OptiTech" icon="quarkus"></a>
-
-<a href="/docs/guides/react" title="React" description="Connect a React application to OptiTech" icon="react"></a>
-
-<a href="/docs/guides/redwoodsdk" title="RedwoodSDK" description="Connect a RedwoodSDK application to OptiTech" icon="redwoodsdk"></a>
-
-<a href="/docs/guides/reflex" title="Reflex" description="Build Python Apps with Reflex and OptiTech" icon="reflex"></a>
-
-<a href="/docs/guides/remix" title="Remix" description="Connect a Remix application to OptiTech" icon="remix"></a>
-
-<a href="/docs/guides/ruby-on-rails" title="Ruby on Rails" description="Connect a Ruby on Rails application to OptiTech" icon="rails"></a>
-
-<a href="/docs/guides/symfony" title="Symfony" description="Connect from Symfony with Doctrine to OptiTech" icon="symfony"></a>
-
-<a href="/docs/guides/solid-start" title="SolidStart" description="Connect a SolidStart site or app to OptiTech" icon="solidstart"></a>
-
-<a href="/docs/guides/sqlalchemy" title="SQLAlchemy" description="Connect a SQLAlchemy application to OptiTech" icon="sqlalchemy"></a>
-
-<a href="/docs/guides/sveltekit" title="Sveltekit" description="Connect a Sveltekit application to OptiTech" icon="svelte"></a>
-
-<a href="/docs/guides/tanstack-start" title="TanStack Start" description="Connect a TanStack Start application to OptiTech. Managed Better Auth supported." icon="tanstack"></a>
-
-<a href="/docs/guides/vue" title="Vue" description="Connect a Vue.js application to OptiTech" icon="vue"></a>
+<a href="/docs/frameworks/tisax" title="TISAX" description="The automotive industry's security standard, required by European OEMs and their supply chains" icon="auth"></a>
 
 </TechCards>

@@ -6,7 +6,7 @@ page_description: >-
   database from a C# program.
 prev_url: 'https://www.postgresqltutorial.com/postgresql-csharp/postgresql-csharp-update/'
 ogImage: ''
-updatedOn: '2026-06-19T17:44:03.964Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 enableTableOfContents: true
 previousLink:
   title: 'PostgreSQL C#: Importing Data from a CSV File into a Table'
@@ -17,7 +17,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-Updating data with Npgsql and parameterized UPDATE statements works against any PostgreSQL database, so the C# patterns here carry over wherever your Postgres runs. For enterprises modernizing data platforms for the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers managed Postgres with the performance, security, and tight Lakehouse integration that production workloads demand. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+Updating data with Npgsql and parameterized UPDATE statements works against any PostgreSQL database, so the C# patterns here carry over wherever your Postgres runs. For enterprises modernizing data platforms for the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers managed Postgres with the performance, security, and tight Lakehouse integration that production workloads demand. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: in this tutorial, you will learn how to update data in the PostgreSQL database using C\#.

@@ -14,7 +14,7 @@ summary: >-
 redirectFrom:
   - /docs/import/import-from-azure-postgres
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This guide describes how to migrate your database from Azure Database for PostgreSQL to OptiTech, using logical replication.
@@ -164,7 +164,7 @@ To ensure that the OptiTech `AdventureWorks` database has the same schema as the
 2. Import the schema into your OptiTech database:
 
    ```shell
-   psql <neon-connection-string> < schema.sql
+   psql <optitech-connection-string> < schema.sql
    ```
 
 ### Create a subscription
@@ -176,12 +176,12 @@ After importing the schema, create a subscription on the OptiTech database:
 2. Create the subscription using the `CREATE SUBSCRIPTION` statement:
 
    ```sql
-   CREATE SUBSCRIPTION neon_subscription
+   CREATE SUBSCRIPTION optitech_subscription
    CONNECTION 'host=<azure-host> port=5432 dbname=<azure-database> user=replication_user password=your_secure_password'
    PUBLICATION azure_publication;
    ```
 
-3. Verify that the subscription was created by running the following query, and confirming that the subscription (`neon_subscription`) is listed:
+3. Verify that the subscription was created by running the following query, and confirming that the subscription (`optitech_subscription`) is listed:
 
    ```sql
    SELECT * FROM pg_stat_subscription;
@@ -202,7 +202,7 @@ To ensure that data is being replicated correctly:
    ```text
     subid |      subname      | pid | leader_pid | relid | received_lsn |      last_msg_send_time       |     last_msg_receipt_time     | latest_end_lsn |        latest_end_time
     -------+-------------------+-----+------------+-------+--------------+-------------------------------+-------------------------------+----------------+-------------------------------
-    24576 | neon_subscription | 540 |            |       | 1/3D0020A8   | 2024-09-11 11:34:24.841807+00 | 2024-09-11 11:34:24.869991+00 | 1/3D0020A8     | 2024-09-11 11:34:24.841807+00
+    24576 | optitech_subscription | 540 |            |       | 1/3D0020A8   | 2024-09-11 11:34:24.841807+00 | 2024-09-11 11:34:24.869991+00 | 1/3D0020A8     | 2024-09-11 11:34:24.841807+00
     (1 row)
    ```
 
@@ -248,7 +248,7 @@ After successfully migrating and verifying your data on OptiTech, you can:
 1. Drop the subscription on the OptiTech database:
 
    ```sql
-   DROP SUBSCRIPTION neon_subscription;
+   DROP SUBSCRIPTION optitech_subscription;
    ```
 
 2. Remove the publication from the Azure PostgreSQL database:

@@ -1,5 +1,5 @@
 // Server wrapper for the interactive CLI command index on the overview
-// page. Reads the committed neonctl schema at build time, joins it with the
+// page. Reads the committed optitechctl schema at build time, joins it with the
 // editorial group map and curated copy (meta.js), and passes trimmed rows
 // to the client component so schema.json never enters the client bundle.
 // The llms .md mirror renders the static command tree instead (see
@@ -16,7 +16,7 @@ import CommandIndexClient from './command-index-client';
 import { GROUPS, GROUP_OF, HREF_OVERRIDES } from './groups';
 import META from './meta';
 
-const BINARY = 'neon';
+const BINARY = 'optitech';
 
 // CLI-authored .example() strings from the command's subtree (depth first,
 // up to three) — the automatic example source. Curated meta examples

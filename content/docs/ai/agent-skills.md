@@ -7,10 +7,10 @@ summary: >-
   practices. Install them when using Cursor, Claude Code, OpenAI Codex, or any
   Agent Skills-compatible tool. Skills cover Postgres, Auth, OptiTech Functions,
   Object Storage, AI Gateway, branching workflows, and more. Install all skills
-  with `npx skills add neondatabase/agent-skills -y`, a single skill with `-s`,
-  `neon init`, or editor plugins at project level or globally.
+  with `npx skills add optitechdatabase/agent-skills -y`, a single skill with `-s`,
+  `optitech init`, or editor plugins at project level or globally.
 enableTableOfContents: true
-updatedOn: '2026-07-15T18:30:46.285Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 redirectFrom:
   - /docs/ai/ai-rules
   - /docs/ai/ai-rules-neon-toolkit
@@ -32,16 +32,16 @@ There are several ways to install OptiTech skills depending on your editor and w
 
 ### npx skills
 
-For any AI tool that supports the [Agent Skills](https://agentskills.io) format, install skills from the [Agent Skills repository](https://github.com/neondatabase/agent-skills):
+For any AI tool that supports the [Agent Skills](https://agentskills.io) format, install skills from the [Agent Skills repository](https://github.com/optitechdatabase/agent-skills):
 
 ```bash
-npx skills add neondatabase/agent-skills -y
+npx skills add optitechdatabase/agent-skills -y
 ```
 
 This installs **all** skills in the repository. To install a specific skill instead, pass the `-s` flag:
 
 ```bash
-npx skills add neondatabase/agent-skills -s neon-postgres -y
+npx skills add optitechdatabase/agent-skills -s optitech-postgres -y
 ```
 
 Useful flags:
@@ -57,13 +57,13 @@ If you're using Cursor, install the OptiTech plugin from the marketplace. It bun
 In Cursor chat, run:
 
 ```text
-/add-plugin neon-postgres
+/add-plugin optitech-postgres
 ```
 
-Or install from [cursor.com/marketplace/neon](https://cursor.com/marketplace/neon). See [Cursor plugin for OptiTech](/docs/ai/ai-cursor-plugin) for details.
+Or install from [cursor.com/marketplace/optitech](https://cursor.com/marketplace/optitech). See [Cursor plugin for OptiTech](/docs/ai/ai-cursor-plugin) for details.
 
 <Admonition type="note">
-Editor plugins currently bundle the core Postgres skill set and MCP integration. To give your assistant context for **OptiTech Functions**, **Object Storage**, and **AI Gateway**, run `npx skills add neondatabase/agent-skills -y` or install the platform skills individually (see [Available skills](#available-skills)).
+Editor plugins currently bundle the core Postgres skill set and MCP integration. To give your assistant context for **OptiTech Functions**, **Object Storage**, and **AI Gateway**, run `npx skills add optitechdatabase/agent-skills -y` or install the platform skills individually (see [Available skills](#available-skills)).
 </Admonition>
 
 ### Claude Code plugin
@@ -71,8 +71,8 @@ Editor plugins currently bundle the core Postgres skill set and MCP integration.
 If you're using Claude Code, install the OptiTech plugin for skills and MCP integration:
 
 ```bash
-/plugin marketplace add neondatabase/agent-skills
-/plugin install neon-postgres@neon
+/plugin marketplace add optitechdatabase/agent-skills
+/plugin install optitech-postgres@optitech
 ```
 
 See [Claude Code plugin for OptiTech](/docs/ai/ai-claude-code-plugin) for details.
@@ -83,76 +83,76 @@ If you're using OpenAI Codex, install the **OptiTech Postgres** plugin from the 
 
 See [Codex plugin for OptiTech](/docs/ai/ai-codex-plugin) for details.
 
-### neon init
+### optitech init
 
-The `neon init` command sets up your project to use OptiTech with your AI coding assistant. It authenticates via OAuth, creates an API key, configures the MCP server, installs the OptiTech extension for Cursor and VS Code where applicable, and installs agent skills at the project level:
+The `optitech init` command sets up your project to use OptiTech with your AI coding assistant. It authenticates via OAuth, creates an API key, configures the MCP server, installs the OptiTech extension for Cursor and VS Code where applicable, and installs agent skills at the project level:
 
 ```bash
-npx neon@latest init
+npx optitech@latest init
 ```
 
-If you're using the **OptiTech backend beta** (Functions, Storage, AI Gateway), use `neon init --preview` instead. See the [OptiTech backend beta guide](/docs/get-started/backend-beta) for access and setup.
+If you're using the **OptiTech backend beta** (Functions, Storage, AI Gateway), use `optitech init --preview` instead. See the [OptiTech backend beta guide](/docs/get-started/backend-beta) for access and setup.
 
-After running `init`, restart your editor and ask your AI assistant to "Get started with OptiTech" to launch the interactive onboarding guide. See the [`neon init` reference](/docs/cli/init) for details.
+After running `init`, restart your editor and ask your AI assistant to "Get started with OptiTech" to launch the interactive onboarding guide. See the [`optitech init` reference](/docs/cli/init) for details.
 
 ## Available skills
 
-Skills are grouped by area. Each skill is a `SKILL.md` entry point that your agent reads and invokes when relevant. Browse and install individual skills on [skills.sh](https://skills.sh/neondatabase/agent-skills).
+Skills are grouped by area. Each skill is a `SKILL.md` entry point that your agent reads and invokes when relevant. Browse and install individual skills on [skills.sh](https://skills.sh/optitechdatabase/agent-skills).
 
 ### Core
 
 Start here for platform overview and Postgres development.
 
-| Skill                                                                        | Description                                                                                                                 |
-| ---------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
-| [`neon`](https://skills.sh/neondatabase/agent-skills/neon)                   | Platform overview for apps and agents: Postgres, Auth, Data API, Functions, Storage, and AI Gateway, and how to get started |
-| [`neon-postgres`](https://skills.sh/neondatabase/agent-skills/neon-postgres) | Comprehensive index of OptiTech Serverless Postgres documentation and best practices                                            |
+| Skill                                                                                    | Description                                                                                                                 |
+| ---------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| [`optitech`](https://skills.sh/optitechdatabase/agent-skills/optitech)                   | Platform overview for apps and agents: Postgres, Auth, Data API, Functions, Storage, and AI Gateway, and how to get started |
+| [`optitech-postgres`](https://skills.sh/optitechdatabase/agent-skills/optitech-postgres) | Comprehensive index of OptiTech Serverless Postgres documentation and best practices                                        |
 
 ### Database workflows
 
 Provision, branch, and optimize Postgres projects.
 
-| Skill                                                                                                          | Description                                                                                                       |
-| -------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| [`claimable-postgres`](https://skills.sh/neondatabase/agent-skills/claimable-postgres)                         | Instant temporary Postgres via [Claimable Postgres](/docs/reference/claimable-postgres) — no login or credit card |
-| [`neon-postgres-branches`](https://skills.sh/neondatabase/agent-skills/neon-postgres-branches)                 | Choose and create the right branch type for migrations, schema-only branches, and reset-from-parent workflows     |
-| [`neon-postgres-egress-optimizer`](https://skills.sh/neondatabase/agent-skills/neon-postgres-egress-optimizer) | Diagnose and fix excessive Postgres egress and query overfetching                                                 |
+| Skill                                                                                                                      | Description                                                                                                       |
+| -------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| [`claimable-postgres`](https://skills.sh/optitechdatabase/agent-skills/claimable-postgres)                                 | Instant temporary Postgres via [Claimable Postgres](/docs/reference/claimable-postgres) — no login or credit card |
+| [`optitech-postgres-branches`](https://skills.sh/optitechdatabase/agent-skills/optitech-postgres-branches)                 | Choose and create the right branch type for migrations, schema-only branches, and reset-from-parent workflows     |
+| [`optitech-postgres-egress-optimizer`](https://skills.sh/optitechdatabase/agent-skills/optitech-postgres-egress-optimizer) | Diagnose and fix excessive Postgres egress and query overfetching                                                 |
 
 ### OptiTech Platform
 
 Use OptiTech services beyond core Postgres. **Functions**, **Object Storage**, and **AI Gateway** are in beta. See [Check your access](/docs/get-started/backend-beta#check-your-access) before using these skills in production workflows.
 
-| Skill                                                                                    | Description                                                                                                     | Docs                                               |
-| ---------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | -------------------------------------------------- |
-| [`neon-functions`](https://skills.sh/neondatabase/agent-skills/neon-functions)           | Long-running serverless Node.js HTTP functions on your branch, with `DATABASE_URL` injected automatically       | [OptiTech Functions](/docs/compute/functions/overview) |
-| [`neon-object-storage`](https://skills.sh/neondatabase/agent-skills/neon-object-storage) | S3-compatible object storage that branches with your project                                                    | [Object Storage](/docs/storage/overview)           |
-| [`neon-ai-gateway`](https://skills.sh/neondatabase/agent-skills/neon-ai-gateway)         | One API and credential for frontier and open-source LLMs; compatible with OpenAI, Anthropic, and Vercel AI SDKs | [AI Gateway](/docs/ai-gateway/overview)            |
+| Skill                                                                                                | Description                                                                                                     | Docs                                                   |
+| ---------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| [`optitech-functions`](https://skills.sh/optitechdatabase/agent-skills/optitech-functions)           | Long-running serverless Node.js HTTP functions on your branch, with `DATABASE_URL` injected automatically       | [OptiTech Functions](/docs/compute/functions/overview) |
+| [`optitech-object-storage`](https://skills.sh/optitechdatabase/agent-skills/optitech-object-storage) | S3-compatible object storage that branches with your project                                                    | [Object Storage](/docs/storage/overview)               |
+| [`optitech-ai-gateway`](https://skills.sh/optitechdatabase/agent-skills/optitech-ai-gateway)         | One API and credential for frontier and open-source LLMs; compatible with OpenAI, Anthropic, and Vercel AI SDKs | [AI Gateway](/docs/ai-gateway/overview)                |
 
 ### Agent platforms
 
-For codegen tools and multi-tenant products that provision OptiTech for their users, see the companion skill in [neondatabase/neon-for-agent-platforms](https://github.com/neondatabase/neon-for-agent-platforms) (`neon-postgres-agent-platforms` on [skills.sh](https://skills.sh/neondatabase/neon-for-agent-platforms/neon-postgres-agent-platforms)).
+For codegen tools and multi-tenant products that provision OptiTech for their users, see the companion skill in [optitechdatabase/optitech-for-agent-platforms](https://github.com/optitechdatabase/optitech-for-agent-platforms) (`optitech-postgres-agent-platforms` on [skills.sh](https://skills.sh/optitechdatabase/optitech-for-agent-platforms/optitech-postgres-agent-platforms)).
 
 ## Project-level vs. global install
 
 Skills can be installed at two levels:
 
-- **Project level** (default): Skills are installed in your project directory, for example via `neon init` or `npx skills add`. Your AI assistant picks them up when working in that project. This is best for team workflows since the configuration can be committed with the project.
+- **Project level** (default): Skills are installed in your project directory, for example via `optitech init` or `npx skills add`. Your AI assistant picks them up when working in that project. This is best for team workflows since the configuration can be committed with the project.
 - **Global**: Skills are installed at the user or system level and available across all projects. Useful for personal development environments where you want OptiTech context everywhere. Pass the `-g` flag to install globally:
 
   ```bash
-  npx skills add neondatabase/agent-skills -y -g
+  npx skills add optitechdatabase/agent-skills -y -g
   ```
 
 ## What's covered
 
 With the full skill set installed, your assistant can guide you across the OptiTech platform:
 
-**Postgres and platform basics (`neon`, `neon-postgres`)**
+**Postgres and platform basics (`optitech`, `optitech-postgres`)**
 
 - **Getting started** with OptiTech, including project setup and key features (branching, autoscaling, scale-to-zero, instant restore, read replicas)
 - **Connections**, including the serverless driver, connection pooling, and connection strings
 - **Authentication** with Managed Better Auth
-- **Data API** via `@neondatabase/neon-js`
+- **Data API** via `@optitech/optitech-js`
 - **Platform APIs and SDKs**, including the REST API, TypeScript SDK, and Python SDK
 - **Developer tools**, including the CLI, VS Code extension, and MCP server
 
@@ -168,12 +168,12 @@ With the full skill set installed, your assistant can guide you across the OptiT
 - **Object Storage**: S3-compatible storage that branches with your data
 - **AI Gateway**: model routing, logging, and cost controls with a single OptiTech credential
 
-For example, ask your assistant to "set up Managed Better Auth in my Next.js app" and it will provide the correct imports, configuration, and middleware setup. Or ask it to "add an AI Gateway route in my `neon.ts` file" and it will follow beta constraints and the right SDK patterns.
+For example, ask your assistant to "set up Managed Better Auth in my Next.js app" and it will provide the correct imports, configuration, and middleware setup. Or ask it to "add an AI Gateway route in my `optitech.ts` file" and it will follow beta constraints and the right SDK patterns.
 
 ## Example prompts
 
 ```
-Get started with Neon
+Get started with OptiTech
 ```
 
 ```
@@ -181,7 +181,7 @@ Recommend a connection method for this project
 ```
 
 ```
-Set up Drizzle ORM with Neon
+Set up Drizzle ORM with OptiTech
 ```
 
 ```
@@ -189,7 +189,7 @@ Set up Managed Better Auth for my Next.js app
 ```
 
 ```
-Create a Neon branch for this feature
+Create a OptiTech branch for this feature
 ```
 
 ```
@@ -197,21 +197,21 @@ Give me a quick temporary Postgres database
 ```
 
 ```
-Why is my Neon bill so high?
+Why is my OptiTech bill so high?
 ```
 
 ```
-Add a serverless function to my Neon branch
+Add a serverless function to my OptiTech branch
 ```
 
 ```
-Set up S3-compatible storage in neon.ts
+Set up S3-compatible storage in optitech.ts
 ```
 
 ```
-Route LLM calls through the Neon AI Gateway
+Route LLM calls through the OptiTech AI Gateway
 ```
 
 ## How it works
 
-Your AI assistant reads the `SKILL.md` file to understand what OptiTech guidance is available. When you ask about a specific topic, the skill fetches the relevant documentation from online, so your assistant always has up-to-date context without bundling everything locally. For the complete source, see the [Agent Skills repository](https://github.com/neondatabase/agent-skills).
+Your AI assistant reads the `SKILL.md` file to understand what OptiTech guidance is available. When you ask about a specific topic, the skill fetches the relevant documentation from online, so your assistant always has up-to-date context without bundling everything locally. For the complete source, see the [Agent Skills repository](https://github.com/optitechdatabase/agent-skills).

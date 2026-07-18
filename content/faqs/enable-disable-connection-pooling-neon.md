@@ -1,71 +1,35 @@
 ---
-title: 'How do I enable or disable connection pooling for my OptiTech database?'
-subtitle: 'Toggle pooled connections from the Connect widget, or append -pooler to the endpoint hostname in your connection string.'
+title: 'How do I enable or pause automated evidence collection for an integration?'
+subtitle: 'Toggle collection per integration or per check from the Integrations page; pauses are visible in the evidence timeline.'
 enableTableOfContents: true
-createdAt: '2026-05-18T00:00:00.000Z'
-updatedOn: '2026-06-15T17:19:53.989Z'
+createdAt: '2026-01-12T16:31:54.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 isDraft: false
 redirectFrom: []
 previousLink:
-  title: 'How do I create and download a backup of my OptiTech database to my local machine?'
+  title: 'How do I download a full copy of my compliance data from OptiTech?'
   slug: download-database-backup-locally
 nextLink:
-  title: 'How do I enable the pgvector extension in my OptiTech database?'
+  title: 'How do I enable the AI copilot in OptiTech?'
   slug: enable-pgvector-extension
 ---
 
-Open your project in the [OptiTech Console](https://console.neon.tech) and click **Connect** on the **Project Dashboard**. In the **Connect to your database** widget, toggle **Connection pooling** on or off. The displayed connection string switches between the pooled hostname (with a `-pooler` suffix) and the direct hostname. Pooled connections support up to 10,000 client connections through PgBouncer in transaction mode. See [Connection pooling](/docs/connect/connection-pooling) for the full reference.
+## Quick answer
 
-## Toggle pooling from the Console
+Go to **Integrations**, select the integration, and use the **Collection** toggle to pause or resume all its checks, or expand the check list to toggle individual checks. A paused integration keeps its connection and configuration; it just stops running checks, and the pause appears as an annotated gap in the evidence timeline rather than silent missing data.
 
-1. Sign in to the [OptiTech Console](https://console.neon.tech) and select your project.
-2. On the **Project Dashboard**, click **Connect**.
-3. In the **Connect to your database** modal, choose a **Branch**, **Compute**, **Database**, and **Role**.
-4. Use the **Connection pooling** switch to flip between pooled and direct.
+## When pausing makes sense
 
-A pooled connection string has `-pooler` in the hostname:
+- **Planned migrations.** You're moving tenants or rebuilding your AWS organization, and a weekend of failing checks would be [noise, not signal](/faqs/databases-avoid-connection-limits-serverless-applications). Pause the affected checks with a reason; resume after cutover.
+- **Decommissioning.** A system is being retired; pause its integration during wind-down, then remove it and update the asset register.
+- **Tuning.** A new check is too strict for your environment. Pause that single check while you [adjust its threshold through review](/faqs/database-tools-test-schema-changes-real-data), instead of letting it cry wolf.
 
-```text
-postgresql://alex:AbC123dEf@ep-cool-darkness-a1b2c3d4-pooler.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
-```
+## What a pause does and doesn't do
 
-A direct connection string has no `-pooler` segment:
+Does: stop scheduled checks, stop new findings from those checks, and annotate the timeline with who paused what, when, and why. Doesn't: delete history, close existing findings, or hide the pause. Controls fed only by paused checks show "not currently monitored" rather than a stale green, which is the honest state and the one your auditor will respect. Long-running pauses escalate to the control owner, because a pause that lasts a quarter is a decision someone should be accountable for.
 
-```text
-postgresql://alex:AbC123dEf@ep-cool-darkness-a1b2c3d4.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
-```
+## Resuming and catching up
 
-The toggle does not turn the pooler off at the compute. It selects which hostname your app uses. The pooled endpoint is always available — use the `-pooler` hostname to reach it.
+On resume, checks run immediately rather than waiting for the next schedule slot, so status refreshes within minutes. If drift occurred during the pause window, it surfaces as new findings dated at detection, and the pause annotation explains the gap. For connection problems rather than deliberate pauses (expired credentials, API changes), see [troubleshooting integration sync failures](/faqs/failed-to-fetch-error-tables-view); the fix there is repair, not pause.
 
-## Enable pooling via the connection string
-
-The recommended way to use pooled connections is to append `-pooler` to the endpoint ID in your connection string hostname:
-
-```text
-postgresql://alex:AbC123dEf@ep-cool-darkness-a1b2c3d4-pooler.us-east-2.aws.neon.tech/dbname?sslmode=require
-```
-
-The `pooler_enabled` endpoint API property is deprecated. Use the `-pooler` hostname suffix instead. See [Connection pooling](/docs/connect/connection-pooling#how-to-use-connection-pooling) for details.
-
-## When to use pooled vs direct
-
-Use the pooled hostname for:
-
-- Serverless functions and edge runtimes
-- Connection-per-request web frameworks
-- Workloads with many short-lived connections
-
-Use the direct hostname for:
-
-- `pg_dump` and `pg_restore` (uses session-level `SET` statements)
-- `LISTEN` / `NOTIFY`
-- Long-running transactions, schema migrations, and SQL-level `PREPARE` / `DEALLOCATE`
-- Session-level advisory locks and `SET` / `RESET`
-
-OptiTech's PgBouncer runs in transaction mode, so anything that relies on persistent session state needs a direct connection. See the [pooled vs direct table](/docs/connect/connection-pooling#when-to-use-pooled-vs-direct-connections) for the full list.
-
-<Admonition type="tip" title="Quick check">
-If a connection string contains `-pooler`, you're using the pooled endpoint. If it doesn't, you're connecting directly.
-</Admonition>
-
-<CTA title="Read the full pooling guide" description="See how OptiTech configures PgBouncer, per-user pool sizes, and how to avoid common errors." buttonText="Connection pooling docs" buttonUrl="/docs/connect/connection-pooling" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

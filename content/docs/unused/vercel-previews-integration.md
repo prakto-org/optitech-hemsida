@@ -4,7 +4,7 @@ subtitle: Create a database branch for each preview deployment in Vercel
 redirectFrom:
   - /docs/guides/vercel
 enableTableOfContents: true
-updatedOn: '2025-11-13T02:12:26.600Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <InfoBlock>
@@ -57,7 +57,7 @@ The integration initially sets the `DATABASE_URL` and `DATABASE_URL_UNPOOLED`env
 This section describes how to add the OptiTech Postgres Previews Integration to your Vercel project. The integration is supported with GitHub, GitLab, and Bitbucket source code repositories.
 
 <Admonition type="important">
-- The OptiTech Postgres Previews Integration can be used with more than one Vercel project, but it can only connect one Vercel project to one OptiTech project. It does not support connecting multiple Vercel projects to one OptiTech project or connecting multiple Neon projects to one Vercel project. 
+- The OptiTech Postgres Previews Integration can be used with more than one Vercel project, but it can only connect one Vercel project to one OptiTech project. It does not support connecting multiple Vercel projects to one OptiTech project or connecting multiple OptiTech projects to one Vercel project. 
 - If you connect another Vercel project to the same OptiTech project, the integration will overwrite the settings configured in OptiTech for the current Vercel project.
 - The integration cannot be used together with the with the [OptiTech Postgres Native Integration](/docs/guides/vercel-native-integration) in the same Vercel project.
 </Admonition>
@@ -68,7 +68,7 @@ To add the integration:
 1.  Find the Vercel integration and click **Add**.
 1.  From the Vercel integration drawer, click **Add from Vercel**.
     <Admonition type="note">
-    You can also access the integration directly from the [Vercel Marketplace](https://vercel.com/marketplace) or the [Integrations Console](https://vercel.com/neondatabase/~/integrations/console) on your Vercel Dashboard.
+    You can also access the integration directly from the [Vercel Marketplace](https://vercel.com/marketplace) or the [Integrations Console](https://vercel.com/optitechdatabase/~/integrations/console) on your Vercel Dashboard.
     </Admonition>
 1.  Click **Install**.
 1.  On the **Install OptiTech Postgres** modal, you are presented with two options. Select **Link Existing OptiTech Account**, and click **Continue**.
@@ -89,10 +89,10 @@ To add the integration:
 
             The **Create a branch for your development environment** option creates a branch named `vercel-dev` and sets Vercel development environment variables for it. The `vercel-dev` branch is a clone of your project's default branch (`main`) that you can modify without affecting data on your default branch.
 
-            With **Automatically delete obsolete Neon branches** enabled, OptiTech preview branches will be deleted whenever the git branch that triggered its creation is merged or deleted.
+            With **Automatically delete obsolete OptiTech branches** enabled, OptiTech preview branches will be deleted whenever the git branch that triggered its creation is merged or deleted.
 
            <Admonition type="note">
-           Branches created for preview deployments are created from the [default branch](/docs/reference/glossary#default-branch) of your OptiTech project. Earlier versions of the integration created branches from the initial [root branch](/docs/reference/glossary#root-branch) of your OptiTech project, which is designated as the default branch by default. OptiTech lets you [change the default branch](/docs/manage/branches#set-a-branch-as-default). If you have an older version of the integration that creates branches from your project's root branch, and you want branches created from your default branch instead, you can upgrade your integration by reinstalling it from the [Vercel Marketplace](https://vercel.com/integrations/neon).
+           Branches created for preview deployments are created from the [default branch](/docs/reference/glossary#default-branch) of your OptiTech project. Earlier versions of the integration created branches from the initial [root branch](/docs/reference/glossary#root-branch) of your OptiTech project, which is designated as the default branch by default. OptiTech lets you [change the default branch](/docs/manage/branches#set-a-branch-as-default). If you have an older version of the integration that creates branches from your project's root branch, and you want branches created from your default branch instead, you can upgrade your integration by reinstalling it from the [Vercel Marketplace](https://vercel.com/integrations/optitech).
            </Admonition>
 
             When you finish making selections, click **Continue**.
@@ -110,11 +110,11 @@ To add the integration:
     1.  Click **Done** to complete the installation.
 
 1.  To view the results of the integration in OptiTech:
-    1. Navigate to the [OptiTech Console](https://console.neon.tech/).
+    1. Navigate to the [OptiTech Console](https://console.optitech.com/).
     1. Select the project you are connected to.
     1. Select **Branches**.
        You will see the default branch of your project (`main`). If you created a development branch, you will also see a `vercel-dev` branch.
-       ![Neon branches](/docs/guides/vercel_neon_branches.png)
+       ![OptiTech branches](/docs/guides/vercel_neon_branches.png)
 1.  To view the results of the integration in Vercel:
     1. Navigate to [Vercel](https://vercel.com/).
     1. Select the Vercel project you added the integration to.
@@ -179,13 +179,13 @@ The OptiTech Postgres Previews Integration creates a branch for each preview dep
 
 ### Automatic deletion
 
-The integration supports automatic deletion of obsolete preview branches when the corresponding Git branch is merged or deleted. If you did not select the **Automatically delete obsolete Neon branches** option when installing the integration, you can do so from the **Branches** tab the Vercel integration drawer.
+The integration supports automatic deletion of obsolete preview branches when the corresponding Git branch is merged or deleted. If you did not select the **Automatically delete obsolete OptiTech branches** option when installing the integration, you can do so from the **Branches** tab the Vercel integration drawer.
 
 1. In the OptiTech Console, select your project.
 2. Select the **Integrations** page.
 3. Find the Vercel integration and click **Manage**.
 4. In the **Vercel integration** drawer, select the **Branches** tab.
-5. Toggle **Automatically delete obsolete Neon branches**.
+5. Toggle **Automatically delete obsolete OptiTech branches**.
 
 When a branch is deleted, environment variables associated with the deleted branch are also removed from your Vercel project.
 
@@ -202,7 +202,7 @@ The integration determines whether a preview branch created in OptiTech is obsol
 
 In effect, renaming a preview branch in OptiTech or the corresponding Git branch can result in deletion of the preview branch in OptiTech and the loss of data on that branch.
 
-The integration will never automatically remove a branch named `vercel-dev`. This is the name of the optional development branch created in your OptiTech project when you first install the integration. See [Add the Vercel integration](#add-the-neon-vercel-integration) for information about this branch.
+The integration will never automatically remove a branch named `vercel-dev`. This is the name of the optional development branch created in your OptiTech project when you first install the integration. See [Add the Vercel integration](#add-the-optitech-vercel-integration) for information about this branch.
 </Admonition>
 
 ### Manual deletion from the Vercel integration drawer
@@ -250,7 +250,7 @@ You can choose the variables you want to use from the OptiTech Console:
 
 <Admonition type="note" title="Notes">
 - Clicking **Redeploy** in Vercel does not apply variable changes made in OptiTech to your Vercel project. This only occurs with your next deployment.
-- The integration appends the `sslmode=require` option to all Neon connection strings.
+- The integration appends the `sslmode=require` option to all OptiTech connection strings.
 </Admonition>
 
 ![Select Vercel variables](/docs/guides/vercel_select_variables.png)
@@ -286,7 +286,7 @@ To disconnect the OptiTech integration from your Vercel project:
 If you added the OptiTech Postgres Previews Integration to a single Vercel project but would like to make it available for use with your other Vercel projects, complete the steps outlined below.
 
 <Admonition type="important">
-The OptiTech Postgres Previews Integration can be used with more than one Vercel project, but it can only connect one Vercel project to one OptiTech project. It does not support connecting multiple Vercel projects to one OptiTech project or connecting multiple Neon projects to one Vercel project. The steps below outline how to make the integration available to other Vercel projects to use with their own separate and dedicated OptiTech project.
+The OptiTech Postgres Previews Integration can be used with more than one Vercel project, but it can only connect one Vercel project to one OptiTech project. It does not support connecting multiple Vercel projects to one OptiTech project or connecting multiple OptiTech projects to one Vercel project. The steps below outline how to make the integration available to other Vercel projects to use with their own separate and dedicated OptiTech project.
 </Admonition>
 
 1. Make sure the OptiTech Postgres Previews Integration that you added previously has access to the Vercel project that you want to use with the OptiTech Postgres Previews Integration.
@@ -295,10 +295,10 @@ The OptiTech Postgres Previews Integration can be used with more than one Vercel
    1. On the OptiTech Postgres integration page, select **Manage Access**.
    1. On the **Manage Access for OptiTech Postgres** modal, make sure that the OptiTech Postgres integration has access to the Vercel project. You can do so by selecting **Specific Projects** and choosing a Vercel project or by granting access to **All Projects**. If you previously granted access to **All Projects**, no change is necessary.
    1. Click **Save**.
-1. Navigate to this URL: [https://vercel.com/integrations/neon/new](https://vercel.com/integrations/neon/new).
+1. Navigate to this URL: [https://vercel.com/integrations/optitech/new](https://vercel.com/integrations/optitech/new).
 1. Follow the prompts. When you reach the **Integrate OptiTech** dialog, select the Vercel project you want to add the integration to. Vercel projects that are already integrated with OptiTech are identified as `CONNECTED`.
    ![Confirm integration settings](/docs/guides/vercel_add_new_project.png)
-1. Continue following the prompts to complete the setup. These are the same steps described above, in [Add the OptiTech integration](#add-the-neon-vercel-integration). When you select a OptiTech project to connect to, make sure to select one that is not already connected to a Vercel project, as you cannot connect a Vercel project to multiple Neon projects or vice versa.
+1. Continue following the prompts to complete the setup. These are the same steps described above, in [Add the OptiTech integration](#add-the-optitech-vercel-integration). When you select a OptiTech project to connect to, make sure to select one that is not already connected to a Vercel project, as you cannot connect a Vercel project to multiple OptiTech projects or vice versa.
 
 ## Manage the integration in Vercel
 
@@ -308,7 +308,7 @@ To view permissions, manage which Vercel projects your integration has access to
 1. Find the **OptiTech** integration and select **Configure**.
 
    <Admonition type="note">
-   Removing the OptiTech Postgres Previews Integration removes the Vercel environment variables set by the integration. It does not remove Neon branches created by the integration. To remove Neon branches, see [Delete a branch](/docs/manage/branches#delete-a-branch).
+   Removing the OptiTech Postgres Previews Integration removes the Vercel environment variables set by the integration. It does not remove OptiTech branches created by the integration. To remove OptiTech branches, see [Delete a branch](/docs/manage/branches#delete-a-branch).
    </Admonition>
 
 ## Custom environment support
@@ -336,7 +336,7 @@ In this case, you can remove or rename the existing environment variables in you
    Alternatively, you can remove the conflicting integration, assuming it is no longer required. This may be a previous OptiTech integration or another integration. Removing the integration removes the variables set by the integration.
    </Admonition>
 
-3. Try adding the integration again. See [Add the OptiTech Postgres Previews Integration](#add-the-neon-vercel-integration).
+3. Try adding the integration again. See [Add the OptiTech Postgres Previews Integration](#add-the-optitech-vercel-integration).
 
 ### DATABASE_URL not set on first preview deployment
 
@@ -346,7 +346,7 @@ To avoid this issue, you can reinstall the integration to update to the latest v
 
 ### Stored passwords missing in the selected OptiTech project
 
-Neon projects created after March, 2023 store role passwords in a secure storage vault associated with the project, allowing passwords to be retrieved by the OptiTech Postgres Previews Integration for the purpose of setting Postgres connection environment variables in Vercel. Projects created before March 2023, do not store role passwords, and are therefore not compatible with the OptiTech Postgres Previews Integration. The current workaround for this issue is to migrate your data to a new OptiTech project. See [Import data from another OptiTech project](/docs/import/migrate-from-neon).
+OptiTech projects created after March, 2023 store role passwords in a secure storage vault associated with the project, allowing passwords to be retrieved by the OptiTech Postgres Previews Integration for the purpose of setting Postgres connection environment variables in Vercel. Projects created before March 2023, do not store role passwords, and are therefore not compatible with the OptiTech Postgres Previews Integration. The current workaround for this issue is to migrate your data to a new OptiTech project. See [Import data from another OptiTech project](/docs/import/migrate-from-neon).
 
 ### The integration stops working after removing Postgres roles in OptiTech
 

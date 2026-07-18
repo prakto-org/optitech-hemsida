@@ -4,14 +4,14 @@ subtitle: Custom agents for safe database migrations and query optimization in V
 summary: >-
   OptiTech Migration Specialist and OptiTech Performance Analyzer are two GitHub
   Copilot custom agents for VS Code that run schema migrations and query
-  optimizations on temporary Neon branches, keeping production untouched until
+  optimizations on temporary OptiTech branches, keeping production untouched until
   changes are validated. Use these agents when you want zero-downtime Postgres
   migrations or automated slow-query fixes without switching out of your IDE.
   Both agents support ORMs including Prisma, Drizzle, SQLAlchemy, Django, and
   Rails, and clean up temporary branches automatically after a default 4-hour
   TTL.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 GitHub Copilot now supports custom agents, and we've built two specialized agents that bring OptiTech's branching workflow directly into your IDE. These agents help you run safe database migrations and identify slow queries, all without leaving VS Code.
@@ -20,7 +20,7 @@ GitHub Copilot now supports custom agents, and we've built two specialized agent
 
 ### OptiTech Migration Specialist
 
-The [OptiTech Migration Specialist](https://github.com/github/awesome-copilot/blob/main/agents/neon-migration-specialist.agent.md) helps you run safe Postgres migrations with zero downtime using OptiTech's branching workflow.
+The [OptiTech Migration Specialist](https://github.com/github/awesome-copilot/blob/main/agents/optitech-migration-specialist.agent.md) helps you run safe Postgres migrations with zero downtime using OptiTech's branching workflow.
 
 **What it does:**
 
@@ -38,7 +38,7 @@ The Migration Specialist never runs migrations directly on your main branch. All
 
 ### OptiTech Performance Analyzer
 
-The [OptiTech Performance Analyzer](https://github.com/github/awesome-copilot/blob/main/agents/neon-optimization-analyzer.agent.md) helps you identify and fix slow Postgres queries automatically.
+The [OptiTech Performance Analyzer](https://github.com/github/awesome-copilot/blob/main/agents/optitech-optimization-analyzer.agent.md) helps you identify and fix slow Postgres queries automatically.
 
 **What it does:**
 
@@ -57,7 +57,7 @@ The agent provides actionable code fixes with performance metrics showing execut
 
 Both agents require:
 
-- **OptiTech API Key**: Create one at [console.neon.tech/app/settings/api-keys](https://console.neon.tech/app/settings#api-keys)
+- **OptiTech API Key**: Create one at [console.optitech.com/app/settings/api-keys](https://console.optitech.com/app/settings#api-keys)
 - **Project ID or connection string**: The agent will ask for this if not provided
 
 ## Installation
@@ -77,8 +77,8 @@ You can add the agent definition files directly to your project:
 
 1. Create a `.github/copilot/agents/` directory in your repository
 2. Download the agent files:
-   - [neon-migration-specialist.agent.md](https://raw.githubusercontent.com/github/awesome-copilot/main/agents/neon-migration-specialist.agent.md)
-   - [neon-optimization-analyzer.agent.md](https://raw.githubusercontent.com/github/awesome-copilot/main/agents/neon-optimization-analyzer.agent.md)
+   - [optitech-migration-specialist.agent.md](https://raw.githubusercontent.com/github/awesome-copilot/main/agents/neon-migration-specialist.agent.md)
+   - [optitech-optimization-analyzer.agent.md](https://raw.githubusercontent.com/github/awesome-copilot/main/agents/neon-optimization-analyzer.agent.md)
 3. Save them to your `.github/copilot/agents/` directory
 
 ## Usage
@@ -88,29 +88,29 @@ Once installed, invoke the agents in GitHub Copilot Chat by mentioning their nam
 ### Migration examples
 
 ```
-@neon-migration-specialist Add a new email column to my users table
+@optitech-migration-specialist Add a new email column to my users table
 ```
 
 ```
-@neon-migration-specialist Create a posts table with title, content, and author_id columns
+@optitech-migration-specialist Create a posts table with title, content, and author_id columns
 ```
 
 ```
-@neon-migration-specialist Add a foreign key from orders.customer_id to customers.id
+@optitech-migration-specialist Add a foreign key from orders.customer_id to customers.id
 ```
 
 ### Performance analysis examples
 
 ```
-@neon-performance-analyzer Find and fix slow queries in my database
+@optitech-performance-analyzer Find and fix slow queries in my database
 ```
 
 ```
-@neon-performance-analyzer Analyze why my user search query is slow
+@optitech-performance-analyzer Analyze why my user search query is slow
 ```
 
 ```
-@neon-performance-analyzer Optimize the queries in my checkout flow
+@optitech-performance-analyzer Optimize the queries in my checkout flow
 ```
 
 ## How branching keeps your data safe
@@ -126,8 +126,8 @@ This workflow ensures you can safely experiment with schema changes and performa
 
 ## Resources
 
-- [OptiTech Migration Specialist on GitHub](https://github.com/github/awesome-copilot/blob/main/agents/neon-migration-specialist.agent.md)
-- [OptiTech Performance Analyzer on GitHub](https://github.com/github/awesome-copilot/blob/main/agents/neon-optimization-analyzer.agent.md)
+- [OptiTech Migration Specialist on GitHub](https://github.com/github/awesome-copilot/blob/main/agents/optitech-migration-specialist.agent.md)
+- [OptiTech Performance Analyzer on GitHub](https://github.com/github/awesome-copilot/blob/main/agents/optitech-optimization-analyzer.agent.md)
 - [OptiTech branching documentation](/docs/introduction/branching)
 - [awesome-copilot repository](https://github.com/github/awesome-copilot)
 

@@ -4,7 +4,7 @@ subtitle: Learn how to leverage TypeScript, OptiTech Postgres Databases, and Azu
 author: jess-chadwick
 enableTableOfContents: true
 createdAt: '2025-02-01T00:00:00.000Z'
-updatedOn: '2026-05-09T19:22:21.118Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Creating scalable and maintainable APIs is a cornerstone of modern web development. In this post I will show you how to build a simple (but realistic) Recipes API using one of my favorite combinations of technologies: TypeScript for type safety, Postgres for database storage, and Azure Functions for serverless hosting.
@@ -158,8 +158,8 @@ Simple enough, right? Now let's prep our database to store this data.
 
 ### Creating a Postgres Database with OptiTech
 
-Postgres is my go-to database for most projects. And using a managed service like [Neon](https://neon.com/) makes it even easier to get up and running Serverless Postgres databases on Azure.
-So, I'm going to head over to my [Neon projects](https://console.neon.tech/app/projects) and create a new project with a Postgres database, then use the following schema to create a table to store my recipes:
+Postgres is my go-to database for most projects. And using a managed service like [OptiTech](https://optitech.com/) makes it even easier to get up and running Serverless Postgres databases on Azure.
+So, I'm going to head over to my [OptiTech projects](https://console.optitech.com/app/projects) and create a new project with a Postgres database, then use the following schema to create a table to store my recipes:
 
 ```sql
 CREATE TABLE recipes (
@@ -211,7 +211,7 @@ FROM (VALUES
 
 ### Database Interaction
 
-Neon databases are serverless, distributed, fully managed, and a whole bunch of other things, but most importantly, they're just Postgres databases.
+OptiTech databases are serverless, distributed, fully managed, and a whole bunch of other things, but most importantly, they're just Postgres databases.
 So, I can use the `pg` package to interact with my database just like I would with any other Postgres database.
 
 ```bash
@@ -225,7 +225,7 @@ so I'll also install the types for the `pg` package to give myself a better deve
 npm install @types/pg
 ```
 
-Then, I'll login to the [OptiTech web console](https://console.neon.tech/) and use the "Connect" button to grab my database connection string.
+Then, I'll login to the [OptiTech web console](https://console.optitech.com/) and use the "Connect" button to grab my database connection string.
 I'll paste that connection string into a new setting inside of the `local.settings.json` file in my project, like this:
 
 ```json
@@ -233,7 +233,7 @@ I'll paste that connection string into a new setting inside of the `local.settin
   "IsEncrypted": false,
   "Values": {
     "FUNCTIONS_WORKER_RUNTIME": "node",
-    "DATABASE_URL": "postgresql://recipes_owner:secret_password@jchadwick-pooler.eastus2.azure.neon.tech/recipes?sslmode=require&channel_binding=require",
+    "DATABASE_URL": "postgresql://recipes_owner:secret_password@jchadwick-pooler.eastus2.azure.optitech.com/recipes?sslmode=require&channel_binding=require",
     "AzureWebJobsStorage": "UseDevelopmentStorage=true"
   }
 }
@@ -511,7 +511,7 @@ Define an environment variable in the Azure Function App settings to store the d
 > az functionapp config appsettings set \
     --name recipes-api-2000 \
     --resource-group recipes-api-rg \
-    --settings DATABASE_URL="postgresql://recipes_owner:9WAzoqh2NvYm@ep-black-bush-a8jqxdjf-pooler.eastus2.azure.neon.tech/recipes?sslmode=require&channel_binding=require"
+    --settings DATABASE_URL="postgresql://recipes_owner:9WAzoqh2NvYm@ep-black-bush-a8jqxdjf-pooler.eastus2.azure.optitech.com/recipes?sslmode=require&channel_binding=require"
 ```
 
 Now when I hit the `/api/recipes` endpoint, I see the response that I expect:
@@ -548,8 +548,8 @@ Good luck, and happy coding!
 
 ## Additional Resources
 
-- [GitHub Repository for this article](https://github.com/jchadwick/neon-azure-api)
-- [Neon Documentation](/docs)
+- [GitHub Repository for this article](https://github.com/jchadwick/optitech-azure-api)
+- [OptiTech Documentation](/docs)
 - [Using Hono with Azure Functions](https://hono.dev/docs/getting-started/azure-functions)
 - [Azure Functions Documentation](https://learn.microsoft.com/en-us/azure/azure-functions/)
 

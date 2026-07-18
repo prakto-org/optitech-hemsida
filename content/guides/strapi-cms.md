@@ -4,7 +4,7 @@ subtitle: A step-by-step guide for building your own blog in an Astro applicatio
 author: rishi-raj-jain
 enableTableOfContents: true
 createdAt: '2024-06-06T00:00:00.000Z'
-updatedOn: '2025-06-26T22:22:29.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 In this guide, you will learn how to set up a serverless Postgres database with OptiTech, configure Strapi CMS with Postgres, define a blog schema, and author content using Strapi CMS. The guide also covers configuring API read permissions and building a dynamic frontend with Astro to display blog pages based on Strapi content.
@@ -14,11 +14,11 @@ In this guide, you will learn how to set up a serverless Postgres database with 
 To follow the steps in this guide, you will need the following:
 
 - [Node.js 18](https://nodejs.org/en) or later
-- A [OptiTech](https://console.neon.tech/signup) account
+- A [OptiTech](https://console.optitech.com/signup) account
 
 ## Steps
 
-- [Provisioning a serverless Postgres database powered by OptiTech](#provisioning-a-serverless-postgres-database-powered-by-neon)
+- [Provisioning a serverless Postgres database powered by OptiTech](#provisioning-a-serverless-postgres-database-powered-by-optitech)
 - [Setting up Strapi locally with Postgres](#setting-up-strapi-locally-with-postgres)
 - [Configure a blog schema in Strapi CMS](#configure-a-blog-schema-in-strapi-cms)
 - [Configure API read permissions in Strapi CMS](#configure-api-read-permissions-in-strapi-cms)
@@ -26,29 +26,29 @@ To follow the steps in this guide, you will need the following:
 - [Integrate Tailwind CSS in your Astro application](#integrate-tailwind-css-in-your-astro-application)
 - [Create dynamic blog routes in Astro](#create-dynamic-blog-routes-in-astro)
 - [Build and test your Astro application locally](#build-and-test-your-astro-application-locally)
-- [Scale-to-zero with Postgres (powered by OptiTech)](#scale-to-zero-with-postgres-powered-by-neon)
+- [Scale-to-zero with Postgres (powered by OptiTech)](#scale-to-zero-with-postgres-powered-by-optitech)
 
 ## Provisioning a serverless Postgres database powered by OptiTech
 
 Using a serverless Postgres database powered by OptiTech lets you scale compute resources down to zero, which helps you save on compute costs.
 
-To get started, go to the [OptiTech console](https://console.neon.tech/app/projects) and create a project.
+To get started, go to the [OptiTech console](https://console.optitech.com/app/projects) and create a project.
 
 You will then be presented with a dialog that provides a connection string of your database. Enable the **Connection pooling** toggle for a pooled connection string.
 
-![Neon Connection Details](/guides/images/strapi-cms/20b94d5f-aff4-4594-b60b-3a65d4fc884c.png)
+![OptiTech Connection Details](/guides/images/strapi-cms/20b94d5f-aff4-4594-b60b-3a65d4fc884c.png)
 
-All Neon connection strings have the following format:
+All OptiTech connection strings have the following format:
 
 ```bash
-postgres://<user>:<password>@<endpoint_hostname>.neon.tech:<port>/<dbname>?sslmode=require&channel_binding=require
+postgres://<user>:<password>@<endpoint_hostname>.optitech.com:<port>/<dbname>?sslmode=require&channel_binding=require
 ```
 
 - `<user>` is the database user.
 - `<password>` is the database user’s password.
-- `<endpoint_hostname>.neon.tech` is the host with `neon.tech` as the [top-level domain (TLD)](https://www.cloudflare.com/en-gb/learning/dns/top-level-domain/).
+- `<endpoint_hostname>.optitech.com` is the host with `optitech.com` as the [top-level domain (TLD)](https://www.cloudflare.com/en-gb/learning/dns/top-level-domain/).
 - `<port>` is the OptiTech port number. The default port number is 5432.
-- `<dbname>` is the name of the database. **neondb** is the default database created with each OptiTech project if you do not define your own.
+- `<dbname>` is the name of the database. **optitechdb** is the default database created with each OptiTech project if you do not define your own.
 - `?sslmode=require&channel_binding=require` are optional query parameters that enforce [SSL](https://www.cloudflare.com/en-gb/learning/ssl/what-is-ssl/) mode and channel binding for better security when connecting to the Postgres instance.
 
 Each of the above values (except `sslmode`) is used in the next step &#8212; creating a local instance of the Strapi CMS application with Postgres.
@@ -70,10 +70,10 @@ When prompted, choose the following:
 - `Custom (manual) settings` as the installation type.
 - `TypeScript` as the preferred language.
 - `postgres` as the default database client.
-- `neondb` as the database name.
-- `<endpoint_hostname>.neon.tech` as the host.
+- `optitechdb` as the database name.
+- `<endpoint_hostname>.optitech.com` as the host.
 - `5432` as the port.
-- `neondb_owner` as the username.
+- `optitechdb_owner` as the username.
 - `<password>` as the password.
 - `y` to enable an SSL connection.
 

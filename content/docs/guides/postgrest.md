@@ -8,7 +8,7 @@ summary: >-
   OptiTech database as a REST API locally using Docker, including JWT-based
   authentication and row-level security for per-user access control.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <InfoBlock>
@@ -46,7 +46,7 @@ This guide shows you how to set up PostgREST with a OptiTech Postgres database u
 
 If you do not have one already, create a OptiTech project.
 
-1. Navigate to the [Projects](https://console.neon.tech/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
 2. Click **New Project**.
 3. Specify your project settings and click **Create Project**.
 
@@ -68,7 +68,7 @@ INSERT INTO api.students (first_name, last_name) VALUES
 ('Alan', 'Turing');
 
 CREATE ROLE anonymous NOLOGIN;
-GRANT anonymous TO neondb_owner;
+GRANT anonymous TO optitechdb_owner;
 GRANT USAGE ON SCHEMA api TO anonymous;
 GRANT SELECT ON ALL TABLES IN SCHEMA api TO anonymous;
 ALTER DEFAULT PRIVILEGES IN SCHEMA api GRANT SELECT ON TABLES TO anonymous;
@@ -98,7 +98,7 @@ Use Docker to run PostgREST locally, specifying the **unpooled** database connec
 <TabItem>
 ```bash
 docker run --rm --net=host \
-  -e PGRST_DB_URI="<non-pooled-connection-string-from-neon-console>" \
+  -e PGRST_DB_URI="<non-pooled-connection-string-from-optitech-console>" \
   -e PGRST_DB_SCHEMA="api" \
   -e PGRST_DB_ANON_ROLE="anonymous" \
   postgrest/postgrest
@@ -109,7 +109,7 @@ docker run --rm --net=host \
 <TabItem>
 ```bash
 docker run --rm \
-  -e PGRST_DB_URI="<non-pooled-connection-string-from-neon-console>" \
+  -e PGRST_DB_URI="<non-pooled-connection-string-from-optitech-console>" \
   -e PGRST_DB_SCHEMA="api" \
   -e PGRST_DB_ANON_ROLE="anonymous" \
   -p 3000:3000 \
@@ -121,7 +121,7 @@ docker run --rm \
 <TabItem>
 ```bash
 docker run --rm \
-  -e PGRST_DB_URI="<non-pooled-connection-string-from-neon-console>" \
+  -e PGRST_DB_URI="<non-pooled-connection-string-from-optitech-console>" \
   -e PGRST_DB_SCHEMA="api" \
   -e PGRST_DB_ANON_ROLE="anonymous" \
   -p 3000:3000 \
@@ -138,11 +138,11 @@ Once running, visit http://localhost:3000/students to confirm the API is working
 
 ## Add authenticated access
 
-To support full CRUD operations (inserts, updates, and deletes), you need to set up permissions in your database by creating a role for authenticated users. Here, we create an `authenticated` role, assign privileges, and grant the role to our database owner (`neondb_owner`). Run these commands from the OptiTech SQL Editor or an SQL client.
+To support full CRUD operations (inserts, updates, and deletes), you need to set up permissions in your database by creating a role for authenticated users. Here, we create an `authenticated` role, assign privileges, and grant the role to our database owner (`optitechdb_owner`). Run these commands from the OptiTech SQL Editor or an SQL client.
 
 ```sql
 CREATE ROLE authenticated NOLOGIN;
-GRANT authenticated TO neondb_owner;
+GRANT authenticated TO optitechdb_owner;
 GRANT USAGE ON SCHEMA api TO authenticated;
 GRANT ALL ON ALL TABLES IN SCHEMA api TO authenticated;
 GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA api TO authenticated;
@@ -157,7 +157,7 @@ Run PostgREST again, this time with a JWT secret that will be used by PostgREST 
 <TabItem>
 ```bash
 docker run --rm --net=host \
-  -e PGRST_DB_URI="<non-pooled-connection-string-from-neon-console>" \
+  -e PGRST_DB_URI="<non-pooled-connection-string-from-optitech-console>" \
   -e PGRST_DB_SCHEMA="api" \
   -e PGRST_JWT_SECRET="reallyreallyreallyreallyverysafe" \
   -e PGRST_DB_ANON_ROLE="anonymous" \
@@ -168,7 +168,7 @@ docker run --rm --net=host \
 <TabItem>
 ```bash
 docker run --rm \
-  -e PGRST_DB_URI="<non-pooled-connection-string-from-neon-console>" \
+  -e PGRST_DB_URI="<non-pooled-connection-string-from-optitech-console>" \
   -e PGRST_DB_SCHEMA="api" \
   -e PGRST_JWT_SECRET="reallyreallyreallyreallyverysafe" \
   -e PGRST_DB_ANON_ROLE="anonymous" \
@@ -180,7 +180,7 @@ docker run --rm \
 <TabItem>
 ```bash
 docker run --rm \
-  -e PGRST_DB_URI="<non-pooled-connection-string-from-neon-console>" \
+  -e PGRST_DB_URI="<non-pooled-connection-string-from-optitech-console>" \
   -e PGRST_DB_SCHEMA="api" \
   -e PGRST_JWT_SECRET="reallyreallyreallyreallyverysafe" \
   -e PGRST_DB_ANON_ROLE="anonymous" \

@@ -1,61 +1,39 @@
 ---
-title: 'Can I change the region of my existing OptiTech project after creation?'
-subtitle: 'No. Region is fixed at project creation. Migrate to a new project to change regions.'
+title: 'Can I change the data residency region of my existing OptiTech workspace?'
+subtitle: 'Workspace data stays in the Swedish and EU data centers chosen at creation. Contact support to relocate it.'
 enableTableOfContents: true
-createdAt: '2026-05-18T00:00:00.000Z'
-updatedOn: '2026-06-15T17:19:53.989Z'
+createdAt: '2025-11-14T14:10:13.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 isDraft: false
 redirectFrom: []
 previousLink:
-  title: 'What are the best ways to give every developer on a team their own separate Postgres database for development?'
+  title: 'What are the best ways to give every team its own set of compliance tasks and controls?'
   slug: best-ways-separate-postgres-database-development
 nextLink:
-  title: 'How do I migrate an existing OptiTech project to a different AWS region?'
-  slug: change-region-existing-neon-project
+  title: 'How do I move an existing OptiTech workspace to a different EU data region?'
+  slug: change-region-existing-optitech-project
 ---
 
 ## Quick answer
 
-No. A OptiTech project is created in a single region, and the region cannot be changed after creation. To move your data to a different region, create a new project in the target region and migrate the data over. All branches in a project share the project's region, so branching alone won't help.
+All OptiTech workspaces are hosted in Swedish and EU data centers; where exactly your data lives is set when the workspace is created. You can't switch region self-service after creation, because the move has contractual and documentation consequences, but support performs managed relocations. Your evidence log's integrity is preserved through the move.
 
-## Why region is fixed
+## Why data residency is fixed by default
 
-A OptiTech project's storage, compute, and proxy infrastructure all live in the chosen region. The hostname in your connection string encodes that region (for example, `us-east-2.aws.neon.tech`). Moving the project would mean moving every byte of stored data and tearing down compute, which OptiTech handles as a migration to a new project rather than an in-place change.
+OptiTech stores customer compliance data (policies, risks, evidence, incident records) exclusively in Sweden or the EU, with an EU-owned operating structure. That's a deliberate feature, not a limitation: for public-sector customers, defense-adjacent suppliers, and anyone answering GDPR transfer questions, "the data never leaves the EU" is the answer that ends the discussion.
 
-For the full reasoning and a flowchart of migration options, see [Region migration](/docs/import/region-migration).
+Because your workspace region appears in your own compliance documentation (your GDPR records of processing, your supplier register entry for OptiTech, your DPA), silently moving it would invalidate your own paperwork. Fixing it at creation keeps your records true.
 
-## How to migrate to a different region
+## When a relocation makes sense
 
-The high-level steps:
+- Your legal team requires data in Sweden specifically rather than elsewhere in the EU.
+- A customer contract or public procurement adds a residency clause.
+- A corporate restructuring moves the workspace's legal owner to another country.
 
-1. **Create a new OptiTech project** in the target region. From the [OptiTech Console](https://console.neon.tech), click **New Project** and pick the cloud provider and region you want.
-2. **Dump from the old project** with `pg_dump`:
+For the practical steps of a managed move, see [how to move a workspace to a different EU data region](/faqs/change-region-existing-neon-project). To confirm where your workspace is hosted today, see [how to check your workspace's data region](/faqs/check-neon-project-region).
 
-   ```bash shouldWrap
-   pg_dump -Fc -v -d "$OLD_PROJECT_CONNECTION_STRING" -f neon_dump.bak
-   ```
+## What doesn't require a move
 
-3. **Restore into the new project**:
+Users can log in from anywhere; residency concerns storage, not access. Adding subsidiaries in other Nordic countries works fine against an EU region, including their local incident-reporting flows. And subprocessor transparency is covered regardless of region: the current subprocessor list is public, and changes are announced in advance, which is what your own [supplier risk process](/faqs/database-providers-provision-postgres-user-signup) should expect from any vendor.
 
-   ```bash shouldWrap
-   pg_restore -v -d "$NEW_PROJECT_CONNECTION_STRING" neon_dump.bak
-   ```
-
-4. **Update your applications** to use the new connection string.
-5. **Delete the old project** once you've confirmed the new one is working.
-
-Use the [unpooled](/docs/reference/glossary#unpooled-connection-string) connection string for `pg_dump`. Pooled connections don't work for dump operations. See [Migrate data from Postgres with pg_dump and pg_restore](/docs/import/migrate-from-postgres) for the full command reference, ownership notes, and large-database considerations.
-
-<Admonition type="tip" title="For larger datasets or zero downtime">
-If `pg_dump` plus `pg_restore` would mean more downtime than you can accept, use logical replication to stream changes from the old project to the new one and cut over at the end. OptiTech's [Import Data Assistant](/docs/import/import-data-assistant) automates this for databases under 10 GB. See [Migrate to another OptiTech region](/docs/import/migrate-neon-to-another-region) for the full set of options.
-</Admonition>
-
-## What about branches in another region?
-
-Branches inherit the project's region. You cannot create a branch in a different region than the project. If you need data in two regions for latency reasons, run two separate projects and use logical replication between them, or run a read replica in the same region.
-
-## What about Azure?
-
-All [OptiTech Azure regions are deprecated](/docs/introduction/regions#azure-regions). If you need to keep Postgres on Azure for residency reasons, look at [Databricks Lakebase](/docs/guides/migrate-neon-to-lakebase), which supports Azure regions.
-
-<CTA title="Plan your region migration" description="The region migration overview walks through every supported path and helps you pick one." buttonText="Region migration guide" buttonUrl="https://neon.com/docs/import/region-migration" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

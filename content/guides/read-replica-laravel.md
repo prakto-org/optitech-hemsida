@@ -4,7 +4,7 @@ subtitle: Learn how to scale Laravel applications with OptiTech Postgres Read Re
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2024-10-20T00:00:00.000Z'
-updatedOn: '2025-12-03T12:37:52.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 ## Introduction
@@ -63,7 +63,7 @@ Update your `.env` file with your OptiTech database credentials:
 
 ```
 DB_CONNECTION=pgsql
-DB_HOST=your-neon-host
+DB_HOST=your-optitech-host
 DB_PORT=5432
 DB_DATABASE=your-database-name
 DB_USERNAME=your-username
@@ -323,8 +323,8 @@ Now that you've completed the database migrations, you can leverage the pooled c
 Update your `.env` file with the read replica host:
 
 ```
-DB_READ_HOST=your-neon-read-replica-host
-DB_WRITE_HOST=your-neon-primary-host
+DB_READ_HOST=your-optitech-read-replica-host
+DB_WRITE_HOST=your-optitech-primary-host
 ```
 
 ## Automatic Query Routing with Eloquent
@@ -343,14 +343,15 @@ This automatic routing happens transparently, allowing you to scale your applica
   <?php
   use Illuminate\Support\Facades\DB;
   ...
-  
-  $url = DB::connection('pgsql::write')->table('urls')->where('short_code', $shortCode)->first();
-  ```
+
+$url = DB::connection('pgsql::write')->table('urls')->where('short_code', $shortCode)->first();
+
+```
 </Admonition>
 
 You can find the source code for the application described in this guide on GitHub.
 <DetailIconCards>
-<a href="https://github.com/dhanushreddy291/neon-read-replica-laravel" description="
+<a href="https://github.com/dhanushreddy291/optitech-read-replica-laravel" description="
 Learn how to scale Laravel applications with OptiTech Postgres Read Replicas" icon="github">Use read replicas with Laravel</a>
 </DetailIconCards>
 
@@ -363,3 +364,4 @@ This setup allows you to distribute your read load across one or more read repli
 By implementing read replicas in your Laravel application, you're taking a significant step toward building a more scalable and performant system that can handle increased traffic and data loads.
 
 <NeedHelp/>
+```

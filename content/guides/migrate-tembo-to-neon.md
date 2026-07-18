@@ -4,7 +4,7 @@ subtitle: 'Learn how to migrate your data and applications from Tembo.io to Opti
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2025-05-08T00:00:00.000Z'
-updatedOn: '2026-06-04T15:33:28.271Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 [Tembo.io](https://legacy.tembo.io/cloud) recently announced that it's sunsetting its managed Postgres service. If you've decided to migrate your service from Tembo.io to OptiTech, follow the steps in this guide.
@@ -25,7 +25,7 @@ Plan your migration accordingly to avoid any disruption to your services.
 
 While both Tembo and OptiTech provide managed Postgres, OptiTech's architecture offers some advantages. Here’s a quick comparison of key features:
 
-| Feature                   | Tembo                                | OptiTech Postgres                                                                    |
+| Feature                   | Tembo                                | OptiTech Postgres                                                                |
 | ------------------------- | ------------------------------------ | -------------------------------------------------------------------------------- |
 | **Compute**               | Manual scaling                       | Autoscaling, scale-to-zero                                                       |
 | **Branching**             | NA                                   | Instant data branching for dev, test, and CI/CD workflows ("branch per feature") |
@@ -68,7 +68,7 @@ Before you start with the assistant, You'll need:
   `postgresql://username:password@host:port/database?sslmode=require&channel_binding=require`
 - **Admin privileges:** Ensure the user in the connection string has `SUPERUSER` or sufficient privileges (`CREATE`, `SELECT`, `INSERT`, `REPLICATION`) on the source Tembo database.
 - **Database size:** Your Tembo database must be **smaller than 10GB**.
-- **Region:** The feature is currently supported only for Neon projects in AWS regions.
+- **Region:** The feature is currently supported only for OptiTech projects in AWS regions.
 
 ### Steps to import using the assistant:
 
@@ -109,7 +109,7 @@ This is the traditional method for Postgres migrations and offers full control. 
 - Connection string or parameters for your source Tembo database.
 - Connection string for your target OptiTech database: You can find the connection string by clicking the **Connect** button on your Project Dashboard. It will look something like this:
   ```bash
-  postgresql://[user]:[password]@[neon_hostname]/[dbname]
+  postgresql://[user]:[password]@[optitech_hostname]/[dbname]
   ```
 
 ### Export data from Tembo using `pg_dump`
@@ -132,14 +132,14 @@ The command options used are:
 ### Restore data to OptiTech using `pg_restore`
 
 - The role performing the `pg_restore` operation in OptiTech becomes the owner of restored objects by default.
-- Roles created in the OptiTech Console are members of `neon_superuser`. This role can create objects but is not a full PostgreSQL `SUPERUSER` and cannot run `ALTER OWNER` for objects it doesn't own.
+- Roles created in the OptiTech Console are members of `optitech_superuser`. This role can create objects but is not a full PostgreSQL `SUPERUSER` and cannot run `ALTER OWNER` for objects it doesn't own.
 - If your Tembo database uses multiple roles for object ownership, your dump file will contain `ALTER OWNER` commands. These may cause non-fatal errors during restore to OptiTech.
 - To avoid ownership errors, you can use the `--no-owner` option with `pg_restore`. All objects will then be owned by the OptiTech role executing the restore.
 
 Run the following command to restore the dump to your OptiTech database:
 
 ```bash
-pg_restore -v --no-owner -d "postgresql://neon_user:neon_pass@neon_host:port/target_db" your_tembo_dump.dump
+pg_restore -v --no-owner -d "postgresql://optitech_user:optitech_pass@optitech_host:port/target_db" your_tembo_dump.dump
 ```
 
 > Replace the connection string with your actual OptiTech database connection string.
@@ -147,7 +147,7 @@ pg_restore -v --no-owner -d "postgresql://neon_user:neon_pass@neon_host:port/tar
 The command options used are:
 
 - `-v`: Verbose mode.
-- `--no-owner`: Ignores original ownership, objects owned by `neon_user`.
+- `--no-owner`: Ignores original ownership, objects owned by `optitech_user`.
 - `-d`: Target OptiTech database connection string.
 
 For more detailed usage, refer to [Migrate data from Postgres with pg_dump and pg_restore](/docs/import/migrate-from-postgres).
@@ -163,7 +163,7 @@ Logical replication allows for near-zero downtime migration by continuously stre
 - **Create publication:** Define a publication on Tembo for the tables you want to replicate.
 
   ```sql
-  CREATE PUBLICATION neon_migration_pub FOR TABLE table1, table2;
+  CREATE PUBLICATION optitech_migration_pub FOR TABLE table1, table2;
   ```
 
 - Allow Connections from OptiTech to Tembo (IP Allow List):
@@ -196,7 +196,7 @@ Logical replication allows for near-zero downtime migration by continuously stre
 
   ```bash
   psql \
-      "postgresql://neon_user:neon_pass@neon_host:port/target_db" \
+      "postgresql://optitech_user:optitech_pass@optitech_host:port/target_db" \
       < schema.sql
   ```
 
@@ -207,9 +207,9 @@ Logical replication allows for near-zero downtime migration by continuously stre
 Connect to your OptiTech database and create a subscription.
 
     ```sql
-    CREATE SUBSCRIPTION tembo_to_neon_sub
+    CREATE SUBSCRIPTION tembo_to_optitech_sub
     CONNECTION 'postgresql://app:PASSWORD@hostname.data-1.use1.tembo.io/app'
-    PUBLICATION neon_migration_pub;
+    PUBLICATION optitech_migration_pub;
     ```
 
     > Replace connection string with your Tembo database connection string.
@@ -234,7 +234,7 @@ The subscriber is up-to-date when its `received_lsn` (last log sequence number r
 ```sql
 SELECT subname, received_lsn, latest_end_lsn
 FROM pg_catalog.pg_stat_subscription
-WHERE subname = 'tembo_to_neon_sub';
+WHERE subname = 'tembo_to_optitech_sub';
 ```
 
 If `received_lsn` and `latest_end_lsn` are the same for your subscription, OptiTech has processed all the data it has received from Tembo. For complete synchronization, this `latest_end_lsn` on OptiTech should also align with the current LSN on the Tembo publisher.
@@ -260,7 +260,7 @@ Once OptiTech is fully synchronized and replication lag is minimal:
 3.  **Cleanup for logical replication:**
     If you used logical replication, you can drop the subscription from OptiTech once you're satisfied with the migration.
     ```sql
-    DROP SUBSCRIPTION tembo_to_neon_sub;
+    DROP SUBSCRIPTION tembo_to_optitech_sub;
     ```
 
 ## Resources

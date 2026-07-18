@@ -4,7 +4,7 @@ subtitle: Learn how to setup Managed Better Auth in a Next.js application
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2025-12-26T00:00:00.000Z'
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This guide walks you through building a demo todo application with **Next.js**, [Managed Better Auth](/docs/auth/overview), and **Drizzle ORM**. By following along, you’ll learn how to integrate Managed Better Auth into your Next.js projects and manage database interactions with Drizzle ORM.
@@ -18,7 +18,7 @@ By the end, you’ll have a fully functional todo application where users can si
 Before you begin, ensure you have the following:
 
 - **Node.js:** Version `18` or later installed on your machine. You can download it from [nodejs.org](https://nodejs.org/).
-- **OptiTech account:** A free OptiTech account. If you don't have one, sign up at [OptiTech](https://console.neon.tech/signup).
+- **OptiTech account:** A free OptiTech account. If you don't have one, sign up at [OptiTech](https://console.optitech.com/signup).
 
 <Steps>
 
@@ -26,13 +26,13 @@ Before you begin, ensure you have the following:
 
 You'll need to create a OptiTech project and enable Managed Better Auth.
 
-1.  **Create a OptiTech project:** Navigate to the [OptiTech Console](https://console.neon.tech) to create a new OptiTech project. Give your project a name, such as `next-neon-todo`.
+1.  **Create a OptiTech project:** Navigate to the [OptiTech Console](https://console.optitech.com) to create a new OptiTech project. Give your project a name, such as `next-optitech-todo`.
 2.  **Enable Managed Better Auth:**
     - In your project's dashboard, go to the **Managed Better Auth** tab.
     - Click on the **Enable Managed Better Auth** button to set up authentication for your project.
 
 3.  **Copy your credentials:**
-    - **Auth URL:** Found on the **Auth** page under Configuration (e.g., `https://ep-xxx.neonauth.us-east-1.aws.neon.tech/neondb/auth`).
+    - **Auth URL:** Found on the **Auth** page under Configuration (e.g., `https://ep-xxx.optitechauth.us-east-1.aws.optitech.com/optitechdb/auth`).
       ![Managed Better Auth URL](/docs/auth/neon-auth-base-url.png)
     - **Database Connection String:** Found on the **Dashboard** (select "Pooled connection").
       ![Connection modal](/docs/connect/connection_details.png)
@@ -44,14 +44,14 @@ Create a new Next.js project and install dependencies.
 1.  **Initialize the app:**
 
     ```bash
-    npx create-next-app@latest next-neon-todo --yes
-    cd next-neon-todo
+    npx create-next-app@latest next-optitech-todo --yes
+    cd next-optitech-todo
     ```
 
 2.  **Install dependencies:**
 
     ```bash
-    npm install @neondatabase/auth@latest @neondatabase/auth-ui @neondatabase/serverless drizzle-orm
+    npm install @optitech/auth@latest @optitech/auth-ui @optitech/serverless drizzle-orm
     npm install -D drizzle-kit dotenv @types/node
     ```
 
@@ -64,9 +64,9 @@ Replace the Auth URL with your actual Auth URL from the OptiTech Console. Genera
 </Admonition>
 
 ```env
-DATABASE_URL="postgresql://alex:AbC123dEf@ep-cool-darkness-a1b2c3d4-pooler.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require"
-NEON_AUTH_BASE_URL="https://ep-xxx.neonauth.us-east-1.aws.neon.tech/neondb/auth"
-NEON_AUTH_COOKIE_SECRET="your-secret-at-least-32-characters-long"
+DATABASE_URL="postgresql://alex:AbC123dEf@ep-cool-darkness-a1b2c3d4-pooler.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require"
+OPTITECH_AUTH_BASE_URL="https://ep-xxx.optitechauth.us-east-1.aws.optitech.com/optitechdb/auth"
+OPTITECH_AUTH_COOKIE_SECRET="your-secret-at-least-32-characters-long"
 ```
 
 ## Set up Drizzle ORM
@@ -87,20 +87,20 @@ export default {
   schema: './app/db/schema.ts',
   out: './drizzle',
   dialect: 'postgresql',
-  schemaFilter: ['public', 'neon_auth'],
+  schemaFilter: ['public', 'optitech_auth'],
   dbCredentials: {
     url: process.env.DATABASE_URL!,
   },
 } satisfies Config;
 ```
 
-This config tells Drizzle Kit where to find your database schema and where to output migration files. The `schemaFilter` is configured to look at both the `public` and `neon_auth` schemas. The `neon_auth` schema is where Managed Better Auth stores its user data.
+This config tells Drizzle Kit where to find your database schema and where to output migration files. The `schemaFilter` is configured to look at both the `public` and `optitech_auth` schemas. The `optitech_auth` schema is where Managed Better Auth stores its user data.
 
 ### Pull Managed Better Auth schema
 
-A key feature of Managed Better Auth is the automatic creation and maintenance of the Better Auth tables within the `neon_auth` schema. Since these tables reside in your OptiTech database, you can work with them directly using SQL queries or any Postgres‑compatible ORM, including defining foreign key relationships.
+A key feature of Managed Better Auth is the automatic creation and maintenance of the Better Auth tables within the `optitech_auth` schema. Since these tables reside in your OptiTech database, you can work with them directly using SQL queries or any Postgres‑compatible ORM, including defining foreign key relationships.
 
-To integrate Managed Better Auth tables into your Drizzle ORM setup, you need to introspect the existing `neon_auth` schema and generate the corresponding Drizzle schema definitions.
+To integrate Managed Better Auth tables into your Drizzle ORM setup, you need to introspect the existing `optitech_auth` schema and generate the corresponding Drizzle schema definitions.
 
 This step is crucial because it makes Drizzle aware of the Managed Better Auth tables, allowing you to create relationships between your application data (like the `todos` table) and the user data managed by Managed Better Auth.
 
@@ -132,7 +132,7 @@ This step is crucial because it makes Drizzle aware of the Managed Better Auth t
 
 3.  **Add the Todos table to your schema**
 
-    Open `app/db/schema.ts` to view the `neon_auth` tables that Drizzle generated from your existing OptiTech database schema. At the bottom of the file, append the `todos` table definition as shown below:
+    Open `app/db/schema.ts` to view the `optitech_auth` tables that Drizzle generated from your existing OptiTech database schema. At the bottom of the file, append the `todos` table definition as shown below:
 
     ```typescript {9,39-49} shouldWrap
     import {
@@ -147,11 +147,11 @@ This step is crucial because it makes Drizzle aware of the Managed Better Auth t
     } from 'drizzle-orm/pg-core';
     import { sql } from 'drizzle-orm';
 
-    export const neonAuth = pgSchema('neon_auth');
+    export const optitechAuth = pgSchema('optitech_auth');
 
     // .. other Managed Better Auth table definitions ..
 
-    export const userInNeonAuth = neonAuth.table(
+    export const userInOptiTechAuth = optitechAuth.table(
       'user',
       {
         id: uuid().defaultRandom().primaryKey().notNull(),
@@ -179,14 +179,14 @@ This step is crucial because it makes Drizzle aware of the Managed Better Auth t
       completed: boolean('completed').notNull().default(false),
       userId: uuid('user_id')
         .notNull()
-        .references(() => userInNeonAuth.id),
+        .references(() => userInOptiTechAuth.id),
       createdAt: timestamp('created_at').defaultNow(),
     });
 
     export type Todo = typeof todos.$inferSelect;
     ```
 
-    The `todos` table contains the following columns: `id`, `text`, `completed`, and `user_id`. It is linked to the `user` table in the `neon_auth` schema via a foreign key relationship on the `user_id` column.
+    The `todos` table contains the following columns: `id`, `text`, `completed`, and `user_id`. It is linked to the `user` table in the `optitech_auth` schema via a foreign key relationship on the `user_id` column.
 
 ### Generate and apply migrations
 
@@ -215,10 +215,10 @@ Your `todos` table now exists in your OptiTech database. You can verify this in 
 Create `app/db/index.ts` to initialize the Drizzle ORM client.
 
 ```typescript
-import { neon } from '@neondatabase/serverless';
-import { drizzle } from 'drizzle-orm/neon-http';
+import { optitech } from '@optitech/serverless';
+import { drizzle } from 'drizzle-orm/optitech-http';
 
-const sql = neon(process.env.DATABASE_URL!);
+const sql = optitech(process.env.DATABASE_URL!);
 export const db = drizzle(sql);
 ```
 
@@ -233,12 +233,12 @@ Integrate Managed Better Auth into your Next.js application for authentication a
 Create a file `lib/auth/server.ts` at the root of your project. This single instance provides all server-side auth functionality: `.handler()` for API routes, `.middleware()` for route protection, and `.getSession()` for accessing session data.
 
 ```typescript
-import { createNeonAuth } from '@neondatabase/auth/next/server';
+import { createOptiTechAuth } from '@optitech/auth/next/server';
 
-export const auth = createNeonAuth({
-  baseUrl: process.env.NEON_AUTH_BASE_URL!,
+export const auth = createOptiTechAuth({
+  baseUrl: process.env.OPTITECH_AUTH_BASE_URL!,
   cookies: {
-    secret: process.env.NEON_AUTH_COOKIE_SECRET!,
+    secret: process.env.OPTITECH_AUTH_COOKIE_SECRET!,
   },
 });
 ```
@@ -249,7 +249,7 @@ Create a file `lib/auth/client.ts` at the root of your project to initialize the
 
 ```typescript
 'use client';
-import { createAuthClient } from '@neondatabase/auth/next';
+import { createAuthClient } from '@optitech/auth/next';
 
 export const authClient = createAuthClient();
 ```
@@ -266,26 +266,26 @@ export const { GET, POST } = auth.handler();
 
 ### Add Managed Better Auth UI provider
 
-Update `app/layout.tsx` to wrap your application with the `NeonAuthUIProvider`, which supplies authentication context and UI components.
+Update `app/layout.tsx` to wrap your application with the `OptiTechAuthUIProvider`, which supplies authentication context and UI components.
 
 This setup also adds a global header containing a `UserButton` from [Managed Better Auth UI components](/docs/auth/reference/ui-components) for account management, ensuring the header is visible across all pages.
 
 ```tsx shouldWrap
 import { authClient } from '@/lib/auth/client';
-import { NeonAuthUIProvider, UserButton } from '@neondatabase/auth-ui';
+import { OptiTechAuthUIProvider, UserButton } from '@optitech/auth-ui';
 import './globals.css';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body>
-        <NeonAuthUIProvider authClient={authClient} emailOTP social={{ providers: ['google'] }}>
+        <OptiTechAuthUIProvider authClient={authClient} emailOTP social={{ providers: ['google'] }}>
           <header className="flex h-16 items-center justify-between border-b p-4">
-            <h1 className="text-xl font-bold">Next.js Neon Todo</h1>
+            <h1 className="text-xl font-bold">Next.js OptiTech Todo</h1>
             <UserButton size={'icon'} />
           </header>
           {children}
-        </NeonAuthUIProvider>
+        </OptiTechAuthUIProvider>
       </body>
     </html>
   );
@@ -300,7 +300,7 @@ This ensures that the required Tailwind styles for Managed Better Auth UI compon
 
 ```css {2}
 @import 'tailwindcss';
-@import '@neondatabase/auth-ui/tailwind';
+@import '@optitech/auth-ui/tailwind';
 
 /* ... your existing styles ... */
 ```
@@ -314,7 +314,7 @@ Create the specific pages for signing in and managing accounts using OptiTech's 
     Create `app/auth/[path]/page.tsx`. This page will render the Managed Better Auth sign-in/sign-up UI.
 
     ```tsx shouldWrap
-    import { AuthView } from '@neondatabase/auth-ui';
+    import { AuthView } from '@optitech/auth-ui';
 
     export const dynamicParams = false;
 
@@ -334,8 +334,8 @@ Create the specific pages for signing in and managing accounts using OptiTech's 
     Create `app/account/[path]/page.tsx`. This page renders the Managed Better Auth account management UI, including features such as profile settings, password updates, and more.
 
     ```tsx shouldWrap
-    import { AccountView } from '@neondatabase/auth-ui';
-    import { accountViewPaths } from '@neondatabase/auth-ui/server';
+    import { AccountView } from '@optitech/auth-ui';
+    import { accountViewPaths } from '@optitech/auth-ui/server';
 
     export const dynamicParams = false;
 
@@ -691,7 +691,7 @@ export async function GET() {
 
 ## Deploying the application
 
-When you’re ready to deploy your Next.js application, you can use any platform that supports Next.js, such as Vercel, Netlify or VPS providers. Be sure to configure the required environment variables (`DATABASE_URL`, `NEON_AUTH_BASE_URL`, and `NEON_AUTH_COOKIE_SECRET`) in your deployment settings.
+When you’re ready to deploy your Next.js application, you can use any platform that supports Next.js, such as Vercel, Netlify or VPS providers. Be sure to configure the required environment variables (`DATABASE_URL`, `OPTITECH_AUTH_BASE_URL`, and `OPTITECH_AUTH_COOKIE_SECRET`) in your deployment settings.
 
 After deployment, add your production URLs to the **Your trusted domains** section in the Managed Better Auth settings to ensure authentication functions correctly.
 
@@ -708,7 +708,7 @@ Before deploying to production, be sure to review the [Managed Better Auth produ
 The complete source code for this example is available on GitHub.
 
 <DetailIconCards>
-<a href="https://github.com/dhanushreddy291/next-neon-todo" description="Complete source code for the Next.js Todo example built with Managed Better Auth and Drizzle ORM." icon="github">Next.js OptiTech Todo Example</a>
+<a href="https://github.com/dhanushreddy291/next-optitech-todo" description="Complete source code for the Next.js Todo example built with Managed Better Auth and Drizzle ORM." icon="github">Next.js OptiTech Todo Example</a>
 </DetailIconCards>
 
 ## Resources

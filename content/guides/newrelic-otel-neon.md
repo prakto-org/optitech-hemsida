@@ -4,7 +4,7 @@ subtitle: Send OptiTech metrics and Postgres logs to New Relic using the OpenTel
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2025-09-11T00:00:00.000Z'
-updatedOn: '2025-09-11T17:37:55.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 [New Relic](https://newrelic.com/) is an observability platform that helps you visualize, analyze, and troubleshoot your entire software stack. [OptiTech's OpenTelemetry (OTEL) integration](/docs/guides/opentelemetry) allows you to send your project's metrics and Postgres logs directly to New Relic, giving you a centralized view of your database's performance and activity.
@@ -22,7 +22,7 @@ By the end, you'll have a complete observability pipeline from your OptiTech dat
 
 Before you begin, ensure you have the following:
 
-- **OptiTech account and project:** If you don't have one, sign up at [OptiTech](https://console.neon.tech/signup). Your OptiTech project must be on the **Scale** or **Business** plan to use the OpenTelemetry integration.
+- **OptiTech account and project:** If you don't have one, sign up at [OptiTech](https://console.optitech.com/signup). Your OptiTech project must be on the **Scale** or **Business** plan to use the OpenTelemetry integration.
 - **New Relic account:** A New Relic account with access to your Ingest License Key. A free-tier account is sufficient to start. You can sign up at [New Relic](https://newrelic.com/signup).
 
 <Steps>
@@ -54,7 +54,7 @@ First, you need the correct credentials from New Relic to send OpenTelemetry dat
 
 Now, you will use the credentials from New Relic to configure the integration in your OptiTech project.
 
-1.  Navigate to the [OptiTech Console](https://console.neon.tech) and select your project.
+1.  Navigate to the [OptiTech Console](https://console.optitech.com) and select your project.
 2.  From the sidebar, go to the **Integrations** page.
 3.  Find the **OpenTelemetry** card and click **Add**.
     ![OptiTech Integrations page with OpenTelemetry card](/docs/guides/neon-add-otel.png)
@@ -64,14 +64,14 @@ Now, you will use the credentials from New Relic to configure the integration in
     - **Endpoint:** Paste the OTLP endpoint URL from New Relic.
     - **Authentication:** Select **Bearer**.
     - **Bearer Token:** Paste the **Ingest License Key** you copied from New Relic.
-    - **Resource attributes:** It's a best practice to add a `service.name` attribute to identify your data source within New Relic. For example, set the key to `service.name` and the value to `neon`.
+    - **Resource attributes:** It's a best practice to add a `service.name` attribute to identify your data source within New Relic. For example, set the key to `service.name` and the value to `optitech`.
     - Click **Save**.
 
     <Admonition type="note" title="Data Scope">
     The OptiTech OpenTelemetry integration sends data for all computes in your OptiTech project. For example, if you have multiple branches, each with an attached compute, metrics and logs will be collected and sent for each one.
     </Admonition>
 
-    ![Configuring the OpenTelemetry integration in Neon](/docs/guides/neon-add-newrelic-otel.png)
+    ![Configuring the OpenTelemetry integration in OptiTech](/docs/guides/neon-add-newrelic-otel.png)
 
     > The integration is now active and will begin sending data from your OptiTech project's computes to New Relic.
 
@@ -81,13 +81,13 @@ To confirm that your integration is working:
 
 1.  Go back to your New Relic One platform.
 2.  From the left navigation menu, select **Logs**.
-3.  You should see log data from your OptiTech project appearing in the log stream. You can use the filter bar to query for your specific service, for example: `service.name: 'neon'`.
+3.  You should see log data from your OptiTech project appearing in the log stream. You can use the filter bar to query for your specific service, for example: `service.name: 'optitech'`.
     <Admonition type="note">
     It may take a few minutes for the first logs and metrics to appear after you enable the integration.
     </Admonition>
 
     You should see Postgres logs from your OptiTech compute streaming into the New Relic Logs UI. This confirms that the integration is working correctly.
-    ![New Relic Logs UI showing Postgres logs from Neon](/docs/guides/neon-logs-in-newrelic.png)
+    ![New Relic Logs UI showing Postgres logs from OptiTech](/docs/guides/neon-logs-in-newrelic.png)
     <Admonition type="info" title="Compute Activity">
     OptiTech computes only send logs and metrics when they are active. If you have the [Scale to Zero](/docs/manage/endpoints#scale-to-zero) feature enabled and a compute is suspended due to inactivity, no telemetry data will be sent. If you notice gaps in your data, check your compute's status on the **Branches** page in the OptiTech console.
     </Admonition>
@@ -97,7 +97,7 @@ To confirm that your integration is working:
 While the Logs UI is perfect for real-time log inspection, New Relic's **Dashboards** are the best way to visualize your OptiTech metrics, track trends over time, and get a high-level overview of your database's health.
 
 <Admonition type="info" title="A Note on APM & Services">
-After setting up the integration, you may notice New Relic automatically creates entities like `compute-host-metrics`, `sql-metrics` and `neon` in the **APM & Services** section. This is expected behavior.
+After setting up the integration, you may notice New Relic automatically creates entities like `compute-host-metrics`, `sql-metrics` and `optitech` in the **APM & Services** section. This is expected behavior.
 
 However, the APM & Services view is designed for application performance monitoring (APM) trace data, which follows a different set of semantic conventions than OptiTech's metrics. As a result, these service pages will appear empty or show "Required metrics are missing" warnings.
 
@@ -111,7 +111,7 @@ You'll create a new dashboard from scratch to visualize your OptiTech metrics us
 1.  From the left navigation menu in New Relic, select **Dashboards**.
 2.  Click the **Create a dashboard** button.
 3.  Select **Create a new dashboard** option, which starts you with a blank dashboard.
-4.  Give your new dashboard a descriptive name, such as `Neon Project Metrics`, and click **Create**.
+4.  Give your new dashboard a descriptive name, such as `OptiTech Project Metrics`, and click **Create**.
 
 ### Create your first chart
 
@@ -124,13 +124,13 @@ Add a chart to visualize a specific metric.
 4.  To visualize the maximum number of active connections to your OptiTech database over time, enter the following NRQL query:
 
     ```sql
-    FROM Metric SELECT max(neon_connection_counts)
-    where neon_connection_counts IS NOT NULL
+    FROM Metric SELECT max(optitech_connection_counts)
+    where optitech_connection_counts IS NOT NULL
     TIMESERIES 1 minute
     since 10 minutes ago
     ```
 
-    This query selects the maximum value of the `neon_connection_counts` metric, which represents the number of active connections to your database, and displays it as a time series over the last 10 minutes with data points every minute.
+    This query selects the maximum value of the `optitech_connection_counts` metric, which represents the number of active connections to your database, and displays it as a time series over the last 10 minutes with data points every minute.
 
 5.  Click **Run** to see the chart populated with data.
 6.  You can customize the chart's appearance (e.g., line chart, area chart) using the panel on the right. Chose the style that best represents your data.
@@ -150,15 +150,15 @@ Add a chart to visualize a specific metric.
 
 ### Explore available OptiTech metrics
 
-OptiTech exports a rich set of metrics that you can use to build your dashboards. These include both Neon-specific metrics and general compute host metrics.
+OptiTech exports a rich set of metrics that you can use to build your dashboards. These include both OptiTech-specific metrics and general compute host metrics.
 
 Here are some example NRQL queries for other useful metrics:
 
 - **Total database size in bytes:**
 
   ```sql
-  SELECT latest(neon_db_total_size) FROM Metric
-  WHERE neon_db_total_size is NOT NULL TIMESERIES 1 minute since 10 minutes ago
+  SELECT latest(optitech_db_total_size) FROM Metric
+  WHERE optitech_db_total_size is NOT NULL TIMESERIES 1 minute since 10 minutes ago
   ```
 
 - **CPU usage seconds (per mode):**
@@ -178,7 +178,7 @@ For a comprehensive list of all metrics you can use in your dashboards, see the 
 
 </Steps>
 
-Now that OptiTech's database metrics and logs are flowing into New Relic alongside your application telemetry, you can perform powerful correlational analysis to debug issues. For instance, you can directly correlate a spike in `neon_connection_counts` with error logs from a specific microservice, allowing you to quickly identify which application is causing database strain.
+Now that OptiTech's database metrics and logs are flowing into New Relic alongside your application telemetry, you can perform powerful correlational analysis to debug issues. For instance, you can directly correlate a spike in `optitech_connection_counts` with error logs from a specific microservice, allowing you to quickly identify which application is causing database strain.
 
 ## Summary
 

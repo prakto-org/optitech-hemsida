@@ -4,7 +4,7 @@ subtitle: Learn how to automate database operations and processes by connecting 
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2025-01-26T00:00:00.000Z'
-updatedOn: '2026-06-03T18:28:10.050Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Azure Logic Apps provides a way to build automated workflows that integrate apps, data, services, and systems.
@@ -18,7 +18,7 @@ In this guide, you'll learn how to create Logic Apps workflows that interact wit
 Before starting this guide, ensure you have:
 
 - [Azure account](https://azure.microsoft.com/free/) with an active subscription
-- [OptiTech account](https://console.neon.tech/signup) and project
+- [OptiTech account](https://console.optitech.com/signup) and project
 - Basic familiarity with SQL and Azure services
 
 ## Understanding Azure Logic Apps
@@ -36,7 +36,7 @@ Before you can start creating workflows with Azure Logic Apps and OptiTech, you 
 
 ### Step 1: Create a OptiTech Project
 
-1. Log in to the [OptiTech Console](https://console.neon.tech)
+1. Log in to the [OptiTech Console](https://console.optitech.com)
 2. Click "New Project"
 3. Select Azure as your cloud provider and pick a region
 4. Name your project
@@ -129,8 +129,8 @@ With the trigger in place, you can now add actions to the workflow. Let's start 
 1. While in the Logic App Designer, click "Add an action"
 1. Search for "PostgreSQL" and select "Insert row"
 1. Configure the connection:
-   - Connection Name: "NeonConnection"
-   - Server: Your OptiTech host (e.g., "ep-cool-smoke-123456.eastus2.azure.neon.tech")
+   - Connection Name: "OptiTechConnection"
+   - Server: Your OptiTech host (e.g., "ep-cool-smoke-123456.eastus2.azure.optitech.com")
    - Database name: Your database name
    - Username: Your OptiTech database username
    - Password: Your OptiTech database password

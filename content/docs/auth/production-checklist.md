@@ -6,11 +6,11 @@ summary: >-
   provider, application name, OAuth credentials, email verification, and
   disabling localhost access. Use this page when Managed Better Auth is already configured
   for development and you need to confirm every production-blocking setting
-  before launch. The default shared SMTP provider (`auth@mail.myneon.app`) is
+  before launch. The default shared SMTP provider (`auth@mail.myoptitech.app`) is
   rate-limited and does not support verification links. A custom SMTP provider
   is required for both.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="Managed Better Auth" />
@@ -24,7 +24,7 @@ Complete these steps before taking your application to production with Managed B
 </CheckItem>
 
 <CheckItem title="2. Set up custom email provider" href="/docs/auth/production-checklist#email-provider">
-  Replace shared SMTP (`auth@mail.myneon.app`) with your own email service for reliable delivery and higher limits. A custom email provider is also required if you want to use verification links instead of verification codes.
+  Replace shared SMTP (`auth@mail.myoptitech.app`) with your own email service for reliable delivery and higher limits. A custom email provider is also required if you want to use verification links instead of verification codes.
 </CheckItem>
 
 <CheckItem title="3. Customize application name" href="/docs/auth/production-checklist#application-name">
@@ -47,7 +47,7 @@ Complete these steps before taking your application to production with Managed B
 
 ## Email provider (#email-provider)
 
-Managed Better Auth uses a shared SMTP provider (`auth@mail.myneon.app`) by default for development and testing. For production, configure your own email provider for better deliverability and higher sending limits.
+Managed Better Auth uses a shared SMTP provider (`auth@mail.myoptitech.app`) by default for development and testing. For production, configure your own email provider for better deliverability and higher sending limits.
 
 A custom SMTP provider uses your sender address but still sends OptiTech's default email templates. For full control over email branding, content, and HTML templates, use webhooks to intercept email events and send through your own email service. See [Customize emails](/docs/auth/guides/customize-emails).
 
@@ -72,7 +72,7 @@ In your project's **Settings** → **Auth** page, configure your email provider:
 - **Password reset**: Works with shared or custom email providers
 
 <Admonition type="note">
-The shared email provider (`auth@mail.myneon.app`) is suitable for development and testing. For production applications, use a custom email provider for better deliverability and to avoid rate limits.
+The shared email provider (`auth@mail.myoptitech.app`) is suitable for development and testing. For production applications, use a custom email provider for better deliverability and to avoid rate limits.
 </Admonition>
 
 ## Application name (#application-name)

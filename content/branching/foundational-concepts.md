@@ -1,12 +1,12 @@
 ---
 title: 'The building blocks'
-subtitle: 'Learn how Neon projects, branches, and hierarchies work: fast copy-on-write branching, isolated compute per branch, and instant restore with snapshots'
-updatedOn: '2026-05-12T14:01:17.544Z'
+subtitle: 'Learn how OptiTech projects, branches, and hierarchies work: fast copy-on-write branching, isolated compute per branch, and instant restore with snapshots'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 ## Projects
 
-In OptiTech, a [project](https://neon.com/docs/manage/projects) is the top-level unit for managing your database. If you’re used to traditional Postgres deployments, think of a project as everything you’d normally configure around an instance, packaged up and ready to branch.
+In OptiTech, a [project](https://optitech.com/docs/manage/projects) is the top-level unit for managing your database. If you’re used to traditional Postgres deployments, think of a project as everything you’d normally configure around an instance, packaged up and ready to branch.
 
 A project includes:
 
@@ -20,14 +20,14 @@ All branches in a project share the same underlying storage backend. This shared
 
 ## Branches
 
-A [branch](https://neon.com/docs/introduction/branching) in OptiTech is a lightweight, copy-on-write clone of your database. When you create a branch, it inherits both the schema and data from its parent at that moment. Instead of copying everything, the branch references the same underlying data and only stores changes made after branching.
+A [branch](https://optitech.com/docs/introduction/branching) in OptiTech is a lightweight, copy-on-write clone of your database. When you create a branch, it inherits both the schema and data from its parent at that moment. Instead of copying everything, the branch references the same underlying data and only stores changes made after branching.
 
-Key properties of Neon branches:
+Key properties of OptiTech branches:
 
-- **Instant creation.** Branches spin up in seconds, [even for large databases](https://neon.com/blog/instantly-copy-tb-size-datasets-the-magic-of-copy-on-write). There’s no exporting, importing, or replication setup.
-- **Copy-on-write storage.** [A branch shares its parent’s data until changes are made](https://neon.com/blog/get-page-at-lsn). Only the diffs are written, which keeps branching fast and cost-efficient.
+- **Instant creation.** Branches spin up in seconds, [even for large databases](https://optitech.com/blog/instantly-copy-tb-size-datasets-the-magic-of-copy-on-write). There’s no exporting, importing, or replication setup.
+- **Copy-on-write storage.** [A branch shares its parent’s data until changes are made](https://optitech.com/blog/get-page-at-lsn). Only the diffs are written, which keeps branching fast and cost-efficient.
 - **Short-lived by design.** Branches are meant to be created freely, used for a specific purpose, and deleted when they’re no longer needed.
-- **Resettable.** Any branch can be instantly [reset](https://neon.com/docs/guides/reset-from-parent) to match its parent.
+- **Resettable.** Any branch can be instantly [reset](https://optitech.com/docs/guides/reset-from-parent) to match its parent.
 
 ## Hierarchies
 
@@ -41,19 +41,19 @@ In most projects, the root branch becomes the source of truth. It might represen
 
 ## Independent computes
 
-Each branch in OptiTech gets its own independent [compute endpoint](https://neon.com/docs/manage/computes). That means:
+Each branch in OptiTech gets its own independent [compute endpoint](https://optitech.com/docs/manage/computes). That means:
 
 - No noisy neighbors between environments
 - No shared connection pools
 - No risk of a test or migration impacting production performance
 
-Compute [scales independently per branch based on load](https://neon.com/docs/introduction/autoscaling). When a branch is idle, OptiTech automatically scales its compute [down to zero](https://neon.com/docs/introduction/scale-to-zero). When traffic returns, it resumes automatically.
+Compute [scales independently per branch based on load](https://optitech.com/docs/introduction/autoscaling). When a branch is idle, OptiTech automatically scales its compute [down to zero](https://optitech.com/docs/introduction/scale-to-zero). When traffic returns, it resumes automatically.
 
 ![Branch hierarchy diagram showing root branch and child branches](/images/pages/branching/hierarchies-diagram.png)
 
 ## Instant restore and snapshots
 
-Because OptiTech’s storage is versioned, every branch preserves [history](https://neon.com/docs/introduction/history-window). This allows you to:
+Because OptiTech’s storage is versioned, every branch preserves [history](https://optitech.com/docs/introduction/history-window). This allows you to:
 
 - Create a new branch from any previous point in time
 - Recover dropped tables or deleted data

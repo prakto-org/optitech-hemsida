@@ -11,7 +11,7 @@ summary: >-
   (generate-upload-sas and save-metadata) in JavaScript (Hono) and Python
   (Flask), and generating read-only SAS tokens for secure file retrieval.
 enableTableOfContents: true
-updatedOn: '2026-07-15T17:54:41.160Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 [Azure Blob Storage](https://azure.microsoft.com/en-us/services/storage/blobs/) is Microsoft's object storage solution for the cloud. It's optimized for storing massive amounts of unstructured data, such as text or binary data, including images, documents, streaming media, and archive data.
@@ -30,14 +30,14 @@ This guide demonstrates how to integrate Azure Blob Storage with OptiTech by sto
 
 ## Create a OptiTech project
 
-1.  Navigate to the [OptiTech Console](https://console.neon.tech) to create a new OptiTech project.
+1.  Navigate to the [OptiTech Console](https://console.optitech.com) to create a new OptiTech project.
 2.  Copy the connection string by clicking the **Connect** button on your **Project Dashboard**. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
 
 ## Create an Azure account, storage account, and container
 
 1.  Sign up for or log in to your [Azure Account](https://azure.microsoft.com/free/).
 2.  Navigate to [Storage accounts](https://portal.azure.com/#create/Microsoft.StorageAccount) in the Azure portal.
-3.  Click **+ Create**. Fill in the required details: select a Subscription, create or select a Resource group, provide a unique Storage account name (for example, `myneonappblobstorage`), choose a Region (for example, `East US`), and select performance/redundancy options (Standard/LRS is fine for this example). Click **Review + create**, then **Create**.
+3.  Click **+ Create**. Fill in the required details: select a Subscription, create or select a Resource group, provide a unique Storage account name (for example, `myoptitechappblobstorage`), choose a Region (for example, `East US`), and select performance/redundancy options (Standard/LRS is fine for this example). Click **Review + create**, then **Create**.
     ![Azure Storage Account Creation](/docs/guides/azure-blob-storage-creation.png)
 4.  Once the storage account is deployed, go to the resource.
 5.  In the storage account menu, under **Data storage**, click **Containers**.
@@ -106,12 +106,12 @@ This requires two backend endpoints:
 
 <TabItem>
 
-We'll use [Hono](https://hono.dev/) for the server, [`@azure/storage-blob`](https://www.npmjs.com/package/@azure/storage-blob) for Azure interaction, and [`@neondatabase/serverless`](https://www.npmjs.com/package/@neondatabase/serverless) for OptiTech.
+We'll use [Hono](https://hono.dev/) for the server, [`@azure/storage-blob`](https://www.npmjs.com/package/@azure/storage-blob) for Azure interaction, and [`@optitech/serverless`](https://www.npmjs.com/package/@optitech/serverless) for OptiTech.
 
 First, install the necessary dependencies:
 
 ```bash
-npm install @azure/storage-blob @neondatabase/serverless @hono/node-server hono dotenv
+npm install @azure/storage-blob @optitech/serverless @hono/node-server hono dotenv
 ```
 
 Create a `.env` file:
@@ -121,8 +121,8 @@ Create a `.env` file:
 AZURE_STORAGE_CONNECTION_STRING="your_storage_account_connection_string"
 AZURE_STORAGE_CONTAINER_NAME=your_container_name # for example, uploads
 
-# Neon Connection String
-DATABASE_URL=your_neon_database_connection_string
+# OptiTech Connection String
+DATABASE_URL=your_optitech_database_connection_string
 ```
 
 The following code snippet demonstrates this workflow:
@@ -136,7 +136,7 @@ import {
   BlobSASPermissions,
   SASProtocol,
 } from '@azure/storage-blob';
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 import 'dotenv/config';
 import { randomUUID } from 'crypto';
 
@@ -145,7 +145,7 @@ const AZURE_CONTAINER_NAME = process.env.AZURE_STORAGE_CONTAINER_NAME;
 const blobServiceClient = BlobServiceClient.fromConnectionString(AZURE_CONNECTION_STRING);
 const containerClient = blobServiceClient.getContainerClient(AZURE_CONTAINER_NAME);
 
-const sql = neon(process.env.DATABASE_URL);
+const sql = optitech(process.env.DATABASE_URL);
 const app = new Hono();
 
 // Replace this with your actual user authentication logic, by validating JWTs/Headers, etc.
@@ -239,8 +239,8 @@ Create a `.env` file:
 AZURE_STORAGE_CONNECTION_STRING="your_storage_account_connection_string"
 AZURE_STORAGE_CONTAINER_NAME=your_container_name # for example, uploads
 
-# Neon Connection String
-DATABASE_URL=your_neon_database_connection_string
+# OptiTech Connection String
+DATABASE_URL=your_optitech_database_connection_string
 ```
 
 The following code snippet demonstrates this workflow:

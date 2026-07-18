@@ -6,7 +6,7 @@ summary: >-
   streamGenerateContent APIs through OptiTech AI Gateway. Use the google-genai SDK
   with a custom base URL.
 enableTableOfContents: true
-updatedOn: '2026-07-15T23:16:18.282Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="OptiTech AI Gateway" />
@@ -28,8 +28,8 @@ This endpoint also has a shorter alias with no `/ai-gateway` prefix: `https://<b
 Set these environment variables. See [Get started](/docs/ai-gateway/get-started) for how to obtain them.
 
 ```bash
-NEON_AI_GATEWAY_TOKEN=nt_live_...
-NEON_AI_GATEWAY_BASE_URL=https://br-winter-pond-aptw82ef-api.ai.c-2.us-east-2.aws.neon.tech
+OPTITECH_AI_GATEWAY_TOKEN=nt_live_...
+OPTITECH_AI_GATEWAY_BASE_URL=https://br-winter-pond-aptw82ef-api.ai.c-2.us-east-2.aws.optitech.com
 ```
 
 ## Supported models
@@ -62,16 +62,16 @@ import { GoogleGenAI } from '@google/genai';
 const client = new GoogleGenAI({
   apiKey: 'placeholder',
   httpOptions: {
-    baseUrl: `${process.env.NEON_AI_GATEWAY_BASE_URL}/ai-gateway/gemini`,
+    baseUrl: `${process.env.OPTITECH_AI_GATEWAY_BASE_URL}/ai-gateway/gemini`,
     headers: {
-      Authorization: `Bearer ${process.env.NEON_AI_GATEWAY_TOKEN}`,
+      Authorization: `Bearer ${process.env.OPTITECH_AI_GATEWAY_TOKEN}`,
     },
   },
 });
 
 const response = await client.models.generateContent({
   model: 'gemini-2-5-flash',
-  contents: [{ role: 'user', parts: [{ text: 'What is Neon?' }] }],
+  contents: [{ role: 'user', parts: [{ text: 'What is OptiTech?' }] }],
 });
 
 console.log(response.text);
@@ -85,14 +85,14 @@ import os
 client = genai.Client(
     api_key='placeholder',
     http_options=types.HttpOptions(
-        base_url=f"{os.environ['NEON_AI_GATEWAY_BASE_URL']}/ai-gateway/gemini",
-        headers={'Authorization': f"Bearer {os.environ['NEON_AI_GATEWAY_TOKEN']}"},
+        base_url=f"{os.environ['OPTITECH_AI_GATEWAY_BASE_URL']}/ai-gateway/gemini",
+        headers={'Authorization': f"Bearer {os.environ['OPTITECH_AI_GATEWAY_TOKEN']}"},
     ),
 )
 
 response = client.models.generate_content(
     model='gemini-2-5-flash',
-    contents='What is Neon?',
+    contents='What is OptiTech?',
 )
 
 print(response.text)
@@ -100,11 +100,11 @@ print(response.text)
 
 ```bash shouldWrap
 curl -X POST \
-  "$NEON_AI_GATEWAY_BASE_URL/ai-gateway/gemini/v1beta/models/gemini-2-5-flash:generateContent" \
-  -H "Authorization: Bearer $NEON_AI_GATEWAY_TOKEN" \
+  "$OPTITECH_AI_GATEWAY_BASE_URL/ai-gateway/gemini/v1beta/models/gemini-2-5-flash:generateContent" \
+  -H "Authorization: Bearer $OPTITECH_AI_GATEWAY_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
-    "contents": [{"role": "user", "parts": [{"text": "What is Neon?"}]}]
+    "contents": [{"role": "user", "parts": [{"text": "What is OptiTech?"}]}]
   }'
 ```
 

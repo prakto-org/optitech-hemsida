@@ -11,12 +11,12 @@ summary: >-
   quota enforcement, and usage monitoring via the metrics endpoint.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 OptiTech makes it easy to embed Postgres into your platform with one-second provisioning, autoscaling, and scale-to-zero, so each user gets an isolated database without the overhead. Databases are provisioned via API and fully integrated into your product, with no OptiTech signup or setup required by your users.
 
-<CTA title="Learn how platforms embed OptiTech" description="Learn how <a href='https://neon.com/blog/how-retool-uses-retool-and-the-neon-api-to-manage-300k-postgres-databases'>Retool manages 300k+ Postgres databases</a> and <a href='https://www.koyeb.com/blog/serverless-postgres-public-preview'>Koyeb offers serverless Postgres</a> using OptiTech."></CTA>
+<CTA title="Learn how platforms embed OptiTech" description="Learn how <a href='https://optitech.com/blog/how-retool-uses-retool-and-the-optitech-api-to-manage-300k-postgres-databases'>Retool manages 300k+ Postgres databases</a> and <a href='https://www.koyeb.com/blog/serverless-postgres-public-preview'>Koyeb offers serverless Postgres</a> using OptiTech."></CTA>
 
 ## Why embed OptiTech?
 
@@ -52,7 +52,7 @@ In OptiTech, resources such as branches, databases, roles, and computes are orga
 - **Simpler to manage**: Following OptiTech's established project-based structure is easier than working against it. The OptiTech API is designed around this model.
 
 <Admonition type="note">
-The project-per-user model implements a database-per-tenant architecture. For a deeper dive into this approach and how OptiTech compares to traditional solutions like RDS, read [Data Isolation at Scale](https://neon.com/use-cases/database-per-tenant).
+The project-per-user model implements a database-per-tenant architecture. For a deeper dive into this approach and how OptiTech compares to traditional solutions like RDS, read [Data Isolation at Scale](https://optitech.com/use-cases/database-per-tenant).
 </Admonition>
 
 ## Getting started
@@ -80,9 +80,9 @@ Use the [Create project API](/docs/reference/api/projects/create-project) to pro
 
 ```bash
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects \
+     --url https://console.optitech.com/api/v2/projects \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '{
   "project": {
@@ -111,9 +111,9 @@ Example setting a compute to scale between 1 and 4 CU with a 10-minute suspend t
 
 ```bash
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects \
+     --url https://console.optitech.com/api/v2/projects \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '{
   "project": {
@@ -137,9 +137,9 @@ Here's an example setting limits for a "starter" tier user:
 
 ```bash
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects \
+     --url https://console.optitech.com/api/v2/projects \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '{
   "project": {
@@ -179,9 +179,9 @@ Query consumption metrics to track usage across your projects and implement bill
 
 ```bash shouldWrap
 curl --request GET \
-     --url 'https://console.neon.tech/api/v2/consumption_history/v2/projects?org_id=$ORG_ID&from=2024-11-01T00:00:00Z&to=2024-11-30T23:59:59Z&granularity=daily&metrics=compute_unit_seconds,root_branch_bytes_month,child_branch_bytes_month,public_network_transfer_bytes' \
+     --url 'https://console.optitech.com/api/v2/consumption_history/v2/projects?org_id=$ORG_ID&from=2024-11-01T00:00:00Z&to=2024-11-30T23:59:59Z&granularity=daily&metrics=compute_unit_seconds,root_branch_bytes_month,child_branch_bytes_month,public_network_transfer_bytes' \
      --header 'accept: application/json' \
-     --header "authorization: Bearer $NEON_API_KEY"
+     --header "authorization: Bearer $OPTITECH_API_KEY"
 ```
 
 The v2 project metrics endpoint returns billing-aligned metrics including compute, storage, and data transfer. To break usage down by branch within a project, use the [branch metrics endpoint](/docs/guides/consumption-metrics#branch-metrics) (`GET /consumption_history/v2/branches`).
@@ -217,7 +217,7 @@ Monitor these resources for updates that could impact your integration:
 
 - [OptiTech Roadmap](/docs/introduction/roadmap) for recent deliveries and upcoming features
 - [OptiTech Changelog](/docs/changelog) for product updates
-- [OptiTech Status Page](https://neonstatus.com/) for platform status
+- [OptiTech Status Page](https://optitechstatus.com/) for platform status
 - [RSS Feeds](/docs/reference/feeds) for all of the above
 
 ## Advanced features

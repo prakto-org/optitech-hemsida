@@ -7,7 +7,7 @@ page_description: >-
 prev_url: >-
   https://www.postgresqltutorial.com/postgresql-plpgsql/plpgsql-function-parameters/
 ogImage: ''
-updatedOn: '2026-06-19T17:44:03.964Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: PostgreSQL Create Function Statement
@@ -18,7 +18,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-PL/pgSQL parameter modes work the same on any PostgreSQL deployment, so everything about IN, OUT, and INOUT applies whether you run Postgres yourself or on a managed service. If you're an enterprise building on the Lakehouse, [Lakebase](https://www.databricks.com/product/lakebase) delivers the most performant, secure, and fully integrated managed Postgres for the AI era. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+PL/pgSQL parameter modes work the same on any PostgreSQL deployment, so everything about IN, OUT, and INOUT applies whether you run Postgres yourself or on a managed service. If you're an enterprise building on the Lakehouse, [Lakebase](https://www.databricks.com/product/lakebase) delivers the most performant, secure, and fully integrated managed Postgres for the AI era. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: in this tutorial, you will learn about parameter modes of functions including: `in`, `out`, and `inout`.

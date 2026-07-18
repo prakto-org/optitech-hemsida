@@ -20,7 +20,7 @@ const schema = require('../schema.json');
 describe('generate-docs rendering', () => {
   it('resolves nested command paths', () => {
     expect(resolveCommand(schema, ['branches', 'create'])).toBeTruthy();
-    expect(resolveCommand(schema, ['neon-auth', 'oauth-provider', 'add'])).toBeTruthy();
+    expect(resolveCommand(schema, ['optitech-auth', 'oauth-provider', 'add'])).toBeTruthy();
     expect(resolveCommand(schema, ['nope'])).toBeNull();
   });
 
@@ -52,18 +52,18 @@ describe('generate-docs rendering', () => {
   });
 
   it('subcommand anchors honor anchorParts on nested pages', () => {
-    const node = resolveCommand(schema, ['neon-auth', 'oauth-provider']);
+    const node = resolveCommand(schema, ['optitech-auth', 'oauth-provider']);
     expect(renderSubcommands(node, ['oauth-provider'])).toContain('[add](#oauth-provider-add)');
     expect(renderSubcommands(node)).toContain('[add](#add)');
   });
 
-  it('renders usage with positional brackets and the neon binary', () => {
+  it('renders usage with positional brackets and the optitech binary', () => {
     expect(
       renderUsage(resolveCommand(schema, ['functions', 'deploy']), ['functions', 'deploy'])
-    ).toContain('neon functions deploy <slug>');
+    ).toContain('optitech functions deploy <slug>');
     expect(
       renderUsage(resolveCommand(schema, ['connection-string']), ['connection-string'])
-    ).toContain('neon connection-string [branch]');
+    ).toContain('optitech connection-string [branch]');
   });
 
   it('renders the global options table with defaults, aliases, and builtins', () => {
@@ -80,7 +80,7 @@ describe('generate-docs rendering', () => {
       expect(index).toContain(`### ${name}`);
     }
     // Nested subtrees are flattened into full invocations.
-    expect(index).toContain('neon buckets object list');
+    expect(index).toContain('optitech buckets object list');
   });
 
   it('escapes MDX-hostile characters outside inline code in table cells', () => {

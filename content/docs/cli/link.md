@@ -1,22 +1,22 @@
 ---
-title: 'Neon CLI command: link'
-subtitle: Link a directory to a Neon project and write a `.neon` context file
+title: 'OptiTech CLI command: link'
+subtitle: Link a directory to a OptiTech project and write a `.optitech` context file
 summary: >-
-  Covers the usage of the `link` command in the Neon CLI to bind the current
-  directory to a Neon project, including interactive, non-interactive, and
+  Covers the usage of the `link` command in the OptiTech CLI to bind the current
+  directory to a OptiTech project, including interactive, non-interactive, and
   agent-oriented workflows.
 enableTableOfContents: true
-updatedOn: '2026-07-11T13:23:16.265Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 redirectFrom:
   - /docs/reference/cli-link
 ---
 
-The `link` command binds the current directory to a Neon project. It picks (or creates) an organization and project, writes `orgId` and `projectId` to a `.neon` file, and also writes `branch` (holding the branch's name or ID) when you pass `--branch` or `--branch-id`. Subsequent commands run in this directory (or any subdirectory) automatically pick up that context; branch-scoped commands can use it once a branch is pinned by `link --branch` or [`checkout`](/docs/cli/checkout).
+The `link` command binds the current directory to a OptiTech project. It picks (or creates) an organization and project, writes `orgId` and `projectId` to a `.optitech` file, and also writes `branch` (holding the branch's name or ID) when you pass `--branch` or `--branch-id`. Subsequent commands run in this directory (or any subdirectory) automatically pick up that context; branch-scoped commands can use it once a branch is pinned by `link --branch` or [`checkout`](/docs/cli/checkout).
 
-Requires neon 2.22.2 or later. Check your version with `neon --version`.
+Requires optitech 2.22.2 or later. Check your version with `optitech --version`.
 
 <Admonition type="tip" title="Prefer link over set-context">
-For most workflows, use `neon link` instead of manually running `neon set-context --project-id ...`. The `link` command guides you through organization and project selection and ensures the context file is complete.
+For most workflows, use `optitech link` instead of manually running `optitech set-context --project-id ...`. The `link` command guides you through organization and project selection and ensures the context file is complete.
 </Admonition>
 
 ## Usage
@@ -31,10 +31,10 @@ By default, linking pulls the linked branch's environment variables (such as `DA
 
 ## Interactive mode (default)
 
-Run `neon link` with no flags for guided prompts:
+Run `optitech link` with no flags for guided prompts:
 
 ```bash
-neon link
+optitech link
 ```
 
 ```text filename="Output"
@@ -43,7 +43,7 @@ neon link
 ? Name for the new project: › my-app
 ? Which region should the new project run in? › AWS US East (Ohio) (aws-us-east-2)
 Created project polished-snowflake-12345678 ("my-app") in aws-us-east-2.
-Linked .neon:
+Linked .optitech:
   orgId:     org-abc123
   projectId: polished-snowflake-12345678
   branch:    br-steep-math-aiu3vve7
@@ -55,13 +55,13 @@ Use flags or a `--params` JSON blob for scripts and CI:
 
 ```bash
 # Link to an existing project
-neon link --org-id org-abc123 --project-id polished-snowflake-12345678
+optitech link --org-id org-abc123 --project-id polished-snowflake-12345678
 
 # Create a new project and link
-neon link --org-id org-abc123 --project-name my-app --region-id aws-us-east-2
+optitech link --org-id org-abc123 --project-name my-app --region-id aws-us-east-2
 
 # Same payload, one JSON blob
-neon link --params '{"orgId":"org-abc123","projectName":"my-app","regionId":"aws-us-east-2"}'
+optitech link --params '{"orgId":"org-abc123","projectName":"my-app","regionId":"aws-us-east-2"}'
 ```
 
 Flags take precedence over fields in `--params`.
@@ -71,7 +71,7 @@ Flags take precedence over fields in `--params`.
 Use `--agent` for a JSON state machine designed for AI coding assistants. Each invocation returns a single JSON object with a `status` discriminator describing the next step, the available options, and the exact follow-up command to run.
 
 ```bash
-neon link --agent
+optitech link --agent
 ```
 
 Example response when an organization must be selected:
@@ -84,7 +84,7 @@ Example response when an organization must be selected:
     { "id": "org-abc123", "name": "Personal Org" },
     { "id": "org-team", "name": "Team Org" }
   ],
-  "next_command_template": "neon link --agent --org-id <org_id>"
+  "next_command_template": "optitech link --agent --org-id <org_id>"
 }
 ```
 
@@ -100,11 +100,11 @@ Any unexpected failure in `--agent` mode is reported as JSON to stdout with exit
 }
 ```
 
-## The `.neon` context file
+## The `.optitech` context file
 
-`link` is a thin wrapper around [`set-context`](/docs/cli/set-context): both write to the same `.neon` file, so anything `link` can write, `set-context` can write too. `link` writes the file into the current working directory by default. If an existing `.neon` is found in any parent directory, that file is reused, so commands run from a subdirectory of a linked project still pick up the project's context. To pin the location explicitly, pass the global `--context-file <path>` option. See [Using a named context file](/docs/cli/set-context#using-a-named-context-file).
+`link` is a thin wrapper around [`set-context`](/docs/cli/set-context): both write to the same `.optitech` file, so anything `link` can write, `set-context` can write too. `link` writes the file into the current working directory by default. If an existing `.optitech` is found in any parent directory, that file is reused, so commands run from a subdirectory of a linked project still pick up the project's context. To pin the location explicitly, pass the global `--context-file <path>` option. See [Using a named context file](/docs/cli/set-context#using-a-named-context-file).
 
-Example `.neon` file:
+Example `.optitech` file:
 
 ```json
 {
@@ -114,10 +114,10 @@ Example `.neon` file:
 }
 ```
 
-The first time a `.neon` file is created, the CLI adds `.neon` to `.gitignore` in that folder so local project settings are not committed by accident. If you want to commit `.neon` and share context with your team, remove the entry from `.gitignore`. The CLI doesn't re-add it when updating an existing file.
+The first time a `.optitech` file is created, the CLI adds `.optitech` to `.gitignore` in that folder so local project settings are not committed by accident. If you want to commit `.optitech` and share context with your team, remove the entry from `.gitignore`. The CLI doesn't re-add it when updating an existing file.
 
 <Admonition type="note">
-Neon does not save confidential information to the context file (for example, auth tokens). You can safely commit this file to your repository or share it with others.
+OptiTech does not save confidential information to the context file (for example, auth tokens). You can safely commit this file to your repository or share it with others.
 </Admonition>
 
 ## Organization-scoped API keys
@@ -125,5 +125,5 @@ Neon does not save confidential information to the context file (for example, au
 Organization-scoped API keys (those created at the organization level rather than the user level) cannot list user organizations or call the regions endpoint. `link` handles this transparently:
 
 - If the API key is org-scoped and at least one project already exists in the org, the CLI auto-detects the `org_id` from the first project.
-- If the API key is org-scoped and no projects exist yet, `--agent` returns a `needs_org` response with `options: []` and an instruction to find the org ID in the Neon Console. Interactive mode prints an error pointing to `--org-id`.
+- If the API key is org-scoped and no projects exist yet, `--agent` returns a `needs_org` response with `options: []` and an instruction to find the org ID in the OptiTech Console. Interactive mode prints an error pointing to `--org-id`.
 - When the regions endpoint is not allowed, `link` falls back to a built-in static region list.

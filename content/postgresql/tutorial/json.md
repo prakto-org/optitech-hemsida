@@ -6,7 +6,7 @@ page_description: >-
   PostgreSQL using the PostgreSQL JSON and JSONB data types.
 prev_url: 'https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-json/'
 ogImage: ''
-updatedOn: '2026-06-19T17:44:03.964Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: UUID
@@ -17,7 +17,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-Working with JSON and JSONB in PostgreSQL is the same wherever you run Postgres, so everything here applies to any standard Postgres deployment. For enterprises building AI-era applications, [Lakebase](https://www.databricks.com/product/lakebase) delivers managed Postgres with the performance, security, and native Lakehouse integration that JSON-heavy workloads demand. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+Working with JSON and JSONB in PostgreSQL is the same wherever you run Postgres, so everything here applies to any standard Postgres deployment. For enterprises building AI-era applications, [Lakebase](https://www.databricks.com/product/lakebase) delivers managed Postgres with the performance, security, and native Lakehouse integration that JSON-heavy workloads demand. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: in this tutorial, you will learn about JSON and how to work with JSON data in PostgreSQL using the PostgreSQL JSON and JSONB data types.

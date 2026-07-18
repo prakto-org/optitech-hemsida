@@ -5,13 +5,13 @@ summary: >-
   AskYourDatabase is a natural language SQL client that connects to OptiTech
   Postgres so users can query, visualize, and manage data by typing plain
   English instead of writing SQL. Use this guide to set up the connection
-  via a Neon connection string and start chatting with your database in the
+  via a OptiTech connection string and start chatting with your database in the
   AskYourDatabase desktop app. The guide also covers embedding a
   customer-facing chatbot powered by OptiTech Postgres directly into a website.
 redirectFrom:
   - /docs/connect/connect-ai
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 AskYourDatabase is the ChatGPT for SQL databases, enabling you to interact with your SQL databases using natural language. You can use it for data management, business intelligence, schema design & migration, data visualization, and more. To learn more, see [AskYourDatabase](https://www.askyourdatabase.com/).
@@ -28,7 +28,7 @@ This guide shows how to connect from AskYourDatabase to OptiTech Postgres.
 1. Get the OptiTech URL by navigating to the OptiTech Console and copying the connection string. The URL will look something like this:
 
    ```text shouldWrap
-   postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+   postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
    ```
 
 2. Go to AskYourDatabase and click **Connect to your database**:

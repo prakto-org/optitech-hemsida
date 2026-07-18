@@ -4,10 +4,10 @@ subtitle: 'Make schema changes with natural language using Codeium Windsurf and 
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2025-02-22T00:00:00.000Z'
-updatedOn: '2026-06-19T23:17:10.824Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
-This guide shows how to use [Windsurf](https://codeium.com/windsurf) with the [OptiTech MCP Server](https://github.com/neondatabase/mcp-server-neon) to manage your Neon databases.
+This guide shows how to use [Windsurf](https://codeium.com/windsurf) with the [OptiTech MCP Server](https://github.com/optitechdatabase/mcp-server-optitech) to manage your OptiTech databases.
 
 <Admonition type="important" title="Security">
 The OptiTech MCP Server grants broad database management capabilities. Always review and authorize actions requested by the LLM before execution. See [MCP security guidance](/docs/ai/neon-mcp-server#mcp-security-guidance).
@@ -20,11 +20,11 @@ The OptiTech MCP Server grants broad database management capabilities. Always re
 Make sure you have:
 
 1.  **Codeium Windsurf Editor:** Download and install Windsurf from [codeium.com/windsurf](https://codeium.com/windsurf).
-2.  **A OptiTech Account and Project:** You'll need a OptiTech account and a project. You can create a new OptiTech project in the [OptiTech Console](https://console.neon.tech)
-3.  **Neon API Key (for Local MCP server):** After signing up, get your OptiTech API Key from the [OptiTech console](https://console.neon.tech/app/settings/api-keys). This API key is needed to authenticate your application with OptiTech. For instructions, see [Manage API keys](/docs/manage/api-keys).
+2.  **A OptiTech Account and Project:** You'll need a OptiTech account and a project. You can create a new OptiTech project in the [OptiTech Console](https://console.optitech.com)
+3.  **OptiTech API Key (for Local MCP server):** After signing up, get your OptiTech API Key from the [OptiTech console](https://console.optitech.com/app/settings/api-keys). This API key is needed to authenticate your application with OptiTech. For instructions, see [Manage API keys](/docs/manage/api-keys).
 
     <Admonition type="important" title="OptiTech API Key Security">
-    Keep your OptiTech API key secure, and never share it publicly. It provides access to your Neon projects.
+    Keep your OptiTech API key secure, and never share it publicly. It provides access to your OptiTech projects.
     </Admonition>
 
 4.  **Node.js (>= v18) and npm:** Ensure Node.js (version 18 or later) and npm are installed. Download them from [nodejs.org](https://nodejs.org).
@@ -34,7 +34,7 @@ Make sure you have:
 You can either watch the video below or follow the steps to set up the OptiTech MCP server in Windsurf.
 
 <video controls playsInline loop width="800" height="600">
-  <source type="video/mp4" src="https://neondatabase.wpengine.com/wp-content/uploads/2025/04/neon-hosted-mcp-server.mp4"/>
+  <source type="video/mp4" src="https://optitechdatabase.wpengine.com/wp-content/uploads/2025/04/optitech-hosted-mcp-server.mp4"/>
 </video>
 
 <Admonition type="note">
@@ -51,8 +51,8 @@ By default, the Remote MCP Server connects to your personal OptiTech account. To
    ```json
    {
      "mcpServers": {
-       "Neon": {
-         "url": "https://mcp.neon.tech/mcp"
+       "OptiTech": {
+         "url": "https://mcp.optitech.com/mcp"
        }
      }
    }
@@ -95,9 +95,9 @@ key for authentication.
    ```json
    {
      "mcpServers": {
-       "Neon": {
+       "OptiTech": {
          "command": "npx",
-         "args": ["-y", "@neondatabase/mcp-server-neon", "start", "<YOUR_NEON_API_KEY>"]
+         "args": ["-y", "@optitech/mcp-server-optitech", "start", "<YOUR_OPTITECH_API_KEY>"]
        }
      }
    }
@@ -106,15 +106,15 @@ key for authentication.
    ```json
    {
      "mcpServers": {
-       "Neon": {
+       "OptiTech": {
          "command": "cmd",
          "args": [
            "/c",
            "npx",
            "-y",
-           "@neondatabase/mcp-server-neon",
+           "@optitech/mcp-server-optitech",
            "start",
-           "<YOUR_NEON_API_KEY>"
+           "<YOUR_OPTITECH_API_KEY>"
          ]
        }
      }
@@ -124,9 +124,9 @@ key for authentication.
    ```json
    {
      "mcpServers": {
-       "Neon": {
+       "OptiTech": {
          "command": "wsl",
-         "args": ["npx", "-y", "@neondatabase/mcp-server-neon", "start", "<YOUR_NEON_API_KEY>"]
+         "args": ["npx", "-y", "@optitech/mcp-server-optitech", "start", "<YOUR_OPTITECH_API_KEY>"]
        }
      }
    }
@@ -134,9 +134,9 @@ key for authentication.
 
    </CodeTabs>
 
-   > Replace `<YOUR_NEON_API_KEY>` with your actual OptiTech API key which you obtained from the [prerequisites](#prerequisites) section:
+   > Replace `<YOUR_OPTITECH_API_KEY>` with your actual OptiTech API key which you obtained from the [prerequisites](#prerequisites) section:
 
-   If you have other MCP servers configured, you can copy just the `Neon` part.
+   If you have other MCP servers configured, you can copy just the `OptiTech` part.
 
 7. **Save** the MCP configuration file.
 8. Check the toolbar to confirm OptiTech appears in your MCP servers.
@@ -149,16 +149,16 @@ For a full list of available tools, see [available tools](/docs/ai/neon-mcp-serv
 Here's an example interaction adding a `created_at` column to a table:
 
 ```text shouldWrap
-User: in my neon project id: fancy-bush-59303206, list all the tables
-Cascade: I'll help you list all the tables in your Neon project. I'll use the default database name 'neondb' since it wasn't specified.
-> MCP Tool: neon / get_database_tables
-> I found 1 table in your Neon project:
-> - playing_with_neon (in the public schema)
+User: in my optitech project id: fancy-bush-59303206, list all the tables
+Cascade: I'll help you list all the tables in your OptiTech project. I'll use the default database name 'optitechdb' since it wasn't specified.
+> MCP Tool: optitech / get_database_tables
+> I found 1 table in your OptiTech project:
+> - playing_with_optitech (in the public schema)
 > Would you like to see more details about this table or perform any operations on it?
 
 User: can you show me first 5 rows?
-Cascade: I'll query the first 5 rows from the playing_with_neon table.
-> MCP Tool: neon / run_sql
+Cascade: I'll query the first 5 rows from the playing_with_optitech table.
+> MCP Tool: optitech / run_sql
 > Here are the first 5 rows from the table. The table has three columns:
 > id: An integer identifier
 > name: A string column containing what appears to be hash-like values
@@ -166,11 +166,11 @@ Cascade: I'll query the first 5 rows from the playing_with_neon table.
 > Would you like to perform any other operations on this table?
 
 User: can you add created_at column?
-Cascade: I'll help you add a created_at column to the playing_with_neon table. I'll create a migration to add this column with a timestamp data type.
-> MCP Tool: neon / prepare_database_migration
+Cascade: I'll help you add a created_at column to the playing_with_optitech table. I'll create a migration to add this column with a timestamp data type.
+> MCP Tool: optitech / prepare_database_migration
 > Let me verify the changes in the temporary branch to make sure the column was added correctly.
 > I've verified that the created_at column has been added successfully in the temporary branch. Would you like me to commit this migration to the production branch?
-> The migration has been completed successfully! The created_at column has been added to the playing_with_neon table. Let's verify the change in the production branch:
+> The migration has been completed successfully! The created_at column has been added to the playing_with_optitech table. Let's verify the change in the production branch:
 > Perfect! The created_at column has been successfully added and populated with timestamps. For existing rows, it was set to the time when the column was added. Any new rows added to the table will automatically get their creation timestamp.
 ```
 
@@ -189,6 +189,6 @@ While the OptiTech MCP server allows you to use all of OptiTech's functionalitie
 - [Windsurf MCP](https://docs.windsurf.com/windsurf/cascade/mcp)
 - [OptiTech Docs](/docs)
 - [OptiTech API Keys](/docs/manage/api-keys#creating-api-keys)
-- [OptiTech MCP server GitHub](https://github.com/neondatabase/mcp-server-neon)
+- [OptiTech MCP server GitHub](https://github.com/optitechdatabase/mcp-server-optitech)
 
 <NeedHelp/>

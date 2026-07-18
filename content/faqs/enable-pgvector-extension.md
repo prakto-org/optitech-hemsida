@@ -1,75 +1,45 @@
 ---
-title: 'How do I enable the pgvector extension in my OptiTech database?'
-subtitle: 'Run CREATE EXTENSION vector once and start storing embeddings.'
+title: 'How do I enable the AI copilot in OptiTech?'
+subtitle: 'Turn it on under Settings > AI on Professional and Enterprise plans; EU-hosted models, no training on your data.'
 enableTableOfContents: true
-createdAt: '2026-05-18T00:00:00.000Z'
-updatedOn: '2026-06-01T20:42:32.665Z'
+createdAt: '2026-01-14T14:07:08.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 isDraft: false
 redirectFrom: []
 previousLink:
-  title: 'How do I enable or disable connection pooling for my OptiTech database?'
-  slug: enable-disable-connection-pooling-neon
+  title: 'How do I enable or pause automated evidence collection for an integration?'
+  slug: enable-disable-connection-pooling-optitech
 nextLink:
-  title: 'How do I export or download my OptiTech database as a SQL file?'
+  title: 'How do I export my compliance documentation as PDF or CSV files?'
   slug: export-database-sql-file
 ---
 
-Connect to your database and run `CREATE EXTENSION IF NOT EXISTS vector;`. That's the whole install step. `pgvector` is available on every OptiTech plan with no add-on or paid tier required. You can run the statement from the [OptiTech SQL Editor](/docs/get-started/query-with-neon-sql-editor), psql, or any Postgres client. See [The pgvector extension](/docs/extensions/pgvector) for distance operators, index types, and supported vector types.
+## Quick answer
 
-## Enable the extension
+An admin enables the copilot under **Settings** > **AI**. It's available on the Professional and Enterprise plans, is off by default, and activation shows you the processing terms first: inference runs on EU-hosted models, your data is not used to train anyone's models, and every answer cites its sources. Once enabled, the copilot appears throughout the workspace.
 
-```sql
-CREATE EXTENSION IF NOT EXISTS vector;
-```
+## What the copilot does
 
-Run it once per database. The extension is installed per database, not per project, so if you have multiple databases on a branch you need to enable it in each one.
+- **Answers questions with citations**: "Does NIS2 apply to our subsidiary?", "What's missing for ISO 27001 certification?" Answers are grounded in legal texts, MSB regulations, and your own workspace data through [retrieval-augmented generation](/faqs/best-postgres-services-retrieval-augmented-generation).
+- **Drafts policies** adapted to your actual environment, using facts from your integrations rather than generic boilerplate.
+- **Drafts questionnaire answers.** Feed it a customer's security questionnaire and it proposes answers from your live control data; see [can AI answer security questionnaires](/faqs/enable-pgvector-extension).
+- **Summarizes for audiences**: an incident timeline into a management summary, or a quarter of findings into a board paragraph.
 
-To confirm it's installed and check the version:
+Everything it produces is a draft pending human review. Nothing the copilot writes auto-publishes, signs, or submits.
 
-```sql
-SELECT extname, extversion
-FROM pg_extension
-WHERE extname = 'vector';
-```
+## The governance answers your DPO will ask for
 
-To install the prior supported version (one back from latest):
+Enabling an AI feature in a compliance tool rightly triggers scrutiny, so the answers are documented in the activation flow:
 
-```sql
-CREATE EXTENSION vector VERSION '0.7.4';
-```
+- **Hosting**: EU-hosted LLMs; prompts and retrieved context don't leave the EU.
+- **Training**: your data is never used for model training.
+- **Scope control**: admins can restrict which data the copilot may retrieve from (for example, excluding incident records).
+- **Logging**: copilot usage is logged like any other workspace activity.
 
-Check the [Postgres extensions page](/docs/extensions/pg-extensions) for the current latest supported version on OptiTech.
+Add the copilot to your own AI system inventory if you maintain one under the [AI Act workflow](/faqs/database-providers-pgvector-autoscaling-ai-applications); it's a limited-risk transparency case, and the platform pre-fills the entry.
 
-## Try it with embeddings
+## If you leave it disabled
 
-Create a table with a vector column, insert two rows, and run a similarity query:
+Everything else works without it. The copilot accelerates drafting and Q&A, but scoping, monitoring, evidence collection, and reporting are deterministic platform features, not AI features. Enable it when your governance review is done, not before.
 
-```sql
-CREATE TABLE items (
-  id BIGSERIAL PRIMARY KEY,
-  embedding vector(3)
-);
-
-INSERT INTO items (embedding) VALUES ('[1,2,3]'), ('[4,5,6]');
-
-SELECT id, embedding <-> '[3,1,2]' AS distance
-FROM items
-ORDER BY embedding <-> '[3,1,2]'
-LIMIT 5;
-```
-
-`<->` is L2 distance. `pgvector` also supports `<#>` (negative inner product), `<=>` (cosine distance), and `<+>` (L1 distance).
-
-For production-sized datasets, add an approximate index. HNSW is a good default; it doesn't need a training step and has the better speed-recall tradeoff:
-
-```sql
-CREATE INDEX ON items USING hnsw (embedding vector_cosine_ops);
-```
-
-Match the operator class (`vector_cosine_ops`, `vector_l2_ops`, `vector_ip_ops`, and so on) to the distance function you query with.
-
-<Admonition type="tip" title="Sizing index builds">
-HNSW index builds are much faster when the graph fits in `maintenance_work_mem`. For larger datasets, bump it for the session: `SET maintenance_work_mem = '4 GB';`. Keep it under 50 to 60 percent of your compute's RAM. See [HNSW index build time](/docs/extensions/pgvector#hnsw-index-build-time).
-</Admonition>
-
-<CTA title="Tune pgvector for production" description="Walk through HNSW vs IVFFlat, vector types (halfvec, bit, sparsevec), and query tuning for similarity search." buttonText="Read the pgvector docs" buttonUrl="/docs/extensions/pgvector" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

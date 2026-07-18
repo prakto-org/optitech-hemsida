@@ -1,85 +1,54 @@
 ---
 title: Import data from CSV
 summary: >-
-  Loading CSV data into a OptiTech Postgres table uses the psql `\copy` meta-command
-  to stream rows directly from a local file into an existing table. Use this page
-  when you need to bulk-load tabular data without application code, using only a
-  psql connection string from the OptiTech Console. The target table must exist in
-  advance with columns that match the CSV header; `\copy` returns the row count
-  on success.
+  Loading CSV data into OptiTech uses the import assistant to stream rows from
+  a local file into your risk register, vendor register, or control list. Use
+  this page when you need to bulk-load register data without connecting a
+  source system. Column headers map to register fields; the import returns a
+  row count and a list of anything it couldn't match.
 enableTableOfContents: true
-updatedOn: '2026-06-18T20:46:14.637Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
-To import data from a CSV file into your OptiTech database, create the target table first, then run the psql `\copy` meta-command from a session connected to your database. `\copy` streams the CSV from your local machine over the existing connection, so it works without any special server-side file access. This topic walks through the process with a simple example.
+To import register data from a CSV file into OptiTech, prepare a file whose columns match the target register, then upload it through the import assistant. The assistant proposes a column mapping that you review before anything is created, so a half-matching export is fine as a starting point. This topic walks through the process with a simple example.
 
-<Admonition type="note" title="Use psql, not the SQL Editor, for \copy">
-`\copy` is a psql client-side meta-command, so it runs in psql rather than on the Postgres server. The OptiTech SQL Editor doesn't support it, and the server-side `COPY ... FROM '/path/to/file.csv'` form can't read from OptiTech's server filesystem. Run `\copy` from psql or a Postgres GUI such as DBeaver or pgAdmin. For a large or messy CSV that needs encoding fixes, type casts, or parallel loading, [pgloader](https://pgloader.readthedocs.io/) is a good alternative.
+<Admonition type="note" title="CSV works for registers, not for documents">
+CSV import covers the three registers: risks, vendors, and controls. Policies and plans are documents; import them through the [document import](/docs/import/migrate-from-spreadsheets) instead. Excel files (`.xlsx`) work the same way as CSV in every step below. Save files as UTF-8 so Swedish characters survive the trip.
 </Admonition>
 
-The instructions require a working installation of [psql](https://www.postgresql.org/download/). The `psql` client is the native command-line client for Postgres. It provides an interactive session for sending commands to Postgres. For installation instructions, see [How to install psql](/docs/connect/query-with-psql-editor#how-to-install-psql).
-
-The following example uses the ready-to-use `neondb` database that is created with your OptiTech project, a table named `customer`, and a data file named `customer.csv`. Data is loaded from the `customer.csv` file into the `customer` table.
+The following example imports a vendor list from a file named `vendors.csv` into the vendor register.
 
 <Steps>
 
-## Connect to your database
-
-Connect to the `neondb` database using `psql`. For example:
-
-```bash shouldWrap
-psql "<your_neon_database_connection_string>"
-```
-
-You can find your connection string on your OptiTech Project Dashboard. Click on the **Connect** button. Use the drop-down menu to copy a full `psql` connection command.
-
-<Admonition type="note">
-For more information about connecting to OptiTech with `psql`, see [Connect with psql](/docs/connect/query-with-psql-editor).
-</Admonition>
-
-## Create the target table
-
-Create the `customer` table: the table you are importing to must exist in your database and the columns must match your CSV file.
-
-```sql
-CREATE TABLE customer (
-   id SERIAL,
-   first_name VARCHAR(50),
-   last_name VARCHAR(50),
-   email VARCHAR(255),
-   PRIMARY KEY (id)
-)
-```
-
-<Admonition type="tip">
-You can also create tables using the **SQL Editor** in the OptiTech Console. See [Query with OptiTech's SQL Editor](/docs/get-started/query-with-neon-sql-editor).
-</Admonition>
-
 ## Prepare the CSV file
 
-Prepare a `customer.csv` file with the following data. Note that the columns in the CSV file match the columns in the table you created in the previous step.
+Prepare a `vendors.csv` file with a header row. Column names don't have to match OptiTech's field names exactly; the mapping step handles variations.
 
 ```text
-First Name,Last Name,Email
-1,Casey,Smith,casey.smith@example.com
-2,Sally,Jones,sally.jones@example.com
+Name,Contact,Service,Risk level,Contract end
+Example IT Drift AB,dana.smith@example.com,Managed IT operations,High,2027-03-31
+Example Lön AB,alex.lopez@example.com,Payroll processing,Medium,2026-12-31
 ```
 
-## Load the data
+For a risk register, typical columns are name, description, likelihood, impact, owner, and treatment plan. For controls: name, description, owner, and framework reference if you have one.
 
-From your `psql` prompt, load the data from the `customer.csv` file using the `\copy` option.
+## Upload to the import assistant
 
-```bash
-\copy customer FROM '/path/to/customer.csv' DELIMITER ',' CSV HEADER
+In the Console, open **Settings**, then **Import**, choose **CSV or Excel**, and select the target register: risks, vendors, or controls. Upload the file.
+
+## Review the column mapping
+
+The assistant proposes which CSV column maps to which register field and shows a preview of the first rows. Fix anything it guessed wrong, and choose what happens with unmapped columns: import as a note field, or skip.
+
+## Confirm and verify
+
+Confirm the import. The assistant reports the number of rows created:
+
+```text
+Imported 2 vendors, 0 skipped
 ```
 
-If the command runs successfully, it returns the number of records copied to the database:
-
-```bash
-COPY 2
-```
-
-For more information about the `\copy` option, refer to the [psql reference](https://www.postgresql.org/docs/current/app-psql.html), in the _PostgreSQL Documentation_.
+Rows it couldn't parse land in a review list instead of failing silently, so nothing disappears. Open the register and spot-check a few entries, then assign owners to anything imported without one.
 
 </Steps>
 

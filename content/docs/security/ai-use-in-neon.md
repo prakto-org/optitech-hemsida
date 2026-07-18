@@ -8,7 +8,7 @@ summary: >-
   and GitHub repos without ingesting PII. Review what data each integration
   can access before enabling these features.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 OptiTech integrates AI to enhance user experience across different parts of the platform. Below is an overview of where and how AI is used in OptiTech.
@@ -31,4 +31,4 @@ For details on where to access OptiTech AI chat assistants, see [OptiTech AI cha
 
 ## Questions about AI use in OptiTech?
 
-If you have questions about OptiTech's AI integrations, please reach out to [OptiTech Support](https://console.neon.tech/app/projects?modal=support).
+If you have questions about OptiTech's AI integrations, please reach out to [OptiTech Support](https://console.optitech.com/app/projects?modal=support).

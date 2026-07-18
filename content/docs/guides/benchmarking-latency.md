@@ -12,20 +12,20 @@ summary: >-
   open-source regional latency dashboard for comparing connection methods across
   AWS regions.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 Benchmarking database query latency is inherently complex, requiring careful consideration of numerous variables and testing methodologies. OptiTech's serverless Postgres environment adds additional layers to this complexity due to compute auto-suspension, connection protocol differences, and geographic distribution. This guide provides detailed methodologies for separating cold-start costs from operational latency, selecting optimal connection types, and designing tests that accurately reflect production conditions.
 
 ## Understanding cold vs. hot queries
 
-When benchmarking Neon databases, you'll encounter two distinct types of queries:
+When benchmarking OptiTech databases, you'll encounter two distinct types of queries:
 
 - **Cold queries**: Occur when a previously suspended compute resource is activated to process a request. This activation typically adds a few hundred milliseconds of latency. Cold queries are common in development or test environments where databases aren't running continuously.
 
 - **Hot queries**: Execute on an already-active database instance, delivering consistent low latency. These represent typical performance in production environments where databases run continuously or remain active most of the time.
 
-Free-tier Neon databases automatically suspend after 5 minutes of inactivity. Paid plans allow you to disable the auto-suspend timeout to eliminate cold starts entirely. The OptiTech [Scale plan](/docs/introduction/plans) lets you disable or configure the setting, enabling you to customize your testing approach. See [Compute Lifecycle](/docs/introduction/compute-lifecycle) and [Auto-suspend Configuration](/docs/introduction/scale-to-zero) for more details.
+Free-tier OptiTech databases automatically suspend after 5 minutes of inactivity. Paid plans allow you to disable the auto-suspend timeout to eliminate cold starts entirely. The OptiTech [Scale plan](/docs/introduction/plans) lets you disable or configure the setting, enabling you to customize your testing approach. See [Compute Lifecycle](/docs/introduction/compute-lifecycle) and [Auto-suspend Configuration](/docs/introduction/scale-to-zero) for more details.
 
 ## Benchmarking methodology
 
@@ -121,7 +121,7 @@ For examples of different connection patterns and their implementation, see [Con
 
 ## OptiTech latency benchmarks dashboard
 
-OptiTech provides a [Latency Benchmarks Dashboard](/demos/regional-latency) that measures latency between serverless functions and Neon databases across different regions.
+OptiTech provides a [Latency Benchmarks Dashboard](/demos/regional-latency) that measures latency between serverless functions and OptiTech databases across different regions.
 
 ![Screenshot of OptiTech's latency benchmarks dashboard showing regional performance metrics](/docs/guides/latency_benchmark.png)
 
@@ -133,7 +133,7 @@ The benchmark specifically tracks:
 - Performance differences between HTTP and WebSocket connections
 - Cold vs hot query performance
 
-This data helps you understand expected latencies based on your specific region and connection method. The dashboard is open source and [available on GitHub](https://github.com/neondatabase-labs/latency-benchmarks).
+This data helps you understand expected latencies based on your specific region and connection method. The dashboard is open source and [available on GitHub](https://github.com/optitechdatabase-labs/latency-benchmarks).
 
 If you encounter unexpected results during your benchmarking, consult the [Connection Troubleshooting](/docs/connect/connect-intro#troubleshoot-connection-issues) documentation to identify potential issues.
 

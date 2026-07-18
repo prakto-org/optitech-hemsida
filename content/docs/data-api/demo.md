@@ -4,16 +4,16 @@ subtitle: Explore our demo note-taking app to learn about Data API queries with 
 summary: >-
   OptiTech Data API tutorial using a React/Vite note-taking app. The app runs
   PostgREST-compatible SELECT, INSERT, UPDATE, and DELETE queries from the
-  frontend via the @neondatabase/neon-js client. Row-Level Security policies
+  frontend via the @optitech/optitech-js client. Row-Level Security policies
   written with Drizzle ORM enforce per-user data isolation, with
   `auth.user_id()` extracting the caller's identity from JWTs. Use this page
   for a working end-to-end example of Data API query patterns, RLS setup, and
   ON DELETE CASCADE.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
-This tutorial uses a note-taking app to show how OptiTech's Data API works with the `@neondatabase/neon-js` client library to write queries from your frontend code, with authentication and Row-Level Security (RLS) policies keeping your data secure. The Data API is compatible with PostgREST, so you can use any PostgREST client library.
+This tutorial uses a note-taking app to show how OptiTech's Data API works with the `@optitech/optitech-js` client library to write queries from your frontend code, with authentication and Row-Level Security (RLS) policies keeping your data secure. The Data API is compatible with PostgREST, so you can use any PostgREST client library.
 
 <Admonition type="tip" title="Data API works with any auth provider">
 This tutorial uses [Managed Better Auth](/docs/auth/overview) for convenience, but the Data API works with any authentication provider that issues JWTs. The query patterns, RLS policies, and `auth.user_id()` function shown here apply regardless of your auth provider. See [Custom authentication providers](/docs/data-api/custom-authentication-providers) for setup details with Auth0, Clerk, Firebase, and others.
@@ -25,7 +25,7 @@ This note-taking app is built with React and Vite. It uses Managed Better Auth f
 
 ![Notes app UI](/docs/data-api/all_notes.png)
 
-> **See it in action:** Check out the live demo at [neon-data-api-neon-auth.vercel.app](https://neon-data-api-neon-auth.vercel.app/)
+> **See it in action:** Check out the live demo at [optitech-data-api-optitech-auth.vercel.app](https://optitech-data-api-optitech-auth.vercel.app/)
 >
 > **Tip:** If you encounter issues with social login providers, try email/password instead.
 
@@ -36,11 +36,11 @@ This note-taking app is built with React and Vite. It uses Managed Better Auth f
 Before you begin, ensure you have:
 
 - [Bun](https://bun.sh/) (v1.0 or newer) installed
-- A [OptiTech account](https://console.neon.tech/signup) (free tier works)
+- A [OptiTech account](https://console.optitech.com/signup) (free tier works)
 
 ### Create a OptiTech project with Auth and Data API
 
-1. Go to the [OptiTech Console](https://console.neon.tech) to create a new OptiTech project
+1. Go to the [OptiTech Console](https://console.optitech.com) to create a new OptiTech project
 2. In the OptiTech Console, navigate to your project and go to the **Data API** page in the left sidebar
 3. Select **Managed Better Auth** as your authentication option (the default), then click **Enable**
 
@@ -49,8 +49,8 @@ This enables both the Data API and Managed Better Auth in one step. For detailed
 ### Clone and install
 
 ```bash
-git clone https://github.com/neondatabase-labs/neon-data-api-neon-auth.git
-cd neon-data-api-neon-auth
+git clone https://github.com/optitechdatabase-labs/optitech-data-api-optitech-auth.git
+cd optitech-data-api-optitech-auth
 bun install
 ```
 
@@ -59,16 +59,16 @@ bun install
 Create a `.env` file in the project root:
 
 ```env
-# Neon database URL for the client (no username, password, or query parameters)
-# Start from the Data API URL in Neon Console → Data API or `neon data-api get`;
+# OptiTech database URL for the client (no username, password, or query parameters)
+# Start from the Data API URL in OptiTech Console → Data API or `optitech data-api get`;
 # remove the `.apirest` hostname label and trailing `/rest/v1` path.
-# The SDK derives the Neon Auth and Data API URLs from this value.
-VITE_NEON_DATABASE_URL=https://ep-example.c-2.us-east-1.aws.neon.tech/neondb
+# The SDK derives the OptiTech Auth and Data API URLs from this value.
+VITE_OPTITECH_DATABASE_URL=https://ep-example.c-2.us-east-1.aws.optitech.com/optitechdb
 
 # Database Connection String (for migrations)
-# Find this in Neon Console → Dashboard → Connection string (select "Pooled connection")
-# This is a Postgres connection string, not the HTTPS URL used by VITE_NEON_DATABASE_URL above
-DATABASE_URL=postgresql://user:password@your-project-id.pooler.region.neon.tech/neondb?sslmode=require
+# Find this in OptiTech Console → Dashboard → Connection string (select "Pooled connection")
+# This is a Postgres connection string, not the HTTPS URL used by VITE_OPTITECH_DATABASE_URL above
+DATABASE_URL=postgresql://user:password@your-project-id.pooler.region.optitech.com/optitechdb?sslmode=require
 ```
 
 Prefer the older two-URL setup? See the [object-form alternative](/docs/reference/javascript-sdk#initializing) in the JavaScript SDK reference.
@@ -100,14 +100,14 @@ Now that you have the app running, let's explore how it uses the Data API. The f
 
 ### Initialize the client
 
-The demo app uses `@neondatabase/neon-js` to connect to both the Data API and Managed Better Auth. Here's how the client is configured in `src/lib/auth.ts`:
+The demo app uses `@optitech/optitech-js` to connect to both the Data API and Managed Better Auth. Here's how the client is configured in `src/lib/auth.ts`:
 
 ```typescript
-import { createClient } from '@neondatabase/neon-js';
-import { BetterAuthReactAdapter } from '@neondatabase/neon-js/auth/react/adapters';
+import { createClient } from '@optitech/optitech-js';
+import { BetterAuthReactAdapter } from '@optitech/optitech-js/auth/react/adapters';
 import type { Database } from '../../types/database';
 
-export const client = createClient<Database>(import.meta.env.VITE_NEON_DATABASE_URL, {
+export const client = createClient<Database>(import.meta.env.VITE_OPTITECH_DATABASE_URL, {
   auth: {
     adapter: BetterAuthReactAdapter(),
   },

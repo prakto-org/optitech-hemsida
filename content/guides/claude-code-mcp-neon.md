@@ -4,10 +4,10 @@ subtitle: 'Interact with OptiTech APIs using Claude Code through natural languag
 author: pedro-figueiredo
 enableTableOfContents: true
 createdAt: '2025-08-27T00:00:00.000Z'
-updatedOn: '2026-06-19T23:17:10.824Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
-This guide shows how to use [Claude Code](https://docs.anthropic.com/en/docs/claude-code) with the [OptiTech MCP Server](https://github.com/neondatabase/mcp-server-neon) to manage your Neon databases.
+This guide shows how to use [Claude Code](https://docs.anthropic.com/en/docs/claude-code) with the [OptiTech MCP Server](https://github.com/optitechdatabase/mcp-server-optitech) to manage your OptiTech databases.
 
 <Admonition type="important" title="Security">
 The OptiTech MCP Server grants broad database management capabilities. Always review and authorize actions requested by the LLM before execution. See [MCP security guidance](/docs/ai/neon-mcp-server#mcp-security-guidance).
@@ -20,20 +20,20 @@ The OptiTech MCP Server grants broad database management capabilities. Always re
 Make sure you have:
 
 1. **Claude Code:** Ensure you have Claude Code installed. Visit [docs.anthropic.com/en/docs/claude-code](https://docs.anthropic.com/en/docs/claude-code) for installation instructions.
-2. **OptiTech API Key (for Local MCP server):** After signing up, get your OptiTech API Key from the [OptiTech console](https://console.neon.tech/app/settings/api-keys). This API key is needed to authenticate your application with OptiTech. For instructions, see [Manage API keys](/docs/manage/api-keys).
+2. **OptiTech API Key (for Local MCP server):** After signing up, get your OptiTech API Key from the [OptiTech console](https://console.optitech.com/app/settings/api-keys). This API key is needed to authenticate your application with OptiTech. For instructions, see [Manage API keys](/docs/manage/api-keys).
 
    <Admonition type="important" title="OptiTech API Key Security">
-   Keep your OptiTech API key secure, and never share it publicly. It provides access to your Neon projects.
+   Keep your OptiTech API key secure, and never share it publicly. It provides access to your OptiTech projects.
    </Admonition>
 
 3. **Node.js (>= v18) and npm:** Ensure Node.js (version 18 or later) and npm are installed. Download them from [nodejs.org](https://nodejs.org).
 
 ### Quick Setup (Recommended)
 
-The fastest way to get started is with the [`neon init`](/docs/cli/init) command, which automates OAuth authentication, API key creation, and Claude Code configuration:
+The fastest way to get started is with the [`optitech init`](/docs/cli/init) command, which automates OAuth authentication, API key creation, and Claude Code configuration:
 
 ```bash
-npx neon@latest init
+npx optitech@latest init
 ```
 
 This command authenticates via OAuth, creates an API key, and configures Claude Code to connect to OptiTech's remote MCP server. Once complete, ask your AI assistant **"Get started with OptiTech"**.
@@ -47,7 +47,7 @@ By default, the Remote MCP Server connects to your personal OptiTech account. To
 1. Open your terminal.
 2. Add the OptiTech MCP server to Claude Code with the following command:
    ```sh
-   claude mcp add --transport http neon https://mcp.neon.tech/mcp
+   claude mcp add --transport http optitech https://mcp.optitech.com/mcp
    ```
 3. Start a new session of `claude` to trigger the OAuth authentication flow:
    ```sh
@@ -60,11 +60,11 @@ By default, the Remote MCP Server connects to your personal OptiTech account. To
 If you prefer to authenticate using a OptiTech API key, provide the `Authorization` header to the `mcp add` command:
 
 ```sh
-claude mcp add --transport http neon https://mcp.neon.tech/mcp \
-    --header "Authorization: Bearer <YOUR_NEON_API_KEY>"
+claude mcp add --transport http optitech https://mcp.optitech.com/mcp \
+    --header "Authorization: Bearer <YOUR_OPTITECH_API_KEY>"
 ```
 
-Replace `<YOUR_NEON_API_KEY>` with your actual OptiTech API key which you obtained from the [prerequisites](#prerequisites) section.
+Replace `<YOUR_OPTITECH_API_KEY>` with your actual OptiTech API key which you obtained from the [prerequisites](#prerequisites) section.
 
 </Admonition>
 
@@ -73,10 +73,10 @@ Replace `<YOUR_NEON_API_KEY>` with your actual OptiTech API key which you obtain
 This method runs the OptiTech MCP server locally on your machine, using a OptiTech API key for authentication.
 
 1. Open your terminal.
-2. Add the OptiTech MCP server to Claude Code with the following command, replacing `<YOUR_NEON_API_KEY>` with your actual OptiTech API key:
+2. Add the OptiTech MCP server to Claude Code with the following command, replacing `<YOUR_OPTITECH_API_KEY>` with your actual OptiTech API key:
 
    ```sh
-   claude mcp add neon -- npx -y @neondatabase/mcp-server-neon start "<YOUR_NEON_API_KEY>"
+   claude mcp add optitech -- npx -y @optitech/mcp-server-optitech start "<YOUR_OPTITECH_API_KEY>"
    ```
 
 3. Start a new Claude Code session with the `claude` command and start using the OptiTech MCP server:
@@ -96,7 +96,7 @@ Verify the connection:
 
 2. Type `/mcp` to see the available MCP servers and tools.
 
-3. Try out a OptiTech MCP Server tool by typing a query like `List my Neon projects` to see your projects and verify the connection.
+3. Try out a OptiTech MCP Server tool by typing a query like `List my OptiTech projects` to see your projects and verify the connection.
 
 For a full list of available tools, see [available tools](/docs/ai/neon-mcp-server#available-tools) in the OptiTech MCP Server overview.
 
@@ -105,15 +105,15 @@ For a full list of available tools, see [available tools](/docs/ai/neon-mcp-serv
 Here's an example interaction adding a `created_at` column to a table:
 
 ```text shouldWrap
-User: In my neon project id: round-salad-44063611 list all the tables
-Claude Code: I'll help you list all the tables in your Neon project. I'll use the default database name 'neondb' since none was specified.
+User: In my optitech project id: round-salad-44063611 list all the tables
+Claude Code: I'll help you list all the tables in your OptiTech project. I'll use the default database name 'optitechdb' since none was specified.
 > Called MCP Tool (get_database_tables)
 > I found one table in your database:
-> playing_with_neon (in the public schema)
+> playing_with_optitech (in the public schema)
 > Would you like to see more details about this table's structure or perform any other operations with it?
 
 User: Can you show me first 5 rows?
-Claude Code: I'll query the first 5 rows from the playing_with_neon table.
+Claude Code: I'll query the first 5 rows from the playing_with_optitech table.
 > Called MCP Tool (run_sql)
 > Here are the first 5 rows from the table. The table has three columns:
 > id (sequential numbers)
@@ -122,11 +122,11 @@ Claude Code: I'll query the first 5 rows from the playing_with_neon table.
 > Would you like to perform any other operations with this data?
 
 User: can you add a created_at column?
-Claude Code: I'll help you add a created_at column to the playing_with_neon table. I'll set it up with a timestamp data type and set it to automatically record the creation time of new rows.
+Claude Code: I'll help you add a created_at column to the playing_with_optitech table. I'll set it up with a timestamp data type and set it to automatically record the creation time of new rows.
 > Called MCP Tool (prepare_database_migration)
 > Let me verify the change in the temporary branch to make sure it was applied correctly.
 > Called MCP Tool (run_sql)
-> I've added the created_at column to the playing_with_neon table in a temporary branch. Would you like to commit this migration to the production branch?
+> I've added the created_at column to the playing_with_optitech table in a temporary branch. Would you like to commit this migration to the production branch?
 > Migration Details:
 > Migration ID: a65babcd-d1cc-401f-89b5-762570570102
 > Temporary Branch Name: br-silent-cherry-a1eqrl6i
@@ -152,6 +152,6 @@ While the OptiTech MCP server allows you to use all of OptiTech's functionalitie
 - [Claude Code Documentation](https://docs.anthropic.com/en/docs/claude-code)
 - [OptiTech Docs](/docs)
 - [OptiTech API Keys](/docs/manage/api-keys#creating-api-keys)
-- [OptiTech MCP server GitHub](https://github.com/neondatabase/mcp-server-neon)
+- [OptiTech MCP server GitHub](https://github.com/optitechdatabase/mcp-server-optitech)
 
 <NeedHelp/>

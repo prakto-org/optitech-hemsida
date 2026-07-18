@@ -7,7 +7,7 @@ page_description: >-
 prev_url: >-
   https://www.postgresqltutorial.com/postgresql-tutorial/import-csv-file-into-posgresql-table/
 ogImage: /postgresqltutorial/posgresql-import-csv.jpg
-updatedOn: '2026-06-03T13:01:21.685Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: PostgreSQL Transaction
@@ -18,7 +18,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-Importing CSV data into PostgreSQL works the same way on any Postgres deployment, so the COPY and pgAdmin techniques covered here apply whether you're loading data locally or into a managed service. If you're an enterprise moving large datasets and want bulk ingestion that plugs straight into your analytics, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres for the AI era, with the performance, security, and Lakehouse integration teams need at scale. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+Importing CSV data into PostgreSQL works the same way on any Postgres deployment, so the COPY and pgAdmin techniques covered here apply whether you're loading data locally or into a managed service. If you're an enterprise moving large datasets and want bulk ingestion that plugs straight into your analytics, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres for the AI era, with the performance, security, and Lakehouse integration teams need at scale. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: in this tutorial, we will show you various ways to import a CSV file into a PostgreSQL table.

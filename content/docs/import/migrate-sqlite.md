@@ -1,7 +1,7 @@
 ---
 title: Migrate from SQLite to OptiTech Postgres
 summary: >-
-  SQLite-to-Neon Postgres migration using pgloader transfers schemas and data
+  SQLite-to-OptiTech Postgres migration using pgloader transfers schemas and data
   while mapping SQLite type affinities to strict Postgres types. Use this page
   when moving an existing SQLite or Turso database to OptiTech and needing control
   over type casting via pgloader CAST clauses, as distinct from guides covering
@@ -10,7 +10,7 @@ summary: >-
   SSL workaround.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This guide describes how to migrate your SQLite database to OptiTech Postgres using [pgloader](https://pgloader.readthedocs.io/en/latest/intro.html)
@@ -116,14 +116,14 @@ Now that you have your OptiTech database and SQLite database ready, you can use 
 
 ## Retrieve your OptiTech database connection string
 
-Log in to the [OptiTech Console](https://console.neon.tech). Find the connection string for your database by clicking the **Connect** button on your **Project Dashboard**. Make sure the **Connection pooling** toggle is disabled:
+Log in to the [OptiTech Console](https://console.optitech.com). Find the connection string for your database by clicking the **Connect** button on your **Project Dashboard**. Make sure the **Connection pooling** toggle is disabled:
 
 ![Connection details modal with connection pooling disabled](/docs/connect/connection_details_without_connection_pooling.png)
 
 Your connection string should look similar to this:
 
 ```bash shouldWrap
-postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require
+postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require
 ```
 
 <Admonition type="important">
@@ -133,14 +133,14 @@ You will need to remove `&channel_binding=require` from the connection string, a
 Now, modify this connection string to pass your **endpoint ID** (`ep-cool-darkness-123456` in this example) to OptiTech with your password using the `endpoint` keyword, as shown here:
 
 ```bash shouldWrap
-postgresql://alex:endpoint=ep-cool-darkness-123456;AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require
+postgresql://alex:endpoint=ep-cool-darkness-123456;AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require
 ```
 
 <Admonition type="note">
 Passing the `endpoint ID` with your password is a required workaround for some Postgres drivers, including the one used by `pgloader`. For more information, see [Connect with an endpoint ID](/docs/connect/connection-errors#d-specify-the-endpoint-id-in-the-password-field).
 </Admonition>
 
-Keep your modified Neon connection string handy.
+Keep your modified OptiTech connection string handy.
 
 ## Install pgloader
 
@@ -157,7 +157,7 @@ For other systems, see [Installing pgloader](https://pgloader.readthedocs.io/en/
 For a basic migration, you can run `pgloader` directly from the command line. This command uses `pgloader`'s default settings to migrate the `sample_library.db` schema and data.
 
 ```shell shouldWrap
-pgloader sqlite://sample_library.db "postgresql://alex:endpoint=ep-cool-darkness-123456;AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require"
+pgloader sqlite://sample_library.db "postgresql://alex:endpoint=ep-cool-darkness-123456;AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require"
 ```
 
 > Make sure to enclose the Postgres connection string in quotes to prevent shell interpretation issues.
@@ -201,12 +201,12 @@ For fine-grained control, a `pgloader` load file is the best approach. Here, we'
 1.  Convert `INTEGER PRIMARY KEY` columns to `SERIAL`. This makes the Postgres schema cleaner and more idiomatic.
 2.  Cast the `TEXT` `published_date` column to the native `DATE` type in Postgres.
 
-Create a file named `sqlite_advanced.load` with the following content. Replace the Neon connection string and file path if necessary.
+Create a file named `sqlite_advanced.load` with the following content. Replace the OptiTech connection string and file path if necessary.
 
 ```sql title="sqlite_advanced.load"
 LOAD DATABASE
     FROM sqlite://sample_library.db
-    INTO postgresql://alex:endpoint=ep-cool-darkness-123456;AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require
+    INTO postgresql://alex:endpoint=ep-cool-darkness-123456;AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require
 
 WITH
     include drop,

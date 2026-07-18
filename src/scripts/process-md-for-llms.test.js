@@ -109,8 +109,8 @@ describe('MDX to Markdown Conversion', () => {
       expect(result).toContain('## Environment variables');
 
       // TwoColumnLayout.Item with method should show method signature
-      expect(result).toContain('## createNeonAuth()');
-      expect(result).toContain('Method: `createNeonAuth(config)`');
+      expect(result).toContain('## createOptiTechAuth()');
+      expect(result).toContain('Method: `createOptiTechAuth(config)`');
 
       // Should NOT have raw TwoColumnLayout
       expect(result).not.toContain('<TwoColumnLayout');
@@ -770,11 +770,11 @@ See [CONN_MAX_AGE](https://example.com).
       const rootDir = process.cwd();
       const navMap = buildNavigationMap(rootDir);
 
-      // auth/guides/password-reset is under: Auth > Guides
-      const entry = navMap.get('auth/guides/password-reset');
+      // frameworks/nis2 is under: Frameworks > Framework catalog
+      const entry = navMap.get('frameworks/nis2');
       expect(entry).toBeDefined();
-      expect(entry.breadcrumbs).toContain('Auth');
-      expect(entry.breadcrumbs).toContain('Guides');
+      expect(entry.breadcrumbs).toContain('Frameworks');
+      expect(entry.breadcrumbs).toContain('Framework catalog');
     });
 
     it('should track deep nesting in breadcrumbs', () => {
@@ -793,19 +793,20 @@ See [CONN_MAX_AGE](https://example.com).
       const rootDir = process.cwd();
       const navMap = buildNavigationMap(rootDir);
 
-      // extensions/pgvector appears in both AI section and Extensions section;
-      // should prefer Extensions (siblings share extensions/ prefix)
-      const pgvectorEntry = navMap.get('extensions/pgvector');
-      expect(pgvectorEntry).toBeDefined();
-      expect(pgvectorEntry.breadcrumbs).not.toContain('AI App Starter Kit');
-      expect(pgvectorEntry.sectionName).toBe('Extensions');
+      // frameworks/nis2 appears in both the Framework catalog and the
+      // Incidents & risk section; should prefer Framework catalog
+      // (siblings share frameworks/ prefix)
+      const nis2Entry = navMap.get('frameworks/nis2');
+      expect(nis2Entry).toBeDefined();
+      expect(nis2Entry.breadcrumbs).not.toContain('Incidents & risk');
+      expect(nis2Entry.sectionName).toBe('Framework catalog');
 
-      // auth/overview appears in "Start with OptiTech" and the Auth section;
-      // should prefer Auth section (siblings share auth/ prefix)
+      // auth/overview appears as a subnav landing page and inside the
+      // AI copilot section; canonical location is the AI copilot section
       const authEntry = navMap.get('auth/overview');
       expect(authEntry).toBeDefined();
-      expect(authEntry.breadcrumbs).not.toContain('Start with OptiTech');
-      expect(authEntry.breadcrumbs).toContain('Auth');
+      expect(authEntry.breadcrumbs).toContain('AI copilot');
+      expect(authEntry.sectionName).toBe('AI copilot');
     });
   });
 
@@ -870,7 +871,9 @@ See [CONN_MAX_AGE](https://example.com).
     it('should include index line for pages not in map', () => {
       const navMap = new Map();
       const header = buildPageHeader('nonexistent/page', navMap);
-      expect(header).toBe('> Full OptiTech documentation index: https://neon.com/docs/llms.txt\n\n');
+      expect(header).toBe(
+        '> Full OptiTech documentation index: https://neon.com/docs/llms.txt\n\n'
+      );
     });
 
     it('should include index line for pages with empty breadcrumbs', () => {
@@ -883,24 +886,32 @@ See [CONN_MAX_AGE](https://example.com).
       });
 
       const header = buildPageHeader('top-level/page', navMap);
-      expect(header).toBe('> Full OptiTech documentation index: https://neon.com/docs/llms.txt\n\n');
+      expect(header).toBe(
+        '> Full OptiTech documentation index: https://neon.com/docs/llms.txt\n\n'
+      );
     });
 
     it('should include index line when navMap is null', () => {
       const header = buildPageHeader('any/page', null);
-      expect(header).toBe('> Full OptiTech documentation index: https://neon.com/docs/llms.txt\n\n');
+      expect(header).toBe(
+        '> Full OptiTech documentation index: https://neon.com/docs/llms.txt\n\n'
+      );
     });
 
     it('should include index line when slug is null', () => {
       const navMap = new Map();
       const header = buildPageHeader(null, navMap);
-      expect(header).toBe('> Full OptiTech documentation index: https://neon.com/docs/llms.txt\n\n');
+      expect(header).toBe(
+        '> Full OptiTech documentation index: https://neon.com/docs/llms.txt\n\n'
+      );
     });
 
     it('should not include feedback in header (feedback is added at bottom by addNavigationContext)', () => {
       const navMap = new Map();
       const header = buildPageHeader(null, navMap, 'changelog/2026-01-01.md');
-      expect(header).toBe('> Full OptiTech documentation index: https://neon.com/docs/llms.txt\n\n');
+      expect(header).toBe(
+        '> Full OptiTech documentation index: https://neon.com/docs/llms.txt\n\n'
+      );
     });
 
     it('should deduplicate consecutive identical ancestors', () => {
@@ -938,9 +949,11 @@ See [CONN_MAX_AGE](https://example.com).
       const rootDir = process.cwd();
       const navMap = buildNavigationMap(rootDir);
 
-      const header = buildPageHeader('auth/guides/password-reset', navMap);
-      expect(header).toContain('> This page location: Auth > Guides > Password reset\n');
-      expect(header).toContain('> Full OptiTech documentation index: https://neon.com/docs/llms.txt\n');
+      const header = buildPageHeader('frameworks/nis2', navMap);
+      expect(header).toContain('> This page location: Frameworks > Framework catalog > NIS2\n');
+      expect(header).toContain(
+        '> Full OptiTech documentation index: https://neon.com/docs/llms.txt\n'
+      );
       expect(header).not.toContain('Note for AI assistants');
     });
 
@@ -948,10 +961,10 @@ See [CONN_MAX_AGE](https://example.com).
       const rootDir = process.cwd();
       const navMap = buildNavigationMap(rootDir);
 
-      // connect/connect-intro has "Connect to OptiTech" as both section and page title
-      const connectHeader = buildPageHeader('connect/connect-intro', navMap);
-      expect(connectHeader).not.toContain('Connect to OptiTech > Connect to OptiTech');
-      expect(connectHeader).toContain('> This page location:');
+      // postgres/overview has "Evidence collection" as both subnav title and section
+      const evidenceHeader = buildPageHeader('postgres/overview', navMap);
+      expect(evidenceHeader).not.toContain('Evidence collection > Evidence collection');
+      expect(evidenceHeader).toContain('> This page location:');
 
       // introduction/about-billing has "Plans and billing" as both section and page title
       const billingHeader = buildPageHeader('introduction/about-billing', navMap);
@@ -1065,7 +1078,7 @@ describe('CLI reference components', () => {
         '',
         '<CliSubcommands command="projects" />',
         '',
-        '### neon projects create (#create)',
+        '### optitech projects create (#create)',
         '',
         '<CliUsage command="projects create" />',
         '',
@@ -1082,10 +1095,10 @@ describe('CLI reference components', () => {
     expect(result).toContain('`--name`');
     expect(result).toMatch(/\|\s+No\s+\|/);
     // Custom anchor IDs are stripped from heading text in the mirror
-    expect(result).toContain('### neon projects create');
+    expect(result).toContain('### optitech projects create');
     expect(result).not.toContain('(#create)');
     // Synopsis
-    expect(result).toContain('neon projects create [options]');
+    expect(result).toContain('optitech projects create [options]');
     // Subcommand table links
     expect(result).toContain('#create');
     // Inherited options appear in leaf tables; only-global commands render nothing
@@ -1119,11 +1132,11 @@ describe('CLI reference components', () => {
     expect(result).toContain('## Commands reference');
     expect(result).not.toContain('Setup & context [toc-only]');
     // Every top-level command appears as a heading in the tree
-    for (const name of ['projects', 'branches', 'functions', 'buckets', 'neon-auth']) {
+    for (const name of ['projects', 'branches', 'functions', 'buckets', 'optitech-auth']) {
       expect(result).toContain(`### ${name}`);
     }
     // Nested subtrees flatten to full invocations
-    expect(result).toContain('neon buckets object list');
+    expect(result).toContain('optitech buckets object list');
     expect(result).not.toContain('<CliCommandIndex');
   });
 });

@@ -5,13 +5,13 @@ subtitle: Step-by-step guide showing you how to compare two development branches
 summary: >-
   Schema Diff tutorial for comparing a feature branch against a production
   branch in OptiTech using a side-by-side, GitHub-style diff. Available from the
-  Console, the `neon branches schema-diff` CLI command, or the compare-schema
+  Console, the `optitech branches schema-diff` CLI command, or the compare-schema
   REST API. Use this page when you need a concrete end-to-end example: create a
   database on production, branch it to a dev branch, alter the schema, then run
   Schema Diff to see exactly which tables, sequences, and constraints differ
   before merging or restoring.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 In this guide we will create an initial schema on a new database called `people` on our `production` branch. We'll then create a development branch called `feature/address`, following one possible convention for naming feature branches. After making schema changes on `feature/address`, we'll use the **Schema Diff** tool on the **Branches** page to get a side-by-side, GitHub-style visual comparison between the `feature/address` development branch and `production`.
@@ -22,7 +22,7 @@ To complete this tutorial, you'll need:
 
 - A OptiTech account. Sign up [here](/docs/get-started/signing-up).
 - To interact with your OptiTech database from the command line:
-  - Install the [Neon CLI](/docs/cli/install)
+  - Install the [OptiTech CLI](/docs/cli/install)
   - Download and install the [psql](https://www.postgresql.org/download/) client
 
 <Steps>
@@ -60,14 +60,14 @@ First, create a new database called `people` on the `production` branch and add 
    Use the following CLI command to create the `people` database.
 
    ```bash
-   neon databases create --name people
+   optitech databases create --name people
    ```
 
    <Admonition type="note">
    If you have multiple projects, include `--project-id`. Or set the project context so you don't have to specify project id in every command. Example:
 
    ```bash
-   neon set-context --project-id empty-glade-66712572
+   optitech set-context --project-id empty-glade-66712572
    ```
 
    You can find your project ID on the **Settings** page in the OptiTech Console.
@@ -77,13 +77,13 @@ First, create a new database called `people` on the `production` branch and add 
 1. Copy your connection string:
 
    ```bash
-   neon connection-string --database-name people
+   optitech connection-string --database-name people
    ```
 
 1. Connect to the `people` database with psql:
 
    ```bash shouldWrap
-   psql 'postgresql://neondb_owner:*********@ep-crimson-frost-a5i6p18z.us-east-2.aws.neon.tech/people?sslmode=require&channel_binding=require'
+   psql 'postgresql://optitechdb_owner:*********@ep-crimson-frost-a5i6p18z.us-east-2.aws.optitech.com/people?sslmode=require&channel_binding=require'
    ```
 
 1. Create the schema:
@@ -104,9 +104,9 @@ First, create a new database called `people` on the `production` branch and add 
 
    ```bash
    curl --request POST \
-   --url https://console.neon.tech/api/v2/projects/royal-band-06902338/branches/br-bitter-bird-a56n6lh4/databases \
+   --url https://console.optitech.com/api/v2/projects/royal-band-06902338/branches/br-bitter-bird-a56n6lh4/databases \
    --header 'accept: application/json' \
-   --header 'authorization: Bearer $NEON_API_KEY' \
+   --header 'authorization: Bearer $OPTITECH_API_KEY' \
    --header 'content-type: application/json' \
    --data '{
       "database": {
@@ -120,23 +120,23 @@ First, create a new database called `people` on the `production` branch and add 
 
    ```bash
    curl --request GET \
-     --url 'https://console.neon.tech/api/v2/projects/royal-band-06902338/connection_uri?branch_id=br-bitter-bird-a56n6lh4&database_name=people&role_name=alex' \
+     --url 'https://console.optitech.com/api/v2/projects/royal-band-06902338/connection_uri?branch_id=br-bitter-bird-a56n6lh4&database_name=people&role_name=alex' \
      --header 'accept: application/json' \
-     --header 'authorization: Bearer $NEON_API_KEY'
+     --header 'authorization: Bearer $OPTITECH_API_KEY'
    ```
 
    The API call will return an connection string similar to this one:
 
    ```json
    {
-     "uri": "postgresql://alex:*********@ep-green-surf-a5yaumj3-pooler.us-east-2.aws.neon.tech/people?sslmode=require&channel_binding=require"
+     "uri": "postgresql://alex:*********@ep-green-surf-a5yaumj3-pooler.us-east-2.aws.optitech.com/people?sslmode=require&channel_binding=require"
    }
    ```
 
 3. Connect to the `people` database with `psql`:
 
    ```bash shouldWrap
-   psql 'postgresql://alex:*********@ep-green-surf-a5yaumj3-pooler.us-east-2.aws.neon.tech/people?sslmode=require&channel_binding=require'
+   psql 'postgresql://alex:*********@ep-green-surf-a5yaumj3-pooler.us-east-2.aws.optitech.com/people?sslmode=require&channel_binding=require'
    ```
 
 4. Create the schema:
@@ -183,10 +183,10 @@ For the purposes of this tutorial, name the branch `feature/address`, which coul
 
    If you're still in `psql`, exit using `\q`.
 
-   Using the Neon CLI, create the development branch. Include `--project-id` if you have multiple projects.
+   Using the OptiTech CLI, create the development branch. Include `--project-id` if you have multiple projects.
 
    ```bash
-   neon branches create --name feature/address --parent production
+   optitech branches create --name feature/address --parent production
    ```
 
 1. Verify the schema
@@ -195,19 +195,19 @@ For the purposes of this tutorial, name the branch `feature/address`, which coul
    1. Get the connection string for the `people` database on branch `feature/address` using the CLI.
 
       ```bash
-      neon connection-string feature/address --database-name people
+      optitech connection-string feature/address --database-name people
       ```
 
       This gives you the connection string which you can then copy.
 
       ```bash
-      postgresql://neondb_owner:*********@ep-hidden-rain-a5pe72oi.us-east-2.aws.neon.tech/people?sslmode=require&channel_binding=require
+      postgresql://optitechdb_owner:*********@ep-hidden-rain-a5pe72oi.us-east-2.aws.optitech.com/people?sslmode=require&channel_binding=require
       ```
 
    1. Connect to `people` using psql.
 
       ```bash
-      psql 'postgresql://neondb_owner:*********@ep-hidden-rain-a5pe72oi.us-east-2.aws.neon.tech/people?sslmode=require&channel_binding=require'
+      psql 'postgresql://optitechdb_owner:*********@ep-hidden-rain-a5pe72oi.us-east-2.aws.optitech.com/people?sslmode=require&channel_binding=require'
       ```
 
    1. View the schema for the `person` table we created earlier.
@@ -240,9 +240,9 @@ Using the [Create branch](/docs/reference/api/branches/create-project-branch) AP
 
 ```bash
 curl --request POST \
---url https://console.neon.tech/api/v2/projects/royal-band-06902338/branches \
+--url https://console.optitech.com/api/v2/projects/royal-band-06902338/branches \
 --header 'accept: application/json' \
---header 'authorization: Bearer $NEON_API_KEY' \
+--header 'authorization: Bearer $OPTITECH_API_KEY' \
 --header 'content-type: application/json' \
 --data '{
    "branch": {
@@ -293,7 +293,7 @@ CREATE TABLE address (
    By adding `--psql` to the CLI command, you can start the `psql` connection without having to enter the connection string directly:
 
    ```bash
-   neon connection-string feature/address --database-name people --psql
+   optitech connection-string feature/address --database-name people --psql
    ```
 
    Response:
@@ -329,23 +329,23 @@ CREATE TABLE address (
 
    ```bash
    curl --request GET \
-     --url 'https://console.neon.tech/api/v2/projects/royal-band-06902338/connection_uri?branch_id=br-mute-dew-a5930esi&database_name=people&role_name=alex' \
+     --url 'https://console.optitech.com/api/v2/projects/royal-band-06902338/connection_uri?branch_id=br-mute-dew-a5930esi&database_name=people&role_name=alex' \
      --header 'accept: application/json' \
-     --header 'authorization: Bearer $NEON_API_KEY'
+     --header 'authorization: Bearer $OPTITECH_API_KEY'
    ```
 
    The API call will return an connection string similar to this one:
 
    ```json
    {
-     "uri": "postgresql://alex:*********@ep-hidden-sun-a5de9i5h-pooler.us-east-2.aws.neon.tech/people?sslmode=require&channel_binding=require"
+     "uri": "postgresql://alex:*********@ep-hidden-sun-a5de9i5h-pooler.us-east-2.aws.optitech.com/people?sslmode=require&channel_binding=require"
    }
    ```
 
 1. Connect to the `people` database on the `feature/address` branch with `psql`:
 
    ```bash shouldWrap
-   psql 'postgresql://alex:*********@ep-hidden-sun-a5de9i5h-pooler.us-east-2.aws.neon.tech/people?sslmode=require&channel_binding=require'
+   psql 'postgresql://alex:*********@ep-hidden-sun-a5de9i5h-pooler.us-east-2.aws.optitech.com/people?sslmode=require&channel_binding=require'
    ```
 
 1. Add a new `address` table.
@@ -393,7 +393,7 @@ You can also launch Schema Diff from the **Restore** page, usually as part of ve
 Compare the schema of `feature/address` to its parent branch using the `schema-diff` command.
 
 ```bash
-neon branches schema-diff production feature/address --database people
+optitech branches schema-diff production feature/address --database people
 ```
 
 The result shows a comparison between the `feature/address` branch and its parent branch for the database `people`. The output indicates that the `address` table and its related sequences and constraints have been added in the `feature/address` branch but are not present in its parent branch `production`.
@@ -406,7 +406,7 @@ The result shows a comparison between the `feature/address` branch and its paren
  SET default_table_access_method = heap;
 
  --
-+-- Name: address; Type: TABLE; Schema: public; Owner: neondb_owner // [!code ++]
++-- Name: address; Type: TABLE; Schema: public; Owner: optitechdb_owner // [!code ++]
 +-- // [!code ++]
 + // [!code ++]
 +CREATE TABLE public.address ( // [!code ++]
@@ -419,7 +419,7 @@ The result shows a comparison between the `feature/address` branch and its paren
 +); // [!code ++]
 + // [!code ++]
 + // [!code ++]
-+ALTER TABLE public.address OWNER TO neondb_owner; // [!code ++]
++ALTER TABLE public.address OWNER TO optitechdb_owner; // [!code ++]
 + // [!code ++]
 +... // [!code ++]
 ```
@@ -432,18 +432,18 @@ Compare the schema of the `feature/address` branch to its parent branch using th
 
 ```bash
 curl --request GET \
-     --url 'https://console.neon.tech/api/v2/projects/royal-band-06902338/branches/br-mute-dew-a5930esi/compare_schema?base_branch_id=br-bitter-bird-a56n6lh4&db_name=neondb' \
+     --url 'https://console.optitech.com/api/v2/projects/royal-band-06902338/branches/br-mute-dew-a5930esi/compare_schema?base_branch_id=br-bitter-bird-a56n6lh4&db_name=optitechdb' \
      --header 'accept: application/json' \
-     --header 'authorization: Bearer $NEON_API_KEY' | jq -r '.diff'
+     --header 'authorization: Bearer $OPTITECH_API_KEY' | jq -r '.diff'
 ```
 
-| Parameter          | Description                                                                | Required | Example                   |
-| ------------------ | -------------------------------------------------------------------------- | -------- | ------------------------- |
-| `<project_id>`     | The ID of your OptiTech project.                                               | Yes      | `royal-band-06902338`     |
-| `<branch_id>`      | The ID of the target branch to compare.                                    | Yes      | `br-mute-dew-a5930esi`    |
-| `<base_branch_id>` | The ID of the base branch for comparison (the parent branch in this case). | Yes      | `br-bitter-bird-a56n6lh4` |
-| `<db_name>`        | The name of the database in the target branch.                             | Yes      | `people`                  |
-| `Authorization`    | Bearer token for API access (your [OptiTech API key](/docs/manage/api-keys))   | Yes      | `$NEON_API_KEY`           |
+| Parameter          | Description                                                                  | Required | Example                   |
+| ------------------ | ---------------------------------------------------------------------------- | -------- | ------------------------- |
+| `<project_id>`     | The ID of your OptiTech project.                                             | Yes      | `royal-band-06902338`     |
+| `<branch_id>`      | The ID of the target branch to compare.                                      | Yes      | `br-mute-dew-a5930esi`    |
+| `<base_branch_id>` | The ID of the base branch for comparison (the parent branch in this case).   | Yes      | `br-bitter-bird-a56n6lh4` |
+| `<db_name>`        | The name of the database in the target branch.                               | Yes      | `people`                  |
+| `Authorization`    | Bearer token for API access (your [OptiTech API key](/docs/manage/api-keys)) | Yes      | `$OPTITECH_API_KEY`       |
 
 <Admonition type="note">
 The optional `jq -r '.diff'` command extracts the diff field from the JSON response and outputs it as plain text to make it easier to read. This command would not be necessary when using the endpoint programmatically.

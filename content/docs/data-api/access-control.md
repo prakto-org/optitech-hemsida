@@ -11,7 +11,7 @@ summary: >-
   configure GRANT statements, enable RLS, and write per-row policies with
   `auth.user_id()`, which extracts the `sub` claim from the request JWT.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="OptiTech Data API" />
@@ -53,9 +53,9 @@ Anonymous access still uses a JWT, but no user sign-in is required. How you obta
 **With Managed Better Auth:** Set `allowAnonymous: true` in the client config. The SDK fetches a short-lived anonymous token (`GET /token/anonymous`) on the first request, caches it, and sends it as `Authorization: Bearer <jwt>` on every query.
 
 ```js
-import { createClient } from '@neondatabase/neon-js';
+import { createClient } from '@optitech/optitech-js';
 
-const client = createClient(import.meta.env.VITE_NEON_DATABASE_URL, {
+const client = createClient(import.meta.env.VITE_OPTITECH_DATABASE_URL, {
   auth: {
     allowAnonymous: true,
   },
@@ -66,7 +66,7 @@ const { data, error } = await client.from('public_items').select('*');
 ```
 
 <Admonition type="warning" title="Not yet on npm">
-The single-URL form shown above, `createClient(url)`, requires a version of `@neondatabase/neon-js` that has not been published to npm as of this writing. The latest published version, `0.6.2-beta`, only accepts the two-URL object form. If `npm install @neondatabase/neon-js` installs `0.6.2-beta` or earlier for you, use the [object-form alternative](/docs/reference/javascript-sdk#initializing) in the JavaScript SDK reference instead.
+The single-URL form shown above, `createClient(url)`, requires a version of `@optitech/optitech-js` that has not been published to npm as of this writing. The latest published version, `0.6.2-beta`, only accepts the two-URL object form. If `npm install @optitech/optitech-js` installs `0.6.2-beta` or earlier for you, use the [object-form alternative](/docs/reference/javascript-sdk#initializing) in the JavaScript SDK reference instead.
 </Admonition>
 
 **With a third-party provider:** Check whether your provider supports issuing anonymous or guest tokens. If it does, obtain the token using your provider's method and include it in the `Authorization: Bearer <token>` header on each request.

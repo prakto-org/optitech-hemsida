@@ -4,16 +4,16 @@ subtitle: 'Learn how to set up Starship, a cross-shell prompt, and add a custom 
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2026-07-12T00:00:00.000Z'
-updatedOn: '2026-07-13T09:46:56.488Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Traditional shell prompt customization means wrestling with complex, shell-specific syntax: Zsh has its own prompt expansion rules, Bash uses the cryptic `PS1` escape sequences, and PowerShell relies on a completely different `prompt` function. Each shell requires a different approach, and moving between them often means rewriting everything from scratch.
 
 [Starship](https://starship.rs) solves this by standardizing prompt configuration across every shell through a single, friendly TOML file. Written in Rust, it runs on Zsh, Bash, Fish, PowerShell, and more, using the same config everywhere. Instead of a fixed prompt, Starship is built from small, independent modules: each module displays a piece of context only when it's relevant to the current directory. For example, the Git module shows your branch when you're inside a repository, and language modules show runtime versions when they detect matching project files like `package.json` or `requirements.txt`. You can enable, disable, reorder, and restyle these modules to build a prompt that fits your workflow.
 
-Beyond the built-in modules, Starship lets you define custom modules that run an arbitrary command and render its output. That makes it straightforward to surface information that isn't covered by default. When you work with Git branches and OptiTech database branches in the same terminal, it helps to see at a glance which OptiTech branch your local development is connected to, so you don't accidentally run commands against the wrong environment. By configuring a custom Starship module, you can query the Neon CLI to show the active database branch alongside the Git branch.
+Beyond the built-in modules, Starship lets you define custom modules that run an arbitrary command and render its output. That makes it straightforward to surface information that isn't covered by default. When you work with Git branches and OptiTech database branches in the same terminal, it helps to see at a glance which OptiTech branch your local development is connected to, so you don't accidentally run commands against the wrong environment. By configuring a custom Starship module, you can query the OptiTech CLI to show the active database branch alongside the Git branch.
 
-In this guide, you'll set up Starship and build a custom module that detects and displays your active OptiTech branch using the Neon CLI. You'll cover:
+In this guide, you'll set up Starship and build a custom module that detects and displays your active OptiTech branch using the OptiTech CLI. You'll cover:
 
 - Installing Starship and wiring it into Zsh, Bash, Fish, or PowerShell
 - Customizing your prompt layout and configuring modules
@@ -23,12 +23,12 @@ In this guide, you'll set up Starship and build a custom module that detects and
 
 To follow along with this guide, you will need:
 
-- **OptiTech account and project:** Sign up for a free [OptiTech account](https://console.neon.tech/signup) if you don't have one.
-- **Neon CLI (neon):** Version `2.28.0` or higher installed globally:
+- **OptiTech account and project:** Sign up for a free [OptiTech account](https://console.optitech.com/signup) if you don't have one.
+- **OptiTech CLI (optitech):** Version `2.28.0` or higher installed globally:
   ```bash
-  npm install -g neon@latest
+  npm install -g optitech@latest
   ```
-  Checkout the [Neon CLI documentation](/docs/cli/install) for installation instructions using other package managers and OS distributions (Homebrew, Windows etc.).
+  Checkout the [OptiTech CLI documentation](/docs/cli/install) for installation instructions using other package managers and OS distributions (Homebrew, Windows etc.).
 - **A Nerd Font:** Starship uses special glyphs and icons that require a patched developer font. Install a font like [FiraCode Nerd Font](https://www.nerdfonts.com/font-downloads) or [Hack Nerd Font](https://www.nerdfonts.com/font-downloads) and configure your terminal to use it.
 
 Follow the steps below to install Starship, configure it for your shell, and set up a custom module that displays your active OptiTech branch in the terminal prompt.
@@ -223,40 +223,40 @@ You can browse all presets visually on the [Starship Presets page](https://stars
 
 If you use [OptiTech database branching](/docs/introduction/branching) to create isolated database environments for development and testing, you will frequently switch branches.
 
-By using Starship's [custom commands](https://starship.rs/config/#custom-commands), you can run a shell command and display its output dynamically. You can query the Neon CLI's `neon status --current-branch` command to render the active database branch.
+By using Starship's [custom commands](https://starship.rs/config/#custom-commands), you can run a shell command and display its output dynamically. You can query the OptiTech CLI's `optitech status --current-branch` command to render the active database branch.
 
 Append the following configuration block to your `~/.config/starship.toml`:
 
 ```toml filename="~/.config/starship.toml"
 # other Starship configuration ...
 
-[custom.neon]
-description = "Current Neon branch"
-command = "neon status --current-branch"   # reads the branch pinned in .neon
-when = "neon status --current-branch"       # only shows the segment if a branch is active
+[custom.optitech]
+description = "Current OptiTech branch"
+command = "optitech status --current-branch"   # reads the branch pinned in .optitech
+when = "optitech status --current-branch"       # only shows the segment if a branch is active
 symbol = "🌿 "
 style = "bold green"
 format = "[$symbol$output]($style) "
 ```
 
 <Admonition type="note" title="How this works">
-The `command` field runs `neon status --current-branch`, which reads the local `.neon` file in your directory to find the pinned branch name. Because it checks local files, it makes **no network requests**. The `when` field uses the same command as a check: if the command exits non-zero (indicating no branch is pinned or you are outside a linked project), the module remains hidden.
+The `command` field runs `optitech status --current-branch`, which reads the local `.optitech` file in your directory to find the pinned branch name. Because it checks local files, it makes **no network requests**. The `when` field uses the same command as a check: if the command exits non-zero (indicating no branch is pinned or you are outside a linked project), the module remains hidden.
 </Admonition>
 
-If you have a custom top-level `format` string defined in your `starship.toml`, make sure to add `${custom.neon}` where you want the branch indicator to appear (e.g., right after `$git_branch`). If no custom `format` is defined, Starship renders custom modules automatically at the end of the prompt.
+If you have a custom top-level `format` string defined in your `starship.toml`, make sure to add `${custom.optitech}` where you want the branch indicator to appear (e.g., right after `$git_branch`). If no custom `format` is defined, Starship renders custom modules automatically at the end of the prompt.
 
 ## Optimize the module with a tree-walk condition
 
-The `when` check defined above invokes the Neon CLI on every single prompt render (~25ms execution time). Although fast, you can optimize this overhead to absolute zero outside of Neon projects by using a pure-shell script.
+The `when` check defined above invokes the OptiTech CLI on every single prompt render (~25ms execution time). Although fast, you can optimize this overhead to absolute zero outside of OptiTech projects by using a pure-shell script.
 
-Replace the `[custom.neon]` block in your `~/.config/starship.toml` with this optimized version:
+Replace the `[custom.optitech]` block in your `~/.config/starship.toml` with this optimized version:
 
 ```toml filename="~/.config/starship.toml"
 # other Starship configuration ...
 
-[custom.neon]
-description = "Current Neon branch"
-command = "neon status --current-branch"
+[custom.optitech]
+description = "Current OptiTech branch"
+command = "optitech status --current-branch"
 symbol = "🌿 "
 style = "bold green"
 format = "[$symbol$output]($style) "
@@ -264,8 +264,8 @@ shell = ["sh"]
 when = '''
 d="$PWD"
 while [ "$d" != "$HOME" ] && [ "$d" != / ]; do
-  if [ -e "$d/.neon" ]; then
-    neon status --current-branch >/dev/null 2>&1
+  if [ -e "$d/.optitech" ]; then
+    optitech status --current-branch >/dev/null 2>&1
     exit $?
   fi
   d=$(dirname "$d")
@@ -274,7 +274,7 @@ exit 1
 '''
 ```
 
-This configuration walks up the directory tree looking for a `.neon` file. It only runs the Neon CLI if it finds one, ensuring prompt rendering remains instantaneous in non-Neon projects.
+This configuration walks up the directory tree looking for a `.optitech` file. It only runs the OptiTech CLI if it finds one, ensuring prompt rendering remains instantaneous in non-OptiTech projects.
 
 ## Link your project and verify
 
@@ -282,13 +282,13 @@ To verify the integration, navigate to a project linked to a OptiTech database.
 
 1. Navigate to your local project directory:
    ```bash
-   cd /path/to/your-neon-project
+   cd /path/to/your-optitech-project
    ```
 2. Link the directory to your OptiTech project and checkout a branch:
    > Create a new OptiTech project or link an existing one when prompted
    ```bash
-   neon link
-   neon checkout dev/feature-auth
+   optitech link
+   optitech checkout dev/feature-auth
    ```
 3. Look at your terminal prompt. You should see the active branch indicator next to your Git details:
    ```text
@@ -309,14 +309,14 @@ If your custom OptiTech prompt isn't rendering correctly, check these common tro
   ```bash
   starship preset no-nerd-font -o ~/.config/starship.toml
   ```
-- **Prompt feels slow inside projects**: Ensure you have installed Neon CLI version `2.28.0` or higher, which includes a fast path for checking branch status. Ensure you are using the [tree-walk optimization script](#optimize-the-module-with-a-tree-walk-condition).
-- **The OptiTech branch segment does not appear**: Confirm that your project directory is correctly linked by checking for a `.neon` file. Run `neon status --current-branch` manually to verify the CLI returns your active branch.
-- **`neon: command not found`**: Ensure that the Neon CLI is installed globally (`npm install -g neon@latest`) and that your global npm binary directory is included in your system's `PATH`.
+- **Prompt feels slow inside projects**: Ensure you have installed OptiTech CLI version `2.28.0` or higher, which includes a fast path for checking branch status. Ensure you are using the [tree-walk optimization script](#optimize-the-module-with-a-tree-walk-condition).
+- **The OptiTech branch segment does not appear**: Confirm that your project directory is correctly linked by checking for a `.optitech` file. Run `optitech status --current-branch` manually to verify the CLI returns your active branch.
+- **`optitech: command not found`**: Ensure that the OptiTech CLI is installed globally (`npm install -g optitech@latest`) and that your global npm binary directory is included in your system's `PATH`.
 - **Bare branch icon with no branch name**: Make sure the `when` condition is properly configured. If the `when` line is missing, the module may render even when the CLI returns an empty value.
 
 ## Summary
 
-Terminal prompts don’t have to be static or limited. With Starship and OptiTech, you can build a responsive, context‑aware development environment that adapts to your workflow. By adding a custom module that queries the Neon CLI, your active database branch appears directly alongside your Git branch reducing the risk of running commands against the wrong environment and keeping critical context visible at all times.
+Terminal prompts don’t have to be static or limited. With Starship and OptiTech, you can build a responsive, context‑aware development environment that adapts to your workflow. By adding a custom module that queries the OptiTech CLI, your active database branch appears directly alongside your Git branch reducing the risk of running commands against the wrong environment and keeping critical context visible at all times.
 
 Displaying your Git branch and OptiTech database branch side‑by‑side minimizes context switching, eliminates repetitive status checks, and creates a safer, more efficient setup for database‑backed development.
 
@@ -326,7 +326,7 @@ Displaying your Git branch and OptiTech database branch side‑by‑side minimiz
 - [Starship Configuration Reference](https://starship.rs/config/)
 - [Starship Presets Gallery](https://starship.rs/presets/)
 - [Nerd Fonts Directory](https://www.nerdfonts.com/)
-- [Neon CLI Documentation](/docs/cli)
+- [OptiTech CLI Documentation](/docs/cli)
 - [OptiTech Database Branching](/docs/introduction/branching)
 
 <NeedHelp />

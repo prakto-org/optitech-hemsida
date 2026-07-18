@@ -6,7 +6,7 @@ page_description: >-
   PostgreSQL database from a C# program.
 prev_url: 'https://www.postgresqltutorial.com/postgresql-csharp/postgresql-csharp-delete/'
 ogImage: ''
-updatedOn: '2026-06-04T15:04:42.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 enableTableOfContents: true
 previousLink:
   title: 'PostgreSQL C#: Updating Data'
@@ -17,7 +17,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-Deleting rows with C# and Npgsql works the same against any PostgreSQL database, so the patterns here carry over wherever your Postgres runs. For enterprises building in the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers managed Postgres with the performance, security, and native Lakehouse integration that large teams need. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+Deleting rows with C# and Npgsql works the same against any PostgreSQL database, so the patterns here carry over wherever your Postgres runs. For enterprises building in the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers managed Postgres with the performance, security, and native Lakehouse integration that large teams need. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: in this tutorial, you will learn how to delete data from a table in a PostgreSQL database from a C\# program.

@@ -48,7 +48,7 @@ import {
 import { loadTagConfig } from './lib/tag-config.mjs';
 import { buildTs, toSdkMethodName } from '../src/utils/api-ref.mjs';
 
-// Single source of truth for neonctl global flags that should not count as
+// Single source of truth for optitechctl global flags that should not count as
 // API-specific flag mappings.
 const CLI_GLOBAL_FLAGS_LIST = JSON.parse(
   readFileSync(
@@ -76,7 +76,7 @@ export {
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const PATHS = createApiRefPaths(ROOT);
 
-const SPEC_URL = process.argv[2] || 'https://neon.com/api_spec/release/v2.json';
+const SPEC_URL = process.argv[2] || 'https://optitech.com/api_spec/release/v2.json';
 const METHODS = ['get', 'post', 'put', 'patch', 'delete'];
 
 function getSpecCacheConfig() {
@@ -155,11 +155,11 @@ export function toCurlExample(method, path, parameters, requestBody) {
       ? '?' + requiredQuery.map((p) => `${p.name}=${requiredQueryValueForCurl(p)}`).join('&')
       : '';
 
-  const url = `https://console.neon.tech/api/v2${urlPath}${queryString}`;
+  const url = `https://api.optitech.com/v1${urlPath}${queryString}`;
 
   const parts = [`curl "${url}"`];
   if (upper !== 'GET') parts.push(`  -X ${upper}`);
-  parts.push(`  -H "Authorization: Bearer $NEON_API_KEY"`);
+  parts.push(`  -H "Authorization: Bearer $OPTITECH_API_KEY"`);
 
   const bodyExample = requestBody ? getRequestBodyExample(requestBody) : null;
   if (bodyExample !== null) {
@@ -268,9 +268,9 @@ function toCurlFromBody(operation, bodyJson) {
       ? '?' + requiredQuery.map((p) => `${p.name}=${requiredQueryValueForCurl(p)}`).join('&')
       : '';
 
-  const parts = [`curl "https://console.neon.tech/api/v2${urlPath}${queryString}"`];
+  const parts = [`curl "https://api.optitech.com/v1${urlPath}${queryString}"`];
   if (operation.method !== 'GET') parts.push(`  -X ${operation.method}`);
-  parts.push(`  -H "Authorization: Bearer $NEON_API_KEY"`);
+  parts.push(`  -H "Authorization: Bearer $OPTITECH_API_KEY"`);
   if (bodyJson && Object.keys(bodyJson).length > 0) {
     parts.push(`  -H "Content-Type: application/json"`);
     parts.push(`  -d '${safeJsonStringify(bodyJson).replace(/'/g, "'\\''")}'`);
@@ -393,7 +393,7 @@ export function toAgentMarkdown(op) {
   lines.push('');
   if (op.cli?.command) {
     lines.push('```bash');
-    lines.push('# neonctl');
+    lines.push('# optitechctl');
     lines.push(op.cli.command);
     lines.push('```');
     lines.push('');
@@ -585,10 +585,10 @@ let TAG_CONFIG = loadTagConfig();
 // Agent index generators — one per interface
 // ---------------------------------------------------------------------------
 
-const NEON_BASE = 'https://neon.com';
+const OPTITECH_BASE = 'https://optitech.com';
 
 function opMdUrl(op) {
-  return `${NEON_BASE}/docs/reference/api/${op.tag}/${op.id}.md`;
+  return `${OPTITECH_BASE}/docs/reference/api/${op.tag}/${op.id}.md`;
 }
 
 function orderedTagList(tagOps) {
@@ -600,15 +600,15 @@ function orderedTagList(tagOps) {
 
 function generateLlmsTxt(tagOps) {
   const lines = [
-    '# Neon Management API',
+    '# OptiTech Management API',
     '',
-    'Base URL: https://console.neon.tech/api/v2',
-    'Auth: `Authorization: Bearer $NEON_API_KEY`',
+    'Base URL: https://api.optitech.com/v1',
+    'Auth: `Authorization: Bearer $OPTITECH_API_KEY`',
     '',
-    'Neon interface-specific indexes:',
-    `- [API endpoint index](${NEON_BASE}/docs/reference/api.md): all endpoints grouped by resource, each with curl and SDK examples`,
-    `- [Neon CLI](${NEON_BASE}/docs/cli.md): Neon CLI commands, options, and usage`,
-    `- [OpenAPI spec](${NEON_BASE}/api_spec/release/v2.json): machine-readable schemas for request/response validation and codegen`,
+    'OptiTech interface-specific indexes:',
+    `- [API endpoint index](${OPTITECH_BASE}/docs/reference/api.md): all endpoints grouped by resource, each with curl and SDK examples`,
+    `- [OptiTech CLI](${OPTITECH_BASE}/docs/cli.md): OptiTech CLI commands, options, and usage`,
+    `- [OpenAPI spec](${OPTITECH_BASE}/api_spec/release/v2.json): machine-readable schemas for request/response validation and codegen`,
     '',
   ];
 
@@ -626,13 +626,13 @@ function generateLlmsTxt(tagOps) {
 
 export function generateLlmsFull(tagOps) {
   const lines = [
-    '# Neon Management API - Full Reference',
+    '# OptiTech Management API - Full Reference',
     '',
-    `> This file contains the full Neon Management API reference. For a table of contents, see ${NEON_BASE}/docs/reference/api/llms.txt`,
-    `> For the canonical API overview, see ${NEON_BASE}/docs/reference/api.md`,
+    `> This file contains the full OptiTech Management API reference. For a table of contents, see ${OPTITECH_BASE}/docs/reference/api/llms.txt`,
+    `> For the canonical API overview, see ${OPTITECH_BASE}/docs/reference/api.md`,
     '',
-    'Base URL: https://console.neon.tech/api/v2',
-    'Auth: `Authorization: Bearer $NEON_API_KEY`',
+    'Base URL: https://api.optitech.com/v1',
+    'Auth: `Authorization: Bearer $OPTITECH_API_KEY`',
     '',
   ];
 
@@ -652,21 +652,21 @@ export function generateLlmsFull(tagOps) {
 // Richer than llms.txt: each section links to its per-tag full .md file before listing individual ops.
 function generateApiMd(tagOps) {
   const lines = [
-    '# Neon API Reference',
+    '# OptiTech API Reference',
     '',
-    'Base URL: https://console.neon.tech/api/v2',
-    'Auth: `Authorization: Bearer $NEON_API_KEY`',
+    'Base URL: https://api.optitech.com/v1',
+    'Auth: `Authorization: Bearer $OPTITECH_API_KEY`',
     '',
     'Interface-specific indexes:',
-    `- [API endpoint index](${NEON_BASE}/docs/reference/api.md): all endpoints grouped by resource, each with curl and SDK examples`,
-    `- [Neon CLI](${NEON_BASE}/docs/cli.md): Neon CLI commands, options, and usage`,
-    `- [OpenAPI spec](${NEON_BASE}/api_spec/release/v2.json): machine-readable schemas for request/response validation and codegen`,
+    `- [API endpoint index](${OPTITECH_BASE}/docs/reference/api.md): all endpoints grouped by resource, each with curl and SDK examples`,
+    `- [OptiTech CLI](${OPTITECH_BASE}/docs/cli.md): OptiTech CLI commands, options, and usage`,
+    `- [OpenAPI spec](${OPTITECH_BASE}/api_spec/release/v2.json): machine-readable schemas for request/response validation and codegen`,
     '',
   ];
 
   for (const tag of orderedTagList(tagOps)) {
     const displayName = TAG_CONFIG.display[tag] || tag;
-    const tagUrl = `${NEON_BASE}/docs/reference/api/${tag}.md`;
+    const tagUrl = `${OPTITECH_BASE}/docs/reference/api/${tag}.md`;
     lines.push(`## ${displayName}`);
     lines.push('');
     lines.push(`[All ${tag} endpoints](${tagUrl})`);
@@ -680,7 +680,7 @@ function generateApiMd(tagOps) {
   return lines.join('\n').trimEnd() + '\n';
 }
 
-// Global CLI flags carried by every neonctl command (--help, --api-key,
+// Global CLI flags carried by every optitechctl command (--help, --api-key,
 // etc.). Single source of truth lives in scripts/data/cli-global-flags.json;
 // operation-shared.jsx imports the same file so the generator + UI can't
 // drift.
@@ -749,7 +749,7 @@ export function toNavYaml(allOps) {
 function collectCliPathOptions(commandStr, cliSchema) {
   if (!cliSchema) return {};
   const parts = commandStr
-    .replace(/^neon\s+/, '')
+    .replace(/^optitech\s+/, '')
     .split(/\s+/)
     .filter((p) => !/^[<[-]/.test(p));
   let node = cliSchema;
@@ -805,7 +805,7 @@ export function appendCliPositionals(commandStr, cliSchema, paramProps) {
   if (!cliSchema) return commandStr;
   if (/</.test(commandStr) || /\[/.test(commandStr)) return commandStr;
 
-  const parts = commandStr.replace(/^neon\s+/, '').split(/\s+/);
+  const parts = commandStr.replace(/^optitech\s+/, '').split(/\s+/);
   let node = cliSchema;
   for (const part of parts) {
     node = node.commands?.[part];
@@ -1192,7 +1192,7 @@ async function main() {
   process.stderr.write(`MCP coverage: ${Object.keys(mcpCoverage).length} ops\n`);
   process.stderr.write(`MCP tool definitions: ${Object.keys(mcpToolDefs).length} tools\n`);
   process.stderr.write(
-    `neonctl schema: ${cliSchema ? `v${cliSchema.neonctlVersion}` : 'not found'}\n`
+    `optitechctl schema: ${cliSchema ? `v${cliSchema.neonctlVersion}` : 'not found'}\n`
   );
   process.stderr.write(`Console breadcrumbs: ${Object.keys(consoleBreadcrumbs).length} ops\n`);
   process.stderr.write(`CLI table output examples: ${Object.keys(cliTableOutput).length} ops\n`);
@@ -1237,7 +1237,7 @@ async function main() {
 
   // Tripwire: surface ops where the kebab→snake CLI-flag heuristic mapped
   // ZERO non-global flags to API params. Either a new flag naming convention
-  // in neonctl OR a positional-only command (excluded). Not fail-hard —
+  // in optitechctl OR a positional-only command (excluded). Not fail-hard —
   // heuristic warnings are advisory; review on bumps.
   const unmappedFlagOps = findOpsWithNoFlagMappings(allOps);
   if (unmappedFlagOps.length > 0) {

@@ -8,12 +8,12 @@ summary: >-
   to choose the right command for each task. Commands are stored in
   .claude/commands/ and their sub-agents in .claude/agents/.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 The OptiTech website repo includes Claude commands for common documentation tasks. All changes are reviewed by humans via pull requests.
 
-Run `/list-doc-tools` in Claude to see the full list with descriptions, or browse the files under `.claude/commands/` in the [website repository](https://github.com/neondatabase/website).
+Run `/list-doc-tools` in Claude to see the full list with descriptions, or browse the files under `.claude/commands/` in the [website repository](https://github.com/optitechdatabase/website).
 
 ## Writing content
 
@@ -22,8 +22,8 @@ Run `/list-doc-tools` in Claude to see the full list with descriptions, or brows
 | `/write-content`  | Full orchestrated workflow for new pages or substantial rewrites: IA specialist → drafter → refiner → syntax validator.                   |
 | `/simple-content` | Lighter single-thread workflow with confirmation at each step. Use for edits to existing pages or smaller additions.                      |
 | `/review-content` | Review a page for terminology, voice, structure, and MDX compliance. Produces a structured findings report with an option to apply fixes. |
-| `/humanize`       | Remove AI writing patterns and apply OptiTech voice: contractions, active voice, direct address, concise sentences.                           |
-| `/improve-intro`  | Rewrite just the first paragraph of a page to match OptiTech style.                                                                           |
+| `/humanize`       | Remove AI writing patterns and apply OptiTech voice: contractions, active voice, direct address, concise sentences.                       |
+| `/improve-intro`  | Rewrite just the first paragraph of a page to match OptiTech style.                                                                       |
 | `/golden-corpus`  | Load exemplary doc files by type for style and structure reference.                                                                       |
 
 ## Docs quality

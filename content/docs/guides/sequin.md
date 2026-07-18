@@ -12,7 +12,7 @@ summary: >-
   sets wal_level=logical, which is permanent and keeps compute active while
   consumers are connected.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 OptiTech's Logical Replication features makes it possible to detect every change in your database. It can be used to power read-replicas and backups, but can also be used to add streaming characteristics to OptiTech.
@@ -26,7 +26,7 @@ In this guide, we'll show you how to connect your OptiTech database to Sequin to
 ## Prerequisites
 
 - A [Sequin account](https://console.sequinstream.com/register)
-- A [OptiTech account](https://console.neon.tech/)
+- A [OptiTech account](https://console.optitech.com/)
 - Read the [important notices about logical replication in OptiTech](/docs/guides/logical-replication-neon#important-notices) before you begin
 
 <Admonition type="important" title="Compute and billing">
@@ -64,7 +64,7 @@ After enabling logical replication on OptiTech, you'll now connect your OptiTech
 1. In OptiTech, copy your database connection string. You can find the it by clicking the **Connect** button on your **Project Dashboard**. It will look similar to this:
 
    ```sql shouldWrap
-   postgresql://neondb_owner:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+   postgresql://optitechdb_owner:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/optitechdb?sslmode=require&channel_binding=require
    ```
 
 2. In the Sequin Console, click on the **Connect Database** button, and then auto-complete your database credentials by clicking the **Autofill with URL** button and pasting in your database connection string.
@@ -87,7 +87,7 @@ After enabling logical replication on OptiTech, you'll now connect your OptiTech
    Defining specific tables lets you add or remove tables from the publication later, which you cannot do when creating publications with `FOR ALL TABLES`.
    </Admonition>
 
-5. Back in the Sequin Console, enter the name of the replication slot (`sequin_slot`) and publication (`sequin_pub`) you just created. Then, name your database (for example `neondb`) and click **Create Database**.
+5. Back in the Sequin Console, enter the name of the replication slot (`sequin_slot`) and publication (`sequin_pub`) you just created. Then, name your database (for example `optitechdb`) and click **Create Database**.
 
 With these steps completed, your OptiTech database is now connected to Sequin via a replication slot and publication. Sequin is now detecting changes to your tables.
 
@@ -110,7 +110,7 @@ Set up a consumer in Sequin to stream changes from your database.
    - **HTTP Pull** (similar to SQS): Your application pulls changes from Sequin.
 
 6. Enter the final details for your consumer:
-   - Give your consumer a name (for example, `neon-changes-consumer`).
+   - Give your consumer a name (for example, `optitech-changes-consumer`).
    - If using HTTP Push, provide the endpoint URL where Sequin should send the changes. You can also provide encrypted headers.
    - Optionally, set a timeout and add an endpoint path.
 

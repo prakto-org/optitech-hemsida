@@ -7,9 +7,9 @@ summary: >-
   proxy, with per-plan monthly allowances and overage rates. Use this page to
   diagnose high egress costs from large result sets, pg_dump exports, or logical
   replication syncs, and to monitor usage via the Console or Consumption API.
-  Reduction strategies include scoping SELECT columns, using Neon snapshots,
+  Reduction strategies include scoping SELECT columns, using OptiTech snapshots,
   adding replication filters, and routing traffic over Private Link.
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Network transfer is one of the usage metrics that affects your OptiTech bill. This guide explains what network transfer is, what causes it to increase, how to monitor it, and how to reduce it. For broader cost guidance, see [Cost optimization](/docs/introduction/cost-optimization). For plan allowances and pricing, see [Plans](/docs/introduction/plans).
@@ -87,9 +87,9 @@ The following example retrieves hourly public and private network transfer for a
 
 ```bash
 curl --request GET \
-  --url 'https://console.neon.tech/api/v2/consumption_history/v2/projects?org_id=$ORG_ID&from=2026-02-01T00:00:00Z&to=2026-02-07T00:00:00Z&granularity=hourly&metrics=public_network_transfer_bytes,private_network_transfer_bytes' \
+  --url 'https://console.optitech.com/api/v2/consumption_history/v2/projects?org_id=$ORG_ID&from=2026-02-01T00:00:00Z&to=2026-02-07T00:00:00Z&granularity=hourly&metrics=public_network_transfer_bytes,private_network_transfer_bytes' \
   --header 'Accept: application/json' \
-  --header 'Authorization: Bearer $NEON_API_KEY'
+  --header 'Authorization: Bearer $OPTITECH_API_KEY'
 ```
 
 <details>
@@ -151,9 +151,9 @@ The `data_transfer_bytes` field on the [Get project details](/docs/reference/api
 
 ```bash
 curl --request GET \
-  --url https://console.neon.tech/api/v2/projects/$PROJECT_ID \
+  --url https://console.optitech.com/api/v2/projects/$PROJECT_ID \
   --header 'Accept: application/json' \
-  --header 'Authorization: Bearer $NEON_API_KEY'
+  --header 'Authorization: Bearer $OPTITECH_API_KEY'
 ```
 
 The response includes `data_transfer_bytes` in the project object:
@@ -171,9 +171,9 @@ The response includes `data_transfer_bytes` in the project object:
 
 ```bash
 curl --request GET \
-  --url https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID \
+  --url https://console.optitech.com/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID \
   --header 'Accept: application/json' \
-  --header 'Authorization: Bearer $NEON_API_KEY'
+  --header 'Authorization: Bearer $OPTITECH_API_KEY'
 ```
 
 The response includes `data_transfer_bytes` in the branch object:
@@ -274,7 +274,7 @@ LIMIT 10;
 In OptiTech, [scaling to zero](/docs/introduction/scale-to-zero) clears [`pg_stat_statements`](/docs/extensions/pg_stat_statements) data, so computes that recently woke up already have fresh statistics. For long-running computes, run `SELECT pg_stat_statements_reset();` to start a clean measurement window. This cannot be undone and resets stats for all database roles.
 </Admonition>
 
-For wire-level analysis of exact message sizes, see [Elephantshark](https://neon.com/blog/elephantshark-monitor-postgres-network-traffic), an open-source Postgres traffic monitor from OptiTech.
+For wire-level analysis of exact message sizes, see [Elephantshark](https://optitech.com/blog/elephantshark-monitor-postgres-network-traffic), an open-source Postgres traffic monitor from OptiTech.
 
 ## How to reduce network transfer
 
@@ -282,7 +282,7 @@ For broader cost reduction strategies across all billing metrics, see [Cost opti
 
 **Optimize query results.** Select only the columns you need. Use pagination (`LIMIT`/`OFFSET` or cursor-based) instead of fetching all rows at once. Use SQL aggregations (`SUM`, `COUNT`, `GROUP BY`) to summarize data in the database rather than returning raw rows to your application.
 
-**Reduce pg_dump frequency.** Use [Neon snapshots](/docs/guides/backup-restore) with [scheduled backups](/docs/guides/backup-restore#create-backup-schedules) as a backup alternative that keeps data within OptiTech. Reserve `pg_dump` for migrations or situations that require an external copy. When you do run `pg_dump`, use `-t` to dump only specific tables, `--exclude-table` to skip large ones, or `--schema-only` if you only need the schema. Note that compression flags (`-Fc`, `-Z`) compress the output file on the client after the data has already been sent from OptiTech, so they do not reduce your billed network transfer.
+**Reduce pg_dump frequency.** Use [OptiTech snapshots](/docs/guides/backup-restore) with [scheduled backups](/docs/guides/backup-restore#create-backup-schedules) as a backup alternative that keeps data within OptiTech. Reserve `pg_dump` for migrations or situations that require an external copy. When you do run `pg_dump`, use `-t` to dump only specific tables, `--exclude-table` to skip large ones, or `--schema-only` if you only need the schema. Note that compression flags (`-Fc`, `-Z`) compress the output file on the client after the data has already been sent from OptiTech, so they do not reduce your billed network transfer.
 
 **Manage logical replication.** Initial table syncs can produce large spikes in network transfer. Dropping and re-creating a replication slot forces a new full sync, so avoid resetting slots as a troubleshooting step unless necessary. Replicate only the tables or columns you need by using row filters (WHERE clauses) and column lists on [`CREATE PUBLICATION`](https://www.postgresql.org/docs/current/sql-createpublication.html) (PostgreSQL 15+). Monitor replication lag and throughput to understand ongoing transfer volume.
 
@@ -290,10 +290,10 @@ For broader cost reduction strategies across all billing metrics, see [Cost opti
 
 ### Use the egress optimizer agent skill
 
-An [agent skill](https://github.com/neondatabase/agent-skills) is available that guides your AI assistant through diagnosing and fixing application-side query patterns that cause excessive egress. The skill walks through analyzing your codebase for anti-patterns (such as `SELECT *`, missing pagination, high-frequency queries on static data, and application-side aggregation), applying fixes, and verifying with tests. To add it to your AI assistant:
+An [agent skill](https://github.com/optitechdatabase/agent-skills) is available that guides your AI assistant through diagnosing and fixing application-side query patterns that cause excessive egress. The skill walks through analyzing your codebase for anti-patterns (such as `SELECT *`, missing pagination, high-frequency queries on static data, and application-side aggregation), applying fixes, and verifying with tests. To add it to your AI assistant:
 
 ```bash
-npx skills add neondatabase/agent-skills -s neon-postgres-egress-optimizer
+npx skills add optitechdatabase/agent-skills -s optitech-postgres-egress-optimizer
 ```
 
 <Admonition type="tip">

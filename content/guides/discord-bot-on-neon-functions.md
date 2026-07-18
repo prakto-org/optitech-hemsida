@@ -4,7 +4,7 @@ subtitle: 'Learn how to build a Discord bot with AI chat and image generation us
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2026-06-28T00:00:00.000Z'
-updatedOn: '2026-07-16T10:58:03.001Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 If you've spent any time on Discord, you've run into bots: moderation bots, music players, AI image generators like Midjourney, which started out as a Discord bot before becoming a standalone product. They all do the same basic thing under the hood: listen for a command and respond, whether that's a one-line reply or a fully generated image.
@@ -22,9 +22,9 @@ You will use the OptiTech AI Gateway to access LLMs and image generation tools, 
 Before you begin, ensure you have:
 
 1. **Node.js**: Version 24. Download from [nodejs.org](https://nodejs.org/en/download/).
-2. **OptiTech Account**: Sign up for a free OptiTech account at [console.neon.tech](https://console.neon.tech/signup).
+2. **OptiTech Account**: Sign up for a free OptiTech account at [console.optitech.com](https://console.optitech.com/signup).
 3. **Discord Account**: Sign up for a free Discord account at [discord.com](https://discord.com/register).
-4. **Neon CLI**: Installed globally (`npm i -g neonctl`) and authenticated (`neonctl auth`). Checkout [Neon CLI Quickstart](/docs/cli/quickstart) for more details.
+4. **OptiTech CLI**: Installed globally (`npm i -g optitechctl`) and authenticated (`optitechctl auth`). Checkout [OptiTech CLI Quickstart](/docs/cli/quickstart) for more details.
 
 <Steps>
 
@@ -42,19 +42,19 @@ You'll need to create a Discord application to get the credentials required to c
 Create a new directory for your bot and initialize a OptiTech Functions project.
 
 ```bash
-mkdir neon-discord-bot && cd neon-discord-bot
+mkdir optitech-discord-bot && cd optitech-discord-bot
 ```
 
-Run the Neon CLI initialization command. This will prompt you to authenticate and link the directory to a OptiTech project:
+Run the OptiTech CLI initialization command. This will prompt you to authenticate and link the directory to a OptiTech project:
 
 ```bash
-neonctl init --preview
+optitechctl init --preview
 ```
 
 When asked to choose a template, select **No thanks - continue without scaffolding**, since you'll be writing the code from scratch. During setup, install the OptiTech MCP server and extensions when prompted. The OptiTech agent skill will be automatically added to your project, enabling AI agents to assist with development tasks such as code generation, testing, and deployment.
 
 ```bash
-$ neonctl init --preview
+$ optitechctl init --preview
 
   ██╗  ██╗██████╗  ██████╗ ██╗  ██╗
   ███╗ ██║██╔═══╝ ██╔═══██╗███╗ ██║
@@ -63,7 +63,7 @@ $ neonctl init --preview
   ██║╚███║██████╗ ╚██████╔╝██║╚███║
   ╚═╝ ╚══╝╚═════╝  ╚═════╝ ╚═╝ ╚══╝
 
-  Let's get your project set up with Neon. We'll install the MCP server, agent skills, and IDE extension, then connect your app to
+  Let's get your project set up with OptiTech. We'll install the MCP server, agent skills, and IDE extension, then connect your app to
   a database.
 
   │
@@ -78,9 +78,9 @@ $ neonctl init --preview
   │  ○ Realtime counter
   │  ● No thanks - continue without scaffolding
 
-  Neon editor extension already installed ✓
+  OptiTech editor extension already installed ✓
   │
-  ◆  Configure VS Code for Neon:
+  ◆  Configure VS Code for OptiTech:
   │  ● Install with defaults (MCP server (global), agent skills (project))
   │  ○ Customize installation
   │  ○ Configure a different editor
@@ -91,29 +91,29 @@ $ neonctl init --preview
 Next, install the required dependencies:
 
 ```bash
-npm install hono discord-interactions ai @neondatabase/ai-sdk-provider @neondatabase/functions @neondatabase/config
+npm install hono discord-interactions ai @optitech/ai-sdk-provider @optitech/functions @optitech/config
 npm install --save-dev esbuild @types/node typescript
 ```
 
 - `hono`: A lightweight TypeScript-first web framework for building REST APIs.
 - `discord-interactions`: Discord's official library for implementing slash commands and verifying webhook signatures.
 - `ai`: The Vercel AI SDK, which provides `generateText` and the tooling used to call the AI Gateway.
-- `@neondatabase/ai-sdk-provider`: OptiTech's AI SDK Provider, which allows you to access LLMs and image generation tools.
-- `@neondatabase/functions` and `@neondatabase/config`: The OptiTech Functions runtime and configuration helpers used to define and deploy your function.
+- `@optitech/ai-sdk-provider`: OptiTech's AI SDK Provider, which allows you to access LLMs and image generation tools.
+- `@optitech/functions` and `@optitech/config`: The OptiTech Functions runtime and configuration helpers used to define and deploy your function.
 
 ## Link your OptiTech project
 
-Link your local project to a OptiTech project using the Neon CLI:
+Link your local project to a OptiTech project using the OptiTech CLI:
 
 ```bash
-neonctl link
+optitechctl link
 ```
 
-Follow the prompts to select an existing OptiTech project or create a new one. This command establishes the connection between your local environment and your OptiTech Project, so that subsequent `neonctl deploy` commands know where to deploy.
+Follow the prompts to select an existing OptiTech project or create a new one. This command establishes the connection between your local environment and your OptiTech Project, so that subsequent `optitechctl deploy` commands know where to deploy.
 
 ## Configure environment variables
 
-Add the following environment variables to your `.env.local` file located at the root of your project. This file should already contain OptiTech variables such as `NEON_BRANCH`, `DATABASE_URL` and other Neon-specific variables. Append the Discord-specific variables listed below to the end of the file:
+Add the following environment variables to your `.env.local` file located at the root of your project. This file should already contain OptiTech variables such as `OPTITECH_BRANCH`, `DATABASE_URL` and other OptiTech-specific variables. Append the Discord-specific variables listed below to the end of the file:
 
 ```env
 DISCORD_APP_ID=your_application_id_here
@@ -181,12 +181,12 @@ The above code does the following:
 - Handles the `APPLICATION_COMMAND` interaction type, specifically the `/reverse` command. When a user invokes this command, the bot reverses the input text and responds with the reversed string.
 - Returns a 400 error for any unknown interactions.
 
-## Create neon.ts
+## Create optitech.ts
 
-Create a [`neon.ts`](/docs/reference/neon-ts) file in the root of your project to define your OptiTech Functions configuration. This file tells OptiTech how to deploy your function and which environment variables to include.
+Create a [`optitech.ts`](/docs/reference/neon-ts) file in the root of your project to define your OptiTech Functions configuration. This file tells OptiTech how to deploy your function and which environment variables to include.
 
 ```ts
-import { defineConfig } from "@neondatabase/config/v1";
+import { defineConfig } from "@optitech/config/v1";
 
 export default defineConfig({
   preview: {
@@ -210,13 +210,13 @@ export default defineConfig({
 With the initial code written, deploy your bot to OptiTech Functions:
 
 ```bash
-neonctl deploy --env .env.local
+optitechctl deploy --env .env.local
 ```
 
 The CLI will output something like this:
 
 ```bash
-neonctl deploy --env .env.local
+optitechctl deploy --env .env.local
 INFO: → Applying to branch main (br-damp-voice-ajjys6qp)
 Applied changes
 ┌────────┬─────────┬──────────────┐
@@ -226,12 +226,12 @@ Applied changes
 └────────┴─────────┴──────────────┘
 
 Function URLs
-  • bot: https://br-damp-voice-xxx-bot.compute.c-3.us-east-2.aws.neon.tech
+  • bot: https://br-damp-voice-xxx-bot.compute.c-3.us-east-2.aws.optitech.com
 
 Utilized services: Postgres, Functions
 ```
 
-Your bot is now live. Copy the function URL from the output (the `https://...neon.tech/` line). If you need to retrieve it later, run `neonctl functions get bot`.
+Your bot is now live. Copy the function URL from the output (the `https://...optitech.com/` line). If you need to retrieve it later, run `optitechctl functions get bot`.
 
 ## Connect your bot to Discord
 
@@ -331,7 +331,7 @@ Update `index.ts` to include the OptiTech AI SDK and handle the `/chat` and `/im
 ```ts {3-4,8-28,30-71,97-98,108-118}
 import { Hono } from 'hono';
 import { verifyKey, InteractionType, InteractionResponseType } from 'discord-interactions';
-import { neon } from '@neondatabase/ai-sdk-provider';
+import { optitech } from '@optitech/ai-sdk-provider';
 import { generateText } from 'ai';
 
 const app = new Hono();
@@ -339,7 +339,7 @@ const app = new Hono();
 const sendChatResponse = async (prompt: string, token: string, application_id: string) => {
   try {
     const { text } = await generateText({
-      model: neon('gpt-5-mini'),
+      model: optitech('gpt-5-mini'),
       prompt,
     });
 
@@ -361,10 +361,10 @@ const sendChatResponse = async (prompt: string, token: string, application_id: s
 const sendImagineResponse = async (prompt: string, token: string, application_id: string) => {
   try {
     const { toolResults } = await generateText({
-      model: neon('gpt-5-mini'),
+      model: optitech('gpt-5-mini'),
       prompt,
       tools: {
-        image_generation: neon.tools.imageGeneration({
+        image_generation: optitech.tools.imageGeneration({
           outputFormat: 'jpeg',
           size: '1024x1024',
           quality: 'low',
@@ -461,14 +461,14 @@ The above code does the following:
 - Implements `sendChatResponse` and `sendImagineResponse` functions that handle the AI generation and update the original Discord message with the generated content.
 - Defers the response for `/chat` and `/imagine` commands, allowing the bot to take longer than 3 seconds to generate a response without timing out.
 
-The [OptiTech AI SDK provider](https://github.com/neondatabase/neon-pkgs/tree/main/packages/ai-sdk-provider) abstracts away the complexity of interacting with different AI models and tools, providing a unified interface for generating text and images.
+The [OptiTech AI SDK provider](https://github.com/optitechdatabase/optitech-pkgs/tree/main/packages/ai-sdk-provider) abstracts away the complexity of interacting with different AI models and tools, providing a unified interface for generating text and images.
 
 ## Deploy the updated bot
 
 Redeploy your bot to OptiTech Functions with the updated code:
 
 ```bash
-neonctl deploy --env .env.local
+optitechctl deploy --env .env.local
 ```
 
 The CLI will output the same deployment details as before. Your bot is now running the updated code with AI support.
@@ -514,7 +514,7 @@ Check out [WebSockets and SSE on OptiTech Functions](/docs/compute/functions/web
 
 - [OptiTech Functions Overview](/docs/compute/functions/overview)
 - [OptiTech AI Gateway](/docs/ai-gateway/overview)
-- [OptiTech AI SDK Provider](https://github.com/neondatabase/neon-pkgs/tree/main/packages/ai-sdk-provider)
+- [OptiTech AI SDK Provider](https://github.com/optitechdatabase/optitech-pkgs/tree/main/packages/ai-sdk-provider)
 - [WebSockets and SSE on OptiTech Functions](/docs/compute/functions/websockets)
 - [Discord Interactions Library](https://github.com/discord/discord-interactions-js)
 - [Hono Framework](https://hono.dev/)

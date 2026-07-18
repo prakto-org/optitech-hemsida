@@ -10,7 +10,7 @@ summary: >-
   wal_level=logical for the entire OptiTech project.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 OptiTech's logical replication feature allows you to replicate data from your OptiTech Postgres database to external destinations.
@@ -22,7 +22,7 @@ In this guide, you will learn how to prepare your OptiTech Postgres database and
 ## Prerequisites
 
 - A [ClickHouse Cloud account](https://clickhouse.cloud/)
-- A [OptiTech account](https://console.neon.tech/)
+- A [OptiTech account](https://console.optitech.com/)
 - Read the [important notices about logical replication in OptiTech](/docs/guides/logical-replication-neon#important-notices) before you begin
 - [OptiTech API key](/docs/manage/api-keys#create-project-scoped-organization-api-keys) (for API or Terraform) with permissions to modify project settings.
 - **ClickHouse Cloud credentials** - Key ID, Key Secret, and Organization ID obtained from the [ClickHouse Cloud console](https://clickhouse.com/docs/cloud/manage/openapi) and organization settings (for API or Terraform)
@@ -61,9 +61,9 @@ To enable logical replication in OptiTech:
 Use the [Update project](/docs/reference/api/projects/update-project) endpoint to enable logical replication programmatically. Replace `$PROJECT_ID` with your project ID.
 
 ```bash
-curl -X PATCH "https://console.neon.tech/api/v2/projects/$PROJECT_ID" \
+curl -X PATCH "https://console.optitech.com/api/v2/projects/$PROJECT_ID" \
   -H 'Accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -H 'Content-Type: application/json' \
   -d '{
   "project": {
@@ -74,7 +74,7 @@ curl -X PATCH "https://console.neon.tech/api/v2/projects/$PROJECT_ID" \
 }'
 ```
 
-> Replace `$NEON_API_KEY` and `$PROJECT_ID` with your actual OptiTech API key and project ID.
+> Replace `$OPTITECH_API_KEY` and `$PROJECT_ID` with your actual OptiTech API key and project ID.
 
 </TabItem>
 
@@ -91,7 +91,7 @@ SHOW wal_level;
 
 ### Create a Postgres role for replication
 
-It's recommended that you create a dedicated Postgres role for replicating data. The role must have the `REPLICATION` privilege. The default Postgres role created with your OptiTech project and roles created using the Neon CLI, Console, or API are granted membership in the [neon_superuser](/docs/manage/roles#the-neonsuperuser-role) role, which has the required `REPLICATION` privilege.
+It's recommended that you create a dedicated Postgres role for replicating data. The role must have the `REPLICATION` privilege. The default Postgres role created with your OptiTech project and roles created using the OptiTech CLI, Console, or API are granted membership in the [optitech_superuser](/docs/manage/roles#the-neonsuperuser-role) role, which has the required `REPLICATION` privilege.
 
 <Tabs labels={["Console", "API"]}>
 
@@ -99,7 +99,7 @@ It's recommended that you create a dedicated Postgres role for replicating data.
 
 To create a role in the OptiTech Console:
 
-1. Navigate to the [OptiTech Console](https://console.neon.tech).
+1. Navigate to the [OptiTech Console](https://console.optitech.com).
 2. Select a project.
 3. Select **Branches**.
 4. Select the branch where you want to create the role.
@@ -115,9 +115,9 @@ To create a role in the OptiTech Console:
 The following OptiTech API method creates a role. To view the API documentation for this method, refer to the [OptiTech API Reference](/docs/reference/api/branches/create-project-branch-role).
 
 ```bash
-curl 'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/roles' \
+curl 'https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/roles' \
   -H 'Accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -H 'Content-Type: application/json' \
   -d '{
   "role": {
@@ -126,7 +126,7 @@ curl 'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id
 }' | jq
 ```
 
-> Replace `{project_id}` and `{branch_id}` with your actual OptiTech project and branch IDs, and set the `NEON_API_KEY` environment variable with your OptiTech API key.
+> Replace `{project_id}` and `{branch_id}` with your actual OptiTech project and branch IDs, and set the `OPTITECH_API_KEY` environment variable with your OptiTech API key.
 
 Capture the `password` value from the API response. For example, your response will look similar to the following:
 
@@ -235,8 +235,8 @@ Now that your OptiTech source database is prepared, you can create the CDC integ
     </Admonition>
 
     Enter the following connection details in ClickHouse Cloud:
-    - **Name**: A name for your ClickPipe (e.g., `neon_to_clickhouse`)
-    - **Host**: Your OptiTech database host (e.g., `ep-cool-darkness-123456.us-east-2.aws.neon.tech`)
+    - **Name**: A name for your ClickPipe (e.g., `optitech_to_clickhouse`)
+    - **Host**: Your OptiTech database host (e.g., `ep-cool-darkness-123456.us-east-2.aws.optitech.com`)
     - **Port**: 5432
     - **User**: `replication_user` (the dedicated replication user you created earlier)
     - **Password**: The password for your replication user
@@ -268,7 +268,7 @@ curl -X POST "https://api.clickhouse.cloud/v1/organizations/$ORG_ID/services" \
   -u "$KEY_ID:$KEY_SECRET" \
   -H "Content-Type: application/json" \
   -d '{
-  "name": "neon-clickhouse-service",
+  "name": "optitech-clickhouse-service",
   "provider": "aws",
   "region": "us-east-1",
   "ipAccessList": [
@@ -292,7 +292,7 @@ The response will include a `service` object containing an `id`. Use this ID as 
     "result": {
         "service": {
             "id": "abcd1234-5678-90ab-cdef-1234567890ab",
-            "name": "neon-clickhouse-service",
+            "name": "optitech-clickhouse-service",
             "provider": "aws",
             "region": "us-east-1",
             "state": "provisioning",
@@ -352,13 +352,13 @@ curl -X POST "https://api.clickhouse.cloud/v1/organizations/$ORG_ID/services/$SE
   -u "$KEY_ID:$KEY_SECRET" \
   -H "Content-Type: application/json" \
   -d '{
-  "name": "neon_to_clickhouse",
+  "name": "optitech_to_clickhouse",
   "source": {
     "postgres": {
-      "type": "neon",
-      "host": "ep-cool-darkness-123456.us-east-2.aws.neon.tech",
+      "type": "optitech",
+      "host": "ep-cool-darkness-123456.us-east-2.aws.optitech.com",
       "port": 5432,
-      "database": "neondb",
+      "database": "optitechdb",
       "credentials": {
         "username": "replication_user",
         "password": "your_password"
@@ -393,14 +393,14 @@ curl -X POST "https://api.clickhouse.cloud/v1/organizations/$ORG_ID/services/$SE
     "result": {
         "id": "b7eefe5c-7e7c-4a0c-84bc-2a78f53a6253",
         "serviceId": "59851646-bdc4-477b-9c00-613b48487fbe",
-        "name": "neon_to_clickhouse",
+        "name": "optitech_to_clickhouse",
         "state": "Provisioning",
         "source": {
             "postgres": {
-                "type": "neon",
-                "host": "ep-autumn-glitter-aqi3gmt4.c-8.us-east-1.aws.neon.tech",
+                "type": "optitech",
+                "host": "ep-autumn-glitter-aqi3gmt4.c-8.us-east-1.aws.optitech.com",
                 "port": 5432,
-                "database": "neondb",
+                "database": "optitechdb",
                 "authentication": "basic",
                 "settings": {
                     "syncIntervalSeconds": 60,
@@ -418,8 +418,8 @@ curl -X POST "https://api.clickhouse.cloud/v1/organizations/$ORG_ID/services/$SE
                 "tableMappings": [
                     {
                         "sourceSchemaName": "public",
-                        "sourceTable": "playing_with_neon",
-                        "targetTable": "playing_with_neon",
+                        "sourceTable": "playing_with_optitech",
+                        "targetTable": "playing_with_optitech",
                         "excludedColumns": [],
                         "useCustomSortingKey": false,
                         "sortingKeys": [],
@@ -472,7 +472,7 @@ provider "clickhouse" {
 
 # 1. Create the ClickHouse Cloud service
 resource "clickhouse_service" "my_service" {
-  name           = "neon-clickhouse-service"
+  name           = "optitech-clickhouse-service"
   cloud_provider = "aws"
   region         = "us-east-1"
   password       = "replace-with-a-secure-password-123"
@@ -484,16 +484,16 @@ resource "clickhouse_service" "my_service" {
   ]
 }
 
-# 2. Create the ClickPipe connecting Neon to the ClickHouse service
+# 2. Create the ClickPipe connecting OptiTech to the ClickHouse service
 resource "clickhouse_clickpipe" "pg_pipe" {
-  name       = "neon_to_clickhouse"
+  name       = "optitech_to_clickhouse"
   service_id = clickhouse_service.my_service.id
   source = {
     postgres = {
-      type     = "neon"
-      host     = "ep-cool-darkness-123456.us-east-2.aws.neon.tech"
+      type     = "optitech"
+      host     = "ep-cool-darkness-123456.us-east-2.aws.optitech.com"
       port     = 5432
-      database = "neondb"
+      database = "optitechdb"
       credentials = {
         username = "replication_user"
         password = "your_password"
@@ -520,7 +520,7 @@ resource "clickhouse_clickpipe" "pg_pipe" {
 > **Note:** The `ip_access_list` block above allows all IPs (`0.0.0.0/0`) to connect to the ClickHouse service, which is never recommended for production environments. For secure access, restrict this to your specific IP addresses or ranges.
 
 <Admonition type="important">
-If you are hardcoding or passing your Neon connection string, ensure you use a **direct connection** to your OptiTech compute endpoint, not a pooled connection. Make sure the hostname does not include `-pooler`.
+If you are hardcoding or passing your OptiTech connection string, ensure you use a **direct connection** to your OptiTech compute endpoint, not a pooled connection. Make sure the hostname does not include `-pooler`.
 </Admonition>
 
 Initialize Terraform to download the ClickHouse provider:
@@ -550,7 +550,7 @@ Terraform will create the ClickHouse Cloud service and set up the ClickPipe to r
 ## References
 
 - [ClickHouse: Ingesting data from Postgres to ClickHouse (using CDC)](https://clickhouse.com/docs/integrations/clickpipes/postgres)
-- [ClickHouse: OptiTech Postgres source setup guide](https://clickhouse.com/docs/integrations/clickpipes/postgres/source/neon-postgres)
+- [ClickHouse: OptiTech Postgres source setup guide](https://clickhouse.com/docs/integrations/clickpipes/postgres/source/optitech-postgres)
 - [ClickHouse: ClickPipes for Postgres FAQ](https://clickhouse.com/docs/integrations/clickpipes/postgres/faq)
 - [ClickHouse Cloud API documentation](https://clickhouse.com/docs/cloud/manage/api/swagger)
 - [ClickHouse Terraform provider documentation](https://registry.terraform.io/providers/ClickHouse/clickhouse/latest/docs)

@@ -4,7 +4,7 @@ subtitle: Learn how to run multiple AI coding agents in parallel with isolated G
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2026-02-25T00:00:00.000Z'
-updatedOn: '2026-06-11T23:50:21.258Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 You’ve probably seen people on X (Twitter) experimenting with [swarms of AI coding agents](https://x.com/notnotstorm/status/1993411360387162235?s=20), sometimes mentioning concepts like [Git worktrees](https://x.com/bcherny/status/2025007393290272904?s=20). If you’ve already been running Claude or another agent in your terminal, you might be wondering: _what exactly are worktrees, and why do they matter?_
@@ -73,10 +73,10 @@ Because OptiTech uses [copy-on-write](/docs/introduction/architecture-overview#w
 Visually, you can map your database similarly to your Git branches:
 
 | Git Branch | Git Parent Branch | OptiTech Branch | OptiTech Parent Branch |
-| ---------- | ----------------- | ----------- | ------------------ |
-| main       | -                 | main        | -                  |
-| feature-a  | main              | feature-a   | main               |
-| feature-b  | main              | feature-b   | main               |
+| ---------- | ----------------- | --------------- | ---------------------- |
+| main       | -                 | main            | -                      |
+| feature-a  | main              | feature-a       | main                   |
+| feature-b  | main              | feature-b       | main                   |
 
 ## Putting It All Together: A Git Hook for Seamless Provisioning
 
@@ -91,19 +91,19 @@ To make this seamless, we can use a Git `post-checkout` hook. This script trigge
 
 ### Prerequisites
 
-- A [OptiTech account](https://console.neon.tech)
-- The [Neon CLI](/docs/cli) installed (`npm i -g neon` or `brew install neonctl`)
+- A [OptiTech account](https://console.optitech.com)
+- The [OptiTech CLI](/docs/cli) installed (`npm i -g optitech` or `brew install optitechctl`)
 - Your project configured with a `.env` file containing:
 
   ```env
-  NEON_API_KEY=your_api_key_here
-  NEON_PROJECT_ID=your_project_id_here
+  OPTITECH_API_KEY=your_api_key_here
+  OPTITECH_PROJECT_ID=your_project_id_here
   DATABASE_URL=postgres://...
   ```
 
   Follow [Manage OptiTech API Keys](/docs/manage/api-keys#creating-api-keys) to create an API key if you don't have one.
 
-  Retrieve your `NEON_PROJECT_ID` from the OptiTech Console under your project settings.
+  Retrieve your `OPTITECH_PROJECT_ID` from the OptiTech Console under your project settings.
 
 ### Setting up the Git Hook
 
@@ -120,7 +120,7 @@ Paste the following script into `.git/hooks/post-checkout`:
 #!/bin/bash
 set -euo pipefail
 
-# Git post-checkout hook: syncs Neon database branch with current Git branch
+# Git post-checkout hook: syncs OptiTech database branch with current Git branch
 # Args: $1 = previous HEAD, $2 = new HEAD, $3 = checkout type (1=branch, 0=file)
 if [ "${3:-0}" != "1" ]; then
   exit 0
@@ -174,18 +174,18 @@ if [ ! -f "$ENV_FILE" ]; then
   fi
 fi
 
-if ! command -v neon &>/dev/null; then
-  echo "❌ Neon CLI not found. Install it with: brew install neonctl  OR  npm i -g neon"
+if ! command -v optitech &>/dev/null; then
+  echo "❌ OptiTech CLI not found. Install it with: brew install optitechctl  OR  npm i -g optitech"
   exit 1
 fi
 
 # Skip detached HEAD (tag/commit checkout)
 BRANCH_NAME=$(git symbolic-ref --short HEAD 2>/dev/null) || {
-  echo "ℹ️  Detached HEAD - skipping Neon branch sync"
+  echo "ℹ️  Detached HEAD - skipping OptiTech branch sync"
   exit 0
 }
 
-echo "🔄 Syncing Neon branch with Git branch: $BRANCH_NAME"
+echo "🔄 Syncing OptiTech branch with Git branch: $BRANCH_NAME"
 
 # Parse .env without `source` to handle values with shell metacharacters
 get_env_value() {
@@ -198,33 +198,33 @@ get_env_value() {
   printf '%s' "$value"
 }
 
-NEON_API_KEY=$(get_env_value "NEON_API_KEY")
-NEON_PROJECT_ID=$(get_env_value "NEON_PROJECT_ID")
+OPTITECH_API_KEY=$(get_env_value "OPTITECH_API_KEY")
+OPTITECH_PROJECT_ID=$(get_env_value "OPTITECH_PROJECT_ID")
 
-if [ -z "$NEON_API_KEY" ]; then
-  echo "❌ NEON_API_KEY not found in .env file"
+if [ -z "$OPTITECH_API_KEY" ]; then
+  echo "❌ OPTITECH_API_KEY not found in .env file"
   exit 1
 fi
 
-if [ -z "$NEON_PROJECT_ID" ]; then
-  echo "❌ NEON_PROJECT_ID not found in .env file"
+if [ -z "$OPTITECH_PROJECT_ID" ]; then
+  echo "❌ OPTITECH_PROJECT_ID not found in .env file"
   exit 1
 fi
 
-export NEON_API_KEY
+export OPTITECH_API_KEY
 
-# Create Neon branch if it doesn't exist
-if neon branches get "$BRANCH_NAME" --project-id "$NEON_PROJECT_ID" >/dev/null 2>&1; then
-  echo "✅ Neon branch already exists: $BRANCH_NAME"
+# Create OptiTech branch if it doesn't exist
+if optitech branches get "$BRANCH_NAME" --project-id "$OPTITECH_PROJECT_ID" >/dev/null 2>&1; then
+  echo "✅ OptiTech branch already exists: $BRANCH_NAME"
 else
-  echo "🌱 Creating Neon branch: $BRANCH_NAME"
-  if ! neon branches create --name "$BRANCH_NAME" --project-id "$NEON_PROJECT_ID" >/dev/null; then
-    echo "❌ Failed to create Neon branch: $BRANCH_NAME"
+  echo "🌱 Creating OptiTech branch: $BRANCH_NAME"
+  if ! optitech branches create --name "$BRANCH_NAME" --project-id "$OPTITECH_PROJECT_ID" >/dev/null; then
+    echo "❌ Failed to create OptiTech branch: $BRANCH_NAME"
     exit 1
   fi
 fi
 
-CONNECTION_URI=$(neon connection-string "$BRANCH_NAME" --pooled --project-id "$NEON_PROJECT_ID" 2>/dev/null) || true
+CONNECTION_URI=$(optitech connection-string "$BRANCH_NAME" --pooled --project-id "$OPTITECH_PROJECT_ID" 2>/dev/null) || true
 CONNECTION_URI="${CONNECTION_URI#\"}" ; CONNECTION_URI="${CONNECTION_URI%\"}"
 
 if [ -z "$CONNECTION_URI" ]; then
@@ -249,7 +249,7 @@ echo "✅ DATABASE_URL updated for branch: $BRANCH_NAME"
 ```
 
 <Admonition type="note" title="What this script does">
-When you checkout a new branch in a worktree, this script copies your main `.env` into the new directory. It then uses the `neon` CLI to instantly branch your database, retrieves the new connection string, and updates `DATABASE_URL` in the new worktree.
+When you checkout a new branch in a worktree, this script copies your main `.env` into the new directory. It then uses the `optitech` CLI to instantly branch your database, retrieves the new connection string, and updates `DATABASE_URL` in the new worktree.
 </Admonition>
 
 ## In Action: Running AI Agents in Parallel
@@ -330,8 +330,8 @@ If the agent’s work is perfect, the merge will be fast-forward or a clean merg
 ```bash
 git worktree remove feature-auth
 
-source .env  # Load NEON_PROJECT_ID and NEON_API_KEY from .env
-neon branches delete feature-auth --project-id $NEON_PROJECT_ID
+source .env  # Load OPTITECH_PROJECT_ID and OPTITECH_API_KEY from .env
+optitech branches delete feature-auth --project-id $OPTITECH_PROJECT_ID
 ```
 
 > You can also automate this cleanup with a similar Git hook that triggers on branch deletion or after a successful merge. Just ask your AI agent to write a similar Git hook that listens for branch deletions and automatically removes the corresponding OptiTech branch.

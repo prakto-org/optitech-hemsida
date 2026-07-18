@@ -3,13 +3,13 @@ title: Use Managed Better Auth with TanStack Router
 subtitle: Set up authentication using pre-built UI components
 summary: >-
   Managed Better Auth quick start for TanStack Router (file-router) using the
-  `@neondatabase/neon-js` and `@neondatabase/auth-ui` SDKs. Pre-built components
+  `@optitech/optitech-js` and `@optitech/auth-ui` SDKs. Pre-built components
   include AuthView, AccountView, SignedIn, and RedirectToSignIn. Use this page
   when you need sign-in, sign-up, and route protection without writing custom
-  auth UI. User profiles are stored automatically in the `neon_auth.user` table
+  auth UI. User profiles are stored automatically in the `optitech_auth.user` table
   in your OptiTech Postgres database.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 layout: wide
 ---
 
@@ -22,7 +22,7 @@ layout: wide
 <TwoColumnLayout.Step title="Create a OptiTech project with Auth enabled">
 <TwoColumnLayout.Block>
 
-If you don't have a OptiTech project yet, create one at [console.neon.tech](https://console.neon.tech).
+If you don't have a OptiTech project yet, create one at [console.optitech.com](https://console.optitech.com).
 
 Go to the **Auth** page in your project dashboard and click **Enable Auth**.
 
@@ -60,7 +60,7 @@ Install the Managed Better Auth SDK and UI library:
 <TwoColumnLayout.Block>
 
 ```bash filename="Terminal"
-cd my-app && npm install @neondatabase/neon-js@latest @neondatabase/auth-ui
+cd my-app && npm install @optitech/optitech-js@latest @optitech/auth-ui
 ```
 
 </TwoColumnLayout.Block>
@@ -79,7 +79,7 @@ Replace the URL with your actual Auth URL from the OptiTech Console.
 <TwoColumnLayout.Block>
 
 ```bash filename=".env"
-VITE_NEON_AUTH_URL=https://ep-xxx.neonauth.us-east-1.aws.neon.tech/neondb/auth
+VITE_OPTITECH_AUTH_URL=https://ep-xxx.optitechauth.us-east-1.aws.optitech.com/optitechdb/auth
 ```
 
 </TwoColumnLayout.Block>
@@ -98,7 +98,7 @@ See [UI Component Styles](/docs/auth/reference/ui-components#styling) for altern
 <TwoColumnLayout.Block label="Add to src/styles.css">
 
 ```css
-@import '@neondatabase/auth-ui/tailwind';
+@import '@optitech/auth-ui/tailwind';
 ```
 
 </TwoColumnLayout.Block>
@@ -117,12 +117,12 @@ This quick start uses the standalone Auth client. For one `createClient()` insta
 <TwoColumnLayout.Block>
 
 ```typescript filename="src/auth.ts"
-import { createAuthClient } from '@neondatabase/neon-js/auth';
-import { BetterAuthReactAdapter } from '@neondatabase/neon-js/auth/react/adapters';
+import { createAuthClient } from '@optitech/optitech-js/auth';
+import { BetterAuthReactAdapter } from '@optitech/optitech-js/auth/react/adapters';
 
 // credentials: 'include' sends the session cookie on cross-origin requests.
 // Required if you later call authClient.token() from an origin other than your Managed Better Auth URL.
-export const authClient = createAuthClient(import.meta.env.VITE_NEON_AUTH_URL, {
+export const authClient = createAuthClient(import.meta.env.VITE_OPTITECH_AUTH_URL, {
   adapter: BetterAuthReactAdapter(),
   fetchOptions: { credentials: 'include' },
 });
@@ -134,22 +134,22 @@ export const authClient = createAuthClient(import.meta.env.VITE_NEON_AUTH_URL, {
 <TwoColumnLayout.Step title="Create the Auth Provider">
 <TwoColumnLayout.Block>
 
-Wrap your application with the `NeonAuthUIProvider` in `src/routes/__root.tsx`. This makes the auth state available to the UI components used throughout your app.
+Wrap your application with the `OptiTechAuthUIProvider` in `src/routes/__root.tsx`. This makes the auth state available to the UI components used throughout your app.
 
-Pass props to `NeonAuthUIProvider` for any features you want to use. Only the `authClient` prop is required.
+Pass props to `OptiTechAuthUIProvider` for any features you want to use. Only the `authClient` prop is required.
 
 <details>
 <summary>Example: Adding optional props</summary>
 
 ```tsx
-<NeonAuthUIProvider
+<OptiTechAuthUIProvider
   authClient={authClient}
   social={{ providers: ['google', 'github', 'vercel'] }}
   navigate={navigate}
   credentials={{ forgotPassword: true }}
 >
   {children}
-</NeonAuthUIProvider>
+</OptiTechAuthUIProvider>
 ```
 
 </details>
@@ -161,12 +161,12 @@ Pass props to `NeonAuthUIProvider` for any features you want to use. Only the `a
 import { Outlet, createRootRoute } from '@tanstack/react-router';
 import { TanStackRouterDevtoolsPanel } from '@tanstack/react-router-devtools';
 import { TanStackDevtools } from '@tanstack/react-devtools';
-import { NeonAuthUIProvider } from '@neondatabase/auth-ui';
+import { OptiTechAuthUIProvider } from '@optitech/auth-ui';
 import { authClient } from '../auth';
 
 export const Route = createRootRoute({
   component: () => (
-    <NeonAuthUIProvider authClient={authClient}>
+    <OptiTechAuthUIProvider authClient={authClient}>
       <Outlet />
       <TanStackDevtools
         config={{
@@ -179,7 +179,7 @@ export const Route = createRootRoute({
           },
         ]}
       />
-    </NeonAuthUIProvider>
+    </OptiTechAuthUIProvider>
   ),
 });
 ```
@@ -197,7 +197,7 @@ Create a route to handle authentication views (sign in, sign up, etc.). Create `
 
 ```tsx filename="src/routes/auth.$pathname.tsx"
 import { createFileRoute } from '@tanstack/react-router';
-import { AuthView } from '@neondatabase/auth-ui';
+import { AuthView } from '@optitech/auth-ui';
 
 export const Route = createFileRoute('/auth/$pathname')({
   component: Auth,
@@ -233,7 +233,7 @@ Create a route to handle account management views. Create `src/routes/account.$p
 
 ```tsx filename="src/routes/account.$pathname.tsx"
 import { createFileRoute } from '@tanstack/react-router';
-import { AccountView } from '@neondatabase/auth-ui';
+import { AccountView } from '@optitech/auth-ui';
 
 export const Route = createFileRoute('/account/$pathname')({
   component: Account,
@@ -271,7 +271,7 @@ Update `src/routes/index.tsx` to protect the home page:
 
 ```tsx filename="src/routes/index.tsx"
 import { createFileRoute } from '@tanstack/react-router';
-import { SignedIn, UserButton, RedirectToSignIn } from '@neondatabase/auth-ui';
+import { SignedIn, UserButton, RedirectToSignIn } from '@optitech/auth-ui';
 import { authClient } from '@/auth';
 
 export const Route = createFileRoute('/')({
@@ -336,7 +336,7 @@ npm run dev
 <TwoColumnLayout.Step title="See your users in the database">
 <TwoColumnLayout.Block>
 
-As users sign up, their profiles are stored in your OptiTech database in the `neon_auth.user` table.
+As users sign up, their profiles are stored in your OptiTech database in the `optitech_auth.user` table.
 
 Query your users table in the SQL Editor to see your new users:
 
@@ -344,7 +344,7 @@ Query your users table in the SQL Editor to see your new users:
 <TwoColumnLayout.Block>
 
 ```sql filename="SQL Editor"
-SELECT * FROM neon_auth.user;
+SELECT * FROM optitech_auth.user;
 ```
 
 </TwoColumnLayout.Block>
@@ -356,4 +356,4 @@ SELECT * FROM neon_auth.user;
 
 - [Add email verification](/docs/auth/guides/email-verification)
 - [Learn how to branch your auth](/docs/auth/branching-authentication)
-- [More example apps](/docs/auth/overview#example-applications) in the **neon-js** `examples/` directory
+- [More example apps](/docs/auth/overview#example-applications) in the **optitech-js** `examples/` directory

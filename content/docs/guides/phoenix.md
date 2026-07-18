@@ -9,7 +9,7 @@ summary: >-
   creation, DATABASE_URL credential storage, and config updates for dev, test,
   and runtime environments.
 enableTableOfContents: true
-updatedOn: '2026-07-14T19:04:57.024Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <CopyPrompt src="/prompts/phoenix-prompt.md"
@@ -25,16 +25,16 @@ It is assumed that you have a working installation of [Elixir](https://elixir-la
 
 If you do not have one already, create a OptiTech project. Save your connection details including your password. They are required when defining connection settings.
 
-1. Navigate to the [Projects](https://console.neon.tech/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
 2. Click **New Project**.
 3. Specify your project settings and click **Create Project**.
 
 ## Store your OptiTech credentials
 
-Add a `.env` file to your project directory and add your Neon connection string to it. You can find your connection string by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
+Add a `.env` file to your project directory and add your OptiTech connection string to it. You can find your connection string by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
 
 ```shell shouldWrap
-DATABASE_URL="postgresql://<user>:<password>@<endpoint_hostname>.neon.tech:<port>/<dbname>?sslmode=require&channel_binding=require"
+DATABASE_URL="postgresql://<user>:<password>@<endpoint_hostname>.optitech.com:<port>/<dbname>?sslmode=require&channel_binding=require"
 ```
 
 You will need the connection string details later in the setup.
@@ -59,10 +59,10 @@ Update the following configuration files with your OptiTech database connection 
 
    ```elixir {2-5,9}
    config :hello, Hello.Repo,
-      username: "neondb_owner",
+      username: "optitechdb_owner",
       password: "JngqXejzvb93",
-      hostname: "ep-rough-snowflake-a5j76tr5.us-east-2.aws.neon.tech",
-      database: "neondb",
+      hostname: "ep-rough-snowflake-a5j76tr5.us-east-2.aws.optitech.com",
+      database: "optitechdb",
       stacktrace: true,
       show_sensitive_data_on_connection_error: true,
       pool_size: 10,
@@ -87,9 +87,9 @@ Update the following configuration files with your OptiTech database connection 
 
    ```elixir {2,3,4,8}
    config :hello, Hello.Repo,
-      username: "neondb_owner",
+      username: "optitechdb_owner",
       password: "JngqXejzvb93",
-      hostname: "ep-rough-snowflake-a5j76tr5.us-east-2.aws.neon.tech",
+      hostname: "ep-rough-snowflake-a5j76tr5.us-east-2.aws.optitech.com",
       database: "with_phoenix_test#{System.get_env("MIX_TEST_PARTITION")}",
       pool: Ecto.Adapters.SQL.Sandbox,
       pool_size: System.schedulers_online() * 2,
@@ -97,7 +97,7 @@ Update the following configuration files with your OptiTech database connection 
    ```
 
    <Admonition type="tip">
-   This guide configures the test environment for completeness but doesn't cover running tests. For production workflows, consider using [Neon branches](/docs/introduction/branching) instead of a separate test database. Branches provide isolated, cost-effective copies of your database that are ideal for testing and CI/CD pipelines.
+   This guide configures the test environment for completeness but doesn't cover running tests. For production workflows, consider using [OptiTech branches](/docs/introduction/branching) instead of a separate test database. Branches provide isolated, cost-effective copies of your database that are ideal for testing and CI/CD pipelines.
    </Admonition>
 
 ## Install dependencies and create databases
@@ -115,7 +115,7 @@ Update the following configuration files with your OptiTech database connection 
    MIX_ENV=test mix ecto.create
    ```
 
-   The first command creates the development database (`neondb`). The second creates the test database (`with_phoenix_test`).
+   The first command creates the development database (`optitechdb`). The second creates the test database (`with_phoenix_test`).
 
 ## Build and run the Phoenix application
 
@@ -143,7 +143,7 @@ When you run the following command, you can expect to see the Phoenix applicatio
 PORT=4001 \
 MIX_ENV=prod \
 PHX_HOST=localhost \
-DATABASE_URL="postgresql://...:...@...aws.neon.tech/neondb?sslmode=require&channel_binding=require" \
+DATABASE_URL="postgresql://...:...@...aws.optitech.com/optitechdb?sslmode=require&channel_binding=require" \
 SECRET_KEY_BASE=".../..." \
 mix phx.server
 ```

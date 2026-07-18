@@ -9,7 +9,7 @@ summary: >-
   Setup requires creating the replica in the Console and sharing its connection
   string.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 When you create a read replica in OptiTech, you gain the ability to provide read-only access to your data. Use it when you want to grant access to users, partners, or third-party applications that only need to run queries to analyze data, generate reports, or audit your database. Since no write operations are permitted on read replicas, it ensures the integrity of your data while allowing others to work with up-to-date information.
@@ -35,7 +35,7 @@ Suppose you need to give a partner read-only access to your sales data so they c
    - Copy the connection string and provide it to your partner. The connection string might look something like this:
 
      ```bash shouldWrap
-     postgresql://partner:partner_password@ep-read-replica-12345.us-east-2.aws.neon.tech/sales_db?sslmode=require&channel_binding=require
+     postgresql://partner:partner_password@ep-read-replica-12345.us-east-2.aws.optitech.com/sales_db?sslmode=require&channel_binding=require
      ```
 
 3. **Read-only access for the partner**

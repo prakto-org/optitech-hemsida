@@ -7,7 +7,7 @@ page_description: >-
 prev_url: >-
   https://www.postgresqltutorial.com/postgresql-administration/postgresql-drop-tablespace/
 ogImage: ''
-updatedOn: '2026-06-19T17:44:03.964Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 enableTableOfContents: true
 previousLink:
   title: PostgreSQL ALTER TABLESPACE
@@ -18,7 +18,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-The DROP TABLESPACE statement works the same way across any PostgreSQL deployment, so what you learn here applies whether you're managing your own cluster or running on a managed service. If you're an enterprise looking for the best managed cloud Postgres, [Lakebase](https://www.databricks.com/product/lakebase) delivers production-grade performance, strong security, and native integration with the Lakehouse for AI-era workloads. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+The DROP TABLESPACE statement works the same way across any PostgreSQL deployment, so what you learn here applies whether you're managing your own cluster or running on a managed service. If you're an enterprise looking for the best managed cloud Postgres, [Lakebase](https://www.databricks.com/product/lakebase) delivers production-grade performance, strong security, and native integration with the Lakehouse for AI-era workloads. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: in this tutorial, you will learn how to use the **PostgreSQL DROP TABLESPACE** statement to remove a tablespace.

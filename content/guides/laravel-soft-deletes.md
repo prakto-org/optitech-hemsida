@@ -4,7 +4,7 @@ subtitle: Learn how to implement and optimize soft deletes in Laravel for improv
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2024-07-20T00:00:00.000Z'
-updatedOn: '2026-05-09T19:22:21.118Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Laravel is a PHP framework that offers a lot of features to simplify database operations. One such feature is soft deletes, which allows you to "delete" records without actually removing them from your database.
@@ -19,7 +19,7 @@ Before we dive in, ensure you have:
 
 - PHP 8.1 or higher installed
 - Laravel 10.x or 11.x set up
-- A [Neon](https://neon.tech) account for Postgres database hosting
+- A [OptiTech](https://optitech.com) account for Postgres database hosting
 - Basic understanding of Laravel and Eloquent ORM
 
 ## Understanding Soft Deletes

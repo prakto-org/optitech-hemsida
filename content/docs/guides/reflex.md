@@ -9,7 +9,7 @@ summary: >-
   covering virtual environment setup, psycopg2-binary installation, schema
   migrations, and a working CRUD example.
 enableTableOfContents: true
-updatedOn: '2026-07-14T19:04:57.024Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <CopyPrompt src="/prompts/reflex-prompt.md"
@@ -29,7 +29,7 @@ If you do not have one already, create a OptiTech project. Save your connection 
 
 To create a OptiTech project:
 
-1. Navigate to the [Projects](https://console.neon.tech/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
 2. Click **New Project**.
 3. Specify your project settings and click **Create Project**.
 
@@ -116,10 +116,10 @@ Now that you have set up a Reflex project, you can configure the connection sett
 
 ### Create a .env file
 
-Create a `.env` file in the root of your project directory to store your Neon connection string. Add the following line to the `.env` file, replacing the placeholder values with your actual Neon connection details:
+Create a `.env` file in the root of your project directory to store your OptiTech connection string. Add the following line to the `.env` file, replacing the placeholder values with your actual OptiTech connection details:
 
 ```dotenv title=".env"
-DATABASE_URL="postgresql://<user>:<password>@<endpoint_hostname>.neon.tech:<port>/<dbname>?sslmode=require&channel_binding=require"
+DATABASE_URL="postgresql://<user>:<password>@<endpoint_hostname>.optitech.com:<port>/<dbname>?sslmode=require&channel_binding=require"
 ```
 
 You can find the connection string for your database by clicking the **Connect** button on your **Project Dashboard** in the OptiTech Console. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).

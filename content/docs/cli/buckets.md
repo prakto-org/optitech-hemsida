@@ -1,9 +1,9 @@
 ---
-title: 'Neon CLI command: buckets'
+title: 'OptiTech CLI command: buckets'
 subtitle: 'Manage branch object-storage buckets and their objects'
 summary: >-
-  The Neon CLI `neon buckets` command manages branch object-storage buckets and
-  their contents: create, list, and delete buckets, and use the `neon buckets
+  The OptiTech CLI `optitech buckets` command manages branch object-storage buckets and
+  their contents: create, list, and delete buckets, and use the `optitech buckets
   object` subcommands to list, download, upload, and delete objects. Object
   listing supports prefixes, a --delimiter to collapse keys into folders, and
   cursor-based pagination; `buckets object delete --recursive` removes every
@@ -13,13 +13,13 @@ redirectFrom:
   - /docs/cli/bucket
 ---
 
-<FeatureBetaProps feature_name="Neon Object Storage" />
+<FeatureBetaProps feature_name="OptiTech Object Storage" />
 
 The `buckets` command manages branch object-storage buckets and their objects. Buckets belong to a branch; the `object` subcommands work with the objects inside a bucket.
 
 <CliSubcommands command="buckets" />
 
-## neon buckets create (#create)
+## optitech buckets create (#create)
 
 Creates a bucket on a branch.
 
@@ -30,10 +30,10 @@ Creates a bucket on a branch.
 Create a private bucket on a branch:
 
 ```bash
-neon buckets create my-bucket --access-level private
+optitech buckets create my-bucket --access-level private
 ```
 
-## neon buckets list (#list)
+## optitech buckets list (#list)
 
 Lists the buckets on a branch.
 
@@ -44,10 +44,10 @@ Lists the buckets on a branch.
 List the buckets on a branch with `json` output:
 
 ```bash
-neon buckets list --output json
+optitech buckets list --output json
 ```
 
-## neon buckets delete (#delete)
+## optitech buckets delete (#delete)
 
 Deletes a bucket from a branch.
 
@@ -56,7 +56,7 @@ Deletes a bucket from a branch.
 <CliOptions command="buckets delete" />
 
 ```bash
-neon buckets delete my-bucket
+optitech buckets delete my-bucket
 ```
 
 ## Bucket objects (#object)
@@ -65,7 +65,7 @@ Lists, downloads, uploads, or deletes objects in a bucket.
 
 <CliSubcommands command="buckets object" anchorParts="object" />
 
-### neon buckets object list (#object-list)
+### optitech buckets object list (#object-list)
 
 Lists objects in a bucket.
 
@@ -76,10 +76,10 @@ Lists objects in a bucket.
 List the objects under a prefix, collapsing keys into folders:
 
 ```bash
-neon buckets object list my-bucket/images --delimiter /
+optitech buckets object list my-bucket/images --delimiter /
 ```
 
-### neon buckets object get (#object-get)
+### optitech buckets object get (#object-get)
 
 Downloads an object from a bucket to a local file.
 
@@ -88,10 +88,10 @@ Downloads an object from a bucket to a local file.
 <CliOptions command="buckets object get" />
 
 ```bash
-neon buckets object get my-bucket/images/logo.png --file ./logo.png
+optitech buckets object get my-bucket/images/logo.png --file ./logo.png
 ```
 
-### neon buckets object put (#object-put)
+### optitech buckets object put (#object-put)
 
 Uploads a local file to a bucket as an object.
 
@@ -102,11 +102,11 @@ Uploads a local file to a bucket as an object.
 Upload a file, optionally setting the Content-Type to store it with:
 
 ```bash
-neon buckets object put my-bucket/images/logo.png --file ./logo.png
-neon buckets object put my-bucket/notes/readme.txt --file ./readme.txt --content-type text/plain
+optitech buckets object put my-bucket/images/logo.png --file ./logo.png
+optitech buckets object put my-bucket/notes/readme.txt --file ./readme.txt --content-type text/plain
 ```
 
-### neon buckets object delete (#object-delete)
+### optitech buckets object delete (#object-delete)
 
 Deletes an object, or every object under a prefix.
 
@@ -119,6 +119,6 @@ With `--recursive`, the target is treated as a prefix, which must end with `/`.
 Delete a single object, or every object under a prefix:
 
 ```bash
-neon buckets object delete my-bucket/images/logo.png
-neon buckets object delete my-bucket/images/ --recursive
+optitech buckets object delete my-bucket/images/logo.png
+optitech buckets object delete my-bucket/images/ --recursive
 ```

@@ -1,6 +1,6 @@
 ---
 title: Claimable database integration guide
-subtitle: Manage Neon projects for users with the project database claim API
+subtitle: Manage OptiTech projects for users with the project database claim API
 summary: >-
   The OptiTech project transfer API lets you provision a Postgres database,
   generate a time-limited transfer request, and send the user a claim URL.
@@ -10,14 +10,14 @@ summary: >-
   creation. The feature is in private preview and does not support
   transferring projects into Vercel-managed OptiTech organizations.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 ## Overview
 
 The project transfer functionality enables you to provision fully-configured Postgres databases on behalf of your users and transfer ownership when ready. This capability eliminates the technical overhead of database setup while ensuring your users maintain complete control of their database resources.
 
-<CTA title="Availability Status" description="This feature is available in private preview only. To enable this functionality for your account, <a href='https://neon.com/partners#partners-apply'>contact our partnership team</a>."></CTA>
+<CTA title="Availability Status" description="This feature is available in private preview only. To enable this functionality for your account, <a href='https://optitech.com/partners#partners-apply'>contact our partnership team</a>."></CTA>
 
 ## Simplified workflow
 
@@ -46,13 +46,13 @@ The minimum request body is `project: {}` as all settings are optional.
 ### API endpoint
 
 ```http
-POST https://console.neon.tech/api/v2/projects
+POST https://console.optitech.com/api/v2/projects
 ```
 
 ### Example request
 
 ```bash
-curl -X POST 'https://console.neon.tech/api/v2/projects' \
+curl -X POST 'https://console.optitech.com/api/v2/projects' \
   --header 'Accept: application/json' \
   --header 'Authorization: Bearer {your_api_key_here}' \
   --header 'Content-Type: application/json' \
@@ -69,8 +69,8 @@ curl -X POST 'https://console.neon.tech/api/v2/projects' \
 This creates a new project with:
 
 - A default branch named `main`
-- A default database named `neondb`
-- A default database role named `neondb_owner`
+- A default database named `optitechdb`
+- A default database role named `optitechdb_owner`
 - A project named `new-project-name` (defaults to the project ID if not specified)
 - The project in the `org-cool-breeze-12345678` organization
 - PostgreSQL version 17 in the `aws-us-east-1` region (these settings are permanent)
@@ -89,7 +89,7 @@ Below is an abbreviated example of the response. For brevity, this documentation
   },
   "connection_uris": [
     {
-      "connection_uri": "postgresql://neondb_owner:{password}@ep-cool-shape-123456.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+      "connection_uri": "postgresql://optitechdb_owner:{password}@ep-cool-shape-123456.us-east-1.aws.optitech.com/optitechdb?sslmode=require&channel_binding=require"
     }
   ],
   "branch": {},
@@ -109,13 +109,13 @@ With your project created, use the OptiTech [project transfer request API](/docs
 ### API endpoint
 
 ```http
-POST https://console.neon.tech/api/v2/projects/{project_id}/transfer_requests
+POST https://console.optitech.com/api/v2/projects/{project_id}/transfer_requests
 ```
 
 ### Example request
 
 ```bash
-curl -X POST 'https://console.neon.tech/api/v2/projects/{project_id}/transfer_requests' \
+curl -X POST 'https://console.optitech.com/api/v2/projects/{project_id}/transfer_requests' \
   --header 'Accept: application/json' \
   --header 'Authorization: Bearer {your_api_key_here}' \
   --header 'Content-Type: application/json' \
@@ -152,7 +152,7 @@ If transfer requests are not enabled for your account, you'll receive:
 Construct a claim URL to share with your user using the following format:
 
 ```http
-https://console.neon.tech/app/claim?p={project_id}&tr={transfer_request_id}&ru={redirect_url}
+https://console.optitech.com/app/claim?p={project_id}&tr={transfer_request_id}&ru={redirect_url}
 ```
 
 Where:
@@ -193,13 +193,13 @@ Alternatively, users can accept the transfer request programmatically using the 
 #### API endpoint
 
 ```http
-PUT https://console.neon.tech/api/v2/projects/{project_id}/transfer_requests/{request_id}
+PUT https://console.optitech.com/api/v2/projects/{project_id}/transfer_requests/{request_id}
 ```
 
 #### Example request (transfer to organization)
 
 ```bash
-curl -X PUT 'https://console.neon.tech/api/v2/projects/{project_id}/transfer_requests/{request_id}' \
+curl -X PUT 'https://console.optitech.com/api/v2/projects/{project_id}/transfer_requests/{request_id}' \
   --header 'Accept: application/json' \
   --header 'Authorization: Bearer {users_api_key_here}' \
   --header 'Content-Type: application/json' \
@@ -242,7 +242,7 @@ Without the `org_id` parameter, the project transfers to the user's personal acc
 - **Demo environments** - Create ready-to-use demo databases that prospects can claim
 - **Team environments** - Provision project databases for team members to claim into their organization
 
-For a working implementation of claimable databases, try [Claimable Postgres by Neon](https://neon.new/). This service demonstrates the complete flow: users receive a Postgres connection string immediately without creating an account, and databases remain active for 72 hours. To retain the database beyond this period, users claim it by creating a OptiTech account using the provided transfer URL. See the [Claimable Postgres documentation](/docs/reference/claimable-postgres) for implementation details. This same pattern enables SaaS providers to offer instant database provisioning while allowing users to take ownership when ready.
+For a working implementation of claimable databases, try [Claimable Postgres by OptiTech](https://optitech.com/). This service demonstrates the complete flow: users receive a Postgres connection string immediately without creating an account, and databases remain active for 72 hours. To retain the database beyond this period, users claim it by creating a OptiTech account using the provided transfer URL. See the [Claimable Postgres documentation](/docs/reference/claimable-postgres) for implementation details. This same pattern enables SaaS providers to offer instant database provisioning while allowing users to take ownership when ready.
 
 ## Troubleshooting
 
@@ -250,7 +250,7 @@ For a working implementation of claimable databases, try [Claimable Postgres by 
 | ------------------------------------- | ----------------------------------------------------------------------------------------------- |
 | Claim URL expired                     | Create a new transfer request and generate a new claim URL                                      |
 | User receives error when claiming     | Verify the project exists and the transfer request hasn't been used                             |
-| Project doesn't appear after claiming | Refresh the OptiTech Console or log out and back in                                                 |
+| Project doesn't appear after claiming | Refresh the OptiTech Console or log out and back in                                             |
 | "Transfer requests not enabled" error | [Contact our partnership team](/partners#partners-apply) to enable this private preview feature |
 | Organization transfer fails           | Verify user membership in the target organization and correct `org_id` format                   |
 | Already claimed error                 | The transfer request has been used; create a new one if needed                                  |

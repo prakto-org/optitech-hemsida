@@ -1,22 +1,22 @@
 ---
 title: Manage OptiTech with Pulumi
-subtitle: Use Pulumi to provision and manage your Neon projects, branches, endpoints, roles, databases, and other resources as code.
+subtitle: Use Pulumi to provision and manage your OptiTech projects, branches, endpoints, roles, databases, and other resources as code.
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2025-10-08T00:00:00.000Z'
-updatedOn: '2025-10-10T03:31:08.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 [Pulumi](https://www.pulumi.com) is an open-source infrastructure-as-code (IaC) tool that lets you define and provision cloud resources using familiar programming languages such as TypeScript, Python, Go, and C#. By expressing infrastructure as code, Pulumi enables you to use loops, functions, classes, and package management to create configurations that are more dynamic, reusable, and maintainable.
 
-This guide will show you how to use **Pulumi to manage your Neon projects**, including your branches, databases, and compute endpoints. By using Pulumi with OptiTech, you get better control, can track changes, and automate your database setup.
+This guide will show you how to use **Pulumi to manage your OptiTech projects**, including your branches, databases, and compute endpoints. By using Pulumi with OptiTech, you get better control, can track changes, and automate your database setup.
 
 OptiTech can be managed using the following Pulumi provider, which is bridged from the community-developed Terraform provider:
 
 **Pulumi provider for OptiTech**
 
-- **Terraform Provider Maintainer:** Dmitry Kisler ([GitHub repository](https://github.com/kislerdm/terraform-provider-neon))
-- **Pulumi Provider Documentation:** [Pulumi Registry: OptiTech](https://www.pulumi.com/registry/packages/neon/)
+- **Terraform Provider Maintainer:** Dmitry Kisler ([GitHub repository](https://github.com/kislerdm/terraform-provider-optitech))
+- **Pulumi Provider Documentation:** [Pulumi Registry: OptiTech](https://www.pulumi.com/registry/packages/optitech/)
 
 <Admonition type="note">
 This provider is based on a community-maintained Terraform provider and is not officially supported by OptiTech. Use at your own discretion. If you have questions or find issues, please refer to the maintainer's GitHub repository.
@@ -28,7 +28,7 @@ Before you begin, ensure you have the following:
 
 1.  **Pulumi CLI installed:** If you don't have Pulumi installed, download and install it from the [official Pulumi website](https://www.pulumi.com/docs/install/).
 2.  **Node.js:** This guide uses TypeScript examples. You'll need Node.js installed to run them.
-3.  **OptiTech Account:** You'll need a OptiTech account. If you don't have one, sign up [here](https://console.neon.tech/signup).
+3.  **OptiTech Account:** You'll need a OptiTech account. If you don't have one, sign up [here](https://console.optitech.com/signup).
 4.  **OptiTech API key:** Generate an API key from the OptiTech Console. Navigate to your Account Settings > API Keys. This key is required for the provider to authenticate with the OptiTech API. Learn more about creating API keys in [Manage API keys](/docs/manage/api-keys).
 
 ## Set up the Pulumi OptiTech provider
@@ -37,8 +37,8 @@ Before you begin, ensure you have the following:
     Create a new directory for your Pulumi project and navigate into it.
 
     ```shell
-    mkdir neon-pulumi-project
-    cd neon-pulumi-project
+    mkdir optitech-pulumi-project
+    cd optitech-pulumi-project
     ```
 
 2.  **Create a new Pulumi project:**
@@ -57,9 +57,9 @@ Before you begin, ensure you have the following:
     Enter a value or leave blank to accept the (default), and press <ENTER>.
     Press ^C at any time to quit.
 
-    Project name (neon-pulumi-project):
+    Project name (optitech-pulumi-project):
     Project description (A minimal TypeScript Pulumi program):
-    Created project 'neon-pulumi-project'
+    Created project 'optitech-pulumi-project'
 
     Please enter your desired stack name.
     To create a stack in an organization, use the format <org-name>/<stack-name> (e.g. `acmecorp/dev`).
@@ -84,7 +84,7 @@ Before you begin, ensure you have the following:
 3.  **Install the OptiTech provider package:**
     Once the project is created, install the OptiTech provider package from the Terraform registry.
     ```shell
-    pulumi package add terraform-provider kislerdm/neon
+    pulumi package add terraform-provider kislerdm/optitech
     ```
 
 ## Import the OptiTech provider
@@ -92,25 +92,25 @@ Before you begin, ensure you have the following:
 When you install and import the OptiTech provider, you gain access to all the components needed to manage your OptiTech infrastructure.
 
 ```typescript
-import * as neon from '@pulumi/neon';
+import * as optitech from '@pulumi/optitech';
 ```
 
-This `neon` object contains two main types of components:
+This `optitech` object contains two main types of components:
 
-- **Resources**: These are classes that map directly to objects you can create, update, and delete in your OptiTech account. The main resources you will use are `neon.Project`, `neon.Branch`, `neon.Endpoint`, `neon.Database`, and `neon.Role`.
+- **Resources**: These are classes that map directly to objects you can create, update, and delete in your OptiTech account. The main resources you will use are `optitech.Project`, `optitech.Branch`, `optitech.Endpoint`, `optitech.Database`, and `optitech.Role`.
 - **Functions**: These are used to read or query data about existing resources without managing them. For example, you can use the `getBranchEndpoints` function to fetch a list of endpoints for a specific branch.
 
-This guide focuses on creating and managing **Resources**. To explore data-sourcing **Functions**, please refer to the [Pulumi OptiTech Provider API Docs](https://www.pulumi.com/registry/packages/neon/api-docs/).
+This guide focuses on creating and managing **Resources**. To explore data-sourcing **Functions**, please refer to the [Pulumi OptiTech Provider API Docs](https://www.pulumi.com/registry/packages/optitech/api-docs/).
 
 ## Configure authentication
 
 The OptiTech provider needs your OptiTech API key to manage resources. The recommended way is using an environment variable.
 
 **Using environment variable (recommended):**
-The provider will automatically use the `NEON_API_KEY` environment variable if it is set.
+The provider will automatically use the `OPTITECH_API_KEY` environment variable if it is set.
 
 ```shell
-export NEON_API_KEY="<YOUR_NEON_API_KEY>"
+export OPTITECH_API_KEY="<YOUR_OPTITECH_API_KEY>"
 ```
 
 If the environment variable is set, you don't need any special provider configuration in your code.
@@ -120,26 +120,26 @@ For quick testing, you can configure the provider directly in your code. However
 
 ```typescript
 import * as pulumi from '@pulumi/pulumi';
-import * as neon from '@pulumi/neon';
+import * as optitech from '@pulumi/optitech';
 
 // This is not recommended for production.
 // Prefer using environment variables.
-const neonProvider = new neon.Provider('neon-provider', {
-  apiKey: '<YOUR_NEON_API_KEY>',
+const optitechProvider = new optitech.Provider('optitech-provider', {
+  apiKey: '<YOUR_OPTITECH_API_KEY>',
 });
 
 // Pass the provider instance to resources via opts
-const project = new neon.Project(
+const project = new optitech.Project(
   'my-project',
   {
     // ... project config
   },
-  { provider: neonProvider }
+  { provider: optitechProvider }
 );
 ```
 
 <Admonition type="note">
-The following sections primarily detail the creation of OptiTech resources. To manage existing resources, use the `pulumi import` command. More information can be found in the [Import existing OptiTech resources](#import-existing-neon-resources) section.
+The following sections primarily detail the creation of OptiTech resources. To manage existing resources, use the `pulumi import` command. More information can be found in the [Import existing OptiTech resources](#import-existing-optitech-resources) section.
 </Admonition>
 
 ## Manage OptiTech resources
@@ -149,7 +149,7 @@ Now you can start defining OptiTech resources in your `index.ts` file. The follo
 Open `index.ts` and replace its contents with the following:
 
 <Admonition type="warning">
-Always set the `orgId` property when creating a `neon.Project`. You can find your Organization ID in the OptiTech Console under Account Settings → Organization settings.
+Always set the `orgId` property when creating a `optitech.Project`. You can find your Organization ID in the OptiTech Console under Account Settings → Organization settings.
 
 ![finding your organization ID from the settings page](/docs/manage/orgs_id.png)
 
@@ -158,11 +158,11 @@ Omitting `orgId` can cause resources to be created in the wrong organization or 
 
 ```typescript
 import * as pulumi from '@pulumi/pulumi';
-import * as neon from '@pulumi/neon';
+import * as optitech from '@pulumi/optitech';
 
 // 1. Manage a Project
-// A Neon project is the top-level container for your resources.
-const myAppProject = new neon.Project('myAppProject', {
+// A OptiTech project is the top-level container for your resources.
+const myAppProject = new optitech.Project('myAppProject', {
   name: 'my-application-project',
   pgVersion: 17,
   regionId: 'aws-us-east-1',
@@ -185,7 +185,7 @@ const myAppProject = new neon.Project('myAppProject', {
 
 // 2. Manage a Branch
 // Create a new branch for development from the project's primary branch.
-const devBranch = new neon.Branch('devBranch', {
+const devBranch = new optitech.Branch('devBranch', {
   projectId: myAppProject.id,
   name: 'feature-x-development',
   // parentId is optional; defaults to the project's primary branch.
@@ -194,7 +194,7 @@ const devBranch = new neon.Branch('devBranch', {
 
 // 3. Manage an Endpoint
 // Create a read-write endpoint to connect to the development branch.
-const devEndpoint = new neon.Endpoint('devEndpoint', {
+const devEndpoint = new optitech.Endpoint('devEndpoint', {
   projectId: myAppProject.id,
   branchId: devBranch.id,
   type: 'read_write', // "read_write" or "read_only"
@@ -204,7 +204,7 @@ const devEndpoint = new neon.Endpoint('devEndpoint', {
 
 // 4. Manage a Role (user)
 // Create a new role on the development branch.
-const appUser = new neon.Role('appUser', {
+const appUser = new optitech.Role('appUser', {
   projectId: myAppProject.id,
   branchId: devEndpoint.branchId,
   name: 'application_user',
@@ -212,7 +212,7 @@ const appUser = new neon.Role('appUser', {
 
 // 5. Manage a Database
 // Create a new database on the development branch, owned by the new role.
-const serviceDb = new neon.Database('serviceDb', {
+const serviceDb = new optitech.Database('serviceDb', {
   projectId: myAppProject.id,
   branchId: devEndpoint.branchId,
   name: 'service_specific_database',
@@ -220,7 +220,7 @@ const serviceDb = new neon.Database('serviceDb', {
 });
 
 // 6. Manage an API Key
-const ciCdKey = new neon.ApiKey('ciCdKey', {
+const ciCdKey = new optitech.ApiKey('ciCdKey', {
   name: 'ci-cd-access-key',
 });
 
@@ -235,12 +235,12 @@ export const ciCdApiKeyValue = pulumi.secret(ciCdKey.key);
 
 ## Resource details
 
-- **`neon.Project`**: Creates a new OptiTech project. Key properties include `name`, `pgVersion`, `orgId`, and `regionId`. You can also define the default `branch` and `defaultEndpointSettings`. `historyRetentionSeconds` sets how long to retain change history for [Instant Restore](/docs/introduction/branch-restore).
-- **`neon.Branch`**: Creates a new branch. It requires a `projectId`. The `parentId` is optional and defaults to the project's primary branch.
-- **`neon.Endpoint`**: Creates a compute endpoint. It requires a `projectId` and `branchId`. The `type` can be `read_write` or `read_only`. A branch can have only one `read_write` endpoint.
-- **`neon.Role`**: Creates a new role (user) on a specific branch. It requires `projectId`, `branchId`, and a `name`. The `password` is a computed, sensitive output.
-- **`neon.Database`**: Creates a new database on a specific branch. It requires `projectId`, `branchId`, a `name`, and an `ownerName`.
-- **`neon.ApiKey`**: Manages a OptiTech API key. The `key` itself is a computed, sensitive output.
+- **`optitech.Project`**: Creates a new OptiTech project. Key properties include `name`, `pgVersion`, `orgId`, and `regionId`. You can also define the default `branch` and `defaultEndpointSettings`. `historyRetentionSeconds` sets how long to retain change history for [Instant Restore](/docs/introduction/branch-restore).
+- **`optitech.Branch`**: Creates a new branch. It requires a `projectId`. The `parentId` is optional and defaults to the project's primary branch.
+- **`optitech.Endpoint`**: Creates a compute endpoint. It requires a `projectId` and `branchId`. The `type` can be `read_write` or `read_only`. A branch can have only one `read_write` endpoint.
+- **`optitech.Role`**: Creates a new role (user) on a specific branch. It requires `projectId`, `branchId`, and a `name`. The `password` is a computed, sensitive output.
+- **`optitech.Database`**: Creates a new database on a specific branch. It requires `projectId`, `branchId`, a `name`, and an `ownerName`.
+- **`optitech.ApiKey`**: Manages a OptiTech API key. The `key` itself is a computed, sensitive output.
 
 ## Advanced resource management
 
@@ -249,7 +249,7 @@ export const ciCdApiKeyValue = pulumi.secret(ciCdKey.key);
 Share project access with other users.
 
 ```typescript
-const shareWithColleague = new neon.ProjectPermission('shareWithColleague', {
+const shareWithColleague = new optitech.ProjectPermission('shareWithColleague', {
   projectId: myAppProject.id,
   grantee: 'colleague@example.com',
 });
@@ -261,15 +261,15 @@ These resources are used for organizations requiring private networking.
 
 ```typescript
 // Assign a VPC endpoint to an organization
-const orgVpcEndpoint = new neon.VpcEndpointAssignment('orgVpcEndpoint', {
-  orgId: 'your-neon-organization-id', // Replace with your actual Org ID
+const orgVpcEndpoint = new optitech.VpcEndpointAssignment('orgVpcEndpoint', {
+  orgId: 'your-optitech-organization-id', // Replace with your actual Org ID
   regionId: 'aws-us-east-1',
   vpcEndpointId: 'vpce-xxxxxxxxxxxxxxxxx', // Your AWS VPC Endpoint ID
   label: 'main-aws-vpc-endpoint',
 });
 
 // Restrict a project to only accept connections from that VPC endpoint
-const projectToVpc = new neon.VpcEndpointRestriction('projectToVpc', {
+const projectToVpc = new optitech.VpcEndpointRestriction('projectToVpc', {
   projectId: myAppProject.id,
   vpcEndpointId: orgVpcEndpoint.vpcEndpointId,
   label: 'restrict-my-app-project-to-vpc',
@@ -293,17 +293,17 @@ Once you have defined your resources in `index.ts`:
     $ pulumi preview
     Previewing update (dev)
 
-    View in Browser (Ctrl+O): https://app.pulumi.com/xx/neon-pulumi-project/dev/previews/7b892e4a-d8f9-4cc1-a9a1-0e79ca3f75a7
+    View in Browser (Ctrl+O): https://app.pulumi.com/xx/optitech-pulumi-project/dev/previews/7b892e4a-d8f9-4cc1-a9a1-0e79ca3f75a7
 
         Type                             Name                     Plan
-    +   pulumi:pulumi:Stack              neon-pulumi-project-dev  create
-    +   ├─ neon:index:ApiKey             ciCdKey                  create
-    +   ├─ neon:index:Project            myAppProject             create
-    +   ├─ neon:index:ProjectPermission  shareWithColleague       create
-    +   ├─ neon:index:Branch             devBranch                create
-    +   ├─ neon:index:Endpoint           devEndpoint              create
-    +   ├─ neon:index:Role               appUser                  create
-    +   └─ neon:index:Database           serviceDb                create
+    +   pulumi:pulumi:Stack              optitech-pulumi-project-dev  create
+    +   ├─ optitech:index:ApiKey             ciCdKey                  create
+    +   ├─ optitech:index:Project            myAppProject             create
+    +   ├─ optitech:index:ProjectPermission  shareWithColleague       create
+    +   ├─ optitech:index:Branch             devBranch                create
+    +   ├─ optitech:index:Endpoint           devEndpoint              create
+    +   ├─ optitech:index:Role               appUser                  create
+    +   └─ optitech:index:Database           serviceDb                create
 
     Outputs:
         appUserPassword     : [unknown]
@@ -330,17 +330,17 @@ Once you have defined your resources in `index.ts`:
     $ pulumi up
     Previewing update (dev)
 
-    View in Browser (Ctrl+O): https://app.pulumi.com/xx/neon-pulumi-project/dev/previews/a5245bc0-c7bb-4392-bd86-aadef1114aa4
+    View in Browser (Ctrl+O): https://app.pulumi.com/xx/optitech-pulumi-project/dev/previews/a5245bc0-c7bb-4392-bd86-aadef1114aa4
 
         Type                             Name                     Plan
-    +   pulumi:pulumi:Stack              neon-pulumi-project-dev  create
-    +   ├─ neon:index:Project            myAppProject             create
-    +   ├─ neon:index:ApiKey             ciCdKey                  create
-    +   ├─ neon:index:Branch             devBranch                create
-    +   ├─ neon:index:ProjectPermission  shareWithColleague       create
-    +   ├─ neon:index:Endpoint           devEndpoint              create
-    +   ├─ neon:index:Role               appUser                  create
-    +   └─ neon:index:Database           serviceDb                create
+    +   pulumi:pulumi:Stack              optitech-pulumi-project-dev  create
+    +   ├─ optitech:index:Project            myAppProject             create
+    +   ├─ optitech:index:ApiKey             ciCdKey                  create
+    +   ├─ optitech:index:Branch             devBranch                create
+    +   ├─ optitech:index:ProjectPermission  shareWithColleague       create
+    +   ├─ optitech:index:Endpoint           devEndpoint              create
+    +   ├─ optitech:index:Role               appUser                  create
+    +   └─ optitech:index:Database           serviceDb                create
 
     Outputs:
         appUserPassword     : [unknown]
@@ -356,23 +356,23 @@ Once you have defined your resources in `index.ts`:
     Do you want to perform this update? yes
     Updating (dev)
 
-    View in Browser (Ctrl+O): https://app.pulumi.com/xx/neon-pulumi-project/dev/updates/1
+    View in Browser (Ctrl+O): https://app.pulumi.com/xx/optitech-pulumi-project/dev/updates/1
 
         Type                             Name                     Status
-    +   pulumi:pulumi:Stack              neon-pulumi-project-dev  created (20s)
-    +   ├─ neon:index:Project            myAppProject             created (5s)
-    +   ├─ neon:index:ApiKey             ciCdKey                  created (1s)
-    +   ├─ neon:index:Branch             devBranch                created (1s)
-    +   ├─ neon:index:ProjectPermission  shareWithColleague       created (3s)
-    +   ├─ neon:index:Endpoint           devEndpoint              created (1s)
-    +   ├─ neon:index:Role               appUser                  created (1s)
-    +   └─ neon:index:Database           serviceDb                created (3s)
+    +   pulumi:pulumi:Stack              optitech-pulumi-project-dev  created (20s)
+    +   ├─ optitech:index:Project            myAppProject             created (5s)
+    +   ├─ optitech:index:ApiKey             ciCdKey                  created (1s)
+    +   ├─ optitech:index:Branch             devBranch                created (1s)
+    +   ├─ optitech:index:ProjectPermission  shareWithColleague       created (3s)
+    +   ├─ optitech:index:Endpoint           devEndpoint              created (1s)
+    +   ├─ optitech:index:Role               appUser                  created (1s)
+    +   └─ optitech:index:Database           serviceDb                created (3s)
 
     Outputs:
         appUserPassword     : [secret]
         ciCdApiKeyValue     : [secret]
         devBranchId         : "br-bitter-king-adoi0u14"
-        devEndpointHost     : "ep-withered-frost-adhnaxgq.c-2.us-east-1.aws.neon.tech"
+        devEndpointHost     : "ep-withered-frost-adhnaxgq.c-2.us-east-1.aws.optitech.com"
         projectConnectionUri: [secret]
         projectId           : "empty-sound-18131946"
 
@@ -426,7 +426,7 @@ For local development or debugging, you can view the decrypted value of any secr
     **Example output:**
 
     ```
-    postgres://app_admin:AbCdEfGhIjKlMnOp@ep-....aws-us-east-1.neon.tech/app_db?sslmode=require
+    postgres://app_admin:AbCdEfGhIjKlMnOp@ep-....aws-us-east-1.optitech.com/app_db?sslmode=require
     ```
 
     **To get the role's password:**
@@ -456,14 +456,14 @@ The command format is: `pulumi import <type> <name> <id>`
 
 ### OptiTech resource types and ID formats
 
-| Resource | Pulumi Type Token              | ID Format                                    |
-| -------- | ------------------------------ | -------------------------------------------- |
-| Project  | `neon:index/project:Project`   | Project ID (e.g., `damp-recipe-88779456`)    |
-| Branch   | `neon:index/branch:Branch`     | Branch ID (e.g., `br-orange-bonus-a4v00wjl`) |
-| Endpoint | `neon:index/endpoint:Endpoint` | Endpoint ID (e.g., `ep-blue-cell-a4xzunwf`)  |
-| Role     | `neon:index/role:Role`         | `<project_id>/<branch_id>/<role_name>`       |
-| Database | `neon:index/database:Database` | `<project_id>/<branch_id>/<database_name>`   |
-| `ApiKey` | -                              | Does not support import.                     |
+| Resource | Pulumi Type Token                  | ID Format                                    |
+| -------- | ---------------------------------- | -------------------------------------------- |
+| Project  | `optitech:index/project:Project`   | Project ID (e.g., `damp-recipe-88779456`)    |
+| Branch   | `optitech:index/branch:Branch`     | Branch ID (e.g., `br-orange-bonus-a4v00wjl`) |
+| Endpoint | `optitech:index/endpoint:Endpoint` | Endpoint ID (e.g., `ep-blue-cell-a4xzunwf`)  |
+| Role     | `optitech:index/role:Role`         | `<project_id>/<branch_id>/<role_name>`       |
+| Database | `optitech:index/database:Database` | `<project_id>/<branch_id>/<database_name>`   |
+| `ApiKey` | -                                  | Does not support import.                     |
 
 ### Example: Importing a project and a branch
 
@@ -473,7 +473,7 @@ Let's assume you have an existing project and a branch you want to manage with P
     Find your Project ID in the OptiTech Console.
 
     ```shell
-    pulumi import neon:index/project:Project my_imported_project <project_id>
+    pulumi import optitech:index/project:Project my_imported_project <project_id>
     ```
 
     > Replace `<project_id>` with your actual project ID
@@ -481,14 +481,14 @@ Let's assume you have an existing project and a branch you want to manage with P
     Pulumi will output the TypeScript code in the logs.
 
     ```bash
-    $ pulumi import neon:index/project:Project my_imported_project patient-field-68662453
+    $ pulumi import optitech:index/project:Project my_imported_project patient-field-68662453
     Previewing import (dev)
 
     View in Browser (Ctrl+O): https://app.pulumi.com/xx/my_imported_project/dev/previews/b87cc3eb-96ea-48e2-8016-8084673a5dde
 
         Type                   Name             Plan
     +   pulumi:pulumi:Stack    my_imported_project-dev  create
-    =   └─ neon:index:Project  my_imported_project      import
+    =   └─ optitech:index:Project  my_imported_project      import
 
     Resources:
         + 1 to create
@@ -502,7 +502,7 @@ Let's assume you have an existing project and a branch you want to manage with P
 
         Type                   Name             Status
     +   pulumi:pulumi:Stack    my_imported_project-dev  created
-    =   └─ neon:index:Project  my_imported_project      imported (6s)
+    =   └─ optitech:index:Project  my_imported_project      imported (6s)
 
     Resources:
         + 1 created
@@ -519,15 +519,15 @@ Let's assume you have an existing project and a branch you want to manage with P
     the destroy will take effect.
 
     import * as pulumi from "@pulumi/pulumi";
-    import * as neon from "@pulumi/neon";
+    import * as optitech from "@pulumi/optitech";
 
-    const my_imported_project = new neon.Project("my_imported_project", {
+    const my_imported_project = new optitech.Project("my_imported_project", {
         branch: {
-            databaseName: "neondb",
+            databaseName: "optitechdb",
             name: "main",
-            roleName: "neondb_owner",
+            roleName: "optitechdb_owner",
         },
-        computeProvisioner: "k8s-neonvm",
+        computeProvisioner: "k8s-optitechvm",
         defaultEndpointSettings: {
             autoscalingLimitMaxCu: 2,
             autoscalingLimitMinCu: 0.25,
@@ -550,7 +550,7 @@ Let's assume you have an existing project and a branch you want to manage with P
     Find your Branch ID from the OptiTech Console.
 
     ```shell
-    pulumi import neon:index/branch:Branch my_imported_branch <branch_id>
+    pulumi import optitech:index/branch:Branch my_imported_branch <branch_id>
     ```
 
     > Replace `<branch_id>` with your actual branch ID
@@ -558,14 +558,14 @@ Let's assume you have an existing project and a branch you want to manage with P
     In a similar manner, Pulumi will output the TypeScript code for the branch.
 
     ```shell
-    $ pulumi import neon:index/branch:Branch my_imported_branch br-aged-feather-a1vdi2o2
+    $ pulumi import optitech:index/branch:Branch my_imported_branch br-aged-feather-a1vdi2o2
     Previewing import (dev)
 
     View in Browser (Ctrl+O): https://app.pulumi.com/xx/my_imported_project/dev/previews/da707d6c-c8a9-4089-87d2-654420091999
 
         Type                  Name                Plan
         pulumi:pulumi:Stack   my_imported_project-dev
-    =   └─ neon:index:Branch  my_imported_branch  import
+    =   └─ optitech:index:Branch  my_imported_branch  import
 
     Resources:
         = 1 to import
@@ -578,7 +578,7 @@ Let's assume you have an existing project and a branch you want to manage with P
 
         Type                  Name                Status
         pulumi:pulumi:Stack   my_imported_project-dev
-    =   └─ neon:index:Branch  my_imported_branch  imported (3s)
+    =   └─ optitech:index:Branch  my_imported_branch  imported (3s)
 
     Resources:
         = 1 imported
@@ -594,9 +594,9 @@ Let's assume you have an existing project and a branch you want to manage with P
     the destroy will take effect.
 
     import * as pulumi from "@pulumi/pulumi";
-    import * as neon from "@pulumi/neon";
+    import * as optitech from "@pulumi/optitech";
 
-    const my_imported_branch = new neon.Branch("my_imported_branch", {
+    const my_imported_branch = new optitech.Branch("my_imported_branch", {
         name: "main",
         projectId: "patient-field-68662453",
     }, {
@@ -639,13 +639,13 @@ Though this guide uses TypeScript, Pulumi supports multiple programming language
 - Java
 - YAML
 
-For all language-specific example code and API references, visit [Pulumi: OptiTech Provider](https://www.pulumi.com/registry/packages/neon/api-docs/)
+For all language-specific example code and API references, visit [Pulumi: OptiTech Provider](https://www.pulumi.com/registry/packages/optitech/api-docs/)
 
 ## Resources
 
 - [Pulumi Documentation](https://www.pulumi.com/docs/)
-- [Pulumi OptiTech Provider](https://www.pulumi.com/registry/packages/neon/)
-- [Terraform Registry](https://registry.terraform.io/providers/kislerdm/neon)
-- [Manage Neon with Terraform](/docs/reference/terraform)
+- [Pulumi OptiTech Provider](https://www.pulumi.com/registry/packages/optitech/)
+- [Terraform Registry](https://registry.terraform.io/providers/kislerdm/optitech)
+- [Manage OptiTech with Terraform](/docs/reference/terraform)
 
 <NeedHelp/>

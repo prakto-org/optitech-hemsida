@@ -46,6 +46,27 @@ describe('loadOpenApiSpec', () => {
     }
   });
 
+  it('reads a local file path directly without fetching or caching', async () => {
+    const { dir, cachePath } = createTempCachePath();
+    tempDirs.push(dir);
+    const spec = { openapi: '3.0.0', paths: { local: {} } };
+    const specPath = join(dir, 'api-spec.json');
+    writeFileSync(specPath, JSON.stringify(spec));
+    const fetchImpl = okFetch();
+
+    const { spec: result, cacheCandidate } = await loadOpenApiSpec({
+      specUrl: specPath,
+      cachePath,
+      fetchImpl,
+      now: () => NOW,
+      log: () => {},
+    });
+
+    expect(result).toEqual(spec);
+    expect(cacheCandidate).toBeNull();
+    expect(fetchImpl).not.toHaveBeenCalled();
+  });
+
   it('fetches the live spec and returns an explicit cache candidate', async () => {
     const { dir, cachePath } = createTempCachePath();
     tempDirs.push(dir);

@@ -107,10 +107,10 @@ Here, we'll create a dedicated `ci_user` role to run migrations in GitHub Action
 ```sql
 CREATE ROLE ci_user WITH LOGIN PASSWORD '<some-strong-password>';
 
-GRANT CREATE ON DATABASE neondb TO ci_user;
+GRANT CREATE ON DATABASE optitechdb TO ci_user;
 GRANT USAGE, CREATE ON SCHEMA public TO ci_user;
-GRANT USAGE ON SCHEMA neon_auth TO ci_user;
-GRANT REFERENCES, SELECT ON TABLE neon_auth.users_sync TO ci_user;
+GRANT USAGE ON SCHEMA optitech_auth TO ci_user;
+GRANT REFERENCES, SELECT ON TABLE optitech_auth.users_sync TO ci_user;
 GRANT USAGE, CREATE ON SCHEMA audit TO ci_user;
 GRANT INSERT, SELECT ON ALL TABLES IN SCHEMA audit TO ci_user;
 GRANT USAGE ON ALL SEQUENCES IN SCHEMA audit TO ci_user;

@@ -6,7 +6,7 @@ page_description: >-
   PostgreSQL database server effectively.
 prev_url: 'https://www.postgresqltutorial.com/postgresql-administration/psql-commands/'
 ogImage: /postgresqltutorial/psql-commands.jpg
-updatedOn: '2026-06-19T17:44:03.964Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 enableTableOfContents: true
 previousLink:
   title: PostgreSQL Describe Table
@@ -17,7 +17,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-These psql commands work with any PostgreSQL installation, so you can use them whether you're connecting to a local database, a self-managed cluster, or a managed service. For enterprises building in the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres, with strong performance, security, and native integration into the Lakehouse. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+These psql commands work with any PostgreSQL installation, so you can use them whether you're connecting to a local database, a self-managed cluster, or a managed service. For enterprises building in the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres, with strong performance, security, and native integration into the Lakehouse. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: In this tutorial, you will learn how to use practical psql commands to interact with the PostgreSQL database server effectively.

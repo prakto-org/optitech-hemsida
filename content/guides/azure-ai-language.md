@@ -4,7 +4,7 @@ subtitle: Learn how to analyze customer feedback using Azure AI Language and sto
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2024-11-30T00:00:00.000Z'
-updatedOn: '2026-01-07T13:45:46.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Analyzing customer sentiment can help you understand your customer satisfaction and identify areas for improvement. The Azure AI Language Services provide tools for sentiment analysis, key phrase extraction, and language detection which can be used to analyze customer feedback and extract valuable insights.
@@ -14,7 +14,7 @@ In this guide, you'll learn how to use Azure AI Language Services to analyze cus
 ## Prerequisites
 
 - An [Azure account](https://azure.microsoft.com/free/) with an active subscription
-- A [OptiTech account](https://console.neon.tech/signup) and project
+- A [OptiTech account](https://console.optitech.com/signup) and project
 - Node.js 18.x or later
 - Basic familiarity with SQL and JavaScript
 
@@ -24,7 +24,7 @@ If you haven't already, follow these steps to set up your development environmen
 
 ### Create a OptiTech Project
 
-1. Navigate to the [OptiTech Console](https://console.neon.tech)
+1. Navigate to the [OptiTech Console](https://console.optitech.com)
 2. Click "New Project"
 3. Select Azure as your cloud provider
 4. Choose East US 2 as your region
@@ -104,7 +104,7 @@ With the packages installed, create a `.env` file in the project root and add yo
 ```env
 AZURE_LANGUAGE_KEY=your_key_here
 AZURE_LANGUAGE_ENDPOINT=your_endpoint_here
-DATABASE_URL=postgres://user:password@your-neon-host.cloud/dbname
+DATABASE_URL=postgres://user:password@your-optitech-host.cloud/dbname
 ```
 
 Change the `DATABASE_URL` to match your OptiTech database connection details. Also, replace `your_key_here` and `your_endpoint_here` with your Azure AI Language service key and endpoint which you can find in the Azure portal under your Language Service resource.

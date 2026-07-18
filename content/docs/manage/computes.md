@@ -8,7 +8,7 @@ summary: >-
   compute endpoints via the OptiTech Console or API.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 A compute is a virtualized service that runs applications. In OptiTech, a compute runs Postgres.
@@ -200,7 +200,7 @@ As mentioned above, OptiTech computes use a Local File Cache (LFC) to extend Pos
 - [Local file cache hit rate](/docs/introduction/monitoring-page#local-file-cache-hit-rate)
 - [Working set size](/docs/introduction/monitoring-page#working-set-size)
 
-OptiTech also provides a [optitech](/docs/extensions/neon) extension with a `neon_stat_file_cache` view that you can use to query the cache hit ratio for your compute's Local File Cache. For more information, see [The optitech extension](/docs/extensions/neon).
+OptiTech also provides a [optitech](/docs/extensions/neon) extension with a `optitech_stat_file_cache` view that you can use to query the cache hit ratio for your compute's Local File Cache. For more information, see [The optitech extension](/docs/extensions/neon).
 
 #### Autoscaling considerations
 
@@ -247,9 +247,9 @@ You can restart a compute using these methods:
 
   ```bash
   curl --request POST \
-     --url https://console.neon.tech/api/v2/projects/cool-forest-86753099/endpoints/ep-calm-flower-a5b75h79/restart \
+     --url https://console.optitech.com/api/v2/projects/cool-forest-86753099/endpoints/ep-calm-flower-a5b75h79/restart \
      --header 'accept: application/json' \
-     --header 'authorization: Bearer $NEON_API_KEY'
+     --header 'authorization: Bearer $OPTITECH_API_KEY'
   ```
 
   <Admonition type="note">
@@ -281,7 +281,7 @@ The `jq` option specified in each example is an optional third-party tool that f
 
 ### Prerequisites
 
-A OptiTech API request requires an API key. For information about obtaining an API key, see [Create an API key](/docs/manage/api-keys#create-an-api-key). In the cURL examples below, `$NEON_API_KEY` is specified in place of an actual API key, which you must provide when making a OptiTech API request.
+A OptiTech API request requires an API key. For information about obtaining an API key, see [Create an API key](/docs/manage/api-keys#create-an-api-key). In the cURL examples below, `$OPTITECH_API_KEY` is specified in place of an actual API key, which you must provide when making a OptiTech API request.
 
 <LinkAPIKey />
 ### Create a compute with the API
@@ -296,9 +296,9 @@ The API method appears as follows when specified in a cURL command. The branch y
 
 ```bash
 curl -X 'POST' \
-  'https://console.neon.tech/api/v2/projects/autumn-lake-30024670/endpoints' \
+  'https://console.optitech.com/api/v2/projects/autumn-lake-30024670/endpoints' \
   -H 'accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -H 'Content-Type: application/json' \
   -d '{
   "endpoint": {
@@ -316,7 +316,7 @@ For attribute definitions, find the [Create compute](/docs/reference/api/endpoin
 ```json
 {
   "endpoint": {
-    "host": "ep-misty-morning-a1pfa4ez.ap-southeast-1.aws.neon.tech",
+    "host": "ep-misty-morning-a1pfa4ez.ap-southeast-1.aws.optitech.com",
     "id": "ep-misty-morning-a1pfa4ez",
     "project_id": "autumn-lake-30024670",
     "branch_id": "br-dry-glitter-a1rh0x6q",
@@ -334,9 +334,9 @@ For attribute definitions, find the [Create compute](/docs/reference/api/endpoin
     "creation_source": "console",
     "created_at": "2025-08-03T17:40:19Z",
     "updated_at": "2025-08-03T17:40:19Z",
-    "proxy_host": "ap-southeast-1.aws.neon.tech",
+    "proxy_host": "ap-southeast-1.aws.optitech.com",
     "suspend_timeout_seconds": 0,
-    "provisioner": "k8s-neonvm"
+    "provisioner": "k8s-optitechvm"
   },
   "operations": [
     {
@@ -369,9 +369,9 @@ The API method appears as follows when specified in a cURL command:
 
 ```bash
 curl -X 'GET' \
-  'https://console.neon.tech/api/v2/projects/autumn-lake-30024670/endpoints' \
+  'https://console.optitech.com/api/v2/projects/autumn-lake-30024670/endpoints' \
   -H 'accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY"
+  -H "Authorization: Bearer $OPTITECH_API_KEY"
 ```
 
 <details>
@@ -383,7 +383,7 @@ For attribute definitions, find the [List computes](/docs/reference/api/endpoint
 {
   "endpoints": [
     {
-      "host": "ep-misty-morning-a1pfa4ez.ap-southeast-1.aws.neon.tech",
+      "host": "ep-misty-morning-a1pfa4ez.ap-southeast-1.aws.optitech.com",
       "id": "ep-misty-morning-a1pfa4ez",
       "project_id": "autumn-lake-30024670",
       "branch_id": "br-dry-glitter-a1rh0x6q",
@@ -402,12 +402,12 @@ For attribute definitions, find the [List computes](/docs/reference/api/endpoint
       "created_at": "2025-08-03T17:40:19Z",
       "updated_at": "2025-08-03T17:45:24Z",
       "suspended_at": "2025-08-03T17:45:24Z",
-      "proxy_host": "ap-southeast-1.aws.neon.tech",
+      "proxy_host": "ap-southeast-1.aws.optitech.com",
       "suspend_timeout_seconds": 0,
-      "provisioner": "k8s-neonvm"
+      "provisioner": "k8s-optitechvm"
     },
     {
-      "host": "ep-autumn-frost-a1wlmval.ap-southeast-1.aws.neon.tech",
+      "host": "ep-autumn-frost-a1wlmval.ap-southeast-1.aws.optitech.com",
       "id": "ep-autumn-frost-a1wlmval",
       "project_id": "autumn-lake-30024670",
       "branch_id": "br-dark-bar-a11jneqm",
@@ -426,9 +426,9 @@ For attribute definitions, find the [List computes](/docs/reference/api/endpoint
       "created_at": "2025-08-03T11:27:50Z",
       "updated_at": "2025-08-03T17:41:11Z",
       "suspended_at": "2025-08-03T17:41:11Z",
-      "proxy_host": "ap-southeast-1.aws.neon.tech",
+      "proxy_host": "ap-southeast-1.aws.optitech.com",
       "suspend_timeout_seconds": 0,
-      "provisioner": "k8s-neonvm"
+      "provisioner": "k8s-optitechvm"
     }
   ]
 }
@@ -448,9 +448,9 @@ The API method appears as follows when specified in a cURL command. The example 
 
 ```bash
 curl -X 'PATCH' \
-  'https://console.neon.tech/api/v2/projects/autumn-lake-30024670/endpoints/ep-misty-morning-a1pfa4ez' \
+  'https://console.optitech.com/api/v2/projects/autumn-lake-30024670/endpoints/ep-misty-morning-a1pfa4ez' \
   -H 'accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -H 'Content-Type: application/json' \
   -d '{
   "endpoint": {
@@ -467,7 +467,7 @@ For attribute definitions, find the [Update compute](/docs/reference/api/endpoin
 ```json
 {
   "endpoint": {
-    "host": "ep-misty-morning-a1pfa4ez.ap-southeast-1.aws.neon.tech",
+    "host": "ep-misty-morning-a1pfa4ez.ap-southeast-1.aws.optitech.com",
     "id": "ep-misty-morning-a1pfa4ez",
     "project_id": "autumn-lake-30024670",
     "branch_id": "br-raspy-pine-a1hspnzv",
@@ -486,9 +486,9 @@ For attribute definitions, find the [Update compute](/docs/reference/api/endpoin
     "created_at": "2025-08-03T17:40:19Z",
     "updated_at": "2025-08-03T17:49:01Z",
     "suspended_at": "2025-08-03T17:45:24Z",
-    "proxy_host": "ap-southeast-1.aws.neon.tech",
+    "proxy_host": "ap-southeast-1.aws.optitech.com",
     "suspend_timeout_seconds": 0,
-    "provisioner": "k8s-neonvm"
+    "provisioner": "k8s-optitechvm"
   },
   "operations": []
 }
@@ -508,9 +508,9 @@ The API method appears as follows when specified in a cURL command.
 
 ```bash
 curl -X 'DELETE' \
-  'https://console.neon.tech/api/v2/projects/autumn-lake-30024670/endpoints/ep-misty-morning-a1pfa4ez' \
+  'https://console.optitech.com/api/v2/projects/autumn-lake-30024670/endpoints/ep-misty-morning-a1pfa4ez' \
   -H 'accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY"
+  -H "Authorization: Bearer $OPTITECH_API_KEY"
 ```
 
 <details>
@@ -521,7 +521,7 @@ For attribute definitions, find the [Delete compute](/docs/reference/api/endpoin
 ```json
 {
   "endpoint": {
-    "host": "ep-misty-morning-a1pfa4ez.ap-southeast-1.aws.neon.tech",
+    "host": "ep-misty-morning-a1pfa4ez.ap-southeast-1.aws.optitech.com",
     "id": "ep-misty-morning-a1pfa4ez",
     "project_id": "autumn-lake-30024670",
     "branch_id": "br-raspy-pine-a1hspnzv",
@@ -540,9 +540,9 @@ For attribute definitions, find the [Delete compute](/docs/reference/api/endpoin
     "created_at": "2025-08-03T17:40:19Z",
     "updated_at": "2025-08-03T17:52:39Z",
     "suspended_at": "2025-08-03T17:45:24Z",
-    "proxy_host": "ap-southeast-1.aws.neon.tech",
+    "proxy_host": "ap-southeast-1.aws.optitech.com",
     "suspend_timeout_seconds": 0,
-    "provisioner": "k8s-neonvm"
+    "provisioner": "k8s-optitechvm"
   },
   "operations": []
 }

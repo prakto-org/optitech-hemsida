@@ -5,9 +5,8 @@ import { Children, isValidElement } from 'react';
 
 import LinkPreview from 'components/pages/doc/link-preview';
 import Link from 'components/shared/link';
-import getGlossaryItem from 'utils/get-glossary-item';
 
-const DocsLink = ({ href, children, ...otherProps }) => {
+const DocsLink = ({ href, children, glossaryItem = null, ...otherProps }) => {
   const baseUrl = process.env.NEXT_PUBLIC_DEFAULT_SITE_URL;
   const isExternal = href?.startsWith('http') && !href?.startsWith(baseUrl);
   const isGlossary =
@@ -28,17 +27,17 @@ const DocsLink = ({ href, children, ...otherProps }) => {
     return <span id={id} />;
   }
 
-  // Automatically generate previews for glossary links
-  if (isGlossary) {
-    const glossaryItem = getGlossaryItem(href);
-    if (glossaryItem) {
-      const { title, preview } = glossaryItem;
-      return (
-        <LinkPreview href={href} title={title} preview={preview} {...otherProps}>
-          {children}
-        </LinkPreview>
-      );
-    }
+  // Automatically generate previews for glossary links.
+  // The glossary item is looked up in the server layer (where the markdown
+  // file is readable) and passed down as a serializable prop, so server and
+  // client render the same tree.
+  if (isGlossary && glossaryItem) {
+    const { title, preview } = glossaryItem;
+    return (
+      <LinkPreview href={href} title={title} preview={preview} {...otherProps}>
+        {children}
+      </LinkPreview>
+    );
   }
 
   return (
@@ -58,6 +57,10 @@ const DocsLink = ({ href, children, ...otherProps }) => {
 DocsLink.propTypes = {
   href: PropTypes.string.isRequired,
   children: PropTypes.node.isRequired,
+  glossaryItem: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    preview: PropTypes.string.isRequired,
+  }),
 };
 
 export default DocsLink;

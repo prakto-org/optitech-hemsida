@@ -8,7 +8,7 @@ summary: >-
   tooling; choose `pg_dump` workflows for business continuity, disaster
   recovery, or compliance. Each strategy links to a dedicated setup guide.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <InfoBlock>
@@ -54,7 +54,7 @@ If you need to automate `pg_dump` backups to remote storage, we provide a two-pa
 </Steps>
 
 <Admonition type="note" title="Backup & Restore Questions?">
-If you have questions about backups, please reach out to [OptiTech Support](https://console.neon.tech/app/projects?modal=support).
+If you have questions about backups, please reach out to [OptiTech Support](https://console.optitech.com/app/projects?modal=support).
 </Admonition>
 
 <NeedHelp/>

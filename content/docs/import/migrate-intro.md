@@ -1,56 +1,52 @@
 ---
-title: OptiTech data migration guides
-subtitle: Learn how to migrate data to OptiTech Postgres from different database providers
+title: OptiTech migration guides
+subtitle: Learn how to move your compliance program to OptiTech from different tools
   and sources
 summary: >-
-  OptiTech migration guide selection page compares transfer methods (Import Data
-  Assistant, pg_dump/restore, pgcopydb, Logical Replication, pgloader, AWS DMS)
-  by database size, downtime tolerance, and skill level to help you pick the
-  right approach. Import Data Assistant is automated and targets databases under
-  10 GB. Logical Replication delivers near-zero downtime for production Postgres
-  workloads. pgloader covers non-Postgres sources including MySQL, MSSQL, and
-  SQLite. Also indexes provider-specific migration paths for Heroku, Supabase,
-  PlanetScale, RDS, Cloud SQL, and Azure, plus guidance for region migration and
-  Neon-to-Neon moves.
+  OptiTech migration guide selection page compares import methods (document
+  import, spreadsheet import, platform export import, guided onboarding, fresh
+  start with gap analysis) by program size, effort, and starting point to help
+  you pick the right approach. Also indexes source-specific migration paths for
+  spreadsheets and documents, consultant deliverables, Vanta, Drata,
+  Secureframe, Sprinto, Cyberday, and enterprise GRC tools.
 redirectFrom:
   - /docs/import/import-intro
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
-This guide helps you choose the best migration method based on your database size, downtime tolerance, source database type, and technical requirements.
+This guide helps you choose the best migration method based on where your compliance program lives today, how much history you need to keep, and how fast you need to be up and running.
 
 ## Migration methods
 
-| Method                                                        | Best For                               | Database Size | Downtime                | Technical Skill | Key Benefit                   |
-| ------------------------------------------------------------- | -------------------------------------- | ------------- | ----------------------- | --------------- | ----------------------------- |
-| [Import Data Assistant](/docs/import/import-data-assistant)   | Quick Postgres migrations              | Under 10GB    | Minimal (minutes–hours) | Low             | Easiest - fully automated     |
-| [pg_dump/restore](/docs/import/migrate-from-postgres)         | Standard Postgres migrations           | Any size      | Required                | Medium          | Reliable and well-tested      |
-| [pgcopydb](/docs/import/pgcopydb)                             | Large Postgres databases               | 10GB+         | Required                | Medium          | Parallel processing - fast    |
-| [Logical Replication](/docs/guides/logical-replication-guide) | Production Postgres workloads          | Any size      | Near-zero               | High            | Minimal downtime              |
-| [pgloader](#provider-specific-guides)                         | Non-Postgres sources                   | Any size      | Required                | Medium          | Handles MySQL, MSSQL, SQLite  |
-| [AWS DMS](/docs/import/migrate-aws-dms)                       | Multi-source or custom transformations | Any size      | Minimal (minutes–hours) | High            | Advanced transformation rules |
+| Method                                                                     | Best For                                     | Program size | Effort      | Key benefit                            |
+| -------------------------------------------------------------------------- | -------------------------------------------- | ------------ | ----------- | -------------------------------------- |
+| [Fresh start with gap analysis](/docs/get-started/full-backend-quickstart) | First-time compliance, small programs        | Starting out | Low         | Fastest path, nothing to carry over    |
+| [Document import](/docs/import/migrate-from-spreadsheets)                  | Policies and plans in Word or PDF            | Any size     | Low         | OptiTech maps documents to controls    |
+| [Spreadsheet import](/docs/import/migrate-from-spreadsheets)               | Risk registers and control matrices in Excel | Any size     | Medium      | Keeps your risk and control history    |
+| [Platform export import](/docs/import/migrate-from-vanta)                  | Moving from another compliance platform      | Any size     | Medium      | Controls and evidence mapped on import |
+| [Guided onboarding](/docs/introduction/plans#add-ons)                      | Complex programs, groups, regulated entities | Large        | Low for you | Our team runs the migration with you   |
 
 <Admonition type="tip" title="Quick guidance">
-If you can't afford downtime, use [Logical Replication](/docs/guides/logical-replication-guide). For Postgres databases under 10GB with some downtime flexibility, [Import Data Assistant](/docs/import/import-data-assistant) is the easiest option. For larger Postgres databases where downtime is acceptable, choose between [pg_dump/restore](/docs/import/migrate-from-postgres) (simplest) or [pgcopydb](/docs/import/pgcopydb) (fastest).
+If your program lives in spreadsheets and documents, start with [Spreadsheets and documents](/docs/import/migrate-from-spreadsheets), or load individual registers straight from a file with [CSV import](/docs/import/import-from-csv). If you're leaving another platform, pick your source below; controls and evidence map on import. If you're starting from scratch, skip migration entirely and run the [gap analysis](/docs/get-started/full-backend-quickstart).
 </Admonition>
 
-## Region migration
+## Source-specific guides
 
-If you need your OptiTech **database** in a different **region**, or a **Postgres-compatible export** from OptiTech, start with **[Region migration](/docs/import/region-migration)** for paths and tradeoffs. For **Neon-to-Neon** moves, use **[Migrate to another OptiTech region](/docs/import/migrate-neon-to-another-region)**. A project stays in one region; you create a **new** OptiTech project in the target region and migrate your **data**, or export. For a **piped** `pg_dump | pg_restore` between Neon projects, see **[Migrate data from another OptiTech project](/docs/import/migrate-from-neon)**.
+For step-by-step instructions tailored to where your program lives today, see [Spreadsheets and documents](/docs/import/migrate-from-spreadsheets), [SharePoint and Teams](/docs/import/migrate-from-sharepoint), [Consultant deliverables](/docs/import/migrate-from-consultants), [Swedish GDPR tools](/docs/import/migrate-from-gdpr-tools), [Vanta](/docs/import/migrate-from-vanta), [Drata](/docs/import/migrate-from-drata), [Secureframe](/docs/import/migrate-from-secureframe), [Sprinto](/docs/import/migrate-from-sprinto), [Cyberday](/docs/import/migrate-from-cyberday), [open source GRC tools](/docs/import/migrate-from-open-source), [enterprise GRC tools](/docs/import/migrate-from-grc-tools), or [another OptiTech organization](/docs/import/migrate-from-another-optitech).
 
-## Provider-specific guides
+## What carries over
 
-For step-by-step instructions tailored to specific databases or providers, see [MySQL](/docs/import/migrate-mysql), [MSSQL](/docs/import/migrate-mssql), [SQLite](/docs/import/migrate-sqlite), [Heroku](/docs/import/migrate-from-heroku), [Supabase](/docs/import/migrate-from-supabase), [PlanetScale](/docs/import/migrate-from-planetscale), [Turso](/docs/import/migrate-from-turso), [Render](/docs/import/migrate-from-render), [Azure](/docs/import/migrate-from-azure-postgres), [Digital Ocean](/docs/import/migrate-from-digital-ocean), [Railway](/docs/import/migrate-from-railway), [Firebase](/docs/import/migrate-from-firebase), or [another OptiTech project](/docs/import/migrate-from-neon).
+Whatever the source, the same things map into OptiTech:
 
-## Logical replication guides
+- **Policies and plans**: imported documents keep their content and get version control, review cycles, and e-signing
+- **Controls**: mapped against OptiTech's framework requirements, with cross-mapping applied automatically
+- **Risk register**: risks, scores, and treatment plans, linked to the controls that mitigate them
+- **Vendor register**: suppliers, classifications, and contract dates
+- **Evidence history**: imported as historical records, clearly separated from the continuously collected evidence that starts at cutover
 
-For near-zero downtime Postgres database migrations using logical replication, see guides for [AWS RDS](/docs/guides/logical-replication-rds-to-neon), [Google Cloud SQL](/docs/guides/logical-replication-cloud-sql), [AlloyDB](/docs/guides/logical-replication-alloydb), [Azure](/docs/import/migrate-from-azure-postgres), [Supabase](/docs/guides/logical-replication-supabase-to-neon), [PostgreSQL](/docs/guides/logical-replication-postgres-to-neon), or [Neon to Neon](/docs/guides/logical-replication-neon-to-neon).
+## What doesn't need migrating
 
-## Other imports
-
-- [Import data from CSV](/docs/import/import-from-csv): Import data from CSV files using psql
-- [Import sample data](/docs/import/import-sample-data): Try OptiTech with sample datasets
-- [Migrate schema only](/docs/import/migrate-schema-only): Migrate just the schema without data
+Evidence collection starts fresh from your integrations at cutover, which is the point: within days, your controls are verified by live checks instead of imported screenshots. Old evidence stays available for audits that cover the earlier period.
 
 <NeedHelp/>

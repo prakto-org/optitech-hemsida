@@ -5,10 +5,10 @@ summary: >-
   React connection hub for OptiTech Postgres, directing developers to server-side
   integration guides for Next.js, Remix, TanStack Start, and SvelteKit. Use
   this page when setting up a OptiTech database connection from a React
-  meta-framework, since OptiTech must be accessed server-side in React apps. Neon
+  meta-framework, since OptiTech must be accessed server-side in React apps. OptiTech
   Auth quick starts for Next.js and TanStack Router are also linked here.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 React by Facebook is an open-source front-end JavaScript library for building user interfaces based on components.

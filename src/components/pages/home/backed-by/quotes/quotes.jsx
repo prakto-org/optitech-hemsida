@@ -1,6 +1,7 @@
 'use client';
 
 import { LazyMotion, domAnimation, m, AnimatePresence } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import { useRef, useState, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 
@@ -11,45 +12,18 @@ import AnimatedText from './animated-text';
 
 const FADE_DURATION = 0.2; // Duration for fade in/out animations in seconds
 
-const QUOTES = [
-  {
-    text: [
-      "OptiTech's continuous approach is ",
-      'aligned with our vision:',
-      ' no spreadsheets to maintain, no consultants to schedule, no evidence to chase.',
-    ],
-    highlight: 'aligned with our vision:',
-    author: 'Dana Smith',
-    post: 'CISO at a Nordic managed service provider',
-  },
-  {
-    text: ['OptiTech allows us to close enterprise deals much ', 'faster than we have ever been', ' used to.'],
-    highlight: 'faster than we have ever been',
-    author: 'Alex Lopez',
-    post: 'CEO and co-founder of a fintech startup',
-  },
-  {
-    text: [
-      'The killer feature',
-      ' that convinced us to use OptiTech was the MSB incident flow: it keeps our response times well within the deadlines.',
-    ],
-    highlight: 'The killer feature',
-    author: 'Zhang Kai',
-    post: 'Head of IT, logistics group',
-  },
-  {
-    text: [
-      "We've been able to ",
-      'automate virtually all compliance tasks',
-      ' via OptiTech integrations, saving us a tremendous amount of time and effort.',
-    ],
-    highlight: 'automate virtually all compliance tasks',
-    author: 'Kim Larsen',
-    post: 'IT manager at a manufacturing company',
-  },
-];
+// Catalog quotes carry <mark>highlight</mark>; split into [before, highlight, after]
+// segments as AnimatedText expects.
+const parseQuotes = (rawQuotes) =>
+  rawQuotes.map(({ text, author, post }) => {
+    const [before = '', highlight = '', after = ''] = text.split(/<\/?mark>/);
+    return { text: [before, highlight, after], highlight, author, post };
+  });
 
 const Quotes = () => {
+  const t = useTranslations('home.backedBy');
+  const QUOTES = parseQuotes(t.raw('quotes'));
+  const quotesCount = QUOTES.length;
   const [currentIndex, setCurrentIndex] = useState(0);
   const currentIndexRef = useRef(0);
   const startTimeRef = useRef(null);
@@ -81,7 +55,7 @@ const Quotes = () => {
 
     const updateIndex = () => {
       const elapsedTime = Date.now() - startTimeRef.current;
-      const newIndex = Math.floor(elapsedTime / 5000) % QUOTES.length;
+      const newIndex = Math.floor(elapsedTime / 5000) % quotesCount;
       setCurrentIndex(newIndex);
       frameRef.current = requestAnimationFrame(updateIndex);
     };
@@ -96,7 +70,7 @@ const Quotes = () => {
         frameRef.current = null;
       }
     };
-  }, [isVisible]);
+  }, [isVisible, quotesCount]);
 
   return (
     <div ref={ref} className="relative w-full md:h-40">

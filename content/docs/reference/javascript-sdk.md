@@ -1,25 +1,25 @@
 ---
-title: Managed Better Auth and Data API SDK
-subtitle: Reference documentation for @neondatabase/neon-js (authentication and Data API database queries)
+title: Console and questionnaire SDK
+subtitle: Reference documentation for @optitech/optitech-js (team access and OptiTech API queries)
 summary: >-
-  The `@neondatabase/neon-js` TypeScript SDK combines Managed Better Auth and the OptiTech
-  Data API in one client, covering auth methods (email/password, OAuth, OTP,
-  password reset) alongside a PostgREST-style query builder (select, insert,
+  The `@optitech/optitech-js` TypeScript SDK combines team authentication and the OptiTech
+  API in one client, covering auth methods (email/password, OAuth, OTP,
+  password reset) alongside a query builder (select, insert,
   update, delete, rpc, filters) with automatic JWT forwarding. Choose this page
-  over the standalone `@neondatabase/postgrest-js` or `@neondatabase/auth`
+  over the standalone `@optitech/postgrest-js` or `@optitech/auth`
   packages when you need the full combined API reference in one place. Three
   adapters are documented: BetterAuthVanillaAdapter (default, Promise-based),
   BetterAuthReactAdapter (React hooks), and SupabaseAuthAdapter
   (Supabase-compatible migration path).
 enableTableOfContents: true
 layout: wide
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
-This page documents `@neondatabase/neon-js`, which combines Managed Better Auth and the Data API in a single client. OptiTech also publishes standalone packages:
+This page documents `@optitech/optitech-js`, which combines team authentication and the OptiTech API in a single client. It's the SDK to reach for when you build on top of OptiTech, for example to surface control status in your own dashboard or answer questionnaires programmatically. OptiTech also publishes standalone packages:
 
-- [`@neondatabase/postgrest-js`](/docs/data-api/get-started#any-authentication-provider): Data API with any authentication provider
-- [`@neondatabase/auth`](https://www.npmjs.com/package/@neondatabase/auth): Managed Better Auth without the Data API
+- [`@optitech/postgrest-js`](/docs/data-api/get-started#any-authentication-provider): the OptiTech API with any authentication provider
+- [`@optitech/auth`](https://www.npmjs.com/package/@optitech/auth): team authentication without the API query layer
 
 Authentication is provided through an adapter-based architecture, letting you work more easily with your existing code or preferred framework. Available adapters:
 
@@ -40,7 +40,7 @@ Install the TypeScript SDK in your project using npm, yarn, pnpm, or bun.
 <TwoColumnLayout.Block>
 
 ```bash
-npm install @neondatabase/neon-js
+npm install @optitech/optitech-js
 ```
 
 </TwoColumnLayout.Block>
@@ -65,38 +65,38 @@ Use this when you only need authentication (no database queries). You get:
 
 The auth methods are identical; only the access path differs. `client.auth.signIn.email()` and `auth.signIn.email()` do the same thing.
 
-For the full client, pass a single HTTPS OptiTech database URL without credentials or query parameters. The SDK derives the Neon Auth URL and Data API URL automatically. If you already have a Neon Auth URL or Data API URL, use the same URL without the `.neonauth` or `.apirest` hostname label and without the trailing `/auth` or `/rest/v1` path. The cell label (if present), region, and database path stay the same. If you need to override either derived URL, the object form is still supported.
+For the full client, pass a single HTTPS OptiTech database URL without credentials or query parameters. The SDK derives the OptiTech Auth URL and Data API URL automatically. If you already have a OptiTech Auth URL or Data API URL, use the same URL without the `.optitechauth` or `.apirest` hostname label and without the trailing `/auth` or `/rest/v1` path. The cell label (if present), region, and database path stay the same. If you need to override either derived URL, the object form is still supported.
 
 </TwoColumnLayout.Block>
 <TwoColumnLayout.Block>
 <CodeTabs labels={["Full client","Auth-only","With TypeScript types","With a different adapter"]}>
 
 ```typescript
-import { createClient } from '@neondatabase/neon-js';
+import { createClient } from '@optitech/optitech-js';
 
-// Use your Neon database URL without credentials or query parameters.
-// Example: https://ep-example.c-2.us-east-1.aws.neon.tech/neondb
-const client = createClient(import.meta.env.VITE_NEON_DATABASE_URL);
+// Use your OptiTech database URL without credentials or query parameters.
+// Example: https://ep-example.c-2.us-east-1.aws.optitech.com/optitechdb
+const client = createClient(import.meta.env.VITE_OPTITECH_DATABASE_URL);
 ```
 
 ```typescript
-import { createAuthClient } from '@neondatabase/neon-js/auth';
+import { createAuthClient } from '@optitech/optitech-js/auth';
 
-const auth = createAuthClient(import.meta.env.VITE_NEON_AUTH_URL);
+const auth = createAuthClient(import.meta.env.VITE_OPTITECH_AUTH_URL);
 ```
 
 ```typescript
-import { createClient } from '@neondatabase/neon-js';
+import { createClient } from '@optitech/optitech-js';
 import type { Database } from './types/database.types';
 
-const client = createClient<Database>(import.meta.env.VITE_NEON_DATABASE_URL);
+const client = createClient<Database>(import.meta.env.VITE_OPTITECH_DATABASE_URL);
 ```
 
 ```typescript
-import { createClient } from '@neondatabase/neon-js';
-import { BetterAuthReactAdapter } from '@neondatabase/neon-js/auth/react/adapters';
+import { createClient } from '@optitech/optitech-js';
+import { BetterAuthReactAdapter } from '@optitech/optitech-js/auth/react/adapters';
 
-const client = createClient(import.meta.env.VITE_NEON_DATABASE_URL, {
+const client = createClient(import.meta.env.VITE_OPTITECH_DATABASE_URL, {
   auth: {
     adapter: BetterAuthReactAdapter(),
   },
@@ -106,7 +106,7 @@ const client = createClient(import.meta.env.VITE_NEON_DATABASE_URL, {
 </CodeTabs>
 
 <Admonition type="warning" title="Not yet on npm">
-The single-URL form shown above, `createClient(url)`, requires a version of `@neondatabase/neon-js` that has not been published to npm as of this writing. The latest published version, `0.6.2-beta`, only accepts the two-URL object form below. If `npm install @neondatabase/neon-js` installs `0.6.2-beta` or earlier for you, use the object form instead.
+The single-URL form shown above, `createClient(url)`, requires a version of `@optitech/optitech-js` that has not been published to npm as of this writing. The latest published version, `0.6.2-beta`, only accepts the two-URL object form below. If `npm install @optitech/optitech-js` installs `0.6.2-beta` or earlier for you, use the object form instead.
 </Admonition>
 
 The object form remains available for custom endpoint layouts or local development setups where the Auth and Data API URLs cannot be derived from the same OptiTech database URL:
@@ -114,10 +114,10 @@ The object form remains available for custom endpoint layouts or local developme
 ```typescript
 const client = createClient({
   auth: {
-    url: import.meta.env.VITE_NEON_AUTH_URL,
+    url: import.meta.env.VITE_OPTITECH_AUTH_URL,
   },
   dataApi: {
-    url: import.meta.env.VITE_NEON_DATA_API_URL,
+    url: import.meta.env.VITE_OPTITECH_DATA_API_URL,
   },
 });
 ```

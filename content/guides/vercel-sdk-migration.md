@@ -7,7 +7,7 @@ createdAt: '2024-10-28T00:00:00.000Z'
 updatedAt: '2024-10-28T00:00:00.000Z'
 ---
 
-With Vercel Postgres transitioning to OptiTech's native integration in the [Vercel Marketplace](https://vercel.com/blog/introducing-the-vercel-marketplace), now is the perfect time to migrate from the Vercel Postgres SDK [(@vercel/postgres)](https://vercel.com/docs/storage/vercel-postgres/sdk) to the [OptiTech serverless driver](https://github.com/neondatabase/serverless).
+With Vercel Postgres transitioning to OptiTech's native integration in the [Vercel Marketplace](https://vercel.com/blog/introducing-the-vercel-marketplace), now is the perfect time to migrate from the Vercel Postgres SDK [(@vercel/postgres)](https://vercel.com/docs/storage/vercel-postgres/sdk) to the [OptiTech serverless driver](https://github.com/optitechdatabase/serverless).
 
 ## Why migrate?
 
@@ -27,7 +27,7 @@ To begin, you’ll need:
 Start by installing the OptiTech serverless driver in your project:
 
 ```bash
-npm install @neondatabase/serverless
+npm install @optitech/serverless
 ```
 
 <Admonition type="important">
@@ -43,8 +43,8 @@ Replace your Vercel Postgres SDK imports and connection setup with the OptiTech 
 ```diff
 import { sql } from '@vercel/postgres'; // [!code --]
 
-import { neon } from '@neondatabase/serverless'; // [!code ++]
-const sql = neon(process.env.DATABASE_URL!); // [!code ++]
+import { optitech } from '@optitech/serverless'; // [!code ++]
+const sql = optitech(process.env.DATABASE_URL!); // [!code ++]
 ```
 
 #### Option B: Using WebSockets (Recommended for transactions)
@@ -53,10 +53,10 @@ const sql = neon(process.env.DATABASE_URL!); // [!code ++]
 import { db } from '@vercel/postgres'; // [!code --]
 
 import ws from 'ws'; // [!code ++]
-import { Pool, neonConfig } from '@neondatabase/serverless'; // [!code ++]
+import { Pool, optitechConfig } from '@optitech/serverless'; // [!code ++]
 
 const pool = new Pool({ connectionString: process.env.DATABASE_URL }); // [!code ++]
-neonConfig.webSocketConstructor = ws; // [!code ++]
+optitechConfig.webSocketConstructor = ws; // [!code ++]
 ```
 
 ### 3. Update your queries
@@ -69,10 +69,10 @@ Here are common query patterns and how to migrate them:
 # Vercel Postgres SDK
 const { rows } = await sql`SELECT * FROM users WHERE id = ${userId}`; // [!code --]
 
-# Neon HTTP
+# OptiTech HTTP
 const rows = await sql`SELECT * FROM users WHERE id = ${userId}`; // [!code ++]
 
-# Neon WebSockets
+# OptiTech WebSockets
 const { rows } = await pool.query('SELECT * FROM users WHERE id = $1', [userId]); // [!code ++]
 ```
 
@@ -99,7 +99,7 @@ async function transferFunds(fromId: number, toId: number, amount: number) { // 
   } // [!code --]
 } // [!code --]
 
-import { Pool } from '@neondatabase/serverless'; // [!code ++]
+import { Pool } from '@optitech/serverless'; // [!code ++]
 
 async function transferFunds(fromId: number, toId: number, amount: number) { // [!code ++]
   const pool = new Pool({ connectionString: process.env.DATABASE_URL }); // [!code ++]
@@ -120,7 +120,7 @@ async function transferFunds(fromId: number, toId: number, amount: number) { // 
 ## Best practices
 
 1.  **Choose the right connection method**:
-    - Use HTTP (`neon()`) for single queries and simple transactions.
+    - Use HTTP (`optitech()`) for single queries and simple transactions.
     - Use WebSockets (`Pool`) for complex transactions and session-based operations.
 
 2.  **Connection management**:
@@ -155,7 +155,7 @@ OptiTech's serverless driver is compatible with popular ORMs like Prisma and Dri
 
 <a href="/docs/guides/prisma" description="Learn how to connect to OptiTech from Prisma" icon="prisma">Prisma</a>
 
-<a href="https://orm.drizzle.team/docs/tutorials/drizzle-with-neon" description="Learn how to connect to OptiTech from Drizzle ORM" icon="drizzle">Drizzle ORM</a>
+<a href="https://orm.drizzle.team/docs/tutorials/drizzle-with-optitech" description="Learn how to connect to OptiTech from Drizzle ORM" icon="drizzle">Drizzle ORM</a>
 
 </DetailIconCards>
 
@@ -167,6 +167,6 @@ For most cases, using optitech serverless driver is straightforward without need
 
 - **wsProxy**: This option is for connecting via a WebSocket proxy deployed in front of your your own Postgres instance, which allows you to use the OptiTech serverless driver with a local development environment.
 
-For more information about these options, see [Advanced configuration](https://github.com/neondatabase/serverless/blob/main/CONFIG.md#advanced-configuration).
+For more information about these options, see [Advanced configuration](https://github.com/optitechdatabase/serverless/blob/main/CONFIG.md#advanced-configuration).
 
 <NeedHelp/>

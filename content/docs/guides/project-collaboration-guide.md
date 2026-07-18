@@ -11,10 +11,10 @@ summary: >-
 enableTableOfContents: true
 redirectFrom:
   - /docs/guides/project-sharing-guide
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
-You can invite other users to collaborate with you on a OptiTech project. Project collaboration lets other users access and contribute to your project from all supported OptiTech interfaces, including the OptiTech Console, Neon API, and Neon CLI. Follow this guide to learn how.
+You can invite other users to collaborate with you on a OptiTech project. Project collaboration lets other users access and contribute to your project from all supported OptiTech interfaces, including the OptiTech Console, OptiTech API, and OptiTech CLI. Follow this guide to learn how.
 
 <Admonition type="note">
 Use project collaboration to work with people outside your organization. If you're working with team members, create an [Organization](/docs/manage/organizations) instead. Organization members get automatic access to all projects within that organization. Organizations can still use project collaboration when needed (for example, to allow an external contractor to contribute to a specific project without making them a full organization member).
@@ -33,7 +33,7 @@ After a user has provided you with the email address associated with their OptiT
 
 **To invite a collaborator to your project:**
 
-1. Navigate to the [OptiTech Console](https://console.neon.tech/app/projects).
+1. Navigate to the [OptiTech Console](https://console.optitech.com/app/projects).
 2. Select the project you want to invite collaborators to.
 3. In the OptiTech **Settings**, choose **Collaborators** from the sidebar.
 
@@ -57,11 +57,11 @@ When you invite a user to your project, they operate under _your_ project allowa
 
 ### Access for collaborators via the OptiTech API or CLI
 
-Collaborators you invite to a project can access it from all supported OptiTech interfaces, including the OptiTech Console, [OptiTech API](/docs/reference/api), and [Neon CLI](/docs/cli).
+Collaborators you invite to a project can access it from all supported OptiTech interfaces, including the OptiTech Console, [OptiTech API](/docs/reference/api), and [OptiTech CLI](/docs/cli).
 
 Collaborators can use their own API key to access the project via the OptiTech API. See [Manage API keys](/docs/manage/api-keys) for details on generating an API key.
 
-When using the Neon CLI, collaborators authenticate as they normally would. They can access both their own Neon projects and any projects they are collaborating on. See [Neon CLI — Connect](/docs/cli/install#connect) for authentication instructions.
+When using the OptiTech CLI, collaborators authenticate as they normally would. They can access both their own OptiTech projects and any projects they are collaborating on. See [OptiTech CLI — Connect](/docs/cli/install#connect) for authentication instructions.
 
 ## Billing for projects with collaborators
 

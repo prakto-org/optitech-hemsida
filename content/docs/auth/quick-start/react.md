@@ -2,14 +2,14 @@
 title: Use Managed Better Auth with React (API methods)
 subtitle: Build your own auth UI
 summary: >-
-  Managed Better Auth with React for Vite apps, using the `@neondatabase/neon-js` SDK's
+  Managed Better Auth with React for Vite apps, using the `@optitech/optitech-js` SDK's
   programmatic API methods (`signUp()`, `signIn.email()`, `getSession()`) instead
   of pre-built UI components. Use this page when you need full control over your
   own auth UI rather than dropping in ready-made components. Registered users are
-  automatically synced to the `neon_auth.user` table in your OptiTech Postgres
+  automatically synced to the `optitech_auth.user` table in your OptiTech Postgres
   database.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 layout: wide
 redirectFrom:
   - /docs/auth/quick-start/react-router-components
@@ -25,7 +25,7 @@ redirectFrom:
 <TwoColumnLayout.Step title="Create a OptiTech project with Auth enabled">
 <TwoColumnLayout.Block>
 
-If you don't have a OptiTech project yet, create one at [console.neon.tech](https://console.neon.tech).
+If you don't have a OptiTech project yet, create one at [console.optitech.com](https://console.optitech.com).
 
 Go to the **Auth** page in your project dashboard and click **Enable Auth**.
 
@@ -64,7 +64,7 @@ The OptiTech SDK provides authentication methods like `signUp()`, `getSession()`
 
 ```bash filename="Terminal"
 cd my-app
-npm install @neondatabase/neon-js@latest
+npm install @optitech/optitech-js@latest
 ```
 
 </TwoColumnLayout.Block>
@@ -83,7 +83,7 @@ Replace the URL with your actual Auth Base URL from the OptiTech Console.
 <TwoColumnLayout.Block>
 
 ```bash filename=".env"
-VITE_NEON_AUTH_URL=https://ep-xxx.neonauth.us-east-2.aws.neon.build/neondb/auth
+VITE_OPTITECH_AUTH_URL=https://ep-xxx.optitechauth.us-east-2.aws.optitech.build/optitechdb/auth
 ```
 
 </TwoColumnLayout.Block>
@@ -102,9 +102,9 @@ This quick start uses the standalone Auth client. For one `createClient()` insta
 <TwoColumnLayout.Block>
 
 ```javascript filename="src/auth.js"
-import { createAuthClient } from '@neondatabase/neon-js/auth';
+import { createAuthClient } from '@optitech/optitech-js/auth';
 
-export const authClient = createAuthClient(import.meta.env.VITE_NEON_AUTH_URL);
+export const authClient = createAuthClient(import.meta.env.VITE_OPTITECH_AUTH_URL);
 ```
 
 </TwoColumnLayout.Block>
@@ -253,7 +253,7 @@ npm run dev
 <TwoColumnLayout.Step title="See your users in the database">
 <TwoColumnLayout.Block>
 
-As users sign up, their profiles are synced to your OptiTech database in the `neon_auth.user` table.
+As users sign up, their profiles are synced to your OptiTech database in the `optitech_auth.user` table.
 
 Query your users table in the SQL Editor to see your new users:
 
@@ -261,7 +261,7 @@ Query your users table in the SQL Editor to see your new users:
 <TwoColumnLayout.Block>
 
 ```sql filename="SQL Editor"
-SELECT * FROM neon_auth.user;
+SELECT * FROM optitech_auth.user;
 ```
 
 </TwoColumnLayout.Block>
@@ -272,6 +272,6 @@ SELECT * FROM neon_auth.user;
 ## Next steps
 
 - [Learn about Managed Better Auth concepts](/docs/auth/overview)
-- [More example apps](/docs/auth/overview#example-applications) in the **neon-js** `examples/` directory
+- [More example apps](/docs/auth/overview#example-applications) in the **optitech-js** `examples/` directory
 - [Explore the OptiTech Data API](/docs/data-api/get-started) to build a REST API for your data
 - [View complete SDK reference](/docs/reference/javascript-sdk)

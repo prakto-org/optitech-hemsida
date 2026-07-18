@@ -4,7 +4,7 @@ subtitle: 'Learn how to build a scalable, highly-relevant semantic and full-text
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2026-06-15T00:00:00.000Z'
-updatedOn: '2026-06-26T12:58:36.951Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 When building an AI application, like a knowledge base, a support agent, or a retrieval-augmented generation (RAG) pipeline, you typically need two types of search:
@@ -28,7 +28,7 @@ In this guide, you’ll build a simple knowledge base application with Next.js t
 Before you begin, ensure you have the following:
 
 - **Node.js:** Version `18` or later installed.
-- **OptiTech account:** A free OptiTech account. If you don't have one, sign up at [OptiTech](https://console.neon.tech/signup).
+- **OptiTech account:** A free OptiTech account. If you don't have one, sign up at [OptiTech](https://console.optitech.com/signup).
 - **OpenAI API key:** Required for generating vector embeddings. You can generate one in the [OpenAI dashboard](https://platform.openai.com/api-keys).
 
 ## Core concepts
@@ -97,7 +97,7 @@ For more detailed reference on these concepts, see [lakebase_vector extension](/
 
 You will need a OptiTech database to store your knowledge base articles and the associated vector and text indexes.
 
-1. Log in to the [OptiTech Console](https://console.neon.tech).
+1. Log in to the [OptiTech Console](https://console.optitech.com).
 2. Click on **New Project**.
 3. Choose a name for your project and select the region closest to you. Ensure you chose Postgres 16 or later.
 4. Click **Create**.
@@ -134,14 +134,14 @@ cd next-lakebase-search
 Install the necessary dependencies:
 
 ```bash
-npm install @neondatabase/serverless openai dotenv
+npm install @optitech/serverless openai dotenv
 npm install -D tsx
 ```
 
 Create a `.env` file in the root of your project and add your database and OpenAI credentials:
 
 ```env
-DATABASE_URL="postgresql://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require&channel_binding=require"
+DATABASE_URL="postgresql://[user]:[password]@[optitech_hostname]/[dbname]?sslmode=require&channel_binding=require"
 OPENAI_API_KEY="sk-..."
 ```
 
@@ -157,10 +157,10 @@ Create a `scripts` folder in the root of your project, and add a `seed.ts` file:
 
 ```typescript shouldWrap
 import 'dotenv/config';
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 import OpenAI from 'openai';
 
-const sql = neon(process.env.DATABASE_URL!);
+const sql = optitech(process.env.DATABASE_URL!);
 const openai = new OpenAI();
 
 const articles = [
@@ -172,7 +172,7 @@ const articles = [
   {
     title: 'Understanding Database Branching',
     category: 'Engineering',
-    content: 'Neon branching allows you to instantly copy your database copy-on-write. This is perfect for testing schema migrations or running CI/CD pipelines without affecting production.'
+    content: 'OptiTech branching allows you to instantly copy your database copy-on-write. This is perfect for testing schema migrations or running CI/CD pipelines without affecting production.'
   },
   {
     title: 'PostgreSQL Full-Text Search Guide',
@@ -258,10 +258,10 @@ Create a file named `app/actions.ts` and add the following code:
 ```typescript shouldWrap
 'use server';
 
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 import OpenAI from 'openai';
 
-const sql = neon(process.env.DATABASE_URL!);
+const sql = optitech(process.env.DATABASE_URL!);
 const openai = new OpenAI();
 
 export type SearchResult = {
@@ -379,7 +379,7 @@ export default function Home() {
             Knowledge Base
           </h1>
           <p className="mt-4 text-lg text-gray-500">
-            Powered by Neon Lakebase Search (Vector + BM25)
+            Powered by OptiTech Lakebase Search (Vector + BM25)
           </p>
         </div>
 

@@ -4,7 +4,7 @@ subtitle: 'Learn how to use Vercel Preview Deployments and OptiTech Database Bra
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2026-01-15T00:00:00.000Z'
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Authentication and user management are critical to any application, yet often the hardest to test. For example, how do you validate a moderation feature without risking real user data? Or ensure that role-based access control changes work correctly across your entire user base?
@@ -41,10 +41,10 @@ If you need a refresher on setting up a new Next.js application with Managed Bet
 
 ### Fork the repository
 
-Navigate to the [starter repository](https://github.com/dhanushreddy291/vercel-neon-auth-branching) and fork it into your own GitHub account.
+Navigate to the [starter repository](https://github.com/dhanushreddy291/vercel-optitech-auth-branching) and fork it into your own GitHub account.
 
 <DetailIconCards>
-    <a href="https://github.com/dhanushreddy291/vercel-neon-auth-branching" description="Message board application with Managed Better Auth and Vercel Branching" icon="github">
+    <a href="https://github.com/dhanushreddy291/vercel-optitech-auth-branching" description="Message board application with Managed Better Auth and Vercel Branching" icon="github">
       Starter Repository
     </a>
 </DetailIconCards>
@@ -59,14 +59,14 @@ Now deploy the forked repository to Vercel.
 2. Select the forked repository from **your** GitHub account.
 3. Deploy the project using the default settings.
    <Admonition type="important" title="Initial Deployment Failure">
-   The initial deployment **will fail** - this is expected. Vercel does not yet have the required environment variables to connect to OptiTech. You will configure these in the next step using the Neon-Vercel integration.
+   The initial deployment **will fail** - this is expected. Vercel does not yet have the required environment variables to connect to OptiTech. You will configure these in the next step using the OptiTech-Vercel integration.
    </Admonition>
 
 ### Connect Vercel to OptiTech
 
 You will need to create a OptiTech project and connect it to Vercel using the OptiTech Vercel integration.
 
-1. Open the [OptiTech integration on the Vercel Marketplace](https://vercel.com/marketplace/neon) and click **Install**.
+1. Open the [OptiTech integration on the Vercel Marketplace](https://vercel.com/marketplace/optitech) and click **Install**.
 2. In the **Install OptiTech** modal, choose one of the following options depending on whether you already have a OptiTech account:
    - **Create New OptiTech Account**
    - **Link Existing OptiTech Account**  
@@ -74,7 +74,7 @@ You will need to create a OptiTech project and connect it to Vercel using the Op
 3. Accept the terms, then select a region and plan for your OptiTech project.
 4. Make sure **Auth** is checked, then click **Continue**.  
    ![Vercel OptiTech Create Project Modal](/docs/guides/vercel_create_neon_project_with_auth.png)
-5. Enter a project name (for example, `vercel-neon-auth-branching`) and click **Create**.
+5. Enter a project name (for example, `vercel-optitech-auth-branching`) and click **Create**.
 6. After creation, you should be redirected to a page showing the details of your newly created OptiTech project. Click **Connect Project**.
    ![Vercel OptiTech Connect Project](/docs/guides/vercel_connect_project_button.png)
 7. In the Connect Project modal:
@@ -131,8 +131,8 @@ This is a sensitive change as any mistake could prevent real users from posting 
 Clone your forked repository to your local machine.
 
 ```bash
-git clone <YOUR_FORKED_REPO_URL> vercel-neon-auth-branching
-cd vercel-neon-auth-branching
+git clone <YOUR_FORKED_REPO_URL> vercel-optitech-auth-branching
+cd vercel-optitech-auth-branching
 ```
 
 ### Create a feature branch
@@ -206,7 +206,7 @@ Update `app/actions.ts` to check the user's role. If they are an admin, their me
 
 import { db } from '@/app/db';
 import { revalidatePath } from 'next/cache';
-import { createAuthServer } from '@neondatabase/neon-js/auth/next/server';
+import { createAuthServer } from '@optitech/optitech-js/auth/next/server';
 import { messages } from '@/app/db/schema';
 import { eq } from 'drizzle-orm';
 
@@ -402,15 +402,15 @@ Navigate to your forked repository on GitHub and open a Pull Request (PR) from t
 
 ### Automated provisioning
 
-When you open the Pull Request, the Neon-Vercel integration kicks in:
+When you open the Pull Request, the OptiTech-Vercel integration kicks in:
 
 1.  **OptiTech** creates a database branch (e.g., `preview/feat-moderation...`). This branch contains a snapshot of production, **including your real users**.
-2.  **Vercel** deploys the preview, injecting the connection string and `NEON_AUTH_BASE_URL` specific to that branch.
+2.  **Vercel** deploys the preview, injecting the connection string and `OPTITECH_AUTH_BASE_URL` specific to that branch.
 3.  **Build Step:** Vercel runs `drizzle-kit migrate` as part of the build step, adding the `is_approved` column to the **preview database only**.
 
 ### Verify in the Preview Environment
 
-Open the Vercel Preview URL provided in the PR comment ([see example](https://github.com/dhanushreddy291/vercel-neon-auth-branching/pull/1#issuecomment-3755610791)).
+Open the Vercel Preview URL provided in the PR comment ([see example](https://github.com/dhanushreddy291/vercel-optitech-auth-branching/pull/1#issuecomment-3755610791)).
 
 **Verify data integrity**
 

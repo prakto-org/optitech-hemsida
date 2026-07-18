@@ -40,9 +40,9 @@ export function buildCurl(operation, paramValues, paramIncluded, bodyJson) {
   if (queryParts.length > 0) urlPath += '?' + queryParts.join('&');
 
   const hasBody = Object.keys(bodyJson).length > 0;
-  const lines = [`curl "https://console.neon.tech/api/v2${urlPath}" \\`];
+  const lines = [`curl "https://api.optitech.com/v1${urlPath}" \\`];
   if (operation.method !== 'GET') lines.push(`  -X ${operation.method} \\`);
-  lines.push(`  -H "Authorization: Bearer $NEON_API_KEY"`);
+  lines.push(`  -H "Authorization: Bearer $OPTITECH_API_KEY"`);
   if (hasBody) {
     lines[lines.length - 1] += ' \\';
     lines.push(`  -H "Content-Type: application/json" \\`);
@@ -82,7 +82,7 @@ function formatRawPropertyName(name) {
 function formatRawValue(value, depth = 0) {
   if (
     typeof value === 'string' &&
-    (value.startsWith('process.env.') || value === 'neon.client')
+    (value.startsWith('process.env.') || value === 'optitech.client')
   ) {
     return value;
   }
@@ -121,7 +121,7 @@ export function buildTs(operation, paramValues, paramIncluded, bodyJson) {
 
   const bodyStr = hasBody ? JSON.stringify(bodyJson, null, 2) : null;
 
-  const rawOptions = { client: 'neon.client' };
+  const rawOptions = { client: 'optitech.client' };
   if (pathParams.length > 0) {
     rawOptions.path = {};
     for (const p of pathParams) {
@@ -137,9 +137,9 @@ export function buildTs(operation, paramValues, paramIncluded, bodyJson) {
   if (bodyStr) rawOptions.body = bodyJson;
 
   return [
-    `import { createNeonClient, raw } from '@neon/sdk';`,
+    `import { createOptiTechClient, raw } from '@optitech/sdk';`,
     ``,
-    `const neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });`,
+    `const optitech = createOptiTechClient({ apiKey: process.env.OPTITECH_API_KEY });`,
     `const { data } = await raw.${sdkMethod}(${formatRawValue(rawOptions)});`,
   ].join('\n');
 }

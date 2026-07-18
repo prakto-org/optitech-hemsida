@@ -4,7 +4,7 @@ subtitle: Set up a OptiTech project in seconds and connect from a Next.js applic
 summary: >-
   Connection guide for wiring a Next.js application to OptiTech serverless Postgres
   using node-postgres, postgres.js, or the OptiTech serverless driver
-  (@neondatabase/serverless). Choose this page when you need working
+  (@optitech/serverless). Choose this page when you need working
   DATABASE_URL setup and driver code for App Router (Server Components, Server
   Actions), Pages Router (getServerSideProps, getStaticProps), Serverless
   Functions, or Edge Functions. The guide also explains Next.js static render
@@ -14,7 +14,7 @@ enableTableOfContents: true
 redirectFrom:
   - /docs/quickstart/vercel
   - /docs/integrations/vercel
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <CopyPrompt src="/prompts/nextjs-prompt.md"
@@ -36,7 +36,7 @@ To create a OptiTech project and access it from a Next.js application:
 
 If you do not have one already, create a OptiTech project. Save your connection details including your password. They are required when defining connection settings.
 
-1. Navigate to the [Projects](https://console.neon.tech/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
 2. Click **New Project**.
 3. Specify your project settings and click **Create Project**.
 
@@ -57,17 +57,17 @@ If you do not have one already, create a OptiTech project. Save your connection 
    ```
 
    ```shell
-   npm install @neondatabase/serverless
+   npm install @optitech/serverless
    ```
 
    </CodeTabs>
 
 ## Store your OptiTech credentials
 
-Add a `.env` file to your project directory and add your Neon connection string to it. You can find your OptiTech database connection string by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
+Add a `.env` file to your project directory and add your OptiTech connection string to it. You can find your OptiTech database connection string by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
 
 ```shell shouldWrap
-DATABASE_URL="postgresql://<user>:<password>@<endpoint_hostname>.neon.tech:<port>/<dbname>?sslmode=require&channel_binding=require"
+DATABASE_URL="postgresql://<user>:<password>@<endpoint_hostname>.optitech.com:<port>/<dbname>?sslmode=require&channel_binding=require"
 ```
 
 ## Configure the Postgres client
@@ -127,10 +127,10 @@ export default async function Page() {
 ```
 
 ```javascript
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 
 async function getData() {
-  const sql = neon(process.env.DATABASE_URL);
+  const sql = optitech(process.env.DATABASE_URL);
   const response = await sql`SELECT version()`;
   return response[0].version;
 }
@@ -206,12 +206,12 @@ export default async function Page() {
 ```
 
 ```javascript
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 
 export default async function Page() {
   async function create(formData: FormData) {
     "use server";
-    const sql = neon(process.env.DATABASE_URL);
+    const sql = optitech(process.env.DATABASE_URL);
     await sql`CREATE TABLE IF NOT EXISTS comments (comment TEXT)`;
     const comment = formData.get("comment");
     await sql`INSERT INTO comments (comment) VALUES (${comment})`;
@@ -279,10 +279,10 @@ export default function Page({ data }) {
 ```
 
 ```javascript
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 
 export async function getServerSideProps() {
-  const sql = neon(process.env.DATABASE_URL);
+  const sql = optitech(process.env.DATABASE_URL);
   const response = await sql`SELECT version()`;
   return { props: { data: response[0].version } };
 }
@@ -338,10 +338,10 @@ export default function Page({ data }) {
 ```
 
 ```javascript
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 
 export async function getStaticProps() {
-  const sql = neon(process.env.DATABASE_URL);
+  const sql = optitech(process.env.DATABASE_URL);
   const response = await sql`SELECT version()`;
   return { props: { data: response[0].version } };
 }
@@ -392,9 +392,9 @@ export default async function handler(req, res) {
 ```
 
 ```javascript
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 
-const sql = neon(process.env.DATABASE_URL);
+const sql = optitech(process.env.DATABASE_URL);
 
 export default async function handler(req, res) {
   const response = await sql`SELECT version()`;
@@ -414,9 +414,9 @@ export const config = {
   runtime: 'edge',
 };
 
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 
-const sql = neon(process.env.DATABASE_URL);
+const sql = optitech(process.env.DATABASE_URL);
 
 export default async function handler(req: Request) {
   const response = await sql`SELECT version()`;

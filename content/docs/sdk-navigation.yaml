@@ -85,8 +85,8 @@ auth/reference/nextjs-server:
           id: installation
         - title: Environment variables
           id: environment-variables
-        - title: createNeonAuth()
-          id: createneonauth
+        - title: createOptiTechAuth()
+          id: createoptitechauth
     - section: Core Methods
       items:
         - title: auth.handler()

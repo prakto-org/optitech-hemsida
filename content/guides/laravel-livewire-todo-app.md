@@ -4,7 +4,7 @@ subtitle: Learn how to create a simple yet powerful TODO app using Laravel, Live
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2024-06-30T00:00:00.000Z'
-updatedOn: '2025-05-30T16:53:05.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 In this guide, we'll walk through the process of building a TODO application using [Laravel](https://laravel.com/), [Livewire](https://livewire.laravel.com/), and [Volt](https://livewire.laravel.com/docs/volt).
@@ -20,7 +20,7 @@ Before we begin, ensure you have the following:
 - PHP 8.1 or higher installed on your system
 - [Composer](https://getcomposer.org/) for managing PHP dependencies
 - [Node.js](https://nodejs.org/) and npm for managing front-end assets
-- A [OptiTech](https://console.neon.tech/signup) account for database hosting
+- A [OptiTech](https://console.optitech.com/signup) account for database hosting
 - Basic knowledge of Laravel and Livewire
 
 ## Setting up the Project
@@ -75,14 +75,14 @@ Update your `.env` file with your OptiTech database credentials:
 
 ```env
 DB_CONNECTION=pgsql
-DB_HOST=your-neon-hostname.neon.tech
+DB_HOST=your-optitech-hostname.optitech.com
 DB_PORT=5432
 DB_DATABASE=your_database_name
 DB_USERNAME=your_username
 DB_PASSWORD=your_password
 ```
 
-Make sure to replace `your-neon-hostname`, `your_database_name`, `your_username`, and `your_password` with your actual OptiTech database details.
+Make sure to replace `your-optitech-hostname`, `your_database_name`, `your_username`, and `your_password` with your actual OptiTech database details.
 
 Once you've updated the `.env` file, run the following command to create the default tables:
 

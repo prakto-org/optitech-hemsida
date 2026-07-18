@@ -8,7 +8,7 @@ summary: >-
   serverless Postgres backend, with driver options for node-postgres,
   postgres.js, or the OptiTech serverless driver.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 [React Router](https://reactrouter.com/home) is a powerful routing library for React that also includes modern, full-stack framework features. This guide explains how to connect a React Router application to OptiTech using a server-side `loader` function.
@@ -21,7 +21,7 @@ To create a OptiTech project and access it from a React Router application:
 
 If you do not have one already, create a OptiTech project. Save your connection details including your password. They are required when defining connection settings.
 
-1. Navigate to the [Projects](https://console.neon.tech/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
 2. Click **New Project**.
 3. Specify your project settings and click **Create Project**.
 
@@ -47,17 +47,17 @@ If you do not have one already, create a OptiTech project. Save your connection 
    ```
 
    ```shell
-   npm install @neondatabase/serverless
+   npm install @optitech/serverless
    ```
 
    </CodeTabs>
 
 ## Store your OptiTech credentials
 
-Add a `.env` file to your project's root directory and add your Neon connection string to it. You can find the connection string for your database by clicking the **Connect** button on your **Project Dashboard**. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
+Add a `.env` file to your project's root directory and add your OptiTech connection string to it. You can find the connection string for your database by clicking the **Connect** button on your **Project Dashboard**. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
 
 ```shell shouldWrap
-DATABASE_URL="postgresql://<user>:<password>@<endpoint_hostname>.neon.tech:<port>/<dbname>?sslmode=require&channel_binding=require"
+DATABASE_URL="postgresql://<user>:<password>@<endpoint_hostname>.optitech.com:<port>/<dbname>?sslmode=require&channel_binding=require"
 ```
 
 ## Configure the Postgres client
@@ -134,12 +134,12 @@ export default function Version({ loaderData }: Route.ComponentProps) {
 ```
 
 ```tsx filename=app/routes/version.tsx
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 import type { Route } from './+types/version';
 
 // The loader function runs on the server
 export async function loader() {
-  const sql = neon(process.env.DATABASE_URL as string);
+  const sql = optitech(process.env.DATABASE_URL as string);
   const response = await sql`SELECT version()`;
   return { version: response[0].version };
 }

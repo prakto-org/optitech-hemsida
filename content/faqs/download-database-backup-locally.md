@@ -1,69 +1,39 @@
 ---
-title: 'How do I create and download a backup of my OptiTech database to my local machine?'
-subtitle: 'Run pg_dump in custom format against a direct connection string and save the archive to disk.'
+title: 'How do I download a full copy of my compliance data from OptiTech?'
+subtitle: 'Settings > Export produces documents, structured CSV data, and the evidence log with its integrity chain.'
 enableTableOfContents: true
-createdAt: '2026-05-18T00:00:00.000Z'
-updatedOn: '2026-06-01T20:42:32.665Z'
+createdAt: '2026-01-09T11:44:59.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 isDraft: false
 redirectFrom: []
 previousLink:
-  title: 'How do I delete a database in OptiTech?'
-  slug: delete-database-neon
+  title: 'How do I delete a framework or an entire workspace in OptiTech?'
+  slug: delete-database-optitech
 nextLink:
-  title: 'How do I enable or disable connection pooling for my OptiTech database?'
-  slug: enable-disable-connection-pooling-neon
+  title: 'How do I enable or pause automated evidence collection for an integration?'
+  slug: enable-disable-connection-pooling-optitech
 ---
 
-Use `pg_dump` against a direct (non-pooled) Neon connection string. The custom format (`-Fc`) gives you a single compressed archive that `pg_restore` can read selectively and in parallel. The output file lives on your local machine, so it's an off-platform copy independent of OptiTech. See [Migrate data from Postgres with pg_dump and pg_restore](/docs/import/migrate-from-postgres) for the full reference.
+## Quick answer
 
-## Create the backup
+Go to **Settings** > **Export** and request a full workspace export. You get a downloadable archive containing your documents (policies with version history, as PDF and source), structured data (controls, risks, suppliers, assets, findings as CSV), incident records, and the evidence log with its hash chain, so the export's integrity is independently verifiable. Owner or admin permissions required; the export event is logged.
 
-Copy the **direct** connection string from the **Connect** widget on your Project Dashboard (turn **Connection pooling** off so the hostname has no `-pooler` suffix). Then run:
+## What's in the archive
 
-```bash shouldWrap
-pg_dump -Fc -v -d "postgresql://alex:AbC123dEf@ep-cool-darkness-a1b2c3d4.us-east-2.aws.neon.tech/neondb" -f neondb-backup.dump
-```
+- **Documents**: every policy and procedure, all published versions, plus signature records of who acknowledged what and when.
+- **Structured registers**: controls with their framework mappings, the risk register with assessment history, the supplier register including questionnaire responses, and asset inventories, all as CSV for portability.
+- **Evidence log**: check results and attached artifacts with timestamps and the hash chain that makes tampering detectable after the fact.
+- **Incident records**: complete timelines and attachments, including submitted authority reports.
+- **Audit log**: administrative events (access changes, exports, deletions) for the workspace itself.
 
-The flags:
+## When to export
 
-- `-Fc` writes a custom-format archive (recommended for backups)
-- `-v` prints progress as it dumps
-- `-d` is the source connection string
-- `-f` is the output file
+- **Scheduled archival.** Many teams export quarterly or yearly into their document archive as a retention practice, independent of any plans to leave.
+- **Before big changes**: a [workspace deletion](/faqs/delete-database-neon), a [platform switch](/faqs/best-managed-postgres-services-risky-migration), or a corporate restructuring.
+- **On request**: an auditor, insurer, or authority wants a specific slice; note that for auditors, the [read-only portal](/faqs/find-database-url-neon) is usually the better answer than a data dump.
 
-To produce a date-stamped backup, use a shell variable:
+## Verifying and storing the export
 
-```bash shouldWrap
-pg_dump -Fc -d "$NEON_URL" -f "neondb-$(date +%Y-%m-%d).dump"
-```
+The archive includes a manifest with checksums and the evidence log's chain head, so you (or anyone you hand it to) can verify completeness and integrity without OptiTech's involvement. Store it under your normal document-retention rules: it contains incident details and security posture, which makes it sensitive; encrypt at rest and restrict access the same way you restrict the workspace itself. For targeted extracts rather than the full archive, see [exporting documentation as PDF or CSV](/faqs/export-database-sql-file).
 
-### Restore the backup later
-
-`pg_restore` reads custom-format archives back into any Postgres database:
-
-```bash
-pg_restore -v -d "$TARGET_URL" neondb-backup.dump
-```
-
-Add `--no-owner` if you're restoring to a different role, and `--clean --if-exists` if you want to drop existing objects first.
-
-## When to use a local backup
-
-OptiTech already keeps a change history that supports [instant restore](/docs/introduction/branch-restore) (point-in-time restore) within your project's [history window](/docs/introduction/history-window): up to 6 hours on Free, up to 7 days on Launch, and up to 30 days on Scale. For most accidental-delete recoveries, restoring from history inside OptiTech is faster than rebuilding from a local file.
-
-Local `pg_dump` backups are useful for:
-
-- Off-platform redundancy (your project's history doesn't help if you lose access to your OptiTech org)
-- Long-term archival beyond your history window
-- Compliance requirements that mandate an external copy
-- Moving data into a different Postgres instance
-
-<Admonition type="warning" title="Use a direct connection for pg_dump">
-`pg_dump` relies on session-level `SET` statements, which aren't supported by OptiTech's transaction-mode PgBouncer pooling. Always connect through the direct hostname (no `-pooler` segment). Pooled dumps can fail or produce incomplete output.
-</Admonition>
-
-<Admonition type="tip" title="For large databases">
-Add `-j <njobs>` to dump tables in parallel (set `<njobs>` to your CPU count) and `-Z 1` for light compression. For very large dumps, scale your OptiTech compute up temporarily so it can serve the read load without throttling.
-</Admonition>
-
-<CTA title="See all pg_dump options" description="Parallel dumps, ownership handling, large objects, and piping pg_dump to pg_restore for small databases." buttonText="Read the migration guide" buttonUrl="/docs/import/migrate-from-postgres" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

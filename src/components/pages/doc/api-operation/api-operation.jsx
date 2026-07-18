@@ -215,7 +215,7 @@ const ApiOperation = ({ operation, breadcrumbs, navigationLinks, currentSlug }) 
           <OperationDoc operation={operation} bodyTree={bodyTree} respTree={respTree} />
         </article>
 
-        <DocFooter slug={currentSlug} gitHubPath={null} />
+        <DocFooter slug={currentSlug} />
 
         <NavigationLinks
           className="mt-6"

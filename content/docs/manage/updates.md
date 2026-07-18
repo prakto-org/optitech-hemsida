@@ -11,7 +11,7 @@ summary: >-
   to handle the brief disruption.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 To keep your OptiTech [computes](/docs/reference/glossary#compute) and Postgres instances up to date with the latest patches and features, OptiTech applies updates to your project's computes. We notify you of updates in advance so that you can plan for them if necessary. On OptiTech's paid plans, you can select an update window (a specific day and hour for updates).
@@ -22,7 +22,7 @@ To apply updates to your compute (Postgres upgrades, security patches, and simil
 
 To protect performance, OptiTech **prewarms** your compute's cache during the update process, without adding time to the restart. Prewarming means repopulating Postgres's in-memory buffer cache from storage before your workload continues, so frequently used data is already in memory instead of being read cold from storage after the restart. Prewarming runs automatically. You do not configure it. There are no additional compute or storage costs associated with this behavior.
 
-For technical details, see [Zero-Downtime Patching Part 1: Prewarming](https://neon.com/blog/prewarming).
+For technical details, see [Zero-Downtime Patching Part 1: Prewarming](https://optitech.com/blog/prewarming).
 
 <Admonition type="important">
 Brief connection drops are expected during compute updates. Verify that your application has a retry policy configured to handle these brief interruptions. For guidance on implementing retry logic, see [Building resilient applications with Postgres](/guides/building-resilient-applications-with-postgres).
@@ -101,9 +101,9 @@ On OptiTech paid plans, the [Create project](/docs/reference/api/projects/create
 
 ```bash
 curl --request PATCH \
-     --url https://console.neon.tech/api/v2/projects/fragrant-mode-99795914 \
+     --url https://console.optitech.com/api/v2/projects/fragrant-mode-99795914 \
      --header 'accept: application/json' \
-     --header 'authorization: Bearer $NEON_API' \
+     --header 'authorization: Bearer $OPTITECH_API' \
      --header 'content-type: application/json' \
      --data '
 {
@@ -130,13 +130,13 @@ curl --request PATCH \
 
 You can retrieve your update window and check for planned updates using the [Retrieve project details](/docs/reference/api/projects/get-project) endpoint.
 
-To get your project details, send the following request, replacing `<your_project_id>` with your OptiTech project ID, and `$NEON_API_KEY` with your [OptiTech API key](/docs/manage/api-keys):
+To get your project details, send the following request, replacing `<your_project_id>` with your OptiTech project ID, and `$OPTITECH_API_KEY` with your [OptiTech API key](/docs/manage/api-keys):
 
 ```bash
 curl --request GET \
-     --url https://console.neon.tech/api/v2/projects/<your_project_id> \
+     --url https://console.optitech.com/api/v2/projects/<your_project_id> \
      --header 'accept: application/json' \
-     --header 'authorization: Bearer $NEON_API_KEY'
+     --header 'authorization: Bearer $OPTITECH_API_KEY'
 ```
 
 In the response, locate the `maintenance_window` field. It specifies the selected weekday and hour for updates. For Free plan accounts, the update window is set by OptiTech. Paid plan accounts can [choose a preferred update window](#updates-on-paid-plans). The `weekdays` value is a number from 1 to 7, representing the day of the week.

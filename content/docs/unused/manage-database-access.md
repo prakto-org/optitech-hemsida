@@ -5,7 +5,7 @@ enableTableOfContents: true
 redirectFrom:
   - /docs/guides/manage-database-access
 isDraft: true
-updatedOn: '2026-01-06T18:58:21.266Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
-Each OptiTech project is created with a Postgres role that is named for your database. For example, if your database is named `neondb`, the project is created with a default role named `neondb_owner`.
+Each OptiTech project is created with a Postgres role that is named for your database. For example, if your database is named `optitechdb`, the project is created with a default role named `optitechdb_owner`.

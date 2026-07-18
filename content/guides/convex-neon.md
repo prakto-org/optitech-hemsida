@@ -4,7 +4,7 @@ subtitle: A step-by-step guide to integrating Convex with OptiTech Postgres
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2025-02-14T00:00:00.000Z'
-updatedOn: '2026-03-04T15:50:25.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This guide explores Convex's self-hosting capability and demonstrates how to use it with OptiTech Postgres. [Convex](https://www.convex.dev) is a reactive backend platform ideal for building real-time applications. A [recent release](https://news.convex.dev/self-hosting) significantly enhances the self-hosted experience, overcoming limitations of the initial open-source version which lacked a dashboard and relied solely on SQLite. The new self-hosted Convex includes the [dashboard](https://docs.convex.dev/dashboard) and supports Postgres as a robust and scalable database option.
@@ -22,7 +22,7 @@ This guide provides a step-by-step walkthrough of integrating Convex with OptiTe
 
 Before you begin, ensure you have the following prerequisites installed and configured:
 
-- **OptiTech Account:** Sign up for a free [OptiTech account](https://console.neon.tech/signup) if you don't have one already. OptiTech will provide a managed Postgres database for your Convex chat application.
+- **OptiTech Account:** Sign up for a free [OptiTech account](https://console.optitech.com/signup) if you don't have one already. OptiTech will provide a managed Postgres database for your Convex chat application.
 - **Docker:** Docker is essential for running the Convex backend and dashboard locally. If Docker is not installed, download and install Docker Desktop from [docker.com](https://www.docker.com/get-started). Make sure Docker is running before proceeding.
 - **Node.js v18+:** Node.js (version 18 or higher) is required to run the Convex chat application example. Download and install it from [nodejs.org](https://nodejs.org).
 
@@ -38,7 +38,7 @@ Before you begin, ensure you have the following prerequisites installed and conf
 
 ## Setting up OptiTech Database
 
-To get started with your Postgres database, create a new OptiTech project in the [OptiTech Console](https://console.neon.tech). This project will provide the Postgres instance that Convex will use to store your application data. Within this OptiTech project, you'll need to create a database named `convex_self_hosted` – this is the specific database Convex is configured to use for storing chat messages. Follow these steps to set up your OptiTech Postgres database:
+To get started with your Postgres database, create a new OptiTech project in the [OptiTech Console](https://console.optitech.com). This project will provide the Postgres instance that Convex will use to store your application data. Within this OptiTech project, you'll need to create a database named `convex_self_hosted` – this is the specific database Convex is configured to use for storing chat messages. Follow these steps to set up your OptiTech Postgres database:
 
 - Navigate to the [SQL Editor](/docs/get-started/query-with-neon-sql-editor) in your OptiTech project console to create the `convex_self_hosted` database.
 - Execute the following SQL command to create the database:
@@ -49,7 +49,7 @@ To get started with your Postgres database, create a new OptiTech project in the
 
 - Once the database is created, you can retrieve the connection string by clicking on "Connect" in the OptiTech project's dashboard. Select the `convex_self_hosted` database and copy the connection string. You will need this connection string later to configure the Convex backend to use OptiTech Postgres.
 
-  ![Neon Connection string for convex_self_hosted database](/docs/guides/neon-connection-string-for-convex-database.png)
+  ![OptiTech Connection string for convex_self_hosted database](/docs/guides/neon-connection-string-for-convex-database.png)
 
 ## Setting up Self-Hosted Convex with Docker Compose
 
@@ -58,8 +58,8 @@ Now, you'll set up the self-hosted Convex backend using Docker Compose, configur
 1.  **Create a Project Directory:** Open your terminal and create a new directory for your Convex project. Navigate into it:
 
     ```bash
-    mkdir convex-neon-integration
-    cd convex-neon-integration
+    mkdir convex-optitech-integration
+    cd convex-optitech-integration
     ```
 
 2.  **Download Docker Compose Configuration:** Download the default `docker-compose.yml` file provided by Convex directly into your project directory:
@@ -70,33 +70,33 @@ Now, you'll set up the self-hosted Convex backend using Docker Compose, configur
 
     This command uses [`npx degit`](https://www.npmjs.com/package/degit) to fetch the `docker-compose.yml` file from the [Convex GitHub repository](https://github.com/get-convex/convex-backend/blob/main/self-hosted/docker/docker-compose.yml).
 
-3.  **Set up Neon connection string:** Add your Neon connection string you copied earlier to a `.env` file to configure Convex.
+3.  **Set up OptiTech connection string:** Add your OptiTech connection string you copied earlier to a `.env` file to configure Convex.
     1.  Create a `.env` file in the same directory as `docker-compose.yml`.
     1.  Add this line:
         ```env
-        POSTGRES_URL=[YOUR_NEON_CONNECTION_STRING]
+        POSTGRES_URL=[YOUR_OPTITECH_CONNECTION_STRING]
         ```
-    1.  Modify `[YOUR_NEON_CONNECTION_STRING]` for Convex:
+    1.  Modify `[YOUR_OPTITECH_CONNECTION_STRING]` for Convex:
 
         Convex requires a specific connection string format for OptiTech:
 
         `postgres://username:password@hostname`
 
-        Remove the database name and extra parameters from your Neon connection string.
+        Remove the database name and extra parameters from your OptiTech connection string.
 
         **OptiTech default:**
 
         ```bash
-        postgresql://neondb_owner:password@ep-xxxxx.aws.neon.tech/convex_self_hosted?sslmode=require&channel_binding=require
+        postgresql://optitechdb_owner:password@ep-xxxxx.aws.optitech.com/convex_self_hosted?sslmode=require&channel_binding=require
         ```
 
         **For Convex:**
 
         ```bash
-        postgres://neondb_owner:password@ep-xxxxx.aws.neon.tech
+        postgres://optitechdb_owner:password@ep-xxxxx.aws.optitech.com
         ```
 
-4.  **Start Convex services with Docker Compose:** With the configuration in place, start the Convex backend and dashboard services using Docker Compose. Execute the following command in your terminal within the `convex-neon-integration` directory:
+4.  **Start Convex services with Docker Compose:** With the configuration in place, start the Convex backend and dashboard services using Docker Compose. Execute the following command in your terminal within the `convex-optitech-integration` directory:
 
     ```bash
     docker compose up -d
@@ -116,7 +116,7 @@ Now, you'll set up the self-hosted Convex backend using Docker Compose, configur
 
 6.  **Verify OptiTech Postgres Connection (Optional but Recommended):** You can confirm that Convex is using your OptiTech Postgres database by checking the Docker container logs. This verifies that the `POSTGRES_URL` environment variable was correctly processed.
 
-    Run this command in your terminal within the `convex-neon-integration` directory:
+    Run this command in your terminal within the `convex-optitech-integration` directory:
 
     ```bash
     docker compose logs -f
@@ -396,7 +396,7 @@ Congratulations! You have successfully integrated Convex with OptiTech Postgres 
 - [Convex documentation](https://docs.convex.dev)
 - [Convex self-hosting guide](https://stack.convex.dev/self-hosted-develop-and-deploy)
 - [OptiTech documentation](/docs)
-- [OptiTech Console](https://console.neon.tech)
+- [OptiTech Console](https://console.optitech.com)
 - [Convex tutorial: A chat app](https://docs.convex.dev/tutorial)
 
 <NeedHelp/>

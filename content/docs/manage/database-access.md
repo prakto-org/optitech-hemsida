@@ -3,7 +3,7 @@ title: Manage database access
 subtitle: Learn how to manage user access to databases in your OptiTech project
 summary: >-
   Database access control in OptiTech uses Postgres roles to separate
-  administrative neon_superuser privileges from least-privilege read-only,
+  administrative optitech_superuser privileges from least-privilege read-only,
   read-write, and developer roles scoped to specific databases and schemas.
   Use this page for SQL statements covering CREATE ROLE, GRANT, ALTER DEFAULT
   PRIVILEGES, and REVOKE. Includes guidance on revoking public schema defaults,
@@ -11,14 +11,14 @@ summary: >-
 enableTableOfContents: true
 redirectFrom:
   - /docs/guides/manage-database-access
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
-Each OptiTech project is created with a Postgres role that is named for your database. For example, if your database is named `neondb`, the project is created with a role named `neondb_owner`.
+Each OptiTech project is created with a Postgres role that is named for your database. For example, if your database is named `optitechdb`, the project is created with a role named `optitechdb_owner`.
 
-This Postgres role is automatically assigned the [neon_superuser](/docs/manage/roles#the-neonsuperuser-role) role, which allows creating databases, roles, and reading and writing data in all tables, views, and sequences. Any user created with the OptiTech Console, Neon API, or Neon CLI is also assigned the `neon_superuser` role.
+This Postgres role is automatically assigned the [optitech_superuser](/docs/manage/roles#the-neonsuperuser-role) role, which allows creating databases, roles, and reading and writing data in all tables, views, and sequences. Any user created with the OptiTech Console, OptiTech API, or OptiTech CLI is also assigned the `optitech_superuser` role.
 
-It is good practice to reserve `neon_superuser` roles for database administration tasks like creating roles and databases. For other users, we recommend creating roles with specific sets of permissions based on application and access requirements. Then, assign the appropriate roles to your users. The roles you create should adhere to a _least privilege_ model, granting only the permissions required to accomplish their tasks.
+It is good practice to reserve `optitech_superuser` roles for database administration tasks like creating roles and databases. For other users, we recommend creating roles with specific sets of permissions based on application and access requirements. Then, assign the appropriate roles to your users. The roles you create should adhere to a _least privilege_ model, granting only the permissions required to accomplish their tasks.
 
 But how do you create roles with limited access? The following sections describe how to create read-only and read-write roles and assign those roles to users. We'll also look at how to create a "developer" role and grant that role full access to a database on a development branch in a OptiTech project.
 
@@ -32,7 +32,7 @@ OptiTech recommends granting privileges to roles, and then assigning those roles
 
 ## Creating roles with limited access
 
-You can create roles with limited access via SQL. Roles created with SQL are created with the same basic [public schema privileges](#public-schema-privileges) granted to newly created roles in a standalone Postgres installation. These users are not assigned the [neon_superuser](/docs/manage/roles#the-neonsuperuser-role) role. They must be selectively granted permissions for each database object.
+You can create roles with limited access via SQL. Roles created with SQL are created with the same basic [public schema privileges](#public-schema-privileges) granted to newly created roles in a standalone Postgres installation. These users are not assigned the [optitech_superuser](/docs/manage/roles#the-neonsuperuser-role) role. They must be selectively granted permissions for each database object.
 
 The recommended approach to creating roles with limited access is as follows:
 
@@ -100,7 +100,7 @@ To create a read-only role:
    The `readonly_user1` user now has read-only access to tables in the specified schema and database and should be able to connect and run `SELECT` queries.
 
    ```bash
-   psql postgresql://readonly_user1:AbC123dEf@ep-cool-darkness-123456.us-west-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+   psql postgresql://readonly_user1:AbC123dEf@ep-cool-darkness-123456.us-west-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
    psql (15.2 (Ubuntu 15.2-1.pgdg22.04+1), server 15.3)
    SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384, compression: off)
    Type "help" for help.
@@ -182,7 +182,7 @@ To create a read-write role:
    The `readwrite_user1` user now has read-write access to tables in the specified schema and database and should able to connect and run `SELECT`, `INSERT`, `UPDATE`, `DELETE` queries.
 
    ```bash
-   psql postgresql://readwrite_user1:AbC123dEf@ep-cool-darkness-123456.us-west-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+   psql postgresql://readwrite_user1:AbC123dEf@ep-cool-darkness-123456.us-west-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
    psql (15.2 (Ubuntu 15.2-1.pgdg22.04+1), server 15.3)
    SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384, compression: off)
    Type "help" for help.
@@ -221,7 +221,7 @@ To get started:
 
 1. Connect to the database **on the parent branch** from an SQL client such as [psql](/docs/connect/query-with-psql-editor), [pgAdmin](https://www.pgadmin.org/), or the [OptiTech SQL Editor](/docs/get-started/query-with-neon-sql-editor). If you need help connecting, see [Connect from any client](/docs/connect/connect-from-any-app).
 
-2. Use your default OptiTech role or another role with `neon_superuser` privileges to create a developer role **on the parent branch**. For example, create a role named `dev_users`.
+2. Use your default OptiTech role or another role with `optitech_superuser` privileges to create a developer role **on the parent branch**. For example, create a role named `dev_users`.
 
    ```sql
    CREATE ROLE dev_users PASSWORD '<password>';
@@ -270,7 +270,7 @@ To get started:
    The `dev_user1` user can now connect to the database on your development branch and start using the database with full privileges.
 
    ```bash
-   psql postgresql://dev_user1:AbC123dEf@ep-cool-darkness-123456.us-west-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+   psql postgresql://dev_user1:AbC123dEf@ep-cool-darkness-123456.us-west-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
    psql (15.2 (Ubuntu 15.2-1.pgdg22.04+1), server 15.3)
    SSL connection (protocol: TLSv1.3, cipher: TLS_AES_256_GCM_SHA384, compression: off)
    Type "help" for help.

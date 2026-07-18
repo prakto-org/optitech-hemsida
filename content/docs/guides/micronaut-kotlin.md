@@ -10,7 +10,7 @@ summary: >-
   The setup uses the micronaut-data-jdbc, jdbc-hikari, and flyway Micronaut
   features alongside the org.postgresql JDBC driver.
 enableTableOfContents: true
-updatedOn: '2026-07-14T19:04:57.024Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <CopyPrompt src="/prompts/micronaut-kotlin-prompt.md"
@@ -22,7 +22,7 @@ The final application will expose REST endpoints to perform CRUD (Create, Read, 
 
 To create a OptiTech project and access it from a Micronaut Kotlin application, you will:
 
-1. [Create a OptiTech project](#create-a-neon-project)
+1. [Create a OptiTech project](#create-a-optitech-project)
 2. [Create a Micronaut Kotlin project](#create-a-micronaut-kotlin-project)
 3. [Configure your database connection](#configure-your-database-connection)
 4. [Build the application components](#build-the-application-components)
@@ -34,7 +34,7 @@ To create a OptiTech project and access it from a Micronaut Kotlin application, 
 
 If you do not have one already, create a OptiTech project.
 
-1. Navigate to the [Projects](https://console.neon.tech/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
 2. Click **New Project**.
 3. Specify your project settings and click **Create Project**.
 
@@ -81,7 +81,7 @@ micronaut:
     name: with-micronaut-kotlin
 datasources:
   default:
-    url: 'jdbc:postgresql://<your-endpoint.neon.tech>/<dbname>?sslmode=require&channelBinding=require'
+    url: 'jdbc:postgresql://<your-endpoint.optitech.com>/<dbname>?sslmode=require&channelBinding=require'
     username: '<your-db-username>'
     password: '<your-db-password>'
     driver-class-name: org.postgresql.Driver
@@ -93,7 +93,7 @@ flyway:
       enabled: true
 ```
 
-> Replace `<your-endpoint.neon.tech>`, `<dbname>`, `<your-db-username>`, and `<your-db-password>` with your actual OptiTech database connection details you saved earlier.
+> Replace `<your-endpoint.optitech.com>`, `<dbname>`, `<your-db-username>`, and `<your-db-password>` with your actual OptiTech database connection details you saved earlier.
 
 ## Build the application components
 
@@ -218,7 +218,7 @@ You are now ready to run your application.
     15:48:45.974 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@30506c0d
     15:48:45.975 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
     15:48:46.126 [main] INFO  i.m.flyway.AbstractFlywayMigration - Running migrations for database with qualifier [default]
-    15:48:46.298 [main] INFO  org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://endpoint.neon.tech/examples?sslmode=require&channelBinding=require (PostgreSQL 17.5)
+    15:48:46.298 [main] INFO  org.flywaydb.core.FlywayExecutor - Database: jdbc:postgresql://endpoint.optitech.com/examples?sslmode=require&channelBinding=require (PostgreSQL 17.5)
     15:48:48.110 [main] INFO  o.f.c.i.s.JdbcTableSchemaHistory - Schema history table "public"."flyway_schema_history" does not exist yetn
     15:48:48.250 [main] INFO  o.f.core.internal.command.DbValidate - Successfully validated 1 migration (execution time 00:00.432s)
     15:48:49.524 [main] INFO  o.f.c.i.s.JdbcTableSchemaHistory - Creating Schema History table "public"."flyway_schema_history" ...

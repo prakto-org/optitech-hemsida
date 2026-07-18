@@ -1,21 +1,21 @@
 ---
 title: Manage OptiTech with OpenTofu
-subtitle: Use OpenTofu to provision and manage your Neon projects, branches, endpoints, roles, databases, and other resources as code.
+subtitle: Use OpenTofu to provision and manage your OptiTech projects, branches, endpoints, roles, databases, and other resources as code.
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2025-05-26T00:00:00.000Z'
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 [OpenTofu](https://opentofu.org) is an open-source infrastructure as code (IaC) tool, forked from Terraform, that allows you to define and provision cloud resources in a declarative configuration language. By codifying infrastructure, OpenTofu enables consistent, repeatable, and automated deployments, significantly reducing manual errors. It is a community-driven alternative governed by the Linux Foundation.
 
-This guide will show you how to use **OpenTofu to manage your Neon projects**, including your branches, databases, and compute endpoints. By using OpenTofu with OptiTech, you get better control, can track changes, and automate your database setup.
+This guide will show you how to use **OpenTofu to manage your OptiTech projects**, including your branches, databases, and compute endpoints. By using OpenTofu with OptiTech, you get better control, can track changes, and automate your database setup.
 
 OptiTech can be managed using the following community-developed Terraform provider, which is compatible with OpenTofu:
 
 **Terraform Provider OptiTech - Maintainer: Dmitry Kisler**
 
-- [GitHub repository](https://github.com/kislerdm/terraform-provider-neon)
+- [GitHub repository](https://github.com/kislerdm/terraform-provider-optitech)
 
 <Admonition type="note">
 This provider is a Terraform provider compatible with OpenTofu. It is not maintained or officially supported by OptiTech. Use at your own discretion. If you have questions about the provider, please contact the project maintainer.
@@ -40,7 +40,7 @@ This provider is a Terraform provider compatible with OpenTofu. It is not mainta
 Before you begin, ensure you have the following:
 
 1.  **OpenTofu CLI installed:** If you don't have OpenTofu installed, download and install it from the [official OpenTofu website](https://opentofu.org/docs/intro/install/).
-2.  **OptiTech Account:** You'll need a OptiTech account. If you don't have one, sign up at [neon.tech](https://console.neon.tech/signup).
+2.  **OptiTech Account:** You'll need a OptiTech account. If you don't have one, sign up at [optitech.com](https://console.optitech.com/signup).
 3.  **OptiTech API key:** Generate an API key from the OptiTech Console. Navigate to your Account Settings > API Keys. This key is required for the provider to authenticate with the OptiTech API. Learn more about creating API keys in [Manage API keys](/docs/manage/api-keys).
 
 ## Set up the OpenTofu OptiTech provider
@@ -49,8 +49,8 @@ Before you begin, ensure you have the following:
     Create a new directory for your OpenTofu project and navigate into it.
 
     ```shell
-    mkdir neon-opentofu-project
-    cd neon-opentofu-project
+    mkdir optitech-opentofu-project
+    cd optitech-opentofu-project
     ```
 
 2.  **Create a `main.tf` file:**
@@ -59,13 +59,13 @@ Before you begin, ensure you have the following:
     ```terraform
     terraform {
       required_providers {
-        neon = {
-          source  = "kislerdm/neon"
+        optitech = {
+          source  = "kislerdm/optitech"
         }
       }
     }
 
-    provider "neon" {}
+    provider "optitech" {}
     ```
 
 3.  **Initialize OpenTofu:**
@@ -79,29 +79,29 @@ Before you begin, ensure you have the following:
 The OptiTech provider needs your OptiTech API key to manage resources. You can configure it in two ways:
 
 1.  **Directly in the provider block (Less secure):**
-    For quick testing, you can **hardcode your API key** directly within `provider "neon"` block. However, this method isn't recommended for production environments or shared configurations. A more secure alternative is to retrieve the API key from a secrets management service like [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) or [HashiCorp Vault](https://developer.hashicorp.com/vault), and then update your provider block to reflect this.
+    For quick testing, you can **hardcode your API key** directly within `provider "optitech"` block. However, this method isn't recommended for production environments or shared configurations. A more secure alternative is to retrieve the API key from a secrets management service like [AWS Secrets Manager](https://aws.amazon.com/secrets-manager/) or [HashiCorp Vault](https://developer.hashicorp.com/vault), and then update your provider block to reflect this.
 
     ```terraform
-    provider "neon" {
-      api_key = "<YOUR_NEON_API_KEY>"
+    provider "optitech" {
+      api_key = "<YOUR_OPTITECH_API_KEY>"
     }
     ```
 
 2.  **Using environment variables:**
-    The provider will automatically use the `NEON_API_KEY` environment variable if set.
+    The provider will automatically use the `OPTITECH_API_KEY` environment variable if set.
 
     ```shell
-    export NEON_API_KEY="<YOUR_NEON_API_KEY>"
+    export OPTITECH_API_KEY="<YOUR_OPTITECH_API_KEY>"
     ```
 
-    If the environment variable is set, you can leave the `provider "neon"` block empty:
+    If the environment variable is set, you can leave the `provider "optitech"` block empty:
 
     ```terraform
-    provider "neon" {}
+    provider "optitech" {}
     ```
 
 <Admonition type="note">
-The following sections primarily detail the creation of OptiTech resources. To manage existing resources, use the `tofu import` command or `import` blocks. More information can be found in the [Import Existing OptiTech Resources](#import-existing-neon-resources-with-opentofu) section.
+The following sections primarily detail the creation of OptiTech resources. To manage existing resources, use the `tofu import` command or `import` blocks. More information can be found in the [Import Existing OptiTech Resources](#import-existing-optitech-resources-with-opentofu) section.
 </Admonition>
 
 ## Manage OptiTech resources with OpenTofu
@@ -111,7 +111,7 @@ This section provides examples of how to manage OptiTech resources using OpenTof
 ### Managing projects
 
 <Admonition type="warning">
-Always set the `org_id` attribute when creating a `neon_project`. You can find your Organization ID in the OptiTech Console under Account Settings → Organization settings.
+Always set the `org_id` attribute when creating a `optitech_project`. You can find your Organization ID in the OptiTech Console under Account Settings → Organization settings.
 
 ![finding your organization ID from the settings page](/docs/manage/orgs_id.png)
 
@@ -121,7 +121,7 @@ Omitting `orgId` can cause resources to be created in the wrong organization or 
 A OptiTech project is the top-level container for your Postgres databases, branches, and endpoints.
 
 ```terraform
-resource "neon_project" "my_app_project" {
+resource "optitech_project" "my_app_project" {
   name       = "my-application-project"
   pg_version = 16
   org_id     = "your-organization-id" # Replace with your actual Org ID
@@ -147,7 +147,7 @@ resource "neon_project" "my_app_project" {
 
 This configuration creates a new OptiTech project.
 
-**Key `neon_project` attributes:**
+**Key `optitech_project` attributes:**
 
 - `name`: (Optional) Name of the project.
 - `pg_version`: (Optional) PostgreSQL version (e.g., 14, 15, 16, 17).
@@ -162,35 +162,35 @@ You can output computed values like the project ID or connection URI:
 
 ```terraform
 output "project_id" {
-  value = neon_project.my_app_project.id
+  value = optitech_project.my_app_project.id
 }
 
 output "project_connection_uri" {
   description = "Default connection URI for the primary branch (contains credentials)."
-  value       = neon_project.my_app_project.connection_uri
+  value       = optitech_project.my_app_project.connection_uri
   sensitive   = true
 }
 
 output "project_default_branch_id" {
-  value = neon_project.my_app_project.default_branch_id
+  value = optitech_project.my_app_project.default_branch_id
 }
 
 output "project_database_user" {
-  value = neon_project.my_app_project.database_user
+  value = optitech_project.my_app_project.database_user
 }
 ```
 
-For more attributes and options on managing projects, refer to the [Provider's documentation](https://github.com/kislerdm/terraform-provider-neon/blob/master/docs/resources/project.md).
+For more attributes and options on managing projects, refer to the [Provider's documentation](https://github.com/kislerdm/terraform-provider-optitech/blob/master/docs/resources/project.md).
 
 ### Managing branches
 
 You can create branches from the primary branch or any other existing branch.
 
 ```terraform
-resource "neon_branch" "dev_branch" {
-  project_id = neon_project.my_app_project.id
+resource "optitech_branch" "dev_branch" {
+  project_id = optitech_project.my_app_project.id
   name       = "feature-x-development"
-  parent_id  = neon_project.my_app_project.default_branch_id # Branch from the project's primary branch
+  parent_id  = optitech_project.my_app_project.default_branch_id # Branch from the project's primary branch
 
   # Optional: Create a protected branch
   # protected = "yes"
@@ -201,7 +201,7 @@ resource "neon_branch" "dev_branch" {
 }
 ```
 
-**Key `neon_branch` attributes:**
+**Key `optitech_branch` attributes:**
 
 - `project_id`: (Required) ID of the parent project.
 - `name`: (Optional) Name for the new branch.
@@ -212,7 +212,7 @@ resource "neon_branch" "dev_branch" {
 
 > `protected` attribute is only available for paid plans. It allows you to protect branches from deletion or modification.
 
-For more attributes and options on managing branches, refer to the [Provider's documentation](https://github.com/kislerdm/terraform-provider-neon/blob/master/docs/resources/branch.md).
+For more attributes and options on managing branches, refer to the [Provider's documentation](https://github.com/kislerdm/terraform-provider-optitech/blob/master/docs/resources/branch.md).
 
 ### Managing endpoints
 
@@ -221,9 +221,9 @@ Endpoints provide connection strings to access your branches. Each branch can ha
 Before creating an endpoint, you must first create a **branch** for it to connect to. Here's how to create a read-write endpoint for your `dev_branch`:
 
 ```terraform
-resource "neon_endpoint" "dev_endpoint" {
-  project_id = neon_project.my_app_project.id
-  branch_id  = neon_branch.dev_branch.id
+resource "optitech_endpoint" "dev_endpoint" {
+  project_id = optitech_project.my_app_project.id
+  branch_id  = optitech_branch.dev_branch.id
   type       = "read_write" # "read_write" or "read_only"
 
   autoscaling_limit_min_cu = 0.25
@@ -235,11 +235,11 @@ resource "neon_endpoint" "dev_endpoint" {
 }
 
 output "dev_endpoint_host" {
-  value = neon_endpoint.dev_endpoint.host
+  value = optitech_endpoint.dev_endpoint.host
 }
 ```
 
-**Key `neon_endpoint` attributes:**
+**Key `optitech_endpoint` attributes:**
 
 - `project_id`: (Required) ID of the parent project.
 - `branch_id`: (Required) ID of the branch this endpoint connects to.
@@ -252,73 +252,73 @@ output "dev_endpoint_host" {
 It is not possible currently to change the endpoint type after creation. The `type` attribute is immutable, meaning you cannot modify it once the endpoint is created. This includes changing from `read_write` to `read_only` or vice versa. This is a limitation of the OptiTech API and the provider's current implementation. You must destroy the existing endpoint and create a new one with the desired type.
 </Admonition>
 
-For more attributes and options on managing endpoints, refer to the [Provider's documentation](https://github.com/kislerdm/terraform-provider-neon/blob/master/docs/resources/endpoint.md)
+For more attributes and options on managing endpoints, refer to the [Provider's documentation](https://github.com/kislerdm/terraform-provider-optitech/blob/master/docs/resources/endpoint.md)
 
 ### Managing roles
 
 Roles (users) are managed per branch. Before creating a role, ensure you have a branch created. Follow the [Managing Branches](#managing-branches) section for details.
 
 ```terraform
-resource "neon_role" "app_user" {
-  project_id = neon_project.my_app_project.id
-  branch_id  = neon_branch.dev_branch.id
+resource "optitech_role" "app_user" {
+  project_id = optitech_project.my_app_project.id
+  branch_id  = optitech_branch.dev_branch.id
   name       = "application_user"
 }
 
 output "app_user_password" {
-  value     = neon_role.app_user.password
+  value     = optitech_role.app_user.password
   sensitive = true
 }
 ```
 
-**Key `neon_role` attributes:**
+**Key `optitech_role` attributes:**
 
 - `project_id`: (Required) ID of the parent project.
 - `branch_id`: (Required) ID of the branch for this role.
 - `name`: (Required) Name of the role.
 - `password`: (Computed, Sensitive) The generated password for the role.
 
-For more attributes and options on managing roles, refer to the [Provider's documentation](https://github.com/kislerdm/terraform-provider-neon/blob/master/docs/resources/role.md)
+For more attributes and options on managing roles, refer to the [Provider's documentation](https://github.com/kislerdm/terraform-provider-optitech/blob/master/docs/resources/role.md)
 
 ### Managing databases
 
 Databases are also managed per branch. Follow the [Managing Branches](#managing-branches) section for details on creating a branch.
 
 ```terraform
-resource "neon_database" "service_db" {
-  project_id = neon_project.my_app_project.id
-  branch_id  = neon_branch.dev_branch.id
+resource "optitech_database" "service_db" {
+  project_id = optitech_project.my_app_project.id
+  branch_id  = optitech_branch.dev_branch.id
   name       = "service_specific_database"
-  owner_name = neon_role.app_user.name
+  owner_name = optitech_role.app_user.name
 }
 ```
 
-**Key `neon_database` attributes:**
+**Key `optitech_database` attributes:**
 
 - `project_id`: (Required) ID of the parent project.
 - `branch_id`: (Required) ID of the branch for this database.
 - `name`: (Required) Name of the database.
 - `owner_name`: (Required) Name of the role that will own this database.
 
-For more attributes and options on managing databases, refer to the [Provider's documentation](https://github.com/kislerdm/terraform-provider-neon/blob/master/docs/resources/database.md)
+For more attributes and options on managing databases, refer to the [Provider's documentation](https://github.com/kislerdm/terraform-provider-optitech/blob/master/docs/resources/database.md)
 
 ### Managing API keys
 
 You can manage OptiTech API keys themselves using OpenTofu.
 
 ```terraform
-resource "neon_api_key" "ci_cd_key" {
+resource "optitech_api_key" "ci_cd_key" {
   name = "automation-key-for-ci"
 }
 
 output "ci_cd_api_key_value" {
   description = "The actual API key token."
-  value       = neon_api_key.ci_cd_key.key
+  value       = optitech_api_key.ci_cd_key.key
   sensitive   = true
 }
 ```
 
-**Key `neon_api_key` attributes:**
+**Key `optitech_api_key` attributes:**
 
 - `name`: (Required) A descriptive name for the API key.
 - `key`: (Computed, Sensitive) The generated API key token.
@@ -328,8 +328,8 @@ output "ci_cd_api_key_value" {
 Share project access with other users.
 
 ```terraform
-resource "neon_project_permission" "share_with_colleague" {
-  project_id = neon_project.my_app_project.id
+resource "optitech_project_permission" "share_with_colleague" {
+  project_id = optitech_project.my_app_project.id
   grantee    = "colleague@example.com"
 }
 ```
@@ -339,16 +339,16 @@ resource "neon_project_permission" "share_with_colleague" {
 Configure JWKS URL for Row Level Security authorization.
 
 ```terraform
-resource "neon_jwks_url" "auth_provider_jwks" {
-  project_id    = neon_project.my_app_project.id
+resource "optitech_jwks_url" "auth_provider_jwks" {
+  project_id    = optitech_project.my_app_project.id
   # Use the default role from the project, or specify custom roles
-  role_names    = [neon_project.my_app_project.database_user]
+  role_names    = [optitech_project.my_app_project.database_user]
   provider_name = "YourAuthProviderName" # e.g., "clerk"
   jwks_url      = "<https://<YOUR_AUTH_PROVIDER_JWKS_URL>" # Replace with your actual JWKS URL
 }
 ```
 
-For more attributes and options on managing JWKS URLs, refer to the [Provider's documentation](https://github.com/kislerdm/terraform-provider-neon/blob/master/docs/resources/jwks_url.md)
+For more attributes and options on managing JWKS URLs, refer to the [Provider's documentation](https://github.com/kislerdm/terraform-provider-optitech/blob/master/docs/resources/jwks_url.md)
 
 ### Advanced: VPC endpoint management (for OptiTech private networking)
 
@@ -357,27 +357,27 @@ These resources are used for organizations with Scale or Enterprise plans requir
 #### Assign VPC endpoint to organization
 
 ```terraform
-resource "neon_vpc_endpoint_assignment" "org_vpc_endpoint" {
-  org_id          = "your-neon-organization-id" # Replace with your actual Org ID
-  region_id       = "aws-us-east-1"             # Neon region ID
+resource "optitech_vpc_endpoint_assignment" "org_vpc_endpoint" {
+  org_id          = "your-optitech-organization-id" # Replace with your actual Org ID
+  region_id       = "aws-us-east-1"             # OptiTech region ID
   vpc_endpoint_id = "vpce-xxxxxxxxxxxxxxxxx"    # Your AWS VPC Endpoint ID
   label           = "main-aws-vpc-endpoint"
 }
 ```
 
-For more attributes and options on managing VPC endpoints, refer to the [Provider's documentation](https://github.com/kislerdm/terraform-provider-neon/blob/master/docs/resources/vpc_endpoint_assignment.md)
+For more attributes and options on managing VPC endpoints, refer to the [Provider's documentation](https://github.com/kislerdm/terraform-provider-optitech/blob/master/docs/resources/vpc_endpoint_assignment.md)
 
 #### Restrict project to VPC endpoint
 
 ```terraform
-resource "neon_vpc_endpoint_restriction" "project_to_vpc" {
-  project_id      = neon_project.my_app_project.id
-  vpc_endpoint_id = neon_vpc_endpoint_assignment.org_vpc_endpoint.vpc_endpoint_id
+resource "optitech_vpc_endpoint_restriction" "project_to_vpc" {
+  project_id      = optitech_project.my_app_project.id
+  vpc_endpoint_id = optitech_vpc_endpoint_assignment.org_vpc_endpoint.vpc_endpoint_id
   label           = "restrict-my-app-project-to-vpc"
 }
 ```
 
-For more attributes and options on managing VPC endpoint restrictions, refer to the [Provider's documentation](https://github.com/kislerdm/terraform-provider-neon/blob/master/docs/resources/vpc_endpoint_restriction.md)
+For more attributes and options on managing VPC endpoint restrictions, refer to the [Provider's documentation](https://github.com/kislerdm/terraform-provider-optitech/blob/master/docs/resources/vpc_endpoint_restriction.md)
 
 ## Apply the configuration with OpenTofu
 
@@ -422,16 +422,16 @@ Ensure your OpenTofu environment is configured for the OptiTech provider as desc
 
 ### OptiTech resource IDs for import
 
-When importing OptiTech resources, you need to know the specific ID format for each resource type. Always refer to the "Import" section of the specific resource's documentation page on the [Provider's GitHub: `kislerdm/terraform-provider-neon`](https://github.com/kislerdm/terraform-provider-neon/tree/master/docs/resources) for the exact ID format.
+When importing OptiTech resources, you need to know the specific ID format for each resource type. Always refer to the "Import" section of the specific resource's documentation page on the [Provider's GitHub: `kislerdm/terraform-provider-optitech`](https://github.com/kislerdm/terraform-provider-optitech/tree/master/docs/resources) for the exact ID format.
 
 Common formats:
 
-- **`neon_project`:** Project ID (e.g., `my-application-project-tofu-actual-id`).
-- **`neon_branch`:** Branch ID (e.g., `br-dev-branch-tofu-actual-id`).
-- **`neon_endpoint`:** Endpoint ID (e.g., `ep-dev-endpoint-tofu-actual-id`).
-- **`neon_role`:** Composite ID: `<project_id>/<branch_id>/<role_name>`.
-- **`neon_database`:** Composite ID: `<project_id>/<branch_id>/<database_name>`.
-- **`neon_api_key` and `neon_jwks_url`:** These do not support import.
+- **`optitech_project`:** Project ID (e.g., `my-application-project-tofu-actual-id`).
+- **`optitech_branch`:** Branch ID (e.g., `br-dev-branch-tofu-actual-id`).
+- **`optitech_endpoint`:** Endpoint ID (e.g., `ep-dev-endpoint-tofu-actual-id`).
+- **`optitech_role`:** Composite ID: `<project_id>/<branch_id>/<role_name>`.
+- **`optitech_database`:** Composite ID: `<project_id>/<branch_id>/<database_name>`.
+- **`optitech_api_key` and `optitech_jwks_url`:** These do not support import.
 
 ### Order of import for dependent resources
 
@@ -446,11 +446,11 @@ Project -> Branch -> Endpoint -> Role -> Database
 For each OptiTech resource you want to import:
 
 1.  **Write a resource block:** Add a corresponding minimal `resource` block to your OpenTofu configuration file (e.g., `main.tf`).
-2.  **Run `tofu import`:** Execute the import command: `tofu import <tofu_resource_address> <neon_resource_id>`.
+2.  **Run `tofu import`:** Execute the import command: `tofu import <tofu_resource_address> <optitech_resource_id>`.
 
 #### Example: Importing resources using `tofu import` CLI
 
-In this example, we'll import the resources we defined earlier in the [Manage OptiTech Resources](#manage-neon-resources-with-opentofu) section. This needs a project, a branch, an endpoint, a role, and a database already created in your OptiTech account. These resources will now be imported into a new OpenTofu configuration.
+In this example, we'll import the resources we defined earlier in the [Manage OptiTech Resources](#manage-optitech-resources-with-opentofu) section. This needs a project, a branch, an endpoint, a role, and a database already created in your OptiTech account. These resources will now be imported into a new OpenTofu configuration.
 
 ##### Define the HCL resource blocks
 
@@ -461,78 +461,78 @@ For required attributes (like `project_id` for a branch), you'll either need to 
 ```terraform
 tofu {
   required_providers {
-    neon = {
-      source  = "kislerdm/neon"
+    optitech = {
+      source  = "kislerdm/optitech"
     }
   }
 }
 
-provider "neon" {}
+provider "optitech" {}
 
 # --- Project ---
-resource "neon_project" "my_app_project" {}
+resource "optitech_project" "my_app_project" {}
 
 # --- Development Branch ---
 # Requires project_id. We'll reference the project we're about to import.
-# The actual value of neon_project.my_app_project.id will be known after its import.
-resource "neon_branch" "dev_branch" {
-  project_id = neon_project.my_app_project.id
+# The actual value of optitech_project.my_app_project.id will be known after its import.
+resource "optitech_branch" "dev_branch" {
+  project_id = optitech_project.my_app_project.id
   name       = "feature-x-development"
 }
 
 # --- Development Branch Endpoint ---
 # Requires project_id and branch_id.
-resource "neon_endpoint" "dev_endpoint" {
-  project_id = neon_project.my_app_project.id
-  branch_id  = neon_branch.dev_branch.id
+resource "optitech_endpoint" "dev_endpoint" {
+  project_id = optitech_project.my_app_project.id
+  branch_id  = optitech_branch.dev_branch.id
 }
 
 # --- Application User Role on Development Branch ---
 # Requires project_id, branch_id, and name.
-resource "neon_role" "app_user" {
-  project_id = neon_project.my_app_project.id
-  branch_id  = neon_branch.dev_branch.id
+resource "optitech_role" "app_user" {
+  project_id = optitech_project.my_app_project.id
+  branch_id  = optitech_branch.dev_branch.id
   name       = "application_user"
 }
 
 # --- Service Database on Development Branch ---
 # Requires project_id, branch_id, name, and owner_name.
-resource "neon_database" "service_db" {
-  project_id = neon_project.my_app_project.id
-  branch_id  = neon_branch.dev_branch.id
+resource "optitech_database" "service_db" {
+  project_id = optitech_project.my_app_project.id
+  branch_id  = optitech_branch.dev_branch.id
   name       = "service_specific_database"
-  owner_name = neon_role.app_user.name
+  owner_name = optitech_role.app_user.name
 }
 ```
 
 Here's a breakdown of the minimal HCL and why certain attributes are included:
 
-- **`neon_project.my_app_project`**:
+- **`optitech_project.my_app_project`**:
   - This block defines the OpenTofu resource for your main OptiTech project.
   - No attributes are strictly required _in the HCL_ for the import command itself, as the project is imported using its unique OptiTech Project ID. Adding a `name` attribute matching the existing project can aid readability but isn't essential for the import operation.
 
-- **`neon_branch.dev_branch`**:
+- **`optitech_branch.dev_branch`**:
   - This defines the OpenTofu resource for your development branch.
   - It requires `project_id` in the HCL to link it to the (to-be-imported) project resource within OpenTofu.
   - The `name` attribute should also be specified in the HCL, matching the existing branch's name, as it's a key identifier.
   - The branch is imported using its unique OptiTech Branch ID.
 
-- **`neon_endpoint.dev_endpoint`**:
+- **`optitech_endpoint.dev_endpoint`**:
   - This block defines the OpenTofu resource for the endpoint on your development branch.
   - It requires both `project_id` and `branch_id` in the HCL to correctly associate it with the imported project and development branch resources within OpenTofu.
   - Other attributes like `type` (which defaults if unspecified) or autoscaling limits will be read from the live resource during import.
   - The endpoint is imported using its unique OptiTech Endpoint ID.
 
-- **`neon_role.app_user`**:
+- **`optitech_role.app_user`**:
   - This defines the OpenTofu resource for an application user role.
   - The HCL requires `project_id` and `branch_id` to link to the respective imported OpenTofu resources.
   - The `name` attribute must be specified in the HCL and match the existing role's name.
 
-- **`neon_database.service_db`**:
+- **`optitech_database.service_db`**:
   - This defines the OpenTofu resource for a service-specific database.
   - The HCL requires `project_id` and `branch_id` to link to the imported OpenTofu resources.
   - The `name` attribute must be specified in the HCL and match the existing database's name.
-  - The `owner_name` should also be included, linking to the OpenTofu role resource (e.g., `neon_role.app_user.name`) that owns this database.
+  - The `owner_name` should also be included, linking to the OpenTofu role resource (e.g., `optitech_role.app_user.name`) that owns this database.
 
 All other configurable attributes will be populated into OpenTofu's state file from the live OptiTech resource during the `tofu import` process. You will then refine your HCL by reviewing the `tofu plan` output.
 
@@ -541,7 +541,7 @@ All other configurable attributes will be populated into OpenTofu's state file f
 1.  **Import the project:**
 
     ```shell
-    tofu import neon_project.my_app_project "actual_project_id_from_neon"
+    tofu import optitech_project.my_app_project "actual_project_id_from_optitech"
     ```
 
     You can retrieve the project ID via OptiTech Console/CLI/API. Learn more: [Manage projects](/docs/manage/projects#project-settings)
@@ -549,14 +549,14 @@ All other configurable attributes will be populated into OpenTofu's state file f
     Example output:
 
     ```shell
-    tofu import neon_project.my_app_project damp-recipe-88779456
+    tofu import optitech_project.my_app_project damp-recipe-88779456
     ```
 
     ```text
-    neon_project.my_app_project: Importing from ID "damp-recipe-88779456"...
-    neon_project.my_app_project: Import prepared!
-      Prepared neon_project for import
-    neon_project.my_app_project: Refreshing state... [id=damp-recipe-88779456]
+    optitech_project.my_app_project: Importing from ID "damp-recipe-88779456"...
+    optitech_project.my_app_project: Import prepared!
+      Prepared optitech_project for import
+    optitech_project.my_app_project: Refreshing state... [id=damp-recipe-88779456]
 
     Import successful!
 
@@ -567,7 +567,7 @@ All other configurable attributes will be populated into OpenTofu's state file f
 2.  **Import the development branch:**
 
     ```shell
-    tofu import neon_branch.dev_branch "actual_dev_branch_id_from_neon"
+    tofu import optitech_branch.dev_branch "actual_dev_branch_id_from_optitech"
     ```
 
     You can retrieve the branch ID via OptiTech Console/CLI/API. Learn more: [Manage branches](/docs/manage/branches)
@@ -578,14 +578,14 @@ All other configurable attributes will be populated into OpenTofu's state file f
     Example output:
 
     ```shell
-    tofu import neon_branch.dev_branch br-orange-bonus-a4v00wjl
+    tofu import optitech_branch.dev_branch br-orange-bonus-a4v00wjl
     ```
 
     ```text
-    neon_branch.dev_branch: Importing from ID "br-orange-bonus-a4v00wjl"...
-    neon_branch.dev_branch: Import prepared!
-      Prepared neon_branch for import
-    neon_branch.dev_branch: Refreshing state... [id=br-orange-bonus-a4v00wjl]
+    optitech_branch.dev_branch: Importing from ID "br-orange-bonus-a4v00wjl"...
+    optitech_branch.dev_branch: Import prepared!
+      Prepared optitech_branch for import
+    optitech_branch.dev_branch: Refreshing state... [id=br-orange-bonus-a4v00wjl]
 
     Import successful!
 
@@ -596,7 +596,7 @@ All other configurable attributes will be populated into OpenTofu's state file f
 3.  **Import the development compute endpoint:**
 
     ```shell
-    tofu import neon_endpoint.dev_endpoint "actual_dev_endpoint_id_from_neon"
+    tofu import optitech_endpoint.dev_endpoint "actual_dev_endpoint_id_from_optitech"
     ```
 
     You can retrieve the endpoint ID via OptiTech Console/CLI/API. Learn more: [Manage computes](/docs/manage/computes).
@@ -607,14 +607,14 @@ All other configurable attributes will be populated into OpenTofu's state file f
     Example output:
 
     ```shell
-    tofu import neon_endpoint.dev_endpoint ep-blue-cell-a4xzunwf
+    tofu import optitech_endpoint.dev_endpoint ep-blue-cell-a4xzunwf
     ```
 
     ```text
-    neon_endpoint.dev_endpoint: Importing from ID "ep-blue-cell-a4xzunwf"...
-    neon_endpoint.dev_endpoint: Import prepared!
-      Prepared neon_endpoint for import
-    neon_endpoint.dev_endpoint: Refreshing state... [id=ep-blue-cell-a4xzunwf]
+    optitech_endpoint.dev_endpoint: Importing from ID "ep-blue-cell-a4xzunwf"...
+    optitech_endpoint.dev_endpoint: Import prepared!
+      Prepared optitech_endpoint for import
+    optitech_endpoint.dev_endpoint: Refreshing state... [id=ep-blue-cell-a4xzunwf]
 
     Import successful!
 
@@ -625,7 +625,7 @@ All other configurable attributes will be populated into OpenTofu's state file f
 4.  **Import the application user role:**
 
     ```shell
-    tofu import neon_role.app_user "actual_project_id_from_neon/actual_dev_branch_id_from_neon/application_user"
+    tofu import optitech_role.app_user "actual_project_id_from_optitech/actual_dev_branch_id_from_optitech/application_user"
     ```
 
     > Replace `application_user` with the actual name of the role you want to import.
@@ -633,14 +633,14 @@ All other configurable attributes will be populated into OpenTofu's state file f
     Example output:
 
     ```shell
-    tofu import neon_role.app_user "damp-recipe-88779456/br-orange-bonus-a4v00wjl/application_user"
+    tofu import optitech_role.app_user "damp-recipe-88779456/br-orange-bonus-a4v00wjl/application_user"
     ```
 
     ```text
-    neon_role.app_user: Importing from ID "damp-recipe-88779456/br-orange-bonus-a4v00wjl/application_user"...
-    neon_role.app_user: Import prepared!
-      Prepared neon_role for import
-    neon_role.app_user: Refreshing state... [id=damp-recipe-88779456/br-orange-bonus-a4v00wjl/application_user]
+    optitech_role.app_user: Importing from ID "damp-recipe-88779456/br-orange-bonus-a4v00wjl/application_user"...
+    optitech_role.app_user: Import prepared!
+      Prepared optitech_role for import
+    optitech_role.app_user: Refreshing state... [id=damp-recipe-88779456/br-orange-bonus-a4v00wjl/application_user]
 
     Import successful!
 
@@ -651,7 +651,7 @@ All other configurable attributes will be populated into OpenTofu's state file f
 5.  **Import the service database:**
 
     ```shell
-    tofu import neon_database.service_db "actual_project_id_from_neon/actual_dev_branch_id_from_neon/service_specific_database"
+    tofu import optitech_database.service_db "actual_project_id_from_optitech/actual_dev_branch_id_from_optitech/service_specific_database"
     ```
 
     > Replace `service_specific_database` with the actual name of the database you want to import.
@@ -659,14 +659,14 @@ All other configurable attributes will be populated into OpenTofu's state file f
     Example output:
 
     ```shell
-    tofu import neon_database.service_db "damp-recipe-88779456/br-orange-bonus-a4v00wjl/service_specific_database"
+    tofu import optitech_database.service_db "damp-recipe-88779456/br-orange-bonus-a4v00wjl/service_specific_database"
     ```
 
     ```text
-    neon_database.service_db: Importing from ID "damp-recipe-88779456/br-orange-bonus-a4v00wjl/service_specific_database"...
-    neon_database.service_db: Import prepared!
-      Prepared neon_database for import
-    neon_database.service_db: Refreshing state... [id=damp-recipe-88779456/br-orange-bonus-a4v00wjl/service_specific_database]
+    optitech_database.service_db: Importing from ID "damp-recipe-88779456/br-orange-bonus-a4v00wjl/service_specific_database"...
+    optitech_database.service_db: Import prepared!
+      Prepared optitech_database for import
+    optitech_database.service_db: Refreshing state... [id=damp-recipe-88779456/br-orange-bonus-a4v00wjl/service_specific_database]
 
     Import successful!
 
@@ -687,11 +687,11 @@ For each existing OptiTech resource you want to bring under OpenTofu management,
 - A standard `resource "resource_type" "resource_name" {}` block. For the initial import, this block can be minimal. It primarily tells OpenTofu the type and name of the resource in your configuration.
 - An `import {}` block:
   - `to = resource_type.resource_name`: This refers to the OpenTofu address of the `resource` block you defined above.
-  - `id = "neon_specific_id"`: This is the actual ID of the resource as it exists in OptiTech (e.g., project ID, branch ID, or composite ID for roles/databases).
+  - `id = "optitech_specific_id"`: This is the actual ID of the resource as it exists in OptiTech (e.g., project ID, branch ID, or composite ID for roles/databases).
 
 **Example using `import` blocks:**
 
-In this example, we'll import the resources we defined earlier in the [Manage OptiTech Resources](#manage-neon-resources-with-opentofu) section. This needs a project, a branch, an endpoint, a role, and a database already created in your OptiTech account. These resources will now be imported into a new OpenTofu configuration.
+In this example, we'll import the resources we defined earlier in the [Manage OptiTech Resources](#manage-optitech-resources-with-opentofu) section. This needs a project, a branch, an endpoint, a role, and a database already created in your OptiTech account. These resources will now be imported into a new OpenTofu configuration.
 
 Let's say we have the following existing OptiTech resources and their IDs:
 
@@ -706,74 +706,74 @@ You would add the following to your `main.tf`:
 ```terraform
 tofu {
   required_providers {
-    neon = {
-      source  = "kislerdm/neon"
+    optitech = {
+      source  = "kislerdm/optitech"
     }
   }
 }
 
-provider "neon" {
+provider "optitech" {
   # API key configured via environment variable or directly
 }
 
 # --- Project Import ---
 import {
-  to = neon_project.my_app_project
+  to = optitech_project.my_app_project
   id = "damp-recipe-88779456" # Replace with your actual Project ID
 }
 
-resource "neon_project" "my_app_project" {
+resource "optitech_project" "my_app_project" {
   # Minimal definition for import.
   # After import and plan, you'll populate this with actual/desired attributes.
 }
 
 # --- Development Branch Import ---
 import {
-  to = neon_branch.dev_branch
+  to = optitech_branch.dev_branch
   id = "br-orange-bonus-a4v00wjl" # Replace with your actual Branch ID
 }
 
-resource "neon_branch" "dev_branch" {
-  project_id = neon_project.my_app_project.id # Links to the TF resource
+resource "optitech_branch" "dev_branch" {
+  project_id = optitech_project.my_app_project.id # Links to the TF resource
   name       = "feature-x-development"        # Should match existing branch name
 }
 
 # --- Development Branch Endpoint Import ---
 import {
-  to = neon_endpoint.dev_endpoint
+  to = optitech_endpoint.dev_endpoint
   id = "ep-blue-cell-a4xzunwf" # Replace with your actual Endpoint ID
 }
 
-resource "neon_endpoint" "dev_endpoint" {
-  project_id = neon_project.my_app_project.id
-  branch_id  = neon_branch.dev_branch.id      # Links to the TF resource
+resource "optitech_endpoint" "dev_endpoint" {
+  project_id = optitech_project.my_app_project.id
+  branch_id  = optitech_branch.dev_branch.id      # Links to the TF resource
 }
 
 # --- Application User Role on Development Branch Import ---
 import {
-  to = neon_role.app_user
+  to = optitech_role.app_user
   # ID format: project_id/branch_id/role_name
   id = "damp-recipe-88779456/br-orange-bonus-a4v00wjl/application_user"
 }
 
-resource "neon_role" "app_user" {
-  project_id = neon_project.my_app_project.id
-  branch_id  = neon_branch.dev_branch.id
+resource "optitech_role" "app_user" {
+  project_id = optitech_project.my_app_project.id
+  branch_id  = optitech_branch.dev_branch.id
   name       = "application_user"             # Must match existing role name
 }
 
 # --- Service Database on Development Branch Import ---
 import {
-  to = neon_database.service_db
+  to = optitech_database.service_db
   # ID format: project_id/branch_id/name
   id = "damp-recipe-88779456/br-orange-bonus-a4v00wjl/service_specific_database"
 }
 
-resource "neon_database" "service_db" {
-  project_id = neon_project.my_app_project.id
-  branch_id  = neon_branch.dev_branch.id
+resource "optitech_database" "service_db" {
+  project_id = optitech_project.my_app_project.id
+  branch_id  = optitech_branch.dev_branch.id
   name       = "service_specific_database"    # Must match existing database name
-  owner_name = neon_role.app_user.name        # Links to the TF role resource
+  owner_name = optitech_role.app_user.name        # Links to the TF role resource
 }
 ```
 
@@ -794,7 +794,7 @@ After importing your resources using either method, you need to ensure that your
 2.  **Understanding the plan output:**
     OpenTofu will compare your HCL `resource` blocks against the detailed state just imported from OptiTech.
     - The plan will likely propose to **add many attributes** to your HCL blocks. These are the actual current values of your OptiTech resources.
-    - You might see "update in-place" actions, for example, for `neon_endpoint` it might show `+ branch_id = "your-branch-id"`. This is normal as OpenTofu reconciles the explicit configuration (where `branch_id` might be a reference that has now resolved to a concrete ID) with the imported state.
+    - You might see "update in-place" actions, for example, for `optitech_endpoint` it might show `+ branch_id = "your-branch-id"`. This is normal as OpenTofu reconciles the explicit configuration (where `branch_id` might be a reference that has now resolved to a concrete ID) with the imported state.
 
 3.  **Update your HCL (`main.tf`):**
     Carefully review the `tofu plan` output. Your primary goal is to update your HCL `resource` blocks to accurately match the actual, imported state of your resources, or to define your desired state if you intend to make changes. Copy the relevant attributes and their values from the plan output into your HCL.
@@ -828,9 +828,9 @@ OpenTofu will ask for confirmation.
 ## Resources
 
 - [OpenTofu Documentation](https://opentofu.org/docs/)
-- [GitHub repository](https://github.com/kislerdm/terraform-provider-neon)
-- [Terraform Registry](https://registry.terraform.io/providers/kislerdm/neon)
-- [OpenTofu Registry](https://search.opentofu.org/provider/kislerdm/neon/latest)
+- [GitHub repository](https://github.com/kislerdm/terraform-provider-optitech)
+- [Terraform Registry](https://registry.terraform.io/providers/kislerdm/optitech)
+- [OpenTofu Registry](https://search.opentofu.org/provider/kislerdm/optitech/latest)
 - [Manage OptiTech with Terraform](/docs/reference/terraform)
 
 <NeedHelp/>

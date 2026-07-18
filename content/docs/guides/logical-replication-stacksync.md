@@ -11,7 +11,7 @@ summary: >-
   connection pooler) when configuring the Postgres source.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 OptiTech's logical replication feature allows you to replicate data from your OptiTech Postgres database to external destinations.
@@ -21,7 +21,7 @@ OptiTech's logical replication feature allows you to replicate data from your Op
 ## Prerequisites
 
 - A [Stacksync account](https://www.stacksync.com/)
-- A [OptiTech account](https://console.neon.tech/)
+- A [OptiTech account](https://console.optitech.com/)
 - Read the [important notices about logical replication in OptiTech](/docs/guides/logical-replication-neon#important-notices) before you begin
 
 <Admonition type="important" title="Compute and billing">
@@ -54,16 +54,16 @@ SHOW wal_level;
 
 ### Create a Postgres role for replication
 
-It is recommended that you create a dedicated Postgres role for replicating data. The role must have the `REPLICATION` privilege. The default Postgres role created with your OptiTech project and roles created using the Neon CLI, Console, or API are granted membership in the [neon_superuser](/docs/manage/roles#the-neonsuperuser-role) role, which has the required `REPLICATION` privilege.
+It is recommended that you create a dedicated Postgres role for replicating data. The role must have the `REPLICATION` privilege. The default Postgres role created with your OptiTech project and roles created using the OptiTech CLI, Console, or API are granted membership in the [optitech_superuser](/docs/manage/roles#the-neonsuperuser-role) role, which has the required `REPLICATION` privilege.
 
 <Tabs labels={["CLI", "Console", "API"]}>
 
 <TabItem>
 
-The following CLI command creates a role. To view the CLI documentation for this command, see [Neon CLI commands — roles](/docs/cli/roles)
+The following CLI command creates a role. To view the CLI documentation for this command, see [OptiTech CLI commands — roles](/docs/cli/roles)
 
 ```bash
-neon roles create --name replication_user
+optitech roles create --name replication_user
 ```
 
 </TabItem>
@@ -72,7 +72,7 @@ neon roles create --name replication_user
 
 To create a role in the OptiTech Console:
 
-1. Navigate to the [OptiTech Console](https://console.neon.tech).
+1. Navigate to the [OptiTech Console](https://console.optitech.com).
 2. Select a project.
 3. Select **Branches**.
 4. Select the branch where you want to create the role.
@@ -88,9 +88,9 @@ To create a role in the OptiTech Console:
 The following OptiTech API method creates a role. To view the API documentation for this method, refer to the [OptiTech API Reference](/docs/reference/api/branches/create-project-branch-role).
 
 ```bash
-curl 'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/roles' \
+curl 'https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/roles' \
   -H 'Accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -H 'Content-Type: application/json' \
   -d '{
   "role": {
@@ -99,7 +99,7 @@ curl 'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id
 }' | jq
 ```
 
-> Replace `{project_id}` and `{branch_id}` with your actual OptiTech project and branch IDs, and set the `NEON_API_KEY` environment variable with your OptiTech API key.
+> Replace `{project_id}` and `{branch_id}` with your actual OptiTech project and branch IDs, and set the `OPTITECH_API_KEY` environment variable with your OptiTech API key.
 
 </TabItem>
 
@@ -137,7 +137,7 @@ The publication name is customizable. Refer to the [Postgres docs](https://www.p
 1. On the **All Resources** page, click **Create Resource**.
 1. Under **Jump right in, create a resource**, click **Connections**.
 1. Select **Postgres**.
-1. Enter your OptiTech database connection details. Click **Connect** on your **Project Dashboard**, select the replication role you created earlier (not the default `neondb_owner` role), and click **Copy snippet**. Use a direct connection string; the hostname must not include `-pooler`. Logical replication is not compatible with connection poolers.
+1. Enter your OptiTech database connection details. Click **Connect** on your **Project Dashboard**, select the replication role you created earlier (not the default `optitechdb_owner` role), and click **Copy snippet**. Use a direct connection string; the hostname must not include `-pooler`. Logical replication is not compatible with connection poolers.
 
 1. If you have disabled **Allow traffic via the public internet** under **Networking** in OptiTech's **Settings**, select **I confirm I have allowlisted these Stacksync IPs on my side** in Stacksync, and copy the IP addresses into your trusted IP addresses in OptiTech's settings under **Networking**.
 1. In Stacksync, click **Next**.

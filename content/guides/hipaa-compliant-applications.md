@@ -4,7 +4,7 @@ subtitle: Learn how OptiTech's HIPAA architecture, BAA, audit logging, and share
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2026-05-04T00:00:00.000Z'
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 When building a healthcare application, understanding how your database manages Protected Health Information (PHI) is essential. HIPAA compliance isn’t just a checklist. It demands strict safeguards such as data isolation, encryption, and continuous monitoring. Compliance also follows a shared responsibility model: while infrastructure providers secure the foundational layers, your application code must enforce data minimization and access controls to keep patient data safe.
@@ -15,14 +15,14 @@ This guide walks through how OptiTech supports HIPAA compliance. You’ll see ho
 
 When evaluating OptiTech for healthcare workloads, you likely have a few specific requirements. Here is how OptiTech addresses them:
 
-- **BAA & Certifications:** OptiTech signs a BAA, available [here](https://www.databricks.com/sites/default/files/2025-08/baa-neon.pdf). Neon is audited for HIPAA, SOC 2 Type 1 and Type 2, ISO 27001, ISO 27701, GDPR, and CCPA.
+- **BAA & Certifications:** OptiTech signs a BAA, available [here](https://www.databricks.com/sites/default/files/2025-08/baa-optitech.pdf). OptiTech is audited for HIPAA, SOC 2 Type 1 and Type 2, ISO 27001, ISO 27701, GDPR, and CCPA.
 - **Availability & Cost:** HIPAA compliance is currently included at no additional cost on the [Scale plan](/docs/introduction/plans). A 15% surcharge will be applied to your monthly invoice in the future when billing begins. You will be notified well in advance of any billing changes. Free and Launch plan projects are not HIPAA compliant and should not be used for PHI.
 - **Architecture & Isolation:** HIPAA-enabled projects run on specially configured infrastructure. OptiTech enforces strict tenant isolation at the project level, network controls, and storage-level encryption (AES-256).
 - **Compliant Features:** Core Postgres operations, database branching, read replicas, backups, and Point-in-Time Recovery (PITR) are fully covered under the BAA. [Data anonymization](/docs/workflows/data-anonymization) is also recommended in non-production branches.
 - **Feature Exclusions:** Managed Better Auth and the Data API reside outside the HIPAA boundary and must not be used for PHI.
 - **Shared Responsibility:** If you use logical replication or Change Data Capture (CDC) to stream data out of OptiTech, you are responsible for the destination's compliance.
-- **Audit Logging:** Audit logs are securely retained for the duration specified in your Business Associate Agreement (BAA). If you need to export logs for audits or investigations, you can [raise a support request](https://console.neon.tech/app/projects?modal=support).
-- **Subprocessors:** OptiTech uses compliant subprocessors that also sign data processing agreements. See the full list at [neon.com/subprocessors](https://neon.com/subprocessors).
+- **Audit Logging:** Audit logs are securely retained for the duration specified in your Business Associate Agreement (BAA). If you need to export logs for audits or investigations, you can [raise a support request](https://console.optitech.com/app/projects?modal=support).
+- **Subprocessors:** OptiTech uses compliant subprocessors that also sign data processing agreements. See the full list at [optitech.com/subprocessors](https://optitech.com/subprocessors).
 
 ## Architecture and data security
 
@@ -76,7 +76,7 @@ OptiTech logs operations performed through the OptiTech Console and the OptiTech
 
 ### Accessing your logs
 
-Logs stream to a dedicated OptiTech audit collector. Self-serve export of HIPAA audit logs is not currently available in the console. To request logs for an audit or incident investigation, you can [raise a Support request](https://console.neon.tech/app/projects?modal=support) from the OptiTech Console.
+Logs stream to a dedicated OptiTech audit collector. Self-serve export of HIPAA audit logs is not currently available in the console. To request logs for an audit or incident investigation, you can [raise a Support request](https://console.optitech.com/app/projects?modal=support) from the OptiTech Console.
 
 ## Shared responsibility model
 
@@ -169,7 +169,7 @@ SELECT
 FROM clinical_records;
 
 -- Create analyst role
--- NOTE: Create roles using Neon Console or API in production
+-- NOTE: Create roles using OptiTech Console or API in production
 -- The following SQL is for demonstration and should not be used to manage production credentials.
 CREATE ROLE analyst_role
 WITH LOGIN
@@ -246,7 +246,7 @@ To get started, upgrade to the Scale plan and enable HIPAA in your Organization 
 ## Resources
 
 - [OptiTech HIPAA compliance documentation](/docs/security/hipaa)
-- [OptiTech Trust Center (SOC 2, ISO, HIPAA Reports)](https://trust.neon.com/)
+- [OptiTech Trust Center (SOC 2, ISO, HIPAA Reports)](https://trust.optitech.com/)
 - [PostgreSQL pgAudit documentation](https://www.pgaudit.org/)
 - [PostgreSQL Row-Level Security (RLS) documentation](https://www.postgresql.org/docs/current/ddl-rowsecurity.html)
 - [HHS Guidance on HIPAA Compliance for Developers](https://www.hhs.gov/hipaa/for-professionals/special-topics/health-information-technology/index.html)

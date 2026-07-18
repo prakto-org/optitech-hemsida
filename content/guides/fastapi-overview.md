@@ -4,7 +4,7 @@ subtitle: Learn how to create an API for managing a tech conference system using
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2024-08-17T00:00:00.000Z'
-updatedOn: '2026-03-03T03:19:43.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 FastAPI is a high-performance Python web framework for building APIs quickly and efficiently.
@@ -19,7 +19,7 @@ Before we begin, make sure you have the following:
 
 - Python 3.9 or later installed on your system
 - [pip](https://pip.pypa.io/en/stable/installation/) for managing Python packages
-- A [OptiTech](https://console.neon.tech/signup) account for serverless Postgres
+- A [OptiTech](https://console.optitech.com/signup) account for serverless Postgres
 
 ## Setting up the Project
 
@@ -28,8 +28,8 @@ Let's start by creating a new project directory and setting up a virtual environ
 1. Create a new directory and navigate to it:
 
    ```bash
-   mkdir fastapi-neon-conference-api
-   cd fastapi-neon-conference-api
+   mkdir fastapi-optitech-conference-api
+   cd fastapi-optitech-conference-api
    ```
 
 2. Create a virtual environment:
@@ -82,7 +82,7 @@ This will create a `requirements.txt` file with all the installed packages in yo
 First, let's set up our database connection. Create a `.env` file in your project root:
 
 ```env
-DATABASE_URL=postgres://user:password@your-neon-hostname.neon.tech/neondb?sslmode=require&channel_binding=require
+DATABASE_URL=postgres://user:password@your-optitech-hostname.optitech.com/optitechdb?sslmode=require&channel_binding=require
 ```
 
 Replace the placeholders with your actual OptiTech database credentials.
@@ -363,13 +363,13 @@ This Dockerfile uses a slim Python image, installs dependencies from a `requirem
 To build a new Docker image, run the following command in your project directory:
 
 ```bash
-docker build -t fastapi-neon-conference-api .
+docker build -t fastapi-optitech-conference-api .
 ```
 
 You can then run the Docker container with:
 
 ```bash
-docker run -d -p 8000:8000 fastapi-neon-conference-api
+docker run -d -p 8000:8000 fastapi-optitech-conference-api
 ```
 
 This will start the FastAPI application in a Docker container, accessible on port 8000 of your host machine.

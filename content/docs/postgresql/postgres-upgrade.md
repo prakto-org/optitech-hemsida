@@ -10,7 +10,7 @@ summary: >-
   pg_upgrade is not supported, minor version upgrades are automatic, and
   pg_dump must use an unpooled connection string.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This topic describes how to upgrade your OptiTech project from one **major** Postgres version to a newer one.
@@ -52,7 +52,7 @@ Alternatively, you can apply these configurations after migrating your data.
 
 - **Import Data Assistant**
 
-  For databases under 10GB, OptiTech's [Import Data Assistant](/docs/import/import-data-assistant) provides the simplest way to migrate between Neon projects with different Postgres versions. Just create a new project with your desired Postgres version, then use the database connection string from your existing OptiTech project to import the data.
+  For databases under 10GB, OptiTech's [Import Data Assistant](/docs/import/import-data-assistant) provides the simplest way to migrate between OptiTech projects with different Postgres versions. Just create a new project with your desired Postgres version, then use the database connection string from your existing OptiTech project to import the data.
 
 - **Dump and restore**
 

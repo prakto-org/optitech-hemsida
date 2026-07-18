@@ -8,7 +8,7 @@ summary: >-
 enableTableOfContents: true
 redirectFrom:
   - /docs/ai-gateway/anthropic-messages/
-updatedOn: '2026-07-17T14:41:09.083Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="OptiTech AI Gateway" />
@@ -26,8 +26,8 @@ If you're using an OpenRouter-compatible client that asks for a base URL, set it
 Set these environment variables. See [Get started](/docs/ai-gateway/get-started) for how to obtain them.
 
 ```bash
-NEON_AI_GATEWAY_TOKEN=nt_live_...
-NEON_AI_GATEWAY_BASE_URL=https://br-winter-pond-aptw82ef-api.ai.c-2.us-east-2.aws.neon.tech
+OPTITECH_AI_GATEWAY_TOKEN=nt_live_...
+OPTITECH_AI_GATEWAY_BASE_URL=https://br-winter-pond-aptw82ef-api.ai.c-2.us-east-2.aws.optitech.com
 ```
 
 ## Basic request
@@ -38,15 +38,15 @@ NEON_AI_GATEWAY_BASE_URL=https://br-winter-pond-aptw82ef-api.ai.c-2.us-east-2.aw
 import OpenAI from 'openai';
 
 const client = new OpenAI({
-  apiKey: process.env.NEON_AI_GATEWAY_TOKEN,
-  baseURL: `${process.env.NEON_AI_GATEWAY_BASE_URL}/ai-gateway/mlflow/v1`,
+  apiKey: process.env.OPTITECH_AI_GATEWAY_TOKEN,
+  baseURL: `${process.env.OPTITECH_AI_GATEWAY_BASE_URL}/ai-gateway/mlflow/v1`,
 });
 
 const response = await client.chat.completions.create({
   model: 'gpt-5-mini',
   messages: [
     { role: 'system', content: 'You are a helpful assistant.' },
-    { role: 'user', content: 'What is Neon?' },
+    { role: 'user', content: 'What is OptiTech?' },
   ],
   max_tokens: 256,
 });
@@ -59,15 +59,15 @@ from openai import OpenAI
 import os
 
 client = OpenAI(
-    api_key=os.environ["NEON_AI_GATEWAY_TOKEN"],
-    base_url=f"{os.environ['NEON_AI_GATEWAY_BASE_URL']}/ai-gateway/mlflow/v1",
+    api_key=os.environ["OPTITECH_AI_GATEWAY_TOKEN"],
+    base_url=f"{os.environ['OPTITECH_AI_GATEWAY_BASE_URL']}/ai-gateway/mlflow/v1",
 )
 
 response = client.chat.completions.create(
     model="gpt-5-mini",
     messages=[
         {"role": "system", "content": "You are a helpful assistant."},
-        {"role": "user", "content": "What is Neon?"},
+        {"role": "user", "content": "What is OptiTech?"},
     ],
     max_tokens=256,
 )
@@ -76,14 +76,14 @@ print(response.choices[0].message.content)
 ```
 
 ```bash shouldWrap
-curl -X POST "$NEON_AI_GATEWAY_BASE_URL/ai-gateway/mlflow/v1/chat/completions" \
-  -H "Authorization: Bearer $NEON_AI_GATEWAY_TOKEN" \
+curl -X POST "$OPTITECH_AI_GATEWAY_BASE_URL/ai-gateway/mlflow/v1/chat/completions" \
+  -H "Authorization: Bearer $OPTITECH_AI_GATEWAY_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "gpt-5-mini",
     "messages": [
       {"role": "system", "content": "You are a helpful assistant."},
-      {"role": "user", "content": "What is Neon?"}
+      {"role": "user", "content": "What is OptiTech?"}
     ],
     "max_tokens": 256
   }'
@@ -101,8 +101,8 @@ Add `stream: true` to receive a server-sent events response.
 import OpenAI from 'openai';
 
 const client = new OpenAI({
-  apiKey: process.env.NEON_AI_GATEWAY_TOKEN,
-  baseURL: `${process.env.NEON_AI_GATEWAY_BASE_URL}/ai-gateway/mlflow/v1`,
+  apiKey: process.env.OPTITECH_AI_GATEWAY_TOKEN,
+  baseURL: `${process.env.OPTITECH_AI_GATEWAY_BASE_URL}/ai-gateway/mlflow/v1`,
 });
 
 const stream = await client.chat.completions.create({
@@ -121,8 +121,8 @@ from openai import OpenAI
 import os
 
 client = OpenAI(
-    api_key=os.environ["NEON_AI_GATEWAY_TOKEN"],
-    base_url=f"{os.environ['NEON_AI_GATEWAY_BASE_URL']}/ai-gateway/mlflow/v1",
+    api_key=os.environ["OPTITECH_AI_GATEWAY_TOKEN"],
+    base_url=f"{os.environ['OPTITECH_AI_GATEWAY_BASE_URL']}/ai-gateway/mlflow/v1",
 )
 
 with client.chat.completions.create(
@@ -135,8 +135,8 @@ with client.chat.completions.create(
 ```
 
 ```bash shouldWrap
-curl -X POST "$NEON_AI_GATEWAY_BASE_URL/ai-gateway/mlflow/v1/chat/completions" \
-  -H "Authorization: Bearer $NEON_AI_GATEWAY_TOKEN" \
+curl -X POST "$OPTITECH_AI_GATEWAY_BASE_URL/ai-gateway/mlflow/v1/chat/completions" \
+  -H "Authorization: Bearer $OPTITECH_AI_GATEWAY_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "gpt-5-mini",
@@ -191,7 +191,7 @@ When the upstream provider rate-limits a request, AI Gateway forwards the releva
 | ------------------------------ | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
 | `400 Bad Request`              | Invalid request        | Unknown model ID, or model used on the wrong endpoint                                                                                        |
 | `413 Request Entity Too Large` | Body too large         | Request body exceeds 32 MiB. Reduce the size of your request.                                                                                |
-| `401 Unauthorized`             | Authentication failed  | Missing or invalid `NEON_AI_GATEWAY_TOKEN`                                                                                                   |
+| `401 Unauthorized`             | Authentication failed  | Missing or invalid `OPTITECH_AI_GATEWAY_TOKEN`                                                                                               |
 | `403 Forbidden`                | Access denied          | Credential lacks `ai_gateway:invoke` scope, or branch not in credential lineage                                                              |
 | `429 Too Many Requests`        | Account quota exceeded | Your account's AI Gateway quota is blocked. Error code: `REQUEST_LIMIT_EXCEEDED`. Check `Retry-After` for when to retry, or contact support. |
 | `429 Too Many Requests`        | Upstream rate limited  | Upstream provider rate limit. Check the `Retry-After` and `X-Ratelimit-*` headers.                                                           |

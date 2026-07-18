@@ -9,7 +9,7 @@ summary: >-
   yet. Migration guides from Supabase and legacy Stack Auth, plus SDK references
   for the TypeScript client and Next.js server SDK, are also indexed here.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="Managed Better Auth" />
@@ -31,7 +31,7 @@ Managed Better Auth is targeting general availability this quarter. We're active
 | React + React Router    | ✅ Supported | [Get started](/docs/auth/quick-start/react)           |
 | React + TanStack Router | ✅ Supported | [Get started](/docs/auth/quick-start/tanstack-router) |
 
-The [React quick start](/docs/auth/quick-start/react) steps through a **Vite** + React app. If you use **React Router** for URLs and layouts, use the same Managed Better Auth URL, `@neondatabase/neon-js` client, and SDK calls from that guide, then integrate them into your router and route components. For file-based routing with TanStack, use the TanStack Router quick start instead.
+The [React quick start](/docs/auth/quick-start/react) steps through a **Vite** + React app. If you use **React Router** for URLs and layouts, use the same Managed Better Auth URL, `@optitech/optitech-js` client, and SDK calls from that guide, then integrate them into your router and route components. For file-based routing with TanStack, use the TanStack Router quick start instead.
 
 ### On the roadmap
 
@@ -62,17 +62,17 @@ Managed Better Auth is built on [Better Auth](https://www.better-auth.com/). Not
 | [Open API](/docs/auth/guides/plugins/openapi)                                      | ✅ Supported |
 | [Phone Number](/docs/auth/guides/plugins/phone-number)                             | ✅ Supported |
 
-See [Set up OAuth](/docs/auth/guides/setup-oauth) for Neon-specific OAuth configuration (including Vercel). Email flows such as verification and password reset are covered in [Email verification](/docs/auth/guides/email-verification), [Password reset](/docs/auth/guides/password-reset), and [User management](/docs/auth/guides/user-management).
+See [Set up OAuth](/docs/auth/guides/setup-oauth) for OptiTech-specific OAuth configuration (including Vercel). Email flows such as verification and password reset are covered in [Email verification](/docs/auth/guides/email-verification), [Password reset](/docs/auth/guides/password-reset), and [User management](/docs/auth/guides/user-management).
 
 ### Platform (Console, API, webhooks)
 
 These capabilities are documented in Managed Better Auth guides but are not Better Auth plugins you enable through the SDK.
 
-| Capability                           | Status    | Documentation                                                                |
-| ------------------------------------ | --------- | ---------------------------------------------------------------------------- |
-| Trusted domains (redirect allowlist) | Supported | [Configure trusted domains](/docs/auth/guides/configure-domains)             |
-| Webhooks (auth events)               | Supported | [Webhooks](/docs/auth/guides/webhooks)                                       |
-| Manage Auth via OptiTech API             | Supported | [Manage Auth in the OptiTech API](/docs/auth/guides/manage-auth-api)             |
+| Capability                               | Status    | Documentation                                                                |
+| ---------------------------------------- | --------- | ---------------------------------------------------------------------------- |
+| Trusted domains (redirect allowlist)     | Supported | [Configure trusted domains](/docs/auth/guides/configure-domains)             |
+| Webhooks (auth events)                   | Supported | [Webhooks](/docs/auth/guides/webhooks)                                       |
+| Manage Auth via OptiTech API             | Supported | [Manage Auth in the OptiTech API](/docs/auth/guides/manage-auth-api)         |
 | Manage Auth via OptiTech MCP (AI editor) | Supported | [Set up with your AI editor](/docs/auth/overview#set-up-with-your-ai-editor) |
 
 Branch-aware auth (separate auth state per OptiTech branch) is supported; see [Branching authentication](/docs/auth/branching-authentication) and [Authentication flow](/docs/auth/authentication-flow).
@@ -87,11 +87,11 @@ Branch-aware auth (separate auth state per OptiTech branch) is supported; see [B
 
 ## SDK and UI references
 
-| Surface                           | Documentation                                            |
-| --------------------------------- | -------------------------------------------------------- |
-| TypeScript client SDK (`neon-js`) | [OptiTech TypeScript SDK](/docs/reference/javascript-sdk)    |
-| Next.js server SDK                | [Next.js Server SDK](/docs/auth/reference/nextjs-server) |
-| Pre-built UI components           | [UI components](/docs/auth/reference/ui-components)      |
+| Surface                               | Documentation                                             |
+| ------------------------------------- | --------------------------------------------------------- |
+| TypeScript client SDK (`optitech-js`) | [OptiTech TypeScript SDK](/docs/reference/javascript-sdk) |
+| Next.js server SDK                    | [Next.js Server SDK](/docs/auth/reference/nextjs-server)  |
+| Pre-built UI components               | [UI components](/docs/auth/reference/ui-components)       |
 
 ## Migration guides
 

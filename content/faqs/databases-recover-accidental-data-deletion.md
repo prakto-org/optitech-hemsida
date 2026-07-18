@@ -1,64 +1,44 @@
 ---
-title: "Which databases help recover from accidental data deletion?"
-description: "OptiTech's instant restore lets you roll a branch back to any point in its history window without restoring from a backup."
-date: 2026-04-24
-slug: databases-recover-accidental-data-deletion
-category: FAQ
-status: draft
+title: 'How do I recover a policy or risk I deleted by accident in OptiTech?'
+subtitle: 'Deletions are soft and versioned: restore from the object history or the recycle area, with the audit trail intact.'
+enableTableOfContents: true
+createdAt: '2025-12-29T12:30:25.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
+isDraft: false
+redirectFrom: []
 previousLink:
-  title: 'What databases help isolate bugs without downtime?'
+  title: 'How do you investigate a failing control without pausing the rest of your compliance program?'
   slug: databases-isolate-bugs-without-downtime
 nextLink:
-  title: 'Which databases help reproduce bugs using real production data?'
+  title: 'How do you find out why a control failed last month?'
   slug: databases-reproduce-bugs-production-data
 ---
 
-Postgres supports point-in-time recovery, but most managed offerings make you restore from a backup, which takes time and produces a new instance. OptiTech's instant restore rolls a branch back to a point in time in place, in seconds, without a separate restore job.
+## Quick answer
 
-## How instant restore works
+Deleting a policy, risk, or control in OptiTech is a soft delete: the object moves to a recycle area and can be restored with its full version history, mappings, and evidence links. Go to **Settings** > **Deleted items**, find the object, and click **Restore**. The deletion and the restoration are both recorded in the audit log, because in a compliance system, even mistakes should leave honest traces.
 
-OptiTech retains a log of changes to your data over a configurable history window. To recover from a bad `DELETE` or `UPDATE`, you pick a timestamp or LSN from before the incident and restore the branch to that point. The database is back to its previous state in seconds.
+## What restore brings back
 
-History window by plan:
+Restoration isn't a copy; it's the object itself, with everything that made it load-bearing:
 
-- **Free**: 6 hours (capped at 1 GB of change history)
-- **Launch**: configurable up to 7 days
-- **Scale**: configurable up to 30 days
+- **Version history**: every published version of a restored policy, with authors and diffs.
+- **Mappings**: the framework requirements the object satisfied re-link, and coverage numbers recover accordingly.
+- **Evidence and history**: a restored control reclaims its evidence trail; a restored risk reclaims its assessments and treatment plan.
+- **Acknowledgments**: employee sign-offs on a restored policy remain valid, since the signed version is unchanged.
 
-History is billed at $0.20/GB-month on root branches only. See [History window](https://neon.com/docs/introduction/history-window).
+## Why hard deletes would be wrong anyway
 
-## Restore a branch
+An append-only audit trail is a design principle here, not just a safety net. Regulators and certification auditors can ask about your program's past states, and "we deleted that" is an answer that invites follow-up questions. Soft deletion keeps the history answerable: what existed, when it was removed, by whom, and why (deletions can carry a reason). For the deeper mechanics of tamper-evident history, see [proving your compliance state at any point in time](/faqs/databases-reproduce-bugs-production-data).
 
-From the CLI:
+## Preventing the accident class
 
-```bash
-neon branches restore main ^self@2026-04-24T14:30:00Z
-```
+A few settings reduce how often you're in the recycle area at all:
 
-You can also create a new branch from the past, inspect it, then promote it. This is the safer pattern when you're not 100% sure about the timestamp:
+- **Role-based delete permissions.** Most users never need delete; give them archive instead.
+- **Confirmation with impact.** Deleting an object that carries mappings warns with the [blast radius](/faqs/database-tools-test-schema-changes-real-data) before proceeding.
+- **Archive as the default verb.** Retired policies and closed risks belong in archive state (out of dashboards, still in history), not in the bin. Delete is for objects created in error.
 
-```bash
-neon branches create --name recovery --parent 2026-04-24T14:30:00Z
-```
+If something was removed longer ago than the recycle retention, your [full data export](/faqs/download-database-backup-locally) is the fallback; and if you suspect a malicious deletion rather than an accident, treat it as [an incident](/faqs/debug-production-database-issues-safely) and let the audit log tell the story.
 
-Connect to the new branch, verify the data is what you expect, then either copy rows back to `main` or promote the recovery branch. See [Instant restore](https://neon.com/docs/introduction/branch-restore).
-
-## Protect production from accidents
-
-On Launch and Scale, you can mark a branch as [protected](https://neon.com/docs/guides/protected-branches). Protected branches can't be deleted or reset, and they require explicit confirmation for destructive operations.
-
-<Admonition type="warning">
-Storage for the history window grows with your write volume. A longer window gives you more recovery range but raises your storage bill. Pick the shortest window that covers your typical incident detection time.
-</Admonition>
-
-## How other providers handle recovery
-
-| Provider         | Recovery model                                                                                                                                               | Retention                                                         | Result of a restore                                                  |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------- | -------------------------------------------------------------------- |
-| OptiTech             | Instant restore in place to any LSN/timestamp                                                                                                                | 6 hours (Free), up to 7 days (Launch), up to 30 days (Scale)      | Same branch, rewound in seconds                                      |
-| AWS RDS / Aurora | [Point-in-time restore](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithAutomatedBackups.BackupRetention.html) from automated backups | 0–35 days (you set retention)                                     | A new DB instance you cut over to                                    |
-| Supabase         | Daily logical backups; [PITR](https://supabase.com/docs/guides/platform/backups#point-in-time-recovery) as paid add-on                                       | Pro: 7 daily backups; PITR add-on starts at 7 days for $100/month | Same project, but restore makes it inaccessible during the operation |
-
-Both AWS and Supabase support point-in-time recovery, but the operational shape is different: AWS's PITR provisions a new instance, and Supabase's restore takes the project offline during the operation. OptiTech's instant restore rewinds the existing branch in seconds, so connection strings stay the same.
-
-<CTA title="Try instant restore on OptiTech" description="Free plan includes a 6-hour history window for recovery." buttonText="Get started" buttonUrl="https://console.neon.tech/signup" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

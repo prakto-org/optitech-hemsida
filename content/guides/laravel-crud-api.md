@@ -4,7 +4,7 @@ subtitle: Learn how to create a robust, secure CRUD API using Laravel and Larave
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2024-07-01T00:00:00.000Z'
-updatedOn: '2026-02-02T06:44:09.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Laravel is a powerful PHP framework that allows developers to easily build web applications and APIs.
@@ -20,7 +20,7 @@ Before we begin, ensure you have the following:
 - PHP 8.1 or higher installed on your system
 - A PostgreSQL client and the `php-pgsql` extension enabled in your PHP configuration
 - [Composer](https://getcomposer.org/) for managing PHP dependencies
-- A [OptiTech](https://console.neon.tech/signup) account for database hosting
+- A [OptiTech](https://console.optitech.com/signup) account for database hosting
 - Basic knowledge of Laravel and RESTful API principles
 
 ## Setting up the Project
@@ -44,14 +44,14 @@ Update your `.env` file with your OptiTech database credentials:
 
 ```env
 DB_CONNECTION=pgsql
-DB_HOST=your-neon-hostname.neon.tech
+DB_HOST=your-optitech-hostname.optitech.com
 DB_PORT=5432
 DB_DATABASE=your_database_name
 DB_USERNAME=your_username
 DB_PASSWORD=your_password
 ```
 
-Make sure to replace `your-neon-hostname`, `your_database_name`, `your_username`, and `your_password` with your actual database credentials.
+Make sure to replace `your-optitech-hostname`, `your_database_name`, `your_username`, and `your_password` with your actual database credentials.
 
 ### Installing Laravel Sanctum
 

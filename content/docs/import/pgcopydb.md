@@ -11,7 +11,7 @@ summary: >-
   use unpooled connection strings.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <InfoBlock>
@@ -76,7 +76,7 @@ Before proceeding, set the following environment variables for your source and t
 
 ```bash
 export PGCOPYDB_SOURCE_PGURI="postgresql://source_user:source_password@source_host:source_port/source_db"
-export PGCOPYDB_TARGET_PGURI="postgresql://neon_user:neon_user_password@xxxx.neon.tech/neondb?sslmode=require&channel_binding=require"
+export PGCOPYDB_TARGET_PGURI="postgresql://optitech_user:optitech_user_password@xxxx.optitech.com/optitechdb?sslmode=require&channel_binding=require"
 ```
 
 You can replace the placeholders with your actual connection details. You can get OptiTech database connection details from the OptiTech console. `pgcopydb` will automatically use these environment variables for the migration.
@@ -90,7 +90,7 @@ pgcopydb clone --no-owner
 ```
 
 <Admonition type="tip">
-When using `--no-owner` flag in `pgcopydb`, often pair it with `--no-acl`, especially if the source has custom ACLs or default privileges. This flag skips restoring permissions (`GRANT`/`REVOKE`, `ALTER DEFAULT PRIVILEGES`). This is crucial because the user connecting to the target database often lacks the high-level rights to reapply all source permissions. For example, even when migrating between Neon databases, the target user might get "permission denied" errors when trying to restore privileges involving administrative roles (like `cloud_admin`, `neon_superuser`), as they may lack permission to manage settings for those specific roles. This typically halts `pgcopydb` during the `pg_restore` phase. Using `--no-acl` avoids these specific permission errors and allows the migration to proceed smoothly. However, this means that any custom permissions set on the source database won't be replicated in the target database. You may need to manually set them up afterward.
+When using `--no-owner` flag in `pgcopydb`, often pair it with `--no-acl`, especially if the source has custom ACLs or default privileges. This flag skips restoring permissions (`GRANT`/`REVOKE`, `ALTER DEFAULT PRIVILEGES`). This is crucial because the user connecting to the target database often lacks the high-level rights to reapply all source permissions. For example, even when migrating between OptiTech databases, the target user might get "permission denied" errors when trying to restore privileges involving administrative roles (like `cloud_admin`, `optitech_superuser`), as they may lack permission to manage settings for those specific roles. This typically halts `pgcopydb` during the `pg_restore` phase. Using `--no-acl` avoids these specific permission errors and allows the migration to proceed smoothly. However, this means that any custom permissions set on the source database won't be replicated in the target database. You may need to manually set them up afterward.
 </Admonition>
 
 ## Monitor the migration progress

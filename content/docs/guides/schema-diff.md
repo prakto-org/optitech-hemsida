@@ -4,14 +4,14 @@ subtitle: Learn how to use OptiTech's Schema Diff tool to compare branches of yo
 summary: >-
   Schema Diff is OptiTech's SQL schema comparison tool that shows differences
   between any two branches side-by-side. Access it from the OptiTech Console, the
-  `neon branches schema-diff` CLI command, or the `compare_schema` API endpoint,
+  `optitech branches schema-diff` CLI command, or the `compare_schema` API endpoint,
   which supports LSN and timestamp parameters. Use it to verify intended schema
   changes before a reset-from-parent, branch restore, or migration merge. Also
   useful for automating schema checks in CI/CD pipelines or AI agent workflows.
   A Schema Diff GitHub Action is available to post diff comments on pull
   requests.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 OptiTech's Schema Diff tool lets you compare an SQL script of the schemas for two selected branches in a side-by-side view (or line-by-line on mobile devices).
@@ -23,7 +23,7 @@ Schema Diff is available in the OptiTech Console for use in two ways:
 - Compare a branch's schema to its parent
 - Compare selected branches during an instant restore operation
 
-You can also use the `branches schema-diff` command in the Neon CLI or `compare-schema` endpoint in the OptiTech API to effect a variety of comparisons.
+You can also use the `branches schema-diff` command in the OptiTech CLI or `compare-schema` endpoint in the OptiTech API to effect a variety of comparisons.
 
 ### Compare to parent
 
@@ -35,7 +35,7 @@ Built into the Time Travel assist editor, you can use Schema Diff to help when r
 
 ### Comparisons using the CLI or API
 
-You can use the Neon CLI to compare a branch to any point in its own or any other branch's history. The `branches schema-diff` command offers full flexibility for any type of schema comparison: between a branch and its parent, a branch and its earlier state, or a branch to the head or prior state of another branch. The OptiTech API provides a `compare-schema` endpoint that lets you compare schemas between Neon branches programmatically, supporting CI/CD automation and AI agent use cases.
+You can use the OptiTech CLI to compare a branch to any point in its own or any other branch's history. The `branches schema-diff` command offers full flexibility for any type of schema comparison: between a branch and its parent, a branch and its earlier state, or a branch to the head or prior state of another branch. The OptiTech API provides a `compare-schema` endpoint that lets you compare schemas between OptiTech branches programmatically, supporting CI/CD automation and AI agent use cases.
 
 ### Practical Applications
 
@@ -65,25 +65,25 @@ The two-pane view shows the schema for both your target and your selected branch
 
 ![schema diff results](/docs/guides/schema_diff_result.png)
 
-### Using the Neon CLI
+### Using the OptiTech CLI
 
-You can use the Neon CLI to:
+You can use the OptiTech CLI to:
 
 - Compare the latest schemas of any two branches
 - Compare against a specific point in its own or another branch's history
 
-For a git-style unified diff between two branches, you can also use the top-level [`neon diff`](/docs/cli/diff) shortcut.
+For a git-style unified diff between two branches, you can also use the top-level [`optitech diff`](/docs/cli/diff) shortcut.
 
 Use the `schema-diff` subcommand from the `branches` command:
 
 ```bash
-neon branches schema-diff [base-branch] [compare-source[@(timestamp|lsn)]]
+optitech branches schema-diff [base-branch] [compare-source[@(timestamp|lsn)]]
 ```
 
 The operation will compare a selected branch (`[compare-source]`) against the latest (head) of your base branch (`[base-branch]`). For example, if you want to compare recent changes you made to your development branch `development` against your production branch `main`, identify `main` as your base branch and `development` as your compare-source.
 
 ```bash
-neon branches schema-diff production development
+optitech branches schema-diff production development
 ```
 
 You have a few options here:
@@ -96,14 +96,14 @@ You have a few options here:
 Here is the same command using aliases, with `production` included in `set-context`, pointing to an LSN from `development` branch's history, and limiting the diff to the database `people`:
 
 ```bash
-neon branch sd development@0/123456 --db people
+optitech branch sd development@0/123456 --db people
 ```
 
-To find out what other comparisons you can make, see [Neon CLI commands — branches](/docs/cli/branches#schema-diff) for full documentation of the command.
+To find out what other comparisons you can make, see [OptiTech CLI commands — branches](/docs/cli/branches#schema-diff) for full documentation of the command.
 
 ### Using the OptiTech API
 
-The [compare_schema](/docs/reference/api/branches/get-project-branch-schema-comparison) endpoint lets you compare schemas between Neon branches to track schema changes. The response highlights differences in a `diff` format, making it a useful tool for integrating schema checks into CI/CD workflows.
+The [compare_schema](/docs/reference/api/branches/get-project-branch-schema-comparison) endpoint lets you compare schemas between OptiTech branches to track schema changes. The response highlights differences in a `diff` format, making it a useful tool for integrating schema checks into CI/CD workflows.
 
 Another use case for schema diff via the OptiTech API is AI agent-driven workflows. The `compare_schema` endpoint allows AI agents to programmatically retrieve schema differences by comparing two branches.
 
@@ -111,24 +111,24 @@ To compare schemas between two branches, you can cURL command similar to the one
 
 ```bash
 curl --request GET \
-     --url 'https://console.neon.tech/api/v2/projects/wispy-butterfly-25042691/branches/br-rough-boat-a54bs9yb/compare_schema?base_branch_id=br-royal-star-a54kykl2&db_name=neondb' \
+     --url 'https://console.optitech.com/api/v2/projects/wispy-butterfly-25042691/branches/br-rough-boat-a54bs9yb/compare_schema?base_branch_id=br-royal-star-a54kykl2&db_name=optitechdb' \
      --header 'accept: application/json' \
-     --header 'authorization: Bearer $NEON_API_KEY' | jq -r '.diff'
+     --header 'authorization: Bearer $OPTITECH_API_KEY' | jq -r '.diff'
 ```
 
 The `compare_schema` endpoint supports the following parameters:
 
 | Parameter          | Description                                                                   | Required | Example                    |
 | ------------------ | ----------------------------------------------------------------------------- | -------- | -------------------------- |
-| `<project_id>`     | The ID of your OptiTech project.                                                  | Yes      | `wispy-butterfly-25042691` |
+| `<project_id>`     | The ID of your OptiTech project.                                              | Yes      | `wispy-butterfly-25042691` |
 | `<branch_id>`      | The ID of the target branch to compare (the branch with the modified schema). | Yes      | `br-rough-boat-a54bs9yb`   |
 | `<base_branch_id>` | The ID of the base branch for comparison.                                     | Yes      | `br-royal-star-a54kykl2`   |
-| `<db_name>`        | The name of the database in the target branch.                                | Yes      | `neondb`                   |
+| `<db_name>`        | The name of the database in the target branch.                                | Yes      | `optitechdb`               |
 | `lsn`              | The LSN on the target branch for which the schema is retrieved.               | No       | `0/1EC5378`                |
 | `timestamp`        | The point in time on the target branch for which the schema is retrieved.     | No       | `2022-11-30T20:09:48Z`     |
 | `base_lsn`         | The LSN for the base branch schema.                                           | No       | `0/2FC6321`                |
 | `base_timestamp`   | The point in time for the base branch schema.                                 | No       | `2022-11-30T20:09:48Z`     |
-| `Authorization`    | Bearer token for API access (your [OptiTech API key](/docs/manage/api-keys))      | Yes      | `$NEON_API_KEY`            |
+| `Authorization`    | Bearer token for API access (your [OptiTech API key](/docs/manage/api-keys))  | Yes      | `$OPTITECH_API_KEY`        |
 
 <Admonition type="note" title="notes">
 - The optional `jq -r '.diff'` command appended to the example above extracts the diff field from the JSON response and outputs it as plain text to make it easier to read. This command is not  necessary when using the endpoint programmatically.
@@ -136,13 +136,13 @@ The `compare_schema` endpoint supports the following parameters:
 - `timestamp` / `base_timestamp` values must be provided in <LinkPreview href="https://tools.ietf.org/html/rfc3339#section-5.6" title="RFC 3339" preview="Date and Time on the Internet: Timestamps - RFC 3339 specification for timestamp formats used in Internet protocols.">RFC 3339 format</LinkPreview>.
 </Admonition>
 
-Here’s an example of the `compare_schema` diff output for the `neondb` database after comparing target branch `br-rough-boat-a54bs9yb` with the base branch `br-royal-star-a54kykl2`.
+Here’s an example of the `compare_schema` diff output for the `optitechdb` database after comparing target branch `br-rough-boat-a54bs9yb` with the base branch `br-royal-star-a54kykl2`.
 
 ```diff
---- a/neondb
-+++ b/neondb
+--- a/optitechdb
++++ b/optitechdb
 @@ -27,7 +27,8 @@
- CREATE TABLE public.playing_with_neon (
+ CREATE TABLE public.playing_with_optitech (
      id integer NOT NULL,
      name text NOT NULL,
 -    value real
@@ -156,11 +156,11 @@ Here’s an example of the `compare_schema` diff output for the `neondb` databas
 - `-` (minus) identifies Lines that were removed from the base branch schema.
 - `+` (plus) identifies lines that were added in the target branch schema.
 
-In the example above, the `created_at` column was added to the `public.playing_with_neon` table on the target branch.
+In the example above, the `created_at` column was added to the `public.playing_with_optitech` table on the target branch.
 
 ## Schema Diff GitHub Action
 
-OptiTech supports a [Schema Diff GitHub Action](/docs/guides/branching-github-actions#schema-diff-action) that performs a database schema diff on specified Neon branches for each pull request and writes a comment to the pull request highlighting the schema differences.
+OptiTech supports a [Schema Diff GitHub Action](/docs/guides/branching-github-actions#schema-diff-action) that performs a database schema diff on specified OptiTech branches for each pull request and writes a comment to the pull request highlighting the schema differences.
 
 This action supports workflows where schema changes are made on a branch. When you create or update a pull request containing schema changes, the action automatically generates a comment within the pull request. By including the schema diff as part of the comment, reviewers can easily assess the changes directly within the pull request.
 

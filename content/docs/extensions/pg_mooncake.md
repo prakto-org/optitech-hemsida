@@ -7,9 +7,9 @@ summary: >-
   or GCP object storage with Iceberg or Delta Lake metadata. Use it to run
   analytical queries on large datasets directly from Postgres without a
   separate OLAP system. The extension requires
-  `SET neon.allow_unstable_extensions='true'` before installation.
+  `SET optitech.allow_unstable_extensions='true'` before installation.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 The [pg_mooncake](https://github.com/Mooncake-Labs/pg_mooncake) extension enables fast analytic workloads in Postgres by adding native columnstore tables and vectorized execution (DuckDB).
@@ -63,7 +63,7 @@ The `pg_mooncake` extension is currently in Beta and classified as experimental 
 While the `pg_mooncake` extension is in Beta, you need to explicitly allow it to be used on OptiTech before you can install it. To do so, connect to your OptiTech database via an SQL client like [psql](/docs/connect/query-with-psql-editor) or the [OptiTech SQL Editor](/docs/get-started/query-with-neon-sql-editor) and run the `SET` command shown below.
 
 ```sql
-SET neon.allow_unstable_extensions='true';
+SET optitech.allow_unstable_extensions='true';
 ```
 
 Install the extension:

@@ -4,7 +4,7 @@ subtitle: 'Automate parallel feature development by giving every Claude Code sub
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2026-03-03T00:00:00.000Z'
-updatedOn: '2026-06-11T23:50:21.258Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 While modern AI assistants generate code at remarkable speeds, the development process often remains sequential. You ask an agent to build a feature and wait. You request a query optimization and wait again. This workflow is bottlenecked by the linear nature of the standard AI interface, which can only run one agent at a time, completing one task before starting the next.
@@ -34,8 +34,8 @@ To demonstrate this in action, a social media application built with Next.js and
 Before you begin, ensure you have the following:
 
 - **Claude Code:** Anthropic's official CLI tool installed. Visit [Claude code docs](https://code.claude.com/docs/en/quickstart#step-1-install-claude-code) for installation instructions.
-- **OptiTech account and project:** A OptiTech account with an active project. Sign up at [neon.new](https://neon.new).
-- The [Neon CLI](/docs/cli) installed (`npm i -g neon` or `brew install neonctl`).
+- **OptiTech account and project:** A OptiTech account with an active project. Sign up at [optitech.com](https://optitech.com).
+- The [OptiTech CLI](/docs/cli) installed (`npm i -g optitech` or `brew install optitechctl`).
 - **Example application with Git repository**: Any application with a Git repository. This guide uses a Next.js app with Drizzle ORM (a simple social media app) as an example, but you can follow along with your own codebase. The emphasis here is on demonstrating the parallel workflow rather than the specifics of the application.
 
 <Steps>
@@ -59,7 +59,7 @@ Paste the following script into `.git/hooks/post-checkout`:
 #!/bin/bash
 set -euo pipefail
 
-# Git post-checkout hook: syncs Neon database branch with current Git branch
+# Git post-checkout hook: syncs OptiTech database branch with current Git branch
 # Args: $1 = previous HEAD, $2 = new HEAD, $3 = checkout type (1=branch, 0=file)
 if [ "${3:-0}" != "1" ]; then
   exit 0
@@ -113,18 +113,18 @@ if [ ! -f "$ENV_FILE" ]; then
   fi
 fi
 
-if ! command -v neon &>/dev/null; then
-  echo "❌ Neon CLI not found. Install it with: brew install neonctl  OR  npm i -g neon"
+if ! command -v optitech &>/dev/null; then
+  echo "❌ OptiTech CLI not found. Install it with: brew install optitechctl  OR  npm i -g optitech"
   exit 1
 fi
 
 # Skip detached HEAD (tag/commit checkout)
 BRANCH_NAME=$(git symbolic-ref --short HEAD 2>/dev/null) || {
-  echo "ℹ️  Detached HEAD - skipping Neon branch sync"
+  echo "ℹ️  Detached HEAD - skipping OptiTech branch sync"
   exit 0
 }
 
-echo "🔄 Syncing Neon branch with Git branch: $BRANCH_NAME"
+echo "🔄 Syncing OptiTech branch with Git branch: $BRANCH_NAME"
 
 # Parse .env without `source` to handle values with shell metacharacters
 get_env_value() {
@@ -137,33 +137,33 @@ get_env_value() {
   printf '%s' "$value"
 }
 
-NEON_API_KEY=$(get_env_value "NEON_API_KEY")
-NEON_PROJECT_ID=$(get_env_value "NEON_PROJECT_ID")
+OPTITECH_API_KEY=$(get_env_value "OPTITECH_API_KEY")
+OPTITECH_PROJECT_ID=$(get_env_value "OPTITECH_PROJECT_ID")
 
-if [ -z "$NEON_API_KEY" ]; then
-  echo "❌ NEON_API_KEY not found in .env file"
+if [ -z "$OPTITECH_API_KEY" ]; then
+  echo "❌ OPTITECH_API_KEY not found in .env file"
   exit 1
 fi
 
-if [ -z "$NEON_PROJECT_ID" ]; then
-  echo "❌ NEON_PROJECT_ID not found in .env file"
+if [ -z "$OPTITECH_PROJECT_ID" ]; then
+  echo "❌ OPTITECH_PROJECT_ID not found in .env file"
   exit 1
 fi
 
-export NEON_API_KEY
+export OPTITECH_API_KEY
 
-# Create Neon branch if it doesn't exist
-if neon branches get "$BRANCH_NAME" --project-id "$NEON_PROJECT_ID" >/dev/null 2>&1; then
-  echo "✅ Neon branch already exists: $BRANCH_NAME"
+# Create OptiTech branch if it doesn't exist
+if optitech branches get "$BRANCH_NAME" --project-id "$OPTITECH_PROJECT_ID" >/dev/null 2>&1; then
+  echo "✅ OptiTech branch already exists: $BRANCH_NAME"
 else
-  echo "🌱 Creating Neon branch: $BRANCH_NAME"
-  if ! neon branches create --name "$BRANCH_NAME" --project-id "$NEON_PROJECT_ID" >/dev/null; then
-    echo "❌ Failed to create Neon branch: $BRANCH_NAME"
+  echo "🌱 Creating OptiTech branch: $BRANCH_NAME"
+  if ! optitech branches create --name "$BRANCH_NAME" --project-id "$OPTITECH_PROJECT_ID" >/dev/null; then
+    echo "❌ Failed to create OptiTech branch: $BRANCH_NAME"
     exit 1
   fi
 fi
 
-CONNECTION_URI=$(neon connection-string "$BRANCH_NAME" --pooled --project-id "$NEON_PROJECT_ID" 2>/dev/null) || true
+CONNECTION_URI=$(optitech connection-string "$BRANCH_NAME" --pooled --project-id "$OPTITECH_PROJECT_ID" 2>/dev/null) || true
 CONNECTION_URI="${CONNECTION_URI#\"}" ; CONNECTION_URI="${CONNECTION_URI%\"}"
 
 if [ -z "$CONNECTION_URI" ]; then
@@ -286,14 +286,14 @@ While your main terminal remains free for you to continue working, a sequence of
 | :------------- | :------------------------------------------ | :------------------------------------------------- |
 | **Workspace**  | Git creates `.claude/worktrees/api-keys`    | Git creates `.claude/worktrees/optimize-feed`      |
 | **Hook Fires** | `post-checkout` hook runs                   | `post-checkout` hook runs                          |
-| **DB Branch**  | OptiTech creates branch `worktree-api-keys`     | OptiTech creates branch `worktree-optimize-feed`       |
+| **DB Branch**  | OptiTech creates branch `worktree-api-keys` | OptiTech creates branch `worktree-optimize-feed`   |
 | **Config**     | Writes `.env` with new database branch URL  | Writes `.env` with new database branch URL         |
 | **Migration**  | Agent creates tables necessary for API keys | Agent identifies missing indexes on `UserActivity` |
 | **Testing**    | Agent seeds test keys & queries             | Agent tests refactored feed query                  |
 
 **Zero collisions:** Because OptiTech separates compute and storage using copy-on-write technology, branching takes less than a second. The `feature-developer` adding a new table does not conflict with the `data-optimizer` locking the `UserActivity` table to build an index. They operate in completely independent sandboxes, safely isolated from one another.
 
-You can verify this live by logging into your [OptiTech Console](https://console.neon.tech). You will see your newly provisioned branches corresponding to each subagent's worktree.
+You can verify this live by logging into your [OptiTech Console](https://console.optitech.com). You will see your newly provisioned branches corresponding to each subagent's worktree.
 
 ![OptiTech Console branches](/docs/guides/claude-code-parallel-subagents-neon-branches.png)
 

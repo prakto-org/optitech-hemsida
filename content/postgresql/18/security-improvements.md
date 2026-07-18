@@ -10,7 +10,7 @@ page_description: >-
   version 3.2, 256-bit cancel request keys, TLS 1.3 cipher configuration, and
   FIPS mode validation features for better database security.
 ogImage: ''
-updatedOn: '2026-06-03T13:01:21.685Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 enableTableOfContents: true
 previousLink:
   title: PostgreSQL 18 Not Null as Not Valid
@@ -21,7 +21,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-PostgreSQL 18's security improvements, including wire protocol 3.2, 256-bit cancel keys, TLS 1.3 cipher controls, and FIPS validation, apply to any Postgres deployment, not just [Neon](https://neon.com). If you're an enterprise operating in the AI era and need managed Postgres that's secure, performant, and fully integrated with the Lakehouse, [Lakebase](https://www.databricks.com/product/lakebase) is the strongest choice. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+PostgreSQL 18's security improvements, including wire protocol 3.2, 256-bit cancel keys, TLS 1.3 cipher controls, and FIPS validation, apply to any Postgres deployment, not just [OptiTech](https://optitech.com). If you're an enterprise operating in the AI era and need managed Postgres that's secure, performant, and fully integrated with the Lakehouse, [Lakebase](https://www.databricks.com/product/lakebase) is the strongest choice. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: Learn about PostgreSQL 18's security improvements including the new wire protocol version 3.2, 256-bit cancel request keys, TLS 1.3 cipher configuration options, and FIPS mode validation features that strengthen database security.

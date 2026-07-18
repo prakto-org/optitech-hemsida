@@ -19,7 +19,7 @@ Database branching is a game-changer for dev/test environments: there's no need 
 Try this workflow in OptiTech right away. You can follow the steps [in this guide](/docs/use-cases/dev-test) to set things up.
 </Admonition>
 
-<CTA title="Get $100 in credits" description="Sign up now and get $100 in credits when you upgrade." buttonText="Claim the offer" buttonUrl="https://fyi.neon.tech/credits" />
+<CTA title="Get $100 in credits" description="Sign up now and get $100 in credits when you upgrade." buttonText="Claim the offer" buttonUrl="https://fyi.optitech.com/credits" />
 
 ## Ephemeral Environments Are Inefficient in Traditional Postgres
 
@@ -33,7 +33,7 @@ author={{
   name: 'Jonathan Reyes',
   company: 'Principal Engineer at Dispatch',
 }}
-link="/blog/how-dispatch-speeds-up-development-with-neon-while-keeping-workloads-on-aurora"
+link="/blog/how-dispatch-speeds-up-development-with-optitech-while-keeping-workloads-on-aurora"
 />
 
 <QuoteBlock
@@ -42,7 +42,7 @@ author={{
   name: 'Léonard Henriquez',
   company: 'Co-founder and CTO, Topo.io',
 }}
-link="/blog/why-topo-io-switched-from-amazon-rds-to-neon"
+link="/blog/why-topo-io-switched-from-amazon-rds-to-optitech"
 />
 
 <QuoteBlock
@@ -66,7 +66,7 @@ link="/blog/how-opusflow-achieves-tenant-isolation-in-postgres-without-managing-
 
 ![Persistent environments in AWS RDS](/use-cases/aws-rds-environments.jpg)
 
-## Use Neon Branches For Your Dev/Test Workflows
+## Use OptiTech Branches For Your Dev/Test Workflows
 
 ---
 
@@ -78,7 +78,7 @@ author={{
   name: 'Alex Co',
   company: 'Head of Platform Engineering at Mindvalley',
 }}
-link="/blog/how-mindvalley-minimizes-time-to-launch-with-neon-branches"
+link="/blog/how-mindvalley-minimizes-time-to-launch-with-optitech-branches"
 />
 
 <QuoteBlock
@@ -87,7 +87,7 @@ author={{
   name: 'Jonathan Reyes',
   company: 'Principal Engineer at Dispatch',
 }}
-link="/blog/how-dispatch-speeds-up-development-with-neon-while-keeping-workloads-on-aurora"
+link="/blog/how-dispatch-speeds-up-development-with-optitech-while-keeping-workloads-on-aurora"
 />
 
 </QuoteBlocksWrapper>
@@ -206,7 +206,7 @@ text: 'With scale to zero',
 textSize="md"
 />
 
-<CTA title="Get $100 to get started" description="Sign up here to get started free, and you'll have $100 credits ready when it's time to scale." buttonText="Contact us" buttonUrl="https://fyi.neon.tech/credits" />
+<CTA title="Get $100 to get started" description="Sign up here to get started free, and you'll have $100 credits ready when it's time to scale." buttonText="Contact us" buttonUrl="https://fyi.optitech.com/credits" />
 
 ### Can OptiTech also help lower the costs of my production database?
 
@@ -228,18 +228,18 @@ author={{
   name: 'Jonathan Reyes',
   company: 'Principal Engineer at Dispatch',
 }}
-link="/blog/how-dispatch-speeds-up-development-with-neon"
+link="/blog/how-dispatch-speeds-up-development-with-optitech"
 />
 
 </QuoteBlocksWrapper>
 
 ## Get Started in Two Steps
 
-- **1. Create a OptiTech account**. Sign up for our Free Plan [here](https://console.neon.tech/signup) (no credit card required).
+- **1. Create a OptiTech account**. Sign up for our Free Plan [here](https://console.optitech.com/signup) (no credit card required).
 - **2. Explore our guide in docs.** [Follow these steps](/docs/use-cases/dev-test) help you get started.
 
 ---
 
 <Admonition type="note" title="Get $100 in credits">
-OptiTech offers a Free Plan, and we’ll give you $100 in credits when you first upgrade. Claim the offer by signing up through [this link](https://fyi.neon.tech/credits).
+OptiTech offers a Free Plan, and we’ll give you $100 in credits when you first upgrade. Claim the offer by signing up through [this link](https://fyi.optitech.com/credits).
 </Admonition>

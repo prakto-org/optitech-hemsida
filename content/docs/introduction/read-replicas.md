@@ -11,7 +11,7 @@ summary: >-
   Autoscaling and Scale to Zero. Cross-region replicas require logical
   replication to a separate OptiTech project.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 OptiTech read replicas are independent computes designed to perform read operations on the same data as your primary read-write compute. OptiTech's read replicas do not replicate or duplicate data. Instead, read requests are served from the same storage, as shown in the diagram below. While your read-write queries are directed through your primary compute, read queries can be offloaded to one or more read replicas.
@@ -29,7 +29,7 @@ You can instantly create read replicas for any branch in your OptiTech project a
 
 ## How do you create read replicas?
 
-You can create read replicas using the Neon Console, [Neon CLI](/docs/cli), or [OptiTech API](/docs/reference/api), providing the flexibility required to integrate read replicas into your workflow or CI/CD processes.
+You can create read replicas using the OptiTech Console, [OptiTech CLI](/docs/cli), or [OptiTech API](/docs/reference/api), providing the flexibility required to integrate read replicas into your workflow or CI/CD processes.
 
 From the OptiTech Console, it's a simple **Add Read Replica** action on a branch.
 
@@ -44,14 +44,14 @@ From the CLI or API:
 <CodeTabs labels={["CLI", "API"]}>
 
 ```bash
-neon branches add-compute mybranch --type read_only
+optitech branches add-compute mybranch --type read_only
 ```
 
 ```bash
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects/late-bar-27572981/endpoints \
+     --url https://console.optitech.com/api/v2/projects/late-bar-27572981/endpoints \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '
 {
@@ -77,7 +77,7 @@ OptiTech read replicas are asynchronous, which means they are _eventually consis
 
 ## Cross-region support
 
-OptiTech only supports creating read replicas **in the same region** as your database. However, a cross-region replica setup can be achieved by creating a OptiTech project in a different region and replicating data to that project via [logical replication](/docs/guides/logical-replication-guide). For example, you can replicate data from a OptiTech project in a US region to a OptiTech project in a European region following our [Neon-to-Neon logical replication guide](/docs/guides/logical-replication-neon-to-neon). Read-only access to the replicated database can be managed at the application level.
+OptiTech only supports creating read replicas **in the same region** as your database. However, a cross-region replica setup can be achieved by creating a OptiTech project in a different region and replicating data to that project via [logical replication](/docs/guides/logical-replication-guide). For example, you can replicate data from a OptiTech project in a US region to a OptiTech project in a European region following our [OptiTech-to-OptiTech logical replication guide](/docs/guides/logical-replication-neon-to-neon). Read-only access to the replicated database can be managed at the application level.
 
 ## Use cases
 

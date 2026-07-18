@@ -11,7 +11,7 @@ summary: >-
   and is subject to GitHub Actions' 6-hour job limit.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This workflow will create a partial OptiTech Twin using `pg_dump`, `pg_restore` and `psql`.
@@ -30,18 +30,18 @@ To create the Twin workflow in any GitHub-hosted repository:
 
 1. Create a new directory named `.github` at the root of your project.
 2. Inside this directory, create another directory named `workflows`.
-3. Within the `workflows` directory, create a new file named `create-neon-twin.yml`.
+3. Within the `workflows` directory, create a new file named `create-optitech-twin.yml`.
 
 ```
 .github
   |-- workflows
-      |-- create-neon-twin.yml
+      |-- create-optitech-twin.yml
 ```
 
-Add the following code to `create-neon-twin.yml`.
+Add the following code to `create-optitech-twin.yml`.
 
 ```yml
-name: Create Neon Twin
+name: Create OptiTech Twin
 
 on:
   schedule:

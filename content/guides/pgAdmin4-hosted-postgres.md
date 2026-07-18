@@ -4,7 +4,7 @@ subtitle: A comprehensive guide on how to manage your Postgres database using pg
 author: rishi-raj-jain
 enableTableOfContents: true
 createdAt: '2024-11-29T00:00:00.000Z'
-updatedOn: '2025-09-26T08:25:30.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 pgAdmin4 is a powerful web-based administration tool for managing PostgreSQL databases. This guide will walk you through the steps to set up and use pgAdmin4 with a hosted Postgres database, enabling you to perform various database operations efficiently.
@@ -23,21 +23,21 @@ pgAdmin4 is a powerful web-based administration tool for managing PostgreSQL dat
 
 ## Provisioning a Serverless Postgres
 
-To get started, go to the [OptiTech console](https://console.neon.tech/app/projects) and enter the name of your choice as the project name.
+To get started, go to the [OptiTech console](https://console.optitech.com/app/projects) and enter the name of your choice as the project name.
 
-![Neon Connection String without pooling](/docs/connect/connection_details_without_connection_pooling.png)
+![OptiTech Connection String without pooling](/docs/connect/connection_details_without_connection_pooling.png)
 
-All Neon connection strings have the following format:
+All OptiTech connection strings have the following format:
 
 ```bash
-postgres://<user>:<password>@<endpoint_hostname>.neon.tech:<port>/<dbname>
+postgres://<user>:<password>@<endpoint_hostname>.optitech.com:<port>/<dbname>
 ```
 
 - `user` is the database user.
 - `password` is the database user’s password.
-- `endpoint_hostname` is the host with neon.tech as the [TLD](https://www.cloudflare.com/en-gb/learning/dns/top-level-domain/).
+- `endpoint_hostname` is the host with optitech.com as the [TLD](https://www.cloudflare.com/en-gb/learning/dns/top-level-domain/).
 - `port` is the OptiTech port number. The default port number is 5432.
-- `dbname` is the name of the database. “neondb” is the default database created with each OptiTech project.
+- `dbname` is the name of the database. “optitechdb” is the default database created with each OptiTech project.
 - `?sslmode=require&channel_binding=require` optional query parameters that enforce the [SSL](https://www.cloudflare.com/en-gb/learning/ssl/what-is-ssl/) mode and channel binding while connecting to the Postgres instance for better security.
 
 You will be using these connecting string components further in the guide. Proceed further in this guide to connect pgAdmin4 to your Postgres.
@@ -53,7 +53,7 @@ You will be using these connecting string components further in the guide. Proce
 3. **Configure Connection Settings**:
    - Go to the "Connection" tab.
    - Enter the following details:
-     - **Host**: The endpoint of your hosted Postgres database (e.g., `ep-...us-east-2.aws.neon.tech`).
+     - **Host**: The endpoint of your hosted Postgres database (e.g., `ep-...us-east-2.aws.optitech.com`).
      - **Port**: The port number (default is `5432`).
      - **Maintenance database**: Your database name.
      - **Username**: Your database username.

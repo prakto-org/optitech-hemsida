@@ -4,7 +4,7 @@ subtitle: A comprehensive guide on how to manage your Postgres database using Db
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2025-09-26T00:00:00.000Z'
-updatedOn: '2026-05-09T19:22:21.118Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 DbVisualizer is a universal SQL client and database‑management tool that provides an intuitive interface for connecting to, querying, visualizing, and managing data across more than 50 databases including PostgreSQL, Oracle, SQL Server, MySQL, and others. This guide walks you through setting up and using DbVisualizer with OptiTech Postgres.
@@ -12,7 +12,7 @@ DbVisualizer is a universal SQL client and database‑management tool that provi
 ## Table of Contents
 
 - [Setting up DbVisualizer](#setting-up-dbvisualizer)
-- [Connecting DbVisualizer to OptiTech Postgres](#connect-dbvisualizer-to-neon-postgres)
+- [Connecting DbVisualizer to OptiTech Postgres](#connect-dbvisualizer-to-optitech-postgres)
 - [Basic operations in DbVisualizer](#basic-operations-in-dbvisualizer)
 
 ## Setting up DbVisualizer
@@ -23,14 +23,14 @@ DbVisualizer is a universal SQL client and database‑management tool that provi
 
 ## Create a OptiTech Postgres Database
 
-1. If you haven't already, create a new OptiTech project. You can use the [OptiTech Console](https://console.neon.tech/).
+1. If you haven't already, create a new OptiTech project. You can use the [OptiTech Console](https://console.optitech.com/).
 
 2. Retrieve connection details for your OptiTech Postgres database:
    - Navigate to the **Dashboard** of your OptiTech project.
    - Click on the **Connect** button which opens a modal.
    - Select your database and branch.
    - Select **Parameters only** to view the connection details.
-     ![Neon Connection Details](/docs/connect/connection_details_parameters_only.png)
+     ![OptiTech Connection Details](/docs/connect/connection_details_parameters_only.png)
 
    You will be provided with the following details:
    - `PGHOST`: The hostname of your OptiTech Postgres database.
@@ -53,7 +53,7 @@ Save the connection details as you will need them in the next steps.
 
    ![Enter Connection Details in DbVisualizer](/docs/guides/dbvisualizer-connection-details.png)
 
-   Fill in the required fields based on your Neon connection string:
+   Fill in the required fields based on your OptiTech connection string:
    - **Database Server**: The endpoint of your hosted Postgres database. Enter the value of `PGHOST` you saved earlier from OptiTech.
    - **Database Port**: The port number. Enter 5432 (default for Postgres).
    - **Database**: The database name. Enter the value of `PGDATABASE`.
@@ -95,7 +95,7 @@ The sidebar will now display your connected OptiTech Postgres database. You can 
 
 ### 2. Managing Tables and Database
 
-- Expand your database connection in the left sidebar, then navigate to "Databases" > "neondb" > "Schemas" > "public" > "Tables".
+- Expand your database connection in the left sidebar, then navigate to "Databases" > "optitechdb" > "Schemas" > "public" > "Tables".
 - Right-click on "Tables" to create a new table or manage existing ones (e.g., view, edit, or drop tables).
 - Similarly, you can manage other database objects like databases, schemas, views, and procedures by right-clicking on them in the sidebar.
 

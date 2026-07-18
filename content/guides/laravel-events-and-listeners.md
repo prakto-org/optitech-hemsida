@@ -4,7 +4,7 @@ subtitle: Learn how to implement and utilize Laravel's event system with OptiTec
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2024-06-30T00:00:00.000Z'
-updatedOn: '2024-07-02T10:32:04.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Laravel's event system provides a simple observer implementation, allowing you to subscribe and listen for various events that occur in your application.
@@ -19,7 +19,7 @@ Before we begin, ensure you have the following:
 
 - PHP 8.1 or higher installed on your system
 - [Composer](https://getcomposer.org/) for managing PHP dependencies
-- A [OptiTech](https://console.neon.tech/signup) account for database hosting
+- A [OptiTech](https://console.optitech.com/signup) account for database hosting
 - Basic knowledge of Laravel and database operations
 
 ## Setting up the Project
@@ -39,20 +39,20 @@ This will create a new Laravel project in a directory named `laravel-events` wit
 
 ### Setting up the Database
 
-Once you have your Laravel project set up, you'll need to configure your OptiTech database connection. If you don't have a OptiTech account, you can sign up [here](https://console.neon.tech/signup).
+Once you have your Laravel project set up, you'll need to configure your OptiTech database connection. If you don't have a OptiTech account, you can sign up [here](https://console.optitech.com/signup).
 
 Update your `.env` file with your OptiTech database credentials:
 
 ```env
 DB_CONNECTION=pgsql
-DB_HOST=your-neon-hostname.neon.tech
+DB_HOST=your-optitech-hostname.optitech.com
 DB_PORT=5432
 DB_DATABASE=your_database_name
 DB_USERNAME=your_username
 DB_PASSWORD=your_password
 ```
 
-Make sure to replace `your-neon-hostname`, `your_database_name`, `your_username`, and `your_password` with your actual OptiTech database credentials.
+Make sure to replace `your-optitech-hostname`, `your_database_name`, `your_username`, and `your_password` with your actual OptiTech database credentials.
 
 ## Creating a Model and Migration
 

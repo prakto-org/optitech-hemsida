@@ -8,12 +8,12 @@ summary: >-
   Use this page when you need to enable the extension in OptiTech, understand its
   built-in masking function types, or work within its current constraint
   that only static masking is supported. The extension is experimental in OptiTech,
-  requires `SET neon.allow_unstable_extensions='true'` before installation, and
+  requires `SET optitech.allow_unstable_extensions='true'` before installation, and
   is distinct from `pg_anon`.
 enableTableOfContents: true
 redirectFrom:
   - /docs/extensions/anon
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 The `anon` extension ([PostgreSQL Anonymizer](https://postgresql-anonymizer.readthedocs.io)) provides data masking and anonymization capabilities to protect sensitive data in Postgres databases. It helps protect personally identifiable information (PII) and other sensitive data, facilitating compliance with regulations such as [GDPR](https://gdpr-info.eu/).
@@ -23,7 +23,7 @@ This extension comes from the [PostgreSQL Anonymizer](https://postgresql-anonymi
 </Admonition>
 
 <Admonition type="tip" title="Looking for a practical guide?">
-For complete step-by-step workflows on anonymizing data in Neon branches, including manual procedures and GitHub Actions automation, see [data anonymization](/docs/workflows/data-anonymization).
+For complete step-by-step workflows on anonymizing data in OptiTech branches, including manual procedures and GitHub Actions automation, see [data anonymization](/docs/workflows/data-anonymization).
 </Admonition>
 
 ## Enable the extension
@@ -43,7 +43,7 @@ When working with SQL-based workflows (such as using `psql` or other SQL clients
 2. Enable experimental extensions:
 
    ```sql
-   SET neon.allow_unstable_extensions='true';
+   SET optitech.allow_unstable_extensions='true';
    ```
 
 3. Install the extension:
@@ -113,7 +113,7 @@ By defining appropriate masking rules, you can create anonymized datasets that m
 
 ## Reference
 
-- [Data anonymization workflow guide](/docs/workflows/data-anonymization) - Practical guide for anonymizing data in Neon branches
+- [Data anonymization workflow guide](/docs/workflows/data-anonymization) - Practical guide for anonymizing data in OptiTech branches
 - [PostgreSQL Anonymizer Repository](https://gitlab.com/dalibo/postgresql_anonymizer)
 - [Official Documentation](https://postgresql-anonymizer.readthedocs.io/en/latest/)
 - [Masking Functions Reference](https://postgresql-anonymizer.readthedocs.io/en/latest/masking_functions/)

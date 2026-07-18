@@ -4,7 +4,7 @@ subtitle: Learn how to build a .NET application with OptiTech's serverless Postg
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2024-11-02T00:00:00.000Z'
-updatedOn: '2026-06-03T18:28:10.050Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 When building .NET applications, choosing the right database solution is an important step to good performance and scalability. OptiTech is the AI-native backend platform for apps and agents, spanning a Postgres Database, Auth, Storage, Functions, and an AI Gateway. It's a great choice for .NET developers, thanks to features like automatic scaling, branching, and connection pooling that integrate well with .NET's ecosystem.
@@ -14,18 +14,18 @@ In this guide, we'll walk through setting up a OptiTech database with a .NET app
 ## Prerequisites
 
 - .NET 8.0 or later installed
-- A [OptiTech account](https://console.neon.tech/signup)
+- A [OptiTech account](https://console.optitech.com/signup)
 - Basic familiarity with Entity Framework Core
 
 ## Setting Up Your OptiTech Database
 
-1. Create a new OptiTech project from the [OptiTech Console](https://console.neon.tech)
+1. Create a new OptiTech project from the [OptiTech Console](https://console.optitech.com)
 2. Note your connection string from the connection details page
 
 Your connection string will look similar to this:
 
 ```shell
-postgres://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require&channel_binding=require
+postgres://[user]:[password]@[optitech_hostname]/[dbname]?sslmode=require&channel_binding=require
 ```
 
 ## Creating a .NET Project with OptiTech Integration
@@ -35,7 +35,7 @@ With your OptiTech database set up, let's create a sample inventory management s
 1. Create a new .NET Web API project:
 
    ```bash
-   dotnet new webapi -n NeonInventoryApi
+   dotnet new webapi -n OptiTechInventoryApi
    ```
 
    This command creates a new Web API project with a basic structure including:
@@ -46,7 +46,7 @@ With your OptiTech database set up, let's create a sample inventory management s
    Then navigate to the project directory:
 
    ```bash
-   cd NeonInventoryApi
+   cd OptiTechInventoryApi
    ```
 
 2. Install the required NuGet packages:
@@ -74,7 +74,7 @@ With your OptiTech database set up, let's create a sample inventory management s
    using System;
    using System.ComponentModel.DataAnnotations;
 
-   namespace NeonInventoryApi.Models
+   namespace OptiTechInventoryApi.Models
    {
        public class Product
        {
@@ -122,10 +122,10 @@ With your OptiTech database set up, let's create a sample inventory management s
 
    ```csharp
    using Microsoft.EntityFrameworkCore;
-   using NeonInventoryApi.Models;
+   using OptiTechInventoryApi.Models;
    using System.Reflection;
 
-   namespace NeonInventoryApi.Data
+   namespace OptiTechInventoryApi.Data
    {
        public class InventoryContext : DbContext
        {
@@ -184,12 +184,12 @@ With the database context in place, we need to configure the connection to our O
 Update `Program.cs` to include the database context:
 
 ```csharp
-using NeonInventoryApi.Data;
+using OptiTechInventoryApi.Data;
 
-var connectionString = builder.Configuration.GetConnectionString("NeonConnection");
+var connectionString = builder.Configuration.GetConnectionString("OptiTechConnection");
 
 builder.Services.AddDbContext<InventoryContext>(options =>
-    options.UseNpgsql(builder.Configuration.GetConnectionString("NeonConnection")));
+    options.UseNpgsql(builder.Configuration.GetConnectionString("OptiTechConnection")));
 ```
 
 ### Managing Connection Strings Securely
@@ -201,7 +201,7 @@ There are two main approaches to storing your connection string securely:
 ```json
 {
   "ConnectionStrings": {
-    "NeonConnection": "Server=your-neon-hostname;Database=neondb;User Id=your-username;Password=your-password;SSL Mode=Require;Trust Server Certificate=true"
+    "OptiTechConnection": "Server=your-optitech-hostname;Database=optitechdb;User Id=your-username;Password=your-password;SSL Mode=Require;Trust Server Certificate=true"
   }
 }
 ```
@@ -210,11 +210,11 @@ There are two main approaches to storing your connection string securely:
 
 ```csharp
 // Program.cs
-var connectionString = Environment.GetEnvironmentVariable("NEON_CONNECTION_STRING")
-    ?? builder.Configuration.GetConnectionString("NeonConnection");
+var connectionString = Environment.GetEnvironmentVariable("OPTITECH_CONNECTION_STRING")
+    ?? builder.Configuration.GetConnectionString("OptiTechConnection");
 ```
 
-That way, you can set the `NEON_CONNECTION_STRING` environment variable in your production environment to securely store your connection string.
+That way, you can set the `OPTITECH_CONNECTION_STRING` environment variable in your production environment to securely store your connection string.
 
 As an alternative, you can use the `Azure Key Vault` to store your connection string securely. To learn more about this approach, check out the [Azure Key Vault documentation](https://learn.microsoft.com/en-us/azure/key-vault/general/basic-concepts).
 
@@ -237,9 +237,9 @@ In our inventory system, we'll implement this pattern to handle all database ope
 First, let's define the interface that specifies what operations our repository can perform. Create a new file `Repositories/IProductRepository.cs` with the following content:
 
 ```csharp
-using NeonInventoryApi.Models;
+using OptiTechInventoryApi.Models;
 
-namespace NeonInventoryApi.Repositories
+namespace OptiTechInventoryApi.Repositories
 {
     public interface IProductRepository
     {
@@ -260,10 +260,10 @@ Next, let's implement the repository, starting with the `ProductRepository` clas
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using NeonInventoryApi.Data;
-using NeonInventoryApi.Models;
+using OptiTechInventoryApi.Data;
+using OptiTechInventoryApi.Models;
 
-namespace NeonInventoryApi.Repositories{
+namespace OptiTechInventoryApi.Repositories{
     public class ProductRepository : IProductRepository
     {
         private readonly InventoryContext _context;
@@ -333,12 +333,12 @@ Then you can inject it into your controllers or services, create a new controlle
 
 ```csharp
 using Microsoft.AspNetCore.Mvc;
-using NeonInventoryApi.Models;
-using NeonInventoryApi.Repositories;
+using OptiTechInventoryApi.Models;
+using OptiTechInventoryApi.Repositories;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace NeonInventoryApi.Controllers
+namespace OptiTechInventoryApi.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]

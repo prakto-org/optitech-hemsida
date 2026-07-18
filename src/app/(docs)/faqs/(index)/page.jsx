@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import { getLocale } from 'next-intl/server';
 import { Suspense } from 'react';
 
 import Breadcrumbs from 'components/pages/doc/breadcrumbs';
@@ -14,7 +15,8 @@ export const metadata = getMetadata({
 });
 
 const FaqsPage = async () => {
-  const posts = await getAllFaqs();
+  const locale = await getLocale();
+  const posts = await getAllFaqs(locale);
 
   if (!posts) return notFound();
 

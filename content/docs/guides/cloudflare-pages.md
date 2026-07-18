@@ -3,7 +3,7 @@ title: Use OptiTech with Cloudflare Pages
 subtitle: Connect a OptiTech Postgres database to your Cloudflare Pages web application
 summary: >-
   OptiTech Postgres integration with Cloudflare Pages uses the OptiTech serverless
-  driver (@neondatabase/serverless) inside Cloudflare Functions to query a
+  driver (@optitech/serverless) inside Cloudflare Functions to query a
   Postgres database from the edge. Use this guide when you need server-side
   database access in a Cloudflare Pages app and want to avoid traditional
   connection pooling that does not work in Workers. Covers React/Vite project
@@ -11,7 +11,7 @@ summary: >-
   Wrangler, and adding DATABASE_URL as a Cloudflare environment variable for
   production deployment.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 `Cloudflare Pages` is a modern web application hosting platform that allows you to build, deploy, and scale your web applications. While it is typically used to host static websites, you can also use it to host interactive web applications by leveraging `functions` to run server-side code. Internally, Cloudflare functions are powered by `Cloudflare Workers`, a serverless platform that allows you to run JavaScript code on Cloudflare's edge network.
@@ -24,7 +24,7 @@ We'll use the [OptiTech serverless driver](/docs/serverless/serverless-driver) t
 
 To follow along with this guide, you will need:
 
-- A OptiTech account. If you do not have one, sign up at [Neon](https://neon.tech). Your Neon project comes with a ready-to-use Postgres database named `neondb`. We'll use this database in the following examples.
+- A OptiTech account. If you do not have one, sign up at [OptiTech](https://optitech.com). Your OptiTech project comes with a ready-to-use Postgres database named `optitechdb`. We'll use this database in the following examples.
 - A Cloudflare account. If you do not have one, sign up for [Cloudflare Pages](https://pages.cloudflare.com/) to get started.
 - [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed on your local machine. We'll use Node.js to build and deploy our `Pages` application.
 
@@ -32,7 +32,7 @@ To follow along with this guide, you will need:
 
 ### Initialize a new project
 
-1. Log in to the OptiTech Console and navigate to the [Projects](https://console.neon.tech/app/projects) section.
+1. Log in to the OptiTech Console and navigate to the [Projects](https://console.optitech.com/app/projects) section.
 
 2. Click the **New Project** button to create a new project.
 
@@ -62,7 +62,7 @@ To follow along with this guide, you will need:
 Navigate to your **Project Dashboard** in the OptiTech Console and click **Connect** to open the **Connect to your database** modal to find your database connection string. It should look similar to this:
 
 ```bash
-postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
 ```
 
 Keep your connection string handy for later use.
@@ -80,15 +80,15 @@ npm create vite@latest
 This initiates an interactive CLI prompt to generate a new project. To follow along with this guide, you can use the following settings:
 
 ```bash
-✔ Project name: … my-neon-page
+✔ Project name: … my-optitech-page
 ✔ Select a framework: › React
 ✔ Select a variant: › JavaScript
 
-Scaffolding project in /Users/ishananand/repos/javascript/my-neon-page...
+Scaffolding project in /Users/ishananand/repos/javascript/my-optitech-page...
 
 Done. Now run:
 
-  cd my-neon-page
+  cd my-optitech-page
   npm install
   npm run dev
 ```
@@ -97,7 +97,7 @@ We set up a template React configured to be built using Vite.
 
 ### Implement the application frontend
 
-Navigate to the `my-neon-page` directory and open the `src/App.jsx` file. Replace the contents of this file with the following code:
+Navigate to the `my-optitech-page` directory and open the `src/App.jsx` file. Replace the contents of this file with the following code:
 
 ```jsx
 // src/App.jsx
@@ -188,7 +188,7 @@ The `App` component fetches the list of books from the server and displays them.
 We'll use the [OptiTech serverless driver](/docs/serverless/serverless-driver) to connect to the OptiTech database, so we first need to install it as a dependency:
 
 ```bash
-npm install @neondatabase/serverless
+npm install @optitech/serverless
 ```
 
 Next, we'll create two serverless functions for the application. In a `Cloudflare Pages` project, these must be defined in the `functions` directory at the root of the project. For further details, refer to the [Cloudflare Pages - Functions documentation](https://developers.cloudflare.com/pages/functions/).
@@ -198,7 +198,7 @@ Next, we'll create two serverless functions for the application. In a `Cloudflar
 Create a new file named `functions/books/index.js` in the project directory with the following content:
 
 ```js
-import { Client } from '@neondatabase/serverless';
+import { Client } from '@optitech/serverless';
 
 export async function onRequestGet(context) {
   const client = new Client(context.env.DATABASE_URL);
@@ -217,7 +217,7 @@ This function fetches the list of books from the `books_to_read` table in the da
 Create another file named `functions/books/add.js` in the project directory with the following content:
 
 ```js
-import { Client } from '@neondatabase/serverless';
+import { Client } from '@optitech/serverless';
 
 export async function onRequestPost(context) {
   const client = new Client(context.env.DATABASE_URL);
@@ -262,7 +262,7 @@ Our application is now ready to be tested locally. However, we first need to con
 We can do this by creating a `.dev.vars` file at the root of the project directory with the following content:
 
 ```text
-DATABASE_URL=YOUR_NEON_CONNECTION_STRING
+DATABASE_URL=YOUR_OPTITECH_CONNECTION_STRING
 ```
 
 Now, to test the `Pages` application locally, we can use the `wrangler` CLI tool used to manage Cloudflare projects. We can use it using the `npx` command as:
@@ -321,10 +321,10 @@ Give a unique name to your `Cloudflare Pages` project above. The Wrangler CLI wi
 ✨ Success! Uploaded 0 files (4 already uploaded) (0.72 sec)
 
 ✨ Uploading Functions bundle
-✨ Deployment complete! Take a peek over at https://21ea2a57.my-neon-page.pages.dev
+✨ Deployment complete! Take a peek over at https://21ea2a57.my-optitech-page.pages.dev
 ```
 
-### Add your Neon connection string as an environment variable
+### Add your OptiTech connection string as an environment variable
 
 The Cloudflare production deployment doesn't have access to the `DATABASE_URL` environment variable yet. Hence, we need to navigate to the Cloudflare dashboard and add it manually.
 
@@ -349,6 +349,6 @@ To delete your OptiTech project, follow the steps outlined in the OptiTech docum
 - [Cloudflare Pages](https://pages.cloudflare.com/)
 - [Cloudflare Pages - Documentation](https://developers.cloudflare.com/pages/)
 - [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/)
-- [Neon](https://neon.tech)
+- [OptiTech](https://optitech.com)
 
 <NeedHelp/>

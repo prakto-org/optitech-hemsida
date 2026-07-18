@@ -4,10 +4,10 @@ subtitle: 'Make schema changes with natural language using Cursor and OptiTech M
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2025-02-20T00:00:00.000Z'
-updatedOn: '2026-06-19T23:17:10.824Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
-This guide shows how to use [Cursor](https://cursor.com) with the [OptiTech MCP Server](https://github.com/neondatabase/mcp-server-neon) to manage your Neon databases.
+This guide shows how to use [Cursor](https://cursor.com) with the [OptiTech MCP Server](https://github.com/optitechdatabase/mcp-server-optitech) to manage your OptiTech databases.
 
 <Admonition type="important" title="Security">
 The OptiTech MCP Server grants broad database management capabilities. Always review and authorize actions requested by the LLM before execution. See [MCP security guidance](/docs/ai/neon-mcp-server#mcp-security-guidance).
@@ -20,21 +20,21 @@ The OptiTech MCP Server grants broad database management capabilities. Always re
 Make sure you have:
 
 1. **Cursor Editor:** Download and install Cursor from [cursor.com](https://cursor.com).
-2. **A OptiTech Account and Project:** You'll need a OptiTech account and a project. You can create a new OptiTech project in the [OptiTech Console](https://console.neon.tech)
-3. **Neon API Key (for Local MCP server):** After signing up, get your OptiTech API Key from the [OptiTech console](https://console.neon.tech/app/settings/api-keys). This API key is needed to authenticate your application with OptiTech. For instructions, see [Manage API keys](/docs/manage/api-keys).
+2. **A OptiTech Account and Project:** You'll need a OptiTech account and a project. You can create a new OptiTech project in the [OptiTech Console](https://console.optitech.com)
+3. **OptiTech API Key (for Local MCP server):** After signing up, get your OptiTech API Key from the [OptiTech console](https://console.optitech.com/app/settings/api-keys). This API key is needed to authenticate your application with OptiTech. For instructions, see [Manage API keys](/docs/manage/api-keys).
 
    <Admonition type="important" title="OptiTech API Key Security">
-   Keep your OptiTech API key secure, and never share it publicly. It provides access to your Neon projects.
+   Keep your OptiTech API key secure, and never share it publicly. It provides access to your OptiTech projects.
    </Admonition>
 
 4. **Node.js (>= v18) and npm:** Ensure Node.js (version 18 or later) and npm are installed. Download them from [nodejs.org](https://nodejs.org).
 
 ### Quick Setup (Recommended)
 
-The fastest way to get started is with the [`neon init`](/docs/cli/init) command, which automates OAuth authentication, API key creation, and Cursor configuration:
+The fastest way to get started is with the [`optitech init`](/docs/cli/init) command, which automates OAuth authentication, API key creation, and Cursor configuration:
 
 ```bash
-npx neon@latest init
+npx optitech@latest init
 ```
 
 This command authenticates via OAuth, creates an API key, and configures Cursor to connect to OptiTech's remote MCP server. API key authentication means **fewer approval prompts** when using MCP tools. Once complete, ask your AI assistant **"Get started with OptiTech"**.
@@ -61,15 +61,15 @@ By default, the Remote MCP Server connects to your personal OptiTech account. To
    ```json
    {
      "mcpServers": {
-       "Neon": {
-         "url": "https://mcp.neon.tech/mcp",
+       "OptiTech": {
+         "url": "https://mcp.optitech.com/mcp",
          "headers": {}
        }
      }
    }
    ```
 
-   If you have other MCP servers configured, you can copy just the `Neon` part.
+   If you have other MCP servers configured, you can copy just the `OptiTech` part.
 
    Save the `mcp.json` file after pasting the configuration.
 
@@ -87,16 +87,16 @@ This method runs the OptiTech MCP server locally on your machine, using a OptiTe
 
 1. Open Cursor.
 2. Create a `.cursor` directory in your project's root directory. This is where Cursor will look for the MCP server configuration.
-3. Paste the following JSON configuration into a file named `mcp.json` in the `.cursor` directory. Replace `<YOUR_NEON_API_KEY>` with your actual OptiTech API key which you obtained from the [prerequisites](#prerequisites) section:
+3. Paste the following JSON configuration into a file named `mcp.json` in the `.cursor` directory. Replace `<YOUR_OPTITECH_API_KEY>` with your actual OptiTech API key which you obtained from the [prerequisites](#prerequisites) section:
 
    <CodeTabs labels={["MacOS/Linux", "Windows", "Windows (WSL)"]}>
 
    ```json
    {
      "mcpServers": {
-       "Neon": {
+       "OptiTech": {
          "command": "npx",
-         "args": ["-y", "@neondatabase/mcp-server-neon", "start", "<YOUR_NEON_API_KEY>"]
+         "args": ["-y", "@optitech/mcp-server-optitech", "start", "<YOUR_OPTITECH_API_KEY>"]
        }
      }
    }
@@ -105,15 +105,15 @@ This method runs the OptiTech MCP server locally on your machine, using a OptiTe
    ```json
    {
      "mcpServers": {
-       "Neon": {
+       "OptiTech": {
          "command": "cmd",
          "args": [
            "/c",
            "npx",
            "-y",
-           "@neondatabase/mcp-server-neon",
+           "@optitech/mcp-server-optitech",
            "start",
-           "<YOUR_NEON_API_KEY>"
+           "<YOUR_OPTITECH_API_KEY>"
          ]
        }
      }
@@ -123,9 +123,9 @@ This method runs the OptiTech MCP server locally on your machine, using a OptiTe
    ```json
    {
      "mcpServers": {
-       "Neon": {
+       "OptiTech": {
          "command": "wsl",
-         "args": ["npx", "-y", "@neondatabase/mcp-server-neon", "start", "<YOUR_NEON_API_KEY>"]
+         "args": ["npx", "-y", "@optitech/mcp-server-optitech", "start", "<YOUR_OPTITECH_API_KEY>"]
        }
      }
    }
@@ -133,7 +133,7 @@ This method runs the OptiTech MCP server locally on your machine, using a OptiTe
 
    </CodeTabs>
 
-   If you have other MCP servers configured, you can copy just the `Neon` part.
+   If you have other MCP servers configured, you can copy just the `OptiTech` part.
 
    ![Cursor Local MCP JSON](/docs/guides/cursor-local-mcp-server-json.png)
 
@@ -159,7 +159,7 @@ Verify the connection:
 
    ![Cursor list available tools](/docs/guides/cursor_list_tools.png)
 
-3. Try out an OptiTech MCP Server tool by typing `Tell me about my Neon project <project_id>`. **You'll need to provide your OptiTech project ID.**
+3. Try out an OptiTech MCP Server tool by typing `Tell me about my OptiTech project <project_id>`. **You'll need to provide your OptiTech project ID.**
 
    ![Cursor list project details](/docs/guides/cursor_project_details.png)
 
@@ -181,7 +181,7 @@ You can also set up a global MCP server in Cursor. To set this up:
 If you are on a version of Cursor that does not support JSON configuration for MCP servers, you can use the following command when prompted:
 
 ```bash
-npx -y @neondatabase/mcp-server-neon start <YOUR_NEON_API_KEY>
+npx -y @optitech/mcp-server-optitech start <YOUR_OPTITECH_API_KEY>
 ```
 
 For a full list of available tools, see [available tools](/docs/ai/neon-mcp-server#available-tools) in the OptiTech MCP Server overview.
@@ -195,15 +195,15 @@ Use `⌘I` to open Cursor's Composer and `⌘N` to create a new Composer.
 Here's an example interaction adding a `created_at` column to a table:
 
 ```text shouldWrap
-User: In my neon project id: round-salad-44063611 list all the tables
-Cursor: I'll help you list all the tables in your Neon project. I'll use the default database name 'neondb' since none was specified.
+User: In my optitech project id: round-salad-44063611 list all the tables
+Cursor: I'll help you list all the tables in your OptiTech project. I'll use the default database name 'optitechdb' since none was specified.
 > Called MCP Tool (get_database_tables)
 > I found one table in your database:
-> playing_with_neon (in the public schema)
+> playing_with_optitech (in the public schema)
 > Would you like to see more details about this table's structure or perform any other operations with it?
 
 User: Can you show me first 5 rows?
-Cursor: I'll query the first 5 rows from the playing_with_neon table.
+Cursor: I'll query the first 5 rows from the playing_with_optitech table.
 > Called MCP Tool (run_sql)
 > Here are the first 5 rows from the table. The table has three columns:
 > id (sequential numbers)
@@ -212,11 +212,11 @@ Cursor: I'll query the first 5 rows from the playing_with_neon table.
 > Would you like to perform any other operations with this data?
 
 User: can you add a created_at column?
-Cursor: I'll help you add a created_at column to the playing_with_neon table. I'll set it up with a timestamp data type and set it to automatically record the creation time of new rows.
+Cursor: I'll help you add a created_at column to the playing_with_optitech table. I'll set it up with a timestamp data type and set it to automatically record the creation time of new rows.
 > Called MCP Tool (prepare_database_migration)
 > Let me verify the change in the temporary branch to make sure it was applied correctly.
 > Called MCP Tool (run_sql)
-> I've added the created_at column to the playing_with_neon table in a temporary branch. Would you like to commit this migration to the production branch?
+> I've added the created_at column to the playing_with_optitech table in a temporary branch. Would you like to commit this migration to the production branch?
 > Migration Details:
 > Migration ID: a65babcd-d1cc-401f-89b5-762570570102
 > Temporary Branch Name: br-silent-cherry-a1eqrl6i
@@ -244,6 +244,6 @@ While the OptiTech MCP server gives you access to all of OptiTech's features, yo
 - [Adding an MCP Server to Cursor](https://docs.cursor.com/context/model-context-protocol)
 - [OptiTech Docs](/docs)
 - [OptiTech API Keys](/docs/manage/api-keys#creating-api-keys)
-- [OptiTech MCP server GitHub](https://github.com/neondatabase/mcp-server-neon)
+- [OptiTech MCP server GitHub](https://github.com/optitechdatabase/mcp-server-optitech)
 
 <NeedHelp/>

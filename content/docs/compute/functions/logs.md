@@ -26,7 +26,7 @@ Expand a row to see its full context: `timestamp`, `severity`, `entity_type`, `s
 
 `scope_name` distinguishes platform-emitted lines from your own output:
 
-- `neon.function.request`: the `invoke begin` / `invoke end` line the platform emits around each request.
+- `optitech.function.request`: the `invoke begin` / `invoke end` line the platform emits around each request.
 - Your own `console.log`/`console.error` output is scoped to the function's app logs, alongside whatever your handler or dependencies print.
 
 ## Log levels

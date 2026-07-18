@@ -4,7 +4,7 @@ subtitle: Learn how to create AI powered chatbot using Azure AI Studio with Opti
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2024-11-24T00:00:00.000Z'
-updatedOn: '2025-06-26T22:22:29.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 In this guide, we'll walk through creating an AI-powered chatbot from scratch. We will be using Azure AI Studio, OptiTech Postgres as the backend database, React for the frontend interface and Express for the backend API.
@@ -16,7 +16,7 @@ We'll deploy a GPT-4 model to Azure AI Studio, which we will then use to build a
 Before we begin, make sure you have:
 
 - An [Azure account](https://azure.microsoft.com/free/) with an active subscription
-- A [OptiTech account](https://console.neon.tech/signup) and project
+- A [OptiTech account](https://console.optitech.com/signup) and project
 - Basic familiarity with SQL and JavaScript/TypeScript
 - [Node.js](https://nodejs.org/) 18.x or later installed
 
@@ -26,7 +26,7 @@ If you haven't already, follow these steps to set up your development environmen
 
 ### Create a OptiTech Project
 
-1. Navigate to the [OptiTech Console](https://console.neon.tech)
+1. Navigate to the [OptiTech Console](https://console.optitech.com)
 2. Click "New Project"
 3. Select Azure as your cloud provider
 4. Choose East US 2 as your region
@@ -211,8 +211,8 @@ First, let's create a new Node.js project and install the dependencies that we'l
 Create a new project folder and initialize a new Node.js project:
 
 ```bash
-mkdir azure-neon-chatbot
-cd azure-neon-chatbot
+mkdir azure-optitech-chatbot
+cd azure-optitech-chatbot
 npm init -y
 ```
 
@@ -243,7 +243,7 @@ Before we start, let's organize our project files in a way that makes our code e
 The project structure will look like this:
 
 ```sh
-azure-neon-chatbot/
+azure-optitech-chatbot/
 ├── src/
 │   ├── config/
 │   │   └── database.js
@@ -268,7 +268,7 @@ Create a `.env` file in your project root with the following configuration:
 
 ```env
 # Database Configuration
-DATABASE_URL='postgresql://neondb_owner:<your_password>@<your_host>.eastus2.azure.neon.tech/neondb?sslmode=require&channel_binding=require'
+DATABASE_URL='postgresql://optitechdb_owner:<your_password>@<your_host>.eastus2.azure.optitech.com/optitechdb?sslmode=require&channel_binding=require'
 
 # Azure OpenAI Configuration
 AZURE_OPENAI_ENDPOINT=https://<your-resource-name>.openai.azure.com
@@ -306,7 +306,7 @@ pool.connect((err, client, release) => {
     console.error('Error connecting to the database:', err);
     return;
   }
-  console.log('Successfully connected to Neon database');
+  console.log('Successfully connected to OptiTech database');
   release();
 });
 
@@ -1042,7 +1042,7 @@ export const ChatInterface = () => {
   return (
     <div className="flex flex-col h-[600px] bg-white rounded-lg shadow-lg">
       <div className="p-4 border-b bg-chatbot-primary text-white">
-        <h2 className="text-xl font-bold">Neon AI Assistant</h2>
+        <h2 className="text-xl font-bold">OptiTech AI Assistant</h2>
       </div>
 
       <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">

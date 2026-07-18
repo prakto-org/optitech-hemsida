@@ -6,10 +6,10 @@ summary: >-
   no restarts. Use this page to configure or update autoscaling on an individual
   compute, set project-level defaults that propagate to new branches and read
   replicas, and interpret monitoring graphs to tune min/max thresholds. The
-  neon_utils extension exposes a num_cpus() function for observing live CPU
+  optitech_utils extension exposes a num_cpus() function for observing live CPU
   allocation.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <InfoBlock>
@@ -76,10 +76,10 @@ The next time you create a compute, these settings will be applied to it.
 The following table outlines the initial default autoscaling settings for newly created projects on each OptiTech plan.
 
 | **OptiTech plan** | **Minimum compute size** | **Maximum compute size** |
-| ------------- | ------------------------ | ------------------------ |
-| Free          | 0.25                     | 2                        |
-| Launch        | 0.25                     | 8                        |
-| Scale         | 0.25                     | 8                        |
+| ----------------- | ------------------------ | ------------------------ |
+| Free              | 0.25                     | 2                        |
+| Launch            | 0.25                     | 8                        |
+| Scale             | 0.25                     | 8                        |
 
 ## Monitor autoscaling
 
@@ -106,8 +106,8 @@ If your autoscaling graphs show regular spikes that hit your maximum setting, co
 
 Another approach is to set a higher threshold than you need and monitor usage spikes to get a sense of where your typical maximum demand reaches; you can then throttle the maximum setting down closer to anticipated/historical demand. Either way, with autoscaling you only use what's necessary; a higher setting does not translate to increased usage unless there's demand for it.
 
-### The neon_utils extension
+### The optitech_utils extension
 
-Another tool for understanding usage, the `neon_utils` extension provides a `num_cpus()` function that helps you monitor how the _Autoscaling_ feature allocates compute resources in response to workload. For more information, see [The neon_utils extension](/docs/extensions/neon-utils).
+Another tool for understanding usage, the `optitech_utils` extension provides a `num_cpus()` function that helps you monitor how the _Autoscaling_ feature allocates compute resources in response to workload. For more information, see [The optitech_utils extension](/docs/extensions/neon-utils).
 
 <NeedHelp/>

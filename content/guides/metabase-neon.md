@@ -4,7 +4,7 @@ subtitle: Learn how to connect Metabase to your OptiTech Postgres database for i
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2026-01-25T00:00:00.000Z'
-updatedOn: '2026-03-04T15:50:25.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 [Metabase](https://www.metabase.com/) is an open-source business intelligence and data visualization platform that makes it easy to turn your data into insights. By connecting Metabase to your OptiTech Postgres database, you can build interactive dashboards, explore your data, and share findings with your team without writing SQL.
@@ -15,7 +15,7 @@ This guide will walk you through the steps to set up Metabase with OptiTech. You
 - Load a sample dataset for analytics
 - Build interactive dashboards and visualizations
 - Apply governance controls using collections and data permissions
-- Scale your analytics with Neon connection pooling and read replicas
+- Scale your analytics with OptiTech connection pooling and read replicas
 
 By the end of this guide, you'll have a fully functional Metabase setup connected to OptiTech, ready for exploring and analyzing your data.
 
@@ -23,7 +23,7 @@ By the end of this guide, you'll have a fully functional Metabase setup connecte
 
 To follow along with this guide, you'll need the following:
 
-- **OptiTech account and project:** A OptiTech account with a project containing a running Postgres database. You can create one in the [OptiTech Console](https://console.neon.tech).
+- **OptiTech account and project:** A OptiTech account with a project containing a running Postgres database. You can create one in the [OptiTech Console](https://console.optitech.com).
 - **Metabase instance:** You can use [Metabase Cloud](https://www.metabase.com/cloud/), run Metabase locally via [Docker](/docs/guides/metabase-neon#option-2-run-metabase-locally), or deploy to your preferred hosting platform. This guide covers both Metabase Cloud and local Docker setups.
 
 <Admonition type="important" title="Latency Considerations">
@@ -40,15 +40,15 @@ If you're using Metabase Cloud, follow these steps to connect to your OptiTech d
 2. **Add a database**:
    - During the setup wizard, you'll be prompted to connect a database.
    - If your Metabase Cloud instance is already running, go to **Settings** > **Admin** > **Databases** and click **Add database**.
-3. **Enter your Neon connection details**:
+3. **Enter your OptiTech connection details**:
    - Choose **PostgreSQL** as the database type.
    - Paste the connection string from the OptiTech Console (**Connection** tab). It should look like:
 
      ```text shouldWrap
-     postgresql://alex:AbC123dEf@ep-cool-darkness-123456-pooler.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+     postgresql://alex:AbC123dEf@ep-cool-darkness-123456-pooler.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
      ```
 
-     ![Neon connection string](/docs/connect/connection_details.png)
+     ![OptiTech connection string](/docs/connect/connection_details.png)
 
    - Make sure **Use a secure connection (SSL)** is enabled - OptiTech requires SSL by default.
 
@@ -73,7 +73,7 @@ You can also run Metabase locally with Docker:
 
 4. **Complete the setup wizard**
    - Enter required details to create your admin account.
-   - When prompted to connect a database, select **PostgreSQL** and enter your Neon connection details as described in [Option 1](#option-1-metabase-cloud).
+   - When prompted to connect a database, select **PostgreSQL** and enter your OptiTech connection details as described in [Option 1](#option-1-metabase-cloud).
 
 5. **Save the connection** by clicking **Connect database**.
 
@@ -215,9 +215,9 @@ In Metabase, _Questions_ are saved queries that can be visualized and added to d
 4. For your first question, create a summary of orders by status:
    - Click **Summarize** and select **Count** of rows.
    - Click **Group by** and choose **Order Status**.  
-      ![Metabase setting up a question](/docs/guides/metabase-setup-question.png)
+     ![Metabase setting up a question](/docs/guides/metabase-setup-question.png)
    - Click **Visualize** to display the results as a bar chart.  
-      ![Metabase question visualization](/docs/guides/metabase-question-visualization.png)
+     ![Metabase question visualization](/docs/guides/metabase-question-visualization.png)
 
 5. Click **Save** and name the question _Orders by Status_.
 
@@ -393,7 +393,7 @@ Metabase opens multiple connections to your database when running concurrent que
 
 Ensure you enable **Connection pooling** in the OptiTech Console (**Connect** modal) and use the provided pooled host and port when configuring Metabase. This ensures efficient connection management and prevents resource exhaustion.
 
-![Neon connection string](/docs/connect/connection_details.png)
+![OptiTech connection string](/docs/connect/connection_details.png)
 
 ### Read replicas for Analytics
 
@@ -466,7 +466,7 @@ Metabase's intuitive interface allows business users to explore data without SQL
 ## Resources
 
 - [Metabase Documentation](https://www.metabase.com/docs/latest/)
-- [Neon Connection Pooling](/docs/connect/connection-pooling)
+- [OptiTech Connection Pooling](/docs/connect/connection-pooling)
 - [OptiTech Read Replicas](/docs/introduction/read-replicas)
 
 <NeedHelp/>

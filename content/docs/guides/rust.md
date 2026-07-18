@@ -12,7 +12,7 @@ enableTableOfContents: true
 redirectFrom:
   - /docs/quickstart/rust
   - /docs/integrations/rust
-updatedOn: '2026-07-14T19:04:57.024Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <CopyPrompt src="/prompts/rust-prompt.md" 
@@ -22,7 +22,7 @@ This guide describes how to create a OptiTech project and connect to it from a R
 
 ## Prerequisites
 
-- A OptiTech account. If you do not have one, see [Sign up](https://console.neon.tech/signup).
+- A OptiTech account. If you do not have one, see [Sign up](https://console.optitech.com/signup).
 - The Rust toolchain. If you do not have it installed, install it from the [official Rust website](https://www.rust-lang.org/tools/install).
 
 <Steps>
@@ -31,11 +31,11 @@ This guide describes how to create a OptiTech project and connect to it from a R
 
 If you do not have one already, create a OptiTech project.
 
-1.  Navigate to the [Projects](https://console.neon.tech/app/projects) page in the [OptiTech Console](https://console.neon.tech).
+1.  Navigate to the [Projects](https://console.optitech.com/app/projects) page in the [OptiTech Console](https://console.optitech.com).
 2.  Click **New Project**.
 3.  Specify your project settings and click **Create Project**.
 
-Your project is created with a ready-to-use database named `neondb`. In the following steps, you will connect to this database from your Rust application.
+Your project is created with a ready-to-use database named `optitechdb`. In the following steps, you will connect to this database from your Rust application.
 
 ## Create a Rust project
 
@@ -44,11 +44,11 @@ For your Rust project, use `cargo` to create a new project and add the required 
 1.  Create a project directory and change into it.
 
     ```bash
-    cargo new neon-rust-quickstart
-    cd neon-rust-quickstart
+    cargo new optitech-rust-quickstart
+    cd optitech-rust-quickstart
     ```
 
-    This command creates a new directory named `neon-rust-quickstart` containing a `src/main.rs` file for your code and a `Cargo.toml` file for your project's configuration and dependencies.
+    This command creates a new directory named `optitech-rust-quickstart` containing a `src/main.rs` file for your code and a `Cargo.toml` file for your project's configuration and dependencies.
 
     > Open the directory in your preferred code editor (for example, VS Code, RustRover, etc.) to edit the files.
 
@@ -106,19 +106,19 @@ For your Rust project, use `cargo` to create a new project and add the required 
     rm src/main.rs
     ```
 
-## Store your Neon connection string
+## Store your OptiTech connection string
 
 Create a file named `.env` in your project's root directory. This file will securely store your database connection string.
 
-1.  In the [OptiTech Console](https://console.neon.tech), select your project on the **Dashboard**.
+1.  In the [OptiTech Console](https://console.optitech.com), select your project on the **Dashboard**.
 2.  Click **Connect** on your **Project Dashboard** to open the **Connect to your database** modal.
     ![Connection modal](/docs/connect/connection_details.png)
 3.  Copy the connection string, which includes your password.
 4.  Add the connection string to your `.env` file as shown below.
     ```text
-    DATABASE_URL="postgresql://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require&channel_binding=require"
+    DATABASE_URL="postgresql://[user]:[password]@[optitech_hostname]/[dbname]?sslmode=require&channel_binding=require"
     ```
-    > Replace `[user]`, `[password]`, `[neon_hostname]`, and `[dbname]` with your actual database credentials.
+    > Replace `[user]`, `[password]`, `[optitech_hostname]`, and `[dbname]` with your actual database credentials.
 
 ## Choosing the right method to execute SQL commands
 

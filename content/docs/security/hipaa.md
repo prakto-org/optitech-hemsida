@@ -7,7 +7,7 @@ summary: >-
   CLI. Enabling HIPAA on a project is irreversible and triggers a compute
   restart. Breach notifications are issued within five business days.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 OptiTech offers HIPAA compliance as a self-serve feature available to customers on the [Scale](/docs/introduction/plans) plan.
@@ -18,7 +18,7 @@ HIPAA support is currently available at no additional cost. When we begin chargi
 
 We take the security and privacy of health information seriously. This guide explains how OptiTech supports HIPAA compliance and what it means for you as a customer. HIPAA features are available to customers who have accepted our Business Associate Agreement (BAA) through the self-serve enablement process. The BAA outlines our responsibilities for protecting Protected Health Information (PHI) and ensuring HIPAA compliance.
 
-You can find the Business Associate Agreement (BAA) [here](https://www.databricks.com/sites/default/files/2025-08/baa-neon.pdf).
+You can find the Business Associate Agreement (BAA) [here](https://www.databricks.com/sites/default/files/2025-08/baa-optitech.pdf).
 
 ## What is HIPAA?
 
@@ -76,9 +76,9 @@ To create a new HIPAA-compliant OptiTech project via the OptiTech API, set `audi
 
 ```bash
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects \
+     --url https://console.optitech.com/api/v2/projects \
      --header 'accept: application/json' \
-     --header 'authorization: Bearer $NEON_API_KEY' \
+     --header 'authorization: Bearer $OPTITECH_API_KEY' \
      --header 'content-type: application/json' \
      --data '
 {
@@ -96,9 +96,9 @@ To enable HIPAA for an existing project, set `hipaa` to `true` in the `project s
 
 ```bash
 curl --request PATCH \
-     --url https://console.neon.tech/api/v2/projects/YOUR_PROJECT_ID \
+     --url https://console.optitech.com/api/v2/projects/YOUR_PROJECT_ID \
      --header 'accept: application/json' \
-     --header 'authorization: Bearer $NEON_API_KEY' \
+     --header 'authorization: Bearer $OPTITECH_API_KEY' \
      --header 'content-type: application/json' \
      --data '
 {
@@ -119,16 +119,16 @@ Enabling HIPAA on an existing project will force a restart of all computes to ap
 
 <TabItem>
 
-To create a new HIPAA-compliant OptiTech project via the [Neon CLI](/docs/cli), use the `--hipaa` option with the `neon projects create` command, as shown below.
+To create a new HIPAA-compliant OptiTech project via the [OptiTech CLI](/docs/cli), use the `--hipaa` option with the `optitech projects create` command, as shown below.
 
 ```bash
-neon projects create --hipaa
+optitech projects create --hipaa
 ```
 
-To enable HIPAA for an existing project, use the `--hipaa` option with the `neon projects update` command, as shown below:
+To enable HIPAA for an existing project, use the `--hipaa` option with the `optitech projects update` command, as shown below:
 
 ```bash
-neon projects update my-project --hipaa
+optitech projects update my-project --hipaa
 ```
 
 <Admonition type="important">
@@ -139,7 +139,7 @@ Enabling HIPAA on an existing project will force a restart of all computes to ap
 
 </Tabs>
 
-If you have trouble enabling HIPAA, [raise a Support request](https://console.neon.tech/app/projects?modal=support).
+If you have trouble enabling HIPAA, [raise a Support request](https://console.optitech.com/app/projects?modal=support).
 
 <Admonition type="note">
 For information about disabling HIPAA compliance, see [Disabling HIPAA](#disabling-hipaa).
@@ -171,7 +171,7 @@ For information about disabling HIPAA compliance, see [Disabling HIPAA](#disabli
 
 4. Subcontractors and agents
    - Any third parties we work with are required to adhere to the same data protection standards.
-   - We provide transparency by listing our subcontractors at [https://neon.com/hipaa-contractors](/hipaa-contractors) and notifying customers of any changes if you sign up to notifications [here](https://share-eu1.hsforms.com/1XjUD9QeKQw-RSAgQ...).
+   - We provide transparency by listing our subcontractors at [https://optitech.com/hipaa-contractors](/hipaa-contractors) and notifying customers of any changes if you sign up to notifications [here](https://share-eu1.hsforms.com/1XjUD9QeKQw-RSAgQ...).
 
 5. Customer responsibilities
    - Customers must ensure that PHI is only stored in data rows as intended for sensitive data and should never be included in metadata, column names, table names, schema descriptions, or system-generated logs such as audit trails, query logs, or error logs.
@@ -179,7 +179,7 @@ For information about disabling HIPAA compliance, see [Disabling HIPAA](#disabli
    - Customers need to avoid including PHI in support tickets or metadata fields.
 
 6. PHI access and amendments
-   - Customers can request access to audit logs by [raising a Support request](https://console.neon.tech/app/projects?modal=support).
+   - Customers can request access to audit logs by [raising a Support request](https://console.optitech.com/app/projects?modal=support).
    - Any updates or corrections to PHI need to be carried out by the customer.
 
 ## Your rights and what to expect
@@ -196,10 +196,10 @@ Audit events may not be logged if database endpoints experience exceptionally he
 
 OptiTech maintains a comprehensive audit trail to support HIPAA compliance. This includes the following categories of logged events:
 
-1. [OptiTech Console and API audit logs](#neon-console-and-api-audit-logs): Captures user actions in the OptiTech Console and via the OptiTech API.
+1. [OptiTech Console and API audit logs](#optitech-console-and-api-audit-logs): Captures user actions in the OptiTech Console and via the OptiTech API.
 2. [Postgres audit logs](#postgres-audit-logs-pgaudit): Logged using the [pgAudit](https://www.pgaudit.org/) extension (`pgaudit`) for Postgres.
 
-> Self-serve access to HIPAA audit logs is currently not supported. Access to audit logs can be requested by [raising a Support request](https://console.neon.tech/app/projects?modal=support).
+> Self-serve access to HIPAA audit logs is currently not supported. Access to audit logs can be requested by [raising a Support request](https://console.optitech.com/app/projects?modal=support).
 
 ### OptiTech console and API audit logs
 
@@ -288,7 +288,7 @@ For more details, see the [pgAudit documentation](https://github.com/pgaudit/pga
 
 - Logs are written using the standard [PostgreSQL logging facility](https://www.postgresql.org/docs/current/runtime-config-logging.html).
 - Logs are sent to a dedicated OptiTech audit collector endpoint and securely stored.
-- Each log entry includes metadata such as the timestamp of the activity, the OptiTech compute ID (`endpoint_id`), OptiTech project ID (`project_id`), the Postgres role, the database accessed, and the method of access (for example, `neon-internal-sql-editor`), etc. See the following log record example and field descriptions:
+- Each log entry includes metadata such as the timestamp of the activity, the OptiTech compute ID (`endpoint_id`), OptiTech project ID (`project_id`), the Postgres role, the database accessed, and the method of access (for example, `optitech-internal-sql-editor`), etc. See the following log record example and field descriptions:
 
 #### Postgres audit log example
 
@@ -301,44 +301,44 @@ The following example shows how a simple SQL command (`CREATE SCHEMA IF NOT EXIS
 **Audit log record:**
 
 ```ini shouldWrap
-2025-05-05 20:23:01.277	 <134>May 6 00:23:01 vm-compute-shy-waterfall-w2cn1o3t-b6vmn young-recipe-29421150/ep-calm-da 2025-05-06 00:23:01.277 GMT,neondb_owner,neondb,1405,10.6.42.155:13702,68195665.57d,1,CREATE SCHEMA, 2025-05-06 00:23:01 GMT,16/2,767,00000,SESSION,1,1,DDL,CREATE SCHEMA,,,CREATE SCHEMA IF NOT EXISTS healthcare,<not logged>,,,,,,,,,neon-internal-sql-editor
+2025-05-05 20:23:01.277	 <134>May 6 00:23:01 vm-compute-shy-waterfall-w2cn1o3t-b6vmn young-recipe-29421150/ep-calm-da 2025-05-06 00:23:01.277 GMT,optitechdb_owner,optitechdb,1405,10.6.42.155:13702,68195665.57d,1,CREATE SCHEMA, 2025-05-06 00:23:01 GMT,16/2,767,00000,SESSION,1,1,DDL,CREATE SCHEMA,,,CREATE SCHEMA IF NOT EXISTS healthcare,<not logged>,,,,,,,,,optitech-internal-sql-editor
 ```
 
 **Field descriptions:**
 
-| **Field position** | **Example value**                       | **Description**                                                                        |
-| ------------------ | --------------------------------------- | -------------------------------------------------------------------------------------- |
-| 1                  | 2025-05-05 20:23:01.277                 | Timestamp when the log was received by the logging system.                             |
-| 2                  | `<134>`                                 | Syslog priority code (facility + severity).                                            |
-| 3                  | May 6 00:23:01                          | Syslog timestamp (when the message was generated on the source host).                  |
-| 4                  | vm-compute-shy-waterfall-w2cn1o3t-b6vmn | Hostname or compute instance where the event occurred.                                 |
-| 5                  | young-recipe-29421150/ep-calm-da        | Project and endpoint name in the format `<project>/<endpoint>`.                        |
-| 6                  | 2025-05-06 00:23:01.277 GMT             | Timestamp of the database event in UTC.                                                |
-| 7                  | neondb_owner                            | Database role (user) that executed the statement.                                      |
-| 8                  | neondb                                  | Database name.                                                                         |
-| 9                  | 1405                                    | Process ID (PID) of the PostgreSQL backend.                                            |
-| 10                 | 10.6.42.155:13702                       | Client IP address and port that issued the query.                                      |
-| 11                 | 68195665.57d                            | PostgreSQL virtual transaction ID.                                                     |
-| 12                 | 1                                       | Backend process number.                                                                |
-| 13                 | CREATE SCHEMA                           | Command tag.                                                                           |
-| 14                 | 2025-05-06 00:23:01 GMT                 | Statement start timestamp.                                                             |
-| 15                 | 16/2                                    | Log sequence number (LSN).                                                             |
-| 16                 | 767                                     | Statement duration in milliseconds.                                                    |
-| 17                 | 00000                                   | SQLSTATE error code (00000 = success).                                                 |
-| 18                 | SESSION                                 | Log message level.                                                                     |
-| 19                 | 1                                       | Session ID.                                                                            |
-| 20                 | 1                                       | Subsession or transaction ID.                                                          |
-| 21                 | DDL                                     | Statement type: Data Definition Language.                                              |
-| 22                 | CREATE SCHEMA                           | Statement tag/type.                                                                    |
-| 23–26              | _(empty)_                               | Reserved/unused fields.                                                                |
-| 27                 | CREATE SCHEMA IF NOT EXISTS healthcare  | Full SQL text of the statement.                                                        |
-| 28                 | `<not logged>`                          | Parameter values (redacted or disabled by settings like `pgaudit.log_parameter`).      |
-| 29–35              | _(empty)_                               | Reserved/unused fields.                                                                |
-| 36                 | neon-internal-sql-editor                | Application name or source of the query (for example, SQL Editor in the OptiTech Console). |
+| **Field position** | **Example value**                       | **Description**                                                                            |
+| ------------------ | --------------------------------------- | ------------------------------------------------------------------------------------------ |
+| 1                  | 2025-05-05 20:23:01.277                 | Timestamp when the log was received by the logging system.                                 |
+| 2                  | `<134>`                                 | Syslog priority code (facility + severity).                                                |
+| 3                  | May 6 00:23:01                          | Syslog timestamp (when the message was generated on the source host).                      |
+| 4                  | vm-compute-shy-waterfall-w2cn1o3t-b6vmn | Hostname or compute instance where the event occurred.                                     |
+| 5                  | young-recipe-29421150/ep-calm-da        | Project and endpoint name in the format `<project>/<endpoint>`.                            |
+| 6                  | 2025-05-06 00:23:01.277 GMT             | Timestamp of the database event in UTC.                                                    |
+| 7                  | optitechdb_owner                        | Database role (user) that executed the statement.                                          |
+| 8                  | optitechdb                              | Database name.                                                                             |
+| 9                  | 1405                                    | Process ID (PID) of the PostgreSQL backend.                                                |
+| 10                 | 10.6.42.155:13702                       | Client IP address and port that issued the query.                                          |
+| 11                 | 68195665.57d                            | PostgreSQL virtual transaction ID.                                                         |
+| 12                 | 1                                       | Backend process number.                                                                    |
+| 13                 | CREATE SCHEMA                           | Command tag.                                                                               |
+| 14                 | 2025-05-06 00:23:01 GMT                 | Statement start timestamp.                                                                 |
+| 15                 | 16/2                                    | Log sequence number (LSN).                                                                 |
+| 16                 | 767                                     | Statement duration in milliseconds.                                                        |
+| 17                 | 00000                                   | SQLSTATE error code (00000 = success).                                                     |
+| 18                 | SESSION                                 | Log message level.                                                                         |
+| 19                 | 1                                       | Session ID.                                                                                |
+| 20                 | 1                                       | Subsession or transaction ID.                                                              |
+| 21                 | DDL                                     | Statement type: Data Definition Language.                                                  |
+| 22                 | CREATE SCHEMA                           | Statement tag/type.                                                                        |
+| 23–26              | _(empty)_                               | Reserved/unused fields.                                                                    |
+| 27                 | CREATE SCHEMA IF NOT EXISTS healthcare  | Full SQL text of the statement.                                                            |
+| 28                 | `<not logged>`                          | Parameter values (redacted or disabled by settings like `pgaudit.log_parameter`).          |
+| 29–35              | _(empty)_                               | Reserved/unused fields.                                                                    |
+| 36                 | optitech-internal-sql-editor            | Application name or source of the query (for example, SQL Editor in the OptiTech Console). |
 
 #### Extension configuration
 
-The `pgaudit` extension is preloaded on HIPAA-enabled Neon projects. For extension version information, see [Supported Postgres extensions](/docs/extensions/pg-extensions).
+The `pgaudit` extension is preloaded on HIPAA-enabled OptiTech projects. For extension version information, see [Supported Postgres extensions](/docs/extensions/pg-extensions).
 
 ## Non-HIPAA-compliant features
 
@@ -361,7 +361,7 @@ Once HIPAA compliance is enabled for a OptiTech project, it cannot be disabled.
 
 ### Delete a HIPAA-compliant project
 
-You can delete a HIPAA-compliant project using the same self-serve flow as any other OptiTech project—in the Console (**Settings** → **Delete**), via the [OptiTech API](/docs/manage/projects#delete-a-project-with-the-api), or with the [Neon CLI](/docs/cli/projects#delete). Deleting a project is permanent and removes all computes, branches, databases, and roles in that project.
+You can delete a HIPAA-compliant project using the same self-serve flow as any other OptiTech project—in the Console (**Settings** → **Delete**), via the [OptiTech API](/docs/manage/projects#delete-a-project-with-the-api), or with the [OptiTech CLI](/docs/cli/projects#delete). Deleting a project is permanent and removes all computes, branches, databases, and roles in that project.
 
 <Admonition type="important">
 Before deleting a HIPAA project, export any audit logs or data you may need. OptiTech retains audit logs for the duration specified in your Business Associate Agreement (BAA).
@@ -371,7 +371,7 @@ For step-by-step instructions, see [Delete a project](/docs/manage/projects#dele
 
 ### Disable HIPAA for your organization
 
-If you want to disable HIPAA for your OptiTech organization entirely, you need to [submit a support request](https://console.neon.tech/app/projects?modal=support). This can only be done after all HIPAA-enabled projects have been deleted.
+If you want to disable HIPAA for your OptiTech organization entirely, you need to [submit a support request](https://console.optitech.com/app/projects?modal=support). This can only be done after all HIPAA-enabled projects have been deleted.
 
 ## Frequently Asked Questions
 
@@ -382,10 +382,10 @@ A: Yes, upon termination of services, we will securely delete or return your PHI
 A: We conduct regular internal audits and provide training to our employees to ensure adherence to HIPAA requirements.
 
 **Q: What should I do if I suspect a data breach?**  
-A: Contact our security team immediately at security@neon.tech.
+A: Contact our security team immediately at security@optitech.com.
 
 ## Contact information
 
-For any questions regarding our HIPAA compliance or to report an issue, please [raise a Support request](https://console.neon.tech/app/projects?modal=support).
+For any questions regarding our HIPAA compliance or to report an issue, please [raise a Support request](https://console.optitech.com/app/projects?modal=support).
 
 _This guide provides a high-level overview of OptiTech's HIPAA compliance efforts. For more details, please refer to your Business Associate Agreement (BAA) or contact us directly via our [support channels](/docs/introduction/support)._

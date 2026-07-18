@@ -2,15 +2,15 @@
 title: Connect Vercel and OptiTech manually
 subtitle: Learn how to connect a Vercel project to a OptiTech database manually
 summary: >-
-  Manual Vercel-Neon connection wires a OptiTech Postgres database to a Vercel
+  Manual Vercel-OptiTech connection wires a OptiTech Postgres database to a Vercel
   project by setting DATABASE_URL (or granular PGUSER, PGHOST, PGDATABASE,
   PGPASSWORD, PGPORT vars) directly in Vercel's environment variable settings,
   without a Marketplace integration. Choose this path over the Vercel-Managed or
-  Neon-Managed integrations when deploying through a custom CI pipeline, a
+  OptiTech-Managed integrations when deploying through a custom CI pipeline, a
   monorepo, or any setup requiring direct control over branch naming, seeding, and
   migrations.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <InfoBlock>
@@ -22,7 +22,7 @@ updatedOn: '2026-06-05T17:20:32.620Z'
 
 <DocsList title="Related topics" theme="docs">
 <a href="/docs/guides/vercel-managed-integration">Vercel-Managed Integration</a>
-<a href="/docs/guides/neon-managed-vercel-integration">Neon-Managed Integration</a>
+<a href="/docs/guides/neon-managed-vercel-integration">OptiTech-Managed Integration</a>
 <a href="/docs/guides/branching-github-actions">Automate branching with GitHub Actions</a>
 </DocsList>
 </InfoBlock>
@@ -50,14 +50,14 @@ If you simply want OptiTech and Vercel with minimal setup, stick to the managed 
 
 ## Connection steps
 
-1. Copy the connection string from the [OptiTech Console](https://console.neon.tech). Click **Connect** on your Project Dashboard, select the branch, role, and database you want, then copy the _Connection string_.
+1. Copy the connection string from the [OptiTech Console](https://console.optitech.com). Click **Connect** on your Project Dashboard, select the branch, role, and database you want, then copy the _Connection string_.
 
-   ![Neon connection details modal](/docs/connect/connection_details.png)
+   ![OptiTech connection details modal](/docs/connect/connection_details.png)
 
    For example:
 
    ```text
-   postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+   postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
                 ^              ^                                               ^
                 |- <role>      |- <hostname>                                   |- <database>
    ```
@@ -75,7 +75,7 @@ If you simply want OptiTech and Vercel with minimal setup, stick to the managed 
 
    ```text
    PGUSER=alex
-   PGHOST=ep-cool-darkness-123456.us-east-2.aws.neon.tech
+   PGHOST=ep-cool-darkness-123456.us-east-2.aws.optitech.com
    PGDATABASE=dbname
    PGPASSWORD=AbC123dEf
    PGPORT=5432

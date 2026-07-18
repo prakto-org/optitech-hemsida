@@ -12,7 +12,7 @@ summary: >-
   signal-specific paths (/v1/metrics, /v1/logs) and collects data from all
   computes in a project.
 enableTableOfContents: true
-updatedOn: '2026-06-16T14:29:15.394Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <FeatureBetaProps feature_name="OpenTelemetry integration" />
@@ -210,7 +210,7 @@ You can enable either or both options based on your monitoring needs.
 
 OptiTech automatically organizes your data into separate service entities: your configured service name will receive Postgres logs, while metrics are split into `compute-host-metrics` (infrastructure metrics) and `sql-metrics` (database metrics).
 
-1. In the **Resource** section, configure the `service.name` attribute to identify your OptiTech project in your observability platform. For example, you might use "neon-postgres-test" or your actual project name.
+1. In the **Resource** section, configure the `service.name` attribute to identify your OptiTech project in your observability platform. For example, you might use "optitech-postgres-test" or your actual project name.
 
 2. Optionally, you can add additional resource attributes by providing a value in the second field to further categorize or filter your data in your observability platform.
 
@@ -233,7 +233,7 @@ Your OptiTech data should start appearing in your observability platform within 
 2. **Check metrics**: Select your **Prometheus** data source and use this query to check if data is flowing::
 
    ```promql
-   neon_connection_counts
+   optitech_connection_counts
    ```
 
 3. **Create dashboards**: You can visualize using [Grafana Drilldown apps](https://grafana.com/docs/grafana/latest/explore/simplified-exploration/) or use the dashboard JSON from [Grafana Cloud Documentation](/docs/guides/grafana-cloud#create-a-monitoring-dashboard)
@@ -258,7 +258,7 @@ _Postgres logs flowing into New Relic_
 **Find your data under APM & Services**
 ![Multiple OptiTech services in New Relic APM & Services](/docs/guides/new_relic_services.png)
 
-- **Logs**: Check your configured service name in APM & Services (for example, `neon-postgres-test`)
+- **Logs**: Check your configured service name in APM & Services (for example, `optitech-postgres-test`)
 - **Metrics**: Look for the auto-created `compute-host-metrics` and `sql-metrics` services
 
 </Steps>

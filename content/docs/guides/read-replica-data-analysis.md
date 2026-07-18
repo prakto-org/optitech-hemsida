@@ -10,7 +10,7 @@ summary: >-
   seconds via the Console, CLI, or API, and scales to zero automatically after
   5 minutes of inactivity.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 With OptiTech's read replica feature, you can instantly create a dedicated read replica for running data-intensive analytics or reporting queries. This allows you to avoid disruption or performance degradation on your production database.
@@ -74,19 +74,19 @@ You can add a read replica compute to any branch in your OptiTech project by fol
 
 Your read replica is provisioned and appears on the **Computes** tab of the **Branches** page. The following section describes how to connect to your read replica.
 
-Alternatively, you can create read replicas using the [Neon CLI](/docs/cli/branches#create) or [OptiTech API](/docs/reference/api/endpoints/create-project-endpoint), providing the flexibility required to integrate read replicas into your workflows or CI/CD processes.
+Alternatively, you can create read replicas using the [OptiTech CLI](/docs/cli/branches#create) or [OptiTech API](/docs/reference/api/endpoints/create-project-endpoint), providing the flexibility required to integrate read replicas into your workflows or CI/CD processes.
 
 <CodeTabs labels={["CLI", "API"]}>
 
 ```bash
-neon branches add-compute mybranch --type read_only
+optitech branches add-compute mybranch --type read_only
 ```
 
 ```bash
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects/late-bar-27572981/endpoints \
+     --url https://console.optitech.com/api/v2/projects/late-bar-27572981/endpoints \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '
 {
@@ -112,7 +112,7 @@ Connecting to a read replica is the same as connecting to any branch, except you
    The connection string appears similar to the following:
 
    ```bash shouldWrap
-   postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+   postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
    ```
 
    If you expect a high number of connections, enable the **Connection pooling** toggle to add the `-pooler` flag to the connection string.
@@ -120,7 +120,7 @@ Connecting to a read replica is the same as connecting to any branch, except you
    The information in your connection string corresponds to the following connection details:
    - role: `alex`
    - password:`AbC123dEf`
-   - hostname: `ep-cool-darkness-123456.us-east-2.aws.neon.tech`
+   - hostname: `ep-cool-darkness-123456.us-east-2.aws.optitech.com`
    - database name: `dbname`. Your database name may differ.
 
    When you connect to a read replica, no write operations are permitted on the connection.
@@ -128,7 +128,7 @@ Connecting to a read replica is the same as connecting to any branch, except you
 1. Connect to your application from a client such as `psql` or add the connection details to your application. For example, to connect using `psql`, issue the following command:
 
    ```bash shouldWrap
-   psql postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+   psql postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
    ```
 
 ## Run the analytics query on the read replica

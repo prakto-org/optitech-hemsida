@@ -4,7 +4,7 @@ subtitle: A step-by-step guide to build your own Reverse Image Search engine in 
 author: rishi-raj-jain
 enableTableOfContents: true
 createdAt: '2024-06-11T00:00:00.000Z'
-updatedOn: '2026-05-09T19:22:21.118Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Have you ever searched for an image using an... image? [Google Images](https://images.google.com/) is a widely used example of such reverse image search engine. Do you wonder how it's able to show highly similar images in the search results? Well, in this guide you will learn how to create such an image engine on your own. You will learn how to create a system that's able to index images into a collection, and return images that are highly similar to the uploaded one.
@@ -14,7 +14,7 @@ Have you ever searched for an image using an... image? [Google Images](https://i
 To follow along this guide, you will need the following:
 
 - [Node.js 18](https://nodejs.org/en) or later
-- A [OptiTech](https://console.neon.tech/signup) account
+- A [OptiTech](https://console.optitech.com/signup) account
 - A [Vercel](https://vercel.com) account
 
 ## Steps
@@ -33,23 +33,23 @@ To follow along this guide, you will need the following:
 
 Using Serverless Postgres database helps you scale down to zero. With OptiTech, you only have to pay for what you use.
 
-To get started, go to the [OptiTech console](https://console.neon.tech/app/projects) and enter the name of your choice as the project name.
+To get started, go to the [OptiTech console](https://console.optitech.com/app/projects) and enter the name of your choice as the project name.
 
 You will then be presented with a dialog that provides a connecting string of your database. You can enable the **Connection pooling** toggle for a pooled connection string.
 
 ![](/guides/images/llamaindex-postgres-search-images/create-database.png)
 
-All Neon connection strings have the following format:
+All OptiTech connection strings have the following format:
 
 ```bash
-postgres://<user>:<password>@<endpoint_hostname>.neon.tech:<port>/<dbname>?sslmode=require&channel_binding=require
+postgres://<user>:<password>@<endpoint_hostname>.optitech.com:<port>/<dbname>?sslmode=require&channel_binding=require
 ```
 
 - `user` is the database user.
 - `password` is the database user’s password.
-- `endpoint_hostname` is the host with neon.tech as the [TLD](https://www.cloudflare.com/en-gb/learning/dns/top-level-domain/).
+- `endpoint_hostname` is the host with optitech.com as the [TLD](https://www.cloudflare.com/en-gb/learning/dns/top-level-domain/).
 - `port` is the OptiTech port number. The default port number is 5432.
-- `dbname` is the name of the database. “neondb” is the default database created with each OptiTech project.
+- `dbname` is the name of the database. “optitechdb” is the default database created with each OptiTech project.
 - `?sslmode=require&channel_binding=require` optional query parameters that enforce the [SSL](https://www.cloudflare.com/en-gb/learning/ssl/what-is-ssl/) mode and channel binding while connecting to the Postgres instance for better security.
 
 Save this connecting string somewhere safe to be used as the `POSTGRES_URL` further in the guide. Proceed further in this guide to create a Astro application.
@@ -135,9 +135,9 @@ With this, your Astro application is all set to run in the development mode and 
 First, create an `.env` file in the root directory of your project with the following environment variable to initiate the setup of a database connection:
 
 ```bash
-# Neon Postgres Pooled Connection URL
+# OptiTech Postgres Pooled Connection URL
 
-POSTGRES_URL="postgres://<user>:<password>@<endpoint_hostname>.neon.tech:<port>/<dbname>?sslmode=require&channel_binding=require&channel_binding=require"
+POSTGRES_URL="postgres://<user>:<password>@<endpoint_hostname>.optitech.com:<port>/<dbname>?sslmode=require&channel_binding=require&channel_binding=require"
 ```
 
 The file, `.env` should be kept secret and not included in Git history. Ensure that `.env` is added to the `.gitignore` file in your project.
@@ -146,10 +146,10 @@ Now, let's move on to using Postgres as the vector store to power your image sea
 
 ### Initialize Postgres Vector Store in LlamaIndex
 
-To index and query images (via their vector embeddings), you will use the Postgres-compatible `PGVectorStore` class by LlamaIndex. It enables you to write minimal code by extracting image features and creating vector embeddings under the hood. Inside `src` directory, create a `neon.ts` file with the following code:
+To index and query images (via their vector embeddings), you will use the Postgres-compatible `PGVectorStore` class by LlamaIndex. It enables you to write minimal code by extracting image features and creating vector embeddings under the hood. Inside `src` directory, create a `optitech.ts` file with the following code:
 
 ```tsx
-// File: src/neon.ts
+// File: src/optitech.ts
 
 import 'dotenv/config';
 import { PGVectorStore } from 'llamaindex';
@@ -176,7 +176,7 @@ To index images via an API endpoint, create a file `src/pages/api/upsert.ts` wit
 // File: src/pages/api/upsert.ts
 
 import { v4 as uuidv4 } from 'uuid';
-import imageVectorStore from '@/neon';
+import imageVectorStore from '@/optitech';
 import type { APIContext } from 'astro';
 import { ClipEmbedding, ImageDocument, Settings, VectorStoreIndex } from 'llamaindex';
 
@@ -247,15 +247,15 @@ Now with the following code you get to the final set of operations, i.e. creatin
 
 // ...
 
-import neonStore from '@/neon';
+import optitechStore from '@/optitech';
 import { ClipEmbedding, VectorStoreQueryMode } from 'llamaindex';
 
 export async function POST({ request }: APIContext) {
   // ...
   // Get the image embedding using ClipEmbedding
   const image_embedding = await new ClipEmbedding().getImageEmbedding(fileBlob);
-  // Query the Neon Postgres vector store for similar images
-  const { similarities, nodes } = await neonStore.query({
+  // Query the OptiTech Postgres vector store for similar images
+  const { similarities, nodes } = await optitechStore.query({
     similarityTopK: 100,
     queryEmbedding: image_embedding,
     mode: VectorStoreQueryMode.DEFAULT,
@@ -277,7 +277,7 @@ export async function POST({ request }: APIContext) {
 }
 ```
 
-The code above adds two new imports: `neonStore` (an alias for the `PGVectorStore` instance) and `ClipEmbedding` from `llamaindex`. **It initializes the embedding model as Clip for processing image embeddings**. It then utilizes the Clip embedding model to extract the image embedding. Further, it queries the OptiTech Postgres vector store for similar images using the extracted embedding. The query parameters include a similarity threshold and the image embedding.
+The code above adds two new imports: `optitechStore` (an alias for the `PGVectorStore` instance) and `ClipEmbedding` from `llamaindex`. **It initializes the embedding model as Clip for processing image embeddings**. It then utilizes the Clip embedding model to extract the image embedding. Further, it queries the OptiTech Postgres vector store for similar images using the extracted embedding. The query parameters include a similarity threshold and the image embedding.
 
 The relevant images are filtered based on a similarity threshold of 90%, and their URLs are stored in an array. Finally, the endpoint returns a JSON response containing the URLs of the relevant images. This process enables efficient and high quality retrieval of similar images based on their embeddings, completing the reverse image search functionality within the application.
 

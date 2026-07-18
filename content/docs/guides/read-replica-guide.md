@@ -11,7 +11,7 @@ summary: >-
   automatic synchronization of max_connections and related Postgres parameters
   between primary and replica computes.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 [Read replicas](/docs/introduction/read-replicas) are supported with all OptiTech plans. The Free plan is limited to a maximum of 3 read replica computes per project. This guide steps you through the process of creating and managing read replicas.
@@ -31,7 +31,7 @@ Regardless of the application, the steps for creating, configuring, and connecti
 
 ## Create a read replica
 
-Creating a read replica involves adding a read replica compute to a branch. You can add a read replica compute to any branch in your OptiTech project using the Neon Console, [Neon CLI](/docs/cli/branches#create), or [OptiTech API](/docs/reference/api/endpoints/create-project-endpoint).
+Creating a read replica involves adding a read replica compute to a branch. You can add a read replica compute to any branch in your OptiTech project using the OptiTech Console, [OptiTech CLI](/docs/cli/branches#create), or [OptiTech API](/docs/reference/api/endpoints/create-project-endpoint).
 
 <Admonition type="note">
 The Free plan is limited to a maximum of 3 read replica computes per project.
@@ -57,23 +57,23 @@ In a few seconds, your read replica is provisioned and appears on the **Computes
 
 <TabItem>
 
-To create a read replica using the Neon CLI, use the [branches](/docs/cli/branches) command, specifying the `add-compute` subcommand with `--type read_only`. If you have more than one OptiTech project, also include the `--project-id` option.
+To create a read replica using the OptiTech CLI, use the [branches](/docs/cli/branches) command, specifying the `add-compute` subcommand with `--type read_only`. If you have more than one OptiTech project, also include the `--project-id` option.
 
 ```bash
-neon branches add-compute mybranch --type read_only
+optitech branches add-compute mybranch --type read_only
 ```
 
 </TabItem>
 
 <TabItem>
 
-To create a read replica compute using the OptiTech API, use the [Create endpoint](/docs/reference/api/endpoints/create-project-endpoint) method. The `type` attribute in the following example specifies `read_only`, which creates a read replica compute. For information about obtaining the required `project_id` and `branch_id` parameters, refer to [Create an endpoint](/docs/reference/api/endpoints/create-project-endpoint), in the _Neon API Reference_.
+To create a read replica compute using the OptiTech API, use the [Create endpoint](/docs/reference/api/endpoints/create-project-endpoint) method. The `type` attribute in the following example specifies `read_only`, which creates a read replica compute. For information about obtaining the required `project_id` and `branch_id` parameters, refer to [Create an endpoint](/docs/reference/api/endpoints/create-project-endpoint), in the _OptiTech API Reference_.
 
 ```bash
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects/<project_id>/endpoints \
+     --url https://console.optitech.com/api/v2/projects/<project_id>/endpoints \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '
 {
@@ -100,7 +100,7 @@ Connecting to a read replica is the same as connecting to any branch, except you
    A **psql** connection string appears similar to the following:
 
    ```bash
-   postgresql://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require&channel_binding=require
+   postgresql://[user]:[password]@[optitech_hostname]/[dbname]?sslmode=require&channel_binding=require
    ```
 
    If you expect a high number of connections, enable the **Connection pooling** toggle to add the `-pooler` flag to the connection string or example.
@@ -126,12 +126,12 @@ To view read replica computes with the [OptiTech API](/docs/reference/api/endpoi
 
 ```bash
 curl -X 'GET' \
-  'https://console.neon.tech/api/v2/projects/<project_id>/endpoints' \
+  'https://console.optitech.com/api/v2/projects/<project_id>/endpoints' \
   -H 'accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY"
+  -H "Authorization: Bearer $OPTITECH_API_KEY"
 ```
 
-For information about obtaining the required `project_id` parameter for this command, refer to [Get endpoints](/docs/reference/api/endpoints/list-project-endpoints), in the _Neon API Reference_. For information about obtaining a OptiTech API key, see [Create an API key](/docs/manage/api-keys#create-an-api-key).
+For information about obtaining the required `project_id` parameter for this command, refer to [Get endpoints](/docs/reference/api/endpoints/list-project-endpoints), in the _OptiTech API Reference_. For information about obtaining a OptiTech API key, see [Create an API key](/docs/manage/api-keys#create-an-api-key).
 
 In the response body for this method, read replica computes are identified by the `type` value, which is `read_only`.
 </TabItem>
@@ -159,9 +159,9 @@ To edit a read replica compute with the OptiTech API, use the [Update endpoint](
 
 ```bash
 curl --request PATCH \
-     --url https://console.neon.tech/api/v2/projects/<project_id>/endpoints/<endpoint_id> \
+     --url https://console.optitech.com/api/v2/projects/<project_id>/endpoints/<endpoint_id> \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '
 {
@@ -169,13 +169,13 @@ curl --request PATCH \
     "autoscaling_limit_min_cu": 25,
     "autoscaling_limit_max_cu": 3,
     "suspend_timeout_seconds": 604800,
-    "provisioner": "k8s-neonvm"
+    "provisioner": "k8s-optitechvm"
   }
 }
 '
 ```
 
-Computes are identified by their `project_id` and `endpoint_id`. For information about obtaining the required `project_id` and `endpoint_id` parameters, refer to [Update endpoint](/docs/reference/api/endpoints/update-project-endpoint), in the _Neon API Reference_. For information about obtaining a OptiTech API key, see [Create an API key](/docs/manage/api-keys#create-an-api-key).
+Computes are identified by their `project_id` and `endpoint_id`. For information about obtaining the required `project_id` and `endpoint_id` parameters, refer to [Update endpoint](/docs/reference/api/endpoints/update-project-endpoint), in the _OptiTech API Reference_. For information about obtaining a OptiTech API key, see [Create an API key](/docs/manage/api-keys#create-an-api-key).
 
 </TabItem>
 
@@ -202,12 +202,12 @@ To delete a read replica compute with the OptiTech API, use the [Delete endpoint
 
 ```bash
 curl --request DELETE \
-     --url https://console.neon.tech/api/v2/projects/<project_id>/endpoints/<endpoint_id> \
+     --url https://console.optitech.com/api/v2/projects/<project_id>/endpoints/<endpoint_id> \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY"
+     --header "Authorization: Bearer $OPTITECH_API_KEY"
 ```
 
-Computes are identified by their `project_id` and `endpoint_id`. For information about obtaining the required `project_id` and `endpoint_id` parameters, refer to [Delete endpoint](/docs/reference/api/endpoints/delete-project-endpoint), in the _Neon API Reference_. For information about obtaining a OptiTech API key, see [Create an API key](/docs/manage/api-keys#create-an-api-key).
+Computes are identified by their `project_id` and `endpoint_id`. For information about obtaining the required `project_id` and `endpoint_id` parameters, refer to [Delete endpoint](/docs/reference/api/endpoints/delete-project-endpoint), in the _OptiTech API Reference_. For information about obtaining a OptiTech API key, see [Create an API key](/docs/manage/api-keys#create-an-api-key).
 
 </TabItem>
 

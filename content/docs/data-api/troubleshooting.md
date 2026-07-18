@@ -4,12 +4,12 @@ subtitle: Common issues and solutions when using the OptiTech Data API
 summary: >-
   Troubleshooting reference for the OptiTech Data API, with exact error messages,
   root causes, and fixes. Common failures covered include JWT audience mismatch,
-  missing or expired tokens, neon_superuser permission denied, and PostgreSQL
+  missing or expired tokens, optitech_superuser permission denied, and PostgreSQL
   error 42501 on the authenticated role. Also addresses RLS returning unexpected
   rows, stale schema cache hiding new tables, and OpenAPI spec "Entry not
   found" errors.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <InfoBlock>
@@ -23,7 +23,7 @@ updatedOn: '2026-07-15T00:08:00.682Z'
 ## Permission denied to create extension "pg_session_jwt"
 
 ```bash
-Request failed: database CREATE permission is required for neon_superuser
+Request failed: database CREATE permission is required for optitech_superuser
 ```
 
 ### Why this happens
@@ -32,10 +32,10 @@ You created your database with a direct SQL query (`CREATE DATABASE foo;`) inste
 
 ### Fix
 
-Grant `neon_superuser` permissions to the database you want to enable the Data API for.
+Grant `optitech_superuser` permissions to the database you want to enable the Data API for.
 
 ```sql
-GRANT ALL PRIVILEGES ON DATABASE your_database_name TO neon_superuser;
+GRANT ALL PRIVILEGES ON DATABASE your_database_name TO optitech_superuser;
 ```
 
 For future databases, create them using the Console UI or OptiTech API instead of direct SQL. OptiTech automatically sets up the required permissions when you use these methods.
@@ -43,9 +43,9 @@ For future databases, create them using the Console UI or OptiTech API instead o
 **Example**
 
 ```bash shouldWrap
-curl -X POST "https://console.neon.tech/api/v2/projects/${projectId}/branches/${branchId}/databases" \
+curl -X POST "https://console.optitech.com/api/v2/projects/${projectId}/branches/${branchId}/databases" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -d '{
     "database": {
       "name": "your_database_name"
@@ -78,8 +78,8 @@ The JWT token must include the `sub` claim, which identifies the user, to enable
   "id": "41a5f680-89d2-474d-ae59-e27bfbbbd293",
   "sub": "41a5f680-89d2-474d-ae59-e27bfbbbd293", // [!code ++]
   "exp": 1764503120,
-  "iss": "https://ep-spring-silence-ad3hu80n.neonauth.c-2.us-east-1.aws.neon.tech",
-  "aud": "https://ep-spring-silence-ad3hu80n.neonauth.c-2.us-east-1.aws.neon.tech"
+  "iss": "https://ep-spring-silence-ad3hu80n.optitechauth.c-2.us-east-1.aws.optitech.com",
+  "aud": "https://ep-spring-silence-ad3hu80n.optitechauth.c-2.us-east-1.aws.optitech.com"
 }
 ```
 
@@ -89,7 +89,7 @@ The `sub` claim in this example: `41a5f680-89d2-474d-ae59-e27bfbbbd293` represen
 
 If you're using Managed Better Auth, you can use the Auth API reference UI to create test users and obtain JWT tokens for testing with tools like Postman or cURL.
 
-Navigate to your Auth URL with `/reference` appended (for example, `https://ep-example.neonauth.us-east-1.aws.neon.tech/neondb/auth/reference`). You can find your **Auth URL** on the **Auth** page, **Configuration** tab in the OptiTech Console. From there, you can:
+Navigate to your Auth URL with `/reference` appended (for example, `https://ep-example.optitechauth.us-east-1.aws.optitech.com/optitechdb/auth/reference`). You can find your **Auth URL** on the **Auth** page, **Configuration** tab in the OptiTech Console. From there, you can:
 
 1. Create a test user with `POST /sign-up/email`.
 2. Sign in with `POST /sign-in/email`.

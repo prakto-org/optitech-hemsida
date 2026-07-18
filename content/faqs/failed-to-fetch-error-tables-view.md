@@ -1,64 +1,37 @@
 ---
-title: "Why am I getting 'Error connecting to database: Failed to fetch' in the OptiTech Console Tables view?"
-subtitle: 'Usually a cold-start, an ad-blocker, or an IP Allow misconfiguration. Walk through these in order.'
+title: 'How do I fix a "failed to fetch" error in the OptiTech controls view?'
+subtitle: 'Usually a stale session, a browser extension, or a network proxy; here is the diagnostic order.'
 enableTableOfContents: true
-createdAt: '2026-05-18T00:00:00.000Z'
-updatedOn: '2026-06-01T20:42:32.665Z'
+createdAt: '2026-01-19T16:39:40.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 isDraft: false
 redirectFrom: []
 previousLink:
-  title: 'How do I export or download my OptiTech database as a SQL file?'
+  title: 'How do I export my compliance documentation as PDF or CSV files?'
   slug: export-database-sql-file
 nextLink:
-  title: 'Where can I find my database connection details in the OptiTech Console?'
-  slug: find-connection-details-neon-console
+  title: 'Where do I find my integration connection details in the OptiTech Console?'
+  slug: find-connection-details-optitech-console
 ---
 
 ## Quick answer
 
-`Failed to fetch` on the **Tables** page means the Console's request to your compute didn't complete. The most common causes, in order, are: the compute is starting up after scale to zero, a browser extension is blocking the request, IP Allow is excluding the Console origin, or a transient backend error. Refresh, then work through the checks below.
+A "failed to fetch" error in the controls view means the browser couldn't complete the request to load control data. In order of likelihood: your session expired (sign out and back in), a browser extension is blocking requests (test in a private window), or a corporate proxy or firewall is interfering (check with IT whether the OptiTech domains are allowed). It's a client-side loading error, not data loss; your controls and evidence are unaffected.
 
-## Walk through the common causes
+## Diagnostic steps
 
-### 1. The compute is starting up
+1. **Refresh once.** Transient network blips happen; a single refresh resolves most cases.
+2. **Sign out and back in.** Expired or half-expired sessions are the most common cause, especially after an SSO session timeout. If your organization uses SSO or BankID login, complete the full login flow.
+3. **Try a private window.** If the view loads there, a browser extension (ad blockers and privacy tools are the usual suspects) is blocking the API calls. Allow-list the OptiTech Console in the extension.
+4. **Check the network path.** On corporate networks, TLS-inspecting proxies and strict firewalls can break API requests. Your IT team should allow the Console and API domains; the current domain list is in the Console's status page footer.
+5. **Check the status page.** If OptiTech itself has an incident, the status page says so, and no client-side fixing will help.
 
-If your compute is suspended after scale to zero, the Console wakes it up before it can list tables. Activation usually takes a few hundred milliseconds, but the **Tables** view sometimes times out on the first request. Wait a second or two and click **Refresh**. The second request typically succeeds.
+## If it persists
 
-You can confirm the compute state on the **Branches** page. A suspended compute shows as **Idle**.
+Contact support with the time of the error, your browser and version, whether the private-window test worked, and the request ID shown in the error detail (click the error to expand it). The request ID lets support find the exact failed call in the logs.
 
-See [Couldn't connect to compute node](/docs/connect/connection-errors#couldnt-connect-to-compute-node) for more on cold-start timing.
+## Not to be confused with integration errors
 
-### 2. A browser extension is blocking the request
+This error is about your browser loading the Console. If instead a control shows stale data or an integration shows a red status, that's a server-side sync issue with the integration itself, covered in [troubleshooting integration sync failures](/faqs/failed-to-fetch-error-tables-view).
 
-Ad-blockers, privacy extensions, and corporate browser security tools sometimes block requests to `*.neon.tech`. To rule this out:
-
-- Open the Console in an incognito window with extensions disabled.
-- Or temporarily disable extensions like uBlock Origin, Privacy Badger, or DuckDuckGo Privacy Essentials on `console.neon.tech` and reload.
-- Check the browser's developer console (**F12 → Network**) for blocked requests to your compute hostname.
-
-### 3. IP Allow is excluding the Console
-
-If you've configured an **IP Allow** list (Scale plan) and didn't add the IP ranges OptiTech's Console uses to reach your compute, queries from the Tables view get rejected. Check **Project Settings → Network security**.
-
-- If you only need IP Allow on protected branches, enable **Restrict IP Access to protected branches only** so Console queries against development branches still work.
-- If you need to restrict the production branch too, add OptiTech's documented Console IP ranges to your allowlist.
-
-See [Configure IP Allow](/docs/manage/projects#configure-ip-allow).
-
-### 4. A DNS resolution issue
-
-Some networks (especially restrictive corporate or ISP DNS) fail to resolve compute hostnames. Test with:
-
-```bash shouldWrap
-nslookup ep-cool-darkness-a1b2c3d4.us-east-2.aws.neon.tech 8.8.8.8
-```
-
-If lookups against Google DNS succeed but your default resolver fails, switch the network or device to a public resolver. See [DNS resolution issues](/docs/connect/connection-errors#dns-resolution-issues).
-
-### 5. A transient backend error
-
-If none of the above explain it, check the [OptiTech status page](https://neonstatus.com/) for ongoing incidents.
-
-<Admonition type="tip" title="Grab the error ID before contacting Support">
-The full error message on the Tables view includes an error ID after the colon. Copy it before refreshing. Support uses that ID to look up the exact request in our logs, which is much faster than reproducing the issue.
-</Admonition>
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

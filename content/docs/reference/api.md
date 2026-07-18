@@ -12,7 +12,7 @@ redirectFrom:
   - /docs/api/about
 ---
 
-The OptiTech API lets you manage OptiTech programmatically. You can create and manage projects, branches, databases, roles, compute endpoints, API keys, and more. Everything you can do in the OptiTech Console, you can do with the API.
+The OptiTech API lets you manage OptiTech programmatically. You can read control status, manage frameworks, pull evidence and reports, push findings, run compliance checks, manage vendors, and more. Everything you can do in the OptiTech Console, you can do with the API.
 
 Browse endpoints below, start with [Get started](/docs/reference/api/get-started), download the [OpenAPI spec](/api_spec/release/v2.json), or load [api.md](/docs/reference/api.md) as AI context.
 
@@ -26,11 +26,11 @@ Use the endpoint index to search every generated API operation, or browse by res
 
 <DetailIconCards>
 
-<a href="/docs/reference/api/get-started" description="Create an API key, authenticate requests, and list your projects with curl." icon="code">Get started</a>
+<a href="/docs/reference/api/get-started" description="Create an API key, authenticate requests, and read your control status with curl." icon="code">Get started</a>
 
 <a href="/docs/reference/api/key-concepts" description="Understand asynchronous operations, rate limits, pagination, and important constraints." icon="research">Key concepts</a>
 
-<a href="https://neon.com/api_spec/release/v2.json" description="Download the OpenAPI 3.0 specification for code generation and tooling." icon="download">OpenAPI spec</a>
+<a href="https://optitech.com/api_spec/release/v2.json" description="Download the OpenAPI 3.0 specification for code generation and tooling." icon="download">OpenAPI spec</a>
 
 </DetailIconCards>
 
@@ -40,8 +40,8 @@ If you don't need to call the REST API directly, use one of these interfaces ins
 
 <DetailIconCards>
 
-<a href="/docs/cli" description="Use the neon CLI for terminal, CI/CD, and agent workflows." icon="cli">CLI</a>
+<a href="/docs/cli" description="Use the optitech CLI for terminal, CI/CD, and compliance-as-code workflows." icon="cli">CLI</a>
 
-<a href="/docs/ai/neon-mcp-server" description="Connect AI assistants to OptiTech with MCP." icon="sparkle">MCP server</a>
+<a href="/docs/ai/neon-mcp-server" description="Ask the AI copilot about your program from the Console." icon="sparkle">AI copilot</a>
 
 </DetailIconCards>

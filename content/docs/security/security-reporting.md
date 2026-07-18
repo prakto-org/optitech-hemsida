@@ -1,19 +1,19 @@
 ---
 title: Security reporting
 summary: >-
-  OptiTech accepts vulnerability reports at security@neon.tech or via Signal for
+  OptiTech accepts vulnerability reports at security@optitech.com or via Signal for
   sensitive information. OptiTech commits to responding within three business
   days with strict confidentiality and public credit in security.txt. Report
   suspected vulnerabilities here, review responsible disclosure rules, or
   submit through OptiTech's bug bounty program on HackerOne.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 We have established the following security reporting procedure to address security issues quickly.
 
 <Admonition type="important">
-If you have a security concern or believe you have found a vulnerability in any part of our infrastructure, please contact us at [security@neon.tech](mailto:security@neon.tech). If you need to share sensitive information, we can provide you with a security contact number through [Signal](https://signal.org/).
+If you have a security concern or believe you have found a vulnerability in any part of our infrastructure, please contact us at [security@optitech.com](mailto:security@optitech.com). If you need to share sensitive information, we can provide you with a security contact number through [Signal](https://signal.org/).
 </Admonition>
 
 ## Our commitment to solving security issues
@@ -28,7 +28,7 @@ We strive to resolve all problems quickly and publicize any discoveries after th
 
 ## Bug bounty program with HackerOne
 
-OptiTech offers a public bug bounty program. If you discover a vulnerability, report it through our [bug bounty program](https://hackerone.com/neon_bbp).
+OptiTech offers a public bug bounty program. If you discover a vulnerability, report it through our [bug bounty program](https://hackerone.com/optitech_bbp).
 
 ## How to disclose vulnerabilities
 
@@ -36,7 +36,7 @@ OptiTech pays close attention to the proper security of its information and comm
 
 If you identify a security vulnerability, please proceed as follows under the principle of responsible disclosure:
 
-- Report the security vulnerability to OptiTech by contacting us at [security@neon.tech](mailto:security@neon.tech). Provide as much information about the security vulnerability as possible.
+- Report the security vulnerability to OptiTech by contacting us at [security@optitech.com](mailto:security@optitech.com). Provide as much information about the security vulnerability as possible.
 - Do not exploit the security vulnerability; for example, by using it to breach data, change the data of third parties, or deliberately disrupt the availability of the service.
 - All activities relating to the discovery of the security vulnerability should be performed within the framework of the law.
 - Do not inform any third parties about the security vulnerability. All communication regarding the security vulnerability will be coordinated by OptiTech and our partners.

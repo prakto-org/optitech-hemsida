@@ -2,82 +2,37 @@ export default {
   headings: {
     feature: '',
     free: {
-      label: 'Free',
-      price: '<span>$0</span>/month',
+      label: 'Start',
+      price: '<span>2,995 kr</span>/month',
     },
     launch: {
-      label: 'Launch',
-      price: '<span>Usage-based</span>',
+      label: 'Professional',
+      price: '<span>7,995 kr</span>/month',
     },
     scale: {
-      label: 'Scale',
-      price: '<span>Usage-based</span>',
+      label: 'Enterprise',
+      price: '<span>from 19,995 kr</span>/month',
     },
   },
   cols: [
     {
       rows: '1',
-      feature: 'Projects and Branches',
+      feature: 'Frameworks and scoping',
+    },
+    {
+      rows: '2',
+      feature: {
+        title: 'Frameworks included',
+        subtitle: 'NIS2, DORA, GDPR, ISO 27001, AI Act',
+      },
+      free: '1',
+      launch: '3',
+      scale: 'Unlimited',
     },
     {
       rows: '1',
       feature: {
-        title: 'Projects',
-      },
-      free: '100',
-      launch: '100',
-      scale: '1,000',
-    },
-    {
-      rows: '2',
-      feature: {
-        title: 'Branches per project',
-        subtitle: 'Included',
-      },
-      free: '10',
-      launch: '10',
-      scale: '25',
-    },
-    {
-      rows: '2',
-      feature: {
-        title: 'Additional branches',
-        subtitle: { text: 'Read more', href: '#additional-branches-billing' },
-      },
-      free: false,
-      launch: {
-        title: '$0.002 per branch-hour',
-      },
-      scale: {
-        title: '$0.002 per branch-hour',
-      },
-    },
-    {
-      rows: '1',
-      feature: 'Postgres database',
-    },
-    {
-      rows: '2',
-      feature: {
-        title: 'Compute rates',
-      },
-      free: '100 CU-hours<span>Per Project</span>',
-      launch: '$0.106 per CU-hour',
-      scale: '$0.222 per CU-hour',
-    },
-    {
-      rows: '2',
-      feature: {
-        title: 'Compute sizes',
-      },
-      free: 'Up to 2 CU (8 GB RAM)',
-      launch: 'Up to 16 CU (64 GB RAM)',
-      scale: 'Up to 56 CU (224 GB RAM)',
-    },
-    {
-      rows: '1',
-      feature: {
-        title: 'Autoscaling',
+        title: 'Automated gap analysis',
       },
       free: true,
       launch: true,
@@ -86,182 +41,236 @@ export default {
     {
       rows: '2',
       feature: {
-        title: 'Scale to zero',
-        subtitle: 'When inactive',
+        title: 'Cross-framework mapping',
+        subtitle: 'Do once, prove everywhere',
       },
-      free: 'After 5 minutes <span>when inactive</span>',
-      launch: 'After 5 minutes <span>can be disabled</span>',
-      scale: 'Configurable',
+      free: true,
+      launch: true,
+      scale: true,
     },
     {
       rows: '2',
       feature: {
-        title: 'Database storage',
-        subtitle: 'Root and child branches',
+        title: 'Swedish legal texts',
+        subtitle: 'Built from MSB regulations (MSBFS)',
       },
-      free: 'Free<span>0.5 GB per Project</span>',
-      launch: '$0.35 per GB-month',
-      scale: '$0.35 per GB-month',
+      free: true,
+      launch: true,
+      scale: true,
     },
     {
-      rows: '3',
-      feature: {
-        title: 'History',
-        subtitle: 'Instant restore storage',
-      },
-      free: 'Free<span>with limited window/size</span>',
-      launch:
-        '$0.20 per GB-month <span>based on volume of data changes during your selected history window</span>',
-      scale:
-        '$0.20 per GB-month <span>based on volume of data changes during your selected history window</span>',
+      rows: '1',
+      feature: 'Evidence and integrations',
     },
     {
-      rows: '3',
+      rows: '1',
       feature: {
-        title: 'History window',
-        subtitle: 'For instant restore (configurable)',
+        title: 'Integrations',
       },
-      free: 'Up to 6 hours<span>or 1 GB of data changes</span>',
-      launch: 'Up to 7 days',
-      scale: 'Up to 30 days',
+      free: '10',
+      launch: 'All',
+      scale: 'All',
     },
     {
       rows: '2',
       feature: {
-        title: 'Snapshots',
+        title: 'Continuous evidence collection',
+        subtitle: 'MFA, offboarding, backups, patching',
       },
-      free: '1 snapshot',
-      launch: '100 snapshots  <span>$0.09/GB-month</span>',
-      scale: '100 snapshots  <span>$0.09/GB-month</span>',
+      free: true,
+      launch: true,
+      scale: true,
     },
     {
       rows: '2',
       feature: {
-        title: 'Scheduled Backups',
+        title: 'Swedish integrations',
+        subtitle: 'Fortnox, Visma, BankID, Kivra',
       },
       free: false,
-      launch: 'Daily/Weekly/Monthly <span>$0.09/GB-month</span>',
-      scale: 'Daily/Weekly/Monthly <span>$0.09/GB-month</span>',
-    },
-    {
-      rows: '1',
-      feature: 'Backend',
-    },
-    {
-      rows: '3',
-      feature: {
-        title: 'Managed Better Auth',
-      },
-      free: 'Up to 60k MAUs',
-      launch:
-        "Up to 1M MAUs <span>If you're planning to go beyond that, <a href='/contact-sales'>contact us</a></span>",
-      scale:
-        "Up to 1M MAUs <span>If you're planning to go beyond that, <a href='/contact-sales'>contact us</a></span>",
+      launch: true,
+      scale: true,
     },
     {
       rows: '2',
       feature: {
-        title: 'Object Storage',
-        tag: { label: 'Beta', theme: 'orange-muted' },
-      },
-      free: 'No charges applied during beta, with usage limits',
-      launch: 'No charges applied during beta, with usage limits',
-      scale: 'No charges applied during beta, with usage limits',
-    },
-    {
-      rows: '2',
-      feature: {
-        title: 'Functions',
-        tag: { label: 'Beta', theme: 'orange-muted' },
-      },
-      free: 'No charges applied during beta, with usage limits',
-      launch: 'No charges applied during beta, with usage limits',
-      scale: 'No charges applied during beta, with usage limits',
-    },
-    {
-      rows: '2',
-      feature: {
-        title: 'AI Gateway',
-        tag: { label: 'Beta', theme: 'orange-muted' },
+        title: 'Auto-remediation',
+        subtitle: 'Fix failing controls via API or ticket',
       },
       free: false,
-      launch:
-        'No charges applied during beta. After beta, pricing will match model provider (no markup)',
-      scale:
-        'No charges applied during beta. After beta, pricing will match model provider (no markup)',
+      launch: true,
+      scale: true,
     },
     {
-      rows: '1',
-      feature: 'Network',
-    },
-    {
-      rows: '1',
+      rows: '2',
       feature: {
-        title: 'IP Allow Rules',
+        title: 'Compliance as code',
+        subtitle: 'API, CLI, CI/CD checks',
       },
       free: false,
       launch: false,
       scale: true,
     },
     {
+      rows: '1',
+      feature: 'Documentation and incidents',
+    },
+    {
+      rows: '1',
+      feature: {
+        title: 'Swedish policy templates',
+      },
+      free: '50+',
+      launch: '50+',
+      scale: '50+',
+    },
+    {
       rows: '2',
       feature: {
-        title: 'Private Networking',
-        subtitle: 'Private Link',
+        title: 'Version control',
+        subtitle: 'Annual review cycles with reminders',
+      },
+      free: true,
+      launch: true,
+      scale: true,
+    },
+    {
+      rows: '1',
+      feature: {
+        title: 'Employee e-signing',
+      },
+      free: true,
+      launch: true,
+      scale: true,
+    },
+    {
+      rows: '2',
+      feature: {
+        title: 'MSB incident reporting',
+        subtitle: '24h early warning, 72h report, 1 month final',
+      },
+      free: true,
+      launch: true,
+      scale: true,
+    },
+    {
+      rows: '2',
+      feature: {
+        title: 'IMY breach reporting',
+        subtitle: 'GDPR 72-hour flow',
+      },
+      free: true,
+      launch: true,
+      scale: true,
+    },
+    {
+      rows: '1',
+      feature: 'Risk and vendors',
+    },
+    {
+      rows: '1',
+      feature: {
+        title: 'Risk register',
+      },
+      free: true,
+      launch: true,
+      scale: true,
+    },
+    {
+      rows: '2',
+      feature: {
+        title: 'Vendor risk management',
+        subtitle: 'Register, questionnaires, risk classes',
+      },
+      free: false,
+      launch: true,
+      scale: true,
+    },
+    {
+      rows: '2',
+      feature: {
+        title: 'DORA ICT contract register',
+        subtitle: 'Ready for supervisory review',
       },
       free: false,
       launch: false,
       scale: true,
     },
     {
-      rows: '2',
-      feature: {
-        title: 'Public network transfer',
-        subtitle: 'Egress',
-      },
-      free: '5 GB included',
-      launch: '500 GB included<span>then $0.10 per GB</span>',
-      scale: '500 GB included<span>then $0.10 per GB</span>',
+      rows: '1',
+      feature: 'People and training',
     },
     {
       rows: '2',
       feature: {
-        title: 'Private network transfer',
-        subtitle: 'Bidirectional',
+        title: 'Security awareness training',
+        subtitle: 'In Swedish',
       },
       free: false,
-      launch: false,
-      scale: '$0.01 per GB',
+      launch: true,
+      scale: true,
+    },
+    {
+      rows: '2',
+      feature: {
+        title: 'Board and management training',
+        subtitle: 'Required by NIS2',
+      },
+      free: false,
+      launch: true,
+      scale: true,
+    },
+    {
+      rows: '2',
+      feature: {
+        title: 'Phishing simulation',
+      },
+      free: 'Add-on<span>990 kr/month</span>',
+      launch: 'Add-on<span>990 kr/month</span>',
+      scale: 'Add-on<span>990 kr/month</span>',
     },
     {
       rows: '1',
-      feature: 'Account & Management',
+      feature: 'Trust and audit',
     },
     {
       rows: '2',
       feature: {
-        title: 'Monitoring retention',
-        subtitle: 'Window for metrics, logs',
+        title: 'Trust Center',
+        subtitle: 'Public security page',
       },
-      free: '1 day',
-      launch: '3 days',
-      scale: '14 days',
+      free: false,
+      launch: true,
+      scale: true,
     },
     {
       rows: '2',
       feature: {
-        title: 'Metrics and Logs export',
-        subtitle: 'Datadog, OTel',
+        title: 'Compliance score and board reports',
+      },
+      free: true,
+      launch: true,
+      scale: true,
+    },
+    {
+      rows: '2',
+      feature: {
+        title: 'Auditor portal',
+        subtitle: 'Read-only for auditors and supervisors',
       },
       free: false,
       launch: false,
-      scale: 'Included',
+      scale: true,
+    },
+    {
+      rows: '1',
+      feature: 'Platform and support',
     },
     {
       rows: '2',
       feature: {
-        title: 'Spending limits',
-        subtitle: 'Control your monthly spend',
+        title: 'AI copilot',
+        subtitle: 'Ask questions in Swedish',
       },
       free: false,
       launch: true,
@@ -270,20 +279,30 @@ export default {
     {
       rows: '1',
       feature: {
-        title: 'HIPAA Compliance',
+        title: 'BankID login',
       },
-      free: false,
-      launch: false,
-      scale: "<a href='/docs/security/hipaa'>Available</a>",
+      free: true,
+      launch: true,
+      scale: true,
     },
     {
       rows: '1',
       feature: {
-        title: 'SOC 2 Report Access',
+        title: 'SSO and SCIM',
       },
       free: false,
       launch: false,
-      scale: "<a href='/docs/security/compliance#soc-2'>Available</a>",
+      scale: true,
+    },
+    {
+      rows: '2',
+      feature: {
+        title: 'EU data residency',
+        subtitle: 'Swedish and EU data centers',
+      },
+      free: true,
+      launch: true,
+      scale: true,
     },
     {
       rows: '1',
@@ -297,11 +316,11 @@ export default {
     {
       rows: '1',
       feature: {
-        title: 'Support Plans',
+        title: 'Support',
       },
-      free: 'Community (Discord)',
-      launch: 'Billing Support',
-      scale: "<a href='/docs/introduction/support'>Multiple options</a>",
+      free: 'Email',
+      launch: 'Priority email',
+      scale: 'Dedicated CSM',
     },
   ],
 };

@@ -6,14 +6,14 @@ summary: >-
   pre-built UI components, including enabling Managed Better Auth, creating a React app,
   and configuring the necessary environment variables.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 layout: wide
 ---
 
 <FeatureBetaProps feature_name="Managed Better Auth" />
 
 <Admonition type="note" title="Archived copy">
-This quick start is kept in the repo for reference but is not published on [neon.com/docs](https://neon.com/docs). Use the [React quick start (API methods)](/docs/auth/quick-start/react), the [UI components reference](/docs/auth/reference/ui-components), and the [neon-js examples](https://github.com/neondatabase/neon-js/tree/main/examples) instead.
+This quick start is kept in the repo for reference but is not published on [optitech.com/docs](https://optitech.com/docs). Use the [React quick start (API methods)](/docs/auth/quick-start/react), the [UI components reference](/docs/auth/reference/ui-components), and the [optitech-js examples](https://github.com/optitechdatabase/optitech-js/tree/main/examples) instead.
 </Admonition>
 
 <TwoColumnLayout>
@@ -21,7 +21,7 @@ This quick start is kept in the repo for reference but is not published on [neon
 <TwoColumnLayout.Step title="Enable Auth in your OptiTech project">
 <TwoColumnLayout.Block>
 
-If you don't have a OptiTech project yet, create one at [console.neon.tech](https://console.neon.tech).
+If you don't have a OptiTech project yet, create one at [console.optitech.com](https://console.optitech.com).
 
 Go to the **Auth** page in your project dashboard and click **Enable Managed Better Auth**.
 
@@ -60,7 +60,7 @@ Install the OptiTech SDK, UI components, and React Router:
 
 ```bash filename="Terminal"
 cd my-app
-npm install @neondatabase/neon-js@latest react-router-dom
+npm install @optitech/optitech-js@latest react-router-dom
 ```
 
 </TwoColumnLayout.Block>
@@ -79,7 +79,7 @@ Replace the URL with your actual Auth URL from the OptiTech Console.
 <TwoColumnLayout.Block>
 
 ```bash filename=".env"
-VITE_NEON_AUTH_URL=https://ep-xxx.neonauth.us-east-1.aws.neon.tech/neondb/auth
+VITE_OPTITECH_AUTH_URL=https://ep-xxx.optitechauth.us-east-1.aws.optitech.com/optitechdb/auth
 ```
 
 </TwoColumnLayout.Block>
@@ -94,9 +94,9 @@ Create a `src/auth.ts` file to configure your auth client:
 <TwoColumnLayout.Block>
 
 ```typescript filename="src/auth.ts"
-import { createAuthClient } from '@neondatabase/neon-js/auth';
+import { createAuthClient } from '@optitech/optitech-js/auth';
 
-export const authClient = createAuthClient(import.meta.env.VITE_NEON_AUTH_URL);
+export const authClient = createAuthClient(import.meta.env.VITE_OPTITECH_AUTH_URL);
 ```
 
 </TwoColumnLayout.Block>
@@ -107,7 +107,7 @@ export const authClient = createAuthClient(import.meta.env.VITE_NEON_AUTH_URL);
 
 Replace the contents of `src/main.tsx` to wrap your app with React Router and the auth provider. Import the Managed Better Auth UI CSS - no additional setup needed:
 
-Pass props to `NeonAuthUIProvider` for any features you want to use. Only the `authClient` prop is required.
+Pass props to `OptiTechAuthUIProvider` for any features you want to use. Only the `authClient` prop is required.
 
 <Admonition type="tip" title="Styling options">
 To learn more about applying styles to the Auth UI components, including plain CSS and Tailwind CSS v4 options, see [UI Component Styles](/docs/auth/reference/ui-components#styling).
@@ -117,14 +117,14 @@ To learn more about applying styles to the Auth UI components, including plain C
 <summary>Example: Adding optional props</summary>
 
 ```tsx
-<NeonAuthUIProvider
+<OptiTechAuthUIProvider
   authClient={authClient}
   social={{ providers: ['google', 'github', 'vercel'] }}
   navigate={navigate}
   credentials={{ forgotPassword: true }}
 >
   {children}
-</NeonAuthUIProvider>
+</OptiTechAuthUIProvider>
 ```
 
 </details>
@@ -136,18 +136,18 @@ To learn more about applying styles to the Auth UI components, including plain C
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import { NeonAuthUIProvider } from '@neondatabase/neon-js/auth/react';
-import '@neondatabase/neon-js/ui/css';
+import { OptiTechAuthUIProvider } from '@optitech/optitech-js/auth/react';
+import '@optitech/optitech-js/ui/css';
 import App from './App';
 import { authClient } from './auth';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <NeonAuthUIProvider authClient={authClient}>
+    <OptiTechAuthUIProvider authClient={authClient}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </NeonAuthUIProvider>
+    </OptiTechAuthUIProvider>
   </StrictMode>
 );
 ```
@@ -176,7 +176,7 @@ import {
   SignedIn,
   UserButton,
   RedirectToSignIn,
-} from '@neondatabase/neon-js/auth/react';
+} from '@optitech/optitech-js/auth/react';
 
 function Home() {
   return (
@@ -270,7 +270,7 @@ npm run dev
 <TwoColumnLayout.Step title="See your users in the database">
 <TwoColumnLayout.Block>
 
-As users sign up, their profiles are synced to your OptiTech database in the `neon_auth.user` table.
+As users sign up, their profiles are synced to your OptiTech database in the `optitech_auth.user` table.
 
 Query your users table in the SQL Editor to see your new users:
 
@@ -278,7 +278,7 @@ Query your users table in the SQL Editor to see your new users:
 <TwoColumnLayout.Block>
 
 ```sql filename="SQL Editor"
-SELECT * FROM neon_auth.user;
+SELECT * FROM optitech_auth.user;
 ```
 
 </TwoColumnLayout.Block>
@@ -290,4 +290,4 @@ SELECT * FROM neon_auth.user;
 
 - [Add email verification](/docs/auth/guides/email-verification)
 - [Learn how to branch your auth](/docs/auth/branching-authentication)
-- [More example apps](/docs/auth/overview#example-applications) in the **neon-js** `examples/` directory
+- [More example apps](/docs/auth/overview#example-applications) in the **optitech-js** `examples/` directory

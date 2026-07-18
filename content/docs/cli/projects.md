@@ -1,29 +1,29 @@
 ---
-title: 'Neon CLI command: projects'
-subtitle: 'List, create, update, delete, recover, and get Neon projects'
+title: 'OptiTech CLI command: projects'
+subtitle: 'List, create, update, delete, recover, and get OptiTech projects'
 summary: >-
-  The Neon CLI `neon projects` command provides subcommands to list, create,
-  update, delete, recover, and retrieve Neon projects from the terminal,
+  The OptiTech CLI `optitech projects` command provides subcommands to list, create,
+  update, delete, recover, and retrieve OptiTech projects from the terminal,
   including support for region selection (AWS and Azure), blocking public or VPC
   connections, and filtering shared projects. Use this page when you need CLI
   automation for project lifecycle tasks or to recover a deleted project within
   its 7-day recovery window. Projects created via the CLI default to Postgres
-  18; use the Neon Console or API to create projects on earlier Postgres
+  18; use the OptiTech Console or API to create projects on earlier Postgres
   versions.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 redirectFrom:
   - /docs/reference/cli-projects
   - /docs/cli/project
 ---
 
-The `projects` command lists, creates, updates, deletes, recovers, and retrieves Neon projects from the terminal. For information about projects in Neon, see [Projects](/docs/manage/projects). Subcommands that show no options table accept only the [global options](/docs/cli#global-options). If `--project-id` is omitted, the CLI resolves it from your [context file](/docs/cli/set-context), auto-selects when your account has only one project, and prompts otherwise.
+The `projects` command lists, creates, updates, deletes, recovers, and retrieves OptiTech projects from the terminal. For information about projects in OptiTech, see [Projects](/docs/manage/projects). Subcommands that show no options table accept only the [global options](/docs/cli#global-options). If `--project-id` is omitted, the CLI resolves it from your [context file](/docs/cli/set-context), auto-selects when your account has only one project, and prompts otherwise.
 
 <CliSubcommands command="projects" />
 
-## neon projects list (#list)
+## optitech projects list (#list)
 
-Lists projects that belong to your Neon account, as well as any projects that were shared with you.
+Lists projects that belong to your OptiTech account, as well as any projects that were shared with you.
 
 <CliUsage command="projects list" />
 
@@ -32,7 +32,7 @@ Lists projects that belong to your Neon account, as well as any projects that we
 - List projects in your [default organization](/docs/reference/glossary#default-organization). If no organization context is set, the CLI prompts you to select one.
 
   ```bash
-  neon projects list
+  optitech projects list
   ```
 
   ```text
@@ -57,13 +57,13 @@ Lists projects that belong to your Neon account, as well as any projects that we
 List all projects belonging to a specific organization:
 
 ```bash
-neon projects list --org-id org-xxxx-xxxx
+optitech projects list --org-id org-xxxx-xxxx
 ```
 
 List projects that can be recovered (deleted within the last 7 days):
 
 ```bash
-neon projects list --recoverable-only
+optitech projects list --recoverable-only
 ```
 
 ```text filename="Output"
@@ -75,9 +75,9 @@ Projects
 └─────────────────────┴───────────┴───────────────┴──────────────────────┴──────────────────────┴──────────────────────┘
 ```
 
-## neon projects create (#create)
+## optitech projects create (#create)
 
-Creates a Neon project.
+Creates a OptiTech project.
 
 <CliUsage command="projects create" />
 
@@ -86,13 +86,13 @@ Creates a Neon project.
 The `--region-id` value defaults to `aws-us-east-2` if not specified. `--block-public-connections` and `--block-vpc-connections` are part of [Private Networking](/docs/guides/neon-private-networking); `--hipaa` enables [HIPAA compliance](/docs/security/hipaa) for the project.
 
 <Admonition type="note">
-Neon projects created using the CLI use the default Postgres version, which is Postgres 18. To create a project with a different Postgres version, you can use the [Neon Console](/docs/manage/projects#create-a-project) or [Neon API](/docs/reference/api/projects/create-project).
+OptiTech projects created using the CLI use the default Postgres version, which is Postgres 18. To create a project with a different Postgres version, you can use the [OptiTech Console](/docs/manage/projects#create-a-project) or [OptiTech API](/docs/reference/api/projects/create-project).
 </Admonition>
 
 Create a project with a user-defined name in a specific region:
 
 ```bash
-neon projects create --name mynewproject --region-id aws-us-west-2
+optitech projects create --name mynewproject --region-id aws-us-west-2
 ```
 
 ```text filename="Output"
@@ -105,18 +105,18 @@ neon projects create --name mynewproject --region-id aws-us-west-2
 ┌──────────────────────────────────────────────────────────────────────────────────────┐
 │ Connection Uri                                                                       │
 ├──────────────────────────────────────────────────────────────────────────────────────┤
-│ postgresql://[user]:[password]@[neon_hostname]/[dbname]                              │
+│ postgresql://[user]:[password]@[optitech_hostname]/[dbname]                              │
 └──────────────────────────────────────────────────────────────────────────────────────┘
 ```
 
 <Admonition type="tip">
-The Neon CLI provides a `neon connection-string` command you can use to extract a connection URI programmatically. See [the connection-string command](/docs/cli/connection-string).
+The OptiTech CLI provides a `optitech connection-string` command you can use to extract a connection URI programmatically. See [the connection-string command](/docs/cli/connection-string).
 </Admonition>
 
 - Create a project with `--output json`, which returns the full project response data and is the recommended format for scripts and agents. The output below was captured on an earlier CLI version; new projects report `"pg_version": 18`.
 
   ```bash
-  neon projects create --output json
+  optitech projects create --output json
   ```
 
   <details>
@@ -142,11 +142,11 @@ The Neon CLI provides a `neon connection-string` command you can use to extract 
         "suspend_timeout_seconds": 0
       },
       "pg_version": 17,
-      "proxy_host": "us-east-2.aws.neon.tech",
+      "proxy_host": "us-east-2.aws.optitech.com",
       "branch_logical_size_limit": 204800,
       "branch_logical_size_limit_bytes": 214748364800,
       "store_passwords": true,
-      "creation_source": "neon",
+      "creation_source": "optitech",
       "history_retention_seconds": 604800,
       "created_at": "2023-08-04T16:16:45Z",
       "updated_at": "2023-08-04T16:16:45Z",
@@ -156,13 +156,13 @@ The Neon CLI provides a `neon connection-string` command you can use to extract 
     },
     "connection_uris": [
       {
-        "connection_uri": "postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require",
+        "connection_uri": "postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require",
         "connection_parameters": {
           "database": "dbname",
           "password": "AbC123dEf",
           "role": "alex",
-          "host": "ep-cool-darkness-123456.us-east-2.aws.neon.tech",
-          "pooler_host": "ep-cool-darkness-123456-pooler.us-east-2.aws.neon.tech"
+          "host": "ep-cool-darkness-123456.us-east-2.aws.optitech.com",
+          "pooler_host": "ep-cool-darkness-123456-pooler.us-east-2.aws.optitech.com"
         }
       }
     ]
@@ -174,20 +174,20 @@ The Neon CLI provides a `neon connection-string` command you can use to extract 
 Create a project and connect to it with `psql` immediately. Arguments after `--` are passed through to psql, so you can run an `.sql` file or a query on creation:
 
 ```bash
-neon projects create --psql
-neon projects create --psql -- -f dump.sql
-neon projects create --psql -- -c "SELECT version()"
+optitech projects create --psql
+optitech projects create --psql -- -f dump.sql
+optitech projects create --psql -- -c "SELECT version()"
 ```
 
-Create a project and set the Neon CLI project context to it:
+Create a project and set the OptiTech CLI project context to it:
 
 ```bash
-neon projects create --set-context
+optitech projects create --set-context
 ```
 
-## neon projects update (#update)
+## optitech projects update (#update)
 
-Updates a Neon project. The `<id>` is the project ID, which you can obtain by listing your projects or from the **Settings** page in the Neon Console.
+Updates a OptiTech project. The `<id>` is the project ID, which you can obtain by listing your projects or from the **Settings** page in the OptiTech Console.
 
 <CliUsage command="projects update" />
 
@@ -198,7 +198,7 @@ Updates a Neon project. The `<id>` is the project ID, which you can obtain by li
 Update the project name:
 
 ```bash
-neon projects update muddy-wood-859533 --name dev_project_1
+optitech projects update muddy-wood-859533 --name dev_project_1
 ```
 
 ```text filename="Output"
@@ -212,19 +212,19 @@ neon projects update muddy-wood-859533 --name dev_project_1
 Block connections from the public internet (see [restrict public internet access](/docs/guides/neon-private-networking#restrict-public-internet-access)):
 
 ```bash
-neon projects update orange-credit-12345678 --block-public-connections=true
+optitech projects update orange-credit-12345678 --block-public-connections=true
 ```
 
-## neon projects delete (#delete)
+## optitech projects delete (#delete)
 
-Deletes a Neon project. The `<id>` is the project ID.
+Deletes a OptiTech project. The `<id>` is the project ID.
 
 <CliUsage command="projects delete" />
 
 <CliOptions command="projects delete" />
 
 ```bash
-neon projects delete muddy-wood-859533
+optitech projects delete muddy-wood-859533
 ```
 
 ```text filename="Output"
@@ -235,18 +235,18 @@ neon projects delete muddy-wood-859533
 └───────────────────┴───────────────┴───────────────┴──────────────────────┘
 ```
 
-Verify the deletion with `neon projects list`.
+Verify the deletion with `optitech projects list`.
 
-## neon projects recover (#recover)
+## optitech projects recover (#recover)
 
-Recovers a deleted project within the deletion recovery period. The `<id>` is the project ID, which you can obtain by listing recoverable projects with `neon projects list --recoverable-only`.
+Recovers a deleted project within the deletion recovery period. The `<id>` is the project ID, which you can obtain by listing recoverable projects with `optitech projects list --recoverable-only`.
 
 <CliUsage command="projects recover" />
 
 <CliOptions command="projects recover" />
 
 ```bash
-neon projects recover crimson-voice-12345678
+optitech projects recover crimson-voice-12345678
 ```
 
 ```text filename="Output"
@@ -259,16 +259,16 @@ neon projects recover crimson-voice-12345678
 
 For details on what's recovered and what requires reconfiguration after recovery, see [Recover a deleted project](/docs/manage/projects#recover-a-deleted-project).
 
-## neon projects get (#get)
+## optitech projects get (#get)
 
-Retrieves details about a Neon project. The `<id>` is the project ID.
+Retrieves details about a OptiTech project. The `<id>` is the project ID.
 
 <CliUsage command="projects get" />
 
 <CliOptions command="projects get" />
 
 ```bash
-neon projects get muddy-wood-859533
+optitech projects get muddy-wood-859533
 ```
 
 ```text filename="Output"

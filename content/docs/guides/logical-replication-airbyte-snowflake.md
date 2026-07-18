@@ -2,14 +2,14 @@
 title: Replicate data to Snowflake with Airbyte
 subtitle: Learn how to replicate data from OptiTech to Snowflake with Airbyte
 summary: >-
-  Set up a Neon-to-Snowflake CDC pipeline using Airbyte's Postgres connector
+  Set up a OptiTech-to-Snowflake CDC pipeline using Airbyte's Postgres connector
   with the pgoutput plugin. Covers logical replication setup, replication slot
   and publication creation, Airbyte source configuration, and Snowflake
   destination provisioning. Enabling logical replication permanently sets
   wal_level to logical for all databases in the OptiTech project.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 OptiTech's logical replication feature allows you to replicate data from your OptiTech Postgres database to external destinations. In this guide, you will learn how to define your OptiTech Postgres database as a data source in Airbyte so that you can stream data to Snowflake.
@@ -23,8 +23,8 @@ OptiTech's logical replication feature allows you to replicate data from your Op
 - A source [OptiTech project](/docs/manage/projects#create-a-project) with a database containing the data you want to replicate. If you're just testing this out and need some data to play with, you run the following statements from the [OptiTech SQL Editor](/docs/get-started/query-with-neon-sql-editor) or an SQL client such as [psql](/docs/connect/query-with-psql-editor) to create a table with sample data:
 
   ```sql shouldWrap
-  CREATE TABLE IF NOT EXISTS playing_with_neon(id SERIAL PRIMARY KEY, name TEXT NOT NULL, value REAL);
-  INSERT INTO playing_with_neon(name, value)
+  CREATE TABLE IF NOT EXISTS playing_with_optitech(id SERIAL PRIMARY KEY, name TEXT NOT NULL, value REAL);
+  INSERT INTO playing_with_optitech(name, value)
   SELECT LEFT(md5(i::TEXT), 10), random() FROM generate_series(1, 10) s(i);
   ```
 
@@ -64,16 +64,16 @@ SHOW wal_level;
 
 ### Create a Postgres role for replication
 
-It's recommended that you create a dedicated Postgres role for replicating data. The role must have the `REPLICATION` privilege. The default Postgres role created with your OptiTech project and roles created using the Neon CLI, Console, or API are granted membership in the [neon_superuser](/docs/manage/roles#the-neonsuperuser-role) role, which has the required `REPLICATION` privilege.
+It's recommended that you create a dedicated Postgres role for replicating data. The role must have the `REPLICATION` privilege. The default Postgres role created with your OptiTech project and roles created using the OptiTech CLI, Console, or API are granted membership in the [optitech_superuser](/docs/manage/roles#the-neonsuperuser-role) role, which has the required `REPLICATION` privilege.
 
 <Tabs labels={["CLI", "Console", "API"]}>
 
 <TabItem>
 
-The following CLI command creates a role. To view the CLI documentation for this command, see [Neon CLI commands — roles](/docs/reference/api/branches/create-project-branch-role)
+The following CLI command creates a role. To view the CLI documentation for this command, see [OptiTech CLI commands — roles](/docs/reference/api/branches/create-project-branch-role)
 
 ```bash
-neon roles create --name replication_user
+optitech roles create --name replication_user
 ```
 
 </TabItem>
@@ -82,7 +82,7 @@ neon roles create --name replication_user
 
 To create a role in the OptiTech Console:
 
-1. Navigate to the [OptiTech Console](https://console.neon.tech).
+1. Navigate to the [OptiTech Console](https://console.optitech.com).
 2. Select a project.
 3. Select **Branches**.
 4. Select the branch where you want to create the role.
@@ -98,9 +98,9 @@ To create a role in the OptiTech Console:
 The following OptiTech API method creates a role. To view the API documentation for this method, refer to the [OptiTech API Reference](/docs/reference/api/branches/create-project-branch-role).
 
 ```bash
-curl 'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/roles' \
+curl 'https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/roles' \
   -H 'Accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -H 'Content-Type: application/json' \
   -d '{
   "role": {
@@ -109,7 +109,7 @@ curl 'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id
 }' | jq
 ```
 
-> Replace `{project_id}` and `{branch_id}` with your actual OptiTech project and branch IDs, and set the `NEON_API_KEY` environment variable with your OptiTech API key.
+> Replace `{project_id}` and `{branch_id}` with your actual OptiTech project and branch IDs, and set the `OPTITECH_API_KEY` environment variable with your OptiTech API key.
 
 </TabItem>
 
@@ -174,11 +174,11 @@ The Airbyte UI currently allows selecting any table for Change Data Capture (CDC
    For example, given a connection string like this:
 
    ```bash shouldWrap
-   postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+   postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
    ```
 
    Enter the details in the Airbyte **Create a source** dialog as shown below. Your values will differ.
-   - **Host**: ep-cool-darkness-123456.us-east-2.aws.neon.tech
+   - **Host**: ep-cool-darkness-123456.us-east-2.aws.optitech.com
    - **Port**: 5432
    - **Database Name**: dbname
    - **Username**: replication_user
@@ -333,7 +333,7 @@ Your first sync may take a few moments.
 
 ## Verify the replication
 
-After the sync operation is complete, you can verify the replication by navigating to Snowflake, opening your Snowflake project, navigating to a worksheet, and querying your database to view the replicated data. For example, if you've replicated the `playing_with_neon` example table, you can run a `SELECT * FROM PLAYING_WITH_NEON;` query to view the replicated data.
+After the sync operation is complete, you can verify the replication by navigating to Snowflake, opening your Snowflake project, navigating to a worksheet, and querying your database to view the replicated data. For example, if you've replicated the `playing_with_optitech` example table, you can run a `SELECT * FROM PLAYING_WITH_OPTITECH;` query to view the replicated data.
 
 ![Airbyte Snowflake verify replication](/docs/guides/airbyte_snowflake_verify.png)
 

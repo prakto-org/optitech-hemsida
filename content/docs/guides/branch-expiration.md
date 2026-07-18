@@ -3,7 +3,7 @@ title: Branch expiration
 subtitle: Learn how to use OptiTech's branch expiration feature to automatically delete
   temporary branches
 summary: >-
-  Branch expiration automatically deletes Neon branches at a scheduled time
+  Branch expiration automatically deletes OptiTech branches at a scheduled time
   using a TTL model, with expiration set via the Console, CLI (--expires-at
   flag), or API (expires_at) using RFC 3339 timestamps up to 30 days in the
   future. Use this feature to prevent storage accumulation from CI/CD test
@@ -12,7 +12,7 @@ summary: >-
   default, or parent branches, and deletion is permanent and also removes
   associated compute endpoints.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 ## Overview
@@ -36,7 +36,7 @@ Branch expiration allows you to set automatic deletion timestamps on branches. W
 </DocsList>
 
 <DocsList title="Related docs" theme="docs">
-<a href="/docs/guides/branching-neon-cli">Branching with the Neon CLI</a>
+<a href="/docs/guides/branching-neon-cli">Branching with the OptiTech CLI</a>
 <a href="/docs/manage/branches#branching-with-the-neon-api">Branching with the OptiTech API</a>
 <a href="/docs/manage/branches">Manage branches</a>
 <a href="/docs/introduction/branching#branching-workflows">Branching workflows</a>
@@ -156,7 +156,7 @@ When a branch expires and is deleted, all associated compute endpoints are also 
 
 ```bash {6,15}
 # Create branch expiring at specific date/time
-neon branches create \
+optitech branches create \
   --project-id <project-id> \
   --name feature-test \
   --parent development \
@@ -165,7 +165,7 @@ neon branches create \
 # Create branch expiring in 2 hours (using dynamic date)
 # Linux/GNU: $(date -u -d '+2 hours' +%Y-%m-%dT%H:%M:%SZ)
 # macOS/BSD: $(date -u -v+2H +%Y-%m-%dT%H:%M:%SZ)
-neon branches create \
+optitech branches create \
   --project-id <project-id> \
   --name ci-test \
   --parent development \
@@ -179,9 +179,9 @@ neon branches create \
 ```bash {11,21,22}
 # Create branch that expires in 24 hours
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects/{project_id}/branches \
+     --url https://console.optitech.com/api/v2/projects/{project_id}/branches \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '{
        "branch": {
@@ -229,7 +229,7 @@ curl --request POST \
 
 ```bash {4,12,18}
 # Update expiration to new timestamp
-neon branches set-expiration \
+optitech branches set-expiration \
   <branch-id> \
   --expires-at "2026-01-29T12:00:00Z" \
   --project-id <project-id>
@@ -237,13 +237,13 @@ neon branches set-expiration \
 # Extend expiration by 7 days from now
 # Linux/GNU: $(date -u -d '+7 days' +%Y-%m-%dT%H:%M:%SZ)
 # macOS/BSD: $(date -u -v+7d +%Y-%m-%dT%H:%M:%SZ)
-neon branches set-expiration \
+optitech branches set-expiration \
   <branch-id> \
   --expires-at "$(date -u -d '+7 days' +%Y-%m-%dT%H:%M:%SZ)" \
   --project-id <project-id>
 
 # Remove expiration from a branch
-neon branches set-expiration \
+optitech branches set-expiration \
   <branch-id> \
   --expires-at null \
   --project-id <project-id>
@@ -256,9 +256,9 @@ neon branches set-expiration \
 ```bash {9,21}
 # Update branch expiration to specific date
 curl --request PATCH \
-     --url https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id} \
+     --url https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id} \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '{
        "branch": {
@@ -268,9 +268,9 @@ curl --request PATCH \
 
 # Remove expiration from a branch
 curl --request PATCH \
-     --url https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id} \
+     --url https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id} \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '{
        "branch": {
@@ -302,7 +302,7 @@ Check expiration status of your branches:
 <TabItem>
 
 ```bash
-neon branches get <branch_id> --project-id <project_id>
+optitech branches get <branch_id> --project-id <project_id>
 ```
 
 </TabItem>
@@ -311,9 +311,9 @@ neon branches get <branch_id> --project-id <project_id>
 
 ```bash
 curl --request GET \
-     --url https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id} \
+     --url https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id} \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY"
+     --header "Authorization: Bearer $OPTITECH_API_KEY"
 ```
 
 </TabItem>

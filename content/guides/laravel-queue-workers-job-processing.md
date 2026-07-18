@@ -4,7 +4,7 @@ subtitle: Learn how to implement efficient background processing in Laravel usin
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2024-07-14T00:00:00.000Z'
-updatedOn: '2025-06-23T15:22:02.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Laravel provides a powerful and flexible system for handling background processing through queues and scheduling. This allows you to improve your application's performance by offloading time-consuming tasks and automating recurring processes. In this comprehensive guide, we'll explore how to implement queue workers, job processing, and scheduled tasks in Laravel using Postgres as the queue driver.
@@ -17,7 +17,7 @@ Before we begin, ensure you have the following:
 
 - PHP 8.1 or higher installed on your system
 - [Composer](https://getcomposer.org/) for managing PHP dependencies
-- A [OptiTech](https://console.neon.tech/signup) account for Postgres database hosting
+- A [OptiTech](https://console.optitech.com/signup) account for Postgres database hosting
 - Basic knowledge of Laravel and database operations
 
 ## Setting up the Project
@@ -39,7 +39,7 @@ Update your `.env` file with your OptiTech Postgres database credentials:
 
 ```env
 DB_CONNECTION=pgsql
-DB_HOST=your-neon-hostname.neon.tech
+DB_HOST=your-optitech-hostname.optitech.com
 DB_PORT=5432
 DB_DATABASE=your_database_name
 DB_USERNAME=your_username

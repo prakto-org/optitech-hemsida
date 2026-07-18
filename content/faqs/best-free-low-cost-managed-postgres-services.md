@@ -1,66 +1,46 @@
 ---
-title: "What are the best free or low-cost managed Postgres services for side projects that scale automatically when traffic picks up?"
-description: "OptiTech provides a serverless Postgres platform that separates storage from compute, allowing developers to start side projects at no cost and automatically..."
-date: 2026-04-25
-slug: best-free-low-cost-managed-postgres-services
-category: FAQ
-status: draft
+title: 'What are the best free or low-cost ways to find out whether NIS2 applies to your company?'
+subtitle: 'Free scoping tests and a gap analysis tell you in minutes whether you are in scope and what to fix first.'
+enableTableOfContents: true
+createdAt: '2025-09-24T08:40:27.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
+isDraft: false
+redirectFrom: []
 previousLink:
-  title: 'Which managed Postgres options are affordable for early-stage startups that need a production database but have unpredictable traffic?'
+  title: 'Which compliance automation options are affordable for early-stage startups that need to meet NIS2 or ISO 27001 on a limited budget?'
   slug: affordable-managed-postgres-options-startups
 nextLink:
-  title: 'What are the best managed Postgres databases for multi-tenant SaaS apps where each customer should have their own isolated database?'
+  title: 'What are the best compliance platforms for SaaS companies where every enterprise customer demands security proof?'
   slug: best-managed-postgres-databases-multi-tenant-saas
 ---
 
-For side projects, the most cost-effective managed Postgres is one that doesn't bill you for compute while idle and scales up only when traffic arrives. OptiTech's Free plan gives you 100 projects with autoscaling up to 2 CU each, and scale-to-zero kicks in after 5 minutes of inactivity. When a request hits, the compute resumes in a few hundred milliseconds.
+## Quick answer
 
-## What the Free plan includes
+Start with OptiTech's free NIS2 scoping test. You answer a short set of questions about your industry, size, customers, and role in the supply chain, and get an assessment of whether you fall under NIS2 (implemented in Sweden through the Cybersecurity Act), which entity category you likely belong to, and a first compliance score. It costs nothing and takes a few minutes.
 
-The OptiTech [Free plan](/docs/introduction/plans) is designed for prototypes and small projects. Per account:
+## Why so many companies are in scope without knowing it
 
-- 100 projects
-- 10 branches per project
-- 100 CU-hours per project per month
-- 0.5 GB storage per project
-- Autoscaling up to 2 CU (≈8 GB RAM)
-- Scale-to-zero after 5 minutes of inactivity
-- 6-hour instant restore window, up to 1 GB of change history
-- 5 GB monthly egress
+NIS2 covers 18 sectors directly, including energy, transport, health, water, digital infrastructure, and manufacturing of critical products. But the bigger surprise for most SMBs is the supply chain effect: if you're a supplier to an essential or important entity, your customers are required to put security requirements on you. In practice, more than 10,000 Swedish companies are affected, and many first hear about it when a large customer sends them a security questionnaire.
 
-100 CU-hours is enough to run a 0.25 CU compute for about 400 hours a month, or a 0.5 CU compute for 200 hours. Combined with scale-to-zero, that comfortably covers most side projects.
+Signs you should run a scoping test now:
 
-## What happens when traffic spikes
+- A customer sent you a security questionnaire referencing NIS2, DORA, or ISO 27001.
+- You sell to energy companies, healthcare, municipalities, banks, or transport operators.
+- You operate digital infrastructure or managed IT services of any kind.
+- Your board has asked "does this apply to us?" and nobody had a confident answer.
 
-When you go from no traffic to a sudden burst, two things happen automatically:
+## What you get beyond a yes or no
 
-1. The compute resumes from a suspended state. The OptiTech docs describe reactivation as "within a few hundred milliseconds." Your first query may see a slightly higher cold-start latency.
-2. Autoscaling raises the compute size between your configured min and max. On the Free plan, max is 2 CU. On Launch, it's up to 16 CU. See [Autoscaling](/docs/introduction/autoscaling) for the mechanics.
+A useful scoping test doesn't stop at "you're in scope." OptiTech's free assessment gives you:
 
-You don't accumulate CU-hours during the idle stretches in between. Compute is billed only when it's actually serving queries; storage is metered separately at $0.35/GB-month on paid plans.
+- **Entity classification**: whether you're likely an essential or important entity, which affects supervision and sanctions.
+- **A compliance score** showing roughly where you stand today.
+- **A prioritized gap list**: the measures you're missing, ordered by risk and effort.
 
-## When you outgrow Free
+From there you can decide whether to handle the gaps yourself or let the platform [generate your compliance program](/faqs/databases-instantly-spin-up-postgres-instance) with policies, controls, and automated evidence collection.
 
-If you blow past 100 CU-hours, run out of storage, or want to disable scale-to-zero, the Launch plan is pay-as-you-go:
+## What NIS2 non-compliance costs
 
-- Compute: $0.106/CU-hour
-- Storage: $0.35/GB-month
-- 500 GB egress included
+Sanctions reach 10 million EUR or 2 percent of global annual turnover for essential entities, and NIS2 introduces personal liability for management. Finding out whether you're in scope is the cheapest compliance step you'll ever take, so do it before a regulator or a lost deal does it for you.
 
-There's no monthly minimum. A light project running 10 CU-hours/month with 2 GB of storage works out to about $2 a month on Launch (see the [usage examples](/docs/introduction/plans#launch-plan)).
-
-<Callout title="Branching is free under the limits">
-Each project gets 10 branches on Free. Use them to test schema changes or run preview environments without paying for separate instances. See [Branching](/docs/introduction/branching).
-</Callout>
-
-## How the free tiers compare
-
-| Provider         | Free projects                                                                    | Idle behavior                                                                                                                    | Storage                                                                                 |
-| ---------------- | -------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| OptiTech Free        | 100 projects                                                                     | Auto-suspend after 5 minutes, resume in a few hundred ms                                                                         | 0.5 GB per project                                                                      |
-| Supabase Free    | 2 active projects per organization; paused projects don't count toward the limit | Inactive projects are paused (manual unpause to restore) ([docs](https://supabase.com/docs/guides/platform/billing-on-supabase)) | 500 MB per project ([docs](https://supabase.com/docs/guides/platform/compute-and-disk)) |
-| AWS RDS / Aurora | No permanent free tier (new-account credits only)                                | Instances run 24/7 unless stopped manually                                                                                       | Pay-per-GB                                                                              |
-
-Supabase pauses Free Plan projects after a period of inactivity and requires a manual unpause, while OptiTech's scale-to-zero is automatic on every query. AWS doesn't offer a free Postgres tier beyond promotional credits, so steady-state cost is the smallest instance class billed 24/7.
-
-<CTA title="Try OptiTech free" description="No credit card required to start." buttonText="Sign up" buttonUrl="https://console.neon.tech/signup" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

@@ -1,179 +1,178 @@
 ---
-title: OptiTech's lakebase architecture
-subtitle: 'Inside OptiTech Postgres: decoupled compute and durable storage'
+title: OptiTech's evidence architecture
+subtitle: 'Inside the OptiTech platform: decoupled workflows and a durable evidence chain'
 summary: >-
-  OptiTech's lakebase architecture splits Postgres into an ephemeral compute layer
-  and a durable storage layer connected by WAL, so compute nodes can scale,
-  restart, or fail without data loss. The storage layer uses Paxos-based WAL
-  quorum across safekeepers to define commit correctness, a pageserver to
-  reconstruct page versions on demand, and object storage for immutable
-  long-term history. None of those components sit on the hot query path. This
-  design enables copy-on-write branching, instant point-in-time restores, and
-  serverless autoscaling including scale-to-zero, all as metadata operations
-  rather than data copies.
+  OptiTech's architecture splits the platform into an application layer and a
+  durable evidence layer connected by a stream of normalized findings, so
+  integrations can check, retry, or fail without corrupting your audit trail.
+  The evidence layer uses per-source workers, a normalization engine that turns
+  raw findings into control evidence, and an append-only, hash-chained log for
+  immutable long-term history. This design enables cross-framework mapping,
+  one-click board reports, and instant audit exports, all as queries over
+  existing history rather than assembly projects.
 redirectFrom:
   - /docs/storage-engine/architecture-overview
   - /docs/conceptual-guides/architecture-overview
   - /docs/guides/neon-features
-updatedOn: '2026-07-10T13:57:31.917Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 ## Top level overview
 
-Instead of running Postgres as a single stateful system tied to a VM and its filesystem, OptiTech is a serverless database that splits the system into two independent layers: compute and storage. These layers communicate over the network, with a stream of write-ahead log (WAL) records connecting them.
+Instead of running compliance as a single pile of documents tied to a shared drive and its folder structure, OptiTech splits the system into two independent layers: the application layer and the evidence layer. These layers communicate over one contract, with a stream of normalized findings connecting them.
 
-This separation is what puts OptiTech in the [lakebase category](https://www.databricks.com/blog/what-is-a-lakebase) of OLTP databases. Compute can scale up, scale down, go idle, and be restarted instantly without risking data loss or requiring data movement.
+This separation is what makes OptiTech a compliance platform rather than a document archive. Workflows can change, integrations can come and go, and people can reorganize, all without risking the audit trail.
 
-- **Ephemeral compute layer**: optimized for latency and execution. This layer runs Postgres, executing queries and transactions using RAM and local NVMe for performance. Compute nodes do not own durable state and can be replaced freely.
-- **Durable storage layer**: optimized for correctness, history, and scale. This layer defines durability by replicating WAL via quorum, materializes Postgres pages on demand, and stores long-term, immutable history in object storage.
+- **Application layer**: optimized for daily work. This layer runs the Console, the dashboards, the AI copilot, and the API, executing tasks and approvals with your team's context at hand. It never owns evidence; it only produces and reads it.
+- **Durable evidence layer**: optimized for correctness, history, and scrutiny. This layer defines what counts as verified by normalizing findings, links them to controls, and stores long-term, immutable history in an append-only log.
 
-OptiTech’s design intentionally keeps object storage off the critical path. Object storage provides durability and scale, but never sits in front of query execution. Latency-sensitive work stays close to compute, while durability and history are handled asynchronously and independently.
+OptiTech's design intentionally keeps the evidence log off the editing path. The log provides durability and auditability, but nothing in the application layer can rewrite it. Day-to-day work stays fast and flexible, while history is handled asynchronously and immutably.
 
 ![OptiTech architecture overview](/docs/introduction/neon-architecture-overview.png)
 
-<Admonition type="note" title="What is the difference between OptiTech and Lakebase?">
-Both products share the same architectural foundation but Lakebase comes with additional features integrating it with the rest of the Databricks Data and AI platform. For a full comparison, see [OptiTech and Lakebase](/docs/introduction/neon-and-lakebase).
+<Admonition type="note" title="Where does your data live?">
+The whole platform runs in Swedish and EU data centers under EU ownership, and the AI layer uses EU-hosted models. For the customer-facing summary, see [Why OptiTech](/docs/get-started/why-neon#eu-data-residency-and-ownership).
 </Admonition>
 
 ## Resource hierarchy
 
-While the sections below describe OptiTech's physical architecture, the platform organizes resources into a logical hierarchy:
+While the sections below describe OptiTech's system architecture, the platform organizes resources into a logical hierarchy:
 
-| Concept          | Description                                                           | Relationship              |
-| ---------------- | --------------------------------------------------------------------- | ------------------------- |
-| Organization     | Highest-level container for billing, users, and projects              | Contains Projects         |
-| Project          | Primary container for all database resources for an application       | Contains Branches         |
-| Branch           | Lightweight, copy-on-write clone of database state                    | Contains Databases, Roles |
-| Compute Endpoint | Running PostgreSQL instance (CPU/RAM for queries)                     | Attached to a Branch      |
-| Database         | Logical container for data (tables, schemas, views)                   | Exists within a Branch    |
-| Role             | PostgreSQL role for authentication and authorization                  | Belongs to a Branch       |
-| Operation        | Async action by the control plane (creating branch, starting compute) | Associated with Project   |
+| Concept      | Description                                                         | Relationship                 |
+| ------------ | ------------------------------------------------------------------- | ---------------------------- |
+| Organization | Highest-level container for billing, users, and frameworks          | Contains Frameworks          |
+| Framework    | A regulation or standard you activate (NIS2, DORA, ISO 27001)       | Contains Requirements        |
+| Requirement  | A single obligation from the source text, in plain language         | Maps to Controls             |
+| Control      | A verifiable measure that satisfies one or more requirements        | Verified by Evidence         |
+| Evidence     | A finding with source and timestamp, appended to the log            | Belongs to Controls          |
+| Task         | Manual work an integration can't verify, with an owner and deadline | Linked to a Control          |
+| Owner        | The person alerted when a control drifts or a task is due           | Assigned per Control or Task |
 
-For details on each concept, see the [glossary](/docs/reference/glossary).
+Requirements and controls are many-to-many: that's the cross-mapping that lets one control count in several frameworks. For details on each concept, see the [glossary](/docs/reference/glossary).
 
-## Compute layer
+## Application layer
 
-The compute layer is where Postgres actually runs. Each OptiTech compute node is a standard Postgres instance: it parses SQL, plans queries, executes transactions, enforces MVCC, and manages locks and indexes. From the perspective of the query engine, nothing about Postgres itself is rewritten or replaced.
+The application layer is where your team actually works. It runs the Console, the dashboards, the document workflows, the copilot, and the API. From the perspective of your daily tasks, nothing about how you work is rewritten or replaced.
 
-What is different in OptiTech is what the compute node is responsible for. **It exists to execute work, not to preserve data.** A compute node can start, stop, scale, or fail at any time without putting durability at risk.
+What is different in OptiTech is what the application layer is responsible for. **It exists to produce and read evidence, not to preserve it.** A workflow can change, a user can leave, or a report can be regenerated at any time without putting the audit trail at risk.
 
 ### Components
 
-A OptiTech compute node has access to fast, local resources:
+The application layer has access to fast, contextual resources:
 
-- RAM - used for shared_buffers, session state, and hot data
-- Local NVMe - used as a performance cache for data pages
+- Your organization's live control status, for dashboards and alerts
+- The copilot's retrieval index over legal texts and your own data
 
-Pages cached in RAM or NVMe avoid network round-trips and keep most reads at memory or microsecond-level latencies.
+Status queries stay snappy because they read materialized state, not the raw log.
 
-### How compute fits into the system
+### How the application layer fits into the system
 
-When a query runs, the compute node behaves as you would expect:
+When you complete a task or approve a document, the layer behaves as you would expect:
 
-- SQL is parsed and planned
-- Pages are accessed through the buffer manager
-- Changes are applied in memory
+- The action is validated against your role
+- The change is applied to the working state
+- The dashboards update
 
-The OptiTech difference appears when the system crosses the boundary between execution and durability. **Instead of flushing WAL to a local filesystem, the compute node streams WAL to the storage layer.** A transaction is considered committed once that WAL has been acknowledged by a quorum of safekeepers (more on this later). The compute node does not wait for data pages to be written to disk or object storage.
+The OptiTech difference appears when the system crosses the boundary between work and proof. **Instead of editing records in place, every consequential action emits an event to the evidence layer.** An action counts as recorded once the log has appended it. The application layer does not wait for exports, reports, or reviews.
 
-For reads, **the compute node always prefers local access.** It first looks in memory, then in the local NVMe cache. Only when a page is missing locally does the compute node request it from the pageserver, which reconstructs the correct page version and returns it over the network. At no point does the compute node read directly from object storage.
+For reads, **the application layer always prefers materialized state.** Dashboards read current status directly. Only when someone needs history (an auditor, an incident review, a board report) does the system replay from the log, reconstructing exactly what was true at any point in time.
 
-## Storage layer
+## Evidence layer
 
-If the compute layer is responsible for execution, the storage layer is responsible for correctness, durability, and history. **This layer exists independently of any single compute node and continues to operate even when computes come and go.**
+If the application layer is responsible for work, the evidence layer is responsible for correctness, durability, and history. **This layer exists independently of any workflow and continues to operate even as your team and tools change.**
 
-Rather than exposing a traditional filesystem, the database storage layer is built around three distinct components, each with a well-defined role:
+Rather than exposing an editable database, the evidence layer is built around three distinct components, each with a well-defined role:
 
-- Safekeepers: define correctness by replicating WAL
-- The pageserver: turns WAL into queryable data pages
-- Object storage: holds long-term, immutable history
+- Integration workers: collect raw findings from your systems
+- The normalization engine: turns findings into control evidence
+- The append-only log: holds long-term, immutable history
 
-### Safekeepers: defining correctness via WAL quorum
+### Integration workers: collecting findings per source
 
-Safekeepers are responsible for one thing: **durable replication of WAL**. When a compute node generates WAL records, it streams them to multiple safekeepers. A transaction is considered committed once a quorum of safekeepers has acknowledged the WAL record [via the Paxos protocol](https://neon.com/blog/paxos).
+Integration workers are responsible for one thing: **reliable collection of findings**. Each connected system (Entra ID, AWS, GitHub, Fortnox) has its own worker that checks controls on a schedule. A finding is considered collected once the worker has captured it with its source and timestamp.
 
-This is a fundamental difference from how traditional Postgres works:
+This is a fundamental difference from how manual compliance works:
 
-- Correctness in OptiTech is enforced through replication and consensus
-- Commit latency is primarily quorum/network-bound, with safekeepers batching WAL flushes rather than relying on compute-local fsync
-- No single machine defines the durable state of the database
+- Verification in OptiTech is enforced through scheduled checks, not annual sampling
+- Collection latency is source-bound, with workers batching checks rather than waiting for audit season
+- No single person defines the verified state of the program
 
-### Pageserver: WAL ⇄ pages
+### Normalization engine: findings ⇄ evidence
 
-The pageserver sits between WAL and data [pages](https://neon.com/docs/reference/glossary#page). Its job is to **materialize page versions** by combining previously materialized base pages and committed WAL records. It is the system’s translation layer between the logical history of the database and the physical representation needed to run queries.
+The normalization engine sits between raw findings and control evidence. Its job is to **materialize evidence** by combining findings with the control and requirement mappings. It is the system's translation layer between what your systems report and what your frameworks require.
 
-When a compute node needs a page at a specific [LSN (Log Sequence Number)](https://neon.com/docs/reference/glossary#lsn), it asks the pageserver. The pageserver checks whether it already has that version available. If not, it reconstructs the page by replaying WAL up to the requested LSN and returns the result. Materialized pages are later persisted into object storage asynchronously, building up the long-term history of the database.
+When a control needs its status at a specific point in time, the engine checks whether that state is already materialized. If not, it reconstructs it by replaying the log up to the requested moment and returns the result. Materialized states are kept current asynchronously, building up the queryable history of the program.
 
-Importantly, page materialization is not on the transaction’s critical path. Commits do not wait for pages to be written or uploaded.
+Importantly, normalization is not on the action's critical path. Completing a task never waits for reports to rebuild.
 
-### Object storage: long-term, immutable history
+### The append-only log: long-term, immutable history
 
-Object storage is where OptiTech keeps the **durable history** of the database. This layer stores materialized page versions, historical snapshots of data, and immutable representations of past states. It is not a query engine, and it is never accessed directly by the compute layer. It backs the pageserver, not Postgres.
+The log is where OptiTech keeps the **durable history** of your program. This layer stores every finding, approval, and change as hash-chained entries, immutable representations of past states. It is not a working surface, and it is never edited by the application layer. It backs the audit trail, not the dashboard.
 
-This distinction is critical for performance. Object storage is optimal for durability, scale, and cost, not latency. Reads from object storage may take hundreds of milliseconds, but in OptiTech, those reads happen only inside the pageserver when reconstructing pages, and never on the hot query path.
+This distinction is critical for trust. The log is optimal for integrity, scrutiny, and history, not editing. Replaying deep history may take a moment, but in OptiTech, that happens only when someone asks for the past, and never during daily work.
 
-## Write path: committing a transaction in OptiTech
+## Write path: recording an action in OptiTech
 
 ![Write path in OptiTech](/docs/introduction/neon-write-path.png)
 
-When a transaction executes on a compute node:
+When an action happens in your program:
 
-1. **Postgres applies changes in memory.** Rows are updated in shared buffers, indexes are modified, and WAL records are generated as usual.
-2. **WAL is streamed to the safekeepers.** Instead of flushing WAL to a local filesystem, the compute node sends WAL records over the network to multiple safekeepers.
-3. **Commit is defined by quorum.** A transaction is considered committed once a quorum of safekeepers has acknowledged the WAL record. At this point, the client receives success.
-4. **Page materialization happens later.** Page reconstruction and persistence happen asynchronously in the storage layer.
+1. **The application layer applies the change.** A task closes, a document is approved, or a check completes, and an event is generated as usual.
+2. **The event is streamed to the log.** Instead of editing history in place, the layer sends the event with its actor, source, and timestamp.
+3. **Recorded is defined by the chain.** An action counts as recorded once the log has appended it and linked its hash to the previous entry. At this point, the audit trail includes it permanently.
+4. **Status materialization happens later.** Dashboard updates and report rebuilds happen asynchronously in the evidence layer.
 
-## Read path: serving data without object-store latency
+## Read path: serving audits without assembly projects
 
 ![Read path in OptiTech](/docs/introduction/neon-read-path.png)
 
-The obvious concern with running a database on object storage is latency, but OptiTech’s architecture is designed specifically to avoid this. The most important thing to understand about reads in OptiTech is this: **queries do not read from object storage.** Object storage backs the system, but it is never on the hot query path.
+The obvious concern with an append-only log is speed, but OptiTech's architecture is designed specifically to avoid this. The most important thing to understand about reads in OptiTech is this: **daily work does not read from the raw log.** The log backs the system, but it is never on the hot path.
 
-### The preferred path: local first
+### The preferred path: status first
 
-When Postgres running on a compute node needs to read a page, it follows a preference order:
+When someone needs to know where the program stands, the system follows a preference order:
 
-1. **RAM (shared buffers).** This is the fastest path, just like in traditional Postgres.
-2. **Local NVMe cache.** If the page is not in memory, the compute node checks its local NVMe cache. Access here is still fast.
+1. **Live status.** Dashboards, alerts, and the copilot read materialized state, the fastest path.
+2. **Recent history.** Trends and period reports read pre-built summaries. Access here is still fast.
 
-Only if the page is missing locally does the system involve the storage layer (next section).
+Only if someone needs a precise historical state does the system involve the log (next section).
 
-### Cache miss: requesting a page from the pageserver
+### Deep history: replaying the chain
 
-On a cache miss, the compute node requests the required page from the pageserver, specifying the page identifier and the logical point in time (LSN). The pageserver then:
+On a historical request, the evidence layer replays the log up to the requested point in time. The engine then:
 
-1. Checks whether it already has the requested page version materialized
-2. If not, loads a base page from object storage, replays WAL records up to the requested LSN and returns the reconstructed page to the compute node
+1. Checks whether that state is already materialized
+2. If not, reconstructs it from the chain and returns exactly what was true then, with every entry's hash verifiable
 
-Once returned, the page can be cached in RAM and NVMe, making subsequent reads fast. This reconstruction only happens if needed, and only for the pages actually accessed.
+Once returned, the state can be cached, making subsequent audit queries fast. This reconstruction only happens if needed, and only for the periods actually examined.
 
-## Durability
+## Integrity
 
-Durability in OptiTech is not a single mechanism but a composition of responsibilities. No single component is responsible for everything, and no single machine defines the state of the database.
+Integrity in OptiTech is not a single mechanism but a composition of responsibilities. No single component is responsible for everything, and no single person defines the state of the program.
 
 This layering is what allows OptiTech to tolerate failures intrinsically:
 
-- If a compute node dies → queries stop, but data is safe. A new compute attaches immediately and continues from the same history.
-- If a pageserver dies → no durable state is lost. Another pageserver can be deployed and it can reconstruct pages using WAL and object storage.
-- If a safekeeper dies → another can be deployed, and WAL replication continues as long as quorum remains.
-- Object storage is the last line of defense → it holds immutable page history and survives failures across entire failure domains.
+- If an integration breaks → checks pause, but history is safe. The affected controls flag as unverified until collection resumes.
+- If a report is wrong → no history is lost. Reports are projections and can be rebuilt from the log at any time.
+- If a person leaves → their actions remain attributed and the audit trail is unaffected. Ownership reassigns without rewriting history.
+- The hash chain is the last line of defense → it makes silent edits detectable and survives everything above it.
 
 ## What this architecture enables
 
-**This design turns traditionally heavy-weight database operations (which usually require copying large amounts of data) into simple metadata operations.** These include creating a new branch, restoring from a snapshot, spinning up a read replica, or attaching a new compute node. In OptiTech, these operations are fast because they operate on references to existing history, not on the data itself.
+**This design turns traditionally heavy-weight compliance operations (which usually require assembling documents by hand) into simple queries over existing history.** These include producing a board report, opening an auditor portal, answering a questionnaire, or reconstructing an incident timeline. In OptiTech, these operations are fast because they operate on references to existing history, not on documents someone has to gather.
 
-- **Serverless compute provisioning.** Because durable state lives outside the compute layer, compute endpoints can [automatically scale up and down according to load](https://neon.com/docs/introduction/autoscaling), or [scale to zero](https://neon.com/docs/introduction/scale-to-zero) entirely. When compute starts, it simply attaches to existing database history rather than reconstructing local state.
-- **Copy-on-write branching.** When you create a [branch](https://neon.com/docs/introduction/branching) in OptiTech, the engine does not duplicate files or pages. Instead, the new branch points to an existing point in history and begins diverging from there using copy-on-write semantics. Only new or modified data consumes additional storage.
-- **Instant restores.** Because the database’s history is preserved as immutable page versions in object storage, [restoring the database](https://neon.com/docs/introduction/branch-restore) does not involve copying data back into place. Compute can reattach to a past point in history, and execution can resume from the restored state. This process is fast and predictable, even for multi-terabyte databases.
-- **A unified foundation for OLTP and OLAP.** Once transactional data lives in object storage, it is no longer isolated from analytical or AI workloads. The same underlying history that supports an OLTP engine (OptiTech) can also support OLAP engines and AI systems. This is the principle behind the [lakebase architecture](https://www.databricks.com/product/lakebase).
+- **Continuous verification.** Because evidence collection lives outside any workflow, controls stay verified between audits, with [drift alerts and auto-remediation](/docs/postgres/overview) when something changes.
+- **Cross-framework mapping.** When you activate a new framework, OptiTech does not duplicate your work. Instead, the new framework points to your existing controls and diverges only where its requirements genuinely differ. Only the true gap consumes additional effort.
+- **Instant audit access.** Because the program's history is preserved as immutable entries, [giving an auditor access](/docs/introduction/plans#enterprise-features) does not involve assembling a binder. The portal reads the same chain, scoped and read-only, even for years of history.
+- **A unified foundation for compliance and reporting.** Once evidence lives in one log, it is no longer isolated per framework. The same underlying history that answers an ISO auditor also answers a DORA supervisor, a customer questionnaire, and your own board.
 
 ## In short
 
-OptiTech Postgres, the database service in the OptiTech backend, is a serverless engine that treats:
+OptiTech is a compliance platform that treats:
 
-- compute as ephemeral and replaceable;
-- storage as durable, replicated, and shared;
-- WAL as the source of truth;
-- and object storage as the foundation.
+- workflows as ephemeral and replaceable;
+- evidence as durable, normalized, and shared;
+- the append-only log as the source of truth;
+- and the hash chain as the foundation.
 
-The result is a database architecture that scales, recovers, and evolves without being constrained by a single machine or filesystem. For developers, this means faster iteration, safer workflows, and infrastructure that adapts automatically as applications grow from early prototypes to large-scale production systems. This design also enables advanced lakebase architectures that unify transactional and analytical data platforms.
+The result is a compliance architecture that scales, recovers, and evolves without being constrained by any one person's spreadsheet or memory. For your team, this means faster audits, safer changes, and a program that adapts automatically as your business grows from first framework to full supply-chain coverage.

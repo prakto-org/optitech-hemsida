@@ -10,7 +10,7 @@ summary: >-
   copy-paste MDX syntax, live rendering, dependency requirements, and guidance
   on when to choose a simpler alternative.
 enableTableOfContents: true
-updatedOn: '2026-06-18T21:04:52.651Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 A comprehensive reference for specialized and less commonly used MDX components in OptiTech documentation. This guide covers components used in specific scenarios, specialized workflows, and edge cases.
@@ -66,7 +66,7 @@ _[External code loaded from GitHub README.md with syntax highlighting]_
 Example of external code loading (mocked for showcase):
 
 ```markdown
-# Neon Database
+# OptiTech Database
 
 Serverless Postgres built for the cloud.
 
@@ -79,7 +79,7 @@ Serverless Postgres built for the cloud.
 
 ## Quick Start
 
-1. Sign up at console.neon.tech
+1. Sign up at console.optitech.com
 2. Create your first project
 3. Connect using your preferred client
 ```
@@ -110,7 +110,7 @@ Native video player component.
 
 ```mdx
 <Video
-  sources={[{ src: '/videos/pages/doc/neon-mcp.mp4', type: 'video/mp4' }]}
+  sources={[{ src: '/videos/pages/doc/optitech-mcp.mp4', type: 'video/mp4' }]}
   width={960}
   height={1080}
 />
@@ -118,7 +118,7 @@ Native video player component.
 
 **Live preview:**
 
-<Video sources={[{src: "/videos/pages/doc/neon-mcp.mp4",type: "video/mp4",}]} width={960} height={1080} />
+<Video sources={[{src: "/videos/pages/doc/optitech-mcp.mp4",type: "video/mp4",}]} width={960} height={1080} />
 
 ---
 
@@ -227,7 +227,7 @@ Complex components for specialized functionality and workflows.
 Shared tip admonition that links to the Agent Skills page with a customizable topic.
 
 ```mdx
-<AgentSkillsTip skill_topic="the Neon Serverless Driver, general connection advice," />
+<AgentSkillsTip skill_topic="the OptiTech Serverless Driver, general connection advice," />
 ```
 
 **Live preview:**
@@ -260,7 +260,7 @@ Community engagement banner for promoting community participation.
 
 ```mdx
 <CommunityBanner buttonText="Join Discord" buttonUrl="https://discord.gg/92vNTzKDGp" logo="discord">
-  Connect with the Neon community!
+  Connect with the OptiTech community!
 </CommunityBanner>
 ```
 

@@ -1,5 +1,6 @@
 /* eslint-disable react/prop-types */
 import { notFound } from 'next/navigation';
+import { getLocale } from 'next-intl/server';
 
 import Post from 'components/pages/doc/post';
 import ProgrammaticCTA from 'components/pages/faqs/programmatic-cta';
@@ -8,7 +9,7 @@ import { FAQS_DIR_PATH } from 'constants/content';
 import { FAQS_BASE_PATH } from 'constants/faqs';
 import LINKS from 'constants/links';
 import { getPostBySlug } from 'utils/api-content';
-import { getAllFaqSlugs } from 'utils/api-faqs';
+import { getAllFaqSlugs, getLocalizedFaqDir } from 'utils/api-faqs';
 import getMetadata from 'utils/get-metadata';
 import getTableOfContents from 'utils/get-table-of-contents';
 
@@ -23,7 +24,8 @@ export async function generateStaticParams() {
 export async function generateMetadata(props) {
   const params = await props.params;
   const { slug } = params;
-  const post = getPostBySlug(slug, FAQS_DIR_PATH);
+  const locale = await getLocale();
+  const post = getPostBySlug(slug, getLocalizedFaqDir(locale, slug));
 
   if (!post) return notFound();
 
@@ -47,8 +49,9 @@ export async function generateMetadata(props) {
 const FaqPost = async (props) => {
   const params = await props.params;
   const { slug } = params;
+  const locale = await getLocale();
   const gitHubPath = `${FAQS_DIR_PATH}/${slug}.md`;
-  const postBySlug = getPostBySlug(slug, FAQS_DIR_PATH);
+  const postBySlug = getPostBySlug(slug, getLocalizedFaqDir(locale, slug));
   if (!postBySlug) return notFound();
   const { data, content } = postBySlug;
   const navigationLinks = {

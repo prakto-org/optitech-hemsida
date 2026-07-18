@@ -35,7 +35,7 @@ const GROUP_OF = {
   functions: 'surfaces',
   buckets: 'surfaces',
   'data-api': 'surfaces',
-  'neon-auth': 'surfaces',
+  'optitech-auth': 'surfaces',
   orgs: 'network',
   'ip-allow': 'network',
   vpc: 'network',

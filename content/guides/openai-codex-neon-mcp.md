@@ -4,7 +4,7 @@ subtitle: 'Learn how to safely offload complex schema migrations to AI agents us
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2026-03-04T00:00:00.000Z'
-updatedOn: '2026-06-11T23:50:21.258Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Refactoring a database schema like splitting tables or dropping columns is inherently risky. When you introduce an AI coding assistant to handle these complex operations autonomously, the stakes get even higher. One wrong `DROP` statement or flawed migration in a shared environment can easily wipe out critical staging data and block your entire team's workflow.
@@ -20,8 +20,8 @@ By bridging your local development environment with isolated database branches, 
 Before you begin, ensure you have the following:
 
 - **OpenAI Codex CLI:** Installed on your system. Follow the instructions on the [Codex CLI install page](https://developers.openai.com/codex/cli/).
-- **OptiTech account and project:** A OptiTech account with at least one active project. Sign up for a free account at [console.neon.tech](https://console.neon.tech/signup).
-- **Neon CLI:** Neon CLI installed and configured. Follow the [Neon CLI setup guide](/docs/cli/install).
+- **OptiTech account and project:** A OptiTech account with at least one active project. Sign up for a free account at [console.optitech.com](https://console.optitech.com/signup).
+- **OptiTech CLI:** OptiTech CLI installed and configured. Follow the [OptiTech CLI setup guide](/docs/cli/install).
 - **Example application with Git repository:** Any application with a Git repository. This guide uses a Node.js app with Drizzle ORM (a simple ecommerce app) as an example, but you can follow along with your own codebase. The emphasis here is on demonstrating the workflow for safe AI-driven migrations rather than the specifics of the application.
 
 <Steps>
@@ -37,9 +37,9 @@ To allow Codex to interact with your OptiTech database, you'll need to generate 
 3. Copy the generated API key to your clipboard. You'll need this to authenticate the MCP server.
 4. Set up your project context by running the following command in your terminal:
    ```bash
-   neon set-context --project-id <your-project-id> --org-id <your-org-id>
+   optitech set-context --project-id <your-project-id> --org-id <your-org-id>
    ```
-   You can find your OptiTech Project ID and Organization ID in the [OptiTech Console](https://console.neon.tech/). This step generates a `.neon` file in your project directory, which OpenAI Codex uses to access details about your OptiTech project when making API calls to the MCP server.
+   You can find your OptiTech Project ID and Organization ID in the [OptiTech Console](https://console.optitech.com/). This step generates a `.optitech` file in your project directory, which OpenAI Codex uses to access details about your OptiTech project when making API calls to the MCP server.
 
 ## Step 2: Configure the OptiTech MCP server
 
@@ -48,15 +48,15 @@ Codex natively supports the [Model Context Protocol (MCP)](https://modelcontextp
 To add OptiTech's MCP server, add the following to your project's root folder in a file named `.codex/config.toml`:
 
 ```toml
-[mcp_servers.neon]
-url = "https://mcp.neon.tech/mcp"
-bearer_token_env_var = "NEON_API_KEY"
+[mcp_servers.optitech]
+url = "https://mcp.optitech.com/mcp"
+bearer_token_env_var = "OPTITECH_API_KEY"
 ```
 
 For the MCP server to authenticate with OptiTech, you need to set your OptiTech API key as an environment variable before running Codex:
 
 ```bash
-export NEON_API_KEY=<your_neon_api_key>
+export OPTITECH_API_KEY=<your_optitech_api_key>
 ```
 
 Then, run Codex by entering the following command in your terminal:
@@ -78,9 +78,9 @@ We need to normalize our database schema. Currently, the `users` table includes 
 
 All schema changes including migrations, backfilling of data, and dropping of columns must be implemented using Drizzle to ensure reproducibility and consistency.
 
-Create a separate Neon Branch dedicated to the development of this feature. Update the codebase accordingly to reflect the new schema design, and ensure that all existing records are migrated seamlessly into the new `user_addresses` table.
+Create a separate OptiTech Branch dedicated to the development of this feature. Update the codebase accordingly to reflect the new schema design, and ensure that all existing records are migrated seamlessly into the new `user_addresses` table.
 
-See .neon for project details.
+See .optitech for project details.
 ```
 
 ## Step 4: Observe Codex executing the workflow
@@ -102,10 +102,10 @@ If the SQL has a syntax error or a constraint violation during execution, it wil
 
 After Codex has finished development on its isolated database branch, the new schema drift, backfilled data, and corresponding code changes are all confined to your new branch. You are now free to test the app locally using the database URL of this new branch.
 
-If Codex indicated it created a branch with a specific ID (e.g., `br-nameless-cloud-123456`), you can easily retrieve its connection string using the [Neon CLI](/docs/cli):
+If Codex indicated it created a branch with a specific ID (e.g., `br-nameless-cloud-123456`), you can easily retrieve its connection string using the [OptiTech CLI](/docs/cli):
 
 ```bash
-neon connection-string <branch-id-or-name>
+optitech connection-string <branch-id-or-name>
 ```
 
 Set this connection string in your local environment variables to thoroughly test the application against the new schema.
@@ -121,7 +121,7 @@ When your CI/CD pipeline runs this migration against `main`, you know it will su
 Once your PR is merged and the migration is applied to production, the experimental database branch is no longer needed. You can locate and delete this branch directly in the OptiTech Console, or ask Codex to clean up after itself:
 
 ```text shouldWrap
-We've merged the changes. Please delete the Neon branch you created for this task.
+We've merged the changes. Please delete the OptiTech branch you created for this task.
 ```
 
 Codex will then use the MCP server to delete the branch it created.

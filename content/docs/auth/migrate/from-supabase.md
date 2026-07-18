@@ -3,7 +3,7 @@ title: Migrate from Supabase to OptiTech
 subtitle: Switch from Supabase Auth and Database to OptiTech in a few steps
 summary: >-
   Step-by-step migration from Supabase Auth and Supabase database to Managed Better Auth
-  and OptiTech Data API. Replace `@supabase/supabase-js` with `@neondatabase/neon-js`,
+  and OptiTech Data API. Replace `@supabase/supabase-js` with `@optitech/optitech-js`,
   swap environment variables, and update client initialization while keeping
   existing auth method calls and `from()` database queries code-compatible.
   Existing password-based users cannot transfer due to incompatible password
@@ -11,7 +11,7 @@ summary: >-
   OAuth-only apps. Managed Better Auth does not support phone authentication (SMS/WhatsApp),
   SAML SSO, or Web3 wallet sign-in.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="Managed Better Auth" />
@@ -24,11 +24,11 @@ Existing password-based users cannot migrate due to different hashing algorithms
 
 ## Prerequisites
 
-- A OptiTech project ([create one here](https://console.neon.tech))
+- A OptiTech project ([create one here](https://console.optitech.com))
 - Data API enabled (Managed Better Auth is enabled by default when you enable Data API):
   - Go to **Data API** in the OptiTech Console and enable it
   - In **Data API → Configuration**, verify it's configured with **Managed Better Auth**
-  - Copy your Neon connection host and database name from **Connect** in the Console. The SDK derives both the Auth and Data API URLs from this single base URL. See [Initialize the client](/docs/reference/javascript-sdk#initializing) for the derivation rules, or use the separate Auth and Data API base URLs instead if you'd rather configure them explicitly
+  - Copy your OptiTech connection host and database name from **Connect** in the Console. The SDK derives both the Auth and Data API URLs from this single base URL. See [Initialize the client](/docs/reference/javascript-sdk#initializing) for the derivation rules, or use the separate Auth and Data API base URLs instead if you'd rather configure them explicitly
 
 <Steps>
 
@@ -38,7 +38,7 @@ Replace the Supabase SDK with OptiTech's:
 
 ```bash filename="Terminal"
 npm uninstall @supabase/supabase-js
-npm install @neondatabase/neon-js@latest
+npm install @optitech/optitech-js@latest
 ```
 
 ## Update environment variables
@@ -51,12 +51,12 @@ Replace your Supabase credentials with a single OptiTech base URL. `createClient
 # VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 
 # Add this:
-VITE_NEON_URL=https://ep-xxx.c-2.us-east-2.aws.neon.build/dbname
+VITE_OPTITECH_URL=https://ep-xxx.c-2.us-east-2.aws.optitech.build/dbname
 ```
 
 **Get your URL:**
 
-Your OptiTech base URL is the host and database name from your Neon connection string, served over `https://`. Find these values under **Connect** in the OptiTech Console.
+Your OptiTech base URL is the host and database name from your OptiTech connection string, served over `https://`. Find these values under **Connect** in the OptiTech Console.
 
 <Admonition type="note">
 The `VITE_` prefix is for Vite. Use `NEXT_PUBLIC_` for Next.js, or no prefix for Node.js.
@@ -84,9 +84,9 @@ export const supabase = createClient(
 **After (OptiTech):**
 
 ```typescript filename="src/auth.ts"
-import { createClient, SupabaseAuthAdapter } from '@neondatabase/neon-js';
+import { createClient, SupabaseAuthAdapter } from '@optitech/optitech-js';
 
-export const client = createClient(import.meta.env.VITE_NEON_URL, {
+export const client = createClient(import.meta.env.VITE_OPTITECH_URL, {
   auth: { adapter: SupabaseAuthAdapter() },
 });
 ```
@@ -172,7 +172,7 @@ Go to **Auth → Users** in the OptiTech Console to see your newly created users
 
 ```sql filename="SQL Editor"
 SELECT id, email, "createdAt"
-FROM neon_auth.user
+FROM optitech_auth.user
 ORDER BY "createdAt" DESC;
 ```
 
@@ -180,12 +180,12 @@ ORDER BY "createdAt" DESC;
 
 ## What changed?
 
-| Feature                   | Supabase                            | OptiTech                                                |
+| Feature                   | Supabase                            | OptiTech                                            |
 | ------------------------- | ----------------------------------- | --------------------------------------------------- |
 | **User ID type**          | `UUID`                              | `UUID`                                              |
 | **Client config**         | URL + anon key                      | Single base URL (auto-derives Auth + Data API URLs) |
-| **Environment variables** | `SUPABASE_URL`, `SUPABASE_ANON_KEY` | `NEON_URL`                                          |
-| **SDK package**           | `@supabase/supabase-js`             | `@neondatabase/neon-js`                             |
+| **Environment variables** | `SUPABASE_URL`, `SUPABASE_ANON_KEY` | `OPTITECH_URL`                                      |
+| **SDK package**           | `@supabase/supabase-js`             | `@optitech/optitech-js`                             |
 
 ## API compatibility
 

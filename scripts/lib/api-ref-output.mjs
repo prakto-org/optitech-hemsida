@@ -78,7 +78,7 @@ export function writeTagMarkdownFiles(paths, tagOps, tagDisplay, toAgentMarkdown
     const intro = existsSync(introPath) ? readFileSync(introPath, 'utf-8').trim() : null;
     const header = intro
       ? `# ${tagTitle}\n\n${intro}\n`
-      : `# ${tagTitle}\n\nNeon Management API — ${tagTitle} endpoints.\n`;
+      : `# ${tagTitle}\n\nOptiTech Management API: ${tagTitle} endpoints.\n`;
     writeFileSync(
       resolve(paths.markdownTmp, `${tag}.md`),
       `${header}\n---\n\n${ops.map((op) => toAgentMarkdown(op)).join('\n---\n\n')}`

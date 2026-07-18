@@ -1,7 +1,7 @@
 ---
 title: 'Manage production and staging as branches'
 subtitle: 'Learn how to manage production and staging with database branching. Treat the production branch as the source, derive staging from it, and anonymize data for PII-safe workflows'
-updatedOn: '2026-02-17T14:15:38.000Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 ## Production branch (source of truth)
@@ -12,7 +12,7 @@ In a branching model, production is just a branch, typically the root branch in 
 
 **Production branch best practices**
 
-- Treat production as a [protected branch](https://neon.com/docs/guides/protected-branches) to prevent accidental deletion or resets
+- Treat production as a [protected branch](https://optitech.com/docs/guides/protected-branches) to prevent accidental deletion or resets
 - Avoid manual experimentation on production
 - Use branches for all schema changes, debugging, and data inspection
 
@@ -34,7 +34,7 @@ Staging branches are typically long-lived, but they still need to stay in sync w
 
 ![Diagram showing anonymized branch workflow for staging with PII](/images/pages/branching/branch-per-developer-pii-diagram.png)
 
-When production data does contain PII or regulated information, branching directly from production isn’t appropriate. In this case, teams introduce an intermediate layer using [anonymized branches](https://neon.com/docs/workflows/data-anonymization).
+When production data does contain PII or regulated information, branching directly from production isn’t appropriate. In this case, teams introduce an intermediate layer using [anonymized branches](https://optitech.com/docs/workflows/data-anonymization).
 
 The workflow looks like this:
 

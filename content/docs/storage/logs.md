@@ -14,8 +14,8 @@ enableTableOfContents: true
 Every S3 request against a bucket streams a log line to the OptiTech Console, along with a line for any bucket or object change made through the Console or OptiTech API (creating a bucket, deleting a bucket, deleting an object or prefix):
 
 ```text
-service_name:  neon-storage/my-bucket
-scope_name:    neon.storage.s3.put
+service_name:  optitech-storage/my-bucket
+scope_name:    optitech.storage.s3.put
 severity_text: INFO
 body: {
   "operation": "PUT",
@@ -32,12 +32,12 @@ body: {
 
 Bucket logs live on the branch's [Monitoring page, in the Logs tab](/docs/introduction/monitor-logs), the same shared viewer used for every service on the branch. To jump straight to one bucket's logs, open the bucket list, open that bucket's menu, and select **View logs**. Or go to **Monitoring** > **Logs** and click the **Storage** chip to see every bucket's logs together.
 
-Expand a row to see its full context: `timestamp`, `severity`, `entity_type` (`storage`), `scope_name`, and `service_name` (`neon-storage/<bucket>`). The message body carries per-request detail: `operation` (the HTTP method), `object_key`, `http_status`, `bytes`, `duration_ms`, `request_id`, and `remote_ip`. `access_key_id` is included for authenticated requests and omitted entirely for anonymous reads against a `public_read` bucket, which is expected, not a sign of broken auth.
+Expand a row to see its full context: `timestamp`, `severity`, `entity_type` (`storage`), `scope_name`, and `service_name` (`optitech-storage/<bucket>`). The message body carries per-request detail: `operation` (the HTTP method), `object_key`, `http_status`, `bytes`, `duration_ms`, `request_id`, and `remote_ip`. `access_key_id` is included for authenticated requests and omitted entirely for anonymous reads against a `public_read` bucket, which is expected, not a sign of broken auth.
 
 `scope_name` identifies what generated the line:
 
-- `neon.storage.s3.<method>` (`get`, `put`, `delete`, `head`, `post`): an S3 API request, named for its HTTP method rather than the semantic S3 operation. Multipart upload calls (`UploadPart`, `CompleteMultipartUpload`, `AbortMultipartUpload`) also surface under their HTTP method, not a dedicated multipart scope.
-- `neon.storage.api.<operation>` (`create_bucket`, `delete_bucket`, `delete_object`, `delete_prefix`): a bucket or object change made through the Console or OptiTech API, not an S3 client. These appear in the same stream as S3 traffic, distinguished only by this `api` vs `s3` segment.
+- `optitech.storage.s3.<method>` (`get`, `put`, `delete`, `head`, `post`): an S3 API request, named for its HTTP method rather than the semantic S3 operation. Multipart upload calls (`UploadPart`, `CompleteMultipartUpload`, `AbortMultipartUpload`) also surface under their HTTP method, not a dedicated multipart scope.
+- `optitech.storage.api.<operation>` (`create_bucket`, `delete_bucket`, `delete_object`, `delete_prefix`): a bucket or object change made through the Console or OptiTech API, not an S3 client. These appear in the same stream as S3 traffic, distinguished only by this `api` vs `s3` segment.
 
 ## Log levels
 

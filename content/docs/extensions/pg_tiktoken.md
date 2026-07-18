@@ -10,7 +10,7 @@ summary: >-
   cl100k_base (ChatGPT, text-embedding-ada-002), p50k_base (Codex,
   text-davinci-002/003), and r50k_base (GPT-3/davinci).
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 The `pg_tiktoken` extension enables fast and efficient tokenization of data in your Postgres database using OpenAI's [tiktoken](https://github.com/openai/tiktoken) library.
@@ -62,7 +62,7 @@ The function tokenizes text using the [Byte Pair Encoding (BPE)](https://en.wiki
 The `tiktoken_count` function counts the number of tokens in a text. The function accepts encoding names and OpenAI model names as the first argument and text as the second argument, as shown:
 
 ```sql
-neondb=> SELECT tiktoken_count('text-davinci-003', 'The universe is a vast and captivating mystery, waiting to be explored and understood.');
+optitechdb=> SELECT tiktoken_count('text-davinci-003', 'The universe is a vast and captivating mystery, waiting to be explored and understood.');
 
  tiktoken_count
 ----------------

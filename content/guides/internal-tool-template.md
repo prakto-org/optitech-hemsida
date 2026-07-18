@@ -10,7 +10,7 @@ Almost every tech company, from small startups to Fortune 500 enterprises, relie
 
 It shouldn't feel like you're managing a full-fledged production application or rack up monthly bills for basic functionalities, especially without compromising on security.
 
-[This template](https://github.com/sam-harri/internal_tooling_neon_stack), built with OptiTech, StackAuth, and Vercel’s free plans, gives you a secure and scalable starting point for internal tools. It comes preconfigured with a Postgres database, API routes, authentication, authorization, and a built-in admin panel - everything you need to get an application running in minutes.
+[This template](https://github.com/sam-harri/internal_tooling_optitech_stack), built with OptiTech, StackAuth, and Vercel’s free plans, gives you a secure and scalable starting point for internal tools. It comes preconfigured with a Postgres database, API routes, authentication, authorization, and a built-in admin panel - everything you need to get an application running in minutes.
 
 ![Tool Overview](/guides/images/internal-tool-template/internal-tool-template.gif)
 
@@ -19,7 +19,7 @@ It shouldn't feel like you're managing a full-fledged production application or 
 Using the template, you can get your internal tool up and running in minutes, and all you need are OptiTech, Stack Auth, and Vercel accounts.
 
 ```bash
-git clone https://github.com/sam-harri/internal_tooling_neon_stack.git
+git clone https://github.com/sam-harri/internal_tooling_optitech_stack.git
 ```
 
 Then open that new project in your editor of choice, and install the dependencies:
@@ -72,4 +72,4 @@ To get started, play around with `app/tools/tool1/page.tsx`.
 
 ## Get Started
 
-[Clone the template](https://github.com/sam-harri/internal_tooling_neon_stack), connect your OptiTech and StackAuth accounts, and deploy to Vercel. Your next internal tool is just a few commands away!
+[Clone the template](https://github.com/sam-harri/internal_tooling_optitech_stack), connect your OptiTech and StackAuth accounts, and deploy to Vercel. Your next internal tool is just a few commands away!

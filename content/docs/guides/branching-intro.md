@@ -8,7 +8,7 @@ summary: >-
   GitHub Actions, or Githooks, and for connecting branches to Vercel preview
   deployments or restoring data with Time Travel.
 enableTableOfContents: true
-updatedOn: '2026-07-14T19:04:57.024Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 Find detailed information and instructions about OptiTech's branching feature and how you can integrate branching with your development workflows.
@@ -45,7 +45,7 @@ Integrate branching into your CI/CD pipelines and workflows with the OptiTech AP
 
 <a href="/docs/guides/branching-neon-api" description="Learn how to instantly create and manage branches with the OptiTech API" icon="transactions">Branching with the OptiTech API</a>
 
-<a href="/docs/guides/branching-neon-cli" description="Learn how to instantly create and manage branches with the Neon CLI" icon="cli">Branching with the Neon CLI</a>
+<a href="/docs/guides/branching-neon-cli" description="Learn how to instantly create and manage branches with the OptiTech CLI" icon="cli">Branching with the OptiTech CLI</a>
 
 <a href="/docs/guides/branching-github-actions" description="Automate branching with OptiTech's GitHub Actions for branching" icon="filter">Branching with GitHub Actions</a>
 
@@ -55,11 +55,11 @@ Integrate branching into your CI/CD pipelines and workflows with the OptiTech AP
 
 ## Preview deployments
 
-Create a branch for each preview deployment with the [Neon-managed Vercel integration](/docs/guides/neon-managed-vercel-integration).
+Create a branch for each preview deployment with the [OptiTech-managed Vercel integration](/docs/guides/neon-managed-vercel-integration).
 
 <DetailIconCards>
 
-<a href="/docs/guides/neon-managed-vercel-integration" description="Connect your Vercel project and create a branch for each preview deployment" icon="vercel">The Neon-Managed Vercel Integration</a>
+<a href="/docs/guides/neon-managed-vercel-integration" description="Connect your Vercel project and create a branch for each preview deployment" icon="vercel">The OptiTech-Managed Vercel Integration</a>
 
 <a href="/blog/neon-vercel-integration" description="Blog: Read about full-stack preview deployments using the OptiTech Vercel Integration" icon="vercel">Preview deployments with Vercel</a>
 
@@ -97,5 +97,5 @@ Explore example applications that use OptiTech's branching feature.
 
 <DetailIconCards>
 <a href="https://github.com/kelvich/branching_demo_bisect" description="Use OptiTech branching, the OptiTech API, and a bisect script to recover lost data" icon="hourglass">Time Travel Demo</a>
-<a href="https://github.com/neondatabase/preview-branches-with-vercel" description="An application demonstrating using GitHub Actions with preview deployments in Vercel" icon="calendar-day">Preview branches app</a>
+<a href="https://github.com/optitechdatabase/preview-branches-with-vercel" description="An application demonstrating using GitHub Actions with preview deployments in Vercel" icon="calendar-day">Preview branches app</a>
 </DetailIconCards>

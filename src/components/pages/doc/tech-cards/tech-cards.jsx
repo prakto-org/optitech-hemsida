@@ -40,7 +40,10 @@ const TechCards = ({ children = null, withToggler = false }) => (
           >
             <div className="relative z-10">
               <img
-                className={cn('h-8 w-auto shrink-0', darkIconPath && 'dark:hidden')}
+                className={cn(
+                  'h-8 w-auto max-w-24 shrink-0 object-contain object-left',
+                  darkIconPath && 'dark:hidden'
+                )}
                 src={lightIconPath}
                 width={32}
                 height={32}
@@ -49,7 +52,7 @@ const TechCards = ({ children = null, withToggler = false }) => (
               />
               {darkIconPath && (
                 <img
-                  className="hidden dark:block"
+                  className="hidden h-8 w-auto max-w-24 shrink-0 object-contain object-left dark:block"
                   src={darkIconPath}
                   width={32}
                   height={32}

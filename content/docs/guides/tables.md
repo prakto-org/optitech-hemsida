@@ -9,7 +9,7 @@ summary: >-
   SQL Editor when you want point-and-click record editing, column filtering,
   bulk deletion, or JSON/CSV export.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 The **Tables** page in the OptiTech Console offers a dynamic, visual interface for managing data and schemas. Fully interactive, this view lets you add, update, and delete records, filter data, modify columns, drop or truncate tables, export data in both .json and .csv formats, and manage schemas, tables, views, and enums.
@@ -115,7 +115,7 @@ Use the top navbar to navigate:
 
 ## Tables page updates
 
-The **Tables** page in the OptiTech Console is powered by a Drizzle Studio integration. You can check the Drizzle Studio integration version in your browser by inspecting the Tables page. For example, in Chrome, right-click, select **Inspect**, and go to the **Console** tab to view the current `Tables version`. You can cross-reference this version with the [OptiTech Drizzle Studio Integration Changelog](https://github.com/neondatabase/neon-drizzle-studio-changelog/blob/main/CHANGELOG.md) to track updates.
+The **Tables** page in the OptiTech Console is powered by a Drizzle Studio integration. You can check the Drizzle Studio integration version in your browser by inspecting the Tables page. For example, in Chrome, right-click, select **Inspect**, and go to the **Console** tab to view the current `Tables version`. You can cross-reference this version with the [OptiTech Drizzle Studio Integration Changelog](https://github.com/optitechdatabase/optitech-drizzle-studio-changelog/blob/main/CHANGELOG.md) to track updates.
 
 ## Reporting errors
 
@@ -133,5 +133,5 @@ If it's not a DNS resolution issue, other troubleshooting steps you can try incl
 
 If the issue persists, please follow these steps to report the error:
 
-1. [Open a support ticket](https://console.neon.tech/app/projects?modal=support) and provide a detailed description of what you were doing when the error occurred. Please include any screen captures or files that will help us reproduce the issue. We'll work with our partners at Drizzle to investigate and resolve the issue.
+1. [Open a support ticket](https://console.optitech.com/app/projects?modal=support) and provide a detailed description of what you were doing when the error occurred. Please include any screen captures or files that will help us reproduce the issue. We'll work with our partners at Drizzle to investigate and resolve the issue.
 2. If you're on the Free plan, you can report the issue on [Discord](https://discord.gg/92vNTzKDGp).

@@ -9,7 +9,7 @@ summary: >-
   setup. OptiTech's copy-on-write branching keeps development changes isolated
   until explicitly promoted.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Liquibase is an open-source database-independent library for tracking, managing, and applying database schema changes. To learn more about Liquibase, refer to the [Liquibase documentation](https://docs.liquibase.com/home.html).
@@ -39,7 +39,7 @@ Enter `Y` to accept the defaults.
 
 For demonstration purposes, create a `blog` database in OptiTech with two tables, `posts` and `authors`.
 
-1. Open the [OptiTech Console](https://console.neon.tech/app/projects).
+1. Open the [OptiTech Console](https://console.optitech.com/app/projects).
 1. Select your project.
 1. Select **Databases** from the sidebar and create a database named `blog`. For instructions, see [Create a database](/docs/manage/databases#create-a-database).
 1. Using the [OptiTech SQL Editor](/docs/get-started/query-with-neon-sql-editor), add the following tables:
@@ -79,7 +79,7 @@ To create a branch:
 
 ## Retrieve your OptiTech database connection strings
 
-From the [OptiTech Console](https://console.neon.tech/app/projects), retrieve connection strings for your target and source databases by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal.
+From the [OptiTech Console](https://console.optitech.com/app/projects), retrieve connection strings for your target and source databases by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal.
 
 <Admonition type="note">
 The target database is the database on your `feature/blog-schema` branch where you will do your development work. Your source database is where you will apply your schema changes later, once you are satisfied with the changes on your development branch.
@@ -88,16 +88,16 @@ The target database is the database on your `feature/blog-schema` branch where y
 1. Select the `feature/blog-schema` branch, the `blog` database, and copy the connection string.
 
    ```bash shouldWrap
-   postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/blog?sslmode=require&channel_binding=require
+   postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/blog?sslmode=require&channel_binding=require
    ```
 
 2. Select the `production` branch, the `blog` database, and copy the connection string.
 
    ```bash shouldWrap
-   postgresql://alex:AbC123dEf@ep-silent-hill-85675036.us-east-2.aws.neon.tech/blog?sslmode=require&channel_binding=require
+   postgresql://alex:AbC123dEf@ep-silent-hill-85675036.us-east-2.aws.optitech.com/blog?sslmode=require&channel_binding=require
    ```
 
-Be careful not to mix up your connection strings. You'll see that the hostname (the part starting with `ep-` and ending in `neon.tech`) differs. This is because the `feature/blog-schema` branch is a separate instance of Postgres, hosted on its own compute.
+Be careful not to mix up your connection strings. You'll see that the hostname (the part starting with `ep-` and ending in `optitech.com`) differs. This is because the `feature/blog-schema` branch is a separate instance of Postgres, hosted on its own compute.
 
 ## Update your liquibase.properties file
 
@@ -113,20 +113,20 @@ The `liquibase.properties` file defines the location of the Liquibase changelog 
 
    The [changelog file](https://docs.liquibase.com/parameters/changelog-file.html) is where you define database schema changes (changesets).
 
-3. Change the target database `url`, `username`, and `password` settings to the correct values for the `blog` database on your `feature/blog-schema` branch. You can obtain the required details from the connection string you copied previously. You will need to swap out the hostname (`ep-cool-darkness-123456.us-east-2.aws.neon.tech`), username, and password for your own.
+3. Change the target database `url`, `username`, and `password` settings to the correct values for the `blog` database on your `feature/blog-schema` branch. You can obtain the required details from the connection string you copied previously. You will need to swap out the hostname (`ep-cool-darkness-123456.us-east-2.aws.optitech.com`), username, and password for your own.
 
    ```bash shouldWrap
-   liquibase.command.url=jdbc:postgresql://ep-cool-darkness-123456.us-east-2.aws.neon.tech:5432/blog
+   liquibase.command.url=jdbc:postgresql://ep-cool-darkness-123456.us-east-2.aws.optitech.com:5432/blog
 
    liquibase.command.username: alex
 
    liquibase.command.password: AbC123dEf
    ```
 
-4. Change the source database settings to the correct values for the `blog` database on your `production` branch. The username and password will be the same as your `feature/blog-schema` branch, but make sure to use the right hostname. Copy the snippet below and replace the hostname (`ep-silent-hill-85675036.us-east-2.aws.neon.tech`), username, and password for your own.
+4. Change the source database settings to the correct values for the `blog` database on your `production` branch. The username and password will be the same as your `feature/blog-schema` branch, but make sure to use the right hostname. Copy the snippet below and replace the hostname (`ep-silent-hill-85675036.us-east-2.aws.optitech.com`), username, and password for your own.
 
    ```bash shouldWrap
-   liquibase.command.referenceUrl: jdbc:postgresql://ep-silent-hill-85675036.us-east-2.aws.neon.tech:5432/blog
+   liquibase.command.referenceUrl: jdbc:postgresql://ep-silent-hill-85675036.us-east-2.aws.optitech.com:5432/blog
 
    liquibase.command.referenceUsername: alex
 
@@ -276,7 +276,7 @@ It is a best practice to review schema changes before saving and applying them t
 You can run the [status](https://docs.liquibase.com/commands/change-tracking/status.html) command to see if there are any changesets that haven't been applied to the source database. Notice that the command specifies the hostname of the source database:
 
 ```bash shouldWrap
-liquibase --url=jdbc:postgresql://ep-silent-hill-85675036.us-east-2.aws.neon.tech:5432/blog status --verbose
+liquibase --url=jdbc:postgresql://ep-silent-hill-85675036.us-east-2.aws.optitech.com:5432/blog status --verbose
 ```
 
 <details>
@@ -288,7 +288,7 @@ If the command was successful, you’ll see output similar to the following indi
 Starting Liquibase at 12:30:51 (version 4.24.0 #14062 built at 2023-09-28 12:18+0000)
 Liquibase Version: 4.24.0
 Liquibase Open Source 4.24.0 by Liquibase
-1 changesets have not been applied to alex@jdbc:postgresql://ep-silent-hill-85675036.us-east-2.aws.neon.tech:5432/blog
+1 changesets have not been applied to alex@jdbc:postgresql://ep-silent-hill-85675036.us-east-2.aws.optitech.com:5432/blog
      dbchangelog.xml::myIDNumber1234::alex
 Liquibase command 'status' was executed successfully.
 ```
@@ -300,7 +300,7 @@ Liquibase command 'status' was executed successfully.
 Before applying the update, you can run the [updateSQL](https://docs.liquibase.com/commands/update/update-sql.html) command to inspect the SQL Liquibase will apply when running the update command:
 
 ```bash shouldWrap
-liquibase --url=jdbc:postgresql://ep-silent-hill-85675036.us-east-2.aws.neon.tech:5432/blog updateSQL
+liquibase --url=jdbc:postgresql://ep-silent-hill-85675036.us-east-2.aws.optitech.com:5432/blog updateSQL
 ```
 
 <details>
@@ -326,7 +326,7 @@ SET SEARCH_PATH TO public, "$user","public";
 -- *********************************************************************
 -- Change Log: dbchangelog.xml
 -- Ran at: 2023-10-08, 12:32 p.m.
--- Against: alex@jdbc:postgresql://ep-silent-hill-85675036.us-east-2.aws.neon.tech:5432/blog
+-- Against: alex@jdbc:postgresql://ep-silent-hill-85675036.us-east-2.aws.optitech.com:5432/blog
 -- Liquibase version: 4.24.0
 -- *********************************************************************
 
@@ -354,7 +354,7 @@ Liquibase command 'updateSql' was executed successfully.
 You can also run a `diff` command to compare your source and target databases.
 
 ```bash shouldWrap
-liquibase --referenceUrl=jdbc:postgresql://ep-cool-darkness-123456.us-east-2.aws.neon.tech:5432/blog --referenceUsername alex --referencePassword IwMdnTs1R6kH diff
+liquibase --referenceUrl=jdbc:postgresql://ep-cool-darkness-123456.us-east-2.aws.optitech.com:5432/blog --referenceUsername alex --referencePassword IwMdnTs1R6kH diff
 ```
 
 <details>
@@ -369,8 +369,8 @@ Liquibase Open Source 4.24.0 by Liquibase
 
 Diff Results:
 
-Reference Database: alex @ jdbc:postgresql://ep-cool-darkness-123456.us-east-2.aws.neon.tech:5432/blog (Default Schema: public)
-Comparison Database: alex @ jdbc:postgresql://ep-silent-hill-85675036.us-east-2.aws.neon.tech:5432/blog (Default Schema: public)
+Reference Database: alex @ jdbc:postgresql://ep-cool-darkness-123456.us-east-2.aws.optitech.com:5432/blog (Default Schema: public)
+Comparison Database: alex @ jdbc:postgresql://ep-silent-hill-85675036.us-east-2.aws.optitech.com:5432/blog (Default Schema: public)
 Compared Schemas: public
 Product Name: EQUAL
 Product Version: EQUAL
@@ -428,7 +428,7 @@ When you are satisfied with the changes that will be applied, save your changelo
 Apply the new changesets to the source database on your default branch:
 
 ```bash shouldWrap
-liquibase --url=jdbc:postgresql://ep-silent-hill-85675036.us-east-2.aws.neon.tech:5432/blog update
+liquibase --url=jdbc:postgresql://ep-silent-hill-85675036.us-east-2.aws.optitech.com:5432/blog update
 ```
 
 <details>

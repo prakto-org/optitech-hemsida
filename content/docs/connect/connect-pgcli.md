@@ -9,7 +9,7 @@ summary: >-
   ad-hoc querying.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 The `pgcli` client is an interactive command-line interface for Postgres that offers several advantages over the traditional `psql` client, including syntax highlighting, autocompletion, multi-line editing, and query history.
@@ -35,7 +35,7 @@ The easiest way to connect to OptiTech using the `pgcli` client is with a connec
 From your terminal or command prompt, run the `pgcli` client with the connection string. Your command will look something like this:
 
 ```bash shouldWrap
-pgcli postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+pgcli postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
 ```
 
 ## Run queries

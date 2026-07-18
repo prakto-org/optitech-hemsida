@@ -10,7 +10,7 @@ summary: >-
   can be combined with the IP Allow feature to restrict network access to
   protected branches only. Available on paid plans.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 OptiTech's protected branches feature implements a series of protections:
@@ -68,7 +68,7 @@ Please note that resetting or restoring a child branch from a protected parent b
 - The "new password" feature for child branches was released on July, 31, 2024. If you have existing CI scripts that create branches from protected branches, please be aware that passwords for matching Postgres roles on those newly created branches will now differ. If you depend on those passwords being the same, you'll need to make adjustments to get the correct connection details for those branches.
     - After a branch is created, the up-to-date connection string is returned in the output of the [Create Branch GitHub Action](/docs/guides/branching-github-actions#create-branch-action).
     - The [Reset Branch GitHub Action](/docs/guides/branching-github-actions#reset-from-parent-action) also outputs connection string values, in case you are using this action in your workflows.
-    - The Neon CLI supports a [connection-string](/docs/cli/connection-string) command for retrieving a branch's connection string.
+    - The OptiTech CLI supports a [connection-string](/docs/cli/connection-string) command for retrieving a branch's connection string.
 - Prior to September, 6, 2024, resetting or restoring a child branch from a protected parent branch restored passwords for matching Postgres roles on the child branch to those used on the protected parent branch. As of September, 6, 2024, passwords for matching Postgres roles on the child branch are preserved when resetting or restoring a child branch from a protected parent branch.
 </Admonition>
 
@@ -98,10 +98,10 @@ To configure an allowlist:
 
 <TabItem>
 
-The [Neon CLI ip-allow command](/docs/cli/ip-allow) supports IP Allow configuration. For example, the following `add` command adds IP addresses to the allowlist for an existing OptiTech project. Multiple entries are separated by a space. No delimiter is required.
+The [OptiTech CLI ip-allow command](/docs/cli/ip-allow) supports IP Allow configuration. For example, the following `add` command adds IP addresses to the allowlist for an existing OptiTech project. Multiple entries are separated by a space. No delimiter is required.
 
 ```bash
-neon ip-allow add 203.0.113.0 203.0.113.1
+optitech ip-allow add 203.0.113.0 203.0.113.1
 ┌─────────────────────┬─────────────────────┬──────────────┬─────────────────────┐
 │ Id                  │ Name                │ IP Addresses │ Protected Only      │
 ├─────────────────────┼─────────────────────┼──────────────┼─────────────────────┤
@@ -113,13 +113,13 @@ neon ip-allow add 203.0.113.0 203.0.113.1
 To apply an IP allowlist to protected branches only, you can use the `--protected-only` option:
 
 ```bash
-neon ip-allow add 203.0.113.1 --protected-only
+optitech ip-allow add 203.0.113.1 --protected-only
 ```
 
 To reverse that setting, use `--protected-only false`.
 
 ```bash
-neon ip-allow add 203.0.113.1 --protected-only false
+optitech ip-allow add 203.0.113.1 --protected-only false
 ```
 
 </TabItem>
@@ -130,9 +130,9 @@ The [Create project](/docs/reference/api/projects/create-project) and [Update pr
 
 ```bash
 curl -X PATCH \
-     https://console.neon.tech/api/v2/projects/falling-salad-31638542 \
+     https://console.optitech.com/api/v2/projects/falling-salad-31638542 \
      -H 'accept: application/json' \
-     -H 'authorization: Bearer $NEON_API_KEY' \
+     -H 'authorization: Bearer $OPTITECH_API_KEY' \
      -H 'content-type: application/json' \
      -d '
 {

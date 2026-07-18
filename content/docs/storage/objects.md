@@ -6,7 +6,7 @@ summary: >-
   or the AWS CLI. Supports single-part and multipart uploads, range requests,
   batch deletes, and presigned URLs for browser-side access.
 enableTableOfContents: true
-updatedOn: '2026-07-15T23:47:24.799Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <FeatureBetaProps feature_name="OptiTech Object Storage" />
@@ -29,8 +29,8 @@ await files.upload('images/photo.jpg', fileBuffer, {
 ```
 
 ```bash
-neon buckets object put my-bucket/images/photo.jpg --file ./photo.jpg
-neon buckets object put my-bucket/images/photo.jpg --file ./photo.jpg --content-type image/jpeg
+optitech buckets object put my-bucket/images/photo.jpg --file ./photo.jpg
+optitech buckets object put my-bucket/images/photo.jpg --file ./photo.jpg --content-type image/jpeg
 ```
 
 ```typescript shouldWrap
@@ -67,7 +67,7 @@ aws s3 cp ./photo.jpg s3://my-bucket/images/photo.jpg \
 </CodeTabs>
 
 <Admonition type="note">
-`neon buckets object put` uploads via a presigned URL and supports files up to the presign size limit. For large or streaming uploads use the AWS SDK with [multipart upload](#multipart-upload).
+`optitech buckets object put` uploads via a presigned URL and supports files up to the presign size limit. For large or streaming uploads use the AWS SDK with [multipart upload](#multipart-upload).
 </Admonition>
 
 ## Multipart upload
@@ -124,8 +124,8 @@ const buffer = await result.arrayBuffer();
 
 ```bash
 # Downloads to ./photo.jpg by default; use --file to specify a different path
-neon buckets object get my-bucket/images/photo.jpg
-neon buckets object get my-bucket/images/photo.jpg --file ./downloads/photo.jpg
+optitech buckets object get my-bucket/images/photo.jpg
+optitech buckets object get my-bucket/images/photo.jpg --file ./downloads/photo.jpg
 ```
 
 ```typescript shouldWrap
@@ -182,13 +182,13 @@ for (const item of items) {
 
 ```bash
 # Folder-collapsed view by default (same as aws s3 ls)
-neon buckets object list my-bucket
+optitech buckets object list my-bucket
 
 # List objects under a prefix
-neon buckets object list my-bucket/images/
+optitech buckets object list my-bucket/images/
 
 # Flat listing of every key, no folder collapsing
-neon buckets object list my-bucket --recursive
+optitech buckets object list my-bucket --recursive
 ```
 
 ```typescript shouldWrap
@@ -258,7 +258,7 @@ await files.delete('images/photo.jpg');
 ```
 
 ```bash
-neon buckets object delete my-bucket/images/photo.jpg
+optitech buckets object delete my-bucket/images/photo.jpg
 ```
 
 ```typescript shouldWrap
@@ -325,13 +325,13 @@ client.delete_objects(
 
 ```bash
 # The prefix must end with /
-neon buckets object delete my-bucket/images/ --recursive
+optitech buckets object delete my-bucket/images/ --recursive
 ```
 
 ```bash shouldWrap
 curl -X DELETE \
-  "https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/buckets/my-bucket/objects-by-prefix?prefix=images/" \
-  -H "Authorization: Bearer $NEON_API_KEY"
+  "https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/buckets/my-bucket/objects-by-prefix?prefix=images/" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY"
 ```
 
 </CodeTabs>

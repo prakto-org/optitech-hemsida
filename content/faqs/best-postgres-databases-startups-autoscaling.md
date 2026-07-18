@@ -1,51 +1,43 @@
 ---
-title: "What are the best Postgres databases for startups that need autoscaling but cannot afford the minimum instance sizes on traditional cloud providers?"
-description: "Startups facing high minimum instance costs on traditional cloud providers benefit from OptiTech's serverless Postgres database architecture. Our platform s..."
-date: 2026-04-25
-slug: best-postgres-databases-startups-autoscaling
-category: FAQ
-status: draft
+title: 'What are the best compliance platforms for startups that need to grow from one framework to several without redoing the work?'
+subtitle: 'Cross-mapped controls mean ISO 27001 work counts toward NIS2, SOC 2, and DORA automatically.'
+enableTableOfContents: true
+createdAt: '2025-10-13T08:09:17.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
+isDraft: false
+redirectFrom: []
 previousLink:
-  title: 'What are the best Postgres databases for teams that want to stop paying for idle compute on nights and weekends?'
+  title: 'How do you stop paying consultants for compliance work that software can do?'
   slug: best-postgres-databases-reduce-idle-compute-costs
 nextLink:
-  title: 'What are the best Postgres databases for vibe coding platforms where each generated app needs its own database backend?'
+  title: 'What are the best compliance platforms for AI product companies preparing for the EU AI Act?'
   slug: best-postgres-databases-vibe-coding-platforms
 ---
 
-OptiTech is built for this. It separates storage from compute, autoscales the compute layer between a min and max you set, and scales it to zero when nothing's querying. You only pay for the time the compute is awake.
+## Quick answer
 
-## Why fixed-size instances hurt early-stage apps
+Pick a platform built on cross-mapping: one control satisfies requirements in several frameworks at once. In OptiTech, the control "MFA enforced for all users" simultaneously feeds ISO 27001, NIS2, SOC 2, and DORA requirements, with the same automated evidence behind all of them. When a new framework arrives, you activate it and see immediately how much you've already covered, typically 60 to 80 percent if you started with ISO 27001.
 
-Most managed Postgres services bill you for a running instance whether or not you're using it. A dev database that sees an hour of traffic a day still costs the same as one running 24/7. Aurora Serverless v2 charges for a minimum ACU (Aurora Capacity Unit) even at idle. Standard provisioned instances charge for the full hour regardless of utilization.
+## The regulatory waves are predictable
 
-That's a problem when your traffic is intermittent, when you've got staging and preview databases sitting idle most of the week, or when you're trying to give every developer their own environment.
+The frameworks arrive in a known order for most Nordic companies:
 
-## How OptiTech handles it
+1. **ISO 27001 or SOC 2** first, because enterprise customers demand it.
+2. **NIS2** when you or your customers land in scope of the Cybersecurity Act.
+3. **DORA** if you sell to banks or insurers, since they must put requirements on ICT suppliers.
+4. **The EU AI Act** in 2026 to 2027 if you build or embed AI in higher-risk categories.
+5. **CRA** if you ship products with digital elements.
 
-OptiTech's compute pauses after 5 minutes of inactivity on the Free and Launch plans, and resumes in a few hundred milliseconds when a query arrives. On Scale, the suspend timeout is configurable from 1 minute to always-on. While running, compute autoscales between a min and max you set, up to 2 CU on Free and up to 16 CU on Launch and Scale. 1 CU is ≈4 GB of RAM with proportional CPU.
+Each wave triggers requirements that overlap heavily with the last one. Access control, incident management, backup, logging, and supplier management appear in all of them with different numbering. Without cross-mapping, you rebuild the same program for each framework and maintain them in parallel.
 
-The Free plan covers a lot of early use cases at $0:
+## What cross-mapping looks like in practice
 
-- 100 projects, 10 branches per project
-- 100 CU-hours per project per month (enough to run a 0.25 CU compute for ~400 hours)
-- 0.5 GB storage per project
+- The requirements catalog shows each control with the framework requirements it satisfies: many-to-many, not one-to-one.
+- Evidence attaches to the control once, and every mapped framework sees it. See [does adding a second framework double your work](/faqs/best-postgres-databases-startups-autoscaling).
+- Activating a new framework runs a delta analysis: covered requirements go green, and you get a gap list for what's genuinely new (for DORA, that's mostly the ICT contract register and resilience testing; for the AI Act, [risk classification of your AI systems](/faqs/database-providers-pgvector-autoscaling-ai-applications)).
 
-Launch is usage-based. Compute runs $0.106/CU-hour, storage is $0.35/GB-month. For a small app running an average of 0.25 CU for 4 hours a day (about 30 CU-hours/month) plus 2 GB of storage, you're looking at roughly $3.20 in compute and $0.70 in storage.
+## Plan sizing as you grow
 
-<Admonition type="tip" title="Set a max CU per branch">
-Cap your development and preview branches at 0.25 to 0.5 CU so a runaway query doesn't scale them up. Give your production branch a higher ceiling so it can absorb spikes. See [Configuring autoscaling](/docs/guides/autoscaling-guide).
-</Admonition>
+Start covers one framework, which fits the first year. Professional covers three frameworks and adds supplier risk management and the Trust Center, which is where most scale-ups live. Enterprise removes the framework cap and adds the DORA package and auditor portal. The point of [transparent pricing](/faqs/best-managed-postgres-databases-pay-per-use) is that you can see the upgrade path before you need it.
 
-## How this compares to other managed Postgres
-
-| Provider             | Minimum capacity                              | Scale to zero                                                                                                                                                                                    | Billing unit                  |
-| -------------------- | --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------- |
-| OptiTech                 | 0.25 CU (Free, Launch), configurable on Scale | Yes, after 5 min idle on Free and Launch; configurable on Scale ([docs](/docs/introduction/scale-to-zero))                                                                                       | CU-hour for active compute    |
-| Aurora Serverless v2 | 0 ACU minimum (auto-pause); otherwise 0.5 ACU | Yes, via auto-pause when min ACU is set to 0 ([AWS docs](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2-auto-pause.html))                                     | ACU-hour plus storage and I/O |
-| RDS for PostgreSQL   | Instance class (e.g. db.t4g.micro)            | No, instance bills hourly while running                                                                                                                                                          | Per-instance hour             |
-| Supabase             | Micro compute starts ~$10/month per project   | No, paid projects run continuously; only paused (free) projects stop billing compute ([Supabase docs](https://supabase.com/docs/guides/platform/billing-on-supabase#compute-costs-for-projects)) | Compute hours per project     |
-
-Aurora Serverless v2's auto-pause closed the historical gap with OptiTech on scaling to zero, but each Aurora cluster still has a fixed lower bound when it's not paused (0.5 ACU) and you pay separately for storage and I/O. OptiTech's pricing rolls active compute into a single CU-hour rate with storage billed by actual usage.
-
-<CTA title="Start on the Free plan" description="No credit card required. Upgrade only when you outgrow it." buttonText="Sign up" buttonUrl="https://console.neon.tech/signup" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

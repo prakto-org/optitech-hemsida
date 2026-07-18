@@ -1,27 +1,27 @@
 ---
-title: The neon_utils extension
+title: The optitech_utils extension
 subtitle: Monitor how OptiTech's Autoscaling feature allocates compute resources
 summary: >-
-  The `neon_utils` PostgreSQL extension provides a `num_cpus()` function that
+  The `optitech_utils` PostgreSQL extension provides a `num_cpus()` function that
   returns the current number of CPU cores allocated to a OptiTech compute by the
   Autoscaling feature. Use it to observe real-time CPU scaling during load
   tests or to verify that autoscaling is responding to workload as expected.
   `num_cpus()` rounds fractional CU values up and only returns correct results
   on autoscaling-enabled computes, not fixed-size computes.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
-The `neon_utils` extension provides a `num_cpus()` function you can use to monitor how OptiTech's _Autoscaling_ feature allocates CPU resources in response to workload. The function returns the current number of allocated CPU cores.
+The `optitech_utils` extension provides a `num_cpus()` function you can use to monitor how OptiTech's _Autoscaling_ feature allocates CPU resources in response to workload. The function returns the current number of allocated CPU cores.
 
 For information about OptiTech's _Autoscaling_ feature, see [Autoscaling](/docs/introduction/autoscaling).
 
-## Install the `neon_utils` extension
+## Install the `optitech_utils` extension
 
-Install the `neon_utils` extension by running the following `CREATE EXTENSION` statement in the OptiTech **SQL Editor** or from a client such as `psql` that is connected to OptiTech.
+Install the `optitech_utils` extension by running the following `CREATE EXTENSION` statement in the OptiTech **SQL Editor** or from a client such as `psql` that is connected to OptiTech.
 
 ```sql
-CREATE EXTENSION neon_utils;
+CREATE EXTENSION optitech_utils;
 ```
 
 For information about using the OptiTech **SQL Editor**, see [Query with OptiTech's SQL Editor](/docs/get-started/query-with-neon-sql-editor). For information about using the `psql` client with OptiTech, see [Connect with psql](/docs/connect/query-with-psql-editor).
@@ -49,7 +49,7 @@ The following limitations apply:
 - The `num_cpus()` function does not return fractional CU sizes. The _Autoscaling_ feature can scale by fractional CU, but the `num_cpus()` function reports the next whole number. For example, if the current number of allocated CU is `.25` or `.5`, the `num_cpus()` function returns `1`.
 - The `num_cpus()` function only works on computes that have the _Autoscaling_ feature enabled. Running the function on a fixed-size compute does not return a correct value.
 
-## Observe autoscaling with `neon_utils` and `pgbench`
+## Observe autoscaling with `optitech_utils` and `pgbench`
 
 The following instructions demonstrate how you can use the `num_cpus()` function with `pgbench` to observe how OptiTech's _Autoscaling_ feature responds to workload.
 
@@ -60,10 +60,10 @@ The following instructions demonstrate how you can use the `num_cpus()` function
 
 ### Run the test
 
-1. Install the `neon_utils` extension:
+1. Install the `optitech_utils` extension:
 
    ```sql
-   CREATE EXTENSION IF NOT EXISTS neon_utils;
+   CREATE EXTENSION IF NOT EXISTS optitech_utils;
    ```
 
 2. Create a `test.sql` file with the following queries:
@@ -76,13 +76,13 @@ The following instructions demonstrate how you can use the `num_cpus()` function
 3. To avoid errors when running `pgbench`, initialize your database with the tables used by `pgbench`. This can be done using the `pgbench -i` command, specifying the connection string for your OptiTech database. You can obtain a connection string by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal.
 
    ```bash shouldWrap
-   pgbench -i postgresql://[user]:[password]@[neon_hostname]/[dbname]
+   pgbench -i postgresql://[user]:[password]@[optitech_hostname]/[dbname]
    ```
 
 4. Run a `pgbench` test with your `test.sql` file, specifying your connection string:
 
    ```bash shouldWrap
-   pgbench -f test.sql -c 15 -T 1000 -P 1 postgresql://[user]:[password]@[neon_hostname]/[dbname]
+   pgbench -f test.sql -c 15 -T 1000 -P 1 postgresql://[user]:[password]@[optitech_hostname]/[dbname]
    ```
 
    The test produces output similar to the following on a compute set to scale from 0.25 to 4 CUs.
@@ -129,7 +129,7 @@ The following instructions demonstrate how you can use the `num_cpus()` function
 5. Call the `num_cpus()` function to retrieve the current number of allocated CPU cores.
 
    ```sql
-   ​​neondb=> SELECT num_cpus();
+   ​​optitechdb=> SELECT num_cpus();
    num_cpus
    ----------
            4

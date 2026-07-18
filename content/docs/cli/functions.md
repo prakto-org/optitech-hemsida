@@ -1,9 +1,9 @@
 ---
-title: 'Neon CLI command: functions'
-subtitle: 'Deploy, list, inspect, and delete Neon Functions'
+title: 'OptiTech CLI command: functions'
+subtitle: 'Deploy, list, inspect, and delete OptiTech Functions'
 summary: >-
-  The Neon CLI `neon functions` command manages Neon Functions on a branch:
-  `neon functions deploy <slug>` bundles and deploys a function from a local
+  The OptiTech CLI `optitech functions` command manages OptiTech Functions on a branch:
+  `optitech functions deploy <slug>` bundles and deploys a function from a local
   directory or entry file (with --src, --runtime, --env, and --wait), and the list,
   get, and delete subcommands manage deployed functions. The slug is the
   permanent function identifier: 1 to 20 lowercase letters and digits.
@@ -12,13 +12,13 @@ redirectFrom:
   - /docs/cli/function
 ---
 
-<FeatureBetaProps feature_name="Neon Functions" />
+<FeatureBetaProps feature_name="OptiTech Functions" />
 
-The `functions` command manages [Neon Functions](/docs/compute/functions/overview) on a branch. This is the command reference; for the full deployment workflow, see [Deploy functions](/docs/compute/functions/deploy). To run functions locally, see [`neon dev`](/docs/cli/dev).
+The `functions` command manages [OptiTech Functions](/docs/compute/functions/overview) on a branch. This is the command reference; for the full deployment workflow, see [Deploy functions](/docs/compute/functions/deploy). To run functions locally, see [`optitech dev`](/docs/cli/dev).
 
 <CliSubcommands command="functions" />
 
-## neon functions deploy (#deploy)
+## optitech functions deploy (#deploy)
 
 Deploys a function from a local directory or entry file. The `<slug>` is the permanent function identifier: 1 to 20 lowercase letters and digits (`^[a-z0-9]{1,20}$`).
 
@@ -31,7 +31,7 @@ By default, `deploy` waits until the deployment finishes building (`--wait=true`
 Deploy a function from an entry file:
 
 ```bash
-neon functions deploy hello --src functions/hello.ts
+optitech functions deploy hello --src functions/hello.ts
 ```
 
 ```text filename="Output"
@@ -47,10 +47,10 @@ INFO: Function deployment hello/1 completed.
 Deploy with environment variables and wait for the build:
 
 ```bash
-neon functions deploy hello --src functions/hello.ts --env LOG_LEVEL=info --wait
+optitech functions deploy hello --src functions/hello.ts --env LOG_LEVEL=info --wait
 ```
 
-## neon functions list (#list)
+## optitech functions list (#list)
 
 Lists the functions on the branch.
 
@@ -59,21 +59,21 @@ Lists the functions on the branch.
 <CliOptions command="functions list" />
 
 ```bash
-neon functions list
+optitech functions list
 ```
 
 ```text filename="Output"
 ┌───────┬───────┬─────────────────────────────────────────────────────────────────────────────┬─────────────────────────────┐
 │ Slug  │ Name  │ Invocation Url                                                              │ Created At                  │
 ├───────┼───────┼─────────────────────────────────────────────────────────────────────────────┼─────────────────────────────┤
-│ hello │ hello │ https://br-cool-darkness-123456-hello.compute.c-1.us-east-2.aws.neon.tech/ │ 2026-06-12T00:14:57.942988Z │
+│ hello │ hello │ https://br-cool-darkness-123456-hello.compute.c-1.us-east-2.aws.optitech.com/ │ 2026-06-12T00:14:57.942988Z │
 └───────┴───────┴─────────────────────────────────────────────────────────────────────────────┴─────────────────────────────┘
 ```
 
 List with full deployment details for scripts and agents:
 
 ```bash
-neon functions list --output json
+optitech functions list --output json
 ```
 
 <details>
@@ -85,7 +85,7 @@ neon functions list --output json
     "id": "hello",
     "slug": "hello",
     "name": "hello",
-    "invocation_url": "https://br-cool-darkness-123456-hello.compute.c-1.us-east-2.aws.neon.tech/",
+    "invocation_url": "https://br-cool-darkness-123456-hello.compute.c-1.us-east-2.aws.optitech.com/",
     "current_deployment": {
       "id": 1,
       "status": "completed",
@@ -107,7 +107,7 @@ neon functions list --output json
 
 </details>
 
-## neon functions get (#get)
+## optitech functions get (#get)
 
 Shows a function's details.
 
@@ -116,7 +116,7 @@ Shows a function's details.
 <CliOptions command="functions get" />
 
 ```bash
-neon functions get hello
+optitech functions get hello
 ```
 
 ```text filename="Output"
@@ -124,7 +124,7 @@ function
 ┌───────┬───────┬─────────────────────────────────────────────────────────────────────────────┬─────────────────────────────┐
 │ Slug  │ Name  │ Invocation Url                                                              │ Created At                  │
 ├───────┼───────┼─────────────────────────────────────────────────────────────────────────────┼─────────────────────────────┤
-│ hello │ hello │ https://br-cool-darkness-123456-hello.compute.c-1.us-east-2.aws.neon.tech/ │ 2026-06-12T00:14:57.942988Z │
+│ hello │ hello │ https://br-cool-darkness-123456-hello.compute.c-1.us-east-2.aws.optitech.com/ │ 2026-06-12T00:14:57.942988Z │
 └───────┴───────┴─────────────────────────────────────────────────────────────────────────────┴─────────────────────────────┘
 active deployment
 ┌────┬───────────┬──────────┬────────────┬─────────────────────────────┐
@@ -134,7 +134,7 @@ active deployment
 └────┴───────────┴──────────┴────────────┴─────────────────────────────┘
 ```
 
-## neon functions delete (#delete)
+## optitech functions delete (#delete)
 
 Deletes a function on the branch.
 
@@ -143,7 +143,7 @@ Deletes a function on the branch.
 <CliOptions command="functions delete" />
 
 ```bash
-neon functions delete hello
+optitech functions delete hello
 ```
 
 ```text filename="Output"

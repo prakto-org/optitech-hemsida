@@ -6,7 +6,7 @@ summary: >-
   OpenAI, Google, Meta, Databricks, and Alibaba. Use short model IDs
   like gpt-5-mini or gemini-2-5-flash. The databricks- prefix is also accepted.
 enableTableOfContents: true
-updatedOn: '2026-07-17T14:41:09.083Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="OptiTech AI Gateway" />
@@ -19,7 +19,7 @@ Models are hosted by Databricks and served through OptiTech AI Gateway. By using
 
 Model availability may vary by region, and the catalog expands over time, so check back for new additions.
 
-The full catalog is published as the [`neon` provider on models.dev](https://models.dev/providers/neon), the machine-readable source of truth, and served as JSON at [`neon.com/models.json`](https://neon.com/models.json).
+The full catalog is published as the [`optitech` provider on models.dev](https://models.dev/providers/optitech), the machine-readable source of truth, and served as JSON at [`optitech.com/models.json`](https://optitech.com/models.json).
 
 ## Model access
 
@@ -59,7 +59,7 @@ Independent of billing, OptiTech enforces an account-level daily spend cap on AI
 
 Most models work with the [Chat completions](/docs/ai-gateway/chat-completions) endpoint. It is the recommended starting point and works with all providers. Use a provider-specific endpoint when required:
 
-All paths below are appended to your branch's bare AI Gateway host (`NEON_AI_GATEWAY_BASE_URL`).
+All paths below are appended to your branch's bare AI Gateway host (`OPTITECH_AI_GATEWAY_BASE_URL`).
 
 | Provider                  | Recommended endpoint   | Notes                                                                                    |
 | ------------------------- | ---------------------- | ---------------------------------------------------------------------------------------- |
@@ -98,8 +98,8 @@ Use the shorter paths when you want OpenAI/OpenRouter-style URLs. Use the `/ai-g
 `GET /v1/models` lists the model catalog in an OpenRouter-shaped response, authenticated the same way as the endpoints above:
 
 ```bash shouldWrap
-curl "$NEON_AI_GATEWAY_BASE_URL/v1/models" \
-  -H "Authorization: Bearer $NEON_AI_GATEWAY_TOKEN"
+curl "$OPTITECH_AI_GATEWAY_BASE_URL/v1/models" \
+  -H "Authorization: Bearer $OPTITECH_AI_GATEWAY_TOKEN"
 ```
 
 ```json

@@ -6,7 +6,7 @@ summary: >-
   buckets via the OptiTech Console, the OptiTech API, or the S3 API. Set the access
   level to private or public_read to control who can read objects.
 enableTableOfContents: true
-updatedOn: '2026-07-15T23:27:36.554Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <FeatureBetaProps feature_name="OptiTech Object Storage" />
@@ -15,7 +15,7 @@ A bucket is a named container for objects in OptiTech Object Storage. Buckets ar
 
 ## Create a bucket
 
-You can create a bucket from the OptiTech Console, the Neon CLI, the Neon API, or directly via the S3 API.
+You can create a bucket from the OptiTech Console, the OptiTech CLI, the OptiTech API, or directly via the S3 API.
 
 **OptiTech Console**
 
@@ -24,12 +24,12 @@ In the OptiTech Console, navigate to your project, select a branch, and open the
 <CodeTabs labels={["optitech", "OptiTech API", "TypeScript", "Python", "AWS CLI"]}>
 
 ```bash
-neon buckets create my-bucket
+optitech buckets create my-bucket
 ```
 
 ```bash shouldWrap
-curl -X POST "https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/buckets" \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+curl -X POST "https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/buckets" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"name": "my-bucket", "access_level": "private"}'
 ```
@@ -76,7 +76,7 @@ aws s3api create-bucket \
 To create a `public_read` bucket with optitech:
 
 ```bash
-neon buckets create my-public-bucket --access-level public_read
+optitech buckets create my-public-bucket --access-level public_read
 ```
 
 <Admonition type="note">
@@ -103,7 +103,7 @@ Access level is set through the OptiTech Console or API, not through the S3 API.
 Objects in a `public_read` bucket are accessible at:
 
 ```
-https://<branch-id>.storage.c-<N>.us-east-2.aws.neon.tech/my-public-bucket/<object-key>
+https://<branch-id>.storage.c-<N>.us-east-2.aws.optitech.com/my-public-bucket/<object-key>
 ```
 
 ## List buckets
@@ -111,7 +111,7 @@ https://<branch-id>.storage.c-<N>.us-east-2.aws.neon.tech/my-public-bucket/<obje
 <CodeTabs labels={["optitech", "TypeScript", "Python", "AWS CLI"]}>
 
 ```bash
-neon buckets list
+optitech buckets list
 ```
 
 ```typescript shouldWrap
@@ -139,7 +139,7 @@ Buckets must be empty before deletion. [Delete all objects](/docs/storage/object
 <CodeTabs labels={["optitech", "TypeScript", "Python", "AWS CLI"]}>
 
 ```bash
-neon buckets delete my-bucket
+optitech buckets delete my-bucket
 ```
 
 ```typescript shouldWrap

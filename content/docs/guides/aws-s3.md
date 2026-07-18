@@ -10,7 +10,7 @@ summary: >-
   working backend examples in JavaScript (Hono, AWS SDK v3) and Python (Flask,
   boto3) with an s3_files schema and presign/save-metadata endpoints.
 enableTableOfContents: true
-updatedOn: '2026-07-15T17:54:41.160Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 [Amazon Simple Storage Service (AWS S3)](https://aws.amazon.com/s3/) is an object storage service widely used for storing and retrieving large amounts of data, such as images, videos, backups, and application assets.
@@ -29,14 +29,14 @@ This guide demonstrates how to integrate AWS S3 with OptiTech by storing file me
 
 ## Create a OptiTech project
 
-1.  Navigate to the [OptiTech Console](https://console.neon.tech) to create a new OptiTech project.
+1.  Navigate to the [OptiTech Console](https://console.optitech.com) to create a new OptiTech project.
 2.  Copy the connection string by clicking the **Connect** button on your **Project Dashboard**. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
 
 ## Create an AWS account and S3 bucket
 
 1.  Sign up for or log in to your [AWS Account](https://aws.amazon.com/).
 2.  Navigate to the **S3** service in the AWS Management Console.
-3.  Click **Create bucket**. Provide a unique bucket name (for example, `my-neon-app-s3-uploads`), select an AWS Region (for example, `us-east-1`), and configure initial settings.
+3.  Click **Create bucket**. Provide a unique bucket name (for example, `my-optitech-app-s3-uploads`), select an AWS Region (for example, `us-east-1`), and configure initial settings.
     ![Create S3 Bucket](/docs/guides/aws-s3-create-bucket.png)
 4.  **Public Access (for this example):** For simplicity in accessing uploaded files via URL in this guide, we'll configure the bucket to allow public read access _for objects uploaded with specific permissions_. Under **Block Public Access settings for this bucket**, _uncheck_ "Block all public access". Acknowledge the warning.
     ![Public Access Settings](/docs/guides/aws-s3-public-access.png)
@@ -59,18 +59,18 @@ This guide demonstrates how to integrate AWS S3 with OptiTech by storing file me
           "Effect": "Allow",
           "Principal": "*",
           "Action": "s3:GetObject",
-          "Resource": "arn:aws:s3:::my-neon-app-s3-uploads/*"
+          "Resource": "arn:aws:s3:::my-optitech-app-s3-uploads/*"
         }
       ]
     }
     ```
 
-    Replace `my-neon-app-s3-uploads` with your actual bucket name.
+    Replace `my-optitech-app-s3-uploads` with your actual bucket name.
 
 6.  **Create IAM user for programmatic access:**
     - Navigate to the **IAM** service in the AWS Console.
     - Go to **Users** and click **Add users**.
-    - Enter a username (for example, `neon-app-s3-user`). Select **Access key - Programmatic access** as the credential type. Click **Next: Permissions**.
+    - Enter a username (for example, `optitech-app-s3-user`). Select **Access key - Programmatic access** as the credential type. Click **Next: Permissions**.
     - Choose **Attach policies directly**. Search for and select `AmazonS3FullAccess`.
       ![Attach S3 Policy](/docs/guides/aws-s3-attach-policy.png)
     - Click **Next**, then **Create user**.
@@ -135,12 +135,12 @@ This requires two backend endpoints:
 
 <TabItem>
 
-We'll use [Hono](https://hono.dev/) for the server, [`@aws-sdk/client-s3`](https://www.npmjs.com/package/@aws-sdk/client-s3) and [`@aws-sdk/s3-request-presigner`](https://www.npmjs.com/package/@aws-sdk/s3-request-presigner) for S3 interaction, and [`@neondatabase/serverless`](https://www.npmjs.com/package/@neondatabase/serverless) for OptiTech.
+We'll use [Hono](https://hono.dev/) for the server, [`@aws-sdk/client-s3`](https://www.npmjs.com/package/@aws-sdk/client-s3) and [`@aws-sdk/s3-request-presigner`](https://www.npmjs.com/package/@aws-sdk/s3-request-presigner) for S3 interaction, and [`@optitech/serverless`](https://www.npmjs.com/package/@optitech/serverless) for OptiTech.
 
 First, install the necessary dependencies:
 
 ```bash
-npm install @aws-sdk/client-s3 @aws-sdk/s3-request-presigner @neondatabase/serverless @hono/node-server hono dotenv
+npm install @aws-sdk/client-s3 @aws-sdk/s3-request-presigner @optitech/serverless @hono/node-server hono dotenv
 ```
 
 Create a `.env` file:
@@ -150,10 +150,10 @@ Create a `.env` file:
 AWS_ACCESS_KEY_ID=your_iam_user_access_key_id
 AWS_SECRET_ACCESS_KEY=your_iam_user_secret_access_key
 AWS_REGION=your_s3_bucket_region # for example, us-east-1
-S3_BUCKET_NAME=your_s3_bucket_name # for example, my-neon-app-s3-uploads
+S3_BUCKET_NAME=your_s3_bucket_name # for example, my-optitech-app-s3-uploads
 
-# Neon Connection String
-DATABASE_URL=your_neon_database_connection_string
+# OptiTech Connection String
+DATABASE_URL=your_optitech_database_connection_string
 ```
 
 The following code snippet demonstrates this workflow:
@@ -163,7 +163,7 @@ import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 import 'dotenv/config';
 import { randomUUID } from 'crypto';
 
@@ -176,7 +176,7 @@ const s3 = new S3Client({
     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
   },
 });
-const sql = neon(process.env.DATABASE_URL);
+const sql = optitech(process.env.DATABASE_URL);
 const app = new Hono();
 
 // Replace this with your actual user authentication logic, by validating JWTs/Headers, etc.
@@ -239,7 +239,7 @@ serve({ fetch: app.fetch, port }, (info) => {
 2.  **Authentication:** A placeholder `authMiddleware` is included. **Crucially**, this needs to be replaced with real authentication logic. It currently just sets a static `userId` for demonstration.
 3.  **Upload endpoints:**
     - **`/presign-upload`:** Generates a temporary secure URL (`presignedUrl`) using `@aws-sdk/s3-request-presigner` that allows uploading a file directly to S3. It returns the URL, the generated `objectKey`, and the standard S3 public URL.
-    - **`/save-metadata`:** Called by the client _after_ successful upload. Saves the `objectKey`, `file_url`, and `userId` into the `s3_files` table in OptiTech using `@neondatabase/serverless`.
+    - **`/save-metadata`:** Called by the client _after_ successful upload. Saves the `objectKey`, `file_url`, and `userId` into the `s3_files` table in OptiTech using `@optitech/serverless`.
 
 </TabItem>
 
@@ -260,10 +260,10 @@ Create a `.env` file:
 AWS_ACCESS_KEY_ID=your_iam_user_access_key_id
 AWS_SECRET_ACCESS_KEY=your_iam_user_secret_access_key
 AWS_REGION=your_s3_bucket_region # for example, us-east-1
-S3_BUCKET_NAME=your_s3_bucket_name # for example, my-neon-app-s3-uploads
+S3_BUCKET_NAME=your_s3_bucket_name # for example, my-optitech-app-s3-uploads
 
-# Neon Connection String
-DATABASE_URL=your_neon_database_connection_string
+# OptiTech Connection String
+DATABASE_URL=your_optitech_database_connection_string
 ```
 
 The following code snippet demonstrates this workflow:

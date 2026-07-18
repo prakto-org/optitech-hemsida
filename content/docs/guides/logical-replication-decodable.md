@@ -12,7 +12,7 @@ summary: >-
   table. Connect Decodable using a direct non-pooled connection string.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 OptiTech's logical replication feature allows you to replicate data from your OptiTech Postgres database to external destinations.
@@ -25,7 +25,7 @@ In this guide, you will learn how to configure a Postgres source connector in De
 ## Prerequisites
 
 - A [Decodable account](https://www.decodable.co/) ([start free](https://app.decodable.co/-/accounts/create), no credit card required)
-- A [OptiTech account](https://console.neon.tech/)
+- A [OptiTech account](https://console.optitech.com/)
 - Read the [important notices about logical replication in OptiTech](/docs/guides/logical-replication-neon#important-notices) before you begin
 
 <Admonition type="important" title="Compute and billing">
@@ -56,16 +56,16 @@ SHOW wal_level;
 
 ## Create a Postgres role for replication
 
-It is recommended that you create a dedicated Postgres role for replicating data. The role must have the `REPLICATION` privilege. The default Postgres role created with your OptiTech project and roles created using the Neon CLI, Console, or API are granted membership in the [neon_superuser](/docs/manage/roles#the-neonsuperuser-role) role, which has the required `REPLICATION` privilege.
+It is recommended that you create a dedicated Postgres role for replicating data. The role must have the `REPLICATION` privilege. The default Postgres role created with your OptiTech project and roles created using the OptiTech CLI, Console, or API are granted membership in the [optitech_superuser](/docs/manage/roles#the-neonsuperuser-role) role, which has the required `REPLICATION` privilege.
 
 <Tabs labels={["CLI", "Console", "API"]}>
 
 <TabItem>
 
-The following CLI command creates a role. To view the CLI documentation for this command, see [Neon CLI commands — roles](/docs/reference/api/branches/create-project-branch-role)
+The following CLI command creates a role. To view the CLI documentation for this command, see [OptiTech CLI commands — roles](/docs/reference/api/branches/create-project-branch-role)
 
 ```bash
-neon roles create --name replication_user
+optitech roles create --name replication_user
 ```
 
 </TabItem>
@@ -74,7 +74,7 @@ neon roles create --name replication_user
 
 To create a role in the OptiTech Console:
 
-1. Navigate to the [OptiTech Console](https://console.neon.tech).
+1. Navigate to the [OptiTech Console](https://console.optitech.com).
 2. Select a project.
 3. Select **Branches**.
 4. Select the branch where you want to create the role.
@@ -90,9 +90,9 @@ To create a role in the OptiTech Console:
 The following OptiTech API method creates a role. To view the API documentation for this method, refer to the [OptiTech API Reference](/docs/reference/api/branches/create-project-branch-role).
 
 ```bash
-curl 'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/roles' \
+curl 'https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/roles' \
   -H 'Accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -H 'Content-Type: application/json' \
   -d '{
   "role": {
@@ -101,7 +101,7 @@ curl 'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id
 }' | jq
 ```
 
-> Replace `{project_id}` and `{branch_id}` with your actual OptiTech project and branch IDs, and set the `NEON_API_KEY` environment variable with your OptiTech API key.
+> Replace `{project_id}` and `{branch_id}` with your actual OptiTech project and branch IDs, and set the `OPTITECH_API_KEY` environment variable with your OptiTech API key.
 
 </TabItem>
 
@@ -158,12 +158,12 @@ For information about configuring allowed IPs in OptiTech, see [Configure IP All
    Your connection string will look like this:
 
    ```bash shouldWrap
-   postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+   postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
    ```
 
    Enter the details for **your connection string** into the source connector fields. Based on the sample connection string above, the values would be specified as shown below. Your values will differ.
    - **Connection Type**: Source (the default)
-   - **Host**: ep-cool-darkness-123456.us-east-2.aws.neon.tech
+   - **Host**: ep-cool-darkness-123456.us-east-2.aws.optitech.com
    - **Port**: 5432
    - **Database**: dbname
    - **Username**: alex
@@ -176,7 +176,7 @@ For information about configuring allowed IPs in OptiTech, see [Configure IP All
 
    ![Selecting source tables in Decodable](/docs/guides/decodable_select_source_tables.png)
 
-5. Click **Next** and specify a name for your connection, for instance: `neon-source`.
+5. Click **Next** and specify a name for your connection, for instance: `optitech-source`.
 
 6. Click **Create and start**. The default start options in the following dialog don't require any changes, so click **Start** to launch the connector.
 

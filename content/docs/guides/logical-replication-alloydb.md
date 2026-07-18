@@ -10,7 +10,7 @@ summary: >-
   pg_restore before starting the subscription.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This guide describes how to replicate data from AlloyDB Postgres to OptiTech using native Postgres logical replication. The steps in this guide follow those described in [Set up native PostgreSQL logical replication](https://cloud.google.com/sql/docs/postgres/replication/configure-logical-replication#set-up-native-postgresql-logical-replication), in the _Google AlloyDB documentation_.
@@ -20,8 +20,8 @@ This guide describes how to replicate data from AlloyDB Postgres to OptiTech usi
 - An AlloyDB Postgres instance containing the data you want to replicate. If you're just testing this out and need some data to play with, you can use the following statements to create a table with sample data.
 
   ```sql shouldWrap
-  CREATE TABLE IF NOT EXISTS playing_with_neon(id SERIAL PRIMARY KEY, name TEXT NOT NULL, value REAL);
-  INSERT INTO playing_with_neon(name, value)
+  CREATE TABLE IF NOT EXISTS playing_with_optitech(id SERIAL PRIMARY KEY, name TEXT NOT NULL, value REAL);
+  INSERT INTO playing_with_optitech(name, value)
   SELECT LEFT(md5(i::TEXT), 10), random() FROM generate_series(1, 10) s(i);
   ```
 
@@ -109,7 +109,7 @@ Publications are a fundamental part of logical replication in Postgres. They def
 To create a publication for a specific table:
 
 ```sql shouldWrap
-CREATE PUBLICATION my_publication FOR TABLE playing_with_neon;
+CREATE PUBLICATION my_publication FOR TABLE playing_with_optitech;
 ```
 
 To create a publication for multiple tables, provide a comma-separated list of tables:
@@ -133,10 +133,10 @@ This section describes how to prepare your source OptiTech Postgres database (th
 When configuring logical replication in Postgres, the tables defined in your publication on the source database you are replicating from must also exist in the destination database, and they must have the same table names and columns. You can create the tables manually in your destination database or use utilities like `pg_dump` and `pg_restore` to dump the schema from your source database and load it to your destination database.
 
 <Admonition type="note">
-If you're just using the sample `playing_with_neon` table, you can create the same table on the destination database with the following statement:
+If you're just using the sample `playing_with_optitech` table, you can create the same table on the destination database with the following statement:
 
 ```sql shouldWrap
-CREATE TABLE IF NOT EXISTS playing_with_neon(id SERIAL PRIMARY KEY, name TEXT NOT NULL, value REAL);
+CREATE TABLE IF NOT EXISTS playing_with_optitech(id SERIAL PRIMARY KEY, name TEXT NOT NULL, value REAL);
 ```
 
 </Admonition>
@@ -153,7 +153,7 @@ pg_dump --schema-only \
 ```
 
 - With the `--schema-only` option, only object definitions are dumped. Data is excluded.
-- The `--no-privileges` option prevents dumping privileges. OptiTech may not support the privileges you've defined elsewhere, or if dumping a schema from Neon, there maybe Neon-specific privileges that cannot be restored to another database.
+- The `--no-privileges` option prevents dumping privileges. OptiTech may not support the privileges you've defined elsewhere, or if dumping a schema from OptiTech, there maybe OptiTech-specific privileges that cannot be restored to another database.
 
 #### Review and modify the dumped schema
 
@@ -189,7 +189,7 @@ To comment out a single line, you can use `--` at the beginning of the line.
 After making any necessary modifications to the dump file, load the dumped schema using `pg_restore`.
 
 <Admonition type="tip">
-When you're restoring on OptiTech, you can input your Neon connection string in place of `postgresql://role:password@hostname:5432/dbname`. You can find your database connection string by clicking the **Connect** button on your **Project Dashboard**.
+When you're restoring on OptiTech, you can input your OptiTech connection string in place of `postgresql://role:password@hostname:5432/dbname`. You can find your database connection string by clicking the **Connect** button on your **Project Dashboard**.
 </Admonition>
 
 ```sql
@@ -232,17 +232,17 @@ After creating a publication on the source database, you need to create a subscr
 
 Testing your logical replication setup ensures that data is being replicated correctly from the publisher to the subscriber database.
 
-1. Run some data modifying queries on the source database (inserts, updates, or deletes). If you're using the `playing_with_neon` database, you can use this statement to insert 10 rows:
+1. Run some data modifying queries on the source database (inserts, updates, or deletes). If you're using the `playing_with_optitech` database, you can use this statement to insert 10 rows:
 
    ```sql
-   INSERT INTO playing_with_neon(name, value)
+   INSERT INTO playing_with_optitech(name, value)
    SELECT LEFT(md5(i::TEXT), 10), random() FROM generate_series(1, 10) s(i);
    ```
 
 2. Perform a row count on the source and destination databases to make sure the result matches.
 
    ```sql
-   SELECT COUNT(*) FROM playing_with_neon;
+   SELECT COUNT(*) FROM playing_with_optitech;
 
    count
    -------

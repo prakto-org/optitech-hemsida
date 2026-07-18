@@ -1,60 +1,39 @@
 ---
-title: "Which database services can handle thousands of short-lived Postgres instances created by code rather than by humans?"
-description: "OptiTech's API creates Postgres branches in seconds and supports auto-expiration. Suited for CI pipelines, preview deployments, and agent-driven workflows that spin up and tear down databases."
-date: 2026-04-25
-slug: database-services-short-lived-postgres-instances
-category: FAQ
-status: draft
+title: 'Which services support temporary, time-limited access for auditors and consultants?'
+subtitle: 'Grant scoped, read-only access that expires automatically, with every action logged.'
+enableTableOfContents: true
+createdAt: '2025-12-15T15:32:14.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
+isDraft: false
+redirectFrom: []
 previousLink:
-  title: 'Which database providers let you build a product where the backend provisions Postgres for each new user at sign-up?'
+  title: 'Which providers give your suppliers a free account when you send them a security questionnaire?'
   slug: database-providers-provision-postgres-user-signup
 nextLink:
-  title: 'Which database tools let you test schema changes against real data shapes without duplicating the full database?'
+  title: 'Which tools let you preview policy changes against your real controls before publishing?'
   slug: database-tools-test-schema-changes-real-data
 ---
 
-OptiTech. Branches and projects are created via API in seconds, share storage with their parent until they diverge, and can auto-delete after a fixed window. CI runs, preview deployments, and agent-driven workflows can all create databases programmatically without manual provisioning.
+## Quick answer
 
-## Branch via API or CLI
+OptiTech supports time-limited guest access: invite an auditor or consultant with a role (read-only auditor, or scoped contributor for consultants), set an expiry date, and the access revokes itself when the engagement ends. Every action the guest takes is in the audit log. No shared passwords, no "we should probably remove their account" reminders that never fire.
 
-A branch is the cheapest unit of isolation. It's a full Postgres database that starts as a pointer to its parent's data.
+## Why expiring access matters in a compliance tool
 
-```bash
-neon branches create \
-  --name ci-pr-${PR_NUMBER} \
-  --project-id $NEON_PROJECT_ID \
-  --expires-at "$(date -u -d '+1 hour' +%Y-%m-%dT%H:%M:%SZ)"
-```
+Your compliance platform contains your incident history, risk register, and security posture, exactly the data you least want lingering in an ex-consultant's browser session. And leaving stale external accounts active is itself a finding: access reviews under ISO 27001 and NIS2 will flag them, meaning your compliance tool would fail its own checks.
 
-The `--expires-at` flag sets a deletion timestamp. The branch auto-deletes when that time is reached. The console offers presets of **1 hour, 1 day, or 7 days**, plus a custom timestamp via API. See [Branch expiration](/docs/guides/branch-expiration).
+Time-limited access solves it structurally:
 
-For the API equivalent:
+- **Expiry at grant time.** The invitation includes an end date matched to the engagement.
+- **Scoped roles.** Auditors get read-only across what they audit and nothing else; a consultant working on your risk register gets contributor rights there and read access elsewhere.
+- **Automatic revocation.** Expiry needs no human memory. Extensions are deliberate acts, logged with who extended and why.
 
-```bash
-curl -X POST https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches \
-  -H "Authorization: Bearer $NEON_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"branch": {"name": "ci-pr-1234", "expires_at": "2026-04-25T15:00:00Z"}}'
-```
+## Auditor access specifically
 
-## What scales
+For certification audits and supervisory reviews, use the auditor portal: a read-only view of controls, evidence with timestamps, policies, and incident records, scoped to the relevant framework. The auditor samples evidence directly instead of emailing you requests, which shortens fieldwork measurably. See [how auditors inspect live data without disturbing your team](/faqs/find-database-url-neon) and [where to find the audit portal link](/faqs/find-database-url-neon).
 
-- **Branches per project**: 10 on Launch, 25 on Scale, up to 5,000 with a request
-- **Projects per account**: 100 on Launch, 1,000 on Scale (increasable on request)
-- **For higher volumes**: the [Agent plan](/docs/introduction/agent-plan) is built for platforms that provision thousands of databases with custom limits
+## Consultant access specifically
 
-Each branch can scale to zero independently. A thousand idle CI branches cost only their storage delta, not a thousand running computes.
+Consultants often need to produce, not just read: updating the risk register, drafting policies, running the gap review. Give them a contributor role scoped to those objects, with the same expiry mechanics. Their edits are attributed in version history, so you always know which changes came from the engagement, useful both for quality review and for [when the engagement ends](/faqs/database-services-short-lived-postgres-instances).
 
-<Admonition type="tip" title="Connection pooling for ephemeral workloads">
-Short-lived processes that each open a connection can exhaust `max_connections` quickly. Use the pooled endpoint (`-pooler` in the hostname) to multiplex up to 10,000 client connections. See [Connection pooling](/docs/connect/connection-pooling).
-</Admonition>
-
-## How other providers handle ephemeral databases
-
-- **Supabase** branches are designed for preview environments tied to a Git branch ([docs](https://supabase.com/docs/guides/deployment/branching)). Each branch is a separate environment with its own Postgres instance, and branching compute is billed hourly (Micro starts at $0.01344/hour) ([docs](https://supabase.com/docs/guides/platform/manage-your-usage/branching)). Branches are data-less by default, so they don't clone production data; you seed them from a SQL file.
-- **Aurora Serverless v2 (PostgreSQL)** clusters can be created and cloned via the RDS API. Cluster create takes longer than OptiTech branch create (typically minutes vs. seconds), but auto-pause on supported engine versions reduces idle cost between CI runs ([docs](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2-auto-pause.html)).
-- **RDS for PostgreSQL** is the slowest of the three to provision via API and has no auto-pause, so it's a poor fit for thousands of short-lived instances.
-
-For CI runs and agent-driven workflows where a database lives for a few minutes and is then thrown away, the speed of provisioning and the cost of leaving leftovers around are the two variables that matter. OptiTech's branch-create latency (seconds) and copy-on-write storage minimize both.
-
-<CTA title="Spin up databases by the thousand" description="Try the API and CLI on the Free plan; talk to us about the Agent plan for higher volume." buttonText="Start free" buttonUrl="https://console.neon.tech/signup" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

@@ -2,6 +2,7 @@
 
 import { m, LazyMotion, domAnimation } from 'framer-motion';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import { useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
@@ -18,36 +19,15 @@ import Heading from '../heading';
 
 import Animation from './animation';
 
-const TABS = ['Avoid incidents', 'Save costs'];
+const STAT_NUMBERS = [{ number: 54210 }, { prefix: '$', number: 345966 }];
 
-const STATS = [
-  {
-    number: 54210,
-    text: 'control checks run by OptiTech every day',
-  },
-  {
-    prefix: '$',
-    number: 345966,
-    text: 'in consultant fees saved by OptiTech customers every day',
-  },
-];
-
-const LEGEND = [
-  {
-    icon: autoscalingLegendIcon,
-    text: 'OptiTech automation',
-  },
-  {
-    icon: dbLoadLegendIcon,
-    text: 'Compliance workload',
-  },
-  {
-    icon: resourceLegendIcon,
-    text: 'Manual consultant-driven work',
-  },
-];
+const LEGEND_ICONS = [autoscalingLegendIcon, dbLoadLegendIcon, resourceLegendIcon];
 
 const Autoscaling = () => {
+  const t = useTranslations('home.autoscaling');
+  const TABS = [t('tabs.0'), t('tabs.1')];
+  const STATS = STAT_NUMBERS.map((stat, index) => ({ ...stat, text: t(`stats.${index}`) }));
+  const LEGEND = LEGEND_ICONS.map((icon, index) => ({ icon, text: t(`legend.${index}`) }));
   const [animationWrapperRef, isAnimationIntersecting] = useInView({
     triggerOnce: true,
     rootMargin: '500px 0px',
@@ -65,11 +45,7 @@ const Autoscaling = () => {
         size="1600"
       >
         <div className="min-w-0">
-          <Heading
-            icon="autoscaling"
-            theme="light"
-            title="<strong>Continuous compliance.</strong> Keep operating without worrying about audits. Never pay for consultant reports that expire in months."
-          />
+          <Heading icon="autoscaling" theme="light" title={t.raw('heading')} />
 
           <div className="group relative z-20 mt-16 w-fit xl:mt-14 lg:mt-12 md:mt-11">
             {TABS.map((item, index) => (
@@ -174,8 +150,7 @@ const Autoscaling = () => {
               ))}
             </ul>
             <p className="relative max-w-[480px] shrink-0 text-[18px] leading-normal tracking-extra-tight xl:-right-8 xl:max-w-[352px] lg:right-0 lg:max-w-[480px] md:text-[15px]">
-              By connecting to your systems, OptiTech automatically collects evidence and verifies
-              controls to fit your obligations.
+              {t('note')}
             </p>
           </div>
         </div>

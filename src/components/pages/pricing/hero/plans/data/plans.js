@@ -2,172 +2,143 @@ import LINKS from 'constants/links';
 
 export default [
   {
-    planId: 'free',
-    type: 'Free',
-    title: '$0',
-    subtitle: 'Build and learn free with no time limits and no credit card required.',
-    price: 0,
+    planId: 'start',
+    type: 'Start',
+    title: '2,995 kr/mo',
+    subtitle: 'For companies with 5–30 employees getting compliant for the first time.',
+    price: 2995,
     features: {
-      database: {
-        title: 'Postgres database',
+      compliance: {
+        title: 'Compliance',
         features: [
           {
-            title: '100 projects',
-            info: '<p>A project is a top-level container<br/> for your database environment.</p>',
-            moreLink: { text: 'Read more', href: '#what-is-a-project' },
+            title: '1 framework',
+            info: '<p>Choose NIS2, DORA, GDPR,<br/> ISO 27001, or the AI Act.</p>',
+            moreLink: { text: 'Read more', href: '#what-is-a-framework' },
           },
           {
-            title: '100 CU-hrs monthly per project',
-            info: '<p>CU-hour = CU x active hours</p><p>1 CU ≈ 4 GB RAM</p>',
-            moreLink: { text: 'Read more', href: '#compute-usage' },
+            title: 'Automated gap analysis',
+            info: '<p>20 questions map which laws apply<br/> and which controls you need.</p>',
           },
           {
-            title: '0.5 GB of storage per project',
+            title: '50+ Swedish policy templates',
           },
           {
-            title: 'Sizes up to 2 CU (8 GB RAM)',
+            title: 'MSB and IMY incident reporting',
+            moreLink: { text: 'Read more', href: '#msb-incident-flow' },
           },
           {
-            title: 'Unlimited team members',
+            title: 'Risk register',
           },
         ],
       },
-      other: {
-        title: 'Backend',
+      platform: {
+        title: 'Platform',
         features: [
-          { title: 'Managed Better Auth', info: 'Up to 60k MAUs' },
           {
-            title: 'Object Storage',
-            tag: { label: 'Beta', theme: 'orange-muted' },
-            info: 'No charges applied during beta, with usage limits',
+            title: '10 integrations',
+            info: '<p>Microsoft 365, Entra ID, Google Workspace,<br/> AWS, Azure, GitHub, and more.</p>',
           },
+          { title: 'BankID login' },
+          { title: 'EU data residency' },
+        ],
+      },
+    },
+    button: {
+      url: LINKS.signup,
+      text: 'Get started',
+      event: 'Hero Start Panel',
+    },
+  },
+  {
+    planId: 'professional',
+    type: 'Professional',
+    title: '7,995 kr/mo',
+    subtitle: 'For companies with 30–150 employees managing several frameworks at once.',
+    price: 7995,
+    highlighted: true,
+    features: {
+      compliance: {
+        title: 'Compliance',
+        features: [
           {
-            title: 'Functions',
-            tag: { label: 'Beta', theme: 'orange-muted' },
-            info: 'No charges applied during beta, with usage limits',
+            title: '3 frameworks',
+            info: '<p>Controls are cross-mapped:<br/> do once, prove everywhere.</p>',
+            moreLink: { text: 'Read more', href: '#what-is-a-framework' },
+          },
+          { title: 'Everything in Start' },
+          {
+            title: 'Vendor risk management',
+            info: '<p>Supplier register, questionnaires,<br/> and risk classification.</p>',
+          },
+          { title: 'Trust Center' },
+          { title: 'Security awareness training' },
+        ],
+      },
+      platform: {
+        title: 'Platform',
+        features: [
+          {
+            title: 'All integrations',
+            info: '<p>Including Fortnox, Visma,<br/> Kivra, and Swedish payroll systems.</p>',
+          },
+          { title: 'AI copilot' },
+          {
+            title: 'Auto-remediation',
+            info: '<p>Fix failing controls directly via API,<br/> or send a ready-made ticket.</p>',
           },
         ],
       },
     },
     button: {
       url: LINKS.signup,
-      text: 'Try OptiTech',
-      event: 'Hero Free Tier Panel',
+      text: 'Get started',
+      theme: 'primary',
+      event: 'Hero Professional Panel',
     },
   },
   {
-    planId: 'launch',
-    type: 'Launch',
-    title: 'Usage-based',
-    highlighted: true,
-    hasDynamicPricing: true,
-    computeRate: 0.106,
-    storageRate: 0.35,
+    planId: 'enterprise',
+    type: 'Enterprise',
+    title: 'From 19,995 kr/mo',
+    subtitle: 'For companies with 150+ employees and regulated financial institutions.',
+    price: 19995,
     features: {
-      database: {
-        title: 'Postgres database',
+      compliance: {
+        title: 'Compliance',
         features: [
           {
-            title: '100 projects',
-            info: '<p>A project is a top-level container<br/> for your database environment.</p>',
-            moreLink: { text: 'Read more', href: '#what-is-a-project' },
+            title: 'Unlimited frameworks',
+            moreLink: { text: 'Read more', href: '#what-is-a-framework' },
+          },
+          { title: 'Everything in Professional' },
+          {
+            title: 'DORA package',
+            info: '<p>ICT contract register and reporting<br/> ready for supervisory review.</p>',
           },
           {
-            title: '$0.106 per CU-hr',
-            info: '<p>CU-hour = CU x active hours</p><p>1 CU ≈ 4 GB RAM</p>',
-            moreLink: { text: 'Read more', href: '#compute-usage' },
+            title: 'Auditor portal',
+            info: 'Read-only access for auditors and supervisory authorities',
           },
-          {
-            title: '$0.35 per GB-month',
-          },
-          { title: 'Sizes up to 16 CU (64 GB RAM)' },
-          { title: '3-day metrics/logs in UI' },
+          { title: 'Dedicated customer success manager' },
         ],
       },
-      other: {
-        title: 'Backend',
+      platform: {
+        title: 'Platform',
         features: [
-          { title: 'Managed Better Auth', info: 'Up to 1M MAUs' },
+          { title: 'SSO and SCIM' },
           {
-            title: 'Object Storage',
-            tag: { label: 'Beta', theme: 'orange-muted' },
-            info: 'No charges applied during beta, with usage limits',
+            title: 'API and CLI access',
+            info: '<p>Run compliance checks<br/> in your CI/CD pipeline.</p>',
           },
-          {
-            title: 'Functions',
-            tag: { label: 'Beta', theme: 'orange-muted' },
-            info: 'No charges applied during beta, with usage limits',
-          },
-          {
-            title: 'AI Gateway',
-            tag: { label: 'Beta', theme: 'orange-muted' },
-            info: 'Pricing matches model provider list prices (no markup)',
-          },
+          { title: 'Custom onboarding' },
         ],
       },
     },
     button: {
-      url: `${LINKS.console}/app/billing#plans`,
-      text: 'Get started',
-      theme: 'primary',
-      event: 'Hero Launch Panel',
-    },
-  },
-  {
-    planId: 'scale',
-    type: 'Scale',
-    title: 'Usage-based',
-    hasDynamicPricing: true,
-    computeRate: 0.222,
-    storageRate: 0.35,
-    features: {
-      database: {
-        title: 'Postgres database',
-        features: [
-          {
-            title: '1,000+ projects',
-            info: '<p>A project is a top-level container<br/> for your database environment.</p>',
-            moreLink: { text: 'Read more', href: '#what-is-a-project' },
-          },
-          {
-            title: '$0.222 per CU-hr',
-            info: '<p>CU-hour = CU x active hours</p><p>1 CU ≈ 4 GB RAM</p>',
-            moreLink: { text: 'Read more', href: '#compute-usage' },
-          },
-          {
-            title: '$0.35 per GB-month',
-          },
-          { title: 'Sizes up to 56 CU (224 GB RAM)' },
-          { title: 'SLAs, HIPAA, private network' },
-        ],
-      },
-      other: {
-        title: 'Backend',
-        features: [
-          { title: 'Managed Better Auth', info: 'Up to 1M MAUs' },
-          {
-            title: 'Object Storage',
-            tag: { label: 'Beta', theme: 'orange-muted' },
-            info: 'No charges applied during beta, with usage limits',
-          },
-          {
-            title: 'Functions',
-            tag: { label: 'Beta', theme: 'orange-muted' },
-            info: 'No charges applied during beta, with usage limits',
-          },
-          {
-            title: 'AI Gateway',
-            tag: { label: 'Beta', theme: 'orange-muted' },
-            info: 'Pricing matches model provider list prices (no markup)',
-          },
-        ],
-      },
-    },
-    button: {
-      url: `${LINKS.console}/app/billing#plans`,
-      text: 'Get started',
-      theme: 'primary',
-      event: 'Hero Scale Panel',
+      url: LINKS.contactSales,
+      text: 'Contact sales',
+      event: 'Hero Enterprise Panel',
     },
   },
 ];

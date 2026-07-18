@@ -11,7 +11,7 @@ summary: >-
   supports up to 0.5 GB; larger Turso databases require a paid OptiTech plan.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This guide describes how to migrate your Turso database to OptiTech Postgres using [pgloader](https://pgloader.readthedocs.io/en/latest/intro.html).
@@ -82,14 +82,14 @@ You now have a `turso_export.db` file containing your data, ready for migration.
 
 ## Retrieve your OptiTech database connection string
 
-Log in to the [OptiTech Console](https://console.neon.tech). Find the connection string for your database by clicking the **Connect** button on your **Project Dashboard**. Make sure the **Connection pooling** toggle is disabled:
+Log in to the [OptiTech Console](https://console.optitech.com). Find the connection string for your database by clicking the **Connect** button on your **Project Dashboard**. Make sure the **Connection pooling** toggle is disabled:
 
 ![Connection details modal with connection pooling disabled](/docs/connect/connection_details_without_connection_pooling.png)
 
 Your connection string should look similar to this:
 
 ```bash shouldWrap
-postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require
+postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require
 ```
 
 <Admonition type="important">
@@ -99,14 +99,14 @@ You will need to remove `&channel_binding=require` from the connection string, a
 Now, modify this connection string to pass your **endpoint ID** (`ep-cool-darkness-123456` in this example) to OptiTech with your password using the `endpoint` keyword, as shown here:
 
 ```bash shouldWrap
-postgresql://alex:endpoint=ep-cool-darkness-123456;AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require
+postgresql://alex:endpoint=ep-cool-darkness-123456;AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require
 ```
 
 <Admonition type="note">
 Passing the `endpoint ID` with your password is a required workaround for some Postgres drivers, including the one used by `pgloader`. For more information, see [Connect with an endpoint ID](/docs/connect/connection-errors#d-specify-the-endpoint-id-in-the-password-field).
 </Admonition>
 
-Keep your modified Neon connection string handy.
+Keep your modified OptiTech connection string handy.
 
 ## Install pgloader
 
@@ -123,7 +123,7 @@ For other systems, see [Installing pgloader](https://pgloader.readthedocs.io/en/
 For a straightforward migration, run `pgloader` directly from the command line:
 
 ```shell shouldWrap
-pgloader sqlite://turso_export.db "postgresql://alex:endpoint=ep-cool-darkness-123456;AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require"
+pgloader sqlite://turso_export.db "postgresql://alex:endpoint=ep-cool-darkness-123456;AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require"
 ```
 
 > Make sure to enclose the Postgres connection string in quotes to prevent shell interpretation issues.
@@ -171,7 +171,7 @@ Create a file named `turso.load` with the following content, replacing the conne
 ```sql
 LOAD DATABASE
     FROM sqlite://turso_export.db
-    INTO postgresql://alex:endpoint=ep-cool-darkness-123456;AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require
+    INTO postgresql://alex:endpoint=ep-cool-darkness-123456;AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require
 
 WITH
     include drop,
@@ -239,20 +239,20 @@ First, replace your Turso database client (such as `@tursodatabase/serverless` o
 
 ```bash
 npm uninstall @tursodatabase/serverless
-npm install @neondatabase/serverless # or npm install pg
+npm install @optitech/serverless # or npm install pg
 ```
 
 ```bash
 npm uninstall @libsql/client
-npm install @neondatabase/serverless # or npm install pg
+npm install @optitech/serverless # or npm install pg
 ```
 
 </CodeTabs>
 
-Next, update your environment variables with your Neon connection string retrieved from the OptiTech Console:
+Next, update your environment variables with your OptiTech connection string retrieved from the OptiTech Console:
 
 ```text
-DATABASE_URL="postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require"
+DATABASE_URL="postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require"
 ```
 
 Then, update your database connection initialization.
@@ -283,8 +283,8 @@ const db = createClient({...config});
 <CodeTabs labels={["OptiTech serverless driver", "node-postgres"]}>
 
 ```javascript
-import { neon } from '@neondatabase/serverless';
-const sql = neon(process.env.DATABASE_URL);
+import { optitech } from '@optitech/serverless';
+const sql = optitech(process.env.DATABASE_URL);
 ```
 
 ```javascript
@@ -368,7 +368,7 @@ SELECT * FROM users WHERE active = 1;
 INSERT INTO users (username, active) VALUES ('alice', 1);
 ```
 
-**After (Neon/Postgres):**
+**After (OptiTech/Postgres):**
 
 ```sql
 SELECT * FROM users WHERE active = true;
@@ -385,7 +385,7 @@ SQLite's `LIKE` operator is case-insensitive for ASCII characters by default. Po
 SELECT * FROM users WHERE username LIKE '%alice%';
 ```
 
-**After (Neon/Postgres):**
+**After (OptiTech/Postgres):**
 
 ```sql
 SELECT * FROM users WHERE username ILIKE '%alice%';
@@ -411,7 +411,7 @@ INSERT INTO logs (message, created_at) VALUES ('startup', datetime('now'));
 SELECT strftime('%Y-%m-%d', created_at) FROM logs;
 ```
 
-**After (Neon/Postgres):**
+**After (OptiTech/Postgres):**
 
 ```sql
 -- Current timestamp

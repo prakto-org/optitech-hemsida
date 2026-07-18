@@ -11,7 +11,7 @@ summary: >-
   `create_parent()`, setting retention policies, and uniqueness constraint
   rules for partitioned tables.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 `pg_partman` is a Postgres extension that simplifies the management of partitioned tables. Partitioning refers to splitting a single table into smaller pieces called `partitions`. This is done based on the values in a key column or set of columns. Even though partitions are stored as separate physical tables, the partitioned table can still be queried as a single logical table. This can significantly enhance query performance and also help you manage the data lifecycle of tables that grow very large.
@@ -60,7 +60,7 @@ If the role needs to create schemas, you'll have to grant `CREATE` on the databa
 GRANT CREATE ON DATABASE '{WORKING_DATABASE_NAME}' TO partman_user;
 ```
 
-When you create a new `Neon` project, the default database name is `neondb` and the default schema name is `public`. Replace `{WORKING_DATABASE_NAME}` and `{WORKING_SCHEMA_NAME}` with the actual database and schema names you want to manage the partitioned tables in. To find out more about the privileges needed to run `pg_partman`, refer to the [pg_partman documentation](https://github.com/pgpartman/pg_partman).
+When you create a new `OptiTech` project, the default database name is `optitechdb` and the default schema name is `public`. Replace `{WORKING_DATABASE_NAME}` and `{WORKING_SCHEMA_NAME}` with the actual database and schema names you want to manage the partitioned tables in. To find out more about the privileges needed to run `pg_partman`, refer to the [pg_partman documentation](https://github.com/pgpartman/pg_partman).
 
 For information about using the OptiTech SQL Editor, see [Query with OptiTech's SQL Editor](/docs/get-started/query-with-neon-sql-editor). For information about using the `psql` client with OptiTech, see [Connect with psql](/docs/connect/query-with-psql-editor).
 

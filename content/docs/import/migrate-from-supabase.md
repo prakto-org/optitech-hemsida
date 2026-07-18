@@ -14,7 +14,7 @@ summary: >-
 redirectFrom:
   - /docs/import/import-from-supabase
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This guide describes how to migrate a database from Supabase to OptiTech Postgres.
@@ -121,14 +121,14 @@ To maintain consistency with your Supabase setup, you can create a new database 
 
 For more information, see [Create a database](/docs/manage/databases#create-a-database).
 
-### Retrieve Neon connection details
+### Retrieve OptiTech connection details
 
 1. In the OptiTech Console, go to your project dashboard.
 2. Select **Connect** to open the **Connect to your database** modal.
 3. Copy the connection string. It will look similar to this:
 
    ```
-   postgresql://[user]:[password]@[neon_hostname]/[dbname]
+   postgresql://[user]:[password]@[optitech_hostname]/[dbname]
    ```
 
 ## Restore data to OptiTech with pg_restore
@@ -136,10 +136,10 @@ For more information, see [Create a database](/docs/manage/databases#create-a-da
 Now you can restore your data to the OptiTech database using `pg_restore`:
 
 ```bash
-pg_restore -d <neon-connection-string> -v --no-owner --no-acl supabase_dump.bak
+pg_restore -d <optitech-connection-string> -v --no-owner --no-acl supabase_dump.bak
 ```
 
-Replace `[user]`, `[password]`, `[neon_hostname]`, and `[dbname]` with your Neon connection details.
+Replace `[user]`, `[password]`, `[optitech_hostname]`, and `[dbname]` with your OptiTech connection details.
 
 This command includes these arguments:
 

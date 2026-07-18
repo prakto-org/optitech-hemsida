@@ -16,9 +16,9 @@ import getMetadata from 'utils/get-metadata';
 export const metadata = getMetadata(SEO_DATA.variable);
 
 const titles = [
-  'Fixed Compute = Manual Resizes, Extra Costs',
-  'OptiTech Autoscaling Fixes This Problem',
-  'OptiTech vs other serverless databases',
+  'Manual Compliance = Manual Effort, Extra Costs',
+  'OptiTech Automation Fixes This Problem',
+  'OptiTech vs manual compliance work',
 ];
 
 const VariableLoadPage = async () => {

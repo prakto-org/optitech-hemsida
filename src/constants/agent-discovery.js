@@ -32,7 +32,7 @@ const MCP_SERVER = {
 // is also aliased to /openapi.json via next.config.js so agents probing the
 // conventional OpenAPI path resolve it.
 const NEON_API = {
-  baseUrl: 'https://console.neon.tech/api/v2',
+  baseUrl: 'https://api.optitech.com/v1',
   openApiSpecUrl: 'https://neon.com/api_spec/release/v2.json',
   docsUrl: 'https://neon.com/docs/reference/api',
 };

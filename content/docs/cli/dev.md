@@ -1,17 +1,17 @@
 ---
-title: 'Neon CLI command: dev'
-subtitle: 'Run Neon Functions locally with a dev server'
+title: 'OptiTech CLI command: dev'
+subtitle: 'Run OptiTech Functions locally with a dev server'
 summary: >-
-  The Neon CLI `neon dev` command runs Neon Functions locally with a dev
+  The OptiTech CLI `optitech dev` command runs OptiTech Functions locally with a dev
   server and hot reload. Pass --source to serve a single function entry module
   (optionally with --port for an explicit port), or omit --source to serve
-  every function declared in neon.ts, each on its own dev server.
+  every function declared in optitech.ts, each on its own dev server.
 enableTableOfContents: true
 ---
 
-<FeatureBetaProps feature_name="Neon Functions" />
+<FeatureBetaProps feature_name="OptiTech Functions" />
 
-The `dev` command runs [Neon Functions](/docs/compute/functions/overview) locally with a dev server and hot reload. Serve one function from its entry module, or every function declared in your `neon.ts` policy.
+The `dev` command runs [OptiTech Functions](/docs/compute/functions/overview) locally with a dev server and hot reload. Serve one function from its entry module, or every function declared in your `optitech.ts` policy.
 
 ## Usage
 
@@ -26,17 +26,17 @@ The `dev` command runs [Neon Functions](/docs/compute/functions/overview) locall
 Serve one function on a free port with hot reload:
 
 ```bash
-neon dev --source ./functions/hello.ts
+optitech dev --source ./functions/hello.ts
 ```
 
-Serve every function declared in `neon.ts` (one dev server each):
+Serve every function declared in `optitech.ts` (one dev server each):
 
 ```bash
-neon dev
+optitech dev
 ```
 
 Serve one function on an explicit port (fails if the port is taken):
 
 ```bash
-neon dev --source ./functions/hello.ts --port 3000
+optitech dev --source ./functions/hello.ts --port 3000
 ```

@@ -5,13 +5,13 @@ summary: >-
   Logical replication in OptiTech requires enabling it per project, which
   permanently changes `wal_level` to `logical` and restarts all computes.
   Use this page when configuring OptiTech as a publisher or subscriber. It covers
-  Neon-specific constraints: inactive replication slots are removed after ~40
+  OptiTech-specific constraints: inactive replication slots are removed after ~40
   hours, subscribers prevent scale-to-zero, and `max_wal_senders` and
   `max_replication_slots` are both set to 10. Supported decoder plugins are
   `pgoutput` and `wal2json`.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This topic outlines information about logical replication specific to OptiTech, including important notices.
@@ -40,9 +40,9 @@ Enabling logical replication changes the PostgreSQL `wal_level` setting from `re
 Use the [Update project](/docs/reference/api/projects/update-project) endpoint to enable logical replication programmatically. Replace `$PROJECT_ID` with your project ID.
 
 ```bash
-curl -X PATCH 'https://console.neon.tech/api/v2/projects/$PROJECT_ID' \
+curl -X PATCH 'https://console.optitech.com/api/v2/projects/$PROJECT_ID' \
   -H 'Accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -H 'Content-Type: application/json' \
   -d '{
   "project": {
@@ -117,7 +117,7 @@ If you find that a replication slot was removed and you need to add it back, ple
 
 ## Replication roles
 
-It is recommended that you create a dedicated Postgres role for replicating data from OptiTech to a subscriber. This role must have the `REPLICATION` privilege. The default Postgres role created with your OptiTech project and roles created using the OptiTech Console, CLI, or API are granted membership in the [neon_superuser](/docs/manage/roles#the-neonsuperuser-role) role, which has the required `REPLICATION` privilege. Roles created via SQL do not have this privilege, and the `REPLICATION` privilege cannot be granted.
+It is recommended that you create a dedicated Postgres role for replicating data from OptiTech to a subscriber. This role must have the `REPLICATION` privilege. The default Postgres role created with your OptiTech project and roles created using the OptiTech Console, CLI, or API are granted membership in the [optitech_superuser](/docs/manage/roles#the-neonsuperuser-role) role, which has the required `REPLICATION` privilege. Roles created via SQL do not have this privilege, and the `REPLICATION` privilege cannot be granted.
 
 You can verify that your role has the `REPLICATION` privilege by running the following query:
 
@@ -190,7 +190,7 @@ CREATE PUBLICATION my_publication FOR TABLES <table1>, <table2>;
 SELECT pg_create_logical_replication_slot('my_replication_slot', 'pgoutput');
 ```
 
-Then, on the subscriber database, you would create a subscription that references the replication slot with the `create_slot` option set to `false` and `slot_name` set to the name of the slot you created. The `connection_string` should be the connection string for the Postgres role used to connect to the publisher database. This role must have the `REPLICATION` privilege. Any Postgres role create created via the OptiTech Console, CLI, or API is a member of the `neon_superuser` role, which has the `REPLICATION` privilege by default. You can find your OptiTech database connection details by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal. See [Connect from any application](/docs/connect/connect-from-any-app). Be sure to select the correct role and database before copying the connection string.
+Then, on the subscriber database, you would create a subscription that references the replication slot with the `create_slot` option set to `false` and `slot_name` set to the name of the slot you created. The `connection_string` should be the connection string for the Postgres role used to connect to the publisher database. This role must have the `REPLICATION` privilege. Any Postgres role create created via the OptiTech Console, CLI, or API is a member of the `optitech_superuser` role, which has the `REPLICATION` privilege by default. You can find your OptiTech database connection details by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal. See [Connect from any application](/docs/connect/connect-from-any-app). Be sure to select the correct role and database before copying the connection string.
 
 ```sql
 CREATE SUBSCRIPTION my_subscription

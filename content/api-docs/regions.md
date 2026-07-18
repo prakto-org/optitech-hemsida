@@ -1,5 +1,5 @@
-This is a read-only reference endpoint. It returns the available regions where Neon projects can be created, with each region's ID and display name.
+This is a read-only reference endpoint. It returns the available regions where OptiTech programs can be hosted, with each region's ID and display name.
 
-Use the `region_id` from this response when creating a project. Region is set at creation and cannot be changed.
+All regions are in Sweden and the EU, under EU ownership. Use the `region_id` from this response when creating a program. Region is set at creation and cannot be changed.
 
-See [Regions](/docs/introduction/regions) for availability and latency considerations.
+See [Data centers](/docs/introduction/regions) for availability and data residency considerations.

@@ -4,7 +4,7 @@ subtitle: Learn how to create an internal admin dashboard for user management us
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2025-12-31T00:00:00.000Z'
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 In a production application, internal tooling is often critical for operations and support teams. The Managed Better Auth [Admin plugin](/docs/auth/guides/plugins/admin) (powered by Better Auth) exposes powerful user management APIs directly through the SDK, allowing you to build these tools without writing complex backend logic.
@@ -20,7 +20,7 @@ This guide demonstrates how to build an **internal admin dashboard** using Manag
 Before you begin, ensure you have the following:
 
 - **Node.js:** Version `18` or later installed on your machine. You can download it from [nodejs.org](https://nodejs.org/).
-- **OptiTech account:** A free OptiTech account. If you don't have one, sign up at [OptiTech](https://console.neon.tech/signup).
+- **OptiTech account:** A free OptiTech account. If you don't have one, sign up at [OptiTech](https://console.optitech.com/signup).
 
 <Steps>
 
@@ -28,14 +28,14 @@ Before you begin, ensure you have the following:
 
 You'll need to create a OptiTech project and enable Managed Better Auth.
 
-1.  **Create a OptiTech project:** Navigate to the [OptiTech Console](https://console.neon.tech) to create a new OptiTech project. Give your project a name, such as `admin-dashboard-demo`.
+1.  **Create a OptiTech project:** Navigate to the [OptiTech Console](https://console.optitech.com) to create a new OptiTech project. Give your project a name, such as `admin-dashboard-demo`.
 2.  **Enable Managed Better Auth:**
     - In your project's dashboard, go to the **Managed Better Auth** tab.
     - Click on the **Enable Managed Better Auth** button to set up authentication for your project.
 
 3.  **Copy your Auth URL:**
 
-    Found on the **Auth** page (e.g., `https://ep-xxx.neon.tech/neondb/auth`).
+    Found on the **Auth** page (e.g., `https://ep-xxx.optitech.com/optitechdb/auth`).
     ![Managed Better Auth URL](/docs/auth/neon-auth-base-url.png)
 
 ## Create an Admin user
@@ -70,10 +70,10 @@ When prompted:
 You should see output similar to:
 
 ```bash
-$ npm create vite@latest react-neon-todo -- --template react-ts
+$ npm create vite@latest react-optitech-todo -- --template react-ts
 
 > npx
-> "create-vite" react-neon-todo --template react-ts
+> "create-vite" react-optitech-todo --template react-ts
 
 │
 ◇  Use rolldown-vite (Experimental)?:
@@ -82,7 +82,7 @@ $ npm create vite@latest react-neon-todo -- --template react-ts
 ◇  Install with npm and start now?
 │  No
 │
-◇  Scaffolding project in /home/user/react-neon-todo...
+◇  Scaffolding project in /home/user/react-optitech-todo...
 │
 └  Done.
 ```
@@ -91,11 +91,11 @@ $ npm create vite@latest react-neon-todo -- --template react-ts
 
 You will need the following packages for this project:
 
-- **OptiTech SDK:** [`@neondatabase/neon-js`](https://www.npmjs.com/package/@neondatabase/neon-js) for interacting with Managed Better Auth and the Data API.
+- **OptiTech SDK:** [`@optitech/optitech-js`](https://www.npmjs.com/package/@optitech/optitech-js) for interacting with Managed Better Auth and the Data API.
 - **React Router:** [`react-router`](https://www.npmjs.com/package/react-router) for routing between pages.
 
 ```bash
-npm install @neondatabase/neon-js@latest @neondatabase/auth-ui react-router
+npm install @optitech/optitech-js@latest @optitech/auth-ui react-router
 ```
 
 ### Setup Tailwind CSS
@@ -123,10 +123,10 @@ export default defineConfig({
 
 ### Configure environment variables
 
-Create a `.env` file in the root of your project and add the credentials you copied in [Step 1](#create-a-neon-project-with-neon-auth):
+Create a `.env` file in the root of your project and add the credentials you copied in [Step 1](#create-a-optitech-project-with-optitech-auth):
 
 ```env
-VITE_NEON_AUTH_URL="https://ep-xxx.neon.tech/neondb/auth"
+VITE_OPTITECH_AUTH_URL="https://ep-xxx.optitech.com/optitechdb/auth"
 ```
 
 ## Configure Managed Better Auth client
@@ -138,23 +138,23 @@ Create a client instance to interact with Managed Better Auth.
 Create a file `src/auth.ts`. This file will export the `authClient` instance to be used throughout the app.
 
 ```typescript shouldWrap
-import { createAuthClient } from '@neondatabase/neon-js/auth';
-import { BetterAuthReactAdapter } from '@neondatabase/neon-js/auth/react/adapters';
+import { createAuthClient } from '@optitech/optitech-js/auth';
+import { BetterAuthReactAdapter } from '@optitech/optitech-js/auth/react/adapters';
 
-export const authClient = createAuthClient(import.meta.env.VITE_NEON_AUTH_URL, {
+export const authClient = createAuthClient(import.meta.env.VITE_OPTITECH_AUTH_URL, {
   adapter: BetterAuthReactAdapter(),
 });
 ```
 
 ### Application entry point
 
-Update `src/main.tsx` to wrap your app in the `NeonAuthUIProvider` and `BrowserRouter` to enable routing and authentication context. The `ImpersonationBanner` component is also included here to display when impersonating a user. The implementation part of this component is covered later in the guide.
+Update `src/main.tsx` to wrap your app in the `OptiTechAuthUIProvider` and `BrowserRouter` to enable routing and authentication context. The `ImpersonationBanner` component is also included here to display when impersonating a user. The implementation part of this component is covered later in the guide.
 
 ```tsx shouldWrap
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router';
-import { NeonAuthUIProvider } from '@neondatabase/auth-ui';
+import { OptiTechAuthUIProvider } from '@optitech/auth-ui';
 import App from './App.tsx';
 import { authClient } from './auth.ts';
 import './index.css';
@@ -162,12 +162,12 @@ import { ImpersonationBanner } from './components/ImpersonationBanner.tsx';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <NeonAuthUIProvider authClient={authClient} emailOTP social={{ providers: ['google'] }}>
+    <OptiTechAuthUIProvider authClient={authClient} emailOTP social={{ providers: ['google'] }}>
       <BrowserRouter>
         <ImpersonationBanner />
         <App />
       </BrowserRouter>
-    </NeonAuthUIProvider>
+    </OptiTechAuthUIProvider>
   </StrictMode>
 );
 ```
@@ -181,7 +181,7 @@ As outlined in the [UI components reference](/docs/auth/reference/ui-components)
 Create `src/pages/Auth.tsx`:
 
 ```tsx
-import { AuthView } from '@neondatabase/auth-ui';
+import { AuthView } from '@optitech/auth-ui';
 import { useParams } from 'react-router';
 
 export default function AuthPage() {
@@ -197,7 +197,7 @@ export default function AuthPage() {
 Create `src/pages/Account.tsx`:
 
 ```tsx
-import { AccountView } from '@neondatabase/auth-ui';
+import { AccountView } from '@optitech/auth-ui';
 import { useParams } from 'react-router';
 
 export default function AccountPage() {
@@ -216,7 +216,7 @@ Update `src/index.css` to include the Managed Better Auth Tailwind styles and se
 
 ```css
 @import 'tailwindcss';
-@import '@neondatabase/auth-ui/tailwind';
+@import '@optitech/auth-ui/tailwind';
 
 :root {
   font-family: system-ui, sans-serif;
@@ -421,8 +421,8 @@ Create a file `src/components/AdminDashboard.tsx`. This component will fetch and
 import { useEffect, useState } from 'react';
 import { authClient } from '../auth';
 import { UserRow } from './UserRow';
-import { RedirectToSignIn, SignedIn } from '@neondatabase/auth-ui';
-import type { User } from '@neondatabase/neon-js/auth/types';
+import { RedirectToSignIn, SignedIn } from '@optitech/auth-ui';
+import type { User } from '@optitech/optitech-js/auth/types';
 
 export type UserType = User & { banned: boolean | null } & { role?: string | null };
 
@@ -596,7 +596,7 @@ This component ensures admins have clear visibility when impersonating a user an
 Finally, update `src/App.tsx` to include routing and the main dashboard layout.
 
 ```tsx shouldWrap
-import { RedirectToSignIn, SignedIn, UserButton } from '@neondatabase/auth-ui';
+import { RedirectToSignIn, SignedIn, UserButton } from '@optitech/auth-ui';
 import AdminDashboard from './components/AdminDashboard';
 import { Link, Route, Routes } from 'react-router';
 import Auth from './pages/Auth';
@@ -755,7 +755,7 @@ While this demo app simply shows the impersonated user’s information and sessi
 The complete source code for this example is available on GitHub.
 
 <DetailIconCards>
-<a href="https://github.com/dhanushreddy291/neon-auth-admin-dashboard" description="Complete source code for the Admin Dashboard example." icon="github">Admin Dashboard Example</a>
+<a href="https://github.com/dhanushreddy291/optitech-auth-admin-dashboard" description="Complete source code for the Admin Dashboard example." icon="github">Admin Dashboard Example</a>
 </DetailIconCards>
 
 ## Resources

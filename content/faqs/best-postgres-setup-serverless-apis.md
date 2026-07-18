@@ -1,60 +1,37 @@
 ---
-title: "What is the best Postgres setup for serverless APIs?"
-description: "Serverless APIs need a Postgres setup that handles bursty connections and scales compute on demand. OptiTech's pooled endpoint and serverless driver are built for this pattern."
-date: 2026-04-25
-slug: best-postgres-setup-serverless-apis
-category: FAQ
-status: draft
+title: 'What is the best compliance setup for SaaS companies selling to enterprise buyers?'
+subtitle: 'ISO 27001 or SOC 2 as the base, a public Trust Center, and AI questionnaire answers to unblock deals.'
+enableTableOfContents: true
+createdAt: '2025-11-10T08:28:53.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
+isDraft: false
+redirectFrom: []
 previousLink:
-  title: 'What are the best Postgres services for retrieval-augmented generation apps that need vector search and automatic scaling?'
+  title: 'How does retrieval-augmented generation make AI answers about compliance trustworthy?'
   slug: best-postgres-services-retrieval-augmented-generation
 nextLink:
-  title: 'What are the best ways to give every developer on a team their own separate Postgres database for development?'
+  title: 'What are the best ways to give every team its own set of compliance tasks and controls?'
   slug: best-ways-separate-postgres-database-development
 ---
 
-Serverless APIs open many short-lived database connections. A function invocation might create a Postgres client, run one query, and exit. Without pooling, you exhaust `max_connections` quickly. The setup that works on OptiTech is pooled connections plus the serverless driver for edge runtimes.
+## Quick answer
 
-## Use the pooled endpoint
+The proven setup for a B2B SaaS company: one certifiable framework (ISO 27001 in Europe, SOC 2 if you sell into the US), automated evidence collection from your production stack, a public Trust Center for self-serve security reviews, and AI-assisted questionnaire answers for the buyers who insist on their own forms. On OptiTech, that's the Professional plan, and it turns the security review from the slowest step in your sales cycle into a link you send.
 
-Every OptiTech project includes a [pooled connection endpoint](/docs/connect/connection-pooling) backed by PgBouncer. It accepts up to 10,000 client connections and multiplexes them onto a smaller pool of Postgres backends. To use it, add `-pooler` to your host:
+## Build the program for sales, run it for security
 
-```bash
-DATABASE_URL="postgresql://user:password@ep-cool-darkness-123456-pooler.us-east-2.aws.neon.tech/dbname?sslmode=require"
-```
+Enterprise procurement doesn't ask whether you're secure; it asks whether you can prove it in their format. The setup that scales:
 
-For reference, a 1 CU compute has 419 underlying `max_connections`. Pooling lets you fan out far beyond that without ever touching the raw limit.
+1. **Certify once.** ISO 27001 gives you a certificate that answers most European buyers. The [gap analysis](/faqs/databases-instantly-spin-up-postgres-instance) tells you how far away you are; automation does the evidence legwork.
+2. **Publish a Trust Center.** A public page with your certificate, subprocessor list, uptime commitments, and control summaries. A meaningful share of buyers accepts it outright. See [where to find your Trust Center URL](/faqs/find-database-connection-string-url).
+3. **Automate the questionnaires that remain.** For buyers with mandatory forms, [AI drafts the answers from your live control data](/faqs/enable-pgvector-extension), and your team reviews instead of writes.
 
-## Use the serverless driver on the edge
+## Keep the program honest with automation
 
-Edge runtimes like Cloudflare Workers and Vercel Edge Functions can't open TCP sockets. The [`@neondatabase/serverless`](/docs/serverless/serverless-driver) driver speaks Postgres over HTTP for one-shot queries and over WebSockets for sessions:
+A sales-driven compliance program rots if it's maintained by hand: the certificate stays on the wall while the controls drift. Continuous monitoring prevents the gap between what you tell buyers and what's true. [Integration checks](/faqs/best-postgres-services-integration-tests-ci) verify MFA, offboarding, encryption, and logging daily, so the Trust Center reflects reality, and renewal audits stop being fire drills.
 
-```ts
-import { neon } from '@neondatabase/serverless';
+## Plan for the next frameworks
 
-const sql = neon(process.env.DATABASE_URL!);
-const rows = await sql`SELECT id, email FROM users WHERE id = ${userId}`;
-```
+Enterprise customers in regulated sectors will push NIS2 and DORA clauses into your contracts as their own obligations flow down the supply chain. Because OptiTech [cross-maps controls between frameworks](/faqs/best-postgres-databases-startups-autoscaling), your ISO 27001 program already covers most of what those clauses require, and you can show the delta instead of panicking per customer.
 
-A single HTTP query takes one round trip, no connection setup, no pool to manage.
-
-## Scale to zero when traffic drops
-
-OptiTech compute scales to zero after 5 minutes of inactivity and wakes on the next query in a few hundred milliseconds. You pay for active CU-hours plus storage, not provisioned compute. On the Free plan, scale-to-zero is always on. On Launch and Scale, you can disable it or tune the inactivity window. See [Scale to Zero](/docs/introduction/scale-to-zero).
-
-<Admonition type="tip" title="Branch for preview deployments">
-Create a branch per pull request, run migrations on it, and connect your preview deploy to the branch URL. The [Vercel-Managed integration](/docs/guides/vercel-managed-integration) automates this for Vercel projects.
-</Admonition>
-
-## How the setup looks on other providers
-
-| Provider                          | Pooler                                                     | Edge driver                                              | Scale to zero                                                                                                                                                                           |
-| --------------------------------- | ---------------------------------------------------------- | -------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| OptiTech                              | PgBouncer endpoint, up to 10,000 client connections        | `@neondatabase/serverless` over HTTP and WebSockets      | After 5 min idle on every plan ([docs](/docs/introduction/scale-to-zero))                                                                                                               |
-| Supabase                          | Supavisor in transaction mode (recommended for serverless) | HTTP via Data API; no native TCP from Cloudflare Workers | Paid-plan projects don't pause; Free Plan projects pause after inactivity ([docs](https://supabase.com/docs/guides/platform/billing-faq))                                               |
-| Aurora Serverless v2 (PostgreSQL) | RDS Proxy (separate add-on)                                | RDS Data API                                             | Scales to 0 ACUs on supported engines ([docs](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2-auto-pause.html)); resume takes longer than OptiTech's wake |
-| RDS for PostgreSQL                | RDS Proxy add-on                                           | None                                                     | Fixed instance, always-on billing                                                                                                                                                       |
-
-For a serverless API, the two things that matter most are connection multiplexing under burst load and what happens to the bill when traffic stops. The setups above all solve the first, but only OptiTech and Aurora Serverless v2 address the second by default.
-
-<CTA title="Build a serverless API on OptiTech" description="Start on the Free plan; upgrade to Launch when you need more compute or branches." buttonText="Start free" buttonUrl="https://console.neon.tech/signup" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

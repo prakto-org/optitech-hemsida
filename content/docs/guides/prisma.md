@@ -3,7 +3,7 @@ title: Connect from Prisma to OptiTech
 subtitle: Learn how to connect to OptiTech from Prisma
 summary: >-
   Prisma ORM (Node.js/TypeScript) connects to OptiTech using the
-  `@prisma/adapter-neon` serverless driver adapter, which routes queries over
+  `@prisma/adapter-optitech` serverless driver adapter, which routes queries over
   WebSockets for compatibility with serverless environments. The setup requires
   two connection strings: a pooled URL (`DATABASE_URL`) for application queries
   and a direct URL (`DIRECT_URL`) for Prisma CLI commands such as migrations and
@@ -16,7 +16,7 @@ redirectFrom:
   - /docs/integrations/prisma
   - /docs/guides/prisma-guide
   - /docs/guides/prisma-migrate
-updatedOn: '2026-07-14T19:04:57.024Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <CopyPrompt src="/prompts/prisma-prompt.md" 
@@ -35,7 +35,7 @@ Prisma is an open-source, next-generation ORM for Node.js and TypeScript. This g
 ### Step 1: Install dependencies
 
 ```bash
-npm install @prisma/client @prisma/adapter-neon dotenv
+npm install @prisma/client @prisma/adapter-optitech dotenv
 npm install prisma tsx --save-dev
 ```
 
@@ -52,10 +52,10 @@ Add them to your `.env` file:
 
 ```ini shouldWrap
 # Pooled connection for your application
-DATABASE_URL="postgresql://[user]:[password]@[endpoint]-pooler.[region].aws.neon.tech/[dbname]?sslmode=require"
+DATABASE_URL="postgresql://[user]:[password]@[endpoint]-pooler.[region].aws.optitech.com/[dbname]?sslmode=require"
 
 # Direct connection for Prisma CLI
-DIRECT_URL="postgresql://[user]:[password]@[endpoint].[region].aws.neon.tech/[dbname]?sslmode=require"
+DIRECT_URL="postgresql://[user]:[password]@[endpoint].[region].aws.optitech.com/[dbname]?sslmode=require"
 ```
 
 <Admonition type="tip">
@@ -111,9 +111,9 @@ Create a file to instantiate Prisma Client with the OptiTech adapter (for exampl
 ```typescript
 import 'dotenv/config'
 import { PrismaClient } from './generated/prisma'
-import { PrismaNeon } from '@prisma/adapter-neon'
+import { PrismaOptiTech } from '@prisma/adapter-optitech'
 
-const adapter = new PrismaNeon({
+const adapter = new PrismaOptiTech({
   connectionString: process.env.DATABASE_URL!,
 })
 
@@ -193,7 +193,7 @@ OptiTech uses connection pooling to efficiently manage database connections in s
 If you're using a PostgreSQL schema other than `public`, pass a `schema` option when creating the adapter:
 
 ```typescript
-const adapter = new PrismaNeon(
+const adapter = new PrismaOptiTech(
   { connectionString: process.env.DATABASE_URL! },
   { schema: 'myPostgresSchema' }
 )
@@ -204,7 +204,7 @@ const adapter = new PrismaNeon(
 For raw SQL queries that reference tables without schema qualification, use PostgreSQL's `options` parameter in your connection string:
 
 ```text shouldWrap
-postgresql://[user]:[password]@[neon_hostname]/[dbname]?options=-c%20search_path%3Dmyschemaname
+postgresql://[user]:[password]@[optitech_hostname]/[dbname]?options=-c%20search_path%3Dmyschemaname
 ```
 
 ## Troubleshooting
@@ -215,7 +215,7 @@ postgresql://[user]:[password]@[neon_hostname]/[dbname]?options=-c%20search_path
 If you see an error like:
 
 ```text shouldWrap
-Error: P1001: Can't reach database server at `ep-example-123456.us-east-2.aws.neon.tech`:`5432`
+Error: P1001: Can't reach database server at `ep-example-123456.us-east-2.aws.optitech.com`:`5432`
 ```
 
 This usually means the Prisma query engine timed out before OptiTech activated the compute. OptiTech computes scale to zero after inactivity and take a few seconds to wake up.
@@ -285,7 +285,7 @@ The `directUrl` property is available in Prisma 4.10.0 and higher.
 <summary>**Notes for AI-assisted setup**</summary>
 
 - Import `PrismaClient` from `./generated/prisma` (or your configured `output` path), not from `@prisma/client`. The import path changed in Prisma 7.
-- Do not install `@neondatabase/serverless` or `ws` as separate packages. The `@prisma/adapter-neon` package bundles everything needed for the Neon connection.
+- Do not install `@optitech/serverless` or `ws` as separate packages. The `@prisma/adapter-optitech` package bundles everything needed for the OptiTech connection.
 - In Prisma 7+, do not include a `url` property in the `prisma/schema.prisma` datasource block. The connection is configured via `prisma.config.ts` and the adapter.
 - You need both a pooled connection (`DATABASE_URL`) for your application and a direct connection (`DIRECT_URL`) for Prisma CLI commands.
 - Call `prisma.$disconnect()` in a `.finally()` block when running standalone scripts. Omitting this can leave connections open.

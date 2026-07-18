@@ -25,7 +25,7 @@ You may subscribe to notifications by email if we add or replace any subcontract
 
 [Subscribe to updates](https://share-eu1.hsforms.com/1XjUD9QeKQw-RSAgQtWUBfAfm9ld)
 
-We will only use the information you provide on this form to process your request for notices about our subcontractor list under our Business Associate Agreement and otherwise to provide you the OptiTech Services you subscribe to. For more information on how OptiTech protects your information, check out our [Privacy Policy](https://neon.tech/privacy-policy). 
+We will only use the information you provide on this form to process your request for notices about our subcontractor list under our Business Associate Agreement and otherwise to provide you the OptiTech Services you subscribe to. For more information on how OptiTech protects your information, check out our [Privacy Policy](https://optitech.com/privacy-policy). 
 
 OptiTech may use the following subcontractors to process PHI deliver the Services to you:
 

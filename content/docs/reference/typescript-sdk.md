@@ -1,16 +1,16 @@
 ---
 title: OptiTech Management SDK
-subtitle: The official TypeScript SDK for the OptiTech API. Projects, branches, Postgres, storage, functions, and auth in one typed client.
+subtitle: The official TypeScript SDK for the OptiTech API. Programs, frameworks, controls, evidence, and reports in one typed client.
 summary: >-
-  @neon/sdk is the official TypeScript SDK for the OptiTech API, a modern,
-  fetch-based replacement for @neondatabase/api-client. It exposes every
+  @optitech/sdk is the official TypeScript SDK for the OptiTech API, a modern,
+  fetch-based replacement for @optitech/api-client. It exposes every
   platform resource through ergonomic namespaces on a single client
-  (neon.projects, neon.branches, neon.postgres, neon.storage, neon.functions,
-  neon.snapshots, neon.auth, and more), with one result contract, typed errors,
+  (optitech.projects, optitech.branches, optitech.postgres, optitech.storage, optitech.functions,
+  optitech.snapshots, optitech.auth, and more), with one result contract, typed errors,
   automatic retries, readiness polling, and auto-pagination built in. A raw
   1:1 layer exposes every endpoint and is generated from the OptiTech OpenAPI spec.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <InfoBlock>
@@ -22,35 +22,35 @@ updatedOn: '2026-07-15T00:08:00.682Z'
 
 <DocsList title="Related resources" theme="docs">
 <a href="/docs/reference/api">OptiTech API Reference</a>
-<a href="/docs/reference/migrate-api-client-to-sdk">Migrate from @neondatabase/api-client</a>
-<a href="/docs/cli">Neon CLI</a>
+<a href="/docs/reference/migrate-api-client-to-sdk">Migrate from @optitech/api-client</a>
+<a href="/docs/cli">OptiTech CLI</a>
 </DocsList>
 
 <DocsList title="Source code" theme="repo">
-<a href="https://www.npmjs.com/package/@neon/sdk">@neon/sdk on npm</a>
+<a href="https://www.npmjs.com/package/@optitech/sdk">@optitech/sdk on npm</a>
 <a href="/api_spec/release/v2.json">OpenAPI spec</a>
 </DocsList>
 </InfoBlock>
 
-`@neon/sdk` wraps the entire OptiTech API in one typed, fetch-based client. You authenticate once, then reach every resource through a namespace on `neon.*`: projects, branches, the Postgres data plane, object storage, functions, and Managed Better Auth. Retries, readiness polling, auto-pagination, and typed errors are built in.
+`@optitech/sdk` wraps the entire OptiTech API in one typed, fetch-based client. You authenticate once, then reach every resource through a namespace on `optitech.*`: programs, frameworks, controls and evidence, documents, vendors, and reports. Retries, readiness polling, auto-pagination, and typed errors are built in.
 
-It replaces [`@neondatabase/api-client`](https://www.npmjs.com/package/@neondatabase/api-client), the deprecated Axios-based SDK. New projects should use `@neon/sdk`. See the [migration guide](/docs/reference/migrate-api-client-to-sdk) for method mapping and error-handling changes.
+It replaces [`@optitech/api-client`](https://www.npmjs.com/package/@optitech/api-client), the deprecated Axios-based SDK. New integrations should use `@optitech/sdk`. See the [migration guide](/docs/reference/migrate-api-client-to-sdk) for method mapping and error-handling changes.
 
 <Admonition type="note" title="Not every endpoint has an ergonomic wrapper">
-`createNeonClient` namespaces cover common workflows (projects, branches, Postgres resources, snapshots, and more). They do **not** wrap every Platform API operation. For endpoints without a namespace method, use the [`raw` layer](#raw-layer) below or the [OptiTech API Reference](/docs/reference/api).
+`createOptiTechClient` namespaces cover common workflows (programs, frameworks, controls, evidence, snapshots, and more). They do **not** wrap every Platform API operation. For endpoints without a namespace method, use the [`raw` layer](#raw-layer) below or the [OptiTech API Reference](/docs/reference/api).
 </Admonition>
 
 ```bash
-npm install @neon/sdk
+npm install @optitech/sdk
 ```
 
 ```ts
-import { createNeonClient } from "@neon/sdk";
+import { createOptiTechClient } from "@optitech/sdk";
 
-const neon = createNeonClient({ apiKey: process.env.NEON_API_KEY! });
+const optitech = createOptiTechClient({ apiKey: process.env.OPTITECH_API_KEY! });
 
-const { data, error } = await neon.projects.list().all();
-if (error) throw error; // typed NeonError
+const { data, error } = await optitech.projects.list().all();
+if (error) throw error; // typed OptiTechError
 data; // ProjectListItem[]
 ```
 
@@ -58,26 +58,26 @@ Every method follows this shape: select a namespace, call a method, and receive 
 
 In the reference tables, the **Returns** column names the resolved resource, the type of `data` on success (or the value returned directly when `throwOnError` is set). A method resolving to `void` has no resource body; [`Paginated`](#lazy-auto-paginated-lists)`<T>` is the lazy, auto-paginated list described below. Every method also accepts an optional trailing options argument (`{ throwOnError?, waitForReadiness?, signal? }`), omitted from the tables for brevity.
 
-Nearly every method needs a `projectId`, and branch-scoped methods also need a `branchId`. Get these from `neon.projects.list()` and `neon.branches.list(projectId)` (or `neon.branches.getDefault(projectId)` for the default branch), reading `.id` off each result.
+Nearly every method needs a `projectId`, and branch-scoped methods also need a `branchId`. Get these from `optitech.projects.list()` and `optitech.branches.list(projectId)` (or `optitech.branches.getDefault(projectId)` for the default branch), reading `.id` off each result.
 
 ## Client configuration
 
-`createNeonClient(config)` accepts:
+`createOptiTechClient(config)` accepts:
 
-| Option             | Type                                        | Default                            | Purpose                                                                                                      |
-| ------------------ | ------------------------------------------- | ---------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| `apiKey`           | `string \| () => string \| Promise<string>` | required                           | Bearer credential. A function is called per request, for short-lived tokens                                  |
-| `throwOnError`     | `boolean`                                   | `false`                            | Throw a `NeonError` instead of returning `{ data, error }`. Overridable per call                             |
-| `waitForReadiness` | `boolean`                                   | `false`                            | Poll provisioning operations to completion before resolving. Overridable per call                            |
-| `wait`             | `{ pollIntervalMs?, timeoutMs? }`           | `1000` / `300000`                  | Tuning for the readiness poller                                                                              |
-| `retries`          | `number`                                    | `2`                                | Automatic retries on safe statuses (423, 429, 503)                                                           |
-| `baseUrl`          | `string`                                    | `https://console.neon.tech/api/v2` | Override the API base URL                                                                                    |
-| `fetch`            | `typeof fetch`                              | global `fetch`                     | Custom fetch, for proxies, tests, or non-global runtimes                                                     |
-| `orgId`            | `string`                                    | none                               | Default organization id, applied to project create/list and as the transfer source org. Overridable per call |
+| Option             | Type                                        | Default                       | Purpose                                                                                                      |
+| ------------------ | ------------------------------------------- | ----------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `apiKey`           | `string \| () => string \| Promise<string>` | required                      | Bearer credential. A function is called per request, for short-lived tokens                                  |
+| `throwOnError`     | `boolean`                                   | `false`                       | Throw a `OptiTechError` instead of returning `{ data, error }`. Overridable per call                         |
+| `waitForReadiness` | `boolean`                                   | `false`                       | Poll provisioning operations to completion before resolving. Overridable per call                            |
+| `wait`             | `{ pollIntervalMs?, timeoutMs? }`           | `1000` / `300000`             | Tuning for the readiness poller                                                                              |
+| `retries`          | `number`                                    | `2`                           | Automatic retries on safe statuses (423, 429, 503)                                                           |
+| `baseUrl`          | `string`                                    | `https://api.optitech.com/v1` | Override the API base URL                                                                                    |
+| `fetch`            | `typeof fetch`                              | global `fetch`                | Custom fetch, for proxies, tests, or non-global runtimes                                                     |
+| `orgId`            | `string`                                    | none                          | Default organization id, applied to project create/list and as the transfer source org. Overridable per call |
 
 ```ts
-const neon = createNeonClient({
-  apiKey: process.env.NEON_API_KEY!,
+const optitech = createOptiTechClient({
+  apiKey: process.env.OPTITECH_API_KEY!,
   orgId: "org-cool-forest-12345678",
   throwOnError: true,
 });
@@ -92,36 +92,36 @@ Four behaviors are shared by every method: the result envelope, typed errors, pa
 By default, no `try/catch`. Each call resolves to a discriminated `{ data, error }` envelope; check `error`, then `data` is narrowed:
 
 ```ts
-const { data, error } = await neon.projects.get("late-frost-12345");
-if (error) return; // error: typed NeonError union
+const { data, error } = await optitech.projects.get("late-frost-12345");
+if (error) return; // error: typed OptiTechError union
 data; // narrowed to Project
 ```
 
 To throw instead, set `throwOnError` on the client (or per call). The return type narrows to the bare resource:
 
 ```ts
-const neon = createNeonClient({ apiKey, throwOnError: true });
-const project = await neon.projects.get("my-project"); // Project (throws on error)
-const { data } = await neon.projects.get("my-project", { throwOnError: false }); // opt out per call
+const optitech = createOptiTechClient({ apiKey, throwOnError: true });
+const project = await optitech.projects.get("my-project"); // Project (throws on error)
+const { data } = await optitech.projects.get("my-project", { throwOnError: false }); // opt out per call
 ```
 
 ### Typed errors
 
 The error channel, and what `throwOnError` throws, is one hierarchy of `Error` subclasses, discriminated on `kind`:
 
-| kind         | Class                | Raised when                                                     |
-| ------------ | -------------------- | --------------------------------------------------------------- |
-| `api`        | `NeonApiError`       | Non-2xx response; carries `status`, `code`, `requestId`, `body` |
-| `not_found`  | `NeonNotFoundError`  | 404 (extends `NeonApiError`)                                    |
-| `auth`       | `NeonAuthError`      | 401 or 403                                                      |
-| `rate_limit` | `NeonRateLimitError` | 429, after retries                                              |
-| `operation`  | `NeonOperationError` | An awaited operation failed; carries `operationId`, `status`    |
-| `timeout`    | `NeonTimeoutError`   | A readiness or wait deadline was exceeded                       |
-| `network`    | `NeonNetworkError`   | Transport failure, no response received                         |
-| `client`     | `NeonError`          | SDK-side error, such as ambiguous connection-string selection   |
+| kind         | Class                    | Raised when                                                     |
+| ------------ | ------------------------ | --------------------------------------------------------------- |
+| `api`        | `OptiTechApiError`       | Non-2xx response; carries `status`, `code`, `requestId`, `body` |
+| `not_found`  | `OptiTechNotFoundError`  | 404 (extends `OptiTechApiError`)                                |
+| `auth`       | `OptiTechAuthError`      | 401 or 403                                                      |
+| `rate_limit` | `OptiTechRateLimitError` | 429, after retries                                              |
+| `operation`  | `OptiTechOperationError` | An awaited operation failed; carries `operationId`, `status`    |
+| `timeout`    | `OptiTechTimeoutError`   | A readiness or wait deadline was exceeded                       |
+| `network`    | `OptiTechNetworkError`   | Transport failure, no response received                         |
+| `client`     | `OptiTechError`          | SDK-side error, such as ambiguous connection-string selection   |
 
 ```ts
-const { error } = await neon.branches.get(projectId, "nope");
+const { error } = await optitech.branches.get(projectId, "nope");
 if (error?.kind === "not_found") {
   // handle the 404
 }
@@ -132,21 +132,21 @@ if (error?.kind === "not_found") {
 Methods labeled Paginated return a [`Paginated`](#lazy-auto-paginated-lists)`<T>`; the cursor is managed for you:
 
 ```ts
-const { data: all } = await neon.projects.list().all(); // every page
-const { data: one } = await neon.projects.list().page(); // just the first page
-for await (const project of neon.projects.list()) {
+const { data: all } = await optitech.projects.list().all(); // every page
+const { data: one } = await optitech.projects.list().page(); // just the first page
+for await (const project of optitech.projects.list()) {
   // stream item by item
 }
 ```
 
 ### Async workflows
 
-OptiTech mutations return operations that complete in the background. A few convenience methods, noted as "creates, then polls until ready" in the reference below (`projects.createAndConnect`, `branches.createWithCompute`), do this polling for you and hand back a ready-to-use result, such as a connection string, in a single call. The primitive underneath is `neon.operations.waitFor(operations)`.
+OptiTech mutations return operations that complete in the background. A few convenience methods, noted as "creates, then polls until ready" in the reference below (`projects.createAndConnect`, `branches.createWithCompute`), do this polling for you and hand back a ready-to-use result, such as a connection string, in a single call. The primitive underneath is `optitech.operations.waitFor(operations)`.
 
 On any namespaced mutation, pass `{ waitForReadiness: true }` as the trailing options argument to poll before the call resolves:
 
 ```ts
-const { data, error } = await neon.branches.create(
+const { data, error } = await optitech.branches.create(
   projectId,
   { name: "preview" },
   { waitForReadiness: true }
@@ -155,19 +155,19 @@ if (error) throw error;
 data; // Branch — provisioning finished
 ```
 
-For raw API calls that return an `operations` array, use [`neon.operations.waitFor`](#neonoperations) instead.
+For raw API calls that return an `operations` array, use [`optitech.operations.waitFor`](#optitechoperations) instead.
 
 ## Namespaces
 
-The client groups the API into resource namespaces. Projects and branches are the core surfaces: [`projects`](#neonprojects) create, manage, and share projects, and [`branches`](#neonbranches) branch a project's data and schema. The Postgres data plane lives under [`postgres`](#neonpostgres): compute endpoints, roles, databases, the Data API, and connection strings.
+The client groups the API into resource namespaces. Projects and branches are the core surfaces: [`projects`](#optitechprojects) create, manage, and share projects, and [`branches`](#optitechbranches) branch a project's data and schema. The Postgres data plane lives under [`postgres`](#optitechpostgres): compute endpoints, roles, databases, the Data API, and connection strings.
 
-Branch-scoped platform services include [`storage`](#neonstorage) (S3-compatible object storage), [`functions`](#neonfunctions), [`credentials`](#neoncredentials), [`aiGateway`](#neonaigateway), and [`auth`](#neonauth) (Managed Better Auth, OAuth providers, and users). For data lifecycle and async work, use [`snapshots`](#neonsnapshots) for point-in-time snapshots and restore, and [`operations`](#neonoperations) to poll asynchronous operations.
+Branch-scoped platform services include [`storage`](#optitechstorage) (S3-compatible object storage), [`functions`](#optitechfunctions), [`credentials`](#optitechcredentials), [`aiGateway`](#optitechaigateway), and [`auth`](#optitechauth) (Managed Better Auth, OAuth providers, and users). For data lifecycle and async work, use [`snapshots`](#optitechsnapshots) for point-in-time snapshots and restore, and [`operations`](#optitechoperations) to poll asynchronous operations.
 
-Account-level surfaces round out the client: [`consumption`](#neonconsumption) for billing metrics, [`apiKeys`](#neonapikeys), and [`regions` / `user`](#neonregions--user).
+Account-level surfaces round out the client: [`consumption`](#optitechconsumption) for billing metrics, [`apiKeys`](#optitechapikeys), and [`regions` / `user`](#optitechregions--user).
 
-## neon.projects
+## optitech.projects
 
-Create, manage, and share Neon projects. One API call per method; `list` is paginated. <small>REST: [Projects API](/docs/reference/api/projects)</small>
+Create, manage, and share OptiTech projects. One API call per method; `list` is paginated. <small>REST: [Projects API](/docs/reference/api/projects)</small>
 
 | Method                            | Returns                                                      | Arguments                                                                                                               |
 | --------------------------------- | ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------- |
@@ -183,14 +183,14 @@ Create, manage, and share Neon projects. One API call per method; `list` is pagi
 
 ```ts
 // Provision a project, poll until ready, return a pooled connection string
-const { data } = await neon.projects.createAndConnect(
+const { data } = await optitech.projects.createAndConnect(
   { name: "tenant-42", region_id: "aws-us-east-1" },
   { pooled: true }
 );
 // data: { project, connectionString }
 ```
 
-### neon.projects.permissions
+### optitech.projects.permissions
 
 Share a project with additional users by email.
 
@@ -200,7 +200,7 @@ Share a project with additional users by email.
 | `grant(projectId, email)`         | `ProjectPermission`   |
 | `revoke(projectId, permissionId)` | `ProjectPermission`   |
 
-## neon.branches
+## optitech.branches
 
 Branch a project's data and schema; optionally attach compute in one workflow. <small>REST: [Branches API](/docs/reference/api/branches)</small>
 
@@ -219,8 +219,8 @@ Branch a project's data and schema; optionally attach compute in one workflow. <
 
 ```ts
 // Branch off the default ("production") branch with its own compute
-const { data: prod } = await neon.branches.getDefault(projectId);
-const { data } = await neon.branches.createWithCompute(projectId, {
+const { data: prod } = await optitech.branches.getDefault(projectId);
+const { data } = await optitech.branches.createWithCompute(projectId, {
   name: "preview/pr-123",
   parentId: prod?.id,
   compute: { minCu: 0.25, maxCu: 2 },
@@ -228,7 +228,7 @@ const { data } = await neon.branches.createWithCompute(projectId, {
 // data: { branch, endpoint, connectionString }
 ```
 
-## neon.postgres
+## optitech.postgres
 
 The Postgres data plane of a branch: compute endpoints, roles, databases, the Data API, and a connection-string helper. <small>REST: [Endpoints](/docs/reference/api/endpoints), [Branches](/docs/reference/api/branches), [Data API](/docs/reference/api/dataapi)</small>
 
@@ -237,10 +237,10 @@ The Postgres data plane of a branch: compute endpoints, roles, databases, the Da
 | `connectionString(params)` | `string` | `params`: `{ projectId, branchId?, endpointId?, databaseName?, roleName?, pooled? }`. Only `projectId` is required; branch defaults to the project default, endpoint to the read-write one, and role/database are auto-selected when the branch has exactly one. `pooled` defaults to `true` |
 
 ```ts
-const { data: uri } = await neon.postgres.connectionString({ projectId });
+const { data: uri } = await optitech.postgres.connectionString({ projectId });
 ```
 
-### neon.postgres.endpoints
+### optitech.postgres.endpoints
 
 Compute endpoints, scoped to a project.
 
@@ -256,7 +256,7 @@ Compute endpoints, scoped to a project.
 | `suspend(projectId, endpointId)`       | `Endpoint`   |                                                                                                                                                                         |
 | `restart(projectId, endpointId)`       | `Endpoint`   |                                                                                                                                                                         |
 
-### neon.postgres.roles
+### optitech.postgres.roles
 
 Postgres roles, scoped to a branch.
 
@@ -271,12 +271,12 @@ Postgres roles, scoped to a branch.
 
 ```ts
 // Reveal a role's password, or rotate it
-const { data: password } = await neon.postgres.roles.password(projectId, branchId, "neondb_owner");
-const { data: role } = await neon.postgres.roles.resetPassword(projectId, branchId, "neondb_owner");
+const { data: password } = await optitech.postgres.roles.password(projectId, branchId, "optitechdb_owner");
+const { data: role } = await optitech.postgres.roles.resetPassword(projectId, branchId, "optitechdb_owner");
 // role.password holds the new secret
 ```
 
-### neon.postgres.databases
+### optitech.postgres.databases
 
 Databases, scoped to a branch.
 
@@ -288,7 +288,7 @@ Databases, scoped to a branch.
 | `update(projectId, branchId, name, input)` | `Database`   | `input`: `{ name?, owner_name? }` |
 | `delete(projectId, branchId, name)`        | `void`       |                                   |
 
-### neon.postgres.dataApi
+### optitech.postgres.dataApi
 
 The OptiTech Data API, scoped to a branch and database.
 
@@ -299,7 +299,7 @@ The OptiTech Data API, scoped to a branch and database.
 | `update(projectId, branchId, databaseName, input?)` | `void`                  |
 | `delete(projectId, branchId, databaseName)`         | `void`                  |
 
-## neon.storage
+## optitech.storage
 
 Branch-scoped, S3-compatible object storage. `get` returns whether storage is enabled and the branch's S3 endpoint metadata; buckets and objects are nested underneath. <small>REST: [Storage](/docs/reference/api/storage), [Buckets](/docs/reference/api/buckets)</small>
 
@@ -307,7 +307,7 @@ Branch-scoped, S3-compatible object storage. `get` returns whether storage is en
 | -------------------------- | --------------- |
 | `get(projectId, branchId)` | `BranchStorage` |
 
-### neon.storage.buckets
+### optitech.storage.buckets
 
 | Method                                    | Returns    | Arguments                                                                                  |
 | ----------------------------------------- | ---------- | ------------------------------------------------------------------------------------------ |
@@ -315,7 +315,7 @@ Branch-scoped, S3-compatible object storage. `get` returns whether storage is en
 | `create(projectId, branchId, input)`      | `Bucket`   | `input`: `{ name, access_level? }`, where `access_level` is `"private"` \| `"public_read"` |
 | `delete(projectId, branchId, bucketName)` | `void`     |                                                                                            |
 
-### neon.storage.objects
+### optitech.storage.objects
 
 | Method                                                       | Returns                     | Arguments                                                                                                    |
 | ------------------------------------------------------------ | --------------------------- | ------------------------------------------------------------------------------------------------------------ |
@@ -327,7 +327,7 @@ Branch-scoped, S3-compatible object storage. `get` returns whether storage is en
 
 ```ts
 // Upload via a presigned PUT
-const { data: presign } = await neon.storage.objects.presign(
+const { data: presign } = await optitech.storage.objects.presign(
   projectId, branchId, "avatars", "user-1.png",
   { operation: "upload", content_type: "image/png" }
 );
@@ -340,29 +340,29 @@ await fetch(presign.url, {
 });
 ```
 
-## neon.functions
+## optitech.functions
 
 Branch-scoped OptiTech Functions. <small>REST: [Functions API](/docs/reference/api/functions)</small>
 
-| Method                                      | Returns                                                   | Arguments                                                                                                                                                |
-| ------------------------------------------- | --------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `list(projectId, branchId, query?)`         | [`Paginated`](#lazy-auto-paginated-lists)`<NeonFunction>` | `query`: `{ limit? }`                                                                                                                                    |
-| `get(projectId, branchId, slug)`            | `NeonFunction`                                            |                                                                                                                                                          |
-| `update(projectId, branchId, slug, input)`  | `NeonFunction`                                            | `input`: `{ name? }`                                                                                                                                     |
-| `delete(projectId, branchId, slug)`         | `void`                                                    |                                                                                                                                                          |
-| `deploy(projectId, branchId, slug, input?)` | `NeonFunctionDeployment`                                  | Multipart. `input`: `{ zip?: Blob \| File, runtime?: "nodejs24", environment?: string }`, where `environment` is a JSON-encoded `Record<string, string>` |
+| Method                                      | Returns                                                       | Arguments                                                                                                                                                |
+| ------------------------------------------- | ------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `list(projectId, branchId, query?)`         | [`Paginated`](#lazy-auto-paginated-lists)`<OptiTechFunction>` | `query`: `{ limit? }`                                                                                                                                    |
+| `get(projectId, branchId, slug)`            | `OptiTechFunction`                                            |                                                                                                                                                          |
+| `update(projectId, branchId, slug, input)`  | `OptiTechFunction`                                            | `input`: `{ name? }`                                                                                                                                     |
+| `delete(projectId, branchId, slug)`         | `void`                                                        |                                                                                                                                                          |
+| `deploy(projectId, branchId, slug, input?)` | `OptiTechFunctionDeployment`                                  | Multipart. `input`: `{ zip?: Blob \| File, runtime?: "nodejs24", environment?: string }`, where `environment` is a JSON-encoded `Record<string, string>` |
 
 ```ts
 // Deploy a bundled index.mjs inside a zip (first deploy must include the zip)
 const zip = await Bun.file("bundle.zip").arrayBuffer();
-const { data: deployment } = await neon.functions.deploy(projectId, branchId, "api", {
+const { data: deployment } = await optitech.functions.deploy(projectId, branchId, "api", {
   zip: new File([zip], "bundle.zip", { type: "application/zip" }),
   runtime: "nodejs24",
 });
-// Poll neon.functions.get until current_deployment.status is "completed"
+// Poll optitech.functions.get until current_deployment.status is "completed"
 ```
 
-## neon.credentials
+## optitech.credentials
 
 Branch-scoped credentials with explicit scopes. Secrets (`api_token`, `s3_secret_access_key`) are returned once, on `create`. <small>REST: [Credentials API](/docs/reference/api/credentials)</small>
 
@@ -372,7 +372,7 @@ Branch-scoped credentials with explicit scopes. Secrets (`api_token`, `s3_secret
 | `create(projectId, branchId, input)`   | `CreateCredentialResponse` | `input`: `{ name?, scopes, principal_type: "user" }`. Scopes: `storage:read`, `storage:write`, `ai_gateway:invoke`, `functions:invoke` |
 | `revoke(projectId, branchId, tokenId)` | `void`                     |                                                                                                                                        |
 
-## neon.aiGateway
+## optitech.aiGateway
 
 Branch-scoped AI Gateway endpoint metadata. <small>REST: [AI Gateway API](/docs/reference/api/ai-gateway)</small>
 
@@ -380,7 +380,7 @@ Branch-scoped AI Gateway endpoint metadata. <small>REST: [AI Gateway API](/docs/
 | -------------------------- | ----------------- | -------------------------------------------------------- |
 | `get(projectId, branchId)` | `BranchAiGateway` | Returns 404 when AI Gateway is not enabled on the branch |
 
-## neon.snapshots
+## optitech.snapshots
 
 Point-in-time snapshots, restore, and backup schedules. <small>REST: [Snapshots API](/docs/reference/api/snapshots)</small>
 
@@ -401,13 +401,13 @@ Point-in-time snapshots, restore, and backup schedules. <small>REST: [Snapshots 
 - Transaction-style with `preview`: it restores un-finalized, runs your callback against the restored branch, then commits if the callback returns `true` or aborts (deletes the preview branch) if `false`, unless `keepOnAbort` is set:
 
 ```ts
-await neon.snapshots.restore(projectId, snapshotId, {
+await optitech.snapshots.restore(projectId, snapshotId, {
   targetBranchId,
   preview: async (branch) => (await checks(branch)) === "ok", // true commits, false aborts
 });
 ```
 
-## neon.operations
+## optitech.operations
 
 Read operations and wait for them to finish. <small>REST: [Operations API](/docs/reference/api/operations)</small>
 
@@ -420,54 +420,54 @@ Read operations and wait for them to finish. <small>REST: [Operations API](/docs
 ```ts
 // Wait on operations from a raw call (or when readiness polling is off)
 const { data } = await raw.createProjectBranch({
-  client: neon.client,
+  client: optitech.client,
   path: { project_id: projectId },
   body: { branch: { name: "wip" } },
 });
-const { error } = await neon.operations.waitFor(data!.operations, { timeoutMs: 120_000 });
+const { error } = await optitech.operations.waitFor(data!.operations, { timeoutMs: 120_000 });
 ```
 
-## neon.auth
+## optitech.auth
 
 Branch-scoped Managed Better Auth. The legacy project-scoped endpoints are deprecated and remain raw-only. <small>REST: [Authentication API](/docs/reference/api/auth)</small>
 
-| Method                                     | Returns                             | Arguments                  |
-| ------------------------------------------ | ----------------------------------- | -------------------------- |
-| `get(projectId, branchId)`                 | `NeonAuthIntegration`               |                            |
-| `create(projectId, branchId, input)`       | `NeonAuthCreateIntegrationResponse` | Enable the integration     |
-| `disable(projectId, branchId, input?)`     | `void`                              | `input`: `{ deleteData? }` |
-| `updateConfig(projectId, branchId, input)` | `NeonAuthConfigResponse`            |                            |
+| Method                                     | Returns                                 | Arguments                  |
+| ------------------------------------------ | --------------------------------------- | -------------------------- |
+| `get(projectId, branchId)`                 | `OptiTechAuthIntegration`               |                            |
+| `create(projectId, branchId, input)`       | `OptiTechAuthCreateIntegrationResponse` | Enable the integration     |
+| `disable(projectId, branchId, input?)`     | `void`                                  | `input`: `{ deleteData? }` |
+| `updateConfig(projectId, branchId, input)` | `OptiTechAuthConfigResponse`            |                            |
 
-### neon.auth.oauthProviders
+### optitech.auth.oauthProviders
 
 OAuth providers (Google, GitHub, and others).
 
-| Method                                           | Returns                   |
-| ------------------------------------------------ | ------------------------- |
-| `list(projectId, branchId)`                      | `NeonAuthOauthProvider[]` |
-| `add(projectId, branchId, input)`                | `NeonAuthOauthProvider`   |
-| `update(projectId, branchId, providerId, input)` | `NeonAuthOauthProvider`   |
-| `delete(projectId, branchId, providerId)`        | `void`                    |
+| Method                                           | Returns                       |
+| ------------------------------------------------ | ----------------------------- |
+| `list(projectId, branchId)`                      | `OptiTechAuthOauthProvider[]` |
+| `add(projectId, branchId, input)`                | `OptiTechAuthOauthProvider`   |
+| `update(projectId, branchId, providerId, input)` | `OptiTechAuthOauthProvider`   |
+| `delete(projectId, branchId, providerId)`        | `void`                        |
 
-### neon.auth.trustedDomains
+### optitech.auth.trustedDomains
 
 The redirect-URI whitelist.
 
-| Method                               | Returns                                |
-| ------------------------------------ | -------------------------------------- |
-| `list(projectId, branchId)`          | `NeonAuthRedirectUriWhitelistDomain[]` |
-| `add(projectId, branchId, input)`    | `void`                                 |
-| `delete(projectId, branchId, input)` | `void`                                 |
+| Method                               | Returns                                    |
+| ------------------------------------ | ------------------------------------------ |
+| `list(projectId, branchId)`          | `OptiTechAuthRedirectUriWhitelistDomain[]` |
+| `add(projectId, branchId, input)`    | `void`                                     |
+| `delete(projectId, branchId, input)` | `void`                                     |
 
-### neon.auth.users
+### optitech.auth.users
 
-| Method                                               | Returns                          |
-| ---------------------------------------------------- | -------------------------------- |
-| `create(projectId, branchId, input)`                 | `NeonAuthCreateNewUserResponse`  |
-| `delete(projectId, branchId, authUserId)`            | `void`                           |
-| `updateRole(projectId, branchId, authUserId, roles)` | `UpdateNeonAuthUserRoleResponse` |
+| Method                                               | Returns                              |
+| ---------------------------------------------------- | ------------------------------------ |
+| `create(projectId, branchId, input)`                 | `OptiTechAuthCreateNewUserResponse`  |
+| `delete(projectId, branchId, authUserId)`            | `void`                               |
+| `updateRole(projectId, branchId, authUserId, roles)` | `UpdateOptiTechAuthUserRoleResponse` |
 
-## neon.consumption
+## optitech.consumption
 
 Cursor-paginated billing metrics. Each method takes `{ from, to, granularity, org_id, project_ids? }`, where `from`/`to` are ISO timestamps, `granularity` is `"hourly"` \| `"daily"` \| `"monthly"`, and `org_id` names the org to report on; `perBranchV2` also requires `project_ids`. Consumption requires a Scale plan or above. <small>REST: [Consumption API](/docs/reference/api/consumption)</small>
 
@@ -479,7 +479,7 @@ Cursor-paginated billing metrics. Each method takes `{ from, to, granularity, or
 
 ```ts
 // Stream every project's daily usage across a range
-for await (const project of neon.consumption.perProject({
+for await (const project of optitech.consumption.perProject({
   from: "2026-06-01T00:00:00Z",
   to: "2026-06-30T00:00:00Z",
   granularity: "daily",
@@ -489,7 +489,7 @@ for await (const project of neon.consumption.perProject({
 }
 ```
 
-## neon.apiKeys
+## optitech.apiKeys
 
 Manage account-level API keys. <small>REST: [API Keys API](/docs/reference/api/api-keys)</small>
 
@@ -499,7 +499,7 @@ Manage account-level API keys. <small>REST: [API Keys API](/docs/reference/api/a
 | `create(keyName)` | `ApiKeyCreateResponse`      | The `key` token is shown once |
 | `revoke(keyId)`   | `ApiKeyRevokeResponse`      |                               |
 
-## neon.regions / neon.user
+## optitech.regions / optitech.user
 
 Active regions and the current account. <small>REST: [Regions](/docs/reference/api/regions), [Users](/docs/reference/api/users)</small>
 
@@ -511,21 +511,21 @@ Active regions and the current account. <small>REST: [Regions](/docs/reference/a
 
 ## Raw layer
 
-Anything not wrapped above is available as a raw, 1:1 function. Pass `neon.client` to reuse the client's auth and base URL:
+Anything not wrapped above is available as a raw, 1:1 function. Pass `optitech.client` to reuse the client's auth and base URL:
 
 ```ts
-import { raw } from "@neon/sdk";
-// or, for guaranteed tree-shaking: import { getProjectBranchSchema } from "@neon/sdk/raw";
+import { raw } from "@optitech/sdk";
+// or, for guaranteed tree-shaking: import { getProjectBranchSchema } from "@optitech/sdk/raw";
 
 const { data, error } = await raw.getProjectBranchSchema({
-  client: neon.client,
+  client: optitech.client,
   path: { project_id, branch_id },
-  query: { db_name: "neondb" }, // db_name is required
+  query: { db_name: "optitechdb" }, // db_name is required
 });
 ```
 
-The raw layer speaks the same result contract as the ergonomic client: `{ data, error }` by default, or the bare resource (throwing the typed `NeonError`) with `throwOnError: true`. There is no `responseStyle` switch. Every request, response, and error type is re-exported flat from `@neon/sdk` for `import type { Project, Branch }` and the rest.
+The raw layer speaks the same result contract as the ergonomic client: `{ data, error }` by default, or the bare resource (throwing the typed `OptiTechError`) with `throwOnError: true`. There is no `responseStyle` switch. Every request, response, and error type is re-exported flat from `@optitech/sdk` for `import type { Project, Branch }` and the rest.
 
 ## How this SDK is built
 
-The raw layer and all request, response, and error types are generated from the [OptiTech OpenAPI spec](/api_spec/release/v2.json) using [`@hey-api/openapi-ts`](https://heyapi.dev). The ergonomic namespaces documented above are hand-written on top of that generated layer. When the API adds an endpoint, it appears in the raw layer automatically; the namespace wrappers are added deliberately. The source lives in [`neondatabase/neon-pkgs`](https://github.com/neondatabase/neon-pkgs/tree/main/packages/sdk).
+The raw layer and all request, response, and error types are generated from the [OptiTech OpenAPI spec](/api_spec/release/v2.json) using [`@hey-api/openapi-ts`](https://heyapi.dev). The ergonomic namespaces documented above are hand-written on top of that generated layer. When the API adds an endpoint, it appears in the raw layer automatically; the namespace wrappers are added deliberately. The source lives in [`optitechdatabase/optitech-pkgs`](https://github.com/optitechdatabase/optitech-pkgs/tree/main/packages/sdk).

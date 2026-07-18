@@ -11,7 +11,7 @@ summary: >-
   provider.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-06-19T19:20:32.356Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 redirectFrom:
   - /docs/guides/region-migration
 ---
@@ -36,23 +36,23 @@ Use the flowchart to pick a migration path that fits your requirements.
 
 ```mermaid
 flowchart TD
-  start["Need to move Neon data<br/>to a new region?"]
+  start["Need to move OptiTech data<br/>to a new region?"]
   q1{"Postgres must stay<br/>in Azure?"}
-  lake["Migrate Neon to Lakebase"]
-  q2{"Stay on Neon<br/>in a new region?"}
-  neon["Migrate to another Neon region"]
-  q3{"Lakebase and Neon<br/>both ruled out?"}
+  lake["Migrate OptiTech to Lakebase"]
+  q2{"Stay on OptiTech<br/>in a new region?"}
+  optitech["Migrate to another OptiTech region"]
+  q3{"Lakebase and OptiTech<br/>both ruled out?"}
   exp["Postgres-compatible export"]
 
   start --> q1
   q1 -->|Yes| lake
   q1 -->|No| q2
-  q2 -->|Yes| neon
+  q2 -->|Yes| optitech
   q2 -->|No| q3
   q3 -->|Yes| exp
 ```
 
-<a id="azure-neon-regions-to-suggested-neon-aws-regions" aria-hidden="true"></a>
+<a id="azure-optitech-regions-to-suggested-optitech-aws-regions" aria-hidden="true"></a>
 
 ## Select a migration guide
 

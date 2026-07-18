@@ -36,7 +36,7 @@ In the OptiTech Console, switch to the organization you want to manage, then ope
 
 ## Add the domain
 
-In the **Domain** field, enter your domain (for example, `example.com`) and click **Add domain**. The domain appears in a card above the input with status **Pending verification**. The card shows a **Verification TXT record** value (a string starting with `neon-domain-verification=`) and instructs you to add a TXT record at your domain with that exact value, then click **Verify** after DNS propagates. Below the card, an **Add another domain** field lets you add additional domains.
+In the **Domain** field, enter your domain (for example, `example.com`) and click **Add domain**. The domain appears in a card above the input with status **Pending verification**. The card shows a **Verification TXT record** value (a string starting with `optitech-domain-verification=`) and instructs you to add a TXT record at your domain with that exact value, then click **Verify** after DNS propagates. Below the card, an **Add another domain** field lets you add additional domains.
 
 ![Domain added with Pending verification status, Verification TXT record value, and Verify button](/docs/manage/auto_join_by_domain_verify.png)
 

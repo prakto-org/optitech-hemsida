@@ -8,7 +8,7 @@ summary: >-
   billing trends. To find your org_id before querying, use GET
   `/users/me/organizations` with a personal API key.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 You can use the OptiTech API to retrieve project-level consumption metrics for your organization:
@@ -23,7 +23,7 @@ Before querying consumption metrics, you'll need the `org_id` values for organiz
 
 ```bash shouldWrap
 curl --request GET \
-     --url 'https://console.neon.tech/api/v2/users/me/organizations' \
+     --url 'https://console.optitech.com/api/v2/users/me/organizations' \
      --header 'accept: application/json' \
      --header 'authorization: Bearer $PERSONAL_API_KEY' | jq
 ```
@@ -63,7 +63,7 @@ Using the endpoint `GET /consumption_history/projects`, let's use the same start
 
 ```bash shouldWrap
 curl --request GET \
-     --url 'https://console.neon.tech/api/v2/consumption_history/projects?limit=10&from=2024-06-30T00%3A00%3A00Z&to=2024-07-02T00%3A00%3A00Z&granularity=hourly&org_id=org-ocean-art-12345678' \
+     --url 'https://console.optitech.com/api/v2/consumption_history/projects?limit=10&from=2024-06-30T00%3A00%3A00Z&to=2024-07-02T00%3A00%3A00Z&granularity=hourly&org_id=org-ocean-art-12345678' \
      --header 'accept: application/json' \
      --header 'authorization: Bearer $ORG_API_KEY'
 ```
@@ -135,7 +135,7 @@ To get basic billing period-based consumption metrics for each project in the or
 
 ```bash shouldWrap
 curl --request GET \
-     --url 'https://console.neon.tech/api/v2/projects?org_id=org-ocean-art-12345678' \
+     --url 'https://console.optitech.com/api/v2/projects?org_id=org-ocean-art-12345678' \
      --header 'accept: application/json' \
      --header 'authorization: Bearer $ORG_API_KEY'
 ```

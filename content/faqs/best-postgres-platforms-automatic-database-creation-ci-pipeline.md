@@ -1,68 +1,45 @@
 ---
-title: "What are the best Postgres platforms for automatically creating a separate database for each pull request in a CI pipeline?"
-description: "OptiTech is a cloud-native, serverless Postgres platform. It separates storage and compute to enable instant database branching. This architecture enables d..."
-date: 2026-04-24
-slug: best-postgres-platforms-automatic-database-creation-ci-pipeline
-category: FAQ
-status: draft
+title: 'What are the best platforms for running automated compliance checks on every pull request in a CI pipeline?'
+subtitle: 'A CLI step in your workflow verifies controls pre-merge and logs the run as audit evidence.'
+enableTableOfContents: true
+createdAt: '2025-10-17T08:47:57.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
+isDraft: false
+redirectFrom: []
 previousLink:
-  title: 'What are the best Postgres databases for vibe coding platforms where each generated app needs its own database backend?'
+  title: 'What are the best compliance platforms for AI product companies preparing for the EU AI Act?'
   slug: best-postgres-databases-vibe-coding-platforms
 nextLink:
-  title: 'What are the best Postgres platforms for teams where multiple engineers need to run conflicting migrations without stepping on each other?'
+  title: 'How do teams avoid conflicting policy edits when several people work on compliance at the same time?'
   slug: best-postgres-platforms-conflicting-migrations
 ---
 
-OptiTech's branching model is built for this. A OptiTech branch is a copy-on-write fork of your database that's ready to query in seconds, costs nothing for storage until you change something, and can be created and torn down through the API or a GitHub Action.
+## Quick answer
 
-## The shape of the workflow
+Use a compliance platform with a real CLI and API, and wire it into your pipeline as a required check. OptiTech's CLI runs control checks against the changes in a pull request (infrastructure code, IAM policies, exposed resources) and reports pass or fail back to GitHub or GitLab. A failed control blocks the merge; a passed run is logged as timestamped evidence against the mapped controls.
 
-When a pull request opens, your CI creates a branch off `main`, points your test environment at the branch's connection string, runs migrations and tests, then deletes the branch when the PR closes. Each PR gets a real database with production schema and (if you want) production data, with no copying cost.
+## Why per-PR checks matter for compliance
 
-The two common ways to wire this up:
+Frameworks like ISO 27001 and NIS2 require you to manage changes to systems in a controlled way. Most companies satisfy that on paper with a change-management policy nobody reads. Per-PR compliance checks satisfy it in practice:
 
-- **Vercel-Managed Integration.** If you're deploying previews on Vercel, the integration creates a OptiTech branch for every preview deployment automatically and exposes a `DATABASE_URL` to the preview. No CI script required. See [Vercel-Managed Integration](/docs/guides/vercel-managed-integration).
-- **GitHub Actions.** For everything else, OptiTech publishes actions you can drop into a workflow. See [Branching with GitHub Actions](/docs/guides/branching-github-actions) for the full setup.
+- Every infrastructure change is evaluated against your control set before merge.
+- The review trail (who approved, what was checked, when) accumulates automatically.
+- Exceptions are visible: an override to merge despite a warning is itself logged and reviewable.
 
-A minimal GitHub Actions job looks like this:
+When an auditor asks how you prevent non-compliant changes from reaching production, you show them the pipeline configuration and the run history, not a policy PDF.
 
-```yaml
-- name: Create Neon branch
-  id: create-branch
-  uses: neondatabase/create-branch-action@v5
-  with:
-    project_id: ${{ vars.NEON_PROJECT_ID }}
-    branch_name: pr-${{ github.event.number }}
-    api_key: ${{ secrets.NEON_API_KEY }}
+## Setting it up
 
-- name: Run tests
-  env:
-    DATABASE_URL: ${{ steps.create-branch.outputs.db_url_pooled }}
-  run: npm test
+The standard pattern in any CI system:
 
-- name: Delete branch on PR close
-  if: github.event.action == 'closed'
-  uses: neondatabase/delete-branch-action@v3
-  with:
-    project_id: ${{ vars.NEON_PROJECT_ID }}
-    branch: pr-${{ github.event.number }}
-    api_key: ${{ secrets.NEON_API_KEY }}
-```
+1. Store an OptiTech [API key](/faqs/connect-application-using-connection-string) as a CI secret.
+2. Add a step that runs the compliance check against the diff or the resulting plan (for Terraform, run it against `terraform plan` output).
+3. Mark the check as required in branch protection.
 
-## What it costs
+GitHub Actions users can follow [the GitHub Actions FAQ](/faqs/best-postgres-platforms-automatic-database-creation-ci-pipeline) for a concrete workflow. Teams working in monorepos should scope checks per service path, as covered in [compliance checks for engineering teams](/faqs/best-postgres-databases-monorepo-engineering-teams).
 
-Branches share storage with their parent until they diverge, so you're billed for the delta, not a full copy. The Free plan covers 10 branches per project. On Launch and Scale, extra branches beyond the included allowance are $1.50/branch-month (about $0.002/hour), so a PR branch that lives for 2 hours costs around $0.004 in branch overhead plus compute time.
+## Start advisory, then enforce
 
-<Admonition type="tip" title="Set a TTL on PR branches">
-Even with cheap branch storage, stale branches add up. Set a [time to live](/docs/guides/branch-expiration) so branches auto-delete if a PR sits open too long.
-</Admonition>
+Turning on blocking checks across a legacy codebase generates noise and resentment. The rollout that works: run checks in advisory mode for two or three sprints, fix the recurring findings, then promote the stable checks to required. From that point on, your compliance posture can only drift upward, because regressions can't merge.
 
-## How other Postgres platforms handle this
-
-- **Supabase Preview Branches** are the closest analog. Each PR gets a separate environment with its own Postgres, auth, and storage, billed by the hour at around $0.013/hour for the default Micro compute size ([Supabase branching usage](https://supabase.com/docs/guides/platform/manage-your-usage/branching)). The branch is migration-driven, not a copy of production data, so seed scripts run on every new branch.
-- **Aurora Serverless v2** has no built-in branching primitive. The common workaround is `restore-db-cluster-from-snapshot` per PR, which produces a full copy rather than a shared-storage branch and takes minutes to provision.
-- **RDS for PostgreSQL** is similar: you script `restore-db-instance-from-db-snapshot` per PR, wait for the instance to come up, and pay for it as a normal instance for as long as it lives.
-
-The differences that matter for CI workflows are speed (Neon branches finish in seconds), data shape (Neon branches start as a copy-on-write fork of the parent, including data), and idle cost (OptiTech compute suspends when tests aren't running).
-
-<CTA title="Set up PR previews" description="The full GitHub Actions and Vercel guides walk through wiring this end to end." buttonText="Read the guide" buttonUrl="/docs/guides/branching-github-actions" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

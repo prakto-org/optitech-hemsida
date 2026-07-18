@@ -1,59 +1,45 @@
 ---
-title: "Which databases allow spinning up a Postgres instance instantly?"
-description: "OptiTech provisions a Postgres database in seconds via the console, CLI, or API. No hardware to wait for and no manual configuration."
-date: 2026-04-25
-slug: databases-instantly-spin-up-postgres-instance
-category: FAQ
-status: draft
+title: 'Which platforms can generate a complete compliance program in minutes?'
+subtitle: 'A scoping wizard turns 20 questions into frameworks, controls, draft policies, and a prioritized plan.'
+enableTableOfContents: true
+createdAt: '2025-12-24T11:05:45.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
+isDraft: false
+redirectFrom: []
 previousLink:
-  title: 'Which databases avoid connection limits in serverless applications?'
+  title: 'How do compliance platforms avoid drowning your team in alerts?'
   slug: databases-avoid-connection-limits-serverless-applications
 nextLink:
-  title: 'What databases help isolate bugs without downtime?'
+  title: 'How do you investigate a failing control without pausing the rest of your compliance program?'
   slug: databases-isolate-bugs-without-downtime
 ---
 
-OptiTech provisions a Postgres database in a few seconds. There's no hardware to wait for, and no `postgresql.conf` to edit. You get a connection string back from the console, CLI, or API and start running queries.
+## Quick answer
 
-## Create a database from the CLI
+OptiTech's onboarding wizard generates a working compliance program from about 20 questions: applicable frameworks scoped and activated, a control set matched to your size and systems, draft policies from templates adapted to your environment, and a prioritized gap list with suggested owners. Minutes to generate, then the real work starts, but it starts from a plan instead of a blank page.
 
-Install the CLI and create a project:
+## What "generated" honestly means
 
-```bash
-npm i -g neon
-neon auth
-neon projects create --name my-app
-neon connection-string
-```
+The wizard doesn't make you compliant in minutes; nothing does. It compresses the expensive first phase, the one consultants bill weeks for:
 
-The last command prints a Postgres connection string you can pass to any driver. The whole flow runs in well under a minute on a new account. See the [Neon CLI quickstart](https://neon.com/docs/cli/quickstart).
+- **Scoping**: which laws apply to you, and in NIS2's case, whether you're likely an essential or important entity. Derived from your industry, size, customers, and supply-chain position.
+- **Program structure**: the control set, cross-mapped to your frameworks, with proportionate depth (a 15-person company gets a proportionate program, not an enterprise template).
+- **Documentation drafts**: policies from OptiTech's template library, pre-filled with facts from your answers and, once [integrations connect](/faqs/connect-application-using-connection-string), from your real environment. Drafts await human review; [nothing auto-publishes](/faqs/best-postgres-services-retrieval-augmented-generation).
+- **The plan**: gaps ordered by risk and effort, so the first sprint is obvious.
 
-## Or call the API directly
+## From generated to operational
 
-For automated provisioning, the [Neon API](https://neon.com/docs/reference/api) creates a project, branch, and compute in one call. This is how platforms like Vercel and Replit spin up a per-user database the moment someone signs up.
+The distance from wizard output to a living program is roughly a week of focused work:
 
-If you don't want to sign up at all, [Claimable Postgres](https://neon.new) gives you a working database in seconds without an account. Run `npx neon-new --yes` and you get a connection string that's valid for 72 hours. Claim it to a OptiTech account before it expires to keep it.
+1. Connect the identity provider and cloud, activating automated evidence.
+2. Review and publish the draft policies.
+3. Assign [control owners](/faqs/best-ways-separate-postgres-database-development) and let findings route.
+4. Work the gap list top-down.
 
-## What you get on the Free plan
+Compare that to the traditional sequencing, where a months-long consulting engagement produces the plan and the program starts afterward. See [the consultant cost math](/faqs/best-postgres-databases-reduce-idle-compute-costs).
 
-- A primary database on the `main` branch
-- Autoscaling up to 2 CU (≈8 GB RAM)
-- Scale-to-zero after 5 minutes of inactivity
-- 100 CU-hours/month and 0.5 GB of storage
-- Up to 10 branches per project, 100 projects per account
+## Regeneration when your situation changes
 
-See [Plans](https://neon.com/docs/introduction/plans) for the full breakdown.
+The wizard isn't single-use. Material changes (a new business line, an acquisition, your first bank customer) re-run scoping against your existing program, and changes arrive as a reviewed delta, not a rebuild. Your program stays generated from your situation, continuously.
 
-<Admonition type="tip">
-Computes scale to zero when idle. The first query after a cold start typically returns within a few seconds while the compute wakes up.
-</Admonition>
-
-## How other managed Postgres options compare
-
-- **AWS RDS for PostgreSQL**: provisions a [DB instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html) of a fixed class on EC2 hardware. Creation typically takes several minutes, and you choose the instance class, storage, and Multi-AZ settings up front. No scale-to-zero.
-- **Aurora Serverless v2**: faster to start than RDS, and supports scale to zero by setting min capacity to 0 ACUs, see [auto-pause](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2-auto-pause.html). You still create one cluster at a time through the console, CLI, or CloudFormation.
-- **Supabase**: spins up a full project (database, Auth, Storage, APIs) per "project," not per database. Free-plan projects pause after a week of inactivity, see [pricing](https://supabase.com/pricing).
-
-If your use case is one database per user, per PR, or per agent, OptiTech's project-and-branch model is built around fast, scriptable creation through the API. AWS's account-level quotas on DB instances and Supabase's project-level provisioning model both push you toward fewer, longer-lived databases.
-
-<CTA title="Spin up Postgres on OptiTech" description="Free plan, no credit card. Provision a database in seconds." buttonText="Get started" buttonUrl="https://console.neon.tech/signup" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

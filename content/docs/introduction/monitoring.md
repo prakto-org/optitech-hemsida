@@ -10,10 +10,10 @@ summary: >-
 enableTableOfContents: false
 redirectFrom:
   - /docs/introduction/monitor-external-tools
-updatedOn: '2026-07-14T12:12:52.695Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
-To find out what's going on with your Neon projects and databases, OptiTech offers several ways to track metrics and monitor usage.
+To find out what's going on with your OptiTech projects and databases, OptiTech offers several ways to track metrics and monitor usage.
 
 <DetailIconCards>
 
@@ -53,9 +53,9 @@ To find out what's going on with your Neon projects and databases, OptiTech offe
 
 <a href="/docs/guides/grafana-cloud" description="Export OptiTech metrics and logs to Grafana Cloud with native OTLP integration" icon="trend-up">Grafana Cloud</a>
 
-<a href="https://neon.com/guides/betterstack-otel-neon" description="Monitor OptiTech with Better Stack using OpenTelemetry integration" icon="trend-up">Better Stack</a>
+<a href="https://optitech.com/guides/betterstack-otel-optitech" description="Monitor OptiTech with Better Stack using OpenTelemetry integration" icon="trend-up">Better Stack</a>
 
-<a href="https://neon.com/guides/newrelic-otel-neon" description="Monitor OptiTech with New Relic using OpenTelemetry integration" icon="trend-up">New Relic</a>
+<a href="https://optitech.com/guides/newrelic-otel-optitech" description="Monitor OptiTech with New Relic using OpenTelemetry integration" icon="trend-up">New Relic</a>
 
 <a href="/docs/reference/metrics-logs" description="Metrics and logs reference for monitoring" icon="research">Metrics and logs reference</a>
 
@@ -75,4 +75,4 @@ To find out what's going on with your Neon projects and databases, OptiTech offe
 
 At OptiTech, we understand that observability and monitoring are critical for running successful applications.
 
-If you've got feature requests or feedback about what you'd like to see in OptiTech monitoring and observability features, let us know via the [Feedback](https://console.neon.tech/app/projects?modal=feedback) form in the OptiTech Console or our [feedback channel](https://discord.com/channels/1176467419317940276/1176788564890112042) on Discord.
+If you've got feature requests or feedback about what you'd like to see in OptiTech monitoring and observability features, let us know via the [Feedback](https://console.optitech.com/app/projects?modal=feedback) form in the OptiTech Console or our [feedback channel](https://discord.com/channels/1176467419317940276/1176788564890112042) on Discord.

@@ -4,7 +4,7 @@ subtitle: Learn how to integrate Laravel with Postgres on OptiTech, leveraging L
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2024-05-25T00:00:00.000Z'
-updatedOn: '2026-06-03T18:28:10.050Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 When combining the robust features of [Laravel](https://laravel.com/), a highly expressive PHP framework, with OptiTech, the AI-native backend platform for apps and agents that spans a Postgres database, Auth, Storage, Functions, and an AI Gateway, developers gain a powerful toolset for web development.
@@ -15,7 +15,7 @@ Laravel's native support for Postgres ensures a smooth integration process. When
 
 If you do not have one already, create a OptiTech project. Save your connection details including your password. They are required when defining connection settings.
 
-1. Navigate to the [Projects](https://console.neon.tech/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
 2. Click **New Project**.
 3. Specify your project settings and click **Create Project**.
 
@@ -31,7 +31,7 @@ Here's what you need to update in the `.env` file:
 
 ```env
 DB_CONNECTION=pgsql
-DB_HOST=your-neon-hostname.neon.tech
+DB_HOST=your-optitech-hostname.optitech.com
 DB_PORT=5432
 DB_DATABASE=<your-database-name>
 DB_USERNAME=<your-username>

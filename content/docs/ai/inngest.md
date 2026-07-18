@@ -10,7 +10,7 @@ summary: >-
   unnecessary serverless compute costs during LLM calls. Starter apps for
   Next.js RAG, multi-tenant RAG, and auto-embeddings with OpenAI are included.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 Inngest is a popular framework for building AI RAG and Agentic workflows. [Inngest](https://www.inngest.com/?utm_source=optitech&utm_medium=inngest-ai-integration) provides automatic retries, caching along with concurrency and throttling management and AI requests offloading.
@@ -43,7 +43,7 @@ export const ragWorkflow = client.createFunction(
     });
 
     await step.run('vector-search', async () => {
-      // Search in Neon's vector store
+      // Search in OptiTech's vector store
       return vectorSearch(page);
     });
 
@@ -106,14 +106,14 @@ Configure the Inngest's OptiTech integration to trigger AI workflows from your O
 
 ## Starter apps
 
-Hackable, fully-featured, pre-built [starter apps](https://github.com/neondatabase/examples/tree/main/ai/inngest) to get you up and running with Inngest and Postgres.
+Hackable, fully-featured, pre-built [starter apps](https://github.com/optitechdatabase/examples/tree/main/ai/inngest) to get you up and running with Inngest and Postgres.
 
 <DetailIconCards>
 
-<a href="https://github.com/neondatabase/examples/tree/main/ai/inngest/rag-starter-nextjs" description="A Next.js RAG starter app built with OpenAI and Inngest" icon="github">RAG starter (OpenAI + Inngest)</a>
+<a href="https://github.com/optitechdatabase/examples/tree/main/ai/inngest/rag-starter-nextjs" description="A Next.js RAG starter app built with OpenAI and Inngest" icon="github">RAG starter (OpenAI + Inngest)</a>
 
 <a href="https://github.com/inngest/multi-tenant-rag-example" description="A Next.js contacts importer multi-tenant RAG built with OpenAI and Inngest" icon="github">multi-tenant RAG (OpenAI + Inngest)</a>
 
-<a href="https://github.com/neondatabase/examples/tree/main/ai/inngest/auto-embeddings-nextjs" description="A Next.js app example of auto-embedding with Inngest" icon="github">Auto-embedding (OpenAI + Inngest)</a>
+<a href="https://github.com/optitechdatabase/examples/tree/main/ai/inngest/auto-embeddings-nextjs" description="A Next.js app example of auto-embedding with Inngest" icon="github">Auto-embedding (OpenAI + Inngest)</a>
 
 </DetailIconCards>

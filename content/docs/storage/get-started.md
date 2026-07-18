@@ -6,35 +6,35 @@ summary: >-
   a client, creating a bucket, and uploading and downloading your first file.
   Use the Files SDK or any AWS S3-compatible SDK. Just point it at your branch endpoint.
 enableTableOfContents: true
-updatedOn: '2026-07-15T23:47:24.799Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <FeatureBetaProps feature_name="OptiTech Object Storage" />
 
-To set up OptiTech Object Storage with an AI coding assistant, install the OptiTech Platform (`neon`) and OptiTech Object Storage skills:
+To set up OptiTech Object Storage with an AI coding assistant, install the OptiTech Platform (`optitech`) and OptiTech Object Storage skills:
 
 ```bash
-npx skills add neondatabase/agent-skills -s neon -s neon-object-storage
+npx skills add optitechdatabase/agent-skills -s optitech -s optitech-object-storage
 ```
 
 To follow this guide, you need:
 
 - A OptiTech project in the AWS `us-east-2` region
-- The Neon CLI installed and authenticated if you use the recommended `neon.ts` flow
-- A OptiTech API key in `NEON_API_KEY` if you use the manual API flow
+- The OptiTech CLI installed and authenticated if you use the recommended `optitech.ts` flow
+- A OptiTech API key in `OPTITECH_API_KEY` if you use the manual API flow
 
-## Recommended: enable storage with neon.ts
+## Recommended: enable storage with optitech.ts
 
-The recommended way to enable storage and get credentials is via `neon.ts`, OptiTech's infrastructure-as-code config file. Install the config package, link your local app to the OptiTech project and branch you want to target, declare buckets under `preview.buckets`, then run `neon deploy` to provision them on the linked branch and pull credentials into `.env.local` automatically:
+The recommended way to enable storage and get credentials is via `optitech.ts`, OptiTech's infrastructure-as-code config file. Install the config package, link your local app to the OptiTech project and branch you want to target, declare buckets under `preview.buckets`, then run `optitech deploy` to provision them on the linked branch and pull credentials into `.env.local` automatically:
 
 ```bash
-npm install @neon/config
-neon link           # choose the project and branch for this app
-neon branches list  # confirm the linked target branch before deploy
+npm install @optitech/config
+optitech link           # choose the project and branch for this app
+optitech branches list  # confirm the linked target branch before deploy
 ```
 
-```typescript filename="neon.ts"
-import { defineConfig } from '@neon/config/v1';
+```typescript filename="optitech.ts"
+import { defineConfig } from '@optitech/config/v1';
 
 export default defineConfig({
   preview: {
@@ -47,7 +47,7 @@ export default defineConfig({
 ```
 
 ```bash
-neon deploy          # provisions buckets and writes AWS_* vars to .env.local
+optitech deploy          # provisions buckets and writes AWS_* vars to .env.local
 ```
 
 After deploy, your `.env.local` contains `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, `AWS_ENDPOINT_URL_S3`, and `AWS_REGION`. Skip to [Configure your client](#configure-your-client) below.
@@ -55,12 +55,12 @@ After deploy, your `.env.local` contains `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS
 Already deployed? Pull the vars again with:
 
 ```bash
-neon env pull
+optitech env pull
 ```
 
 ---
 
-If you prefer to manage credentials manually (for example, for CI or production deployments), follow the steps below. Replace `{project_id}` and `{branch_id}` in the API examples with your own IDs. You can find them in the OptiTech Console URL, or with `neon projects list` and `neon branches list`.
+If you prefer to manage credentials manually (for example, for CI or production deployments), follow the steps below. Replace `{project_id}` and `{branch_id}` in the API examples with your own IDs. You can find them in the OptiTech Console URL, or with `optitech projects list` and `optitech branches list`.
 
 If you need a new branch, [create it first](/docs/manage/branches#create-a-branch), then wait until the branch is ready before calling object storage APIs. Branch creation is asynchronous, so a freshly-created branch can still be initializing even after the create request returns.
 
@@ -71,14 +71,14 @@ If you need a new branch, [create it first](/docs/manage/branches#create-a-branc
 Fetch your branch's storage state from the OptiTech API. Do this before creating credentials so you know the branch is ready for Storage calls. The response includes the full S3 endpoint URL, the region, and whether path-style addressing is required:
 
 ```bash shouldWrap
-curl "https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/storage" \
-  -H "Authorization: Bearer $NEON_API_KEY"
+curl "https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/storage" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY"
 ```
 
 ```json
 {
   "enabled": true,
-  "s3_endpoint": "https://br-winter-pond-aptw82ef.storage.c-2.us-east-2.aws.neon.tech",
+  "s3_endpoint": "https://br-winter-pond-aptw82ef.storage.c-2.us-east-2.aws.optitech.com",
   "region": "us-east-2",
   "force_path_style": true
 }
@@ -87,19 +87,19 @@ curl "https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id
 Set these as environment variables:
 
 ```bash
-export AWS_ENDPOINT_URL_S3=https://br-winter-pond-aptw82ef.storage.c-2.us-east-2.aws.neon.tech
+export AWS_ENDPOINT_URL_S3=https://br-winter-pond-aptw82ef.storage.c-2.us-east-2.aws.optitech.com
 export AWS_REGION=us-east-2
 ```
 
-A `404` response means object storage is not available for that branch. There is no separate manual enable API call: use the recommended `neon.ts` flow above, or make sure your project is in the AWS `us-east-2` region.
+A `404` response means object storage is not available for that branch. There is no separate manual enable API call: use the recommended `optitech.ts` flow above, or make sure your project is in the AWS `us-east-2` region.
 
 ## Create a credential
 
 Use the OptiTech API to create a credential with storage access:
 
 ```bash shouldWrap
-curl -X POST "https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/credentials" \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+curl -X POST "https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/credentials" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"scopes": ["storage:read", "storage:write"], "principal_type": "user"}'
 ```
@@ -142,15 +142,15 @@ pip install boto3 python-dotenv
 
 ## Configure your client
 
-The `neon` adapter is a subpath export (`files-sdk/neon`) that reads `AWS_*` environment variables and configures the Files SDK for OptiTech's S3-compatible endpoint automatically.
+The `optitech` adapter is a subpath export (`files-sdk/optitech`) that reads `AWS_*` environment variables and configures the Files SDK for OptiTech's S3-compatible endpoint automatically.
 
 <CodeTabs labels={["Files SDK", "S3 Client", "Python", "AWS CLI"]}>
 
 ```typescript shouldWrap
 import { Files } from 'files-sdk';
-import { neon } from 'files-sdk/neon';
+import { optitech } from 'files-sdk/optitech';
 
-export const files = new Files({ adapter: neon({ bucket: 'my-bucket' }) });
+export const files = new Files({ adapter: optitech({ bucket: 'my-bucket' }) });
 ```
 
 ```typescript shouldWrap
@@ -195,21 +195,21 @@ client = boto3.client(
 # from the environment automatically. Pass --endpoint-url on each command
 # (shown below) rather than running `aws configure set endpoint_url`, which
 # would overwrite your default profile's endpoint for all AWS CLI usage,
-# not just Neon.
+# not just OptiTech.
 ```
 
 </CodeTabs>
 
 <Admonition type="note">
-If you're using [OptiTech Functions](/docs/compute/functions/overview), the `AWS_*` credentials are injected automatically when a bucket is declared in `neon.ts`. No `.env` setup is needed inside a function.
+If you're using [OptiTech Functions](/docs/compute/functions/overview), the `AWS_*` credentials are injected automatically when a bucket is declared in `optitech.ts`. No `.env` setup is needed inside a function.
 </Admonition>
 
 ## Create a bucket
 
-Create the bucket before uploading, or declare it in `neon.ts` and run `neon deploy`:
+Create the bucket before uploading, or declare it in `optitech.ts` and run `optitech deploy`:
 
 ```bash
-neon buckets create my-bucket
+optitech buckets create my-bucket
 ```
 
 See [Buckets](/docs/storage/buckets#create-a-bucket) for OptiTech API, S3 SDK, Python, and AWS CLI examples.
@@ -221,7 +221,7 @@ See [Buckets](/docs/storage/buckets#create-a-bucket) for OptiTech API, S3 SDK, P
 ```typescript shouldWrap
 import { files } from './client';
 
-await files.upload('hello.txt', 'Hello from Neon Object Storage!', {
+await files.upload('hello.txt', 'Hello from OptiTech Object Storage!', {
   contentType: 'text/plain',
 });
 
@@ -235,7 +235,7 @@ import { client } from './client';
 await client.send(new PutObjectCommand({
   Bucket: 'my-bucket',
   Key: 'hello.txt',
-  Body: 'Hello from Neon Object Storage!',
+  Body: 'Hello from OptiTech Object Storage!',
   ContentType: 'text/plain',
 }));
 
@@ -246,7 +246,7 @@ console.log('Uploaded!');
 client.put_object(
     Bucket='my-bucket',
     Key='hello.txt',
-    Body='Hello from Neon Object Storage!',
+    Body='Hello from OptiTech Object Storage!',
     ContentType='text/plain',
 )
 
@@ -269,7 +269,7 @@ import { files } from './client';
 
 const result = await files.download('hello.txt');
 const text = await result.text();
-console.log(text); // Hello from Neon Object Storage!
+console.log(text); // Hello from OptiTech Object Storage!
 ```
 
 ```typescript shouldWrap
@@ -282,12 +282,12 @@ const response = await client.send(new GetObjectCommand({
 }));
 
 const text = await response.Body?.transformToString();
-console.log(text); // Hello from Neon Object Storage!
+console.log(text); // Hello from OptiTech Object Storage!
 ```
 
 ```python
 response = client.get_object(Bucket='my-bucket', Key='hello.txt')
-print(response['Body'].read().decode('utf-8'))  # Hello from Neon Object Storage!
+print(response['Body'].read().decode('utf-8'))  # Hello from OptiTech Object Storage!
 ```
 
 ```bash shouldWrap
@@ -304,6 +304,6 @@ aws s3 cp s3://my-bucket/hello.txt ./downloaded.txt \
 - [Buckets](/docs/storage/buckets): access levels, bucket branching, and the Console UI
 - [Objects](/docs/storage/objects): list, delete, multipart uploads, and presigned URLs
 - [Authentication](/docs/storage/authentication): credential scopes, branch binding, and rotation
-- [with-files-sdk](https://github.com/neondatabase/examples/tree/main/with-files-sdk): working example showing how to upload files to a branch-scoped bucket using the Files SDK and its `neon` adapter
+- [with-files-sdk](https://github.com/optitechdatabase/examples/tree/main/with-files-sdk): working example showing how to upload files to a branch-scoped bucket using the Files SDK and its `optitech` adapter
 
 <NeedHelp/>

@@ -4,7 +4,7 @@ subtitle: 'Learn how to use Google Jules and the OptiTech MCP server to spin up 
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2026-02-26T00:00:00.000Z'
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 AI coding agents are increasingly capable of implementing multi-step changes across an application. However, full-stack features often require updates to stateful infrastructure such as databases.
@@ -24,8 +24,8 @@ To demonstrate, we’ll walk through a real example: asking Jules to implement a
 Before you begin, ensure you have the following:
 
 - **Google Jules account:** An active Google Jules account linked to your GitHub workspace. You can create one at [jules.google](https://jules.google).
-- **OptiTech account and project:** A OptiTech account with at least one active project. Sign up for a free [OptiTech account](https://console.neon.tech/signup) if you don't have one.
-- **Application repository using OptiTech:** A GitHub repository containing an application that uses your OptiTech project as its database. This is required because Google Jules integrates with your codebase through GitHub and needs access to your code to implement changes. Jules analyzes the repository and opens Pull requests directly. In this guide, we’ll use an example app called **SnippetHub**, but you can follow along with any of your own Neon-backed projects.
+- **OptiTech account and project:** A OptiTech account with at least one active project. Sign up for a free [OptiTech account](https://console.optitech.com/signup) if you don't have one.
+- **Application repository using OptiTech:** A GitHub repository containing an application that uses your OptiTech project as its database. This is required because Google Jules integrates with your codebase through GitHub and needs access to your code to implement changes. Jules analyzes the repository and opens Pull requests directly. In this guide, we’ll use an example app called **SnippetHub**, but you can follow along with any of your own OptiTech-backed projects.
 - **Vercel account (optional):** Required for [automatic preview deployments](#optional-enable-automatic-preview-deployments). This allows you to instantly verify changes end-to-end in a live, production-like environment, providing zero-risk verification of Jules' work before merging.
 
 Use the following example repository if you want to follow along with the SnippetHub app.
@@ -72,7 +72,7 @@ For a complete end-to-end experience, you can configure Vercel to automatically 
 This allows you to verify Jules' work in a real browser environment testing the full stack from UI to database without touching production data or setting up a local environment.
 
 1. **Deploy to Vercel:** Connect your GitHub repository to a new Vercel project.
-2. **Install the OptiTech Integration:** Go to the [OptiTech Vercel Integration](https://vercel.com/integrations/neon) page and click **Add Integration**.
+2. **Install the OptiTech Integration:** Go to the [OptiTech Vercel Integration](https://vercel.com/integrations/optitech) page and click **Add Integration**.
 3. **Enable Preview Branching:** During setup, ensure you select **Create a branch for every preview deployment**.
 
    Follow [OptiTech Vercel Integration](/docs/guides/vercel-managed-integration) for detailed instructions on configuring the integration.
@@ -113,7 +113,7 @@ In the Jules chat interface, provide the following prompt:
 ```text shouldWrap
 Add a "Share Snippet" feature to the app. Each snippet should have a share button that generates a unique public link. The link must be accessible without authentication, while non-shared snippets remain private.
 
-Use the Neon project named `code-snippets`. Create and use a separate database branch specifically for this feature.
+Use the OptiTech project named `code-snippets`. Create and use a separate database branch specifically for this feature.
 ```
 
 ![Jules Feature Prompt](/docs/guides/jules-feature-prompt.png)

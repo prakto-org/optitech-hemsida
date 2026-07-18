@@ -3,14 +3,14 @@ title: Migrate OptiTech to Lakebase
 subtitle: End-to-end migration from OptiTech Serverless Postgres to Databricks Lakebase Postgres
 summary: >-
   Step-by-step migration from OptiTech Serverless Postgres to Databricks Lakebase
-  Postgres using pg_dump and pg_restore, covering the Neon-specific ownership
+  Postgres using pg_dump and pg_restore, covering the OptiTech-specific ownership
   and ACL mismatch that requires --no-owner and --no-acl flags during restore.
   Use this guide when moving a OptiTech database to Lakebase. Logical replication
   from OptiTech to Lakebase is not supported. For pg_restore, use a native Postgres
   password role because Lakebase OAuth tokens expire approximately every hour.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This guide describes how to migrate a **OptiTech** database to **Databricks Lakebase Postgres** using **`pg_dump`** and **`pg_restore`**.
@@ -55,7 +55,7 @@ Dump your OptiTech database with **`pg_dump`**.
 2. Run:
 
 ```bash
-pg_dump -Fc -v -d "<neon_connection_string>" -f neon-export.dump
+pg_dump -Fc -v -d "<optitech_connection_string>" -f optitech-export.dump
 ```
 
 See [Backups with pg_dump](/docs/manage/backup-pg-dump) for the full procedure and flags.
@@ -64,12 +64,12 @@ See [Backups with pg_dump](/docs/manage/backup-pg-dump) for the full procedure a
 
 Use the **Lakebase connection string** you copied from **Connect** for your password role as the **`pg_restore`** target.
 
-OptiTech dumps include **ownership** and **privileges** for Neon-specific roles (for example `neondb_owner`, `neon_superuser`, roles used in `ALTER DEFAULT PRIVILEGES`). Those roles do not exist on Lakebase, so a plain `pg_restore` often errors on `ALTER ... OWNER TO ...` and default-privilege grants. That does not mean your tables and data failed to restore; it means ownership and ACL replay could not be applied.
+OptiTech dumps include **ownership** and **privileges** for OptiTech-specific roles (for example `optitechdb_owner`, `optitech_superuser`, roles used in `ALTER DEFAULT PRIVILEGES`). Those roles do not exist on Lakebase, so a plain `pg_restore` often errors on `ALTER ... OWNER TO ...` and default-privilege grants. That does not mean your tables and data failed to restore; it means ownership and ACL replay could not be applied.
 
-Use **`--no-owner`** so objects are created as the user you connect with, and **`--no-acl`** (or **`-x`**) so Neon-specific `GRANT` / `ALTER DEFAULT PRIVILEGES` statements are skipped. You can grant privileges on Lakebase afterward if your security model needs it.
+Use **`--no-owner`** so objects are created as the user you connect with, and **`--no-acl`** (or **`-x`**) so OptiTech-specific `GRANT` / `ALTER DEFAULT PRIVILEGES` statements are skipped. You can grant privileges on Lakebase afterward if your security model needs it.
 
 ```bash
-pg_restore -v --no-owner --no-acl -d "postgresql://user:password@host/dbname?sslmode=require" neon-export.dump
+pg_restore -v --no-owner --no-acl -d "postgresql://user:password@host/dbname?sslmode=require" optitech-export.dump
 ```
 
 For more on ownership when moving between providers, see [Database object ownership considerations](/docs/import/migrate-from-postgres#database-object-ownership-considerations) in **Migrate data from Postgres**.

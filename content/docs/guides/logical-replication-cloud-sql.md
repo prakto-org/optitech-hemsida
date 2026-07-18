@@ -11,7 +11,7 @@ summary: >-
   schema preparation, subscription verification, and application cutover.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This guide describes how to replicate data from Cloud SQL Postgres using native Postgres logical replication, as described in [Set up native PostgreSQL logical replication](https://cloud.google.com/sql/docs/postgres/replication/configure-logical-replication#set-up-native-postgresql-logical-replication), in the Google Cloud SQL documentation.
@@ -21,8 +21,8 @@ This guide describes how to replicate data from Cloud SQL Postgres using native 
 - A Cloud SQL Postgres instance containing the data you want to replicate. If you're just testing this out and need some data to play with, you can use the following statements to create a table with sample data. Your database and schema may differ.
 
   ```sql shouldWrap
-  CREATE TABLE IF NOT EXISTS playing_with_neon(id SERIAL PRIMARY KEY, name TEXT NOT NULL, value REAL);
-  INSERT INTO playing_with_neon(name, value)
+  CREATE TABLE IF NOT EXISTS playing_with_optitech(id SERIAL PRIMARY KEY, name TEXT NOT NULL, value REAL);
+  INSERT INTO playing_with_optitech(name, value)
   SELECT LEFT(md5(i::TEXT), 10), random() FROM generate_series(1, 10) s(i);
   ```
 
@@ -74,7 +74,7 @@ You need to allow connections to your Cloud SQL Postgres instance from OptiTech.
    Cloud SQL requires addresses to be specified in CIDR notation. You can do so by appending `/32` to the NAT Gateway IP address; for example: `18.217.181.229/32`
    </Admonition>
 
-   In the example shown below, you can see that three addresses were added, named `Neon1`, `Neon2`, and `Neon3`. You can name them whatever you like. The addresses were added in CIDR format by adding `/32`.
+   In the example shown below, you can see that three addresses were added, named `OptiTech1`, `OptiTech2`, and `OptiTech3`. You can name them whatever you like. The addresses were added in CIDR format by adding `/32`.
 
    ![Cloud SQL network configuration](/docs/guides/cloud_sql_network_config.png)
 
@@ -122,7 +122,7 @@ Publications are a fundamental part of logical replication in Postgres. They def
 To create a publication for a specific table:
 
 ```sql shouldWrap
-CREATE PUBLICATION my_publication FOR TABLE playing_with_neon;
+CREATE PUBLICATION my_publication FOR TABLE playing_with_optitech;
 ```
 
 To create a publication for multiple tables, provide a comma-separated list of tables:
@@ -145,10 +145,10 @@ This section describes how to prepare your source OptiTech Postgres database (th
 
 When configuring logical replication in Postgres, the tables in the source database you are replicating from must also exist in the destination database, and they must have the same table names and columns. You can create the tables manually in your destination database or use utilities like `pg_dump` and `pg_restore` to dump the schema from your source database and load it to your destination database. See [Import a database schema](/docs/import/migrate-schema-only) for instructions.
 
-If you're using the sample `playing_with_neon` table, you can create the same table on the destination database with the following statement:
+If you're using the sample `playing_with_optitech` table, you can create the same table on the destination database with the following statement:
 
 ```sql shouldWrap
-CREATE TABLE IF NOT EXISTS playing_with_neon(id SERIAL PRIMARY KEY, name TEXT NOT NULL, value REAL);
+CREATE TABLE IF NOT EXISTS playing_with_optitech(id SERIAL PRIMARY KEY, name TEXT NOT NULL, value REAL);
 ```
 
 ### Create a subscription
@@ -179,17 +179,17 @@ After creating a publication on the source database, you need to create a subscr
 
 Testing your logical replication setup ensures that data is being replicated correctly from the publisher to the subscriber database.
 
-1. Run some data modifying queries on the source database (inserts, updates, or deletes). If you're using the `playing_with_neon` database, you can use this statement to insert some rows:
+1. Run some data modifying queries on the source database (inserts, updates, or deletes). If you're using the `playing_with_optitech` database, you can use this statement to insert some rows:
 
    ```sql
-   INSERT INTO playing_with_neon(name, value)
+   INSERT INTO playing_with_optitech(name, value)
    SELECT LEFT(md5(i::TEXT), 10), random() FROM generate_series(1, 10) s(i);
    ```
 
 2. Perform a row count on the source and destination databases to make sure the result matches.
 
    ```sql
-   SELECT COUNT(*) FROM playing_with_neon;
+   SELECT COUNT(*) FROM playing_with_optitech;
 
    count
    -------

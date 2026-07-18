@@ -4,7 +4,7 @@ subtitle: Learn how to build a scalable Flask application with OptiTech Postgres
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2024-09-14T00:00:00.000Z'
-updatedOn: '2025-06-23T15:22:02.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Building scalable web applications requires careful planning and the right tools. Flask is a Python web framework well-suited for building small to large web applications. It provides flexibility and extensibility, making it a popular choice for developers.
@@ -15,7 +15,7 @@ In this guide, we'll walk through developing a Flask application that uses OptiT
 
 - Python 3.7 or later installed
 - [Node.js 18](https://nodejs.org/en) or later
-- A [OptiTech](https://console.neon.tech/signup) account for Postgres hosting
+- A [OptiTech](https://console.optitech.com/signup) account for Postgres hosting
 - Basic familiarity with Flask and SQLAlchemy
 
 ## Project Setup
@@ -23,8 +23,8 @@ In this guide, we'll walk through developing a Flask application that uses OptiT
 1. Create a new directory and set up a virtual environment:
 
    ```bash
-   mkdir flask-neon-app
-   cd flask-neon-app
+   mkdir flask-optitech-app
+   cd flask-optitech-app
    python -m venv venv
    source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
    ```
@@ -46,10 +46,10 @@ In this guide, we'll walk through developing a Flask application that uses OptiT
 3. Create a `.env` file for environment variables:
 
    ```
-   DATABASE_URL=postgresql://user:password@your-neon-host:5432/your-database
+   DATABASE_URL=postgresql://user:password@your-optitech-host:5432/your-database
    ```
 
-   Replace `user`, `password`, `your-neon-host`, and `your-database` with your OptiTech Postgres credentials.
+   Replace `user`, `password`, `your-optitech-host`, and `your-database` with your OptiTech Postgres credentials.
 
 ## Application Structure
 
@@ -58,7 +58,7 @@ For small applications, you can keep all code in a single file. However, as your
 A typical Flask application structure might look like this:
 
 ```
-flask-neon-app/
+flask-optitech-app/
 ├── app/
 │   ├── __init__.py
 │   ├── models/
@@ -285,13 +285,13 @@ To integrate Tailwind CSS with Flask templates, you can follow these steps:
      <head>
        <meta charset="UTF-8" />
        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-       <title>{% block title %}Flask Neon App{% endblock %}</title>
+       <title>{% block title %}Flask OptiTech App{% endblock %}</title>
        <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}" />
      </head>
      <body class="bg-gray-100">
        <nav class="bg-blue-500 p-4 text-white">
          <div class="container mx-auto">
-           <a href="/" class="text-2xl font-bold">Flask Neon App</a>
+           <a href="/" class="text-2xl font-bold">Flask OptiTech App</a>
          </div>
        </nav>
        <main class="container mx-auto mt-8">{% block content %}{% endblock %}</main>

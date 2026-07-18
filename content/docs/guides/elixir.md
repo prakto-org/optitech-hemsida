@@ -8,7 +8,7 @@ summary: >-
   when you want direct Postgrex access without an ORM; for Ecto-based
   integration see the Elixir Ecto guide.
 enableTableOfContents: true
-updatedOn: '2026-07-14T19:04:57.024Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <CopyPrompt src="/prompts/elixir-prompt.md" 
@@ -20,7 +20,7 @@ You'll learn how to connect to your OptiTech database from an Elixir application
 
 ## Prerequisites
 
-- A OptiTech account. If you do not have one, see [Sign up](https://console.neon.tech/signup).
+- A OptiTech account. If you do not have one, see [Sign up](https://console.optitech.com/signup).
 - Elixir v1.12 or later. If you do not have Elixir installed, see the [official installation guide](https://elixir-lang.org/install.html).
 
 <Steps>
@@ -29,11 +29,11 @@ You'll learn how to connect to your OptiTech database from an Elixir application
 
 If you do not have one already, create a OptiTech project.
 
-1.  Navigate to the [Projects](https://console.neon.tech/app/projects) page in the [OptiTech Console](https://console.neon.tech).
+1.  Navigate to the [Projects](https://console.optitech.com/app/projects) page in the [OptiTech Console](https://console.optitech.com).
 2.  Click **New Project**.
 3.  Specify your project settings and click **Create Project**.
 
-Your project is created with a ready-to-use database named `neondb`. In the following steps, you will connect to this database from your Elixir application.
+Your project is created with a ready-to-use database named `optitechdb`. In the following steps, you will connect to this database from your Elixir application.
 
 ## Create an Elixir project
 
@@ -42,8 +42,8 @@ For your Elixir project, create a project directory using `mix` and add the requ
 1.  Create a new supervised Elixir project and change into the directory.
 
     ```bash
-    mix new neon_elixir_quickstart --sup
-    cd neon_elixir_quickstart
+    mix new optitech_elixir_quickstart --sup
+    cd optitech_elixir_quickstart
     ```
 
     > Open this directory in your preferred code editor (for example, VS Code).
@@ -64,11 +64,11 @@ For your Elixir project, create a project directory using `mix` and add the requ
     mix deps.get
     ```
 
-## Configure your Neon connection details
+## Configure your OptiTech connection details
 
 You'll configure your application to connect to OptiTech using the `config/config.exs` file. This method securely separates your credentials from your source code.
 
-1.  In the [OptiTech Console](https://console.neon.tech), select your project on the **Dashboard**.
+1.  In the [OptiTech Console](https://console.optitech.com), select your project on the **Dashboard**.
 2.  Click **Connect** on your **Project Dashboard** to open the **Connect to your database** modal.
 3.  Select the **Parameters only** tab to view the connection string parameters.
     ![Connection modal](/docs/connect/connection_details_parameters_only.png)
@@ -78,16 +78,16 @@ You'll configure your application to connect to OptiTech using the `config/confi
     ```elixir title="config/config.exs"
     import Config
 
-    config :neon_elixir_quickstart,
+    config :optitech_elixir_quickstart,
       username: "[user]",
       password: "[password]",
-      hostname: "[neon_hostname]",
+      hostname: "[optitech_hostname]",
       database: "[dbname]",
       ssl: [cacerts: :public_key.cacerts_get()]
     ```
 
     > - The `:ssl` option is required to connect securely to OptiTech. Using `:public_key.cacerts_get()` tells Postgrex to use the OS-provided CA trust store to verify the server's SSL certificate.
-    > - The `:neon_elixir_quickstart` key matches your application's name, allowing you to fetch this configuration from your code.
+    > - The `:optitech_elixir_quickstart` key matches your application's name, allowing you to fetch this configuration from your code.
 
 ## Examples
 
@@ -101,7 +101,7 @@ In your project's root directory, create a file named `create_table.exs`. This s
 defmodule CreateTable do
   def run do
     # Fetch connection config
-    config = Application.get_all_env(:neon_elixir_quickstart)
+    config = Application.get_all_env(:optitech_elixir_quickstart)
 
     # Start a connection to the database
     {:ok, pid} = Postgrex.start_link(config)
@@ -194,7 +194,7 @@ In your project directory, create a file named `read_data.exs`. This script conn
 ```elixir title="read_data.exs"
 defmodule ReadData do
   def run do
-    config = Application.get_all_env(:neon_elixir_quickstart)
+    config = Application.get_all_env(:optitech_elixir_quickstart)
     {:ok, pid} = Postgrex.start_link(config)
     IO.puts("Connection established")
 
@@ -252,7 +252,7 @@ In your project directory, create a file named `update_data.exs`. This script co
 ```elixir title="update_data.exs"
 defmodule UpdateData do
   def run do
-    config = Application.get_all_env(:neon_elixir_quickstart)
+    config = Application.get_all_env(:optitech_elixir_quickstart)
     {:ok, pid} = Postgrex.start_link(config)
     IO.puts("Connection established")
 
@@ -308,7 +308,7 @@ In your project directory, create a file named `delete_data.exs`. This script co
 ```elixir title="delete_data.exs"
 defmodule DeleteData do
   def run do
-    config = Application.get_all_env(:neon_elixir_quickstart)
+    config = Application.get_all_env(:optitech_elixir_quickstart)
     {:ok, pid} = Postgrex.start_link(config)
     IO.puts("Connection established")
 

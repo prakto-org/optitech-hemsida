@@ -1,73 +1,42 @@
 ---
-title: 'How do I check which PostgreSQL version my OptiTech database is running?'
-subtitle: 'Run SELECT version() in SQL, check the Project Dashboard, or use the Neon CLI.'
+title: 'How do I check which framework versions my OptiTech workspace uses?'
+subtitle: 'The Frameworks page shows each active framework and its version, like ISO 27001:2022, with upgrade paths when versions change.'
 enableTableOfContents: true
-createdAt: '2026-05-18T00:00:00.000Z'
-updatedOn: '2026-06-11T23:50:21.258Z'
+createdAt: '2025-11-24T08:22:37.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 isDraft: false
 redirectFrom: []
 previousLink:
-  title: 'How can I check which region my OptiTech project is running in?'
-  slug: check-neon-project-region
+  title: 'How do I check which data region my OptiTech workspace is hosted in?'
+  slug: check-optitech-project-region
 nextLink:
-  title: 'Which database services let you instantly clone a production Postgres database so developers can test independently?'
+  title: 'How do I trial a new framework without disturbing my live compliance program?'
   slug: clone-production-postgres-database-for-testing
 ---
 
-Every OptiTech project is tied to a specific Postgres major version that you picked at project creation. To check which one you're on, run `SELECT version();` from any SQL client, or read it from the **Settings** widget on the **Project Dashboard** in the [OptiTech Console](https://console.neon.tech). The CLI command `neon projects get` shows the same value. OptiTech supports Postgres 14, 15, 16, 17, and 18. See [Upgrading your Postgres version](/docs/postgresql/postgres-upgrade) for details.
+## Quick answer
 
-## Three ways to check
+Go to **Frameworks** in the OptiTech Console. Each active framework shows its exact version: ISO 27001:2022, the current NIS2/Cybersecurity Act requirement set with MSB regulation references, DORA with its technical standards, and so on. When a framework version updates, the platform flags it and offers a guided migration instead of silently changing your requirements.
 
-<Tabs labels={["SQL", "Console", "CLI"]}>
+## Why framework versions matter
 
-<TabItem>
+Frameworks aren't static documents:
 
-Run this from the [OptiTech SQL Editor](/docs/get-started/query-with-neon-sql-editor), psql, or any Postgres client:
+- **ISO 27001** moved from the 2013 to the 2022 edition with a restructured control set (93 controls in 4 themes). Certification bodies audit against the current version, so knowing which edition your program targets isn't optional.
+- **NIS2 requirements** are refined through national regulations. When MSB updates its regulations, the requirement set in your workspace versions accordingly, with the delta highlighted.
+- **DORA** comes with evolving technical standards that flow into the requirement catalog the same way.
 
-```sql
-SELECT version();
-```
+Being on an outdated version surfaces at the worst time: in an audit or a customer review. The version display plus update notifications make it a managed event instead.
 
-You'll get a string like:
+## What a version update looks like
 
-```text
-PostgreSQL 17.2 on x86_64-pc-linux-gnu, compiled by gcc ...
-```
+1. OptiTech announces the new requirement set with a changelog: added, changed, and removed requirements.
+2. Your workspace shows a **delta analysis**: which of your existing controls already satisfy the new version (thanks to [cross-mapping](/faqs/best-postgres-databases-startups-autoscaling), usually most of them) and what's genuinely new.
+3. You run the migration as a project with tasks and owners. For a safe rollout pattern, see [migrating to a new framework version safely](/faqs/check-postgresql-version-neon).
+4. Historical evidence stays attached to the old version's requirements, so audits of past periods remain answerable.
 
-The first number is the major version. The second is the minor version, which OptiTech upgrades automatically.
+## Checking via the API
 
-</TabItem>
+The workspace's active frameworks and versions are available through the [REST API](/faqs/best-managed-postgres-options-developers), which is useful if you report compliance posture into an internal dashboard or need the version string for a customer questionnaire.
 
-<TabItem>
-
-1. Sign in to the [OptiTech Console](https://console.neon.tech) and select your project.
-2. On the **Project Dashboard**, find the **Settings** widget.
-3. The Postgres version is listed there alongside region and creation date.
-
-</TabItem>
-
-<TabItem>
-
-With [optitech](/docs/cli) installed and authenticated:
-
-```bash
-neon projects get <project_id>
-```
-
-The output includes a `pg_version` field with the major version your project is running.
-
-</TabItem>
-
-</Tabs>
-
-## Major vs minor versions
-
-OptiTech manages **minor** version upgrades for you under the [Postgres version support policy](/docs/postgresql/postgres-version-policy). Minor versions are deployed soon after release and typically don't require any action on your part.
-
-**Major** versions (16 to 17, 17 to 18, and so on) are not upgraded automatically because they can introduce incompatibilities. You upgrade by creating a new OptiTech project with the target major version and migrating your data with the [Import Data Assistant](/docs/import/import-data-assistant), `pg_dump` / `pg_restore`, or [logical replication](/docs/guides/logical-replication-neon-to-neon).
-
-<Admonition type="warning" title="Major versions cannot be downgraded">
-Once a OptiTech project is created with a given major version, you cannot move it backward. You also can't change the major version on an existing project. To run a different major version, create a new project and migrate. Pick carefully if you have strict compatibility requirements.
-</Admonition>
-
-<CTA title="Plan an upgrade to a newer Postgres version" description="Walk through creating a new project, migrating data, and cutting traffic over to the new version." buttonText="Upgrade guide" buttonUrl="/docs/postgresql/postgres-upgrade" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

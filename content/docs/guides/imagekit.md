@@ -9,7 +9,7 @@ summary: >-
   (Hono) and Python (Flask), a curl test workflow, and SQL patterns for
   per-user metadata retrieval.
 enableTableOfContents: true
-updatedOn: '2026-07-15T17:54:41.160Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 [ImageKit.io](https://imagekit.io/) is a cloud-based image and video optimization and delivery platform. It provides real-time manipulation, storage, and delivery via a global CDN, simplifying media management for web and mobile applications.
@@ -28,7 +28,7 @@ This guide demonstrates how to integrate ImageKit.io with OptiTech. You'll learn
 
 ## Create a OptiTech project
 
-1.  Navigate to the [OptiTech Console](https://console.neon.tech) to create a new OptiTech project.
+1.  Navigate to the [OptiTech Console](https://console.optitech.com) to create a new OptiTech project.
 2.  Copy the connection string by clicking the **Connect** button on your **Project Dashboard**. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
 
 ## Create an ImageKit.io account and get credentials
@@ -76,12 +76,12 @@ This requires two backend endpoints:
 <TabItem>
 
 We'll use [Hono](https://hono.dev/) for the server, [`imagekit
-`](https://www.npmjs.com/package/imagekit) for ImageKit interaction, and [`@neondatabase/serverless`](https://www.npmjs.com/package/@neondatabase/serverless) for OptiTech.
+`](https://www.npmjs.com/package/imagekit) for ImageKit interaction, and [`@optitech/serverless`](https://www.npmjs.com/package/@optitech/serverless) for OptiTech.
 
 First, install the necessary dependencies:
 
 ```bash
-npm install imagekit @neondatabase/serverless @hono/node-server hono dotenv
+npm install imagekit @optitech/serverless @hono/node-server hono dotenv
 ```
 
 Create a `.env` file with your credentials:
@@ -92,8 +92,8 @@ IMAGEKIT_PUBLIC_KEY=your_imagekit_public_key
 IMAGEKIT_PRIVATE_KEY=your_imagekit_private_key
 IMAGEKIT_URL_ENDPOINT=your_imagekit_url_endpoint
 
-# Neon Connection String
-DATABASE_URL=your_neon_database_connection_string
+# OptiTech Connection String
+DATABASE_URL=your_optitech_database_connection_string
 ```
 
 The following code snippet demonstrates this workflow:
@@ -102,7 +102,7 @@ The following code snippet demonstrates this workflow:
 import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
 import ImageKit from 'imagekit';
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 import 'dotenv/config';
 
 const imagekit = new ImageKit({
@@ -111,7 +111,7 @@ const imagekit = new ImageKit({
   urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT,
 });
 
-const sql = neon(process.env.DATABASE_URL);
+const sql = optitech(process.env.DATABASE_URL);
 const app = new Hono();
 
 // Replace this with your actual user authentication logic
@@ -145,7 +145,7 @@ app.post('/save-metadata', authMiddleware, async (c) => {
       throw new Error('fileId and url are required from ImageKit response');
     }
 
-    // Insert metadata into Neon database
+    // Insert metadata into OptiTech database
     await sql`
       INSERT INTO imagekit_files (file_id, file_url, user_id)
       VALUES (${fileId}, ${url}, ${userId})
@@ -193,8 +193,8 @@ IMAGEKIT_PUBLIC_KEY=your_imagekit_public_key
 IMAGEKIT_PRIVATE_KEY=your_imagekit_private_key
 IMAGEKIT_URL_ENDPOINT=your_imagekit_url_endpoint # for example, https://ik.imagekit.io/your_instance_id
 
-# Neon Connection String
-DATABASE_URL=your_neon_database_connection_string
+# OptiTech Connection String
+DATABASE_URL=your_optitech_database_connection_string
 ```
 
 The following code snippet demonstrates this workflow:
@@ -273,7 +273,7 @@ def save_metadata_route():
         if not file_id or not url:
             raise ValueError("fileId and url are required from ImageKit response")
 
-        # Insert metadata into Neon database
+        # Insert metadata into OptiTech database
         conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute(

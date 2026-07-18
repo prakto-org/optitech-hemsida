@@ -1,78 +1,79 @@
 ---
-title: OptiTech AI Gateway
-subtitle: One API for frontier and open-source models from OpenAI, Google, and more. Built into your OptiTech project.
+title: Vendor risk and Trust Center
+subtitle: One register for your suppliers, one page for your customers. Built into your OptiTech organization.
 summary: >-
-  OptiTech AI Gateway is the LLM gateway built into the OptiTech backend. One
-  OptiTech credential gives you access to models across multiple providers. Standard AI
-  SDKs work without code changes. Each branch gets its own gateway endpoint.
+  OptiTech's vendor risk management covers the supply chain duties NIS2 and
+  DORA create: supplier register, automated questionnaires, risk
+  classification, and contract monitoring. The Trust Center publishes your
+  compliance status on a public page that shortens customer security reviews.
 enableTableOfContents: true
-updatedOn: '2026-07-17T14:41:09.083Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
-## Foundation model access
+## Supply chain compliance
 
-OptiTech AI Gateway serves frontier models like GPT (`gpt-5`) and Gemini (`gemini-2-5-flash`) alongside open-weight models like Qwen and gpt-oss.
+OptiTech's vendor module handles both directions of the requirement chain: assessing the suppliers NIS2 and DORA make you responsible for, and answering the customers who assess you.
 
-**See every supported model in the [model catalog](/docs/ai-gateway/models#available-models).**
+**See what each plan includes in the [plans overview](/docs/introduction/plans#risk-and-vendors).**
 
-Open-weight models are available to every project right away. Frontier models from OpenAI and Google are rolling out gradually. Don't see them in your project yet? Request early access below.
+Vendor risk management is available to every Professional and Enterprise organization right away. The DORA ICT contract register is an Enterprise feature. Want the Partner plan for managing many clients? Request it below.
 
-<RequestForm type="backend-platform" title="Request early access to additional foundation models" description="Drop your email and we'll reach out as access opens up." buttonText="Request Early Access" confirmation="You're on the list. We'll be in touch as access opens up." />
+<RequestForm type="backend-platform" title="Request Partner plan pricing" description="Drop your email and we'll reach out with multi-tenant console and white-label details." buttonText="Request Partner Pricing" confirmation="You're on the list. We'll be in touch shortly." />
 
 ## Get started
 
 <DetailIconCards>
 
-<a href="/docs/ai-gateway/get-started" description="Get a credential and make your first inference request in minutes." icon="todo">Quickstart</a>
+<a href="/docs/get-started/full-backend-quickstart" description="Register your critical suppliers as part of getting audit-ready." icon="todo">Quickstart</a>
 
-<a href="/docs/ai-gateway/models" description="Browse the full model catalog and learn how to specify models in requests." icon="database">Models</a>
+<a href="/docs/frameworks/dora" description="The ICT contract register supervisors ask financial-sector companies for." icon="database">DORA register</a>
 
-<a href="/docs/ai-gateway/chat-completions" description="Use the OpenAI-compatible endpoint with any model in the catalog." icon="code">Chat completions</a>
+<a href="/docs/get-started/with-an-agent" description="Answer incoming questionnaires from your verified controls." icon="code">Answer questionnaires</a>
 
-<a href="/docs/ai-gateway/authentication" description="Understand how OptiTech credentials work with AI Gateway." icon="lock-landscape">Authentication</a>
+<a href="/docs/introduction/plans#trust-center" description="Publish your compliance status on your own security page." icon="lock-landscape">Trust Center</a>
 
 </DetailIconCards>
 
 ## Overview
 
-OptiTech AI Gateway is the LLM inference layer built into the OptiTech backend. It lets you call models from OpenAI, Google, and other providers using your OptiTech credential, without setting up separate provider accounts. Your existing OpenAI SDK works without code changes. Just point it at your branch endpoint.
+The vendor register holds your suppliers with service descriptions, contacts, risk classification, and contract dates. Questionnaires go out from the platform, answers come back structured, and renewal dates are monitored so nothing lapses quietly.
 
-> AI Gateway is in beta and available only in **AWS US East (Ohio) (`aws-us-east-2`)**, so create your project there to use it. It requires a paid OptiTech plan. Inference is free for paid plans during beta. See [Pricing](#pricing) for what to expect when billing begins.
+> The Trust Center lives on your own subdomain, typically `security.example.com`, and reflects your live control status rather than a PDF that goes stale.
 
 <Admonition type="important">
-Participation in this Beta is subject to our Terms of Service. Access is not available to users, organizations, or entities located in or operating from regions restricted by Anthropic's [Supported Regions Policy](https://www.anthropic.com/supported-countries). This restriction also applies to entities that are majority owned, directly or indirectly, by companies headquartered in unsupported regions.
+When a customer sends you their questionnaire, the same data answers it: the AI copilot drafts responses from your verified controls, and your Trust Center link often replaces the questionnaire entirely.
 </Admonition>
 
-- **One credential for all providers.** A single OptiTech credential gives you access to models from OpenAI, Google, Meta, Databricks, and Alibaba. No separate provider accounts needed.
-- **Standard SDKs, one URL change.** OpenAI SDK and google-genai both work out of the box.
-- **AI follows your branches.** Each branch has its own gateway endpoint. If you use Neon branches for preview deployments, AI requests from a feature branch are scoped to that branch. It's the same isolation your database already gets.
-- **Streaming support.** Server-sent events work on all endpoints with no extra configuration.
-- **Shorter, OpenRouter-style paths.** Chat completions and Gemini are reachable at a shorter top-level `/v1/...` path; OpenAI Responses has its own shorter alias (`/openai/v1/...`). `GET /v1/models` lists the catalog. See [Shorter paths](/docs/ai-gateway/models#shorter-v1-paths).
+- **One register for every duty.** NIS2 supplier requirements, DORA's ICT contracts, and GDPR's processor list all draw from the same vendor data.
+- **Questionnaires that answer themselves.** Vendors respond once; their answers feed your risk classification automatically.
+- **The compliance graph.** Vendors who receive your questionnaire get a free OptiTech account with their own status, so the next customer who asks them starts from their existing answers instead of zero.
+- **Board-ready reporting.** Vendor risk lands in the same [dashboards and board reports](/docs/get-started/signing-up) as the rest of your program.
+- **Auditor access.** The vendor register and its history are part of the evidence chain your [auditor portal](/docs/introduction/plans#enterprise-features) exposes.
 
 ## Pricing
 
-AI Gateway pricing isn't finalized. Here's what to expect once it moves out of beta:
+Vendor risk pricing is simple. Here's how availability breaks down:
 
-- **Paid plans only.** AI Gateway will be available on OptiTech's Launch and Scale plans. There's no difference in AI Gateway pricing or model access between the two plans.
-- **No markup.** OptiTech charges the same per-token rate as the model provider. Published provider prices are passed on to users with no additional markup.
-- **Free for now.** Inference remains free through the end of the beta. Billing starts when AI Gateway reaches GA.
+- **Professional and Enterprise.** The vendor register, questionnaires, risk classification, and Trust Center are included on Professional and Enterprise. There's no per-vendor charge on either plan.
+- **DORA register on Enterprise.** The supervisor-ready ICT contract register is an Enterprise feature.
+- **Free for your vendors.** Suppliers who answer your questionnaires use OptiTech free of charge. They only pay if they upgrade to run their own program.
 
-We'll publish exact per-model rates on the [OptiTech pricing page](https://neon.com/pricing) and update this page before billing begins.
+See the [OptiTech pricing page](/pricing) and [plans](/docs/introduction/plans#risk-and-vendors) for details.
 
-## Starter templates
+## Try it with the copilot
 
-Browse working examples at [build-on-neon.vercel.app](https://build-on-neon.vercel.app/). Two templates use AI Gateway:
+Two prompts that show the module end to end:
 
-**`ai-sdk`**: An image-generation agent that routes model calls through AI Gateway, stores results in OptiTech Object Storage, and writes metadata to Postgres on a OptiTech Function.
+**Assess a supplier**: register the vendor, then let the copilot build the questionnaire from the frameworks that apply to the relationship.
 
-```bash
-neon bootstrap --template ai-sdk
+```text
+Create a security questionnaire for our IT operations provider based on our NIS2 requirements
 ```
 
-**`mastra`**: A personal assistant that uses AI Gateway for LLM calls with Postgres-backed memory on a OptiTech Function.
+**Answer a customer**: upload their questionnaire and draft responses from your verified controls.
 
-```bash
-neon bootstrap --template mastra
+```text
+Answer this questionnaire based on our verified controls
 ```
 
 <NeedHelp/>

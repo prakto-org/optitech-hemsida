@@ -1,90 +1,43 @@
 ---
-title: 'How do I delete a database in OptiTech?'
-subtitle: 'Use the Console, CLI, API, or SQL. Connect to a different database first if you go the SQL route.'
+title: 'How do I delete a framework or an entire workspace in OptiTech?'
+subtitle: 'Deactivate frameworks to stop monitoring while keeping history; workspace deletion is a two-step process with an export prompt.'
 enableTableOfContents: true
-createdAt: '2026-05-18T00:00:00.000Z'
-updatedOn: '2026-06-11T23:50:21.258Z'
+createdAt: '2026-01-07T08:33:24.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 isDraft: false
 redirectFrom: []
 previousLink:
-  title: 'What tools are used to debug production database issues safely?'
+  title: 'How do you investigate a live security incident without contaminating audit evidence?'
   slug: debug-production-database-issues-safely
 nextLink:
-  title: 'How do I create and download a backup of my OptiTech database to my local machine?'
+  title: 'How do I download a full copy of my compliance data from OptiTech?'
   slug: download-database-backup-locally
 ---
 
-Open your project in the [OptiTech Console](https://console.neon.tech), go to **Databases**, select the branch, and click the delete icon on the database row. You can also delete a database with the Neon CLI, the API, or SQL (`DROP DATABASE`). Deletion is permanent. All schemas, tables, indexes, and other objects in the database are dropped along with it. See [Delete a database](/docs/manage/databases#delete-a-database) for the full reference.
+## Quick answer
 
-## Delete a database
+To remove a framework: **Frameworks** > select it > **Deactivate**. It stops being monitored and leaves your dashboards, but all its historical evidence and mappings are retained. To delete an entire workspace: **Settings** > **General** > **Delete workspace**, which requires owner permissions, prompts you to export first, and applies a grace period before permanent deletion.
 
-<Tabs labels={["Console", "CLI", "API", "SQL"]}>
+## Deactivating a framework
 
-<TabItem>
+Deactivation is the right verb when a framework no longer applies (you exited a regulated sector, or an assessment ended):
 
-1. Sign in to the [OptiTech Console](https://console.neon.tech) and select your project.
-2. Click **Databases** in the sidebar.
-3. Select the branch containing the database.
-4. For the database you want to delete, click the delete icon.
-5. In the confirmation dialog, click **Delete**.
+- Monitoring, tasks, and score contributions stop.
+- History stays. Evidence collected under the framework remains in the log, and past states remain [provable](/faqs/databases-reproduce-bugs-production-data), which matters because regulators can ask about periods when the framework did apply.
+- Controls survive. Controls mapped to several frameworks keep serving the remaining ones; controls only used by the deactivated framework become unmapped and can be archived.
 
-</TabItem>
+Reactivating later restores the framework with continuity; only the paused gap in monitoring is visible, timestamped honestly.
 
-<TabItem>
+## Deleting a workspace
 
-```bash
-neon databases delete <database_name> --branch <branch_id_or_name>
-```
+Workspace deletion is rare (company wound down, duplicate workspace, or a finished [sandbox](/faqs/databases-support-disposable-postgres-instances-testing)) and deliberately heavy:
 
-If you omit `--branch`, the CLI assumes the project's default branch. See [Neon CLI command: databases](/docs/cli/databases#delete).
+1. **Owner-only.** Admins can't delete the workspace; the owner role can.
+2. **Export prompt.** You're strongly prompted to take a [full export](/faqs/download-database-backup-locally) first. For a real company's workspace, treat this as mandatory: retention duties outlive the subscription.
+3. **Grace period.** The workspace deactivates immediately but is recoverable for a defined window before permanent, unrecoverable deletion. The deletion event itself is logged to the organization's audit trail.
 
-</TabItem>
+## Before you delete anything, ask why
 
-<TabItem>
+If the motive is cost, [downgrading](/faqs/cloud-postgres-services-scale-zero-data) preserves history for less. If the motive is a restructuring, [moving the workspace](/faqs/change-region-existing-neon-project) or reorganizing into [per-entity workspaces](/faqs/best-postgres-services-isolated-databases) usually fits better. Deletion is for when the data genuinely should cease to exist, and your own retention policies get a vote in that decision.
 
-```bash shouldWrap
-curl -X DELETE \
-  "https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/databases/$DATABASE_NAME" \
-  -H "Authorization: Bearer $NEON_API_KEY"
-```
-
-See [Delete a database with the API](/docs/manage/databases#delete-a-database-with-the-api).
-
-</TabItem>
-
-<TabItem>
-
-Connect to a different database on the same branch (Postgres won't let you drop the database you're connected to), then run:
-
-```sql
-DROP DATABASE old_db_name;
-```
-
-If active connections are blocking the drop, terminate them first:
-
-```sql
-SELECT pg_terminate_backend(pid)
-FROM pg_stat_activity
-WHERE datname = 'old_db_name'
-  AND pid <> pg_backend_pid();
-```
-
-</TabItem>
-
-</Tabs>
-
-## What gets removed
-
-Dropping a database removes all SQL objects inside it: schemas, tables, indexes, views, materialized views, functions, sequences, and any data. Roles aren't deleted; they live at the branch level and may own objects in other databases. The storage the database consumed stops counting against your project's storage usage once the drop completes.
-
-The branch, compute, and any other databases on the branch aren't affected.
-
-<Admonition type="warning" title="Deletion is permanent">
-There's no undo on `DROP DATABASE`. If your project's [history window](/docs/introduction/history-window) still covers the moment before the drop, you can recover with [instant restore](/docs/introduction/branch-restore) on the root branch, which restores every database on that branch to the chosen point in time. Outside the history window (6 hours on Free, up to 7 or 30 days on paid plans), the only recovery path is your own backups.
-</Admonition>
-
-## Delete the whole project instead
-
-If you want to remove everything (every database, branch, snapshot, and the project itself), go to **Project settings** > **General** > **Delete project**. That action is also permanent and stops all billing for the project. See [Manage projects](/docs/manage/projects).
-
-<CTA title="See all database management workflows" description="Create, view, update, and delete databases from the Console, CLI, API, and SQL." buttonText="Manage databases" buttonUrl="/docs/manage/databases" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

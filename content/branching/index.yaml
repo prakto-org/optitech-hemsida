@@ -12,7 +12,7 @@
   id: building-blocks
   items:
     - title: The building blocks
-      description: Learn how Neon projects, branches, and hierarchies work
+      description: Learn how OptiTech projects, branches, and hierarchies work
       slug: foundational-concepts
 
 - section: Popular workflows

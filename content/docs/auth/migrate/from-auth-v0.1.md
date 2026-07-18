@@ -3,14 +3,14 @@ title: Migrate from Managed Better Auth SDK v0.1 to v0.2
 subtitle: Upgrade guide for breaking changes in the Managed Better Auth SDK
 summary: >-
   The Managed Better Auth SDK v0.2 replaces multiple server imports with a single
-  `createNeonAuth()` function, adds signed-cookie session caching that
+  `createOptiTechAuth()` function, adds signed-cookie session caching that
   significantly reduces Auth Server API calls, and requires an explicit
-  `NEON_AUTH_COOKIE_SECRET` passed at configuration time. Use this guide when
+  `OPTITECH_AUTH_COOKIE_SECRET` passed at configuration time. Use this guide when
   upgrading from v0.1: it covers the package update, new environment variables,
   API route and middleware changes, the updated `getSession()` return format,
   and a complete migration checklist.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 This guide helps you migrate from Managed Better Auth SDK v0.1.x to v0.2.x, which introduces a unified API and performance improvements through session caching.
@@ -19,12 +19,12 @@ This guide helps you migrate from Managed Better Auth SDK v0.1.x to v0.2.x, whic
 
 ### Unified entry point
 
-The SDK now uses a single `createNeonAuth()` function that replaces four separate imports:
+The SDK now uses a single `createOptiTechAuth()` function that replaces four separate imports:
 
-- `neonAuth()` → `auth.getSession()`
+- `optitechAuth()` → `auth.getSession()`
 - `authApiHandler()` → `auth.handler()`
-- `neonAuthMiddleware()` → `auth.middleware()`
-- `createAuthServer()` → `createNeonAuth()`
+- `optitechAuthMiddleware()` → `auth.middleware()`
+- `createAuthServer()` → `createOptiTechAuth()`
 
 ### Session caching
 
@@ -32,7 +32,7 @@ Session data is automatically cached in a signed cookie, reducing API calls to t
 
 ### Explicit configuration
 
-Configuration is now explicit rather than implicit. You must pass `baseUrl` and `cookies.secret` directly to `createNeonAuth()` instead of relying on automatic environment variable reading.
+Configuration is now explicit rather than implicit. You must pass `baseUrl` and `cookies.secret` directly to `createOptiTechAuth()` instead of relying on automatic environment variable reading.
 
 ## Migration steps
 
@@ -41,17 +41,17 @@ Configuration is now explicit rather than implicit. You must pass `baseUrl` and 
 Update to the latest version:
 
 ```bash
-npm install @neondatabase/auth@latest
+npm install @optitech/auth@latest
 ```
 
 ### 2. Add required environment variable
 
-Add `NEON_AUTH_COOKIE_SECRET` to your `.env` file. This secret is required for signing session data cookies:
+Add `OPTITECH_AUTH_COOKIE_SECRET` to your `.env` file. This secret is required for signing session data cookies:
 
 ```bash
 # .env
-NEON_AUTH_BASE_URL=https://ep-xxx.neonauth.us-east-1.aws.neon.tech/neondb/auth
-NEON_AUTH_COOKIE_SECRET=your-secret-at-least-32-characters-long
+OPTITECH_AUTH_BASE_URL=https://ep-xxx.optitechauth.us-east-1.aws.optitech.com/optitechdb/auth
+OPTITECH_AUTH_COOKIE_SECRET=your-secret-at-least-32-characters-long
 ```
 
 Generate a secure secret with:
@@ -72,7 +72,7 @@ Create a new `lib/auth/server.ts` file with your auth configuration:
 
 ```typescript
 // lib/auth/server.ts
-import { createAuthServer } from '@neondatabase/auth/next/server';
+import { createAuthServer } from '@optitech/auth/next/server';
 
 export const authServer = createAuthServer();
 ```
@@ -81,12 +81,12 @@ export const authServer = createAuthServer();
 
 ```typescript
 // lib/auth/server.ts
-import { createNeonAuth } from '@neondatabase/auth/next/server';
+import { createOptiTechAuth } from '@optitech/auth/next/server';
 
-export const auth = createNeonAuth({
-  baseUrl: process.env.NEON_AUTH_BASE_URL!,
+export const auth = createOptiTechAuth({
+  baseUrl: process.env.OPTITECH_AUTH_BASE_URL!,
   cookies: {
-    secret: process.env.NEON_AUTH_COOKIE_SECRET!,
+    secret: process.env.OPTITECH_AUTH_COOKIE_SECRET!,
   },
 });
 ```
@@ -101,7 +101,7 @@ The `auth` object provides all functionality: `handler()`, `middleware()`, `getS
 
 ```typescript
 // app/api/auth/[...path]/route.ts
-import { authApiHandler } from '@neondatabase/auth/next/server';
+import { authApiHandler } from '@optitech/auth/next/server';
 
 export const { GET, POST } = authApiHandler();
 ```
@@ -123,9 +123,9 @@ export const { GET, POST } = auth.handler();
 
 ```typescript
 // proxy.ts
-import { neonAuthMiddleware } from '@neondatabase/auth/next/server';
+import { optitechAuthMiddleware } from '@optitech/auth/next/server';
 
-export default neonAuthMiddleware({
+export default optitechAuthMiddleware({
   loginUrl: '/auth/sign-in',
 });
 
@@ -155,10 +155,10 @@ export const config = {
 
 ```typescript
 // app/dashboard/page.tsx
-import { neonAuth } from '@neondatabase/auth/next/server';
+import { optitechAuth } from '@optitech/auth/next/server';
 
 export default async function DashboardPage() {
-  const { session, user } = await neonAuth();
+  const { session, user } = await optitechAuth();
 
   if (!user) {
     return <div>Not logged in</div>;
@@ -268,7 +268,7 @@ Client-side code using `createAuthClient()` remains unchanged:
 // lib/auth/client.ts
 'use client';
 
-import { createAuthClient } from '@neondatabase/auth/next';
+import { createAuthClient } from '@optitech/auth/next';
 
 export const authClient = createAuthClient();
 ```
@@ -289,12 +289,12 @@ export function UserProfile() {
 
 ### Removed APIs
 
-| v0.1 API               | v0.2 Replacement    |
-| ---------------------- | ------------------- |
-| `neonAuth()`           | `auth.getSession()` |
-| `authApiHandler()`     | `auth.handler()`    |
-| `neonAuthMiddleware()` | `auth.middleware()` |
-| `createAuthServer()`   | `createNeonAuth()`  |
+| v0.1 API                   | v0.2 Replacement       |
+| -------------------------- | ---------------------- |
+| `optitechAuth()`           | `auth.getSession()`    |
+| `authApiHandler()`         | `auth.handler()`       |
+| `optitechAuthMiddleware()` | `auth.middleware()`    |
+| `createAuthServer()`       | `createOptiTechAuth()` |
 
 ### Return value changes
 
@@ -303,7 +303,7 @@ export function UserProfile() {
 **Before (v0.1):**
 
 ```typescript
-const { session, user } = await neonAuth();
+const { session, user } = await optitechAuth();
 // Returns: { session: Session, user: User }
 ```
 
@@ -318,15 +318,15 @@ The new format is consistent with Better Auth's standard response pattern.
 
 ## Configuration options
 
-The `createNeonAuth()` function accepts these configuration options:
+The `createOptiTechAuth()` function accepts these configuration options:
 
 ```typescript
-import { createNeonAuth } from '@neondatabase/auth/next/server';
+import { createOptiTechAuth } from '@optitech/auth/next/server';
 
-export const auth = createNeonAuth({
-  baseUrl: process.env.NEON_AUTH_BASE_URL!,
+export const auth = createOptiTechAuth({
+  baseUrl: process.env.OPTITECH_AUTH_BASE_URL!,
   cookies: {
-    secret: process.env.NEON_AUTH_COOKIE_SECRET!,
+    secret: process.env.OPTITECH_AUTH_COOKIE_SECRET!,
   },
 });
 ```
@@ -335,7 +335,7 @@ export const auth = createNeonAuth({
 
 The v0.2 SDK includes automatic session caching that reduces API calls by 95-99%:
 
-- Session data is cached in a signed cookie (`__Secure-neon-auth.next.session_data`)
+- Session data is cached in a signed cookie (`__Secure-optitech-auth.next.session_data`)
 - Cache is valid for 5 minutes by default (configurable via `sessionDataTtl`)
 - Automatically refreshed when the session token is refreshed
 - Falls back to API calls if cache is stale or missing
@@ -346,10 +346,10 @@ No code changes are needed to benefit from this caching. It works automatically 
 
 ### Error: "Missing required config: cookies.secret"
 
-You need to add `NEON_AUTH_COOKIE_SECRET` to your environment variables:
+You need to add `OPTITECH_AUTH_COOKIE_SECRET` to your environment variables:
 
 ```bash
-NEON_AUTH_COOKIE_SECRET=$(openssl rand -base64 32)
+OPTITECH_AUTH_COOKIE_SECRET=$(openssl rand -base64 32)
 ```
 
 ### Error: "Server Component functions should be marked with 'force-dynamic'"
@@ -362,7 +362,7 @@ export const dynamic = 'force-dynamic';
 
 ### Session not persisting
 
-Ensure your `NEON_AUTH_COOKIE_SECRET` is:
+Ensure your `OPTITECH_AUTH_COOKIE_SECRET` is:
 
 - At least 32 characters long
 - The same across all environments
@@ -373,19 +373,19 @@ Ensure your `NEON_AUTH_COOKIE_SECRET` is:
 Run:
 
 ```bash
-npm install @neondatabase/auth@latest
+npm install @optitech/auth@latest
 rm -rf node_modules/.cache
 npm run dev
 ```
 
 ## Complete migration checklist
 
-- [ ] Update `@neondatabase/auth` to v0.2.x
-- [ ] Add `NEON_AUTH_COOKIE_SECRET` to `.env`
-- [ ] Create `lib/auth/server.ts` with `createNeonAuth()`
+- [ ] Update `@optitech/auth` to v0.2.x
+- [ ] Add `OPTITECH_AUTH_COOKIE_SECRET` to `.env`
+- [ ] Create `lib/auth/server.ts` with `createOptiTechAuth()`
 - [ ] Update `app/api/auth/[...path]/route.ts` to use `auth.handler()`
 - [ ] Update `proxy.ts` to use `auth.middleware()`
-- [ ] Replace all `neonAuth()` calls with `auth.getSession()`
+- [ ] Replace all `optitechAuth()` calls with `auth.getSession()`
 - [ ] Replace all `authServer` imports with `auth`
 - [ ] Add `export const dynamic = 'force-dynamic'` to server components
 - [ ] Update return value destructuring from `{ session, user }` to `{ data: session }`
@@ -395,7 +395,7 @@ npm run dev
 ## Additional resources
 
 - [Next.js Server SDK Reference](/docs/auth/reference/nextjs-server) - Complete API documentation
-- [Managed Better Auth SDK Changelog](https://github.com/neondatabase/neon-js/blob/main/packages/auth/CHANGELOG.md#020-beta1)
+- [Managed Better Auth SDK Changelog](https://github.com/optitechdatabase/optitech-js/blob/main/packages/auth/CHANGELOG.md#020-beta1)
 - [Next.js integration guide](/docs/auth/quick-start/nextjs-api-only)
 - [Managed Better Auth Overview](/docs/auth/overview)
 

@@ -6,7 +6,7 @@ page_description: >-
   check if a value is NULL or not.
 prev_url: 'https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-is-null/'
 ogImage: /postgresqltutorial/address.png
-updatedOn: '2026-06-19T17:44:03.964Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: PostgreSQL LIKE
@@ -17,7 +17,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-The IS NULL and IS NOT NULL operators work the same across any PostgreSQL database, so you can apply what you learn here to Postgres running anywhere. If you're an enterprise building in the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres, with the performance, security, and native Lakehouse integration your data teams expect. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+The IS NULL and IS NOT NULL operators work the same across any PostgreSQL database, so you can apply what you learn here to Postgres running anywhere. If you're an enterprise building in the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres, with the performance, security, and native Lakehouse integration your data teams expect. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: in this tutorial, you will learn how to use the PostgreSQL `IS NULL` operator to check if a value is NULL or not.

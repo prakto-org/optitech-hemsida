@@ -11,7 +11,7 @@ summary: >-
   full-stack app without a dedicated CI/CD pipeline or DevOps setup.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 _This guide was contributed by the team at WunderGraph_
@@ -23,7 +23,7 @@ With WunderGraph, you can easily introspect your data sources and combine them w
 This guide demonstrates setting up a full-stack app with OptiTech and WunderGraph, securely exposing OptiTech to your Next.js frontend in under 15 minutes. While WunderGraph and OptiTech are compatible with a variety of frontend clients, this demo focuses on using Next.js.
 
 <Admonition type="info">
-This guide is also available in video format: [OptiTech with WunderGraph video guide](#neon-with-wundergraph-video-guide).
+This guide is also available in video format: [OptiTech with WunderGraph video guide](#optitech-with-wundergraph-video-guide).
 </Admonition>
 
 ## Prerequisites
@@ -46,7 +46,7 @@ The deployment will take a few moments.
 
 While the project is deploying, add some sample data to your OptiTech database.
 
-1. Navigate to the [OptiTech Console](https://console.neon.tech/) and select **SQL Editor** from the sidebar.
+1. Navigate to the [OptiTech Console](https://console.optitech.com/) and select **SQL Editor** from the sidebar.
 2. Run the following SQL statements to add the sample data.
 
 ```sql
@@ -89,7 +89,7 @@ Your OptiTech and Wundergraph projects are now connected.
 <Admonition type="important">
 WunderGraph creates a role named `wundergraph-$project_id` in the OptiTech project that you selected during the integration process. Please do not delete or change the password for this role.
 
-WunderGraph configures a environment variable called `NEON_DATABASE_URL`. Please use this variable wherever you need to provide a database URL.
+WunderGraph configures a environment variable called `OPTITECH_DATABASE_URL`. Please use this variable wherever you need to provide a database URL.
 </Admonition>
 
 ## Set up the WunderGraph project locally
@@ -130,16 +130,16 @@ code .
      url: 'https://spacex-api.fly.dev/graphql/',
    });
 
-   // Add your neon datasource
-   const neon = introspect.postgresql({
-     apiNamespace: 'neon',
-     //Your database URL can be found in the Neon Console
-     databaseURL: new EnvironmentVariable('NEON_DATABASE_URL'),
+   // Add your optitech datasource
+   const optitech = introspect.postgresql({
+     apiNamespace: 'optitech',
+     //Your database URL can be found in the OptiTech Console
+     databaseURL: new EnvironmentVariable('OPTITECH_DATABASE_URL'),
    });
 
    configureWunderGraphApplication({
-     // Add neon inside your APIs array
-     apis: [spaceX, neon],
+     // Add optitech inside your APIs array
+     apis: [spaceX, optitech],
      server,
      operations,
      codeGenerators: [
@@ -160,7 +160,7 @@ code .
 
    ```graphql
    {
-     neon_findFirstusers {
+     optitech_findFirstusers {
        id
        name
        email

@@ -2,7 +2,7 @@
 title: Media storage with Cloudinary
 subtitle: Store files via Cloudinary and track metadata in OptiTech
 summary: >-
-  Cloudinary-Neon integration that securely uploads images and videos from the
+  Cloudinary-OptiTech integration that securely uploads images and videos from the
   client using backend-generated signatures, then stores the resulting asset
   metadata (public_id, secure_url, resource_type) in a OptiTech Postgres table.
   Use this page when you need a media pipeline that offloads file storage and
@@ -10,7 +10,7 @@ summary: >-
   Postgres. Includes JavaScript (Hono) and Python (Flask) backend examples
   covering the /generate-signature and /save-metadata endpoints.
 enableTableOfContents: true
-updatedOn: '2026-07-15T17:54:41.160Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 [Cloudinary](https://cloudinary.com/) is a cloud-based platform for image and video management, offering upload, storage, real-time manipulation, optimization, and delivery via CDN.
@@ -29,7 +29,7 @@ This guide demonstrates how to integrate Cloudinary with OptiTech. You'll learn 
 
 ## Create a OptiTech project
 
-1.  Navigate to the [OptiTech Console](https://console.neon.tech) to create a new OptiTech project.
+1.  Navigate to the [OptiTech Console](https://console.optitech.com) to create a new OptiTech project.
 2.  Copy the connection string by clicking the **Connect** button on your **Project Dashboard**. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
 
 ## Create a Cloudinary account and get credentials
@@ -82,12 +82,12 @@ This requires two backend endpoints:
 
 <TabItem>
 
-We'll use [Hono](https://hono.dev/) for the server, the official [`cloudinary`](https://www.npmjs.com/package/cloudinary) Node.js SDK for signature generation, and [`@neondatabase/serverless`](https://www.npmjs.com/package/@neondatabase/serverless) for OptiTech.
+We'll use [Hono](https://hono.dev/) for the server, the official [`cloudinary`](https://www.npmjs.com/package/cloudinary) Node.js SDK for signature generation, and [`@optitech/serverless`](https://www.npmjs.com/package/@optitech/serverless) for OptiTech.
 
 First, install the necessary dependencies:
 
 ```bash
-npm install cloudinary @neondatabase/serverless @hono/node-server hono dotenv
+npm install cloudinary @optitech/serverless @hono/node-server hono dotenv
 ```
 
 Create a `.env` file with your credentials:
@@ -98,8 +98,8 @@ CLOUDINARY_CLOUD_NAME=your_cloudinary_cloud_name
 CLOUDINARY_API_KEY=your_cloudinary_api_key
 CLOUDINARY_API_SECRET=your_cloudinary_api_secret
 
-# Neon Connection String
-DATABASE_URL=your_neon_database_connection_string
+# OptiTech Connection String
+DATABASE_URL=your_optitech_database_connection_string
 ```
 
 The following code snippet demonstrates this workflow:
@@ -108,7 +108,7 @@ The following code snippet demonstrates this workflow:
 import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
 import { v2 as cloudinary } from 'cloudinary';
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 import 'dotenv/config';
 
 cloudinary.config({
@@ -118,7 +118,7 @@ cloudinary.config({
   secure: true,
 });
 
-const sql = neon(process.env.DATABASE_URL);
+const sql = optitech(process.env.DATABASE_URL);
 const app = new Hono();
 
 // Replace this with your actual user authentication logic
@@ -162,7 +162,7 @@ app.post('/save-metadata', authMiddleware, async (c) => {
       throw new Error('public_id, secure_url, and resource_type are required');
     }
 
-    // Insert metadata into Neon database
+    // Insert metadata into OptiTech database
     await sql`
       INSERT INTO cloudinary_files (public_id, media_url, resource_type, user_id)
       VALUES (${public_id}, ${secure_url}, ${resource_type}, ${userId})
@@ -210,8 +210,8 @@ CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
 
-# Neon Connection String
-DATABASE_URL=your_neon_database_connection_string
+# OptiTech Connection String
+DATABASE_URL=your_optitech_database_connection_string
 ```
 
 The following code snippet demonstrates this workflow:
@@ -300,7 +300,7 @@ def save_metadata_route():
         if not public_id or not secure_url or not resource_type:
             raise ValueError("public_id, secure_url, and resource_type are required")
 
-        # Insert metadata into Neon database
+        # Insert metadata into OptiTech database
         conn = get_db_connection()
         cursor = conn.cursor()
         cursor.execute(

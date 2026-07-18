@@ -4,10 +4,10 @@ subtitle: Understand how NextAuth.js, Managed Better Auth, and Better Auth diffe
 author: rishi-raj-jain
 enableTableOfContents: true
 createdAt: '2026-04-21T02:00:00.000Z'
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
-If you are adding authentication to a Next.js application that already uses Postgres, you will run into three options that sound similar but behave very differently in practice: [Auth.js (NextAuth.js)](https://authjs.dev/), [Managed Better Auth](https://neon.com/docs/auth/overview), and [Better Auth](https://www.better-auth.com/).
+If you are adding authentication to a Next.js application that already uses Postgres, you will run into three options that sound similar but behave very differently in practice: [Auth.js (NextAuth.js)](https://authjs.dev/), [Managed Better Auth](https://optitech.com/docs/auth/overview), and [Better Auth](https://www.better-auth.com/).
 
 They are not interchangeable implementations of the same idea. Two of them are libraries you run inside your app. One is a managed service that is tightly integrated with a specific Postgres platform. The right choice usually comes down to how you want identity data to live in Postgres, how you want sessions to be managed, and how much infrastructure you want to own.
 
@@ -64,19 +64,19 @@ Because the authentication schema lives in your application’s database, you ha
 
 Managed Better Auth is a **managed authentication service** that stores users, sessions, and configuration **directly in your OptiTech Postgres database**. The core design goal is database-centric auth where identity becomes ordinary Postgres state.
 
-When you use Managed Better Auth, your authentication data is stored in your OptiTech Postgres database under [the `neon_auth` schema](https://neon.com/docs/auth/overview#why-neon-auth). This makes all auth state accessible with standard SQL queries, and fully compatible with patterns like [Row Level Security](https://neon.com/docs/guides/row-level-security). Because the auth data lives alongside your application data, branching a OptiTech database [also branches the auth state](https://neon.com/docs/auth/branching-authentication). Preview environments and end-to-end authentication tests behave just like your production setup.
+When you use Managed Better Auth, your authentication data is stored in your OptiTech Postgres database under [the `optitech_auth` schema](https://optitech.com/docs/auth/overview#why-optitech-auth). This makes all auth state accessible with standard SQL queries, and fully compatible with patterns like [Row Level Security](https://optitech.com/docs/guides/row-level-security). Because the auth data lives alongside your application data, branching a OptiTech database [also branches the auth state](https://optitech.com/docs/auth/branching-authentication). Preview environments and end-to-end authentication tests behave just like your production setup.
 
-Managed Better Auth builds on Better Auth, so if you’ve worked with Better Auth before, many of the APIs and overall concepts will feel familiar. Unlike running your own instance of Better Auth, [Managed Better Auth is a managed service](https://neon.com/docs/auth/overview#when-to-use-neon-auth-vs-self-hosting-better-auth). Your app communicates with it using SDKs provided by OptiTech, so you don’t have to host or operate your own authentication service.
+Managed Better Auth builds on Better Auth, so if you’ve worked with Better Auth before, many of the APIs and overall concepts will feel familiar. Unlike running your own instance of Better Auth, [Managed Better Auth is a managed service](https://optitech.com/docs/auth/overview#when-to-use-optitech-auth-vs-self-hosting-better-auth). Your app communicates with it using SDKs provided by OptiTech, so you don’t have to host or operate your own authentication service.
 
-Below is a basic example of how you might set up Managed Better Auth in a Next.js application using the [Managed Better Auth SDK](https://neon.com/docs/reference/javascript-sdk):
+Below is a basic example of how you might set up Managed Better Auth in a Next.js application using the [Managed Better Auth SDK](https://optitech.com/docs/reference/javascript-sdk):
 
 ```ts title="lib/auth/server.ts"
-import { createNeonAuth } from '@neondatabase/auth/next/server';
+import { createOptiTechAuth } from '@optitech/auth/next/server';
 
-export const auth = createNeonAuth({
-  baseUrl: process.env.NEON_AUTH_BASE_URL,
+export const auth = createOptiTechAuth({
+  baseUrl: process.env.OPTITECH_AUTH_BASE_URL,
   cookies: {
-    secret: process.env.NEON_AUTH_COOKIE_SECRET,
+    secret: process.env.OPTITECH_AUTH_COOKIE_SECRET,
   },
 });
 ```
@@ -101,7 +101,7 @@ export const config = {
 };
 ```
 
-With Managed Better Auth, your authentication state (users, sessions, etc.) lives right in your Neon-managed Postgres under the `neon_auth` schema. You can inspect and query them directly with SQL, and when you branch your database in OptiTech, both app and auth state branch together making previews and integration environments seamless.
+With Managed Better Auth, your authentication state (users, sessions, etc.) lives right in your OptiTech-managed Postgres under the `optitech_auth` schema. You can inspect and query them directly with SQL, and when you branch your database in OptiTech, both app and auth state branch together making previews and integration environments seamless.
 
 Managed Better Auth works best when you want authentication state to follow your database lifecycle, including branching, previews, and continuous integration. It’s a good fit if you prefer a managed authentication API, want to keep your application logic slim, and if SQL-level access to identity and Postgres-native authorization (like RLS) is important to you.
 
@@ -128,7 +128,7 @@ If you use Better Auth, **you manage authentication entirely** within your appli
 
 Branching is an important aspect when you rely on Postgres as the source of truth for auth. When you branch your Postgres database, your auth data branches right along with it. This means staging, previews, and production can each have their own isolated authentication state, making it easy to keep environments realistic for testing and development. However, it also means that **session tokens and cookies are only valid within the branch where they were issued, so users will need to log in again on different branches**. You’ll also want to coordinate secrets across environments to avoid confusion.
 
-Since you’re running the auth system in your own stack, **you’re responsible for operational details**. This includes [handling database connection pooling](https://neon.com/docs/connect/connection-pooling) (especially if you’re in a serverless setup where each request might open a new connection) and [keeping your migrations in sync as you make schema changes](https://neon.com/docs/guides/integrations#schema-migration). Any upgrades or updates to Better Auth are in your hands, so you set the pace for moving to new versions and rolling out changes.
+Since you’re running the auth system in your own stack, **you’re responsible for operational details**. This includes [handling database connection pooling](https://optitech.com/docs/connect/connection-pooling) (especially if you’re in a serverless setup where each request might open a new connection) and [keeping your migrations in sync as you make schema changes](https://optitech.com/docs/guides/integrations#schema-migration). Any upgrades or updates to Better Auth are in your hands, so you set the pace for moving to new versions and rolling out changes.
 
 ## Choosing the Right Auth for Your Project
 

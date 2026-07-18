@@ -29,7 +29,7 @@ describe('toSdkMethodName', () => {
 // ── buildCurl ──────────────────────────────────────────────────────────────
 
 const minOp = (overrides = {}) => ({
-  path: '/projects/{project_id}',
+  path: '/programs/{program_id}',
   method: 'GET',
   parameters: [],
   operationId: 'getProject',
@@ -38,24 +38,24 @@ const minOp = (overrides = {}) => ({
 
 describe('buildCurl', () => {
   it('substitutes path param', () => {
-    const result = buildCurl(minOp(), { project_id: 'proj-123' }, new Set(), {});
-    expect(result).toContain('/projects/proj-123');
+    const result = buildCurl(minOp(), { program_id: 'proj-123' }, new Set(), {});
+    expect(result).toContain('/programs/proj-123');
   });
 
   it('URL-encodes path param values', () => {
-    const result = buildCurl(minOp(), { project_id: 'my project' }, new Set(), {});
-    expect(result).toContain('/projects/my%20project');
-    expect(result).not.toContain('/projects/my project');
+    const result = buildCurl(minOp(), { program_id: 'my program' }, new Set(), {});
+    expect(result).toContain('/programs/my%20program');
+    expect(result).not.toContain('/programs/my program');
   });
 
   it('leaves placeholder when param not provided', () => {
     const result = buildCurl(minOp(), {}, new Set(), {});
-    expect(result).toContain('{project_id}');
+    expect(result).toContain('{program_id}');
   });
 
   it('appends query params with encodeURIComponent', () => {
     const op = minOp({
-      path: '/projects',
+      path: '/programs',
       parameters: [{ in: 'query', name: 'search', required: false }],
     });
     const result = buildCurl(op, { search: 'foo bar' }, new Set(['search']), {});
@@ -64,7 +64,7 @@ describe('buildCurl', () => {
 
   it('omits optional query param when not included', () => {
     const op = minOp({
-      path: '/projects',
+      path: '/programs',
       parameters: [{ in: 'query', name: 'search', required: false }],
     });
     const result = buildCurl(op, {}, new Set(), {});
@@ -73,7 +73,7 @@ describe('buildCurl', () => {
 
   it('includes required query param even without explicit value', () => {
     const op = minOp({
-      path: '/projects',
+      path: '/programs',
       parameters: [{ in: 'query', name: 'q', required: true }],
     });
     const result = buildCurl(op, {}, new Set(), {});
@@ -106,52 +106,52 @@ describe('buildCurl', () => {
 
 describe('buildCliCommand', () => {
   it('returns base command when no flags apply', () => {
-    expect(buildCliCommand('neon projects get', [], [], {}, new Set(), {})).toBe(
-      'neon projects get'
+    expect(buildCliCommand('neon programs get', [], [], {}, new Set(), {})).toBe(
+      'neon programs get'
     );
   });
 
   it('appends a required string flag', () => {
-    const flags = [{ name: 'project-id', type: 'string', required: true }];
-    const result = buildCliCommand('neon branches list', [], flags, {}, new Set(), {});
-    expect(result).toContain('--project-id');
+    const flags = [{ name: 'program-id', type: 'string', required: true }];
+    const result = buildCliCommand('neon frameworks list', [], flags, {}, new Set(), {});
+    expect(result).toContain('--program-id');
   });
 
   it('uses cliEdits value for a flag', () => {
-    const flags = [{ name: 'project-id', type: 'string', required: false }];
+    const flags = [{ name: 'program-id', type: 'string', required: false }];
     const result = buildCliCommand(
-      'neon branches list',
+      'neon frameworks list',
       [],
       flags,
-      { 'project-id': 'proj-abc' },
+      { 'program-id': 'proj-abc' },
       new Set(),
       {}
     );
-    expect(result).toContain('--project-id proj-abc');
+    expect(result).toContain('--program-id proj-abc');
   });
 
   it('omits optional flag not in cliEdits or cliIncluded', () => {
     const flags = [{ name: 'output', type: 'string', required: false }];
-    const result = buildCliCommand('neon projects list', [], flags, {}, new Set(), {});
+    const result = buildCliCommand('neon programs list', [], flags, {}, new Set(), {});
     expect(result).not.toContain('--output');
   });
 
   it('includes optional flag when in cliIncluded and has a value', () => {
     const flags = [{ name: 'output', type: 'string', required: false, default: 'table' }];
-    const result = buildCliCommand('neon projects list', [], flags, {}, new Set(['output']), {});
+    const result = buildCliCommand('neon programs list', [], flags, {}, new Set(['output']), {});
     expect(result).toContain('--output table');
   });
 
   it('omits string flag that is included but has no value', () => {
     const flags = [{ name: 'output', type: 'string', required: false }];
-    const result = buildCliCommand('neon projects list', [], flags, {}, new Set(['output']), {});
+    const result = buildCliCommand('neon programs list', [], flags, {}, new Set(['output']), {});
     expect(result).not.toContain('--output');
   });
 
   it('appends boolean flag as --name (no value) when included', () => {
     const flags = [{ name: 'no-color', type: 'boolean', required: false }];
     const result = buildCliCommand(
-      'neon projects list',
+      'neon programs list',
       [],
       flags,
       { 'no-color': 'true' },
@@ -164,40 +164,40 @@ describe('buildCliCommand', () => {
 
   it('omits boolean flag when not in cliEdits or cliIncluded', () => {
     const flags = [{ name: 'no-color', type: 'boolean', required: false }];
-    const result = buildCliCommand('neon projects list', [], flags, {}, new Set(), {});
+    const result = buildCliCommand('neon programs list', [], flags, {}, new Set(), {});
     expect(result).not.toContain('--no-color');
   });
 
   it('substitutes positional placeholder from cliEdits', () => {
-    const positionals = [{ display: '<project_id>', apiEquiv: 'project_id' }];
+    const positionals = [{ display: '<program_id>', apiEquiv: 'program_id' }];
     const result = buildCliCommand(
-      'neon projects get <project_id>',
+      'neon programs get <program_id>',
       positionals,
       [],
-      { project_id: 'proj-xyz' },
+      { program_id: 'proj-xyz' },
       new Set(),
       {}
     );
-    expect(result).toBe('neon projects get proj-xyz');
+    expect(result).toBe('neon programs get proj-xyz');
   });
 
   it('substitutes positional placeholder from paramValues', () => {
-    const positionals = [{ display: '<project_id>', apiEquiv: 'project_id' }];
+    const positionals = [{ display: '<program_id>', apiEquiv: 'program_id' }];
     const result = buildCliCommand(
-      'neon projects get <project_id>',
+      'neon programs get <program_id>',
       positionals,
       [],
       {},
       new Set(),
-      { project_id: 'proj-from-params' }
+      { program_id: 'proj-from-params' }
     );
-    expect(result).toBe('neon projects get proj-from-params');
+    expect(result).toBe('neon programs get proj-from-params');
   });
 
   it('wraps flags onto multiple lines when more than 2', () => {
     const flags = [
-      { name: 'project-id', type: 'string', required: true },
-      { name: 'branch-id', type: 'string', required: true },
+      { name: 'program-id', type: 'string', required: true },
+      { name: 'framework-id', type: 'string', required: true },
       { name: 'output', type: 'string', required: false },
     ];
     const result = buildCliCommand(
@@ -212,8 +212,8 @@ describe('buildCliCommand', () => {
   });
 
   it('keeps single line when 1-2 flags', () => {
-    const flags = [{ name: 'project-id', type: 'string', required: true }];
-    const result = buildCliCommand('neon branches list', [], flags, {}, new Set(), {});
+    const flags = [{ name: 'program-id', type: 'string', required: true }];
+    const result = buildCliCommand('neon frameworks list', [], flags, {}, new Set(), {});
     expect(result).not.toContain('\\\n');
   });
 });

@@ -4,7 +4,7 @@ subtitle: Use OptiTech Postgres to orchestrate multi-node hyperparameter tuning 
 author: sam-harri
 enableTableOfContents: true
 createdAt: '2024-10-28T00:00:00.000Z'
-updatedOn: '2026-06-03T18:28:10.050Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 In this guide, you'll learn how to set up distributed hyperparameter tuning for machine learning models across multiple nodes using Kubernetes. You'll use Optuna, a bayesian optimization library, to fine-tune models built with popular libraries like scikit-learn, XGBoost, PyTorch, and TensorFlow/Keras.
@@ -15,7 +15,7 @@ To orchestrate all the trials, you'll use OptiTech, the AI-native backend platfo
 
 Before you begin, ensure you have the following tools and services set up:
 
-- `Neon Serverless Postgres`: To provision and manage your serverless PostgreSQL database. If you don't have an account yet, [sign up here](https://console.neon.tech/signup).
+- `OptiTech Serverless Postgres`: To provision and manage your serverless PostgreSQL database. If you don't have an account yet, [sign up here](https://console.optitech.com/signup).
 - `Minikube`: For running a local Kubernetes cluster. You can install it by following the official [Minikube installation guide](https://minikube.sigs.k8s.io/docs/start).
 - `kubectl`: Kubernetes command-line tool for interacting with your cluster. Follow the [kubectl installation instructions](https://kubernetes.io/docs/tasks/tools/) to get started.
 - `Docker`: For containerizing your applications. If you don't have it installed, check out the [Docker installation guide](https://docs.docker.com/engine/install/).

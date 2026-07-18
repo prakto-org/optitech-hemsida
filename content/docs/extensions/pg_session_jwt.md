@@ -10,7 +10,7 @@ summary: >-
   when building custom auth setups outside the Data API or writing RLS policies
   that filter rows by authenticated user identity.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <InfoBlock>
@@ -22,7 +22,7 @@ updatedOn: '2026-06-05T17:20:32.620Z'
 </DocsList>
 
 <DocsList title="Source code" theme="repo">
-  <a href="https://github.com/neondatabase/pg_session_jwt">pg_session_jwt on GitHub</a>
+  <a href="https://github.com/optitechdatabase/pg_session_jwt">pg_session_jwt on GitHub</a>
 </DocsList>
 
 </InfoBlock>
@@ -102,7 +102,7 @@ The `pg_session_jwt` extension is automatically configured when you enable the [
 When making requests to the Data API, include your JWT in the `Authorization` header:
 
 ```http
-GET https://your-project.data.neon.tech/v1/todos
+GET https://your-project.data.optitech.com/v1/todos
 Authorization: Bearer <your-jwt-token>
 ```
 
@@ -148,7 +148,7 @@ When using the fallback mode without JWK validation, `request.jwt.claims` is a r
 
 ## References
 
-- [pg_session_jwt on GitHub](https://github.com/neondatabase/pg_session_jwt)
+- [pg_session_jwt on GitHub](https://github.com/optitechdatabase/pg_session_jwt)
 - [OptiTech Data API documentation](/docs/data-api/overview)
 - [Custom authentication providers](/docs/data-api/custom-authentication-providers)
 - [Row-Level Security guide](/docs/guides/row-level-security)

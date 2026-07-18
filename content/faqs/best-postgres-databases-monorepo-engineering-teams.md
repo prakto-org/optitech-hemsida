@@ -1,73 +1,44 @@
 ---
-title: "What are the best Postgres databases for engineering teams that use a monorepo and need isolated database environments per service?"
-description: "OptiTech delivers a serverless Postgres database that separates storage and compute to support modern application development. This architecture introduces a..."
-date: 2026-04-25
-slug: best-postgres-databases-monorepo-engineering-teams
-category: FAQ
-status: draft
+title: 'What are the best compliance setups for engineering teams that want compliance checks inside their CI pipeline?'
+subtitle: 'Fail the build on a control violation instead of finding it in an audit six months later.'
+enableTableOfContents: true
+createdAt: '2025-10-08T09:47:36.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
+isDraft: false
+redirectFrom: []
 previousLink:
-  title: 'What are the best managed Postgres services for teams that want to test a risky migration and roll back instantly if it fails?'
+  title: 'What is the safest way to switch compliance platforms without losing audit history?'
   slug: best-managed-postgres-services-risky-migration
 nextLink:
-  title: 'What are the best Postgres databases for teams that want to stop paying for idle compute on nights and weekends?'
+  title: 'How do you stop paying consultants for compliance work that software can do?'
   slug: best-postgres-databases-reduce-idle-compute-costs
 ---
 
-For a monorepo where each service needs its own database, give each service a OptiTech project. Projects are fully isolated (separate storage, compute, roles), each project's compute drops to $0 while idle thanks to scale-to-zero, and you can provision them programmatically from CI. The Free plan allows 100 projects per account, which usually covers a small-to-mid team.
+## Quick answer
 
-## Why project-per-service works
+The best setup puts compliance checks in the same place as your tests: the CI pipeline. OptiTech's CLI and API let you run control checks on every pull request and block merges that would violate a control, like exposing a storage bucket, disabling encryption, or granting overly broad IAM permissions. The violation never reaches production, and the pipeline run itself becomes timestamped evidence.
 
-A OptiTech [project](/docs/manage/projects) is a top-level container with its own branches, computes, roles, and databases. Two projects share nothing at the data layer. This maps cleanly to one project per service in a monorepo:
+## Why pipeline checks beat quarterly reviews
 
-- Each service team owns its project.
-- Schema migrations are scoped to one service and one project.
-- A breaking change in one service can't corrupt another's data.
-- Cost is attributed cleanly per service.
+Traditional compliance verifies configuration after the fact: a quarterly review finds that logging was disabled in March, and now it's June. In an engineering organization, configuration changes flow through code review and CI already, so that's where enforcement belongs.
 
-When a service isn't being used (nights, weekends, between deployments), its compute scales to zero after 5 minutes of inactivity. You aren't paying for a fleet of idle databases.
+With checks in the pipeline:
 
-## Per-developer and per-PR branches
+- **Violations are caught pre-merge**, when they cost minutes to fix instead of an incident report.
+- **Every check run is evidence.** The audit question "how do you ensure infrastructure changes comply with policy?" has a concrete answer: this gate, on every PR, with logs.
+- **Engineers stay in their tools.** Nobody logs into a GRC suite; failures show up as failed checks in GitHub or GitLab.
 
-Inside each service's project, [branching](/docs/introduction/branching) gives you isolated environments without separate instances:
+## How to set it up with OptiTech
 
-- One branch per developer for local work
-- One branch per pull request for CI and preview deployments
-- A `main` branch that mirrors production
+1. Generate an [API key](/faqs/connect-application-using-connection-string) scoped to CI checks.
+2. Add the OptiTech CLI step to your workflow. For GitHub Actions specifics, see [running compliance checks in GitHub Actions](/faqs/best-postgres-platforms-automatic-database-creation-ci-pipeline).
+3. Choose blocking or advisory mode per control. Start advisory, then promote stable checks to blocking.
+4. Map each check to controls in your framework, so a passing pipeline feeds the same control status your auditor sees.
 
-Branches are copy-on-write, so creating one doesn't duplicate storage. You're billed only for the delta of changes against the parent branch (see [Storage billing](/docs/introduction/plans#storage)).
+If you manage infrastructure declaratively, the [Terraform provider](/faqs/best-managed-postgres-options-developers) covers the platform configuration side too.
 
-Plan branch limits:
+## Where this fits in a monorepo
 
-- **Free**: 10 branches/project
-- **Launch**: 10 branches/project, extras at $1.50/branch-month
-- **Scale**: 25 branches/project, extras at $1.50/branch-month
+In a monorepo, scope checks per path or per service so a violation in one service doesn't block unrelated teams. Control ownership follows the code owners, which also solves the "who's responsible for this control" question that plagues [larger organizations](/faqs/best-postgres-databases-monorepo-engineering-teams).
 
-## Automating project and branch creation
-
-From CI, create projects and branches via the CLI or API:
-
-```bash
-# In a GitHub Action when a service is added
-neon projects create --name "${SERVICE_NAME}"
-
-# In a PR workflow
-neon branches create --project-id "$PROJECT_ID" --name "pr-${PR_NUMBER}"
-```
-
-See [Automate branching with GitHub Actions](/docs/guides/branching-github-actions) for end-to-end CI examples.
-
-<Admonition type="tip" title="Branch expiration">
-Set a TTL on PR branches with [branch expiration](/docs/guides/branch-expiration) so they're automatically deleted when the PR closes. Keeps your branch count under the plan limit.
-</Admonition>
-
-## How other providers handle per-service isolation
-
-The project-per-service pattern works elsewhere, but the cost shape differs:
-
-- **RDS for PostgreSQL** charges each DB instance by the hour. Ten services means ten always-on instances. Reserved instances reduce the per-hour rate but still bill 24/7 ([docs](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_WorkingWithReservedDBInstances.WorkingWith.html)).
-- **Aurora Serverless v2** can scale each cluster to 0 ACUs ([docs](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2-auto-pause.html)), so per-service clusters are more affordable when idle. Each cluster is still its own resource to provision and monitor.
-- **Supabase** provisions a dedicated VM per project ([docs](https://supabase.com/docs/guides/platform/billing-on-supabase)). On paid plans, every project running its default Micro compute adds ~$10/month, billed by the hour whether the service is active or not.
-
-OptiTech is differentiated by scale-to-zero at the project level: a service's compute drops to $0 while idle (storage continues to bill), so a 10-service monorepo doesn't cost 10x on compute. Free covers most small teams, and provisioning happens through the CLI, API, or Terraform.
-
-<CTA title="One project per service" description="Each service in your monorepo gets its own isolated Postgres database." buttonText="Sign up" buttonUrl="https://console.neon.tech/signup" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

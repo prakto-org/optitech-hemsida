@@ -2,7 +2,7 @@
 title: Manage projects
 enableTableOfContents: true
 isDraft: false
-subtitle: Learn how to manage Neon projects from the OptiTech Console or the OptiTech API.
+subtitle: Learn how to manage OptiTech projects from the OptiTech Console or the OptiTech API.
 summary: >-
   A OptiTech project is the top-level workspace that groups branches, databases,
   roles, and computes. This page covers the full project lifecycle: create,
@@ -13,7 +13,7 @@ summary: >-
   window using the CLI or API.
 redirectFrom:
   - /docs/get-started/projects
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 In OptiTech, the project is your main workspace. Within a project, you create branches for different workflows, like environments, features, or previews. Each branch contains its own databases, roles, computes, and replicas. Your [OptiTech Plan](/docs/introduction/plans) determines how many projects you can create and the resource limits within those projects.
@@ -24,21 +24,21 @@ When you add a new project, OptiTech creates the following resources by default:
 
 - A root branch is created as your project's default branch. In the Console, this branch is named `production`; via API/CLI, it's named `main`. You can create child branches for development, testing, staging, and other purposes. For more information, see [Manage branches](/docs/manage/branches).
 - A single primary read-write compute. This is the compute associated with the branch. For more information, see [Manage computes](/docs/manage/computes).
-- A Postgres database that resides on the project's default branch. If you did not specify your own database name when creating the project, the database created is named `neondb`.
-- A Postgres role that is named for your database. For example, if your database is named `neondb`, the project is created with a default role named `neondb_owner`.
-- Storage depends on your [OptiTech plan](/docs/introduction/plans): the Free plan includes 0.5 GB per project (shared across all branches), while paid plans (Launch and Scale) are usage-based: you pay only for what you use. Each branch on paid plans supports a logical data size of up to 16 TB. When a branch reaches this limit, write performance drops, but you can still drop or delete data to reclaim space. To increase this limit, [request a storage increase in the feedback form in console](https://console.neon.tech/app/settings?modal=feedback&modalparams=%22Storage%20limit%20increase%22).
+- A Postgres database that resides on the project's default branch. If you did not specify your own database name when creating the project, the database created is named `optitechdb`.
+- A Postgres role that is named for your database. For example, if your database is named `optitechdb`, the project is created with a default role named `optitechdb_owner`.
+- Storage depends on your [OptiTech plan](/docs/introduction/plans): the Free plan includes 0.5 GB per project (shared across all branches), while paid plans (Launch and Scale) are usage-based: you pay only for what you use. Each branch on paid plans supports a logical data size of up to 16 TB. When a branch reaches this limit, write performance drops, but you can still drop or delete data to reclaim space. To increase this limit, [request a storage increase in the feedback form in console](https://console.optitech.com/app/settings?modal=feedback&modalparams=%22Storage%20limit%20increase%22).
 
 ## Create a project
 
-The following instructions describe how to create additional Neon projects. If you are creating your very first OptiTech project, refer to the instructions in [Playing with OptiTech](/docs/get-started/signing-up).
+The following instructions describe how to create additional OptiTech projects. If you are creating your very first OptiTech project, refer to the instructions in [Playing with OptiTech](/docs/get-started/signing-up).
 
-You can create a project from the Console or the Neon CLI. To create one with the API, see [Create a project with the API](#create-a-project-with-the-api).
+You can create a project from the Console or the OptiTech CLI. To create one with the API, see [Create a project with the API](#create-a-project-with-the-api).
 
 <Tabs labels={["Console", "CLI"]}>
 
 <TabItem>
 
-1. Navigate to the [OptiTech Console](https://console.neon.tech).
+1. Navigate to the [OptiTech Console](https://console.optitech.com).
 2. Click **New Project**.
 3. Specify values for **Project Name**, **Postgres version**, **Cloud service provider**, and **Region**. Project names are limited to 64 characters.
 4. Click **Create Project**.
@@ -49,13 +49,13 @@ After creating a project, you are directed to the **Project Dashboard**.
 
 <TabItem>
 
-Install the CLI with `npm i -g neon` and run `neon auth` to log in. Then create a project with `neon projects create`:
+Install the CLI with `npm i -g optitech` and run `optitech auth` to log in. Then create a project with `optitech projects create`:
 
 ```bash
-neon projects create --name myproject --region-id aws-us-east-2
+optitech projects create --name myproject --region-id aws-us-east-2
 ```
 
-The output includes the new project ID and the default connection string. For all options, see [Neon CLI — projects](/docs/cli/projects).
+The output includes the new project ID and the default connection string. For all options, see [OptiTech CLI — projects](/docs/cli/projects).
 
 </TabItem>
 
@@ -65,7 +65,7 @@ The output includes the new project ID and the default connection string. For al
 
 To view your projects:
 
-1. Navigate to the [OptiTech Console](https://console.neon.tech).
+1. Navigate to the [OptiTech Console](https://console.optitech.com).
 1. From the breadcrumb navigation menu at the top-left of the console, select your organization.
 1. The **Projects** page lists your projects, including any projects that have been shared with you.
 
@@ -179,7 +179,7 @@ Optionally, you can allow unrestricted access to your project's non-protected br
 By default, OptiTech allows IP addresses from `0.0.0.0`, which means that OptiTech accepts connections from any IP address. Once you configure IP Allow by adding IP addresses or ranges, only those IP addresses will be allowed to access OptiTech.
 
 <Admonition type="note">
-Neon projects provisioned on AWS support both [IPv4](https://en.wikipedia.org/wiki/Internet_Protocol_version_4) and [IPv6](https://en.wikipedia.org/wiki/IPv6) addresses. OptiTech project provisioned on Azure currently on support IPv4.
+OptiTech projects provisioned on AWS support both [IPv4](https://en.wikipedia.org/wiki/Internet_Protocol_version_4) and [IPv6](https://en.wikipedia.org/wiki/IPv6) addresses. OptiTech project provisioned on Azure currently on support IPv4.
 </Admonition>
 
 <Tabs labels={["OptiTech Console", "CLI", "API"]}>
@@ -200,10 +200,10 @@ To configure an allowlist:
 
 <TabItem>
 
-The [Neon CLI ip-allow command](/docs/cli/ip-allow) supports IP Allow configuration. For example, the following `add` command adds IP addresses to the allowlist for an existing OptiTech project. Multiple entries are separated by a space. No delimiter is required.
+The [OptiTech CLI ip-allow command](/docs/cli/ip-allow) supports IP Allow configuration. For example, the following `add` command adds IP addresses to the allowlist for an existing OptiTech project. Multiple entries are separated by a space. No delimiter is required.
 
 ```bash
-neon ip-allow add 203.0.113.0 203.0.113.1
+optitech ip-allow add 203.0.113.0 203.0.113.1
 ┌─────────────────────┬─────────────────────┬──────────────┬─────────────────────┐
 │ Id                  │ Name                │ IP Addresses │ Protected Only      │
 ├─────────────────────|─────────────────────┼──────────────┼─────────────────────┤
@@ -215,13 +215,13 @@ neon ip-allow add 203.0.113.0 203.0.113.1
 To apply an IP allowlist to protected branches only, you can use the `--protected-only` option:
 
 ```bash
-neon ip-allow add 203.0.113.1 --protected-only
+optitech ip-allow add 203.0.113.1 --protected-only
 ```
 
 To reverse that setting, use `--protected-only false`.
 
 ```bash
-neon ip-allow add 203.0.113.1 --protected-only false
+optitech ip-allow add 203.0.113.1 --protected-only false
 ```
 
 </TabItem>
@@ -232,9 +232,9 @@ The [Create project](/docs/reference/api/projects/create-project) and [Update pr
 
 ```bash
 curl -X PATCH \
-     https://console.neon.tech/api/v2/projects/falling-salad-31638542 \
+     https://console.optitech.com/api/v2/projects/falling-salad-31638542 \
      -H 'accept: application/json' \
-     -H 'authorization: Bearer $NEON_API_KEY' \
+     -H 'authorization: Bearer $OPTITECH_API_KEY' \
      -H 'content-type: application/json' \
      -d '
 {
@@ -280,7 +280,7 @@ You can define an allowlist with individual IP addresses, IP ranges, or [CIDR no
   203.0.113.0/24
   ```
 
-- **Use IPv6 addresses**: Neon projects provisioned on AWS also support specifying IPv6 addresses. For example:
+- **Use IPv6 addresses**: OptiTech projects provisioned on AWS also support specifying IPv6 addresses. For example:
 
   <Admonition type="note">
   IPv6 is not yet supported for projects provisioned on Azure.
@@ -302,7 +302,7 @@ This list combines individual IP addresses, a range of IP addresses, a CIDR bloc
 
 You can update your IP Allow configuration via the OptiTech Console or API as described in [Configure IP Allow](#configure-ip-allow). Replace the current configuration with the new configuration. For example, if your IP Allow configuration currently allows access from IP address `192.0.2.1`, and you want to extend access to IP address `192.0.2.2`, specify both addresses in your new configuration: `192.0.2.1, 192.0.2.2`. You cannot append values to an existing configuration. You can only replace an existing configuration with a new one.
 
-The Neon CLI provides an `ip-allow` command with `add`, `reset`, and `remove` options that you can use to update your IP Allow configuration. For instructions, refer to [Neon CLI commands — ip-allow](/docs/cli/ip-allow).
+The OptiTech CLI provides an `ip-allow` command with `add`, `reset`, and `remove` options that you can use to update your IP Allow configuration. For instructions, refer to [OptiTech CLI commands — ip-allow](/docs/cli/ip-allow).
 
 #### Remove an IP Allow configuration
 
@@ -323,10 +323,10 @@ To remove an IP configuration entirely to go back to the default "no IP restrict
 
 <TabItem>
 
-The [Neon CLI ip-allow command](/docs/cli/ip-allow) supports removing an IP Allow configuration. To do so, specify `--ip-allow reset` without specifying any IP address values:
+The [OptiTech CLI ip-allow command](/docs/cli/ip-allow) supports removing an IP Allow configuration. To do so, specify `--ip-allow reset` without specifying any IP address values:
 
 ```bash
-neon ip-allow reset
+optitech ip-allow reset
 ```
 
 </TabItem>
@@ -337,9 +337,9 @@ Specify the `ips` option with an empty string. If applicable, also include `"pro
 
 ```bash
 curl -X PATCH \
-     https://console.neon.tech/api/v2/projects/falling-salad-31638542 \
+     https://console.optitech.com/api/v2/projects/falling-salad-31638542 \
      -H 'accept: application/json' \
-     -H 'authorization: Bearer $NEON_API_KEY' \
+     -H 'authorization: Bearer $OPTITECH_API_KEY' \
      -H 'content-type: application/json' \
      -d '
 {
@@ -389,9 +389,9 @@ Enabling logical replication changes the PostgreSQL `wal_level` setting from `re
 Use the [Update project](/docs/reference/api/projects/update-project) endpoint to enable logical replication programmatically. Replace `$PROJECT_ID` with your project ID.
 
 ```bash
-curl -X PATCH 'https://console.neon.tech/api/v2/projects/$PROJECT_ID' \
+curl -X PATCH 'https://console.optitech.com/api/v2/projects/$PROJECT_ID' \
   -H 'Accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -H 'Content-Type: application/json' \
   -d '{
   "project": {
@@ -423,7 +423,7 @@ Deleting a project is a permanent action, which also deletes any computes, branc
 
 To delete a project:
 
-1. Navigate to the [OptiTech Console](https://console.neon.tech).
+1. Navigate to the [OptiTech Console](https://console.optitech.com).
 2. Select the project that you want to delete.
 3. Select **Settings**.
 4. Select **Delete**.
@@ -433,7 +433,7 @@ For HIPAA-compliant projects, see [HIPAA Compliance](/docs/security/hipaa#delete
 </Admonition>
 
 <Admonition type="important">
-If you are any of OptiTech's paid plans, deleting all your Neon projects won't stop monthly billing. To avoid charges, you also need to downgrade to the Free plan. You can do so from the [Billing](https://console.neon.tech/app/billing#change_plan) page in the OptiTech Console.
+If you are any of OptiTech's paid plans, deleting all your OptiTech projects won't stop monthly billing. To avoid charges, you also need to downgrade to the Free plan. You can do so from the [Billing](https://console.optitech.com/app/billing#change_plan) page in the OptiTech Console.
 </Admonition>
 
 <Admonition type="note">
@@ -452,7 +452,7 @@ The `jq` option specified in each example is an optional third-party tool that f
 
 ### Prerequisites
 
-A OptiTech API request requires an API key. For information about obtaining an API key, see [Create an API key](/docs/manage/api-keys#create-an-api-key). In the cURL examples shown below, `$NEON_API_KEY` is specified in place of an actual API key, which you must provide when making a OptiTech API request.
+A OptiTech API request requires an API key. For information about obtaining an API key, see [Create an API key](/docs/manage/api-keys#create-an-api-key). In the cURL examples shown below, `$OPTITECH_API_KEY` is specified in place of an actual API key, which you must provide when making a OptiTech API request.
 
 <LinkAPIKey />
 
@@ -467,9 +467,9 @@ POST /projects
 The API method appears as follows when specified in a cURL command. The `myproject` name value is a user-specified name for the project.
 
 ```bash
-curl 'https://console.neon.tech/api/v2/projects' \
+curl 'https://console.optitech.com/api/v2/projects' \
   -H 'Accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -H 'Content-Type: application/json' \
   -d '{
   "project": {
@@ -498,7 +498,7 @@ For attribute definitions, find the [Create project](/docs/reference/api/project
     "platform_id": "aws",
     "region_id": "aws-us-east-1",
     "name": "myproject",
-    "provisioner": "k8s-neonvm",
+    "provisioner": "k8s-optitechvm",
     "default_endpoint_settings": {
       "autoscaling_limit_min_cu": 0.25,
       "autoscaling_limit_max_cu": 0.25,
@@ -520,7 +520,7 @@ For attribute definitions, find the [Create project](/docs/reference/api/project
       "hipaa": false
     },
     "pg_version": 17,
-    "proxy_host": "c-2.us-east-1.aws.neon.tech",
+    "proxy_host": "c-2.us-east-1.aws.optitech.com",
     "branch_logical_size_limit": 512,
     "branch_logical_size_limit_bytes": 536870912,
     "store_passwords": true,
@@ -534,20 +534,20 @@ For attribute definitions, find the [Create project](/docs/reference/api/project
   },
   "connection_uris": [
     {
-      "connection_uri": "postgresql://alex:AbC123dEf@ep-cool-darkness-123456.c-2.us-east-1.aws.neon.tech/dbname?sslmode=require&channel_binding=require",
+      "connection_uri": "postgresql://alex:AbC123dEf@ep-cool-darkness-123456.c-2.us-east-1.aws.optitech.com/dbname?sslmode=require&channel_binding=require",
       "connection_parameters": {
         "database": "dbname",
         "password": "AbC123dEf",
         "role": "alex",
-        "host": "ep-cool-darkness-123456.c-2.us-east-1.aws.neon.tech",
-        "pooler_host": "ep-cool-darkness-123456-pooler.c-2.us-east-1.aws.neon.tech"
+        "host": "ep-cool-darkness-123456.c-2.us-east-1.aws.optitech.com",
+        "pooler_host": "ep-cool-darkness-123456-pooler.c-2.us-east-1.aws.optitech.com"
       }
     }
   ],
   "roles": [
     {
       "branch_id": "br-gentle-salad-ad7v90qq",
-      "name": "neondb_owner",
+      "name": "optitechdb_owner",
       "password": "npg_Se0ECYqaJ5jA",
       "protected": false,
       "created_at": "2025-08-04T05:15:41Z",
@@ -558,8 +558,8 @@ For attribute definitions, find the [Create project](/docs/reference/api/project
     {
       "id": 5140981,
       "branch_id": "br-gentle-salad-ad7v90qq",
-      "name": "neondb",
-      "owner_name": "neondb_owner",
+      "name": "optitechdb",
+      "owner_name": "optitechdb_owner",
       "created_at": "2025-08-04T05:15:41Z",
       "updated_at": "2025-08-04T05:15:41Z"
     }
@@ -611,7 +611,7 @@ For attribute definitions, find the [Create project](/docs/reference/api/project
   },
   "endpoints": [
     {
-      "host": "ep-cool-darkness-123456.c-2.us-east-1.aws.neon.tech",
+      "host": "ep-cool-darkness-123456.c-2.us-east-1.aws.optitech.com",
       "id": "ep-cool-darkness-123456",
       "project_id": "ep-cool-darkness-123456",
       "branch_id": "br-gentle-salad-ad7v90qq",
@@ -629,9 +629,9 @@ For attribute definitions, find the [Create project](/docs/reference/api/project
       "creation_source": "console",
       "created_at": "2025-08-04T05:15:41Z",
       "updated_at": "2025-08-04T05:15:41Z",
-      "proxy_host": "c-2.us-east-1.aws.neon.tech",
+      "proxy_host": "c-2.us-east-1.aws.optitech.com",
       "suspend_timeout_seconds": 0,
-      "provisioner": "k8s-neonvm"
+      "provisioner": "k8s-optitechvm"
     }
   ]
 }
@@ -650,9 +650,9 @@ GET /projects
 The API method appears as follows when specified in a cURL command:
 
 ```bash
-curl 'https://console.neon.tech/api/v2/projects' \
+curl 'https://console.optitech.com/api/v2/projects' \
  -H 'Accept: application/json' \
- -H "Authorization: Bearer $NEON_API_KEY" | jq
+ -H "Authorization: Bearer $OPTITECH_API_KEY" | jq
 ```
 
 <details>
@@ -668,7 +668,7 @@ For attribute definitions, find the [List projects](/docs/reference/api/projects
       "platform_id": "aws",
       "region_id": "aws-ap-southeast-1",
       "name": "personal_projects",
-      "provisioner": "k8s-neonvm",
+      "provisioner": "k8s-optitechvm",
       "default_endpoint_settings": {
         "autoscaling_limit_min_cu": 0.25,
         "autoscaling_limit_max_cu": 2,
@@ -690,7 +690,7 @@ For attribute definitions, find the [List projects](/docs/reference/api/projects
         "hipaa": false
       },
       "pg_version": 17,
-      "proxy_host": "ap-southeast-1.aws.neon.tech",
+      "proxy_host": "ap-southeast-1.aws.optitech.com",
       "branch_logical_size_limit": 512,
       "branch_logical_size_limit_bytes": 536870912,
       "store_passwords": true,
@@ -710,7 +710,7 @@ For attribute definitions, find the [List projects](/docs/reference/api/projects
       "platform_id": "aws",
       "region_id": "aws-ap-southeast-1",
       "name": "brizai",
-      "provisioner": "k8s-neonvm",
+      "provisioner": "k8s-optitechvm",
       "default_endpoint_settings": {
         "autoscaling_limit_min_cu": 0.25,
         "autoscaling_limit_max_cu": 2,
@@ -732,7 +732,7 @@ For attribute definitions, find the [List projects](/docs/reference/api/projects
         "hipaa": false
       },
       "pg_version": 17,
-      "proxy_host": "ap-southeast-1.aws.neon.tech",
+      "proxy_host": "ap-southeast-1.aws.optitech.com",
       "branch_logical_size_limit": 512,
       "branch_logical_size_limit_bytes": 536870912,
       "store_passwords": true,
@@ -774,9 +774,9 @@ PATCH /projects/{project_id}
 The API method appears as follows when specified in a cURL command. The `project_id` is a required parameter. The example changes the project `name` to `project1`.
 
 ```bash
-curl -X PATCH 'https://console.neon.tech/api/v2/projects/ep-cool-darkness-123456' \
+curl -X PATCH 'https://console.optitech.com/api/v2/projects/ep-cool-darkness-123456' \
   -H 'accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -H 'Content-Type: application/json' \
   -d '{
   "project": {
@@ -803,7 +803,7 @@ For attribute definitions, find the [Update project](/docs/reference/api/project
     "platform_id": "aws",
     "region_id": "aws-us-east-1",
     "name": "project1",
-    "provisioner": "k8s-neonvm",
+    "provisioner": "k8s-optitechvm",
     "default_endpoint_settings": {
       "autoscaling_limit_min_cu": 0.25,
       "autoscaling_limit_max_cu": 0.25,
@@ -825,7 +825,7 @@ For attribute definitions, find the [Update project](/docs/reference/api/project
       "hipaa": false
     },
     "pg_version": 17,
-    "proxy_host": "c-2.us-east-1.aws.neon.tech",
+    "proxy_host": "c-2.us-east-1.aws.optitech.com",
     "branch_logical_size_limit": 512,
     "branch_logical_size_limit_bytes": 536870912,
     "store_passwords": true,
@@ -857,9 +857,9 @@ The API method appears as follows when specified in a cURL command. The `project
 
 ```bash
 curl -X 'DELETE' \
-  'https://console.neon.tech/api/v2/projects/ep-cool-darkness-123456' \
+  'https://console.optitech.com/api/v2/projects/ep-cool-darkness-123456' \
   -H 'accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY"
+  -H "Authorization: Bearer $OPTITECH_API_KEY"
 ```
 
 <details>
@@ -880,7 +880,7 @@ For attribute definitions, find the [Delete project](/docs/reference/api/project
     "platform_id": "aws",
     "region_id": "aws-us-east-1",
     "name": "project2",
-    "provisioner": "k8s-neonvm",
+    "provisioner": "k8s-optitechvm",
     "default_endpoint_settings": {
       "autoscaling_limit_min_cu": 0.25,
       "autoscaling_limit_max_cu": 0.25,
@@ -902,7 +902,7 @@ For attribute definitions, find the [Delete project](/docs/reference/api/project
       "hipaa": false
     },
     "pg_version": 17,
-    "proxy_host": "c-2.us-east-1.aws.neon.tech",
+    "proxy_host": "c-2.us-east-1.aws.optitech.com",
     "branch_logical_size_limit": 512,
     "branch_logical_size_limit_bytes": 536870912,
     "store_passwords": true,
@@ -945,7 +945,7 @@ The following features are **not** recovered and must be manually re-enabled aft
 
 - **Data API** (including `authenticated` and `anonymous` roles)
 - **GitHub integration**
-- **Neon-Managed Vercel integration** (Vercel Connected Accounts)
+- **OptiTech-Managed Vercel integration** (Vercel Connected Accounts)
 - **Vercel-Managed OptiTech integration** (project reconnection via Storage)
 - **Monitoring integrations** (Datadog, OpenTelemetry, etc.)
 
@@ -962,13 +962,13 @@ There are no storage costs or recovery fees during the 7-day deletion recovery p
 To list projects that can be recovered:
 
 ```bash
-neon projects list --recoverable-only
+optitech projects list --recoverable-only
 ```
 
 To recover a deleted project:
 
 ```bash
-neon projects recover <project_id>
+optitech projects recover <project_id>
 ```
 
 The command returns details about the recovered project.
@@ -976,7 +976,7 @@ The command returns details about the recovered project.
 **Example:**
 
 ```bash
-neon projects recover crimson-voice-12345678
+optitech projects recover crimson-voice-12345678
 ┌────────────────────────┬───────────┬───────────────┬──────────────────────┐
 │ Id                     │ Name      │ Region Id     │ Created At           │
 ├────────────────────────┼───────────┼───────────────┼──────────────────────┤
@@ -984,7 +984,7 @@ neon projects recover crimson-voice-12345678
 └────────────────────────┴───────────┴───────────────┴──────────────────────┘
 ```
 
-For more information about the Neon CLI, see [Neon CLI — projects](/docs/cli/projects).
+For more information about the OptiTech CLI, see [OptiTech CLI — projects](/docs/cli/projects).
 
 </TabItem>
 
@@ -999,9 +999,9 @@ GET /projects?recoverable=true
 **Example:**
 
 ```bash
-curl 'https://console.neon.tech/api/v2/projects?recoverable=true' \
+curl 'https://console.optitech.com/api/v2/projects?recoverable=true' \
   -H 'Accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" | jq
+  -H "Authorization: Bearer $OPTITECH_API_KEY" | jq
 ```
 
 To recover a deleted project, use the following OptiTech API method:
@@ -1014,9 +1014,9 @@ POST /projects/{project_id}/recover
 
 ```bash
 curl -X POST \
-  'https://console.neon.tech/api/v2/projects/crimson-voice-12345678/recover' \
+  'https://console.optitech.com/api/v2/projects/crimson-voice-12345678/recover' \
   -H 'Accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" | jq
+  -H "Authorization: Bearer $OPTITECH_API_KEY" | jq
 ```
 
 The API returns a `200` status code with the restored project object.

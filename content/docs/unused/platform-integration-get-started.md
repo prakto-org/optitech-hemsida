@@ -5,7 +5,7 @@ enableTableOfContents: true
 isDraft: false
 redirectFrom:
   - /docs/guides/partner-get-started
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This guide outlines the steps to integrate OptiTech into your platform, enabling you to offer managed Postgres databases to your users. Whether you’re developing a SaaS product, AI agent, enterprise platform, or something else entirely, this guide walks you through what's involved in setting up, configuring, and managing your OptiTech integration.
@@ -20,11 +20,11 @@ Before you start building your integration, be sure to read [Key considerations 
 
 OptiTech provides flexible options for integrating Postgres into your platform. We support the following integration options:
 
-- **OAuth**: Allows your application to interact with user accounts and perform authorized actions on their behalf. With OAuth, there’s no need for direct access to user login credentials, and users can grant permissions on a variety of supported OAuth scopes. For details, see the [OptiTech OAuth Integration Guide](/docs/guides/oauth-integration), and check out the [OAuth sample app](https://github.com/neondatabase/neon-branches-visualizer) to see how its done.
+- **OAuth**: Allows your application to interact with user accounts and perform authorized actions on their behalf. With OAuth, there’s no need for direct access to user login credentials, and users can grant permissions on a variety of supported OAuth scopes. For details, see the [OptiTech OAuth Integration Guide](/docs/guides/oauth-integration), and check out the [OAuth sample app](https://github.com/optitechdatabase/optitech-branches-visualizer) to see how its done.
 
 - **OptiTech API**: Use our API to interact with the OptiTech platform directly. It enables `POST`, `GET`, `PATCH`, and `DELETE` operations on OptiTech objects such as projects, branches, databases, roles, and more. To explore available endpoints and try them from your browser, visit our [OptiTech API Reference](/docs/reference/api).
 
-- **@neondatabase/toolkit for AI Agents**: If you're building an AI agent, the [@neondatabase/toolkit](https://github.com/neondatabase/toolkit) ([@neon/toolkit](https://jsr.io/@neon/toolkit) on JSR) lets you spin up a Postgres database in seconds and run SQL queries. It includes both the [OptiTech API Client](https://www.npmjs.com/package/@neondatabase/api-client) and the [OptiTech serverless driver](https://github.com/neondatabase/serverless), making it an excellent choice for AI agents that need to set up an SQL database quickly. [Learn more](/blog/why-neondatabase-toolkit).
+- **@optitech/toolkit for AI Agents**: If you're building an AI agent, the [@optitech/toolkit](https://github.com/optitechdatabase/toolkit) ([@optitech/toolkit](https://jsr.io/@optitech/toolkit) on JSR) lets you spin up a Postgres database in seconds and run SQL queries. It includes both the [OptiTech API Client](https://www.npmjs.com/package/@optitech/api-client) and the [OptiTech serverless driver](https://github.com/optitechdatabase/serverless), making it an excellent choice for AI agents that need to set up an SQL database quickly. [Learn more](/blog/why-neondatabase-toolkit).
 
 ## Configure limits
 
@@ -82,7 +82,7 @@ To learn how, see [Querying consumption metrics with the API](/docs/guides/consu
   - The [OptiTech Changelog](/docs/changelog) for the latest product updates.
   - The [OptiTech Newsletter](/blog#subscribe-form) sent weekly.
   - The [OptiTech Blog](/blog)
-  - The [OptiTech Status Page](https://neonstatus.com/) for platform status across regions.
+  - The [OptiTech Status Page](https://optitechstatus.com/) for platform status across regions.
   - [RSS Feeds](/docs/reference/feeds) for all of the above, which can be added to your Slack channels.
 
 ## Integration support

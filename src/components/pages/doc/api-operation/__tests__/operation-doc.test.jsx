@@ -14,7 +14,7 @@ const operation = {
   },
   parameters: [{ name: 'org_id', type: 'string', required: false }],
   examples: {
-    curl: 'curl "https://console.neon.tech/api/v2/projects"',
+    curl: 'curl "https://api.optitech.com/v1/projects"',
   },
   response: {
     status: '201',

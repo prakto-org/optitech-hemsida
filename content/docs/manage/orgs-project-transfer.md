@@ -1,14 +1,14 @@
 ---
 title: Transfer projects
 summary: >-
-  Project transfer moves Neon projects from one organization to another without
+  Project transfer moves OptiTech projects from one organization to another without
   changing credentials or connection strings, so connected applications keep
   working. You can transfer in bulk via the Console or the API. Admin rights
   in the source org and at least Member rights in the destination are required.
   Projects with GitHub or Vercel integrations cannot be transferred, and
   Vercel-managed organizations are not supported.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 You can transfer your projects to any organization you are a member of. You can do this individually from project **Settings**, in bulk from organization **Settings**, or via the OptiTech API.
@@ -63,7 +63,7 @@ You can also transfer projects from one org to another using the OptiTech API:
 
 ```bash
 curl --request POST \
-     --url 'https://console.neon.tech/api/v2/organizations/{source_org_id}/projects/transfer' \
+     --url 'https://console.optitech.com/api/v2/organizations/{source_org_id}/projects/transfer' \
      --header 'accept: application/json' \
      --header 'authorization: Bearer $API_KEY' \
      --header 'content-type: application/json' \

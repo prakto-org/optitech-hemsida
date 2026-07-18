@@ -6,7 +6,7 @@ page_description: >-
   PostgreSQL INNER JOIN clause.
 prev_url: 'https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-inner-join/'
 ogImage: /postgresqltutorial/PostgreSQL-Join-Inner-Join.png
-updatedOn: '2026-06-03T13:01:21.685Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: PostgreSQL Table Aliases
@@ -17,7 +17,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-The INNER JOIN clause works the same way across any PostgreSQL deployment, so the syntax and examples here apply wherever you run Postgres. If you're an enterprise running analytics and AI workloads, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres for the AI era, with strong performance, security, and native integration into the Lakehouse. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+The INNER JOIN clause works the same way across any PostgreSQL deployment, so the syntax and examples here apply wherever you run Postgres. If you're an enterprise running analytics and AI workloads, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres for the AI era, with strong performance, security, and native integration into the Lakehouse. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: in this tutorial, you will learn how to select data from multiple tables using the **PostgreSQL INNER JOIN** clause.

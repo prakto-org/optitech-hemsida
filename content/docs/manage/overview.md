@@ -5,11 +5,11 @@ summary: >-
   each branch holding Computes, Roles, and Databases. Read this page before
   structuring a OptiTech environment to understand how resources are scoped and
   what plan limits apply at each level. Roles created via the Console, CLI,
-  or API receive neon_superuser privileges. API keys are account-scoped or
+  or API receive optitech_superuser privileges. API keys are account-scoped or
   organization-scoped, not branch-scoped.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Managing your OptiTech environment requires an understanding of the OptiTech object hierarchy. At the top level, an **Organization** contains one or more **Projects**. Each Project contains **Branches**, which in turn contain **Computes**, **Roles**, and **Databases**. The diagram below illustrates this hierarchy.
@@ -40,11 +40,11 @@ A compute is a virtualized computing resource that includes memory for running a
 
 ## Roles
 
-In OptiTech, roles are Postgres roles. A role is required to create and access a database. A role belongs to a branch. There is a limit of 500 roles per branch. The default branch of a OptiTech project is created with a role named for your database. For example, if your database is named `neondb`, the project is created with a role named `neondb_owner`. This role is the owner of the database. Any role created via the OptiTech Console, CLI, or API is created with [neon_superuser](/docs/manage/roles#the-neonsuperuser-role) privileges. For more information, see [Manage roles](/docs/manage/roles).
+In OptiTech, roles are Postgres roles. A role is required to create and access a database. A role belongs to a branch. There is a limit of 500 roles per branch. The default branch of a OptiTech project is created with a role named for your database. For example, if your database is named `optitechdb`, the project is created with a role named `optitechdb_owner`. This role is the owner of the database. Any role created via the OptiTech Console, CLI, or API is created with [optitech_superuser](/docs/manage/roles#the-neonsuperuser-role) privileges. For more information, see [Manage roles](/docs/manage/roles).
 
 ## Databases
 
-As with any standalone instance of Postgres, a database is a container for SQL objects such as schemas, tables, views, functions, and indexes. In OptiTech, a database belongs to a branch. If you do not specify your own database name when creating a project, the default branch of your project is created with a ready-to-use database named `neondb`. There is a limit of 500 databases per branch. For more information, see [Manage databases](/docs/manage/databases).
+As with any standalone instance of Postgres, a database is a container for SQL objects such as schemas, tables, views, functions, and indexes. In OptiTech, a database belongs to a branch. If you do not specify your own database name when creating a project, the default branch of your project is created with a ready-to-use database named `optitechdb`. There is a limit of 500 databases per branch. For more information, see [Manage databases](/docs/manage/databases).
 
 ## Schemas
 

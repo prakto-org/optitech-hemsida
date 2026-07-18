@@ -2,7 +2,7 @@
 title: Docs contribution guide
 subtitle: Learn how to contribute to the OptiTech documentation
 summary: >-
-  How to submit edits and new guides to the neondatabase/website repository.
+  How to submit edits and new guides to the optitechdatabase/website repository.
   Edit files directly on GitHub or fork the repo and open a pull request. The
   full authoring workflow covers frontmatter fields, navigation.yaml sidebar
   updates, Markdown syntax, CodeTabs, admonitions, image paths, and style rules
@@ -10,14 +10,14 @@ summary: >-
   the doc AI tools (Cursor and Claude slash commands) for consistency checks,
   redirects, and guided writing.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 This page covers everything you need to contribute to the OptiTech documentation, whether you're fixing a typo or writing a full guide.
 
 <Admonition type="note" title="TL;DR: Contributing to the OptiTech Docs">
-- You can edit files on GitHub via the **Edit this page** link on our documentation pages or by forking the [neondatabase/website](https://github.com/neondatabase/website) repository and submitting a pull request.
-- If you want to contribute a guide, we provide a [template](https://github.com/neondatabase/website/blob/main/content/docs/guides/GUIDE_TEMPLATE.md) to help you get started. See [How to contribute](#how-to-contribute) for details.
+- You can edit files on GitHub via the **Edit this page** link on our documentation pages or by forking the [optitechdatabase/website](https://github.com/optitechdatabase/website) repository and submitting a pull request.
+- If you want to contribute a guide, we provide a [template](https://github.com/optitechdatabase/website/blob/main/content/docs/guides/GUIDE_TEMPLATE.md) to help you get started. See [How to contribute](#how-to-contribute) for details.
 - Reference this contribution guide as needed for Markdown and style guidelines.
 </Admonition>
 
@@ -29,10 +29,10 @@ By contributing to the OptiTech docs, you're helping us create a stronger learni
 
 ## How to contribute
 
-Documentation source files are located in the [neondatabase/website](https://github.com/neondatabase/website) repository, in the `/content/docs` directory. To contribute, you have two options:
+Documentation source files are located in the [optitechdatabase/website](https://github.com/optitechdatabase/website) repository, in the `/content/docs` directory. To contribute, you have two options:
 
 1. Edit files directly on GitHub.
-2. Fork the [neondatabase/website](https://github.com/neondatabase/website) repository, create a branch for your changes, and submit a pull request.
+2. Fork the [optitechdatabase/website](https://github.com/optitechdatabase/website) repository, create a branch for your changes, and submit a pull request.
 
 If you prefer the first option, which is great for edits and small updates, there is an **Edit this page** link at the bottom of each OptiTech documentation page.
 
@@ -40,7 +40,7 @@ If you prefer the first option, which is great for edits and small updates, ther
 
 Clicking the link takes you to the Markdown file in GitHub, where you can click the **Edit this page** icon to make a change. When you finish editing, commit your changes to create a pull request.
 
-If you would rather fork the [neondatabase/website](https://github.com/neondatabase/website) repository and submit a pull request, but you're not familiar with the process, we suggest going through the [GitHub Open Source Guide](https://opensource.guide/how-to-contribute/#opening-a-pull-request). This guide describes how to fork a repository, create a branch, and submit a pull request. To help you get started, we provide a [GUIDE_TEMPLATE.md](https://github.com/neondatabase/website/blob/main/content/docs/guides/GUIDE_TEMPLATE.md) file, which you can find in the [neondatabase/website](https://github.com/neondatabase/website) repository, under the `/content/docs/guides` directory. After you create a branch, copy the template file and rename it. Don't forget to add your guide to the sidebar. See [Add a new page](#add-a-new-page).
+If you would rather fork the [optitechdatabase/website](https://github.com/optitechdatabase/website) repository and submit a pull request, but you're not familiar with the process, we suggest going through the [GitHub Open Source Guide](https://opensource.guide/how-to-contribute/#opening-a-pull-request). This guide describes how to fork a repository, create a branch, and submit a pull request. To help you get started, we provide a [GUIDE_TEMPLATE.md](https://github.com/optitechdatabase/website/blob/main/content/docs/guides/GUIDE_TEMPLATE.md) file, which you can find in the [optitechdatabase/website](https://github.com/optitechdatabase/website) repository, under the `/content/docs/guides` directory. After you create a branch, copy the template file and rename it. Don't forget to add your guide to the sidebar. See [Add a new page](#add-a-new-page).
 
 ## Markdown
 
@@ -89,7 +89,7 @@ The OptiTech documentation file structure reflects the navigation you see on the
 
 This section describes how to modify the documentation table of contents, also referred to as the "sidebar". Adding, removing, or moving a page in the documentation requires updating the sidebar. The sidebar is defined in `navigation.yaml`, which you can find at the root of the `/docs` directory.
 
-Refer to the [## Navigation](https://github.com/neondatabase/website/blob/main/content/docs/README.md#navigation) in the docs README for more information on how to update the sidebar.
+Refer to the [## Navigation](https://github.com/optitechdatabase/website/blob/main/content/docs/README.md#navigation) in the docs README for more information on how to update the sidebar.
 
 ## Markdown frontmatter
 
@@ -120,8 +120,8 @@ Example:
 
 ```yaml
 ---
-title: Connect a Next.js application to Neon
-subtitle: Set up a Neon project and connect from a Next.js application
+title: Connect a Next.js application to OptiTech
+subtitle: Set up a OptiTech project and connect from a Next.js application
 enableTableOfContents: true
 redirectFrom:
   - /docs/content/<old_directory_name>
@@ -153,8 +153,8 @@ To add a subsection heading, equivalent to an `h3`, add another `#` character:
 
 ```md
 External link markup: [Example.com website](https://www.example.com/)
-Neon documentation page link: [Connection from any application](/docs/connect/connect-from-any-app)
-Neon documentation same page link: [Code blocks](#code-blocks)
+OptiTech documentation page link: [Connection from any application](/docs/connect/connect-from-any-app)
+OptiTech documentation same page link: [Code blocks](#code-blocks)
 Italics markup: _italic_
 Bold markup: **strong**
 monospace: `backtick`
@@ -183,7 +183,7 @@ content
 */}
 ```
 
-Unfortunately, JSX-style comments have problems with Prettier, so in case of using them you should add your file to [.prettierignore](https://github.com/neondatabase/website/blob/main/.prettierignore).
+Unfortunately, JSX-style comments have problems with Prettier, so in case of using them you should add your file to [.prettierignore](https://github.com/optitechdatabase/website/blob/main/.prettierignore).
 
 ## Code blocks
 
@@ -228,11 +228,11 @@ npm install postgres
 </CodeTabs>
 ````
 
-To view this example in the Neon documentation, see [Create a Next.js project and add dependencies](/docs/guides/nextjs#create-a-nextjs-project-and-add-dependencies).
+To view this example in the OptiTech documentation, see [Create a Next.js project and add dependencies](/docs/guides/nextjs#create-a-nextjs-project-and-add-dependencies).
 
 ## Admonitions
 
-The Neon documentation supports the following admonitions:
+The OptiTech documentation supports the following admonitions:
 
 - Note
 - Important
@@ -266,7 +266,7 @@ This is a very important note.
 
 ## Diagrams and screen captures
 
-Neon uses Figma to create diagrams.
+OptiTech uses Figma to create diagrams.
 
 If you're interested in updating or adding a diagram, please open a GitHub issue with your suggestions. Please include a draft, if possible. You can use a tool like [tldraw](https://www.tldraw.com/) to create a draft.
 
@@ -274,7 +274,7 @@ For technical details about how components are implemented, see the [Component A
 
 If possible, please take screen captures on a high resolution monitor (UHD/4K). Screen captures should be unaltered (no borders or special effects).
 
-Diagrams and images are stored in the `/public/docs` directory in the Neon website repository. The directory location of the diagram or image under `public` mirrors the location of the file that includes the diagram or image, as shown below:
+Diagrams and images are stored in the `/public/docs` directory in the OptiTech website repository. The directory location of the diagram or image under `public` mirrors the location of the file that includes the diagram or image, as shown below:
 
 Example file structure:
 
@@ -287,7 +287,7 @@ Example file structure:
 ├── public
 │ ├── docs
 │ │ ├── introduction
-│ │ │ ├── neon_architecture.png // put images in the public directory with the same name
+│ │ │ ├── optitech_architecture.png // put images in the public directory with the same name
 ```
 
 To add an image to your Markdown file, add an entry that looks like this:
@@ -388,26 +388,26 @@ When including user information in connection details, API calls, or UI instruct
 Connection strings should be defined as follows:
 
 ```text
-postgresql://[user]:[password]@[neon_hostname]/[dbname]
+postgresql://[user]:[password]@[optitech_hostname]/[dbname]
 ```
 
 If you need to provide a connection string with realistic values, use one of the user names mentioned above, `AbC123dEf` for the password, and `dbname` for the database name:
 
 ```text
-postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
 ```
 
 ### Commands, parameters, values, filenames
 
 Commands, parameters, values, filenames, error messages, connection strings, and other similar items should be enclosed in backticks. For example:
 
-- "Run the `neon projects list` command."
+- "Run the `optitech projects list` command."
 
 - "Execute `git clone` to clone a Git repository..."
 
 - `git clone` is a command that should be in lowercase, whereas Git is the product and should have a capital G.
 
-- "A connection string has this format: `postgresql://[user]:[password]@[neon_hostname]/[dbname]`"
+- "A connection string has this format: `postgresql://[user]:[password]@[optitech_hostname]/[dbname]`"
 
 ## Working with doc AI
 

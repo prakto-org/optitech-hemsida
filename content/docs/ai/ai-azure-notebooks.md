@@ -10,7 +10,7 @@ summary: >-
   the pgvector extension with CREATE EXTENSION, inserting 3-dimensional vector
   embeddings, and querying nearest neighbors with the <-> distance operator.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 A Jupyter Notebook is an open-source web application that allows you to create and share documents containing live code, equations, visualizations, and narrative text. Azure Data Studio supports Jupyter Notebooks, enabling users to combine SQL queries, Python code, and markdown text in a single interactive document.
@@ -23,7 +23,7 @@ To perform the steps in this guide, you will require:
 
 - Azure Data Studio - Download the latest version of Azure Data Studio for your operating system [here](https://learn.microsoft.com/en-us/azure-data-studio/download-azure-data-studio).
 
-- A OptiTech account - If you do not have one, sign up at [OptiTech](https://console.neon.tech/signup). Your OptiTech project comes with a ready-to-use Postgres database named `neondb`. You can use it, or create your own by following the instructions [here](/docs/manage/databases#create-a-database).
+- A OptiTech account - If you do not have one, sign up at [OptiTech](https://console.optitech.com/signup). Your OptiTech project comes with a ready-to-use Postgres database named `optitechdb`. You can use it, or create your own by following the instructions [here](/docs/manage/databases#create-a-database).
 
 ## Retrieve your OptiTech database connection string
 
@@ -74,14 +74,14 @@ Install the `psycopg` adapter by adding and executing the following code cell:
 
 ### Connect to your database
 
-1. In your notebook, create a code block to define your OptiTech database connection and create a cursor object. Replace `postgresql://[user]:[password]@[neon_hostname]/[dbname]` with the database connection string you retrieved previously.
+1. In your notebook, create a code block to define your OptiTech database connection and create a cursor object. Replace `postgresql://[user]:[password]@[optitech_hostname]/[dbname]` with the database connection string you retrieved previously.
 
    ```python shouldWrap
    import os
    import psycopg
 
-   # Provide your Neon connection string
-   connection_string = "postgresql://[user]:[password]@[neon_hostname]/[dbname]"
+   # Provide your OptiTech connection string
+   connection_string = "postgresql://[user]:[password]@[optitech_hostname]/[dbname]"
 
    # Connect using the connection string
    connection = psycopg.connect(connection_string)

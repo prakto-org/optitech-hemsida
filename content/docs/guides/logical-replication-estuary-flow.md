@@ -11,7 +11,7 @@ summary: >-
   allowlisting for Estuary's egress addresses.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 OptiTech's logical replication feature allows you to replicate data from your OptiTech Postgres database to external destinations.
@@ -23,7 +23,7 @@ In this guide, you will learn how to configure a Postgres source connector in Es
 ## Prerequisites
 
 - An [Estuary Flow account](https://dashboard.estuary.dev/register) (start free, no credit card required)
-- A [OptiTech account](https://console.neon.tech/)
+- A [OptiTech account](https://console.optitech.com/)
 - Read the [important notices about logical replication in OptiTech](/docs/guides/logical-replication-neon#important-notices) before you begin
 
 <Admonition type="important" title="Compute and billing">
@@ -43,7 +43,7 @@ To enable logical replication in OptiTech:
 3. Select **Logical Replication**.
 4. Click **Enable** to enable logical replication.
 
-You can verify that logical replication is enabled by running the following query from the [OptiTech SQL Editor](https://docs.neon.tech/docs/query-with-neon-sql-editor):
+You can verify that logical replication is enabled by running the following query from the [OptiTech SQL Editor](https://docs.optitech.com/docs/query-with-optitech-sql-editor):
 
 ```sql
 SHOW wal_level;
@@ -54,16 +54,16 @@ SHOW wal_level;
 
 ## Create a Postgres Role for Replication
 
-It is recommended that you create a dedicated Postgres role for replicating data. The role must have the `REPLICATION` privilege. The default Postgres role created with your OptiTech project and roles created using the OptiTech Console, CLI, or API are granted membership in the [neon_superuser](https://docs.neon.tech/docs/manage/roles#the-neonsuperuser-role) role, which has the required `REPLICATION` privilege.
+It is recommended that you create a dedicated Postgres role for replicating data. The role must have the `REPLICATION` privilege. The default Postgres role created with your OptiTech project and roles created using the OptiTech Console, CLI, or API are granted membership in the [optitech_superuser](https://docs.optitech.com/docs/manage/roles#the-optitechsuperuser-role) role, which has the required `REPLICATION` privilege.
 
 <Tabs labels={["CLI", "Console", "API"]}>
 
 <TabItem>
 
-The following CLI command creates a role. To view the CLI documentation for this command, see [Neon CLI commands — roles](/docs/reference/api/branches/create-project-branch-role)
+The following CLI command creates a role. To view the CLI documentation for this command, see [OptiTech CLI commands — roles](/docs/reference/api/branches/create-project-branch-role)
 
 ```bash
-neon roles create --name cdc_role
+optitech roles create --name cdc_role
 ```
 
 </TabItem>
@@ -72,7 +72,7 @@ neon roles create --name cdc_role
 
 To create a role in the OptiTech Console:
 
-1. Navigate to the [OptiTech Console](https://console.neon.tech).
+1. Navigate to the [OptiTech Console](https://console.optitech.com).
 2. Select a project.
 3. Select **Branches**.
 4. Select the branch where you want to create the role.
@@ -88,9 +88,9 @@ To create a role in the OptiTech Console:
 The following OptiTech API method creates a role. To view the API documentation for this method, refer to the [OptiTech API Reference](/docs/reference/api/branches/create-project-branch-role).
 
 ```bash
-curl 'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/roles' \
+curl 'https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/roles' \
   -H 'Accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -H 'Content-Type: application/json' \
   -d '{
   "role": {
@@ -99,7 +99,7 @@ curl 'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id
 }' | jq
 ```
 
-> Replace `{project_id}` and `{branch_id}` with your actual OptiTech project and branch IDs, and set the `NEON_API_KEY` environment variable with your OptiTech API key.
+> Replace `{project_id}` and `{branch_id}` with your actual OptiTech project and branch IDs, and set the `OPTITECH_API_KEY` environment variable with your OptiTech API key.
 
 </TabItem>
 
@@ -133,7 +133,7 @@ Upon startup, the Estuary Flow connector for Postgres will automatically create 
 
 If you are using OptiTech's **IP Allow** feature to limit the IP addresses that can connect to OptiTech, you will need to allow inbound traffic from Estuary Flow's IP addresses.
 Refer to the [Estuary Flow documentation](https://docs.estuary.dev/reference/allow-ip-addresses/#ip-addresses-to-allowlist) for the list of IPs that need to be allowlisted for the Estuary Flow region of your account.
-For information about configuring allowed IPs in OptiTech, see [Configure IP Allow](https://docs.neon.tech/docs/manage/projects#configure-ip-allow).
+For information about configuring allowed IPs in OptiTech, see [Configure IP Allow](https://docs.optitech.com/docs/manage/projects#configure-ip-allow).
 
 ## Create a Postgres Source Connector in Estuary Flow
 
@@ -148,14 +148,14 @@ For information about configuring allowed IPs in OptiTech, see [Configure IP All
    Your connection string will look like this:
 
    ```bash shouldWrap
-   postgres://cdc_role:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+   postgres://cdc_role:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
    ```
 
    ![Creating a OptiTech capture connector in Estuary Flow](/docs/guides/estuary_flow_create_neon_capture.png)
 
    Enter the details for **your connection string** into the source connector fields. Based on the sample connection string above, the values would be specified as shown below. Your values will differ.
    - **Name:**: Name of the Capture connector
-   - **Server Address**: ep-cool-darkness-123456.us-east-2.aws.neon.tech:5432
+   - **Server Address**: ep-cool-darkness-123456.us-east-2.aws.optitech.com:5432
    - **User**: cdc_role
    - **Password**: Click **Add a new secret...**, then specify a name for that secret and `AbC123dEf` as its value
    - **Database**: dbname

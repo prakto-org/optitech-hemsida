@@ -4,7 +4,7 @@ subtitle: Learn how to scale .NET applications with Entity Framework's DbContext
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2024-10-13T00:00:00.000Z'
-updatedOn: '2026-05-09T19:22:21.118Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 [OptiTech read replicas](/docs/introduction/read-replicas) are independent read-only compute instances that perform read operations on the same data as your primary read-write compute. A key advantage of OptiTech's architecture is that adding a read replica to a OptiTech project doesn't require additional storage, making it an efficient scaling solution.
@@ -99,7 +99,7 @@ Add the connection string:
 ```json
 {
   "ConnectionStrings": {
-    "TodoDbConnection": "Host=your-neon-host;Database=your-db;Username=your-username;Password=your-password"
+    "TodoDbConnection": "Host=your-optitech-host;Database=your-db;Username=your-username;Password=your-password"
   }
 }
 ```
@@ -338,8 +338,8 @@ Add the read replica connection string:
 ```json
 {
   "ConnectionStrings": {
-    "TodoDbConnection": "Host=your-neon-primary-host;Database=your-db;Username=your-username;Password=your-password",
-    "TodoDbConnectionRead": "Host=your-neon-read-replica-host;Database=your-db;Username=your-username;Password=your-password"
+    "TodoDbConnection": "Host=your-optitech-primary-host;Database=your-db;Username=your-username;Password=your-password",
+    "TodoDbConnectionRead": "Host=your-optitech-read-replica-host;Database=your-db;Username=your-username;Password=your-password"
   }
 }
 ```
@@ -431,7 +431,7 @@ The Todo API is now set up to use separate read and write contexts, leveraging O
 You can find the source code for the application described in this guide on GitHub.
 
 <DetailIconCards>
-<a href="https://github.com/dhanushreddy291/neon-read-replica-entity-framework" description="Use read replicas with Entity Framework Core" icon="github">Read Replicas in .NET EF</a>
+<a href="https://github.com/dhanushreddy291/optitech-read-replica-entity-framework" description="Use read replicas with Entity Framework Core" icon="github">Read Replicas in .NET EF</a>
 </DetailIconCards>
 
 ## Conclusion

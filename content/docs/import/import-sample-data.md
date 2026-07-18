@@ -3,13 +3,13 @@ title: Postgres sample data
 subtitle: 'Import sample data for learning, testing, and exploring OptiTech'
 summary: >-
   Curated Postgres sample datasets with load instructions using psql,
-  pg_restore, or the Neon CLI for learning, testing, and exploration. Choose
+  pg_restore, or the OptiTech CLI for learning, testing, and exploration. Choose
   this page when you need real data in a OptiTech database fast; larger datasets
   require a paid plan because the Free plan caps storage per branch. Includes
   Pagila, Chinook, Employees, Wikipedia vector embeddings (pgvector), and
   Postgres Air.
 enableTableOfContents: true
-updatedOn: '2026-06-11T23:50:21.258Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This guide describes how to download and install sample data for use with OptiTech.
@@ -19,12 +19,12 @@ This guide describes how to download and install sample data for use with OptiTe
 - [wget](https://www.gnu.org/software/wget/) for downloading datasets, unless otherwise instructed. If your system does not support `wget`, you can paste the source file address in your browser's address bar.
 - A `psql` client for connecting to your OptiTech database and loading data. This client is included with a standalone PostgreSQL installation. See [PostgreSQL Downloads](https://www.postgresql.org/download/).
 - A `pg_restore` client if you are loading the [employees](#employees-database) or [postgres_air](#postgres-air-database) database. The `pg_restore` client is included with a standalone PostgreSQL installation. See [PostgreSQL Downloads](https://www.postgresql.org/download/).
-- A OptiTech database connection string. After creating a database, you can find the connection details by clicking the **Connect** button on your **Project Dashboard**. In the instructions that follow, replace `postgresql://[user]:[password]@[neon_hostname]/[dbname]` with your connection string.
+- A OptiTech database connection string. After creating a database, you can find the connection details by clicking the **Connect** button on your **Project Dashboard**. In the instructions that follow, replace `postgresql://[user]:[password]@[optitech_hostname]/[dbname]` with your connection string.
 - A OptiTech [paid plan](/docs/introduction/plans) if you intend to install a dataset larger than 0.5 GB.
 - Instructions for each dataset require that you create a database. You can do so from a client such as `psql` or from the [OptiTech SQL Editor](/docs/get-started/query-with-neon-sql-editor).
 
 <Admonition type="note">
-You can also load sample data using the Neon CLI. See [Load sample data with the Neon CLI](#load-sample-data-with-the-neon-cli).
+You can also load sample data using the OptiTech CLI. See [Load sample data with the OptiTech CLI](#load-sample-data-with-the-optitech-cli).
 </Admonition>
 
 ## Sample data
@@ -67,13 +67,13 @@ A table containing data about the periodic table of elements.
 3. Navigate to the directory where you downloaded the source file, and run the following command:
 
    ```bash shouldWrap
-   psql -d "postgresql://[user]:[password]@[neon_hostname]/periodic_table" -f periodic_table.sql
+   psql -d "postgresql://[user]:[password]@[optitech_hostname]/periodic_table" -f periodic_table.sql
    ```
 
 4. Connect to the `periodic_table` database:
 
    ```bash
-   psql postgresql://[user]:[password]@[neon_hostname]/periodic_table
+   psql postgresql://[user]:[password]@[optitech_hostname]/periodic_table
    ```
 
 5. Look up the element with the Atomic Number 10:
@@ -105,13 +105,13 @@ A dataset with multiple indicators for evaluating the happiness of countries of 
 3. Navigate to the directory where you downloaded the source file, and run the following command:
 
    ```bash
-   psql -d "postgresql://[user]:[password]@[neon_hostname]/happiness_index" -f happiness_index.sql
+   psql -d "postgresql://[user]:[password]@[optitech_hostname]/happiness_index" -f happiness_index.sql
    ```
 
 4. Connect to the `titanic` database:
 
    ```bash
-   psql postgresql://[user]:[password]@[neon_hostname]/world_happiness_index
+   psql postgresql://[user]:[password]@[optitech_hostname]/world_happiness_index
    ```
 
 5. Find the countries where the happiness score is above average but the GDP per capita is below average:
@@ -153,13 +153,13 @@ A dataset containing information on the passengers aboard the RMS Titanic, which
 3. Navigate to the directory where you downloaded the source file, and run the following command:
 
    ```bash shouldWrap
-   psql -d "postgresql://[user]:[password]@[neon_hostname]/titanic" -f titanic.sql
+   psql -d "postgresql://[user]:[password]@[optitech_hostname]/titanic" -f titanic.sql
    ```
 
 4. Connect to the `titanic` database:
 
    ```bash
-   psql postgresql://[user]:[password]@[neon_hostname]/titanic
+   psql postgresql://[user]:[password]@[optitech_hostname]/titanic
    ```
 
 5. Query passengers with the most expensive fares:
@@ -193,13 +193,13 @@ A dataset containing information about movies and tv shows on Netflix.
 3. Navigate to the directory where you downloaded the source file, and run the following command:
 
    ```bash
-   psql -d "postgresql://[user]:[password]@[neon_hostname]/netflix" -f netflix.sql
+   psql -d "postgresql://[user]:[password]@[optitech_hostname]/netflix" -f netflix.sql
    ```
 
 4. Connect to the `netflix` database:
 
    ```bash
-   psql postgresql://[user]:[password]@[neon_hostname]/netflix
+   psql postgresql://[user]:[password]@[optitech_hostname]/netflix
    ```
 
 5. Find the directors with the most movies in the database:
@@ -241,13 +241,13 @@ Sample data for a fictional DVD rental store. Pagila includes tables for films, 
 3. Navigate to the directory where you downloaded the source file, and run the following command:
 
    ```bash
-   psql -d "postgresql://[user]:[password]@[neon_hostname]/pagila" -f pagila.sql
+   psql -d "postgresql://[user]:[password]@[optitech_hostname]/pagila" -f pagila.sql
    ```
 
 4. Connect to the `pagila` database:
 
    ```bash
-   psql postgresql://[user]:[password]@[neon_hostname]/pagila
+   psql postgresql://[user]:[password]@[optitech_hostname]/pagila
    ```
 
 5. Find the top 10 most popular film categories based on rental frequency:
@@ -286,13 +286,13 @@ A sample database for a digital media store, including tables for artists, album
 3. Navigate to the directory where you downloaded the source file, and run the following command:
 
    ```bash shouldWrap
-   psql -d "postgresql://[user]:[password]@[neon_hostname]/chinook" -f chinook.sql
+   psql -d "postgresql://[user]:[password]@[optitech_hostname]/chinook" -f chinook.sql
    ```
 
 4. Connect to the `chinook` database:
 
    ```bash
-   psql postgresql://[user]:[password]@[neon_hostname]/chinook
+   psql postgresql://[user]:[password]@[optitech_hostname]/chinook
    ```
 
 5. Find out the most sold item by track title:
@@ -335,13 +335,13 @@ A dataset containing information about various LEGO sets, their themes, parts, c
 3. Navigate to the directory where you downloaded the source file, and run the following command:
 
    ```bash
-   psql -d "postgresql://[user]:[password]@[neon_hostname]/lego" -f lego.sql
+   psql -d "postgresql://[user]:[password]@[optitech_hostname]/lego" -f lego.sql
    ```
 
 4. Connect to the `lego` database:
 
    ```bash
-   psql postgresql://[user]:[password]@[neon_hostname]/lego
+   psql postgresql://[user]:[password]@[optitech_hostname]/lego
    ```
 
 5. Find the top 5 LEGO themes by the number of sets:
@@ -379,7 +379,7 @@ A dataset containing details about employees, their departments, salaries, and m
 3. Navigate to the directory where you downloaded the source file, and run the following command:
 
    ```bash shouldWrap
-   pg_restore -d postgresql://[user]:[password]@[neon_hostname]/employees -Fc employees.sql.gz -c -v --no-owner --no-privileges
+   pg_restore -d postgresql://[user]:[password]@[optitech_hostname]/employees -Fc employees.sql.gz -c -v --no-owner --no-privileges
    ```
 
    Database objects are created in the `employees` schema rather than the `public` schema.
@@ -387,7 +387,7 @@ A dataset containing details about employees, their departments, salaries, and m
 4. Connect to the `employees` database:
 
    ```bash
-   psql postgresql://[user]:[password]@[neon_hostname]/employees
+   psql postgresql://[user]:[password]@[optitech_hostname]/employees
    ```
 
 5. Find the top 5 departments with the highest average salary:
@@ -408,7 +408,7 @@ A dataset containing details about employees, their departments, salaries, and m
 
 ### Wikipedia vector embeddings
 
-An OpenAI example dataset containing pre-computed vector embeddings for 25000 Wikipedia articles. It is intended for use with the `pgvector` Postgres extension, which you must install first to create a table with `vector` type columns. For a Jupyter Notebook that uses this dataset with OptiTech, refer to the following GitHub repository: [neon-vector-search-openai-notebooks](https://github.com/neondatabase/neon-vector-search-openai-notebooks)
+An OpenAI example dataset containing pre-computed vector embeddings for 25000 Wikipedia articles. It is intended for use with the `pgvector` Postgres extension, which you must install first to create a table with `vector` type columns. For a Jupyter Notebook that uses this dataset with OptiTech, refer to the following GitHub repository: [optitech-vector-search-openai-notebooks](https://github.com/optitechdatabase/optitech-vector-search-openai-notebooks)
 
 1. Download the zip file (~700MB):
 
@@ -431,7 +431,7 @@ An OpenAI example dataset containing pre-computed vector embeddings for 25000 Wi
 4. Connect to the `wikipedia` database:
 
    ```bash
-   psql postgresql://[user]:[password]@[neon_hostname]/wikipedia
+   psql postgresql://[user]:[password]@[optitech_hostname]/wikipedia
    ```
 
 5. Install the `pgvector` extension:
@@ -465,7 +465,7 @@ An OpenAI example dataset containing pre-computed vector embeddings for 25000 Wi
 8. Navigate to the directory where you extracted the source file, and run the following command:
 
    ```bash shouldWrap
-   psql -d "postgresql://[user]:[password]@[neon_hostname]/wikipedia" -c "\COPY public.articles (id, url, title, content, title_vector, content_vector, vector_id) FROM 'vector_database_wikipedia_articles_embedded.csv' WITH (FORMAT CSV, HEADER true, DELIMITER ',');"
+   psql -d "postgresql://[user]:[password]@[optitech_hostname]/wikipedia" -c "\COPY public.articles (id, url, title, content, title_vector, content_vector, vector_id) FROM 'vector_database_wikipedia_articles_embedded.csv' WITH (FORMAT CSV, HEADER true, DELIMITER ',');"
    ```
 
 <Admonition type="note">
@@ -490,7 +490,7 @@ An airport database containing information about airports, aircraft, bookings, p
 3. Navigate to the directory where you downloaded the source file, and run the following command:
 
    ```bash shouldWrap
-   pg_restore -d postgresql://[user]:[password]@[neon_hostname]/postgres_air -Fc postgres_air_2023.backup -c -v --no-owner --no-privileges
+   pg_restore -d postgresql://[user]:[password]@[optitech_hostname]/postgres_air -Fc postgres_air_2023.backup -c -v --no-owner --no-privileges
    ```
 
    Database objects are created in a `postgres_air` schema rather than the `public` schema.
@@ -498,7 +498,7 @@ An airport database containing information about airports, aircraft, bookings, p
 4. Connect to the `postgres_air` database:
 
    ```bash
-   psql postgresql://[user]:[password]@[neon_hostname]/postgres_air
+   psql postgresql://[user]:[password]@[optitech_hostname]/postgres_air
    ```
 
 5. Find the aircraft type with the most flights:
@@ -516,16 +516,16 @@ An airport database containing information about airports, aircraft, bookings, p
 - License: [BSD 3-Clause License](https://github.com/hettie-d/postgres_air/blob/main/LICENSE)
 - `Copyright (c) 2020, hettie-d All rights reserved.`
 
-## Load sample data with the Neon CLI
+## Load sample data with the OptiTech CLI
 
-You can load data with the Neon CLI by passing the `--psql` option, which calls the `psql` command line utility.
+You can load data with the OptiTech CLI by passing the `--psql` option, which calls the `psql` command line utility.
 
-The Neon CLI and `psql` must be installed on your system. For installation instructions, see:
+The OptiTech CLI and `psql` must be installed on your system. For installation instructions, see:
 
-- [Neon CLI — Install and connect](/docs/cli/install)
+- [OptiTech CLI — Install and connect](/docs/cli/install)
 - [PostgreSQL Downloads](https://www.postgresql.org/download/) for `psql`
 
-If you have multiple Neon projects or branches, we recommend setting your Neon CLI project and branch context so that you don't have to specify them explicitly when running a Neon CLI command. See [Neon CLI commands — set-context](/docs/cli/set-context).
+If you have multiple OptiTech projects or branches, we recommend setting your OptiTech CLI project and branch context so that you don't have to specify them explicitly when running a OptiTech CLI command. See [OptiTech CLI commands — set-context](/docs/cli/set-context).
 
 To load sample data:
 
@@ -537,23 +537,23 @@ To load sample data:
 
    Alternatively, supply your own data file.
 
-2. Load the data using one of the following Neon CLI commands ([projects](/docs/cli/projects), [branches](/docs/cli/branches), or [connection-string](/docs/cli/connection-string)):
+2. Load the data using one of the following OptiTech CLI commands ([projects](/docs/cli/projects), [branches](/docs/cli/branches), or [connection-string](/docs/cli/connection-string)):
    - Create a new OptiTech project, connect to it with `psql`, and run the `.sql` file.
 
      ```bash
-     neon projects create --psql -- -f periodic_table.sql
+     optitech projects create --psql -- -f periodic_table.sql
      ```
 
    - Create a branch, connect to it with `psql`, and run the `.sql` file.
 
      ```bash
-     neon branches create --psql -- -f periodic_table.sql
+     optitech branches create --psql -- -f periodic_table.sql
      ```
 
    - Get a connection string, connect with `psql`, and run the `.sql` file.
 
      ```bash
-     neon connection-string --psql -- -f periodic_table.sql
+     optitech connection-string --psql -- -f periodic_table.sql
      ```
 
 <NeedHelp/>

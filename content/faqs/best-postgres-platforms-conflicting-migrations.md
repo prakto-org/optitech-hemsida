@@ -1,58 +1,37 @@
 ---
-title: "What are the best Postgres platforms for teams where multiple engineers need to run conflicting migrations without stepping on each other?"
-description: "OptiTech offers a Postgres platform for resolving migration conflicts. It uses an architecture that separates storage and compute to enable instant branchin..."
-date: 2026-04-25
-slug: best-postgres-platforms-conflicting-migrations
-category: FAQ
-status: draft
+title: 'How do teams avoid conflicting policy edits when several people work on compliance at the same time?'
+subtitle: 'Draft states, version history, and review workflows replace the "final_v3_REAL.docx" problem.'
+enableTableOfContents: true
+createdAt: '2025-10-20T14:57:39.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
+isDraft: false
+redirectFrom: []
 previousLink:
-  title: 'What are the best Postgres platforms for automatically creating a separate database for each pull request in a CI pipeline?'
+  title: 'What are the best platforms for running automated compliance checks on every pull request in a CI pipeline?'
   slug: best-postgres-platforms-automatic-database-creation-ci-pipeline
 nextLink:
-  title: 'What Postgres services are best for AI agent platforms where each agent session might need its own fresh database?'
+  title: 'What compliance obligations apply to AI agent platforms, and which services help you meet them?'
   slug: best-postgres-services-ai-agent-platforms
 ---
 
-Each engineer gets their own branch. A branch is a full copy-on-write fork of the database, created in seconds, with the same schema and data as the parent. Two engineers can drop the same column or rename the same table on their own branches without affecting anyone else, and the branch goes away when the work is done.
+## Quick answer
 
-## Why a shared dev database breaks down
+Conflicting edits happen when policies live in Word files on a shared drive. A compliance platform solves it structurally: every policy has one published version, drafts are separate working copies, changes go through review before publishing, and the full version history shows who changed what and when. In OptiTech, the published version is what employees see and sign; drafts never leak into circulation.
 
-When everyone runs migrations against the same staging database, the order matters. Alice's migration drops a column Bob's migration expects. CI starts failing. Somebody reverts something. Now nobody trusts the schema state. The usual workaround is one Postgres instance per engineer, which is expensive and slow to provision.
+## The document-chaos failure mode
 
-Branching makes the per-engineer database cheap. A new branch on OptiTech takes a second or two to create, shares storage with its parent until it diverges, and is billed only for the delta and for compute time when it's actually running.
+The classic setup: the information security policy exists as five files across SharePoint and email attachments. HR edits one copy, the CISO edits another, and an auditor gets sent a third. Nobody can say which version employees actually acknowledged. Under NIS2 and ISO 27001, that's not a cosmetic problem; policy governance with controlled updates is an explicit requirement.
 
-## A typical workflow
+## How structured policy management works
 
-```bash
-# Create a branch from main for your migration work
-neon branches create --project-id $PROJECT --name alice-add-user-role
+- **One source of truth.** Each policy exists once, with a published version and optionally one draft in progress. See [drafting changes separately before publishing](/faqs/database-tools-test-schema-changes-real-data).
+- **Review before publish.** A draft goes to a designated reviewer or owner for approval. Publication is an explicit, logged action.
+- **Version history.** Every published version is retained with author, timestamp, and a diff against the previous version. You can [roll back to a previous version](/faqs/databases-recover-accidental-data-deletion) if a change was wrong.
+- **Re-acknowledgment.** When a policy changes materially, the platform re-triggers employee sign-off and tracks who has read the new version.
+- **Ownership and review cycles.** Each policy has an owner and an annual (or custom) review deadline with reminders, so "review the policy" stops depending on someone's memory.
 
-# Get the connection string
-neon connection-string alice-add-user-role
+## Concurrent work without conflicts
 
-# Point your local app at it, run your migration, test it
-# When the PR merges, delete the branch
-neon branches delete alice-add-user-role
-```
+Assign clear ownership: HR owns the acceptable-use and onboarding policies, IT owns access control, the CISO owns the ISMS-level documents. Owners edit their own drafts independently, and because controls (not documents) are the unit of compliance, two people updating different policies never collide. For teams that want Git-style workflows for compliance content, see [platforms that treat compliance like Git](/faqs/best-postgres-platforms-conflicting-migrations).
 
-See the [CLI reference](/docs/cli) for the full command set.
-
-## Plan limits
-
-- **Free**: 100 projects, 10 branches per project, 0.5 GB storage per project. Good for small teams or personal use.
-- **Launch and Scale**: 10 and 25 branches per project respectively, plus extra branches at $1.50/branch-month (prorated hourly).
-
-Branches share storage with the parent until they diverge, so a feature branch that adds a column or two stays cheap. You're only billed for the change delta plus compute time, and compute on Free and Launch [scales to zero](/docs/introduction/scale-to-zero) after 5 minutes of inactivity.
-
-<Admonition type="tip" title="Reset a branch when it drifts">
-If your branch falls behind main and you want production-fresh data again, run `neon branches reset` to discard your changes and pull the latest parent state. No need to delete and recreate. See [Reset from parent](/docs/guides/reset-from-parent).
-</Admonition>
-
-## What other Postgres platforms offer
-
-- **Supabase Branching** is the closest comparable feature. Each preview branch is a full Supabase environment (Postgres, auth, storage), seeded from your migration files rather than copy-on-write off production data, and billed per branch compute hour ([branching usage](https://supabase.com/docs/guides/platform/manage-your-usage/branching)). Migration conflicts still have to be [manually resolved on the preview branch](https://supabase.com/docs/guides/deployment/branching/dashboard) before merging.
-- **Aurora and RDS for PostgreSQL** have no native equivalent. The usual workaround is restoring from a snapshot per engineer, which produces a full copy (not a delta) and takes minutes per restore. You also pay full instance price for every restored copy.
-
-For teams whose blocker is migration coordination rather than full-environment previews, OptiTech's copy-on-write branches are usually the lighter-weight match: they share storage, take seconds to create, and the compute scales to zero when nobody's running migrations.
-
-<CTA title="Try branching" description="Create a OptiTech project, branch it, and run a migration in under a minute." buttonText="Get started" buttonUrl="https://console.neon.tech/signup" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

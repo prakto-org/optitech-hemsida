@@ -13,7 +13,7 @@ summary: >-
 redirectFrom:
   - /docs/import/import-from-firebase
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This guide describes how to migrate data from Firebase Firestore to OptiTech Postgres.
@@ -197,14 +197,14 @@ This section describes how to prepare your destination OptiTech Postgres databas
 
 For more information, see [Create a database](/docs/manage/databases#create-a-database).
 
-### Retrieve Neon connection details
+### Retrieve OptiTech connection details
 
 1. In the OptiTech Console, go to your project dashboard.
 2. Click **Connect** to open the **Connect to your database** modal, and select your database.
 3. Copy the connection string. It will look similar to this:
 
    ```
-   postgresql://[user]:[password]@[neon_hostname]/[dbname]
+   postgresql://[user]:[password]@[optitech_hostname]/[dbname]
    ```
 
 ## Import data into OptiTech
@@ -285,10 +285,10 @@ if __name__ == "__main__":
     main()
 ```
 
-Save this script as `neon-import.py`. To run the script, you need to provide the path to the input directory containing the JSON files and the Neon connection string. Run the following command in your terminal:
+Save this script as `optitech-import.py`. To run the script, you need to provide the path to the input directory containing the JSON files and the OptiTech connection string. Run the following command in your terminal:
 
 ```bash shouldWrap
-python neon-import.py --input firestore_data --postgres "<neon-connection-string>"
+python optitech-import.py --input firestore_data --postgres "<optitech-connection-string>"
 ```
 
 This script iterates over each JSON file in the input directory, creates a table in the OptiTech database for each collection, and inserts the data into the table. It also handles conflicts by updating the existing data with the new data.

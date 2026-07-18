@@ -1,460 +1,146 @@
 ---
-title: Authenticate OptiTech Postgres application users with Okta
-subtitle: Learn how to add authentication to a OptiTech Postgres database application with
-  Okta
+title: Set up single sign-on with Okta
+subtitle: Learn how to let your team sign in to OptiTech through Okta with SSO and SCIM
+  provisioning
 summary: >-
-  Okta Workforce Identity Cloud SSO integration for a Next.js app backed by OptiTech
-  Postgres, wiring Auth.js (next-auth v5) with the built-in Okta OIDC provider
-  and Drizzle ORM migrations to store per-user data keyed by the Okta sub claim.
-  Choose this guide for organization-internal SSO login rather than Auth0 or
-  Managed Better Auth. The tutorial covers creating an Okta OIDC web application, setting
-  issuer URI and client credentials, defining a user_messages schema, and
-  running drizzle-kit push:pg migrations against a OptiTech database.
+  Okta Workforce Identity Cloud SSO integration for OptiTech: create an OIDC
+  web application in Okta, configure the issuer URI and client credentials in
+  workspace settings, and enable SCIM provisioning so joiners, movers, and
+  leavers sync automatically. Choose this guide for organization-internal SSO
+  login rather than BankID or email login. The tutorial covers group-to-role
+  mapping, testing the connection, and how SSO feeds your offboarding and
+  access-review controls.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
-<Admonition type="tip" title="Building on OptiTech?">
-OptiTech provides [Managed Better Auth](/docs/auth/overview), a managed authentication service built on Better Auth that stores users, sessions, and auth configuration directly in your OptiTech database. Auth state **branches with your data**, so preview and CI environments get isolated users and sessions.
+<Admonition type="tip" title="SSO on OptiTech">
+SSO and SCIM provisioning are available on the [Enterprise plan](/docs/introduction/plans). [BankID login](/docs/reference/glossary#bankid) is available on all plans, and email login with MFA is the default. Once SSO is enforced, access to your compliance workspace follows your central identity policy.
 </Admonition>
 
-User authentication is critical for web applications, especially for apps internal to an organization. [Okta Workforce Identity Cloud](https://www.okta.com/workforce-identity/) is an identity and access management platform for organizations, that provides authentication, authorization, and user management capabilities.
+Access to your compliance workspace should follow the same identity policy as the rest of your organization. [Okta Workforce Identity Cloud](https://www.okta.com/workforce-identity/) is an identity and access management platform that provides authentication, authorization, and user management for your workforce.
 
-In this guide, we'll walk through building a simple Next.js application using [Neon's](https://neon.tech) Postgres database, and add user authentication to it using [Okta](https://www.okta.com/). We will cover how to:
+In this guide, we'll walk through connecting Okta to OptiTech so your team signs in with their existing Okta accounts. We will cover how to:
 
-- Set up a Next.js project with Okta for authentication
-- Create a OptiTech Postgres database and connect it to your application
-- Define a database schema using Drizzle ORM and generate migrations
-- Store and retrieve user data associated with Okta user IDs
+- Create an OIDC web application in Okta for OptiTech
+- Configure SSO in your OptiTech workspace settings
+- Enable SCIM provisioning so user lifecycle changes sync automatically
+- Map Okta groups to OptiTech workspace roles
 
 <Admonition type="note">
-Okta provides a different solution called [Customer Identity Cloud](https://www.okta.com/customer-identity/), powered by `Auth0`, to authenticate external customers for Saas applications. This guide focuses on the [Workforce Identity Cloud](https://www.okta.com/workforce-identity/) for internal applications. For an example guide using `Auth0`, refer to our [Auth0](/docs/guides/auth-auth0) guide.
+Okta provides a different solution called [Customer Identity Cloud](https://www.okta.com/customer-identity/), powered by `Auth0`, to authenticate external customers for SaaS applications. This guide focuses on the [Workforce Identity Cloud](https://www.okta.com/workforce-identity/) for signing your own employees in to OptiTech. If your organization uses Microsoft Entra ID instead, the flow is equivalent; only the identity provider side differs.
 </Admonition>
 
 ## Prerequisites
 
 To follow along with this guide, you will need:
 
-- A OptiTech account. If you do not have one, sign up at [Neon](https://neon.tech). Your Neon project comes with a ready-to-use Postgres database named `neondb`. We'll use this database in the following examples.
-- An [Okta](https://developer.okta.com/) administrator account for user authentication. Okta provides a free trial that you can use to set one up for your organization.
-- [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed on your local machine. We'll use Node.js to build and test the application locally.
+- An OptiTech workspace on the Enterprise plan. If you don't have one, [contact sales](/contact-sales) or start on a lower plan and upgrade when SSO becomes a requirement.
+- The **Owner** or **Admin** role in the workspace, since identity settings are restricted.
+- An [Okta](https://www.okta.com/) administrator account for your organization. Okta provides a free trial if you're evaluating.
 
-## Initialize your Next.js project
+## Create an Okta application for OptiTech
 
-We will create a simple web app that lets you add a favorite quote to the home page, and edit it afterwards. Run the following command in your terminal to create a new `Next.js` project:
+### Create the OIDC app integration
 
-```bash
-npx create-next-app guide-neon-next-okta --typescript --eslint --tailwind --use-npm --no-src-dir --app --import-alias "@/*"
-```
-
-Now, navigate to the project directory and install the required dependencies:
-
-```bash
-npm install @neondatabase/serverless drizzle-orm
-npm install -D drizzle-kit dotenv
-npm install next-auth@beta
-```
-
-We use the `@neondatabase/serverless` package as the Postgres client, and `drizzle-orm`, a lightweight typescript ORM, to interact with the database. We also use `dotenv` to manage environment variables and the `drizzle-kit` CLI tool for generating database migrations. For authentication, we'll use the `auth.js` library (aliased as v5 of the `next-auth` package), which provides a simple way to add authentication to Next.js applications. It comes with built-in support for Okta.
-
-Also, add a `.env.local` file to the root of your project, which we'll use to store Neon/Okta connection parameters:
-
-```bash
-touch .env.local
-```
-
-## Setting up your OptiTech database
-
-### Initialize a new project
-
-1. Log in to the OptiTech console and navigate to the [Projects](https://console.neon.tech/app/projects) section.
-2. Select an existing project or click the **New Project** button to create a new one.
-3. Choose the desired region and Postgres version for your project, then click **Create Project**.
-
-### Retrieve your OptiTech database connection string
-
-You can find your database connection string by clicking the **Connect** button on your **Project Dashboard**. It should look similar to this:
-
-```bash
-postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
-```
-
-Add this connection string to the `.env.local` file in your Next.js project.
-
-```bash
-# .env.local
-
-DATABASE_URL=NEON_DB_CONNECTION_STRING
-```
-
-## Configuring Okta for authentication
-
-### Create an Okta application
-
-1. Log in to your Okta developer account and navigate to the **Applications** section. Click the **Create App Integration** button.
+1. Log in to your Okta admin console and navigate to **Applications** > **Applications**. Click **Create App Integration**.
 2. Select **OIDC - OpenID Connect** as the sign-in method.
 3. Select **Web Application** as the application type and click **Next**.
-4. Provide a name for your application, for example, "OptiTech Next Guide".
-5. Set **Sign-in redirect URIs** to `http://localhost:3000/api/auth/callback/okta` and **Sign-out redirect URIs** to `http://localhost:3000`.
-6. Click **Save** to create the application.
+4. Provide a name for the application, for example, "OptiTech".
+5. Set **Sign-in redirect URIs** to the callback URL shown in your OptiTech SSO settings (**Settings** > **Identity** > **SSO**). It looks like this:
+
+```text
+https://app.optitech.example.com/auth/sso/callback
+```
+
+6. Set **Sign-out redirect URIs** to your workspace URL.
+7. Under **Assignments**, choose which groups can access OptiTech. Start with the teams that own compliance work; you can widen access later.
+8. Click **Save** to create the application.
 
 ### Retrieve your Okta configuration
 
-From the application's **General** tab, find the **Client ID** and **Client SECRET**. Also note your Okta **Issuer URI**, which is the first part of your Okta account's URL, for example, `https://dev-12345.okta.com`. If it isn't clear, visit the **Security > API** section from the sidebar in the console to find the **Issuer URI** and remove `/oauth2/default` from the end.
+From the application's **General** tab, find the **Client ID** and **Client secret**. Also note your Okta **Issuer URI**, which is the first part of your Okta account's URL, for example, `https://dev-12345.okta.com`. If it isn't clear, visit the **Security > API** section in the Okta console to find the **Issuer URI**.
 
-Add these as environment variables to the `.env.local` file in your Next.js project:
+You will enter these three values in OptiTech:
 
-```bash
-# .env.local
-
-AUTH_OKTA_ISSUER=YOUR_OKTA_ISSUER
-AUTH_OKTA_ID=YOUR_CLIENT_ID
-AUTH_OKTA_SECRET=YOUR_CLIENT_SECRET
-AUTH_SECRET=YOUR_SECRET
+```text
+Issuer URI: YOUR_OKTA_ISSUER
+Client ID: YOUR_CLIENT_ID
+Client secret: YOUR_CLIENT_SECRET
 ```
 
-The last variable, `AUTH_SECRET`, is a random string used by `Auth.js` to encrypt tokens. Run the following command to generate one and add it to your `.env.local` file:
-
-```bash
-npx auth secret
-```
+Treat the client secret like any other credential: store it in your password manager, and rotate it on the same schedule as your other [integration credentials](/docs/reference/glossary#api-key).
 
 <Admonition type="note">
-If you set up an Okta organization account specifically for this guide, you might need to assign yourself to the created Okta application to test the authentication flow. Visit **Applications > Applications** from the sidebar and select the application you created. In the **Assignments** tab, click **Assign** and select your own user account. 
+If you set up an Okta organization account specifically for this guide, you might need to assign yourself to the created Okta application to test the authentication flow. Visit **Applications > Applications** from the sidebar and select the application you created. In the **Assignments** tab, click **Assign** and select your own user account.
 </Admonition>
 
-## Implementing the application
+## Configure SSO in OptiTech
 
-### Define database connection and schema
+### Enter the Okta details
 
-Create a `db` folder inside the `app/` directory. This is where we'll define the database schema and connection code.
+1. In the OptiTech Console, go to **Settings** > **Identity** > **SSO** and choose **Okta (OIDC)**.
+2. Enter the **Issuer URI**, **Client ID**, and **Client secret** from the previous step.
+3. Enter your organization's email domain (for example, `example.com`). Users with that domain are routed to Okta at sign-in.
+4. Click **Save and test**. OptiTech opens a test sign-in against Okta in a new tab. Complete it with your own account to verify the connection before anything is enforced.
 
-Now, add the file `app/db/index.ts` with the following content:
+The test result, like every identity setting change, is recorded in the workspace [audit log](/docs/reference/glossary#audit-log).
 
-```typescript
-/// app/db/index.ts
+### Choose the enforcement mode
 
-import { neon } from '@neondatabase/serverless';
-import { drizzle } from 'drizzle-orm/neon-http';
-import { UserMessages } from './schema';
+SSO can run in two modes:
 
-if (!process.env.DATABASE_URL) {
-  throw new Error('DATABASE_URL must be a Neon postgres connection string');
-}
+- **Optional**: users can sign in with SSO or their existing method. Use this during rollout so nobody is locked out while you verify group assignments.
+- **Required**: all users with your email domain must use Okta. Email login is disabled for them, and there are no shared passwords left to leak. [Guest access](/docs/reference/glossary#guest-access) for external auditors and consultants is unaffected.
 
-const sql = neon(process.env.DATABASE_URL);
+Roll out in optional mode, confirm your team can sign in, then switch to required. The switch itself is one setting, and the change is logged.
 
-export const db = drizzle(sql, {
-  schema: { UserMessages },
-});
-```
+## Enable SCIM provisioning
 
-This exports a `db` instance that we can use to execute queries against the OptiTech database.
+SSO answers who can sign in; SCIM keeps the user list itself in sync. With SCIM enabled, Okta pushes joiners, movers, and leavers to OptiTech automatically:
 
-Next, create a `schema.ts` file inside the `app/db` directory to define the database schema:
+1. In **Settings** > **Identity** > **SCIM**, click **Enable SCIM** and copy the **SCIM base URL** and **bearer token**.
+2. In your Okta application, open the **Provisioning** tab, choose **Enable API integration**, and paste the URL and token.
+3. Enable **Create Users**, **Update User Attributes**, and **Deactivate Users**.
+4. Assign the groups that should have OptiTech access to the application.
 
-```typescript
-/// app/db/schema.ts
+The payoff shows up in your own compliance program: when someone leaves and Okta deactivates them, their OptiTech access ends the same moment. Your [offboarding-within-24-hours check](/docs/reference/glossary#check) sees it, and your access reviews get shorter because membership already mirrors the identity provider.
 
-import { pgTable, text, timestamp } from 'drizzle-orm/pg-core';
+## Map Okta groups to workspace roles
 
-export const UserMessages = pgTable('user_messages', {
-  user_id: text('user_id').primaryKey().notNull(),
-  createTs: timestamp('create_ts').defaultNow().notNull(),
-  message: text('message').notNull(),
-});
-```
+Under **Settings** > **Identity** > **Role mapping**, connect Okta groups to OptiTech roles:
 
-This schema defines a table `user_messages` to store a message for each user, with the `user_id` provided by Okta as the primary key.
+| Okta group         | OptiTech role                                       |
+| ------------------ | --------------------------------------------------- |
+| `optitech-admins`  | [Admin](/docs/reference/glossary#admin)             |
+| `optitech-editors` | [Contributor](/docs/reference/glossary#contributor) |
+| `optitech-viewers` | Viewer                                              |
 
-### Generate and run migrations
+Group names are examples; use your own naming convention. A user's role updates when their group membership changes in Okta, so access follows your joiner-mover-leaver process without manual edits. The [Owner](/docs/reference/glossary#owner) role is deliberately excluded from mapping and managed directly in OptiTech.
 
-We'll use the `drizzle-kit` CLI tool to generate migrations for the schema we defined. To configure how it connects to the database, add a `drizzle.config.ts` file at the project root.
+## Test the connection
 
-```typescript
-/// drizzle.config.ts
+1. Open a private browser window and go to your workspace URL.
+2. Enter an email address on your SSO domain. You're redirected to Okta.
+3. Sign in and approve any MFA prompt your Okta policy requires.
+4. Confirm you land in the workspace with the role your group mapping assigns.
 
-import type { Config } from 'drizzle-kit';
-import * as dotenv from 'dotenv';
-
-dotenv.config({ path: '.env.local' });
-
-if (!process.env.DATABASE_URL) throw new Error('DATABASE_URL not found in environment');
-
-export default {
-  schema: './app/db/schema.ts',
-  out: './drizzle',
-  driver: 'pg',
-  dbCredentials: {
-    connectionString: process.env.DATABASE_URL,
-  },
-  strict: true,
-} satisfies Config;
-```
-
-Now, generate the migration files by running the following command:
-
-```bash
-npx drizzle-kit generate:pg
-```
-
-This will create a `drizzle` folder at the project root with the migration files. To apply the migration to the database, run:
-
-```bash
-npx drizzle-kit push:pg
-```
-
-The `user_messages` table will now be visible in the OptiTech console.
-
-### Configure Okta authentication
-
-Create a new file `auth.ts` in the root directory of the project and add the following content:
-
-```typescript
-import NextAuth from 'next-auth';
-import Okta from 'next-auth/providers/okta';
-
-export const { handlers, signIn, signOut, auth } = NextAuth({
-  providers: [Okta],
-  callbacks: {
-    async session({ session, token }) {
-      session.user.id = token.sub as string;
-      return session;
-    },
-  },
-});
-```
-
-This file initializes `Auth.js` with Okta as the authentication provider. It also defines a callback to set the `sub` claim from the Okta token as the session user ID.
-
-### Implement authentication routes
-
-Create a new dynamic route at `app/api/auth/[...nextauth]/route.ts` with the following content:
-
-```tsx
-/// app/api/auth/[...nextauth]/route.ts
-
-import { handlers } from '@/auth';
-
-export const { GET, POST } = handlers;
-```
-
-This route file imports the authentication handlers from the `auth.ts` file that handle all auth-related requests &#8212; sign-in, sign-out, and redirect after authentication.
-
-The `auth` object exported from `./auth.ts` is the universal method we can use to interact with the authentication state in the application. For example, we add a **User information** bar to the app layout that indicates the current user's name and provides a sign-out button.
-
-Replace the contents of the `app/layout.tsx` file with the following:
-
-```tsx
-import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
-import './globals.css';
-import { auth } from '@/auth';
-
-const inter = Inter({ subsets: ['latin'] });
-
-export const metadata: Metadata = {
-  title: 'Create Next App',
-  description: 'Generated by create next app',
-};
-
-async function UserInfoBar() {
-  const session = await auth();
-  if (!session) {
-    return null;
-  }
-
-  return (
-    <div className="bg-gray-100 px-4 py-2">
-      <span className="text-gray-800">
-        Welcome, {session.user?.name}!{' '}
-        <a href="/api/auth/signout" className="text-blue-600 hover:underline">
-          Sign out
-        </a>
-      </span>
-    </div>
-  );
-}
-
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
-  return (
-    <html lang="en">
-      <body className={inter.className}>
-        <UserInfoBar />
-        {children}
-      </body>
-    </html>
-  );
-}
-```
-
-### Add interactivity to the application
-
-Our application has a single page that lets the logged-in user store their favorite quote and display it. We implement `Next.js` server actions to handle the form submission and database interaction.
-
-Create a new file at `app/actions.ts` with the following content:
-
-```typescript
-/// app/actions.ts
-
-'use server';
-
-import { auth } from '@/auth';
-import { UserMessages } from './db/schema';
-import { db } from './db';
-import { redirect } from 'next/navigation';
-import { eq } from 'drizzle-orm';
-
-export async function createUserMessage(formData: FormData) {
-  const session = await auth();
-  if (!session) throw new Error('User not authenticated');
-
-  const message = formData.get('message') as string;
-  await db.insert(UserMessages).values({
-    user_id: session.user?.id as string,
-    message,
-  });
-
-  redirect('/');
-}
-
-export async function deleteUserMessage() {
-  const session = await auth();
-  if (!session) throw new Error('User not authenticated');
-
-  await db.delete(UserMessages).where(eq(UserMessages.user_id, session.user?.id as string));
-  redirect('/');
-}
-```
-
-The `createUserMessage` function inserts a new message into the `user_messages` table, while `deleteUserMessage` removes the message associated with the current user.
-
-Next, we implement a minimal UI to interact with these functions. Replace the contents of the `app/page.tsx` file with the following:
-
-```tsx
-/// app/page.tsx
-
-import { createUserMessage, deleteUserMessage } from './actions';
-import { db } from './db';
-import { auth } from '@/auth';
-
-async function getUserMessage() {
-  const session = await auth();
-  if (!session) return null;
-
-  return db.query.UserMessages.findFirst({
-    where: (messages, { eq }) => eq(messages.user_id, session.user?.id as string),
-  });
-}
-
-function LoginBox() {
-  return (
-    <main className="flex min-h-screen flex-col items-center justify-center p-24">
-      <a
-        href="/api/auth/signin"
-        className="text-gray-800 rounded-md bg-[#00E699] px-3.5 py-2.5 text-sm font-semibold shadow-sm hover:bg-[#00e5BF] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#00E699]"
-      >
-        Log in
-      </a>
-    </main>
-  );
-}
-
-export default async function Home() {
-  const session = await auth();
-  const existingMessage = await getUserMessage();
-
-  if (!session) {
-    return <LoginBox />;
-  }
-
-  const ui = existingMessage ? (
-    <div className="w-2/3 text-center">
-      <h1 className="text-3xl">{existingMessage.message}</h1>
-      <form action={deleteUserMessage} className="mb-4 w-full rounded px-8 pb-8 pt-6">
-        <div className="w-full text-center">
-          <input
-            type="submit"
-            value={'Delete Quote'}
-            className="text-gray-800 cursor-pointer rounded bg-[#00E699] px-4 py-2 font-semibold transition-colors hover:bg-[#00e5BF] focus:outline-none"
-          />
-        </div>
-      </form>
-    </div>
-  ) : (
-    <form action={createUserMessage} className="w-2/3 rounded px-8 shadow-md">
-      <div className="mb-6">
-        <input
-          type="text"
-          name="message"
-          placeholder="Mistakes are the portals of discovery - James Joyce"
-          className="text-gray-700 w-full appearance-none rounded border p-3 text-center leading-tight focus:outline-none"
-        />
-      </div>
-      <div className="w-full text-center">
-        <input
-          type="submit"
-          value={'Save Quote'}
-          className="text-gray-800 cursor-pointer rounded bg-[#00E699] px-4 py-2 font-semibold transition-colors hover:bg-[#00e5BF] focus:outline-none"
-        />
-      </div>
-    </form>
-  );
-
-  return (
-    <main className="align-center -mt-16 flex min-h-screen flex-col items-center justify-center px-24">
-      <h2 className="text-gray-400 pb-6 text-2xl">
-        {existingMessage ? 'Your quote is wonderful...' : 'Save an inspiring quote for yourself...'}
-      </h2>
-      {ui}
-    </main>
-  );
-}
-```
-
-This code implements a form with a single text field that lets the user input a quote, and submit it, whereby the quote is stored in the database and associated with the user's `Okta` user ID. If a quote is already stored, it displays the quote and provides a button to delete it.
-
-The `user.id` property set on the session object provides the current user's ID, which we use to interact with the database on their behalf. If the user is not authenticated, the page displays a login button instead.
-
-## Running the application
-
-To start the application, run the following command:
-
-```bash
-npm run dev
-```
-
-This will start the Next.js development server. Open your browser and navigate to `http://localhost:3000` to see the application in action. When running for the first time, you'll see a `Log In` button which will redirect you to the `Auth.js` widget, prompting you to sign in with Okta.
-
-Once authenticated, you'll be able to visit the home page, add a quote, and see it displayed.
+Also verify the negative case: a user who isn't assigned to the Okta application should be denied at Okta, before reaching OptiTech.
 
 ## Conclusion
 
-In this guide, we walked through setting up a simple Next.js application with user authentication using Okta and a OptiTech Postgres database. We defined a database schema using Drizzle ORM, generated migrations, and interacted with the database to store and retrieve user data.
+In this guide, we connected Okta to OptiTech with OIDC single sign-on, enabled SCIM provisioning, and mapped groups to workspace roles. Sign-in now follows your central identity policy: your MFA rules, your conditional access, and your offboarding process apply to your compliance workspace automatically.
 
-Next, we can add more routes and features to the application. The `auth` method can be used in the Next.js API routes or middleware to protect endpoints that require authentication.
+The integration also strengthens your own controls. Access to the workspace is now provable from Okta's logs plus OptiTech's [audit log](/docs/reference/glossary#audit-log), the offboarding check verifies departures against the identity provider, and the access-review evidence your auditor asks for is generated instead of assembled.
 
-To view and manage the users who authenticated with your application, you can navigate to your Okta admin console and view the **Directory > People** section in the sidebar.
-
-## Source code
-
-You can find the source code for the application described in this guide on GitHub.
-
-<DetailIconCards>
-<a href="https://github.com/neondatabase/guide-neon-next-okta" description="Authenticate OptiTech application users with Okta" icon="github">Authentication flow with Okta</a>
-</DetailIconCards>
+To see which users authenticated and when, check **Settings** > **Members** in OptiTech, or the **Directory > People** section in your Okta admin console.
 
 ## Resources
 
 For more information on the tools used in this guide, refer to the following documentation:
 
-- [OptiTech Serverless Driver](/docs/serverless/serverless-driver)
-- [Drizzle ORM](https://orm.drizzle.team/)
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Auth.js Documentation](https://authjs.dev/getting-started/installation)
+- [Okta OIDC app integrations](https://help.okta.com/en-us/content/topics/apps/apps_app_integration_wizard_oidc.htm)
+- [Okta SCIM provisioning](https://developer.okta.com/docs/concepts/scim/)
+- [OptiTech plans](/docs/introduction/plans)
 
 <NeedHelp/>

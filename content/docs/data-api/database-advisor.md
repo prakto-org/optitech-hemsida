@@ -11,7 +11,7 @@ summary: >-
   levels INFO, WARN, or ERROR, and are accessible via the OptiTech Console or the
   REST API.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 The Data API Advisors analyze your database schema and configuration to detect security and performance issues for tables and objects exposed by the [Data API](/docs/data-api/overview) feature. They run a set of checks against your database and report issues with severity levels and recommended fixes.
@@ -66,7 +66,7 @@ Optional query parameters:
       "categories": ["SECURITY"],
       "description": "Detects cases where row level security (RLS) has not been enabled on tables in schemas exposed to Data-API",
       "detail": "Table `public.users` is public, but RLS has not been enabled.",
-      "remediation": "https://neon.com/docs/data-api/database-advisor#rls-disabled-in-public",
+      "remediation": "https://optitech.com/docs/data-api/database-advisor#rls-disabled-in-public",
       "metadata": {}
     }
   ]
@@ -77,23 +77,23 @@ Optional query parameters:
 
 ## Security checks
 
-| Check                                                                             | Severity | Description                                                                             |
-| --------------------------------------------------------------------------------- | -------- | --------------------------------------------------------------------------------------- |
-| [RLS disabled in public](#rls-disabled-in-public)                                 | ERROR    | Tables exposed via the Data API without row-level security                              |
-| [Policy exists RLS disabled](#policy-exists-rls-disabled)                         | ERROR    | RLS policies exist but RLS is not enabled on the table                                  |
-| [Sensitive columns exposed](#sensitive-columns-exposed)                           | ERROR    | API-exposed tables without RLS that contain potentially sensitive columns               |
-| [Security definer view](#security-definer-view)                                   | ERROR    | Views using SECURITY DEFINER, bypassing the querying user's permissions                 |
-| [Managed Better Auth users exposed](#neon-auth-users-exposed)                     | ERROR    | Views exposing `neon_auth.user` data to API roles                                       |
-| [RLS references Managed Better Auth metadata](#rls-references-neon-auth-metadata) | ERROR    | RLS policies referencing user-editable Managed Better Auth fields                       |
-| [FK to Managed Better Auth unique constraint](#fk-to-neon-auth-unique-constraint) | ERROR    | Foreign keys referencing Managed Better Auth unique constraints instead of primary keys |
-| [RLS policy always true](#rls-policy-always-true)                                 | WARN     | RLS policies with always-true expressions that bypass access control                    |
-| [Function search path mutable](#function-search-path-mutable)                     | WARN     | Functions without an explicit `search_path` setting                                     |
-| [Extension in public](#extension-in-public)                                       | WARN     | Extensions installed in the `public` schema, exposing their objects via the Data API    |
-| [Extension versions outdated](#extension-versions-outdated)                       | WARN     | Extensions not using the recommended default version                                    |
-| [Materialized view in API](#materialized-view-in-api)                             | WARN     | Materialized views accessible to API roles, bypassing RLS                               |
-| [Foreign table in API](#foreign-table-in-api)                                     | WARN     | Foreign tables accessible over the Data API, which cannot use RLS                       |
-| [Unsupported reg types](#unsupported-reg-types)                                   | WARN     | Columns using `reg*` types that prevent `pg_upgrade`                                    |
-| [RLS enabled no policy](#rls-enabled-no-policy)                                   | INFO     | RLS is enabled but no policies have been created                                        |
+| Check                                                                                 | Severity | Description                                                                             |
+| ------------------------------------------------------------------------------------- | -------- | --------------------------------------------------------------------------------------- |
+| [RLS disabled in public](#rls-disabled-in-public)                                     | ERROR    | Tables exposed via the Data API without row-level security                              |
+| [Policy exists RLS disabled](#policy-exists-rls-disabled)                             | ERROR    | RLS policies exist but RLS is not enabled on the table                                  |
+| [Sensitive columns exposed](#sensitive-columns-exposed)                               | ERROR    | API-exposed tables without RLS that contain potentially sensitive columns               |
+| [Security definer view](#security-definer-view)                                       | ERROR    | Views using SECURITY DEFINER, bypassing the querying user's permissions                 |
+| [Managed Better Auth users exposed](#optitech-auth-users-exposed)                     | ERROR    | Views exposing `optitech_auth.user` data to API roles                                   |
+| [RLS references Managed Better Auth metadata](#rls-references-optitech-auth-metadata) | ERROR    | RLS policies referencing user-editable Managed Better Auth fields                       |
+| [FK to Managed Better Auth unique constraint](#fk-to-optitech-auth-unique-constraint) | ERROR    | Foreign keys referencing Managed Better Auth unique constraints instead of primary keys |
+| [RLS policy always true](#rls-policy-always-true)                                     | WARN     | RLS policies with always-true expressions that bypass access control                    |
+| [Function search path mutable](#function-search-path-mutable)                         | WARN     | Functions without an explicit `search_path` setting                                     |
+| [Extension in public](#extension-in-public)                                           | WARN     | Extensions installed in the `public` schema, exposing their objects via the Data API    |
+| [Extension versions outdated](#extension-versions-outdated)                           | WARN     | Extensions not using the recommended default version                                    |
+| [Materialized view in API](#materialized-view-in-api)                                 | WARN     | Materialized views accessible to API roles, bypassing RLS                               |
+| [Foreign table in API](#foreign-table-in-api)                                         | WARN     | Foreign tables accessible over the Data API, which cannot use RLS                       |
+| [Unsupported reg types](#unsupported-reg-types)                                       | WARN     | Columns using `reg*` types that prevent `pg_upgrade`                                    |
+| [RLS enabled no policy](#rls-enabled-no-policy)                                       | INFO     | RLS is enabled but no policies have been created                                        |
 
 ## Performance checks
 
@@ -220,7 +220,7 @@ Note: The `security_invoker` option requires PostgreSQL 15 or later. This check 
 
 **Severity:** ERROR
 
-Views or materialized views that reference `neon_auth.user` can expose sensitive user data to API roles. Views in PostgreSQL default to SECURITY DEFINER mode, which means they bypass [row-level security](/postgresql/postgresql-administration/postgresql-row-level-security) policies on the underlying tables.
+Views or materialized views that reference `optitech_auth.user` can expose sensitive user data to API roles. Views in PostgreSQL default to SECURITY DEFINER mode, which means they bypass [row-level security](/postgresql/postgresql-administration/postgresql-row-level-security) policies on the underlying tables.
 
 See [Managed Better Auth overview](/docs/auth/overview) and [Data API access control](/docs/data-api/access-control) for background.
 
@@ -229,11 +229,11 @@ See [Managed Better Auth overview](/docs/auth/overview) and [Data API access con
 
 **Option 1: Use a profiles table with a trigger**
 
-Create a `public.profiles` table with only the user fields your application needs, and populate it via a trigger on `neon_auth.user`:
+Create a `public.profiles` table with only the user fields your application needs, and populate it via a trigger on `optitech_auth.user`:
 
 ```sql
 CREATE TABLE public.profiles (
-  id uuid NOT NULL REFERENCES neon_auth.user ON DELETE CASCADE,
+  id uuid NOT NULL REFERENCES optitech_auth.user ON DELETE CASCADE,
   display_name text,
   PRIMARY KEY (id)
 );
@@ -251,7 +251,7 @@ END;
 $$;
 
 CREATE TRIGGER on_auth_user_created
-  AFTER INSERT ON neon_auth.user
+  AFTER INSERT ON optitech_auth.user
   FOR EACH ROW EXECUTE PROCEDURE public.handle_new_user();
 ```
 
@@ -266,10 +266,10 @@ CREATE VIEW public.members
   WITH (security_invoker=on)
 AS
 SELECT id, created_at
-FROM neon_auth.user;
+FROM optitech_auth.user;
 ```
 
-Note: For this approach to work, RLS must also be enabled on the `neon_auth.user` table with appropriate policies. Otherwise, the security invoker view still exposes all rows.
+Note: For this approach to work, RLS must also be enabled on the `optitech_auth.user` table with appropriate policies. Otherwise, the security invoker view still exposes all rows.
 
 </details>
 
@@ -288,19 +288,19 @@ See [Managed Better Auth overview](/docs/auth/overview).
 
 Remove references to user-editable Managed Better Auth fields from your RLS policies. The specific fields detected by this check are:
 
-- `neon_auth.user.role` -- users can change their own role
-- `neon_auth.organization.metadata` -- organization metadata can be modified
+- `optitech_auth.user.role` -- users can change their own role
+- `optitech_auth.organization.metadata` -- organization metadata can be modified
 
 Instead, base security decisions on stable, non-editable fields like the user's `id`.
 
 For example, replace:
 
 ```sql
--- Insecure: references neon_auth.user.role which users can modify
+-- Insecure: references optitech_auth.user.role which users can modify
 CREATE POLICY role_based_access ON public.documents
   FOR SELECT
   USING (
-    (SELECT role FROM neon_auth.user WHERE id = (SELECT auth.uid())) = 'admin'
+    (SELECT role FROM optitech_auth.user WHERE id = (SELECT auth.uid())) = 'admin'
   );
 ```
 
@@ -320,7 +320,7 @@ CREATE POLICY owner_access ON public.documents
 
 **Severity:** ERROR
 
-Foreign keys referencing unique constraints (rather than primary keys) in the `neon_auth` schema are not supported. These unique constraints may change in future updates, which would break your foreign key references and block migrations.
+Foreign keys referencing unique constraints (rather than primary keys) in the `optitech_auth` schema are not supported. These unique constraints may change in future updates, which would break your foreign key references and block migrations.
 
 <details>
 <summary>Show resolution</summary>
@@ -332,7 +332,7 @@ ALTER TABLE <schema>.<table> DROP CONSTRAINT <foreign_key_name>;
 
 ALTER TABLE <schema>.<table>
   ADD CONSTRAINT <foreign_key_name>
-  FOREIGN KEY (<column>) REFERENCES neon_auth.user(id);
+  FOREIGN KEY (<column>) REFERENCES optitech_auth.user(id);
 ```
 
 </details>

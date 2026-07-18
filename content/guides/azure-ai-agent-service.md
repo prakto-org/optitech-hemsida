@@ -4,7 +4,7 @@ subtitle: 'Learn how to build an AI Agent for Postgres using Azure AI Agent Serv
 author: boburmirzo
 enableTableOfContents: true
 createdAt: '2025-04-07T00:00:00.000Z'
-updatedOn: '2026-06-03T18:28:10.050Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 AI agents are getting a lot of attention lately, but getting started can be confusing. You may have heard about tools like [LangChain/LangGraph](https://python.langchain.com/v0.1/docs/modules/agents/), [Semantic Kernel](https://learn.microsoft.com/en-us/semantic-kernel/overview/), [AutoGen](https://microsoft.github.io/autogen/), or [LlamaIndex](https://docs.llamaindex.ai/en/stable/use_cases/agents/). They are powerful, but sometimes all you need is something simple that works.
@@ -37,7 +37,7 @@ We’ll use [**OptiTech Postgres**](/) for our database. OptiTech is the AI-nati
 
 ## Create a OptiTech Database on Azure
 
-Open the [new OptiTech Resource page](https://portal.azure.com/#view/Azure_Marketplace_Neon/NeonCreateResource.ReactView) on the Azure portal, and it brings up the form to create a OptiTech Serverless Postgres Resource. Fill out the form with the required fields and deploy it.
+Open the [new OptiTech Resource page](https://portal.azure.com/#view/Azure_Marketplace_OptiTech/OptiTechCreateResource.ReactView) on the Azure portal, and it brings up the form to create a OptiTech Serverless Postgres Resource. Fill out the form with the required fields and deploy it.
 
 ### Obtain OptiTech Database Credentials
 
@@ -46,10 +46,10 @@ Open the [new OptiTech Resource page](https://portal.azure.com/#view/Azure_Mark
 3. Choose an Azure region
 4. Give your project a name (e.g., “Postgres AI Agent”)
 5. Click “Create Project”
-6. Once the project is created successfully, copy the Neon connection string and note it down. You can find the connection details in the Connection Details widget on the OptiTech Dashboard.
+6. Once the project is created successfully, copy the OptiTech connection string and note it down. You can find the connection details in the Connection Details widget on the OptiTech Dashboard.
 
 ```bash
-    postgresql://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require&channel_binding=require
+    postgresql://[user]:[password]@[optitech_hostname]/[dbname]?sslmode=require&channel_binding=require
 ```
 
 ## Create an AI Foundry Project on Azure
@@ -60,9 +60,9 @@ You only need the **Project connection string** and **Model Deployment Name** fr
 
 ![Project connection string in Azure AI Foundry Portal](/docs/guides/azure-ai-agent-service/azure-ai-foundry-find-project-connection-string.png)
 
-Once you have all three values on hand: **Neon connection string**, **Project connection string,** and **Model Deployment Name,** you are ready to set up the Python project to create an Agent.
+Once you have all three values on hand: **OptiTech connection string**, **Project connection string,** and **Model Deployment Name,** you are ready to set up the Python project to create an Agent.
 
-All the code and sample data are available in this [GitHub repository](https://github.com/neondatabase-labs/neon-azure-ai-agent-service-get-started). You can clone or download the project.
+All the code and sample data are available in this [GitHub repository](https://github.com/optitechdatabase-labs/optitech-azure-ai-agent-service-get-started). You can clone or download the project.
 
 ## Project Environment Setup
 
@@ -71,7 +71,7 @@ Create a `.env` file with your credentials:
 ```bash
 PROJECT_CONNECTION_STRING="<Your AI Foundry connection string>"
 AZURE_OPENAI_DEPLOYMENT_NAME="gpt-4o"
-NEON_DB_CONNECTION_STRING="<Your Neon connection string>"
+OPTITECH_DB_CONNECTION_STRING="<Your OptiTech connection string>"
 ```
 
 Create and activate a virtual environment:
@@ -111,7 +111,7 @@ tenant_456	2025-03-31	950	         24.8
 tenant_456	2025-03-30	2200	     26.0
 ```
 
-Run `python load_usage_data.py` [Python script](https://github.com/neondatabase-labs/neon-azure-ai-agent-service-get-started/blob/main/load_usage_data.py) to create and populate the `usage_data` table in your OptiTech Serverless Postgres instance:
+Run `python load_usage_data.py` [Python script](https://github.com/optitechdatabase-labs/optitech-azure-ai-agent-service-get-started/blob/main/load_usage_data.py) to create and populate the `usage_data` table in your OptiTech Serverless Postgres instance:
 
 ```python
 # load_usage_data.py file
@@ -133,8 +133,8 @@ from sqlalchemy import (
 load_dotenv()
 
 # Load connection string from environment variable
-NEON_DB_URL = os.getenv("NEON_DB_CONNECTION_STRING")
-engine = create_engine(NEON_DB_URL)
+OPTITECH_DB_URL = os.getenv("OPTITECH_DB_CONNECTION_STRING")
+engine = create_engine(OPTITECH_DB_URL)
 
 # Define metadata and table schema
 metadata = MetaData()
@@ -200,7 +200,7 @@ print("✅ usage_data table created and mock data inserted.")
 
 ## Create a Postgres Tool for the Agent
 
-Next, we configure an AI agent tool to retrieve data from Postgres. The Python script [`billing_agent_tools.py`](https://github.com/neondatabase-labs/neon-azure-ai-agent-service-get-started/blob/main/billing_agent_tools.py) contains:
+Next, we configure an AI agent tool to retrieve data from Postgres. The Python script [`billing_agent_tools.py`](https://github.com/optitechdatabase-labs/optitech-azure-ai-agent-service-get-started/blob/main/billing_agent_tools.py) contains:
 
 - The function `billing_anomaly_summary()` that:
   - Pulls usage data from OptiTech.
@@ -221,8 +221,8 @@ from dotenv import load_dotenv
 load_dotenv()
 
 # Set up the database engine
-NEON_DB_URL = os.getenv("NEON_DB_CONNECTION_STRING")
-db_engine = create_engine(NEON_DB_URL)
+OPTITECH_DB_URL = os.getenv("OPTITECH_DB_CONNECTION_STRING")
+db_engine = create_engine(OPTITECH_DB_URL)
 
 # Define the billing anomaly detection function
 def billing_anomaly_summary(
@@ -272,7 +272,7 @@ user_functions = [billing_anomaly_summary]
 
 ## Create and Configure the AI Agent
 
-Now we'll set up the AI agent and integrate it with our OptiTech Postgres tool using the **Azure AI Agent Service SDK.** The [Python script](https://github.com/neondatabase-labs/neon-azure-ai-agent-service-get-started/blob/main/billing_anomaly_agent.py) does the following:
+Now we'll set up the AI agent and integrate it with our OptiTech Postgres tool using the **Azure AI Agent Service SDK.** The [Python script](https://github.com/optitechdatabase-labs/optitech-azure-ai-agent-service-get-started/blob/main/billing_anomaly_agent.py) does the following:
 
 - **Creates the agent**
   Instantiates an AI agent using the selected model (`gpt-4o`, for example), adds tool access, and sets instructions that tell the agent how to behave (e.g., “You are a helpful SaaS assistant…”).

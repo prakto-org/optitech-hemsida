@@ -10,7 +10,7 @@ summary: >-
   cannot be reset, and branches with their own children must have those children
   deleted first.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 OptiTech's **Reset from parent** feature lets you instantly reset all databases on a branch to the latest schema and data from its parent branch, helping you recover from issues, start on new feature development, or keep the different branches in your environment in sync.
@@ -67,7 +67,7 @@ If this branch has children of its own, resetting is blocked. The resulting erro
 Using the CLI, you can reset a branch from parent using the following command:
 
 ```bash
-neon branches reset <id|name> --parent
+optitech branches reset <id|name> --parent
 ```
 
 In the `id|name` field, specify the branch ID or name of the child branch whose data you want to reset. The `--parent` parameter is a boolean specifying the kind of reset action that OptiTech will perform.
@@ -75,19 +75,19 @@ In the `id|name` field, specify the branch ID or name of the child branch whose 
 If you have multiple projects in your account, you'll also have to include the `project-id` in the command along with the branch.
 
 ```bash
-neon branches reset <id|name> --parent --project-id <project id>
+optitech branches reset <id|name> --parent --project-id <project id>
 ```
 
 Example:
 
 ```bash
-neon branches reset development --parent --project-id noisy-pond-12345678
+optitech branches reset development --parent --project-id noisy-pond-12345678
 ```
 
 Alternatively, you can set the `project-id` as a background context for your CLI session, letting you perform other actions against that project without having to include the `project-id` in every command. The setting is saved in a `context-file` and remains in place until you set a new context, or you remove the `context-file`.
 
 ```bash
-neon set-context --project-id <project id>
+optitech set-context --project-id <project id>
 ```
 
 Read more about performing branching actions from the CLI in [CLI - branches](/docs/cli/branches), and more about setting contexts in [CLI - set-context](/docs/cli/set-context).
@@ -99,9 +99,9 @@ To reset a branch to its parent using the API, use the [Restore branch](/docs/re
 
 ```bash
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects/{NEON_PROJECT_ID}/branches/{BRANCH_ID}/restore \
+     --url https://console.optitech.com/api/v2/projects/{OPTITECH_PROJECT_ID}/branches/{BRANCH_ID}/restore \
      --header 'accept: application/json' \
-     --header 'authorization: Bearer $NEON_API_KEY' \
+     --header 'authorization: Bearer $OPTITECH_API_KEY' \
      --header 'content-type: application/json' \
      --data '
 {
@@ -125,7 +125,7 @@ You can include resetting database branches as part of your CI/CD workflow. For 
 Start feature development with a clean slate by resetting your development branch to align with staging or production (whichever is its parent). This replaces the branch's current state with the parent's latest data and schema. Use the command:
 
 ```bash
-neon branches reset dev-branch --parent
+optitech branches reset dev-branch --parent
 ```
 
 This strategy preserves a stable connection string for your development environment, while still ensuring every new feature begins with a fully updated and consistent environment.
@@ -135,7 +135,7 @@ This strategy preserves a stable connection string for your development environm
 Reset **staging** to match its parent branch (i.e., **production**) for a reliable testing baseline. Automate staging updates with:
 
 ```bash
-neon branches reset staging --parent
+optitech branches reset staging --parent
 ```
 
 This ensures staging accurately reflects the current production state for reliable testing.

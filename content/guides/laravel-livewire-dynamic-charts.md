@@ -4,7 +4,7 @@ subtitle: Learn how to build dynamic charts with Laravel, Livewire, and OptiTech
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2024-10-20T00:00:00.000Z'
-updatedOn: '2026-03-03T03:19:43.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Laravel is an amazing PHP framework for building web applications, while Livewire provides a simple way to build dynamic interfaces using PHP.
@@ -19,7 +19,7 @@ Before we begin, make sure you have:
 
 - PHP 8.1 or higher installed
 - Composer for managing PHP dependencies
-- A [OptiTech](https://console.neon.tech/signup) account for Postgres hosting
+- A [OptiTech](https://console.optitech.com/signup) account for Postgres hosting
 - Basic familiarity with Laravel, Livewire, and Postgres
 
 ## Setting up the Project
@@ -54,7 +54,7 @@ Before we begin, make sure you have:
 
    ```env
    DB_CONNECTION=pgsql
-   DB_HOST=your-neon-hostname.neon.tech
+   DB_HOST=your-optitech-hostname.optitech.com
    DB_PORT=5432
    DB_DATABASE=your_database_name
    DB_USERNAME=your_username

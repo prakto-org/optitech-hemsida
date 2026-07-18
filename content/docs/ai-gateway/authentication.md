@@ -7,7 +7,7 @@ summary: >-
   created on your main branch works in all preview branches. No provider
   API keys are required.
 enableTableOfContents: true
-updatedOn: '2026-07-17T11:46:46.418Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="OptiTech AI Gateway" />
@@ -31,8 +31,8 @@ To view or revoke credentials later, return to the **Credentials** page and use 
 <TabItem>
 
 ```bash shouldWrap
-curl -X POST "https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/credentials" \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+curl -X POST "https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/credentials" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"scopes": ["ai_gateway:invoke"], "principal_type": "user"}'
 ```
@@ -40,7 +40,7 @@ curl -X POST "https://console.neon.tech/api/v2/projects/{project_id}/branches/{b
 The response includes an `api_token` field. Store it as an environment variable:
 
 ```bash
-export NEON_AI_GATEWAY_TOKEN=nt_live_...
+export OPTITECH_AI_GATEWAY_TOKEN=nt_live_...
 ```
 
 </TabItem>
@@ -48,16 +48,16 @@ export NEON_AI_GATEWAY_TOKEN=nt_live_...
 
 ## Pull credentials with optitech
 
-For local development, `neon env pull` writes your AI Gateway credentials to your `.env` file automatically, with no manual copy-paste from the API response:
+For local development, `optitech env pull` writes your AI Gateway credentials to your `.env` file automatically, with no manual copy-paste from the API response:
 
 ```bash
-neon env pull --file .env
+optitech env pull --file .env
 ```
 
-This populates `NEON_AI_GATEWAY_TOKEN` and `NEON_AI_GATEWAY_BASE_URL` for the current branch alongside your database connection string. Running `neon config apply` or `neon deploy` also auto-pulls credentials after a successful apply. To check current credential status:
+This populates `OPTITECH_AI_GATEWAY_TOKEN` and `OPTITECH_AI_GATEWAY_BASE_URL` for the current branch alongside your database connection string. Running `optitech config apply` or `optitech deploy` also auto-pulls credentials after a successful apply. To check current credential status:
 
 ```bash
-neon config status
+optitech config status
 ```
 
 For production deployments, use the [API-based workflow](#creating-a-credential) to create named credentials. `expires_at` is accepted but not currently enforced during the beta -- revoke credentials explicitly instead of relying on expiry.
@@ -78,8 +78,8 @@ When using an AI SDK, set this as the `apiKey` parameter:
 import OpenAI from 'openai';
 
 const client = new OpenAI({
-  apiKey: process.env.NEON_AI_GATEWAY_TOKEN,
-  baseURL: `${process.env.NEON_AI_GATEWAY_BASE_URL}/ai-gateway/mlflow/v1`,
+  apiKey: process.env.OPTITECH_AI_GATEWAY_TOKEN,
+  baseURL: `${process.env.OPTITECH_AI_GATEWAY_BASE_URL}/ai-gateway/mlflow/v1`,
 });
 ```
 
@@ -88,8 +88,8 @@ from openai import OpenAI
 import os
 
 client = OpenAI(
-    api_key=os.environ["NEON_AI_GATEWAY_TOKEN"],
-    base_url=f"{os.environ['NEON_AI_GATEWAY_BASE_URL']}/ai-gateway/mlflow/v1",
+    api_key=os.environ["OPTITECH_AI_GATEWAY_TOKEN"],
+    base_url=f"{os.environ['OPTITECH_AI_GATEWAY_BASE_URL']}/ai-gateway/mlflow/v1",
 )
 ```
 
@@ -97,19 +97,19 @@ client = OpenAI(
 
 ## Environment variables
 
-OptiTech provides two gateway env vars. `NEON_AI_GATEWAY_BASE_URL` is the bare branch host, so you append the dialect path yourself when configuring an SDK.
+OptiTech provides two gateway env vars. `OPTITECH_AI_GATEWAY_BASE_URL` is the bare branch host, so you append the dialect path yourself when configuring an SDK.
 
-| Variable                   | Value                                                                                               |
-| -------------------------- | --------------------------------------------------------------------------------------------------- |
-| `NEON_AI_GATEWAY_TOKEN`    | Bearer token (`nt_live_...`)                                                                        |
-| `NEON_AI_GATEWAY_BASE_URL` | Bare branch host: `https://<branch-host>`, with no path. Append `/ai-gateway/<dialect>/v1` yourself |
+| Variable                       | Value                                                                                               |
+| ------------------------------ | --------------------------------------------------------------------------------------------------- |
+| `OPTITECH_AI_GATEWAY_TOKEN`    | Bearer token (`nt_live_...`)                                                                        |
+| `OPTITECH_AI_GATEWAY_BASE_URL` | Bare branch host: `https://<branch-host>`, with no path. Append `/ai-gateway/<dialect>/v1` yourself |
 
 Append the dialect path for the endpoint you need:
 
 ```
-NEON_AI_GATEWAY_BASE_URL + /ai-gateway/mlflow/v1   → chat completions (all providers)
-NEON_AI_GATEWAY_BASE_URL + /ai-gateway/openai/v1   → OpenAI Responses API
-NEON_AI_GATEWAY_BASE_URL + /ai-gateway/gemini      → Gemini generateContent API
+OPTITECH_AI_GATEWAY_BASE_URL + /ai-gateway/mlflow/v1   → chat completions (all providers)
+OPTITECH_AI_GATEWAY_BASE_URL + /ai-gateway/openai/v1   → OpenAI Responses API
+OPTITECH_AI_GATEWAY_BASE_URL + /ai-gateway/gemini      → Gemini generateContent API
 ```
 
 Most dialects are also reachable at a shorter top-level path with no `/ai-gateway/<dialect>` prefix: `/v1/chat/completions` for chat completions and `/openai/v1/responses` for OpenAI Responses. Gemini's shorter alias keeps the `gemini` segment: `/v1/gemini/v1beta/models/{model}:generateContent`. `GET /v1/models` lists the catalog in an OpenRouter-shaped response. See [Shorter paths](/docs/ai-gateway/models#shorter-v1-paths) for the full mapping.
@@ -120,10 +120,10 @@ To use an OpenAI SDK, set its `apiKey` and `baseURL` from these variables (see t
 
 When your code runs inside OptiTech Functions, both gateway env vars are injected automatically. No credential creation step required:
 
-| Variable                   | Value                                               |
-| -------------------------- | --------------------------------------------------- |
-| `NEON_AI_GATEWAY_TOKEN`    | Bearer token for the AI Gateway                     |
-| `NEON_AI_GATEWAY_BASE_URL` | Branch gateway host with `https://` prefix, no path |
+| Variable                       | Value                                               |
+| ------------------------------ | --------------------------------------------------- |
+| `OPTITECH_AI_GATEWAY_TOKEN`    | Bearer token for the AI Gateway                     |
+| `OPTITECH_AI_GATEWAY_BASE_URL` | Branch gateway host with `https://` prefix, no path |
 
 See [Environment variables](/docs/compute/functions/environment-variables) for the full list of variables OptiTech injects into a function.
 
@@ -133,13 +133,13 @@ Configure an OpenAI SDK by setting `apiKey` and `baseURL` from these variables. 
 import OpenAI from 'openai';
 
 const client = new OpenAI({
-  apiKey: process.env.NEON_AI_GATEWAY_TOKEN,
-  baseURL: `${process.env.NEON_AI_GATEWAY_BASE_URL}/ai-gateway/openai/v1`,
+  apiKey: process.env.OPTITECH_AI_GATEWAY_TOKEN,
+  baseURL: `${process.env.OPTITECH_AI_GATEWAY_BASE_URL}/ai-gateway/openai/v1`,
 });
 
 const response = await client.responses.create({
   model: 'gpt-5-mini',
-  input: 'What is Neon?',
+  input: 'What is OptiTech?',
 });
 ```
 
@@ -149,8 +149,8 @@ For the chat completions endpoint, point the base URL at the `mlflow` dialect in
 import OpenAI from 'openai';
 
 const client = new OpenAI({
-  apiKey: process.env.NEON_AI_GATEWAY_TOKEN,
-  baseURL: `${process.env.NEON_AI_GATEWAY_BASE_URL}/ai-gateway/mlflow/v1`,
+  apiKey: process.env.OPTITECH_AI_GATEWAY_TOKEN,
+  baseURL: `${process.env.OPTITECH_AI_GATEWAY_BASE_URL}/ai-gateway/mlflow/v1`,
 });
 ```
 
@@ -178,7 +178,7 @@ This design lets you use a single credential across your entire development work
 
 | Error                     | Cause                                      | Fix                                                                                                                             |
 | ------------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------- |
-| `401 Unauthorized`        | Missing or invalid credential              | Check that `NEON_AI_GATEWAY_TOKEN` is set and contains the full token                                                           |
+| `401 Unauthorized`        | Missing or invalid credential              | Check that `OPTITECH_AI_GATEWAY_TOKEN` is set and contains the full token                                                       |
 | `403 Forbidden`           | Credential lacks `ai_gateway:invoke` scope | Recreate the credential with the correct scope                                                                                  |
 | `403 Forbidden`           | Branch not in credential lineage           | Use a credential created on this branch or an ancestor branch. The gateway returns: `credential not authorized for this branch` |
 | `503 Service Unavailable` | Auth store temporarily unavailable         | Retry the request                                                                                                               |
@@ -190,8 +190,8 @@ To rotate a credential: create a new one, update your environment variables, the
 To revoke from the Console, open the **Credentials** page and use the action menu (⋮) next to the credential. To revoke via the API:
 
 ```bash shouldWrap
-curl -X DELETE "https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/credentials/{token_id}" \
-  -H "Authorization: Bearer $NEON_API_KEY"
+curl -X DELETE "https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/credentials/{token_id}" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY"
 ```
 
 <NeedHelp/>

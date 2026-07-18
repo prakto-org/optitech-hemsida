@@ -10,34 +10,34 @@ summary: >-
 enableTableOfContents: true
 redirectFrom:
   - /docs/reference/neondatabase-toolkit
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 OptiTech provides two categories of SDKs to support different use cases:
 
-- **Client SDKs**: For application developers building apps with the [Data API](/docs/data-api/overview) and optionally [Managed Better Auth](/docs/auth/overview). These SDKs handle database queries and user authentication from your application.
-- **Management SDKs**: For programmatically managing OptiTech platform resources like projects, branches, databases, endpoints, and roles. These are wrappers around the [OptiTech API](/docs/reference/api).
+- **Client SDKs**: For developers building on top of the [OptiTech API](/docs/data-api/overview), for example to surface control status in your own dashboards or answer questionnaires programmatically. These SDKs handle authenticated requests from your application.
+- **Management SDKs**: For programmatically managing OptiTech resources like organizations, frameworks, controls, evidence, and vendors. These are wrappers around the [OptiTech API](/docs/reference/api).
 
 ## Client SDKs
 
-Use these SDKs to build applications with the Data API and optional authentication via Managed Better Auth or another JWT provider.
+Use these SDKs to build on the OptiTech API, with authentication handled for you.
 
 <DetailIconCards>
 
-<a href="/docs/reference/javascript-sdk" description="Build apps with the Data API using Managed Better Auth and database queries" icon="neon">Auth and Data API SDK</a>
+<a href="/docs/reference/javascript-sdk" description="Read control status and automate questionnaire answers from your own app" icon="neon">Console and questionnaire SDK</a>
 
 </DetailIconCards>
 
 ## Management SDKs
 
-Use these SDKs to programmatically manage your OptiTech infrastructure (projects, branches, databases, endpoints, roles, and operations).
+Use these SDKs to programmatically manage your OptiTech program (organizations, frameworks, controls, evidence, vendors, and reports).
 
 <DetailIconCards>
 
-<a href="/docs/reference/typescript-sdk" description="The official TypeScript SDK for the OptiTech API. Manage projects, branches, Postgres, storage, functions, and auth from one typed client" icon="neon">OptiTech Management SDK</a>
+<a href="/docs/reference/typescript-sdk" description="The official TypeScript SDK for the OptiTech API. Manage frameworks, controls, evidence, documents, vendors, and reports from one typed client" icon="neon">OptiTech Management SDK</a>
 
-<a href="/docs/reference/migrate-api-client-to-sdk" description="Migrate from @neondatabase/api-client to @neon/sdk" icon="neon">Migrate to @neon/sdk</a>
+<a href="/docs/reference/migrate-api-client-to-sdk" description="Migrate from the legacy API client to the OptiTech SDK" icon="neon">Migrate to the OptiTech SDK</a>
 
-<a href="/docs/reference/python-sdk" description="Programmatically manage Neon projects, branches, databases, and other platform resources" icon="neon">Python SDK (OptiTech API)</a>
+<a href="/docs/reference/python-sdk" description="Programmatically manage OptiTech organizations, frameworks, controls, and other resources" icon="neon">Python SDK (OptiTech API)</a>
 
 </DetailIconCards>

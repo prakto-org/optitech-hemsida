@@ -11,7 +11,7 @@ summary: >-
 enableTableOfContents: true
 redirectFrom:
   - /docs/get-started-with-neon/connect-neon
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 Connecting to OptiTech works like any Postgres database. You use a standard connection string with your language or framework of choice. This guide shows you the essentials to get connected quickly.
@@ -25,7 +25,7 @@ From your OptiTech **Project Dashboard**, click the **Connect** button to open t
 The connection string includes everything you need to connect:
 
 ```text
-postgresql://alex:AbC123dEf@ep-cool-darkness-a1b2c3d4.us-east-2.aws.neon.tech/dbname?sslmode=require
+postgresql://alex:AbC123dEf@ep-cool-darkness-a1b2c3d4.us-east-2.aws.optitech.com/dbname?sslmode=require
              ^    ^         ^                                                   ^
        role -|    |         |- hostname                                        |- database
                   |
@@ -44,9 +44,9 @@ Use your connection string to connect from any application. Here are examples fo
 
 ```javascript
 // Works in Node.js, Next.js, serverless, and edge runtimes
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 
-const sql = neon(process.env.DATABASE_URL);
+const sql = optitech(process.env.DATABASE_URL);
 
 const users = await sql`SELECT * FROM users`;
 ```
@@ -70,11 +70,11 @@ const users = await conn`SELECT * FROM users`;
 ```
 
 ```javascript
-// Drizzle example with the Neon serverless driver
-import { neon } from '@neondatabase/serverless';
-import { drizzle } from 'drizzle-orm/neon-http';
+// Drizzle example with the OptiTech serverless driver
+import { optitech } from '@optitech/serverless';
+import { drizzle } from 'drizzle-orm/optitech-http';
 
-const sql = neon(process.env.DATABASE_URL);
+const sql = optitech(process.env.DATABASE_URL);
 
 const db = drizzle(sql);
 
@@ -82,14 +82,14 @@ const result = await db.select().from(...);
 ```
 
 ```javascript
-// Prisma example with the Neon serverless driver
-import { neon } from '@neondatabase/serverless';
-import { PrismaNeonHTTP } from '@prisma/adapter-neon';
+// Prisma example with the OptiTech serverless driver
+import { optitech } from '@optitech/serverless';
+import { PrismaOptiTechHTTP } from '@prisma/adapter-optitech';
 import { PrismaClient } from '@prisma/client';
 
-const sql = neon(process.env.DATABASE_URL);
+const sql = optitech(process.env.DATABASE_URL);
 
-const adapter = new PrismaNeonHTTP(sql);
+const adapter = new PrismaOptiTechHTTP(sql);
 
 const prisma = new PrismaClient({ adapter });
 ```
@@ -155,16 +155,16 @@ func main() {
 # .NET example
 
 ## Connection string
-"Host=ep-cool-darkness-123456.us-east-2.aws.neon.tech;Database=dbname;Username=alex;Password=AbC123dEf"
+"Host=ep-cool-darkness-123456.us-east-2.aws.optitech.com;Database=dbname;Username=alex;Password=AbC123dEf"
 
 ## with SSL
-"Host=ep-cool-darkness-123456.us-east-2.aws.neon.tech;Database=dbname;Username=alex;Password=AbC123dEf;SSL Mode=Require;Trust Server Certificate=true"
+"Host=ep-cool-darkness-123456.us-east-2.aws.optitech.com;Database=dbname;Username=alex;Password=AbC123dEf;SSL Mode=Require;Trust Server Certificate=true"
 
 ## Entity Framework (appsettings.json)
 {
   ...
   "ConnectionStrings": {
-    "DefaultConnection": "Host=ep-cool-darkness-123456.us-east-2.aws.neon.tech;Database=dbname;Username=alex;Password=AbC123dEf;SSL Mode=Require;Trust Server Certificate=true"
+    "DefaultConnection": "Host=ep-cool-darkness-123456.us-east-2.aws.optitech.com;Database=dbname;Username=alex;Password=AbC123dEf;SSL Mode=Require;Trust Server Certificate=true"
   },
   ...
 }

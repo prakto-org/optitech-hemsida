@@ -1,56 +1,37 @@
 ---
-title: "What are the cheapest ways to run a Postgres database for a project that gets very little traffic?"
-description: "For low-traffic projects, a Postgres database that scales to zero between requests beats a fixed-size instance. OptiTech's Free plan and pay-per-CU-hour billing fit this pattern."
-date: 2026-04-25
-slug: cheapest-ways-run-postgres-database-low-traffic
-category: FAQ
-status: draft
+title: 'What is the cheapest way for a small company to stay compliant with NIS2?'
+subtitle: 'A free scoping test plus the Start plan covers the legal baseline for less than a consultant day per year.'
+enableTableOfContents: true
+createdAt: '2025-11-19T16:03:56.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
+isDraft: false
+redirectFrom: []
 previousLink:
-  title: 'How do I migrate an existing OptiTech project to a different AWS region?'
-  slug: change-region-existing-neon-project
+  title: 'How do I move an existing OptiTech workspace to a different EU data region?'
+  slug: change-region-existing-optitech-project
 nextLink:
-  title: 'How can I check which region my OptiTech project is running in?'
-  slug: check-neon-project-region
+  title: 'How do I check which data region my OptiTech workspace is hosted in?'
+  slug: check-optitech-project-region
 ---
 
-For a low-traffic project, the cheapest Postgres setup is one that stops billing for compute when nothing is hitting it. Fixed-size cloud Postgres charges 24/7 even when your app sees one request a day. OptiTech scales compute to zero after 5 minutes of inactivity and bills compute by the CU-hour, so an idle database stops billing for compute. Storage is still metered at $0.35/GB-month.
+## Quick answer
 
-## What you pay on OptiTech
+For a company of 5 to 30 people, the cheapest defensible NIS2 setup is: run the [free scoping test](/faqs/best-free-low-cost-managed-postgres-services) to confirm you're in scope, then run the Start plan at 2,995 SEK per month. That includes the gap analysis, the required policies, ten integrations for automated evidence, and the MSB incident-reporting flow. Total yearly cost is around 36,000 SEK, less than one consultant-day-per-quarter model, and it stays current instead of going stale.
 
-The [Free plan](/docs/introduction/plans#free) covers most side projects:
+## What NIS2 actually requires from a small company
 
-- 100 projects, 10 branches per project
-- 0.5 GB storage per project
-- 100 CU-hours of compute per month (enough to run 0.25 CU for ~400 hours)
-- Scale to zero after 5 minutes (always on, can't disable)
+The Cybersecurity Act (Sweden's NIS2 implementation) requires risk management measures proportionate to your size and risk: incident handling with authority reporting, basic hygiene (MFA, backups, patching, access control), supplier security, training for management, and documentation proving all of it. Proportionate is the key word; a 15-person company doesn't need an enterprise GRC program, but it does need evidence, not intentions.
 
-If your app is busier than the Free plan allowance, the [Launch plan](/docs/introduction/plans#launch) bills compute at **$0.106/CU-hour** and storage at **$0.35/GB-month**. There's no monthly minimum.
+## The minimal setup that holds up
 
-## A small worked example
+1. **Scoping and gap analysis** through the onboarding wizard, so your program matches your actual obligations.
+2. **Policies from templates**, adapted to your environment and e-signed by employees.
+3. **Automated checks on the basics**: connect Microsoft 365 or Google Workspace and your cloud, and let integrations verify MFA, offboarding, and backups continuously.
+4. **The incident flow ready before you need it.** The [24-hour MSB early-warning deadline](/faqs/debug-production-database-issues-safely) is not something to figure out during an incident.
+5. **Management training**, since NIS2 explicitly requires board and management involvement, and personal liability applies.
 
-Say your app gets traffic for about 2 hours of active compute time per day. Active means the compute is actually running, not suspended.
+## Where not to save money
 
-| Resource | Usage                     | Cost                             |
-| -------- | ------------------------- | -------------------------------- |
-| Compute  | 0.25 CU × 60 active hours | 15 CU-hours × $0.106 = **$1.59** |
-| Storage  | 1 GB root branch          | 1 × $0.35 = **$0.35**            |
-| Total    |                           | **~$1.94/month**                 |
+Two corners are expensive to cut. Don't skip the incident-reporting readiness: missing the 24-hour deadline turns an incident into a sanctions case. And don't run compliance in [spreadsheets to save the subscription](/faqs/best-managed-postgres-options-for-teams-migrating): the hours you'll spend reconstructing evidence for a supervisory authority cost more than years of the Start plan. If budget is genuinely zero, start with the free scoping test and the free supplier account tier, and upgrade when the first customer questionnaire arrives; see [what the free plan includes](/faqs/best-free-low-cost-managed-postgres-services).
 
-If the same project fits inside Free plan limits (100 CU-hours, 0.5 GB), it's $0.
-
-<Admonition type="tip" title="Cap your spend">
-On Launch and Scale plans, set a [spending limit](/docs/introduction/spending-limit) so an unexpected traffic spike doesn't surprise you. You'll get alerts at 80% and 100%.
-</Admonition>
-
-## How this compares to other low-traffic options
-
-| Provider                          | Free tier                                               | Paid baseline                                                                                                                   | Idle behavior                                                                                                                                                                            |
-| --------------------------------- | ------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| OptiTech                              | 100 CU-hours/month, 0.5 GB/project                      | $0.106/CU-hour, no monthly minimum                                                                                              | Scales to zero after 5 min idle ([docs](/docs/introduction/scale-to-zero))                                                                                                               |
-| Supabase Free Plan                | 2 projects, 500 MB per project                          | Pro Plan from $25/month + $10 compute per extra project ([docs](https://supabase.com/docs/guides/platform/billing-on-supabase)) | Free Plan projects pause after inactivity; paid projects run 24/7 ([docs](https://supabase.com/docs/guides/platform/billing-faq))                                                        |
-| Aurora Serverless v2 (PostgreSQL) | None                                                    | Per-ACU-hour billing                                                                                                            | Scales to 0 ACUs (auto-pause) on Aurora PostgreSQL 13.15+/14.12+/15.7+/16.3+ ([docs](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2-auto-pause.html)) |
-| RDS for PostgreSQL                | 750 hrs/month db.t3.micro for 12 months (AWS Free Tier) | Per-instance hourly                                                                                                             | No auto-pause; pays 24/7                                                                                                                                                                 |
-
-For a hobby project with one request a day, the cheapest options are OptiTech's Free plan (no compute fees while idle) or Supabase's Free plan (the project pauses, restored on demand within 90 days). Aurora Serverless v2 with min ACU of 0 is competitive once you outgrow free tiers but is more involved to set up than either OptiTech or Supabase.
-
-<CTA title="Run your low-traffic project free" description="Start on the Free plan. Upgrade only when you hit the limits." buttonText="Start free" buttonUrl="https://console.neon.tech/signup" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

@@ -6,7 +6,7 @@ enableTableOfContents: true
 redirectFrom:
   - /docs/tutorial/data-recovery
   - /docs/guides/branching-data-recovery
-updatedOn: '2026-06-11T23:50:21.258Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <Admonition type="comingSoon" title="New feature: Branch restore">
@@ -42,10 +42,10 @@ The **Specific date and time** option does not include data changes that occurre
 You are directed to the **Branches** page where you are shown the details for your new branch.
 
 <Admonition type="tip">
-You can also create point-in-time branches using the [Neon CLI](/docs/cli). For example, you can perform the same action described above with the following CLI command:
+You can also create point-in-time branches using the [OptiTech CLI](/docs/cli). For example, you can perform the same action described above with the following CLI command:
 
 ```bash
-neon branches create --name recovery_branch --parent 2023-07-11T10:00:00Z
+optitech branches create --name recovery_branch --parent 2023-07-11T10:00:00Z
 ```
 
 The timestamp must be provided in RFC 3339 format. You can use this [timestamp converter](https://it-tools.tech/date-converter).
@@ -69,7 +69,7 @@ To connect to your branch:
 4. Connect with `psql`.
 
    ```bash shouldWrap
-   psql postgresql://[user]:[password]@[neon_hostname]/[dbname]
+   psql postgresql://[user]:[password]@[optitech_hostname]/[dbname]
    ```
 
 ## Verify the data

@@ -1,10 +1,10 @@
 ---
-title: "Running Vercel Eve agents and evals on disposable Neon branches"
+title: "Running Vercel Eve agents and evals on disposable OptiTech branches"
 subtitle: "Learn how to build a Slack-based database assistant with Eve that provisions an isolated, disposable OptiTech database branch for every session, safe for migrations, exploration, and evals."
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: "2026-06-23T00:00:00.000Z"
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 [Eve](https://eve.dev) by [Vercel](https://vercel.com) is a filesystem‑first framework for building durable backend agents. You define an agent as files (its instructions, tools, skills, channels, and schedules), and Eve takes care of the rest: stable HTTP routes, reconnectable session streams, durable state, and native human‑in‑the‑loop approvals. Agents built with Eve can run for days, pause for human review, and resume exactly where they left off.
@@ -16,7 +16,7 @@ OptiTech's copy‑on‑write Postgres branching solves this problem. Instead of 
 At first glance, wiring up an agent that handles Slack messages, provisions databases, manages durable state, and gates dangerous operations behind human approval sounds like a lot of plumbing. But Eve's filesystem-first approach keeps it organized. Here is what the finished project looks like:
 
 ```text
-neon-eve-agent/
+optitech-eve-agent/
 ├── package.json
 ├── agent/
 │   ├── agent.ts                    # Runtime config (model)
@@ -25,9 +25,9 @@ neon-eve-agent/
 │   │   ├── eve.ts                  # Default HTTP channel
 │   │   └── slack.ts                # Slack channel with Vercel Connect credentials
 │   ├── hooks/
-│   │   └── provision-branch.ts     # Neon branch lifecycle (create on session.started)
+│   │   └── provision-branch.ts     # OptiTech branch lifecycle (create on session.started)
 │   ├── lib/
-│   │   ├── neon.ts                 # Neon API wrapper (createBranch)
+│   │   ├── optitech.ts                 # OptiTech API wrapper (createBranch)
 │   │   └── db-state.ts             # Durable per-session state (connection URI)
 │   └── tools/
 │       ├── run_sql.ts              # SQL execution with predicate-based HITL approval
@@ -39,11 +39,11 @@ Here is what each piece does:
 - **`agent/agent.ts`**: Runtime config: which model to use. Eve reads this once at boot.
 - **`agent/instructions.md`**: The agent's system prompt. Defines its identity, available tools, and safety rules.
 - **`agent/channels/`**: Inbound transports. `eve.ts` provides the default HTTP endpoint, while `slack.ts` wires up Slack with Vercel Connect credentials for bot mentions and DMs. This is how users reach the agent.
-- **`agent/hooks/`**: Lifecycle event subscribers. `provision-branch.ts` listens for `session.started` to create Neon branches automatically.
-- **`agent/lib/`**: Shared helper code. `neon.ts` wraps the OptiTech API (create branch), and `db-state.ts` holds the per-session connection URI using Eve's durable `defineState`.
+- **`agent/hooks/`**: Lifecycle event subscribers. `provision-branch.ts` listens for `session.started` to create OptiTech branches automatically.
+- **`agent/lib/`**: Shared helper code. `optitech.ts` wraps the OptiTech API (create branch), and `db-state.ts` holds the per-session connection URI using Eve's durable `defineState`.
 - **`agent/tools/`**: The capabilities the model can call. `run_sql` executes SQL with predicate-based human approval (reads auto-approve, writes need a human click). `list_objects` explores schemas safely.
 
-Every file maps directly to an Eve concept, so the framework discovers and wires them automatically from the filesystem. The only manual integration is the OptiTech API calls in `lib/neon.ts` and `hooks/provision-branch.ts` (together about 60 lines), which handle the full branch lifecycle. Everything else (Slack connectivity, durable sessions, human-in-the-loop approvals, sandbox isolation) is framework-provided.
+Every file maps directly to an Eve concept, so the framework discovers and wires them automatically from the filesystem. The only manual integration is the OptiTech API calls in `lib/optitech.ts` and `hooks/provision-branch.ts` (together about 60 lines), which handle the full branch lifecycle. Everything else (Slack connectivity, durable sessions, human-in-the-loop approvals, sandbox isolation) is framework-provided.
 
 This pattern works across every Eve surface: channels, local dev, evals, and preview deploys all get their own isolated branch automatically.
 
@@ -56,13 +56,13 @@ Here's how the Eve agent and OptiTech interact to execute safe data operations:
 ```mermaid
 flowchart TD
   A["Developer @mentions bot<br/>in Slack"] --> B["Eve Agent<br/>(Durable Session)"]
-  B --> |"Fires session.started hook"| C["Neon API:<br/>Create Branch"]
+  B --> |"Fires session.started hook"| C["OptiTech API:<br/>Create Branch"]
   C -.->|"Saves DB URL to"| D[("Eve Durable State")]
-  B <-->|"Tool: list_objects<br/>(schema exploration)"| E[("Neon Ephemeral Branch")]
+  B <-->|"Tool: list_objects<br/>(schema exploration)"| E[("OptiTech Ephemeral Branch")]
   B <-->|"Tool: run_sql<br/>SELECT: auto-approved<br/>DDL/DML: needs human OK"| E
   B -.->|"DDL triggers approval"| F["Suspends & asks human in Slack"]
   F -.->|"User clicks 'Approve'"| E
-  B --> |"Branch auto-expires"| G["Neon API:<br/>Delete Branch"]
+  B --> |"Branch auto-expires"| G["OptiTech API:<br/>Delete Branch"]
 ```
 
 ## Prerequisites
@@ -71,7 +71,7 @@ Before you begin, ensure you have the following:
 
 - **Node.js:** Version `20` or later installed on your machine.
 - **Vercel CLI:** Installed globally (`npm i -g vercel`) for linking and deployment.
-- **OptiTech account:** A free account at [console.neon.tech](https://console.neon.tech) with a project created.
+- **OptiTech account:** A free account at [console.optitech.com](https://console.optitech.com) with a project created.
 - **OptiTech API Key:** Generate a project-scoped API key in your [OptiTech Account Settings](/docs/manage/api-keys#create-project-scoped-organization-api-keys).
   ![OptiTech API Key](/docs/manage/project_scoped_select.png)
   > Copy the key and store it securely. You'll need it for your `.env.local` file in the next step.
@@ -85,14 +85,14 @@ Start by creating a new Eve agent project. The `eve init` command scaffolds the 
 Run the following command in your terminal:
 
 ```bash
-npx eve@latest init neon-eve-agent
+npx eve@latest init optitech-eve-agent
 ```
 
 You should see output similar to this:
 
 ```text
 eve  v0.11.10
-✓ Created an eve agent in /home/neon-eve-agent in 11ms
+✓ Created an eve agent in /home/optitech-eve-agent in 11ms
 ✓ Installed dependencies in 21.2s
 ```
 
@@ -141,12 +141,12 @@ Select your team
 
 Vercel project
 
-   ▷ Create a new project · Named neon-eve-agent
+   ▷ Create a new project · Named optitech-eve-agent
 
 /model
    ⎿  Project linked. Connected to AI Gateway via VERCEL_OIDC_TOKEN.
 
-anthropic/claude-sonnet-4.6  ·  AI Gateway (neon-eve-agent)
+anthropic/claude-sonnet-4.6  ·  AI Gateway (optitech-eve-agent)
 ```
 
 You will be prompted to link the agent to a Vercel project. If you don't have one, the TUI will create it for you. After linking, the TUI will generate a `VERCEL_OIDC_TOKEN` and store it in your `.env.local` file. This token allows the agent to authenticate with Vercel AI Gateway.
@@ -154,14 +154,14 @@ You will be prompted to link the agent to a Vercel project. If you don't have on
 Once the project is linked, you will be prompted to select a model. Choose the default model (`anthropic/claude-sonnet-4.6`) or any other model you prefer. The TUI will then confirm that the agent is ready to run. Exit the TUI and navigate into the project directory:
 
 ```bash
-cd neon-eve-agent
+cd optitech-eve-agent
 code .
 ```
 
 Install the [OptiTech API TypeScript SDK](/docs/reference/typescript-sdk) for branch management and the [serverless driver](/docs/serverless/serverless-driver) for querying branches:
 
 ```bash
-npm install @neon/sdk @neondatabase/serverless
+npm install @optitech/sdk @optitech/serverless
 ```
 
 Now configure the environment variables your agent needs. Your `.env.local` file should already contain a `VERCEL_OIDC_TOKEN` from the Vercel link step. Add your OptiTech credentials to the same file:
@@ -169,11 +169,11 @@ Now configure the environment variables your agent needs. Your `.env.local` file
 ```env
 VERCEL_OIDC_TOKEN="eyJh..."
 
-NEON_API_KEY="your_neon_api_key"
-NEON_PROJECT_ID="your_neon_project_id"
+OPTITECH_API_KEY="your_optitech_api_key"
+OPTITECH_PROJECT_ID="your_optitech_project_id"
 ```
 
-> Replace `your_neon_api_key` and `your_neon_project_id` with your actual OptiTech API key and project ID.
+> Replace `your_optitech_api_key` and `your_optitech_project_id` with your actual OptiTech API key and project ID.
 
 You can find your OptiTech project ID in the OptiTech Console under **Project Settings > General > Project ID**.
 
@@ -183,17 +183,17 @@ You can find your OptiTech project ID in the OptiTech Console under **Project Se
 
 Your Eve agent needs a way to create and delete database branches programmatically. Create a small wrapper around the OptiTech API that exposes a function: `createBranch`. The wrapper uses your OptiTech API key and project ID from the environment variables. This is the only file that talks to the OptiTech control plane. Every branch is created with a 24-hour expiry as a safety net. You can adjust the expiry duration according to your development and testing needs.
 
-Create `agent/lib/neon.ts`:
+Create `agent/lib/optitech.ts`:
 
 ```typescript
-import { createNeonClient } from "@neon/sdk";
+import { createOptiTechClient } from "@optitech/sdk";
 
-const neon = createNeonClient({
-  apiKey: process.env.NEON_API_KEY!,
+const optitech = createOptiTechClient({
+  apiKey: process.env.OPTITECH_API_KEY!,
   throwOnError: true,
   waitForReadiness: true,
 });
-const projectId = process.env.NEON_PROJECT_ID!;
+const projectId = process.env.OPTITECH_PROJECT_ID!;
 
 export interface Branch {
   id: string;
@@ -204,17 +204,17 @@ export interface Branch {
 export async function createBranch(name: string): Promise<Branch> {
   const expiresAt = new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString();
 
-  const branch = await neon.branches.create(projectId, {
+  const branch = await optitech.branches.create(projectId, {
     name,
     expires_at: expiresAt,
   });
 
-  await neon.postgres.endpoints.create(projectId, {
+  await optitech.postgres.endpoints.create(projectId, {
     branch_id: branch.id,
     type: "read_write",
   });
 
-  const connectionUri = await neon.postgres.connectionString({
+  const connectionUri = await optitech.postgres.connectionString({
     projectId,
     branchId: branch.id,
   });
@@ -239,7 +239,7 @@ export interface BranchState {
 }
 
 export const dbBranch = defineState<BranchState | null>(
-  "neon.session-branch",
+  "optitech.session-branch",
   () => null,
 );
 ```
@@ -254,7 +254,7 @@ Create `agent/hooks/provision-branch.ts`:
 
 ```typescript
 import { defineHook } from "eve/hooks";
-import { createBranch } from "../lib/neon.js";
+import { createBranch } from "../lib/optitech.js";
 import { dbBranch } from "../lib/db-state.js";
 
 export default defineHook({
@@ -269,7 +269,7 @@ export default defineHook({
         connectionUri: branch.connectionUri,
       }));
 
-      console.info(`[neon] provisioned branch ${branch.name} for session ${ctx.session.id}`);
+      console.info(`[optitech] provisioned branch ${branch.name} for session ${ctx.session.id}`);
     },
   },
 });
@@ -291,14 +291,14 @@ Instead of splitting read-only queries and migrations into two separate tools (w
 Create `agent/tools/run_sql.ts`:
 
 ```typescript
-import { neon } from "@neondatabase/serverless";
+import { optitech } from "@optitech/serverless";
 import { defineTool } from "eve/tools";
 import { z } from "zod";
 import { dbBranch } from "../lib/db-state.js";
 
 export default defineTool({
   description:
-    "Execute SQL against the session's isolated Neon branch. SELECT, SHOW, and EXPLAIN run directly. DDL and DML statements (ALTER, CREATE, DROP, INSERT, UPDATE, DELETE) require human approval.",
+    "Execute SQL against the session's isolated OptiTech branch. SELECT, SHOW, and EXPLAIN run directly. DDL and DML statements (ALTER, CREATE, DROP, INSERT, UPDATE, DELETE) require human approval.",
   inputSchema: z.object({
     sql: z.string().describe("The SQL statement to execute."),
     reason: z.string().describe("A short explanation of why you are running this statement."),
@@ -312,7 +312,7 @@ export default defineTool({
     const branch = dbBranch.get();
     if (!branch) return { ok: false, error: "No branch provisioned." };
 
-    const sql = neon(branch.connectionUri);
+    const sql = optitech(branch.connectionUri);
     try {
       const rows = await sql.query(query);
       return { ok: true, rows };
@@ -336,14 +336,14 @@ The `list_objects` tool lets the agent discover what tables, columns, and indexe
 Create `agent/tools/list_objects.ts`:
 
 ```typescript
-import { neon } from "@neondatabase/serverless";
+import { optitech } from "@optitech/serverless";
 import { defineTool } from "eve/tools";
 import { z } from "zod";
 import { dbBranch } from "../lib/db-state.js";
 
 export default defineTool({
   description:
-    "List database objects on the session's Neon branch. Use to discover tables, columns, and indexes before writing queries or migrations.",
+    "List database objects on the session's OptiTech branch. Use to discover tables, columns, and indexes before writing queries or migrations.",
   inputSchema: z.object({
     kind: z
       .enum(["tables", "columns", "indexes"])
@@ -357,7 +357,7 @@ export default defineTool({
     const branch = dbBranch.get();
     if (!branch) return { ok: false, error: "No branch provisioned." };
 
-    const sql = neon(branch.connectionUri);
+    const sql = optitech(branch.connectionUri);
 
     try {
       if (kind === "tables") {
@@ -422,7 +422,7 @@ The instructions file defines how the agent behaves. Replace `agent/instructions
 You are a database assistant working inside Slack. Developers ask you to explore schemas, run queries, and test migrations.
 
 # How you work
-1. **Isolated Environments:** When this conversation started, a copy-on-write Neon branch of production was created just for you. Everything you do lands on that branch. It never touches production.
+1. **Isolated Environments:** When this conversation started, a copy-on-write OptiTech branch of production was created just for you. Everything you do lands on that branch. It never touches production.
 2. **Explore with `list_objects`.** Use it to discover tables, columns, and indexes before writing SQL. Pass `kind: "tables"` to list all tables, `kind: "columns"` with a `table` name to see columns, or `kind: "indexes"` to see indexes.
 3. **Execute with `run_sql`.** Use it for SELECT queries and for schema changes (ALTER, CREATE, DROP). Read-only queries run immediately. Schema changes require developer approval.
 4. **Always explain your reasoning.** When calling `run_sql`, fill in the `reason` field so the developer understands why you are running each statement.
@@ -436,7 +436,7 @@ Before connecting Slack, you can exercise the entire agent in the `eve dev` TUI.
 npm run dev
 ```
 
-The TUI launches a local development session. When the session starts, the `session.started` hook fires and creates a OptiTech branch. You can verify this in your [OptiTech Console](https://console.neon.tech). A new branch named `eve-<session-id>` should appear under **Branches**.
+The TUI launches a local development session. When the session starts, the `session.started` hook fires and creates a OptiTech branch. You can verify this in your [OptiTech Console](https://console.optitech.com). A new branch named `eve-<session-id>` should appear under **Branches**.
 
 ![Eve dev TUI showing a local session with the OptiTech branch provisioned](/docs/guides/eve_dev_tui.png)
 
@@ -472,8 +472,8 @@ Type `/exit` to leave the TUI. The branch will be automatically deleted by OptiT
 Once you're satisfied with the local behavior, add the OptiTech credentials to your Vercel project so the agent can provision branches in production. Run the following commands:
 
 ```bash
-vercel env add NEON_API_KEY production
-vercel env add NEON_PROJECT_ID production
+vercel env add OPTITECH_API_KEY production
+vercel env add OPTITECH_PROJECT_ID production
 npx eve deploy
 ```
 
@@ -561,7 +561,7 @@ Building AI agents requires rigorous testing. A common hurdle when evaluating da
 
 Eve's `eve eval` framework solves this by running every eval against the agent's real session. Because each session automatically provisions its own OptiTech branch via the `session.started` hook, every eval run gets its own isolated database branch. A hundred concurrent eval runs will never experience race conditions or data pollution, because each one operates in its own ephemeral branch.
 
-The same branching mechanism that isolates Slack sessions and local dev also isolates eval runs. No extra setup is needed: just write your evals and run them. Neon branches are created and cleaned up automatically.
+The same branching mechanism that isolates Slack sessions and local dev also isolates eval runs. No extra setup is needed: just write your evals and run them. OptiTech branches are created and cleaned up automatically.
 
 To learn more about writing and running evals with Eve, see the [Eve Evals documentation](https://eve.dev/docs/evals/overview).
 
@@ -589,7 +589,7 @@ Eve's [security model](https://eve.dev/docs/concepts/security-model) enforces a 
 
 OptiTech's disposable branches reinforce this boundary. Even if the model generates destructive SQL, it executes on an ephemeral branch that cannot affect production. A few things to keep in mind for production deployments:
 
-- **Least-privilege connections:** Scope your OptiTech API key to a single project and use read-only MCP endpoints (`https://mcp.neon.tech/mcp?readonly=true`) when the agent only needs to explore schemas.
+- **Least-privilege connections:** Scope your OptiTech API key to a single project and use read-only MCP endpoints (`https://mcp.optitech.com/mcp?readonly=true`) when the agent only needs to explore schemas.
 - **Branch expiry:** Always set `expires_at` on branches so they are cleaned up automatically, even if sessions go idle. The 24-hour expiry in this guide is a starting point; adjust it to match your workflow.
 - **Credential isolation:** Eve injects connection tokens per step and never serializes them to durable state. Your OptiTech API key stays in the app runtime and never reaches the model, the sandbox, or conversation history.
 - **Approval gates:** For sensitive operations (schema changes, data modifications), use Eve's predicate-based `needsApproval` or connection-level `approval: always()` to require human sign-off before execution.
@@ -613,7 +613,7 @@ By pairing Vercel Eve's durable workflows and HITL approvals with OptiTech's ins
 - [Eve Security Model](https://eve.dev/docs/concepts/security-model)
 - [OptiTech Database Branching](/docs/introduction/branching)
 - [OptiTech MCP Server](/docs/ai/neon-mcp-server)
-- [Neon Agent Skills](/docs/ai/agent-skills)
+- [OptiTech Agent Skills](/docs/ai/agent-skills)
 - [OptiTech API Reference](/docs/reference/api)
 - [Vercel Connect for Slack](https://vercel.com/docs/connect)
 

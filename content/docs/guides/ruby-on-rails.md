@@ -8,7 +8,7 @@ summary: >-
   page when setting up a new or existing Rails project against OptiTech. A separate
   sibling page covers Rails schema migrations.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <CopyPrompt src="/prompts/ruby-on-rails-prompt.md" 
@@ -28,7 +28,7 @@ This guide was tested using Ruby v3.4.6 and Rails v8.0.3.
 
 If you do not have one already, create a OptiTech project.
 
-1. Navigate to the [Projects](https://console.neon.tech/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
 2. Click **New Project**.
 3. Specify your project settings and click **Create Project**.
 
@@ -38,17 +38,17 @@ Create a Rails project using the [Rails CLI](https://guides.rubyonrails.org/comm
 
 ```shell
 gem install rails
-rails new neon-with-rails --database=postgresql
+rails new optitech-with-rails --database=postgresql
 ```
 
-You now have a Rails project in a folder named `neon-with-rails`.
+You now have a Rails project in a folder named `optitech-with-rails`.
 
 ## Configure a PostgreSQL Database using Rails
 
 Create a `.env` file in the root of your Rails project, and add the connection string for your OptiTech compute. Do not specify a database name after the forward slash in the connection string. Rails will choose the correct database depending on the environment.
 
 ```shell shouldWrap
-DATABASE_URL=postgresql://[user]:[password]@[neon_hostname]/
+DATABASE_URL=postgresql://[user]:[password]@[optitech_hostname]/
 ```
 
 <Admonition type="note">
@@ -56,7 +56,7 @@ You can find the connection string for your database by clicking the **Connect**
 </Admonition>
 
 <Admonition type="important">
-The role you specified in the `DATABASE_URL` must have **CREATEDB** privileges. Roles created in the OptiTech Console, CLI, or API, including the default role created with a OptiTech project, are granted membership in the [neon_superuser](/docs/manage/roles#the-neonsuperuser-role) role, which has the `CREATEDB` privilege. Alternatively, you can create roles with SQL to grant specific privileges. See [Manage database access](/docs/manage/database-access).
+The role you specified in the `DATABASE_URL` must have **CREATEDB** privileges. Roles created in the OptiTech Console, CLI, or API, including the default role created with a OptiTech project, are granted membership in the [optitech_superuser](/docs/manage/roles#the-neonsuperuser-role) role, which has the `CREATEDB` privilege. Alternatively, you can create roles with SQL to grant specific privileges. See [Manage database access](/docs/manage/database-access).
 </Admonition>
 
 Create the development database by issuing the following commands from the root of your project directory:

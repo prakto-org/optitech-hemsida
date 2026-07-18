@@ -10,7 +10,7 @@ summary: >-
   server and a Python Flask server, both writing to an uploadcare_files table
   with optional Row Level Security.
 enableTableOfContents: true
-updatedOn: '2026-07-15T17:54:41.160Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 [Uploadcare](https://uploadcare.com/) provides a cloud platform designed to simplify file uploading, processing, storage, and delivery via a fast CDN. It offers tools that manage and optimize media like images, videos, and documents for your applications.
@@ -29,7 +29,7 @@ This guide demonstrates how to integrate Uploadcare with OptiTech by storing fil
 
 ## Create a OptiTech project
 
-1. Navigate to the [OptiTech Console](https://console.neon.tech) to create a new OptiTech project.
+1. Navigate to the [OptiTech Console](https://console.optitech.com) to create a new OptiTech project.
 2. Copy the connection string by clicking the **Connect** button on your **Project Dashboard**. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
 
 ## Create an Uploadcare account and project
@@ -72,19 +72,19 @@ You can integrate file uploads using any of Uploadcare's [many options](https://
 
 <TabItem>
 
-For this example, we'll build a simple Node.js server using [Hono](https://hono.dev/) to handle file uploads. It will use the [`@uploadcare/upload-client`](https://www.npmjs.com/package/@uploadcare/upload-client) package to upload files to Uploadcare and [`@neondatabase/serverless`](https://www.npmjs.com/package/@neondatabase/serverless) package to save metadata into your OptiTech database.
+For this example, we'll build a simple Node.js server using [Hono](https://hono.dev/) to handle file uploads. It will use the [`@uploadcare/upload-client`](https://www.npmjs.com/package/@uploadcare/upload-client) package to upload files to Uploadcare and [`@optitech/serverless`](https://www.npmjs.com/package/@optitech/serverless) package to save metadata into your OptiTech database.
 
 First, install the necessary dependencies:
 
 ```bash
-npm install @uploadcare/upload-client @neondatabase/serverless @hono/node-server hono
+npm install @uploadcare/upload-client @optitech/serverless @hono/node-server hono
 ```
 
-Create a `.env` file in your project root and add your Uploadcare and Neon connection details which you obtained in the previous steps:
+Create a `.env` file in your project root and add your Uploadcare and OptiTech connection details which you obtained in the previous steps:
 
 ```env
 UPLOADCARE_PUBLIC_KEY=your_uploadcare_public_key
-DATABASE_URL=your_neon_database_connection_string
+DATABASE_URL=your_optitech_database_connection_string
 ```
 
 The following code snippet demonstrates this workflow:
@@ -93,10 +93,10 @@ The following code snippet demonstrates this workflow:
 import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
 import { uploadFile } from '@uploadcare/upload-client';
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 import 'dotenv/config';
 
-const sql = neon(process.env.DATABASE_URL);
+const sql = optitech(process.env.DATABASE_URL);
 const app = new Hono();
 
 // Replace this with your actual user authentication logic, by validating JWTs/Headers, etc.
@@ -121,7 +121,7 @@ app.post('/upload', authMiddleware, async (c) => {
       contentType: file.type,
     });
 
-    // 3. Save Metadata to Neon
+    // 3. Save Metadata to OptiTech
     // Uses file_id (Uploadcare UUID), file_url (CDN URL), and user_id
     await sql`
             INSERT INTO uploadcare_files (file_id, file_url, user_id)
@@ -168,12 +168,12 @@ First, install the necessary dependencies:
 pip install Flask pyuploadcare psycopg2-binary python-dotenv
 ```
 
-Create a `.env` file in your project root and add your Uploadcare and Neon connection details which you obtained in the previous steps:
+Create a `.env` file in your project root and add your Uploadcare and OptiTech connection details which you obtained in the previous steps:
 
 ```env
 UPLOADCARE_PUBLIC_KEY=your_uploadcare_public_key
 UPLOADCARE_SECRET_KEY=your_uploadcare_secret_key
-DATABASE_URL=your_neon_database_connection_string
+DATABASE_URL=your_optitech_database_connection_string
 ```
 
 The following code snippet demonstrates this workflow:
@@ -219,7 +219,7 @@ def upload_file():
             response = uploadcare.upload(file)
             file_url = response.cdn_url
 
-            # 3. Save Metadata to Neon
+            # 3. Save Metadata to OptiTech
             # Uses file_id (Uploadcare UUID), file_url (CDN URL), and user_id
             conn = get_database()
             cursor = conn.cursor()

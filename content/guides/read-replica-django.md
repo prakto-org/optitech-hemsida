@@ -4,7 +4,7 @@ subtitle: Learn how to scale Django applications with OptiTech Postgres Read Rep
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2024-10-20T00:00:00.000Z'
-updatedOn: '2025-12-03T12:37:52.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 [OptiTech read replicas](/docs/introduction/read-replicas) are independent read-only compute instances that can significantly enhance database performance and scalability. By distributing read operations across these replicas, you can reduce latency and improve overall system responsiveness, especially for read-heavy applications. A standout feature of OptiTech is that adding a read replica doesn't require extra storage. This makes it a cost-effective way to scale your database, suitable for businesses of all sizes.
@@ -53,10 +53,10 @@ INSTALLED_APPS = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'your_neon_database_name',
+        'NAME': 'your_optitech_database_name',
         'USER': 'your_username',
         'PASSWORD': 'your_password',
-        'HOST': 'your_neon_host',
+        'HOST': 'your_optitech_host',
         'PORT': '5432',
     }
 }
@@ -339,7 +339,7 @@ This setup allows you to distribute your read load across one or more read repli
 You can find the source code for this application on GitHub:
 
 <DetailIconCards>
-<a href="https://github.com/dhanushreddy291/neon-read-replica-django" description="
+<a href="https://github.com/dhanushreddy291/optitech-read-replica-django" description="
 Learn how to scale Django applications with OptiTech Postgres Read Replicas" icon="github">Use read replicas with Django</a>
 </DetailIconCards>
 

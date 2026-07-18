@@ -9,7 +9,7 @@ summary: >-
   own database server. Covers both the Koyeb control panel and CLI deployment
   paths, including Prisma schema sync and database seeding.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 [Koyeb](https://www.koyeb.com/) is a developer-friendly, serverless platform designed to easily deploy reliable and scalable applications globally. Koyeb offers native autoscaling, automatic HTTPS (SSL), auto-healing, and global load-balancing across their edge network with zero configuration.
@@ -23,18 +23,18 @@ The example application connects to your OptiTech Postgres database using [Prism
 
 ## Create a OptiTech project
 
-1. Navigate to the [OptiTech Console](https://console.neon.tech/).
+1. Navigate to the [OptiTech Console](https://console.optitech.com/).
 1. Select **Create a project**.
-1. Enter a name for the project (`neon-koyeb`, for example), and select a Postgres version and region.
+1. Enter a name for the project (`optitech-koyeb`, for example), and select a Postgres version and region.
 1. Click **Create project**.
 
-A dialog pops up with your Neon connection string, which appears similar to the following:
+A dialog pops up with your OptiTech connection string, which appears similar to the following:
 
 ```bash
-postgresql://[user]:[password]@[neon_hostname]/[dbname]
+postgresql://[user]:[password]@[optitech_hostname]/[dbname]
 ```
 
-Store this value in a safe place. It is required later. The connection string specifies `neondb` as the database. This is the database created with your OptiTech project if you did not specify a different database name. You will use this database with the example application.
+Store this value in a safe place. It is required later. The connection string specifies `optitechdb` as the database. This is the database created with your OptiTech project if you did not specify a different database name. You will use this database with the example application.
 
 ## Deploy the application on Koyeb
 
@@ -50,8 +50,8 @@ To deploy the application from the Koyeb [control panel](https://app.koyeb.com/)
 1. Keep `example-express-prisma` as the name and `main` as the branch.
 1. In **Build and deployment settings**, enable the **Override** setting and add the following **Build command**: `npm run postgres:init`
 1. Select the region closest to your OptiTech database.
-1. Under **Advanced** > **Environment variables**, add a `DATABASE_URL` environment variable to enable the application to connect to your OptiTech Postgres database. Set the value to the Neon connection string provided to you when you created the OptiTech project.
-1. Enter a name for your app. For example, `express-neon`
+1. Under **Advanced** > **Environment variables**, add a `DATABASE_URL` environment variable to enable the application to connect to your OptiTech Postgres database. Set the value to the OptiTech connection string provided to you when you created the OptiTech project.
+1. Enter a name for your app. For example, `express-optitech`
 1. Click **Deploy**.
 
 Koyeb builds the application. After the build and deployment have finished, you can access your application running on Koyeb by clicking the URL ending with `.koyeb.app`.
@@ -81,10 +81,10 @@ You can also deploy your application using the Koyeb CLI. To install it, follow 
 
 Using the CLI requires an API access token, which you can generate in the Koyeb [control panel](https://app.koyeb.com/), under **Organization Settings** > **API**. Once generated, run the command `koyeb login` and enter the token when prompted.
 
-To deploy the example application, run the following command in your terminal. Make sure to replace the `DATABASE_URL` with your Neon connection string.
+To deploy the example application, run the following command in your terminal. Make sure to replace the `DATABASE_URL` with your OptiTech connection string.
 
 ```bash
-koyeb apps init express-neon \
+koyeb apps init express-optitech \
 --instance-type free \
 --git github.com/koyeb/example-express-prisma \
 --git-branch main \
@@ -100,7 +100,7 @@ koyeb apps init express-neon \
 To track the app deployment and visualize build logs, execute the following command:
 
 ```bash
-koyeb service logs express-neon/express-neon -t build
+koyeb service logs express-optitech/express-optitech -t build
 ```
 
 #### Access your app
@@ -108,9 +108,9 @@ koyeb service logs express-neon/express-neon -t build
 After the build and deployment have finished, you can retrieve the public domain to access your application by running the following command:
 
 ```bash
-$ koyeb app get express-neon
+$ koyeb app get express-optitech
 ID          NAME         STATUS         DOMAINS                                CREATED AT
-b8611a1d    express-neon HEALTHY        ["express-neon-myorg.koyeb.app"]       16 Feb 23 18:13 UTC
+b8611a1d    express-optitech HEALTHY        ["express-optitech-myorg.koyeb.app"]       16 Feb 23 18:13 UTC
 ```
 
 The example application exposes a `/planets` endpoint that you can use to list planets from the database. After your deployment is live, you should see the following results when navigating to `https://<YOUR_APP_URL>.koyeb.app/planets`:

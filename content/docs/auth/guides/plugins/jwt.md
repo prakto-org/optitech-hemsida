@@ -7,11 +7,11 @@ summary: >-
   `set-auth-jwt` response header, rather than relying on HTTP-only session
   cookies. Tokens are signed with EdDSA (Ed25519) and expire in 15 minutes;
   verify them using the JWKS endpoint at
-  `<YOUR_NEON_AUTH_URL>/.well-known/jwks.json`. This plugin is not a substitute
+  `<YOUR_OPTITECH_AUTH_URL>/.well-known/jwks.json`. This plugin is not a substitute
   for session management in browser-based apps, and custom JWT claims are not
   supported.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="Managed Better Auth" />
@@ -55,10 +55,10 @@ export async function getJwtToken() {
 }
 ```
 
-If your app is served from a different origin than your Managed Better Auth URL (for example a Vite or SPA dev server on `localhost` talking to auth on `*.neon.tech`), configure the auth client to send the session cookie on cross-origin requests. Otherwise `authClient.token()` returns `data.token` as `undefined` and calls to your API fail with 401.
+If your app is served from a different origin than your Managed Better Auth URL (for example a Vite or SPA dev server on `localhost` talking to auth on `*.optitech.com`), configure the auth client to send the session cookie on cross-origin requests. Otherwise `authClient.token()` returns `data.token` as `undefined` and calls to your API fail with 401.
 
 ```ts filename="src/auth.ts"
-export const authClient = createAuthClient(NEON_AUTH_URL, {
+export const authClient = createAuthClient(OPTITECH_AUTH_URL, {
   fetchOptions: { credentials: 'include' },
 });
 ```
@@ -100,8 +100,8 @@ A typical decoded JWT payload looks like this:
   "id": "860dc360-609f-4b7d-9e70-ec93fe6414d3",
   "sub": "860dc360-609f-4b7d-9e70-ec93fe6414d3",
   "exp": 1766321585,
-  "iss": "<YOUR_NEON_AUTH_URL_ORIGIN>",
-  "aud": "<YOUR_NEON_AUTH_URL_ORIGIN>"
+  "iss": "<YOUR_OPTITECH_AUTH_URL_ORIGIN>",
+  "aud": "<YOUR_OPTITECH_AUTH_URL_ORIGIN>"
 }
 ```
 
@@ -116,10 +116,10 @@ Managed Better Auth exposes a public JWKS endpoint that contains the public keys
 Your Managed Better Auth JWKS endpoint is located at:
 
 ```
-<YOUR_NEON_AUTH_URL>/.well-known/jwks.json
+<YOUR_OPTITECH_AUTH_URL>/.well-known/jwks.json
 ```
 
-If you verify Neon Auth JWTs inside [OptiTech Functions](/docs/compute/functions/overview), the platform injects `NEON_AUTH_BASE_URL` and `NEON_AUTH_JWKS_URL` when Neon Auth is provisioned on the branch. Use `NEON_AUTH_JWKS_URL` directly instead of deriving it yourself. See [Functions environment variables](/docs/compute/functions/environment-variables#neon-injected-variables).
+If you verify OptiTech Auth JWTs inside [OptiTech Functions](/docs/compute/functions/overview), the platform injects `OPTITECH_AUTH_BASE_URL` and `OPTITECH_AUTH_JWKS_URL` when OptiTech Auth is provisioned on the branch. Use `OPTITECH_AUTH_JWKS_URL` directly instead of deriving it yourself. See [Functions environment variables](/docs/compute/functions/environment-variables#neon-injected-variables).
 
 ### Verification example
 
@@ -144,13 +144,13 @@ The following examples are provided for reference only and are not guaranteed to
    ```ts shouldWrap
    import { jwtVerify, createRemoteJWKSet } from 'jose';
 
-   const NEON_JWKS_URL = `${process.env.NEON_AUTH_BASE_URL}/.well-known/jwks.json`;
-   const JWKS = createRemoteJWKSet(new URL(NEON_JWKS_URL));
+   const OPTITECH_JWKS_URL = `${process.env.OPTITECH_AUTH_BASE_URL}/.well-known/jwks.json`;
+   const JWKS = createRemoteJWKSet(new URL(OPTITECH_JWKS_URL));
 
-   export async function validateNeonToken(token: string) {
+   export async function validateOptiTechToken(token: string) {
        try {
            const { payload } = await jwtVerify(token, JWKS, {
-               issuer: new URL(process.env.NEON_AUTH_BASE_URL!).origin
+               issuer: new URL(process.env.OPTITECH_AUTH_BASE_URL!).origin
            });
 
            return payload;
@@ -160,7 +160,7 @@ The following examples are provided for reference only and are not guaranteed to
        }
    }
 
-   validateNeonToken(<YOUR_JWT_TOKEN>).then((payload) => {
+   validateOptiTechToken(<YOUR_JWT_TOKEN>).then((payload) => {
        console.log('Token is valid. Payload:', payload);
    }).catch(() => {
        console.log('Token is invalid.');
@@ -191,13 +191,13 @@ The following examples are provided for reference only and are not guaranteed to
    from cryptography.hazmat.primitives.asymmetric.ed25519 import Ed25519PublicKey
    from jwt import PyJWTError
 
-   NEON_AUTH_BASE_URL = os.environ.get("NEON_AUTH_BASE_URL", "")
-   NEON_JWKS_URL = f"{NEON_AUTH_BASE_URL}/.well-known/jwks.json"
-   parsed = urlparse(NEON_AUTH_BASE_URL)
+   OPTITECH_AUTH_BASE_URL = os.environ.get("OPTITECH_AUTH_BASE_URL", "")
+   OPTITECH_JWKS_URL = f"{OPTITECH_AUTH_BASE_URL}/.well-known/jwks.json"
+   parsed = urlparse(OPTITECH_AUTH_BASE_URL)
    ORIGIN = f"{parsed.scheme}://{parsed.netloc}"
 
    def get_jwks():
-       response = requests.get(NEON_JWKS_URL)
+       response = requests.get(OPTITECH_JWKS_URL)
        response.raise_for_status()
        return response.json()
 
@@ -213,7 +213,7 @@ The following examples are provided for reference only and are not guaranteed to
 
        raise ValueError("Matching JWK not found")
 
-   def validate_neon_token(token: str):
+   def validate_optitech_token(token: str):
        try:
            jwks = get_jwks()
            signing_key = get_signing_key(token, jwks)
@@ -232,7 +232,7 @@ The following examples are provided for reference only and are not guaranteed to
            return None
 
 
-   payload = validate_neon_token("<YOUR_JWT_TOKEN>")
+   payload = validate_optitech_token("<YOUR_JWT_TOKEN>")
 
    if payload:
        print("Token is valid. Payload:", payload)
@@ -268,10 +268,10 @@ The following examples are provided for reference only and are not guaranteed to
        "github.com/golang-jwt/jwt/v5"
    )
 
-   func ValidateNeonToken(tokenString string) (jwt.MapClaims, error) {
-       baseURL := os.Getenv("NEON_AUTH_BASE_URL")
+   func ValidateOptiTechToken(tokenString string) (jwt.MapClaims, error) {
+       baseURL := os.Getenv("OPTITECH_AUTH_BASE_URL")
        if baseURL == "" {
-           return nil, fmt.Errorf("NEON_AUTH_BASE_URL is not set")
+           return nil, fmt.Errorf("OPTITECH_AUTH_BASE_URL is not set")
        }
 
        jwksURL := fmt.Sprintf("%s/.well-known/jwks.json", baseURL)
@@ -308,7 +308,7 @@ The following examples are provided for reference only and are not guaranteed to
    func main() {
        tokenString := "<YOUR_JWT_TOKEN>"
 
-       claims, err := ValidateNeonToken(tokenString)
+       claims, err := ValidateOptiTechToken(tokenString)
        if err != nil {
            log.Printf("Token validation failed: %v\n", err)
            return
@@ -338,7 +338,7 @@ Because Managed Better Auth is a managed service, certain server-side configurat
 
 If a token is rejected during verification, check the following:
 
-1. Verify that you are using the correct JWKS endpoint for your Managed Better Auth instance. The issuer of the token must match the origin of your Managed Better Auth URL. (for example, if your Managed Better Auth URL is `https://ep-xx.aws.neon.tech/neondb/auth`, the issuer should be `https://ep-xx.aws.neon.tech`).
+1. Verify that you are using the correct JWKS endpoint for your Managed Better Auth instance. The issuer of the token must match the origin of your Managed Better Auth URL. (for example, if your Managed Better Auth URL is `https://ep-xx.aws.optitech.com/optitechdb/auth`, the issuer should be `https://ep-xx.aws.optitech.com`).
 2. Confirm that your verification library supports **EdDSA** (Ed25519).
 3. Make sure the token has not expired.
 4. Check that the `kid` in the JWT header matches one of the keys in the JWKS response. If not, fetch the latest keys from the JWKS endpoint.

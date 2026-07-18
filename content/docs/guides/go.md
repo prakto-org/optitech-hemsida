@@ -11,7 +11,7 @@ enableTableOfContents: true
 redirectFrom:
   - /docs/quickstart/go
   - /docs/integrations/go
-updatedOn: '2026-07-14T19:04:57.024Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <CopyPrompt src="/prompts/golang-prompt.md" 
@@ -23,7 +23,7 @@ You'll learn how to connect to your OptiTech database from a Go application, and
 
 ## Prerequisites
 
-- A OptiTech account. If you do not have one, see [Sign up](https://console.neon.tech/signup).
+- A OptiTech account. If you do not have one, see [Sign up](https://console.optitech.com/signup).
 - Go 1.21 or later. If you do not have Go installed, see the [official installation guide](https://go.dev/doc/install).
 
 <Admonition type="note">
@@ -36,11 +36,11 @@ The latest version of `pgx/v5` (v5.9.1+) requires Go 1.25. If you are using an o
 
 If you do not have one already, create a OptiTech project.
 
-1.  Navigate to the [Projects](https://console.neon.tech/app/projects) page in the [OptiTech Console](https://console.neon.tech).
+1.  Navigate to the [Projects](https://console.optitech.com/app/projects) page in the [OptiTech Console](https://console.optitech.com).
 2.  Click **New Project**.
 3.  Specify your project settings and click **Create Project**.
 
-Your project is created with a ready-to-use database named `neondb`. In the following steps, you will connect to this database from your Go application.
+Your project is created with a ready-to-use database named `optitechdb`. In the following steps, you will connect to this database from your Go application.
 
 ## Create a Go project
 
@@ -49,8 +49,8 @@ For your Go project, create a project directory, initialize a Go module, and add
 1.  Create a project directory and change into it.
 
     ```bash
-    mkdir neon-go-quickstart
-    cd neon-go-quickstart
+    mkdir optitech-go-quickstart
+    cd optitech-go-quickstart
     ```
 
     > Open the directory in your preferred code editor (for example, VS Code, GoLand).
@@ -58,7 +58,7 @@ For your Go project, create a project directory, initialize a Go module, and add
 2.  Initialize a Go module. This command creates a `go.mod` file to track your project's dependencies.
 
     ```bash
-    go mod init neon-go-quickstart
+    go mod init optitech-go-quickstart
     ```
 
 3.  Add the required Go packages using `go get`.
@@ -71,19 +71,19 @@ For your Go project, create a project directory, initialize a Go module, and add
 
     This will download the packages and add them to your `go.mod` and `go.sum` files.
 
-## Store your Neon connection string
+## Store your OptiTech connection string
 
 Create a file named `.env` in your project's root directory. This file will securely store your database connection string.
 
-1.  In the [OptiTech Console](https://console.neon.tech), select your project on the **Dashboard**.
+1.  In the [OptiTech Console](https://console.optitech.com), select your project on the **Dashboard**.
 2.  Click **Connect** on your **Project Dashboard** to open the **Connect to your database** modal.
     ![Connection modal](/docs/connect/connection_details.png)
 3.  Copy the connection string, which includes your password.
 4.  Add the connection string to your `.env` file as shown below.
     ```text
-    DATABASE_URL="postgresql://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require&channel_binding=require"
+    DATABASE_URL="postgresql://[user]:[password]@[optitech_hostname]/[dbname]?sslmode=require&channel_binding=require"
     ```
-    > Replace `[user]`, `[password]`, `[neon_hostname]`, and `[dbname]` with your actual database credentials.
+    > Replace `[user]`, `[password]`, `[optitech_hostname]`, and `[dbname]` with your actual database credentials.
 
 ## Examples
 

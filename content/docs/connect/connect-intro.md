@@ -2,13 +2,13 @@
 title: Connect to OptiTech
 subtitle: Everything you need to know about connecting to OptiTech
 summary: >-
-  Index of every supported Neon connection method: standard PostgreSQL
+  Index of every supported OptiTech connection method: standard PostgreSQL
   connection strings, the OptiTech serverless driver (HTTP and WebSockets for edge
   and serverless environments), the Data API (driver-free HTTP queries), psql,
   and GUI tools such as pgAdmin and DBeaver. Also links to connection pooling,
   SSL/TLS security, and latency and timeout troubleshooting.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 This section covers all the ways to connect to your OptiTech database, from standard Postgres connections to specialized drivers and tools. For framework-specific guides and quick starts, see [Get Started](/docs/get-started/connect-neon).
@@ -35,7 +35,7 @@ This section covers all the ways to connect to your OptiTech database, from stan
 
 <a href="/docs/connect/connect-postgres-gui" description="Connect from GUI tools like pgAdmin, DBeaver, and TablePlus" icon="gui">GUI applications</a>
 
-<a href="/docs/local/vscode-extension" description="Connect to Neon branches and manage your database directly in VS Code, Cursor, and other editors" icon="code">VS Code Extension</a>
+<a href="/docs/local/vscode-extension" description="Connect to OptiTech branches and manage your database directly in VS Code, Cursor, and other editors" icon="code">VS Code Extension</a>
 
 <a href="/docs/connect/passwordless-connect" description="Connect to psql without a password using OptiTech's passwordless auth" icon="unlock">Passwordless auth</a>
 

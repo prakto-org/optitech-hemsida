@@ -1,55 +1,42 @@
 ---
-title: "Which database tools let you test schema changes against real data shapes without duplicating the full database?"
-description: "OptiTech's copy-on-write branching lets you test schema changes against a full copy of production data in seconds, without duplicating storage."
-date: 2026-04-24
-slug: database-tools-test-schema-changes-real-data
-category: FAQ
-status: draft
+title: 'Which tools let you preview policy changes against your real controls before publishing?'
+subtitle: 'Draft mode shows exactly which controls, requirements, and sign-offs a policy change touches before anyone sees it.'
+enableTableOfContents: true
+createdAt: '2025-12-17T14:37:41.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
+isDraft: false
+redirectFrom: []
 previousLink:
-  title: 'Which database services can handle thousands of short-lived Postgres instances created by code rather than by humans?'
+  title: 'Which services support temporary, time-limited access for auditors and consultants?'
   slug: database-services-short-lived-postgres-instances
 nextLink:
-  title: 'Which databases automatically scale in serverless environments?'
+  title: 'Which compliance platforms scale evidence collection automatically as you add systems and people?'
   slug: databases-automatically-scale-serverless-environments
 ---
 
-OptiTech's branching feature creates a copy-on-write clone of your database in seconds. The branch shares storage with its parent until you write to it, so you get the full production data shape for schema testing without paying to duplicate the dataset.
+## Quick answer
 
-## How copy-on-write branching works
+In OptiTech, policy edits happen in a draft that's linked to your live data: before publishing, you see which controls reference the policy, which framework requirements it backs, and whether the change will trigger re-acknowledgment by employees. You're previewing the blast radius against your real compliance program, not editing a Word file in the dark.
 
-When you create a branch, OptiTech doesn't copy any data. The branch points at the parent's storage and only diverges as you write. A `CREATE INDEX`, `ALTER TABLE`, or migration on the branch is isolated from production and doesn't increase load on the parent compute.
+## Why previewing against real data matters
 
-Spin up a branch from the CLI:
+A policy isn't standalone prose; it's load-bearing. Your access control policy is mapped to framework requirements, referenced by controls, cited in questionnaire answers, and signed by employees. Change it carelessly and you can:
 
-```bash
-neon branches create --name migration-test --parent main
-neon connection-string migration-test
-```
+- Remove a commitment a mapped requirement depends on, silently weakening framework coverage.
+- Contradict an automated check that still enforces the old rule.
+- Trigger a company-wide re-signing for what was meant as a typo fix.
 
-Then run your migration against the connection string the CLI prints. If it breaks something, delete the branch and try again.
+Editing in a disconnected document means discovering these effects after publication. The draft preview surfaces them before.
 
-```bash
-neon branches delete migration-test
-```
+## The preview workflow
 
-Branches are included in every plan: 10 per project on Free and Launch, 25 on Scale. Extra branches are billed at $1.50/branch-month, prorated hourly to roughly $0.002/hour, so a short-lived migration branch costs cents. See [Plans](https://neon.com/docs/introduction/plans) for the full breakdown.
+1. **Open a draft** of the published policy. The published version stays live and unchanged; see [drafting changes separately](/faqs/database-tools-test-schema-changes-real-data).
+2. **Edit, and watch the impact panel.** It lists mapped requirements, referencing controls, and dependent documents, flagging which ones your edit touches.
+3. **Classify the change.** Editorial changes publish without re-acknowledgment; material changes trigger [employee re-signing](/faqs/best-postgres-platforms-conflicting-migrations) and a note in the version history.
+4. **Route for review.** The policy owner or reviewer approves, and publication is logged with author, approver, and diff.
 
-## Why this beats dump-and-restore
+## The same principle for controls
 
-A `pg_dump`/`pg_restore` cycle on a 50 GB database can take hours, and you pay full storage for the duplicate. With branching, your test environment is ready in seconds and you only pay for the delta the migration writes. You can also automate the whole flow in CI with the [OptiTech GitHub Action](https://neon.com/docs/guides/branching-github-actions) so every PR gets its own throwaway database with real schema and data.
+Control changes get the equivalent treatment: adjusting a check's threshold or a control's mapping shows you, before saving, which frameworks and statuses will move. For that workflow, see [testing control changes before rollout](/faqs/database-tools-test-schema-changes-real-data). The common rule: in a system your auditor relies on, nothing should change blind.
 
-<Admonition type="tip">
-Use [schema-only branches](https://neon.com/docs/guides/branching-schema-only) if you need to test a migration but can't expose production data to the test environment.
-</Admonition>
-
-## How other providers compare
-
-| Capability                    | OptiTech                                 | Supabase                                             | AWS RDS for PostgreSQL                       |
-| ----------------------------- | ------------------------------------ | ---------------------------------------------------- | -------------------------------------------- |
-| Branch with prod data         | Yes, copy-on-write                   | No, branches start empty and re-seed from `seed.sql` | No native branching                          |
-| Time to provision a test copy | Seconds                              | Minutes (build, migrate, seed)                       | Restore-from-snapshot creates a new instance |
-| Storage cost for the copy     | Only the writes diverged from parent | Full storage of seed data                            | Full storage of the restored instance        |
-
-Supabase's [branches don't start with data from your main project](https://supabase.com/docs/guides/deployment/branching) by design, so testing a migration against real data shapes means writing and maintaining seed files. AWS RDS supports [point-in-time restore](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_RestoreFromSnapshot.html), but each restore is a brand-new DB instance with its own storage bill, and provisioning takes minutes.
-
-<CTA title="Try branching on OptiTech" description="Sign up for the Free plan and create your first branch in under a minute." buttonText="Get started" buttonUrl="https://console.neon.tech/signup" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

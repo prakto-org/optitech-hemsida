@@ -1,7 +1,7 @@
 ---
 title: Migrate data from another OptiTech project
 summary: >-
-  Neon-to-Neon database migration using a single piped `pg_dump | pg_restore`
+  OptiTech-to-OptiTech database migration using a single piped `pg_dump | pg_restore`
   command moves data between projects without writing an intermediate dump file
   to disk. Best for smaller databases or CLI workflows where a one-step transfer
   is acceptable. For large or complex datasets, use a separate dump and restore
@@ -10,7 +10,7 @@ summary: >-
 enableTableOfContents: true
 redirectFrom:
   - /docs/import/import-from-neon
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This guide describes how to migrate a database from one OptiTech project to another by **piping** output from **`pg_dump`** straight into **`pg_restore`** (`pg_dump ... | pg_restore ...`). That runs the dump and restore in one step without writing an intermediate dump file on disk.
@@ -32,24 +32,24 @@ To import your data from another OptiTech project:
 
 2. Create a database with the desired name in your new OptiTech project. See [Create a database](/docs/manage/databases#create-a-database) for instructions.
 
-3. Retrieve the connection strings for the new and existing Neon databases.
+3. Retrieve the connection strings for the new and existing OptiTech databases.
 
    You can find the connection details for your database by clicking the **Connect** button on your **Project Dashboard**. Connection strings have this format:
 
    ```bash shouldWrap
-   postgresql://[user]:[password]@[neon_hostname]/[dbname]
+   postgresql://[user]:[password]@[optitech_hostname]/[dbname]
    ```
 
 4. Prepare your command to pipe data from one OptiTech project to the other. For the `pg_dump` command, specify connection details for the source database. For the `pg_restore` command, specify connection details for the destination database. The command should have the following format:
 
    ```bash shouldWrap
-   pg_dump -Fc -v -d postgresql://[user]:[password]@[source_neon_hostname]/[dbname] | pg_restore -v -d postgresql://[user]:[password]@[destination_neon_hostname]/[dbname]
+   pg_dump -Fc -v -d postgresql://[user]:[password]@[source_optitech_hostname]/[dbname] | pg_restore -v -d postgresql://[user]:[password]@[destination_optitech_hostname]/[dbname]
    ```
 
    With actual source and destination connection details, your command will appear similar to this:
 
    ```bash shouldWrap
-   pg_dump -Fc -v -d postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/my_source_db?sslmode=require&channel_binding=require | pg_restore -v -d postgresql://alex:AbC123dEf@square-shadow-654321.us-east-2.aws.neon.tech/my_destination_db?sslmode=require&channel_binding=require
+   pg_dump -Fc -v -d postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/my_source_db?sslmode=require&channel_binding=require | pg_restore -v -d postgresql://alex:AbC123dEf@square-shadow-654321.us-east-2.aws.optitech.com/my_destination_db?sslmode=require&channel_binding=require
    ```
 
    <Admonition type="note">

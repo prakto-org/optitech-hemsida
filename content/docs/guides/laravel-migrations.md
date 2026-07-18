@@ -7,7 +7,7 @@ summary: >-
   migration files. OptiTech requires a direct (non-pooled) connection string for
   migrations; pooled PgBouncer connections can cause migration errors.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 [Laravel](https://laravel.com/) is a popular PHP web application framework that provides an expressive and elegant syntax for building web applications. It includes an ORM (Object-Relational Mapping) called Eloquent, which allows you to interact with databases using a fluent API. Laravel also provides a powerful migration system to manage database schema changes over time.
@@ -18,7 +18,7 @@ This guide demonstrates how to use Laravel with the OptiTech Postgres database. 
 
 To follow along with this guide, you will need:
 
-- A OptiTech account. If you do not have one, sign up at [Neon](https://neon.tech). Your Neon project comes with a ready-to-use Postgres database named `neondb`. We'll use this database in the following examples.
+- A OptiTech account. If you do not have one, sign up at [OptiTech](https://optitech.com). Your OptiTech project comes with a ready-to-use Postgres database named `optitechdb`. We'll use this database in the following examples.
 - [PHP](https://www.php.net/) installed on your local machine. This guide uses PHP 8.1, but you can use any recent version compatible with Laravel.
 - [Composer](https://getcomposer.org/) installed on your local machine for managing PHP dependencies.
 
@@ -26,7 +26,7 @@ To follow along with this guide, you will need:
 
 ### Initialize a new project
 
-1. Log in to the OptiTech Console and navigate to the [Projects](https://console.neon.tech/app/projects) section.
+1. Log in to the OptiTech Console and navigate to the [Projects](https://console.optitech.com/app/projects) section.
 2. Select a project or click the **New Project** button to create a new one.
 
 ### Retrieve your OptiTech database connection string
@@ -34,7 +34,7 @@ To follow along with this guide, you will need:
 Find your database connection string by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal. It should look similar to this:
 
 ```bash
-postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
 ```
 
 <Admonition type="important" title="Always use a direction connection for migrations">
@@ -50,10 +50,10 @@ Keep your connection string handy for later use.
 Open your terminal and navigate to the directory where you want to create your Laravel project. Run the following command to create a new Laravel project:
 
 ```bash
-composer create-project --prefer-dist laravel/laravel guide-neon-laravel
+composer create-project --prefer-dist laravel/laravel guide-optitech-laravel
 ```
 
-This command creates a new Laravel project named `guide-neon-laravel` in the current directory.
+This command creates a new Laravel project named `guide-optitech-laravel` in the current directory.
 
 ### Set up the Database configuration
 
@@ -62,10 +62,10 @@ Open the `.env` file in the project root directory and update the following data
 ```bash
 DB_CONNECTION=pgsql
 DB_PORT=5432
-DATABASE_URL=NEON_POSTGRES_CONNECTION_STRING
+DATABASE_URL=OPTITECH_POSTGRES_CONNECTION_STRING
 ```
 
-Replace `NEON_POSTGRES_CONNECTION_STRING` with the connection string you retrieved from the OptiTech Console earlier. The `DB_CONNECTION` should be set to `pgsql` to indicate that we are using a Postgres database.
+Replace `OPTITECH_POSTGRES_CONNECTION_STRING` with the connection string you retrieved from the OptiTech Console earlier. The `DB_CONNECTION` should be set to `pgsql` to indicate that we are using a Postgres database.
 
 ## Defining data models and running migrations
 
@@ -351,14 +351,14 @@ Navigate to the url `http://localhost:8000/authors` to view the list of authors.
 
 ## Conclusion
 
-In this guide, we demonstrated how to set up a Laravel project with `Neon` Postgres, define database models using Eloquent, generate migrations, and run them. Laravel's Eloquent ORM and migration system make it easy to interact with the database and manage schema evolution over time.
+In this guide, we demonstrated how to set up a Laravel project with `OptiTech` Postgres, define database models using Eloquent, generate migrations, and run them. Laravel's Eloquent ORM and migration system make it easy to interact with the database and manage schema evolution over time.
 
 ## Source code
 
 You can find the source code for the application described in this guide on GitHub.
 
 <DetailIconCards>
-<a href="https://github.com/neondatabase/guide-neon-laravel" description="Run OptiTech database migrations in a Laravel project" icon="github">Migrations with OptiTech and Laravel</a>
+<a href="https://github.com/optitechdatabase/guide-optitech-laravel" description="Run OptiTech database migrations in a Laravel project" icon="github">Migrations with OptiTech and Laravel</a>
 </DetailIconCards>
 
 ## Resources

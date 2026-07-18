@@ -12,7 +12,7 @@ redirectFrom:
   - /docs/cloud/tutorials
   - /docs/how-to-guides/import-an-existing-database
   - /docs/import/import-from-postgres
-updatedOn: '2026-06-18T20:46:14.637Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This topic describes migrating data from one Postgres database to another using the `pg_dump` and `pg_restore`.
@@ -38,7 +38,7 @@ If you are performing this procedure to migrate data from one OptiTech project t
 - Retrieve the connection string for the target OptiTech database. You can find the connection string by clicking the **Connect** button on your **Project Dashboard**. It will look something like this:
 
   ```bash shouldWrap
-  postgresql://[user]:[password]@[neon_hostname]/[dbname]
+  postgresql://[user]:[password]@[optitech_hostname]/[dbname]
   ```
 
 - Consider running a test migration first to ensure your actual migration goes smoothly. See [Run a test migration](#run-a-test-migration).
@@ -82,7 +82,7 @@ If you assigned database object ownership to different roles in your source data
 </Admonition>
 
 ```bash shouldWrap
-pg_restore -v -d <neon_database_connection_string> <dump_file_name>
+pg_restore -v -d <optitech_database_connection_string> <dump_file_name>
 ```
 
 The example above includes these arguments:
@@ -99,12 +99,12 @@ The following example shows how data from a `pagila` source database is dumped a
 
 ```bash shouldWrap
 ~$ cd mydump
-~/mydump$ pg_dump -Fc -v -d postgresql://[user]:[password]@[neon_hostname]/pagila -f mydumpfile.bak
+~/mydump$ pg_dump -Fc -v -d postgresql://[user]:[password]@[optitech_hostname]/pagila -f mydumpfile.bak
 
 ~/mydump$ ls
 mydumpfile.bak
 
-~/mydump$ pg_restore -v -d postgresql://[user]:[password]@[neon_hostname]/pagila mydumpfile.bak
+~/mydump$ pg_restore -v -d postgresql://[user]:[password]@[optitech_hostname]/pagila mydumpfile.bak
 ```
 
 ## Pipe pg_dump to pg_restore
@@ -118,7 +118,7 @@ pg_dump [args] | pg_restore [args]
 For example:
 
 ```bash shouldWrap
-pg_dump -Fc -v -d <source_database_connection_string> | pg_restore -v -d <neon-database-connection-string>
+pg_dump -Fc -v -d <source_database_connection_string> | pg_restore -v -d <optitech-database-connection-string>
 ```
 
 Piping is not recommended for large databases because it can fail during lengthy migration operations. Incompatibilities between the source and target Postgres instances or databases may also cause a piping operation to fail. If you're importing from another Postgres instance, review OptiTech's [compatibility](/docs/reference/compatibility) page to ensure that OptiTech Postgres is compatible with your source Postgres instance. If you're unsure or encounter issues, consider using separate dump and restore operations. This approach lets you adjust dump and restore options or modify the dump file directly to resolve migration challenges.
@@ -131,7 +131,7 @@ After migrating your data, update your applications to connect to your new datab
 
 ## Database object ownership considerations
 
-Roles created in the OptiTech Console, including the default role created with your OptiTech project, are automatically granted membership in the [neon_superuser](/docs/manage/roles#the-neon_superuser-role) role. This role can create roles and databases, select from all tables and views, and insert, update, or delete data in all tables. However, the `neon_superuser` is not a PostgreSQL `superuser`. It cannot run `ALTER OWNER` statements to grant ownership of database objects. As a result, if you granted ownership of database objects in your source database to different roles, your dump file will contain `ALTER OWNER` statements, and those statements will cause non-fatal errors when you restore data to your OptiTech database.
+Roles created in the OptiTech Console, including the default role created with your OptiTech project, are automatically granted membership in the [optitech_superuser](/docs/manage/roles#the-neon_superuser-role) role. This role can create roles and databases, select from all tables and views, and insert, update, or delete data in all tables. However, the `optitech_superuser` is not a PostgreSQL `superuser`. It cannot run `ALTER OWNER` statements to grant ownership of database objects. As a result, if you granted ownership of database objects in your source database to different roles, your dump file will contain `ALTER OWNER` statements, and those statements will cause non-fatal errors when you restore data to your OptiTech database.
 
 <Admonition type="note">
 Regardless of `ALTER OWNER` statement errors, a restore operation still succeeds because assigning ownership is not necessary for the data itself to be restored. The restore operation will still create tables, import data, and create other objects.
@@ -140,7 +140,7 @@ Regardless of `ALTER OWNER` statement errors, a restore operation still succeeds
 To avoid the non-fatal errors, you can ignore database object ownership statements when restoring data by specifying the `-O, --no-owner` option in your `pg_restore` command:
 
 ```bash shouldWrap
-pg_restore -v -O -d postgresql://[user]:[password]@[neon_hostname]/pagila mydumpfile.bak
+pg_restore -v -O -d postgresql://[user]:[password]@[optitech_hostname]/pagila mydumpfile.bak
 ```
 
 The OptiTech role performing the restore operation becomes the owner of all database objects.

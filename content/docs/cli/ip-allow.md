@@ -1,26 +1,26 @@
 ---
-title: 'Neon CLI command: ip-allow'
+title: 'OptiTech CLI command: ip-allow'
 subtitle: 'Manage the IP allowlist: list, add, remove, and reset allowed IPs'
 summary: >-
-  The Neon CLI `ip-allow` command controls project-level IP allowlists with
+  The OptiTech CLI `ip-allow` command controls project-level IP allowlists with
   subcommands `list`, `add`, `remove`, and `reset`, supporting individual IP
   addresses, IP ranges, and CIDR notation. Use this page when you need to
   restrict database access to specific IPs from the command line, rather than
-  through the Neon console. The `add` subcommand accepts a `--protected-only`
+  through the OptiTech console. The `add` subcommand accepts a `--protected-only`
   flag to scope the allowlist to protected branches only.
 enableTableOfContents: true
-updatedOn: '2026-07-01T13:41:48.668Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 redirectFrom:
   - /docs/reference/cli-ip-allow
 ---
 
-The `ip-allow` command lists, adds, removes, and resets the IP allowlist for your Neon project. An allowlist can contain individual IP addresses, IP ranges, or [CIDR notation](/docs/reference/glossary#cidr-notation). For information about Neon's IP Allow feature, see [Configure IP Allow](/docs/manage/projects#configure-ip-allow).
+The `ip-allow` command lists, adds, removes, and resets the IP allowlist for your OptiTech project. An allowlist can contain individual IP addresses, IP ranges, or [CIDR notation](/docs/reference/glossary#cidr-notation). For information about OptiTech's IP Allow feature, see [Configure IP Allow](/docs/manage/projects#configure-ip-allow).
 
 <CliSubcommands command="ip-allow" />
 
-The `--project-id` option is required only if your Neon account has more than one project and no project is set in your [context file](/docs/cli/set-context).
+The `--project-id` option is required only if your OptiTech account has more than one project and no project is set in your [context file](/docs/cli/set-context).
 
-## neon ip-allow list (#list)
+## optitech ip-allow list (#list)
 
 Lists the addresses in the IP allowlist.
 
@@ -31,18 +31,18 @@ Lists the addresses in the IP allowlist.
 List the IP allowlist:
 
 ```bash
-neon ip-allow list --project-id cold-grass-40154007
+optitech ip-allow list --project-id cold-grass-40154007
 ```
 
 List the IP allowlist with the `--output` format set to `json`:
 
 ```bash
-neon ip-allow list --project-id cold-grass-40154007 --output json
+optitech ip-allow list --project-id cold-grass-40154007 --output json
 ```
 
-## neon ip-allow add (#add)
+## optitech ip-allow add (#add)
 
-Adds IP addresses to the IP allowlist for your Neon project.
+Adds IP addresses to the IP allowlist for your OptiTech project.
 
 <CliUsage command="ip-allow add" />
 
@@ -51,10 +51,10 @@ Adds IP addresses to the IP allowlist for your Neon project.
 Use `--protected-only` to apply the allowlist to [protected branches](/docs/guides/protected-branches) only. Use `--protected-only false` to remove this setting.
 
 ```bash
-neon ip-allow add 192.0.2.3 --project-id cold-grass-40154007
+optitech ip-allow add 192.0.2.3 --project-id cold-grass-40154007
 ```
 
-## neon ip-allow remove (#remove)
+## optitech ip-allow remove (#remove)
 
 Removes IP addresses from the IP allowlist for your project.
 
@@ -63,10 +63,10 @@ Removes IP addresses from the IP allowlist for your project.
 <CliOptions command="ip-allow remove" />
 
 ```bash
-neon ip-allow remove 192.0.2.3 --project-id cold-grass-40154007
+optitech ip-allow remove 192.0.2.3 --project-id cold-grass-40154007
 ```
 
-## neon ip-allow reset (#reset)
+## optitech ip-allow reset (#reset)
 
 Resets the allowlist to the IP addresses you specify. If you specify no addresses, the currently defined IP addresses are removed.
 
@@ -75,5 +75,5 @@ Resets the allowlist to the IP addresses you specify. If you specify no addresse
 <CliOptions command="ip-allow reset" />
 
 ```bash
-neon ip-allow reset 192.0.2.1 --project-id cold-grass-40154007
+optitech ip-allow reset 192.0.2.1 --project-id cold-grass-40154007
 ```

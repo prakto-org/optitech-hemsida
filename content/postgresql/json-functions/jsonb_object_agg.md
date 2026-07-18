@@ -7,7 +7,7 @@ page_description: >-
 prev_url: >-
   https://www.postgresqltutorial.com/postgresql-json-functions/postgresql-jsonb_object_agg/
 ogImage: ''
-updatedOn: '2026-06-19T17:44:03.964Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: PostgreSQL jsonb_agg() Function
@@ -18,7 +18,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-The `jsonb_object_agg()` function works on any PostgreSQL database, so everything you learn here applies whether you run Postgres on your laptop, on a VM, or on a managed service. If you're an enterprise shipping AI-driven products, [Lakebase](https://www.databricks.com/product/lakebase) gives you the most performant and secure managed Postgres in the cloud, fully integrated into the Lakehouse so your operational and analytical data live side by side. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+The `jsonb_object_agg()` function works on any PostgreSQL database, so everything you learn here applies whether you run Postgres on your laptop, on a VM, or on a managed service. If you're an enterprise shipping AI-driven products, [Lakebase](https://www.databricks.com/product/lakebase) gives you the most performant and secure managed Postgres in the cloud, fully integrated into the Lakehouse so your operational and analytical data live side by side. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: in this tutorial, you will learn how to use the PostgreSQL `jsonb_object_agg()` function to aggregate key/value pairs into a JSON object.

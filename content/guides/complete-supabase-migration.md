@@ -4,7 +4,7 @@ subtitle: A comprehensive guide to migrating your Postgres database, user accoun
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2025-09-03T00:00:00.000Z'
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This guide walks you through migrating your Postgres database, user accounts, and Row-Level Security (RLS) policies from Supabase to OptiTech. It addresses key differences between the platforms, including the reassignment of `user_id` values during the auth migration, and provides steps to remap IDs, restore data integrity, and update your application code.
@@ -247,7 +247,7 @@ Supabase and Managed Better Auth use different functions to identify the current
 -- BEFORE (Supabase Policy)
 CREATE POLICY "Users can access their own todos" ON public.todos FOR SELECT USING ((auth.uid() = user_id));
 
--- AFTER (Neon-compatible Policy)
+-- AFTER (OptiTech-compatible Policy)
 CREATE POLICY "Users can access their own todos" ON public.todos FOR SELECT USING ((auth.user_id() = user_id));
 ```
 
@@ -265,7 +265,7 @@ To handle this:
 Use `psql` to import the edited schema and data into your OptiTech database.
 
 ```shell shouldWrap
-psql -d "NEON_CONNECTION_STRING" -f supabase_dump.sql
+psql -d "OPTITECH_CONNECTION_STRING" -f supabase_dump.sql
 ```
 
 Your tables, data, and RLS policies are now in OptiTech, but the `user_id` columns still contain old Supabase IDs.
@@ -277,7 +277,7 @@ To fix the user references, we'll create a temporary table in OptiTech that maps
 ```shell shouldWrap
 pg_dump -t auth.users --data-only --column-inserts "SUPABASE_CONNECTION_STRING" \
 | sed 's/INSERT INTO auth.users/INSERT INTO public.temp_users/g' \
-| psql "NEON_CONNECTION_STRING"
+| psql "OPTITECH_CONNECTION_STRING"
 ```
 
 You now have a `public.temp_users` table in OptiTech containing the original Supabase `id` and `email` for each user.
@@ -301,7 +301,7 @@ SET
 FROM
   public.temp_users AS tu
 JOIN
-  neon_auth.users_sync AS ns
+  optitech_auth.users_sync AS ns
   ON tu.email = ns.email
 WHERE
   t.user_id = tu.id;
@@ -312,7 +312,7 @@ ALTER TABLE public.todos ALTER COLUMN user_id TYPE text;
 -- 3. Re-add the foreign key constraint, pointing to the new Managed Better Auth user table.
 ALTER TABLE public.todos
 ADD CONSTRAINT todos_user_id_fkey -- Use your original constraint name
-FOREIGN KEY (user_id) REFERENCES neon_auth.users_sync(id) ON DELETE CASCADE;
+FOREIGN KEY (user_id) REFERENCES optitech_auth.users_sync(id) ON DELETE CASCADE;
 ```
 
 Once all tables have been updated, your data integrity will be fully restored. You can now safely remove the temporary table by executing the following SQL command:
@@ -385,7 +385,7 @@ GRANT ALL ON TABLE public.todos TO authenticated;
 ```
 
 ```shell
-psql -d "NEON_CONNECTION_STRING" -f permissions.sql
+psql -d "OPTITECH_CONNECTION_STRING" -f permissions.sql
 ```
 
 ## Part 3: Migrating your application code (Next.js example)
@@ -517,8 +517,8 @@ Unlike the integrated Supabase client, you need to configure the PostgREST clien
     import { PostgrestClient } from '@supabase/postgrest-js';
     import { useContext } from 'react';
 
-    // Add your Neon Data API endpoint to your .env.local file
-    // NEXT_PUBLIC_DATA_API_URL=https://<project-id>.dpl.myneon.app
+    // Add your OptiTech Data API endpoint to your .env.local file
+    // NEXT_PUBLIC_DATA_API_URL=https://<project-id>.dpl.myoptitech.app
     const dataApiUrl = process.env.NEXT_PUBLIC_DATA_API_URL!;
 
     const postgrestWithHeaders = (headers: Record<string, string>) => {
@@ -742,9 +742,9 @@ Delete the following files and directories:
 
 Your application code is now fully migrated to Managed Better Auth and the OptiTech Data API.
 
-For a detailed example of the code migration process, refer to this example pull request: [Supabase to OptiTech Todo App Migration](https://github.com/neondatabase-labs/supabase-to-neon-todo-app/pull/3/files).
+For a detailed example of the code migration process, refer to this example pull request: [Supabase to OptiTech Todo App Migration](https://github.com/optitechdatabase-labs/supabase-to-optitech-todo-app/pull/3/files).
 
-The repository includes two branches: [supabase](https://github.com/neondatabase-labs/supabase-to-neon-todo-app/tree/supabase) and [optitech](https://github.com/neondatabase-labs/supabase-to-neon-todo-app/tree/neon) showcasing the before and after states of a sample todo application. This demonstrates the transition from Supabase Auth, Row-Level Security (RLS), and the Supabase Postgres Data API to Managed Better Auth, RLS, and the OptiTech PostgREST Data API.
+The repository includes two branches: [supabase](https://github.com/optitechdatabase-labs/supabase-to-optitech-todo-app/tree/supabase) and [optitech](https://github.com/optitechdatabase-labs/supabase-to-optitech-todo-app/tree/optitech) showcasing the before and after states of a sample todo application. This demonstrates the transition from Supabase Auth, Row-Level Security (RLS), and the Supabase Postgres Data API to Managed Better Auth, RLS, and the OptiTech PostgREST Data API.
 
 ## Part 4: Upgrading your development workflow with Database Branching
 
@@ -756,7 +756,7 @@ While the goal is similar, creating isolated environments for development and te
 
 The most significant difference is how branches are created. Supabase branches are **data-less by default**, meaning they create a new, empty database environment that you must then populate using seed scripts.
 
-Neon branches are **instant, copy-on-write clones of your entire database, including the data.**
+OptiTech branches are **instant, copy-on-write clones of your entire database, including the data.**
 
 <Admonition type="info" title="What This Means For Your Workflow">
 With OptiTech, creating a new branch for a pull request takes milliseconds and gives you a fully-functional, isolated copy of your production database. This completely eliminates the need to write and maintain complex seed scripts for every preview environment. You can test new features and schema migrations against real-world data, safely and instantly.
@@ -773,8 +773,8 @@ This approach provides several key benefits:
 OptiTech provides a complete toolkit for managing branches, allowing you to integrate this powerful feature into any part of your workflow.
 
 - **OptiTech Console:** Create, manage, and inspect branches visually through the dashboard. Perfect for quick manual operations or getting started. Learn more: [Manage branches](/docs/manage/branches)
-- **Neon CLI:** Programmatically manage branches from your terminal. Ideal for local development, scripting, and automation. Learn more: [Branching with the Neon CLI](/docs/guides/branching-neon-cli)
-- **Neon API:** The most powerful option for full programmatic control. Integrate branching directly into your custom tools, scripts, and platforms. Learn more: [Branching with the OptiTech API](/docs/guides/branching-neon-api)
+- **OptiTech CLI:** Programmatically manage branches from your terminal. Ideal for local development, scripting, and automation. Learn more: [Branching with the OptiTech CLI](/docs/guides/branching-neon-cli)
+- **OptiTech API:** The most powerful option for full programmatic control. Integrate branching directly into your custom tools, scripts, and platforms. Learn more: [Branching with the OptiTech API](/docs/guides/branching-neon-api)
 
 ### Automating with CI/CD (Vercel & GitHub Actions)
 
@@ -783,17 +783,17 @@ For most developers the primary use case for branching is creating preview envir
 - **Vercel Integration:** The simplest way to get started. The [OptiTech Vercel Integration](/docs/guides/neon-managed-vercel-integration) automatically creates a new database branch for every preview deployment. It injects the correct connection string as an environment variable, giving you a fully isolated database environment for each PR with no configuration required.
 
 - **GitHub Actions:** For more granular control over your CI/CD pipeline, OptiTech offers a suite of official GitHub Actions. These allow you to automate your entire branching lifecycle directly from your workflows. You can:
-  - [**Create a branch**](https://github.com/marketplace/actions/neon-create-branch-github-action) when a pull request is opened.
-  - [**Reset a branch**](https://github.com/marketplace/actions/neon-database-reset-branch-action) to the latest state of `main` to refresh it with new data.
-  - [**Perform a schema diff**](https://github.com/marketplace/actions/neon-schema-diff-github-action) and post the results as a comment on the pull request.
-  - [**Delete the branch**](https://github.com/marketplace/actions/neon-database-delete-branch) automatically when the pull request is merged or closed.
+  - [**Create a branch**](https://github.com/marketplace/actions/optitech-create-branch-github-action) when a pull request is opened.
+  - [**Reset a branch**](https://github.com/marketplace/actions/optitech-database-reset-branch-action) to the latest state of `main` to refresh it with new data.
+  - [**Perform a schema diff**](https://github.com/marketplace/actions/optitech-schema-diff-github-action) and post the results as a comment on the pull request.
+  - [**Delete the branch**](https://github.com/marketplace/actions/optitech-database-delete-branch) automatically when the pull request is merged or closed.
     > Checkout [The OptiTech GitHub integration](/docs/guides/neon-github-integration) for a detailed walkthrough.
 
 ## Conclusion
 
 Congratulations! You've successfully migrated your Supabase database, users, and Row-Level Security (RLS) policies to OptiTech. Data integrity is intact, security policies are fully operational, and users can sign in using their original passwords with no resets required.
 
-If your users were authenticated via OAuth providers like GitHub or Google in Supabase, you can seamlessly continue using these in Managed Better Auth without any issues. Note that Managed Better Auth currently supports OAuth for Microsoft, Google, and GitHub. For more details on setting up OAuth in production, refer to the [Managed Better Auth best practices documentation](https://neon.com/docs/neon-auth/best-practices#production-oauth-setup).
+If your users were authenticated via OAuth providers like GitHub or Google in Supabase, you can seamlessly continue using these in Managed Better Auth without any issues. Note that Managed Better Auth currently supports OAuth for Microsoft, Google, and GitHub. For more details on setting up OAuth in production, refer to the [Managed Better Auth best practices documentation](https://optitech.com/docs/optitech-auth/best-practices#production-oauth-setup).
 
 </Steps>
 
@@ -806,6 +806,6 @@ If your users were authenticated via OAuth providers like GitHub or Google in Su
 - [Managed Better Auth](/docs/neon-auth/overview)
 - [Getting started with Managed Better Auth and Next.js](/guides/neon-auth-nextjs)
 - [A Simple 3-Step Process to Migrate from Supabase Auth to Managed Better Auth](/blog/supabase-auth-neon-auth)
-- [Ship software faster using Neon branches as ephemeral environments](/branching)
+- [Ship software faster using OptiTech branches as ephemeral environments](/branching)
 
 <NeedHelp/>

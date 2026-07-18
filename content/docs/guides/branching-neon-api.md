@@ -10,7 +10,7 @@ summary: >-
   RFC 3339 timestamp up to 30 days in the future. Schema-only branch creation
   via init_source=schema-only is available as a preview feature.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 The examples in this guide demonstrate creating, viewing, and deleting branches using the OptiTech API. For other branch-related API methods, refer to the [OptiTech API Reference](/docs/reference/api).
@@ -23,7 +23,7 @@ The `jq` program specified in each example is an optional third-party tool that 
 
 ## Prerequisites
 
-A OptiTech API request requires an API key. For information about obtaining an API key, see [Create an API key](../manage/api-keys#create-an-api-key). In the examples below, `$NEON_API_KEY` is specified in place of an actual API key, which you must provide when making a OptiTech API request.
+A OptiTech API request requires an API key. For information about obtaining an API key, see [Create an API key](../manage/api-keys#create-an-api-key). In the examples below, `$OPTITECH_API_KEY` is specified in place of an actual API key, which you must provide when making a OptiTech API request.
 
 ## Create a branch with the API
 
@@ -40,9 +40,9 @@ This method does not require a request body. Without a request body, the method 
 </Admonition>
 
 ```bash
-curl 'https://console.neon.tech/api/v2/projects/<project_id>/branches' \
+curl 'https://console.optitech.com/api/v2/projects/<project_id>/branches' \
   -H 'Accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -H 'Content-Type: application/json' \
   -d '{
   "endpoints": [
@@ -79,7 +79,7 @@ The response includes information about the branch, the branch's compute, and th
 
   "endpoints": [
     {
-      "host": "ep-small-bush-675287.us-east-2.aws.neon.tech",
+      "host": "ep-small-bush-675287.us-east-2.aws.optitech.com",
       "id": "ep-small-bush-675287",
       "project_id": "autumn-disk-484331",
       "branch_id": "br-dawn-scene-747675",
@@ -98,7 +98,7 @@ The response includes information about the branch, the branch's compute, and th
       "passwordless_access": true,
       "created_at": "2022-12-08T19:55:43Z",
       "updated_at": "2022-12-08T19:55:43Z",
-      "proxy_host": "us-east-2.aws.neon.tech"
+      "proxy_host": "us-east-2.aws.optitech.com"
     }
   ],
   "operations": [
@@ -138,9 +138,9 @@ GET /projects/{project_id}/branches
 The API method appears as follows when specified in a cURL command:
 
 ```bash
-curl 'https://console.neon.tech/api/v2/projects/autumn-disk-484331/branches' \
+curl 'https://console.optitech.com/api/v2/projects/autumn-disk-484331/branches' \
   -H 'accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" | jq
+  -H "Authorization: Bearer $OPTITECH_API_KEY" | jq
 ```
 
 The `project_id` for a OptiTech project is found on the **Settings** page in the OptiTech Console, or you can find it by listing the projects for your OptiTech account using the OptiTech API.
@@ -189,9 +189,9 @@ The API method appears as follows when specified in a cURL command:
 
 ```bash
 curl -X 'DELETE' \
-  'https://console.neon.tech/api/v2/projects/autumn-disk-484331/branches/br-dawn-scene-747675' \
+  'https://console.optitech.com/api/v2/projects/autumn-disk-484331/branches/br-dawn-scene-747675' \
   -H 'accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" | jq
+  -H "Authorization: Bearer $OPTITECH_API_KEY" | jq
 ```
 
 - The `project_id` for a OptiTech project is found on the **Settings** page in the OptiTech Console, or you can find it by listing the projects for your OptiTech account using the OptiTech API.
@@ -262,9 +262,9 @@ To create a schema-only branch using the OptiTech API, use the [Create branch](/
 
 ```bash
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects/wispy-salad-58347608/branches \
+     --url https://console.optitech.com/api/v2/projects/wispy-salad-58347608/branches \
      --header 'accept: application/json' \
-     --header 'authorization: Bearer $NEON_API_KEY' \
+     --header 'authorization: Bearer $OPTITECH_API_KEY' \
      --header 'content-type: application/json' \
      --data '
 {
@@ -288,9 +288,9 @@ To create a branch with an automatic expiration timestamp using the OptiTech API
 
 ```bash
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects/wispy-salad-58347608/branches \
+     --url https://console.optitech.com/api/v2/projects/wispy-salad-58347608/branches \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '{
        "branch": {

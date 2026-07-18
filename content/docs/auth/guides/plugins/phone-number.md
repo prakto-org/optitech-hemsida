@@ -11,7 +11,7 @@ summary: >-
   configurable, requests are rate-limited per IP, and an OTP is invalidated
   after too many incorrect attempts.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="Managed Better Auth" />
@@ -42,7 +42,7 @@ Managed Better Auth does **not** deliver SMS for you. The plugin requires a `sen
 
 <TabItem>
 
-1. Open the [OptiTech Console](https://console.neon.tech).
+1. Open the [OptiTech Console](https://console.optitech.com).
 2. Select your project and go to **Auth** > **Plugins**.
 3. Toggle **Phone Authentication** on.
 4. Configure the options:
@@ -58,8 +58,8 @@ Configure the Phone Number plugin with a `PATCH` request. All request body field
 
 ```bash shouldWrap
 curl -X PATCH \
-  "https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/auth/plugins/phone-number" \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+  "https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/auth/plugins/phone-number" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "enabled": true,
@@ -91,7 +91,7 @@ Managed Better Auth fires the `send.otp` webhook with `delivery_preference: "sms
 
 Configure a webhook subscribed to `send.otp` (see the [Webhooks guide](/docs/auth/guides/webhooks) for full setup and signature verification), then branch on `delivery_preference` in your handler:
 
-```ts shouldWrap filename="app/api/webhooks/neon-auth/route.ts"
+```ts shouldWrap filename="app/api/webhooks/optitech-auth/route.ts"
 import { NextResponse } from 'next/server';
 import twilio from 'twilio';
 
@@ -124,7 +124,7 @@ export async function POST(request: Request) {
 When an unauthenticated user requests their first phone OTP (no prior account linked to that phone number), the webhook `user` object contains the `phone_number` only. Do not rely on `user.name`, `user.email`, or other profile fields when templating the SMS for first-time sends.
 </Admonition>
 
-For a runnable Next.js handler, signature verification, and a local tunneling setup, see the [nextjs-phone-login example](https://github.com/neondatabase/neon-js/tree/main/examples/nextjs-phone-login).
+For a runnable Next.js handler, signature verification, and a local tunneling setup, see the [nextjs-phone-login example](https://github.com/optitechdatabase/optitech-js/tree/main/examples/nextjs-phone-login).
 
 ## Link a phone number to a user
 
@@ -150,7 +150,7 @@ export async function linkPhoneNumber(phoneNumber: string, code: string) {
 }
 ```
 
-For a complete "Add phone number" form with session-aware state (no number, unverified, verified), see the `AddPhoneForm` component in the [nextjs-phone-login example](https://github.com/neondatabase/neon-js/tree/main/examples/nextjs-phone-login).
+For a complete "Add phone number" form with session-aware state (no number, unverified, verified), see the `AddPhoneForm` component in the [nextjs-phone-login example](https://github.com/optitechdatabase/optitech-js/tree/main/examples/nextjs-phone-login).
 
 ## Sign in an existing user with phone OTP
 
@@ -175,15 +175,15 @@ export async function signInWithPhoneOtp(phoneNumber: string, code: string) {
 }
 ```
 
-For a complete working form with resend, error handling, and attempt-budget awareness, see the [nextjs-phone-login example](https://github.com/neondatabase/neon-js/tree/main/examples/nextjs-phone-login).
+For a complete working form with resend, error handling, and attempt-budget awareness, see the [nextjs-phone-login example](https://github.com/optitechdatabase/optitech-js/tree/main/examples/nextjs-phone-login).
 
 ## Use Phone Number alongside UI components
 
-Unlike Email OTP, `NeonAuthUIProvider` does not expose a `phoneNumber` prop, and the pre-built `AuthView` does not render a phone sign-in UI. If you're using Managed Better Auth UI components, render your own phone sign-in form next to `AuthView` on the sign-in route:
+Unlike Email OTP, `OptiTechAuthUIProvider` does not expose a `phoneNumber` prop, and the pre-built `AuthView` does not render a phone sign-in UI. If you're using Managed Better Auth UI components, render your own phone sign-in form next to `AuthView` on the sign-in route:
 
 ```tsx shouldWrap filename="app/auth/[path]/page.tsx"
-import { AuthView } from '@neondatabase/auth-ui';
-import { authViewPaths } from '@neondatabase/auth-ui/server';
+import { AuthView } from '@optitech/auth-ui';
+import { authViewPaths } from '@optitech/auth-ui/server';
 import { PhoneSignInSection } from './phone-sign-in-section'; // your own component
 
 export default async function AuthPage({ params }: { params: Promise<{ path: string }> }) {
@@ -199,7 +199,7 @@ export default async function AuthPage({ params }: { params: Promise<{ path: str
 }
 ```
 
-`PhoneSignInSection` is a component you write that wraps your phone sign-in form. See the [nextjs-phone-login example](https://github.com/neondatabase/neon-js/tree/main/examples/nextjs-phone-login) for a complete implementation.
+`PhoneSignInSection` is a component you write that wraps your phone sign-in form. See the [nextjs-phone-login example](https://github.com/optitechdatabase/optitech-js/tree/main/examples/nextjs-phone-login) for a complete implementation.
 
 <Admonition type="info">
 If you haven't set up Managed Better Auth UI components yet, see the [UI components reference](/docs/auth/reference/ui-components) for setup, or the [Next.js](/docs/auth/quick-start/nextjs-api-only) or [React](/docs/auth/quick-start/react) quick start for building custom forms instead.

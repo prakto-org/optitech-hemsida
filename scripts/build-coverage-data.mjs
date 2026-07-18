@@ -1,8 +1,8 @@
 #!/usr/bin/env node
 // Builds scripts/data/cli-coverage.json and scripts/data/mcp-coverage.json
-// by fetching public neonctl and mcp-server-neon source from GitHub.
+// by fetching public optitechctl and mcp-server-neon source from GitHub.
 //
-// Run whenever neonctl or mcp-server-neon releases change coverage.
+// Run whenever optitechctl or mcp-server-neon releases change coverage.
 // Commit the output files — the generator reads them at CI time.
 //
 // Usage: node scripts/build-coverage-data.mjs
@@ -28,7 +28,7 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const DATA_DIR = resolve(ROOT, 'scripts/data');
 mkdirSync(DATA_DIR, { recursive: true });
 
-const SPEC_URL = 'https://neon.com/api_spec/release/v2.json';
+const SPEC_URL = 'https://optitech.com/api_spec/release/v2.json';
 
 // Pinned upstream versions. Bumping these is a deliberate act: run
 // `node scripts/build-coverage-data.mjs`, eyeball the diff in
@@ -36,10 +36,10 @@ const SPEC_URL = 'https://neon.com/api_spec/release/v2.json';
 // Pinned input → deterministic output: re-running with unchanged versions
 // produces a zero-diff. Pinning to `main` would let upstream force-pushes
 // or refactors silently break the docs build at CI time.
-// neonctl ships tagged releases; mcp-server-neon does not, so SHA-pin it.
+// optitechctl ships tagged releases; mcp-server-neon does not, so SHA-pin it.
 const NEONCTL_VERSION = 'v2.27.0';
 const MCP_VERSION = 'fac296fe303fc93fec5bd02a2b505ba88e275950';
-const NEONCTL = `https://raw.githubusercontent.com/neondatabase/neonctl/${NEONCTL_VERSION}`;
+const NEONCTL = `https://raw.githubusercontent.com/neondatabase/optitechctl/${NEONCTL_VERSION}`;
 const MCP = `https://raw.githubusercontent.com/neondatabase/mcp-server-neon/${MCP_VERSION}`;
 const METHODS = ['get', 'post', 'put', 'patch', 'delete'];
 
@@ -53,111 +53,111 @@ async function fetchText(url) {
 // CLI coverage
 // ---------------------------------------------------------------------------
 
-// neonctl command files that call apiClient methods. Shared with the neonctl
+// optitechctl command files that call apiClient methods. Shared with the optitechctl
 // schema generator so new top-level command files are added in one place.
 const NEONCTL_COMMAND_FILES = JSON.parse(
   readFileSync(resolve(DATA_DIR, 'neonctl-command-files.json'), 'utf8')
 );
 
 // Manual exceptions where heuristic gets it wrong, or where one API method
-// is called by multiple neonctl commands (one primary + N helpers) and we
+// is called by multiple optitechctl commands (one primary + N helpers) and we
 // need to pin which command is canonical for the docs. The TS-AST parser
 // (Phase 2c) surfaces more helper calls than the old line-scan regex did
 // (the old code missed apiClient.X calls split across two lines), so the
 // multi-match tripwire fires for ops the old parser silently resolved by
 // missing the helper site.
 //
-// key = operationId, value = { cmd: 'neon X Y [...]', note }
+// key = operationId, value = { cmd: 'optitech X Y [...]', note }
 const CLI_MANUAL = {
   // Pin to primary command — also called as a helper inside `create` (to
   // pick a default parent branch).
-  listProjectBranches: { cmd: 'neon branches list' },
+  listProjectBranches: { cmd: 'optitech branches list' },
   // Pinned: ip-allow subcommands (add, remove, list, reset) call getProject
   // and updateProject as helpers to inspect/update the project's IP allowlist.
   // The user-facing canonical commands live in projects.ts.
-  getProject: { cmd: 'neon projects get' },
-  updateProject: { cmd: 'neon projects update' },
-  // Branches: neonctl sub-command names differ from operationId action words
-  getProjectBranch: { cmd: 'neon branches get <id|name>' },
+  getProject: { cmd: 'optitech projects get' },
+  updateProject: { cmd: 'optitech projects update' },
+  // Branches: optitechctl sub-command names differ from operationId action words
+  getProjectBranch: { cmd: 'optitech branches get <id|name>' },
   updateProjectBranch: {
     commands: [
-      { cmd: 'neon branches rename <id|name> <new-name>', covers: ['name'] },
-      { cmd: 'neon branches set-expiration <id|name>', covers: ['expires_at'] },
+      { cmd: 'optitech branches rename <id|name> <new-name>', covers: ['name'] },
+      { cmd: 'optitech branches set-expiration <id|name>', covers: ['expires_at'] },
     ],
     uncovered: ['protected'],
   },
-  setDefaultProjectBranch: { cmd: 'neon branches set-default <id|name>' },
-  restoreProjectBranch: { cmd: 'neon branches restore <id|name>' },
-  createProjectEndpoint: { cmd: 'neon branches add-compute <id|name>' },
-  getProjectBranchSchema: { cmd: 'neon branches schema-diff [base] [compare]' },
+  setDefaultProjectBranch: { cmd: 'optitech branches set-default <id|name>' },
+  restoreProjectBranch: { cmd: 'optitech branches restore <id|name>' },
+  createProjectEndpoint: { cmd: 'optitech branches add-compute <id|name>' },
+  getProjectBranchSchema: { cmd: 'optitech branches schema-diff [base] [compare]' },
   // listProjectBranchEndpoints: used internally as a helper in connection-string, no direct command
   // Roles
   // Connection string
-  getConnectionURI: { cmd: 'neon connection-string [branch]' },
-  // Neon Auth
-  createNeonAuth: { cmd: 'neon neon-auth enable' },
-  getNeonAuth: { cmd: 'neon neon-auth status' },
-  disableNeonAuth: { cmd: 'neon neon-auth disable' },
-  listBranchNeonAuthOauthProviders: { cmd: 'neon neon-auth oauth-provider list' },
-  addBranchNeonAuthOauthProvider: { cmd: 'neon neon-auth oauth-provider add' },
-  updateBranchNeonAuthOauthProvider: { cmd: 'neon neon-auth oauth-provider update' },
-  deleteBranchNeonAuthOauthProvider: { cmd: 'neon neon-auth oauth-provider delete' },
-  listBranchNeonAuthTrustedDomains: { cmd: 'neon neon-auth domain list' },
-  addBranchNeonAuthTrustedDomain: { cmd: 'neon neon-auth domain add <domain>' },
-  deleteBranchNeonAuthTrustedDomain: { cmd: 'neon neon-auth domain delete <domain>' },
-  getNeonAuthAllowLocalhost: { cmd: 'neon neon-auth domain allow-localhost get' },
+  getConnectionURI: { cmd: 'optitech connection-string [branch]' },
+  // OptiTech Auth
+  createNeonAuth: { cmd: 'optitech optitech-auth enable' },
+  getNeonAuth: { cmd: 'optitech optitech-auth status' },
+  disableNeonAuth: { cmd: 'optitech optitech-auth disable' },
+  listBranchNeonAuthOauthProviders: { cmd: 'optitech optitech-auth oauth-provider list' },
+  addBranchNeonAuthOauthProvider: { cmd: 'optitech optitech-auth oauth-provider add' },
+  updateBranchNeonAuthOauthProvider: { cmd: 'optitech optitech-auth oauth-provider update' },
+  deleteBranchNeonAuthOauthProvider: { cmd: 'optitech optitech-auth oauth-provider delete' },
+  listBranchNeonAuthTrustedDomains: { cmd: 'optitech optitech-auth domain list' },
+  addBranchNeonAuthTrustedDomain: { cmd: 'optitech optitech-auth domain add <domain>' },
+  deleteBranchNeonAuthTrustedDomain: { cmd: 'optitech optitech-auth domain delete <domain>' },
+  getNeonAuthAllowLocalhost: { cmd: 'optitech optitech-auth domain allow-localhost get' },
   updateNeonAuthAllowLocalhost: {
     commands: [
-      { cmd: 'neon neon-auth domain allow-localhost enable', covers: ['allow_localhost'] },
-      { cmd: 'neon neon-auth domain allow-localhost disable', covers: ['allow_localhost'] },
+      { cmd: 'optitech optitech-auth domain allow-localhost enable', covers: ['allow_localhost'] },
+      { cmd: 'optitech optitech-auth domain allow-localhost disable', covers: ['allow_localhost'] },
     ],
   },
-  getNeonAuthEmailAndPasswordConfig: { cmd: 'neon neon-auth config email-password get' },
-  updateNeonAuthEmailAndPasswordConfig: { cmd: 'neon neon-auth config email-password update' },
-  getNeonAuthEmailProvider: { cmd: 'neon neon-auth config email-provider get' },
-  updateNeonAuthEmailProvider: { cmd: 'neon neon-auth config email-provider update' },
-  sendNeonAuthTestEmail: { cmd: 'neon neon-auth config email-provider test' },
+  getNeonAuthEmailAndPasswordConfig: { cmd: 'optitech optitech-auth config email-password get' },
+  updateNeonAuthEmailAndPasswordConfig: { cmd: 'optitech optitech-auth config email-password update' },
+  getNeonAuthEmailProvider: { cmd: 'optitech optitech-auth config email-provider get' },
+  updateNeonAuthEmailProvider: { cmd: 'optitech optitech-auth config email-provider update' },
+  sendNeonAuthTestEmail: { cmd: 'optitech optitech-auth config email-provider test' },
   getNeonAuthPluginConfigs: {
     commands: [
-      { cmd: 'neon neon-auth plugins list', covers: [] },
-      { cmd: 'neon neon-auth plugins get <plugin-name>', covers: [] },
-      { cmd: 'neon neon-auth config organization get', covers: [] },
+      { cmd: 'optitech optitech-auth plugins list', covers: [] },
+      { cmd: 'optitech optitech-auth plugins get <plugin-name>', covers: [] },
+      { cmd: 'optitech optitech-auth config organization get', covers: [] },
     ],
   },
-  updateNeonAuthOrganizationPlugin: { cmd: 'neon neon-auth config organization update' },
-  getNeonAuthWebhookConfig: { cmd: 'neon neon-auth config webhook get' },
-  updateNeonAuthWebhookConfig: { cmd: 'neon neon-auth config webhook update' },
-  createBranchNeonAuthNewUser: { cmd: 'neon neon-auth user create' },
-  deleteBranchNeonAuthUser: { cmd: 'neon neon-auth user delete <user-id>' },
-  updateNeonAuthUserRole: { cmd: 'neon neon-auth user set-role <user-id>' },
+  updateNeonAuthOrganizationPlugin: { cmd: 'optitech optitech-auth config organization update' },
+  getNeonAuthWebhookConfig: { cmd: 'optitech optitech-auth config webhook get' },
+  updateNeonAuthWebhookConfig: { cmd: 'optitech optitech-auth config webhook update' },
+  createBranchNeonAuthNewUser: { cmd: 'optitech optitech-auth user create' },
+  deleteBranchNeonAuthUser: { cmd: 'optitech optitech-auth user delete <user-id>' },
+  updateNeonAuthUserRole: { cmd: 'optitech optitech-auth user set-role <user-id>' },
   // User / orgs
-  getCurrentUserInfo: { cmd: 'neon me' },
-  getCurrentUserOrganizations: { cmd: 'neon orgs list' },
+  getCurrentUserInfo: { cmd: 'optitech me' },
+  getCurrentUserOrganizations: { cmd: 'optitech orgs list' },
   // getAuthDetails: called internally by analytics.ts for API key metadata, not a user-facing command
   // VPC endpoints — correct operationId casing from live spec
   listOrganizationVPCEndpoints: {
-    cmd: 'neon vpc endpoint list --org-id <id> --region-id <region_id>',
+    cmd: 'optitech vpc endpoint list --org-id <id> --region-id <region_id>',
   },
   assignOrganizationVPCEndpoint: {
-    cmd: 'neon vpc endpoint assign <vpc_endpoint_id> --org-id <id> --region-id <region_id>',
+    cmd: 'optitech vpc endpoint assign <vpc_endpoint_id> --org-id <id> --region-id <region_id>',
   },
   deleteOrganizationVPCEndpoint: {
-    cmd: 'neon vpc endpoint remove <vpc_endpoint_id> --org-id <id> --region-id <region_id>',
+    cmd: 'optitech vpc endpoint remove <vpc_endpoint_id> --org-id <id> --region-id <region_id>',
   },
   getOrganizationVPCEndpointDetails: {
-    cmd: 'neon vpc endpoint status <vpc_endpoint_id> --org-id <id> --region-id <region_id>',
+    cmd: 'optitech vpc endpoint status <vpc_endpoint_id> --org-id <id> --region-id <region_id>',
   },
-  listProjectVPCEndpoints: { cmd: 'neon vpc project list --project-id <id>' },
-  listProjectVpcEndpoints: { cmd: 'neon vpc project list --project-id <id>' }, // neonctl API client uses Vpc (not VPC)
+  listProjectVPCEndpoints: { cmd: 'optitech vpc project list --project-id <id>' },
+  listProjectVpcEndpoints: { cmd: 'optitech vpc project list --project-id <id>' }, // optitechctl API client uses Vpc (not VPC)
   assignProjectVPCEndpoint: {
-    cmd: 'neon vpc project restrict <vpc_endpoint_id> --project-id <id>',
+    cmd: 'optitech vpc project restrict <vpc_endpoint_id> --project-id <id>',
   },
   deleteProjectVPCEndpoint: {
-    cmd: 'neon vpc project remove <vpc_endpoint_id> --project-id <id>',
+    cmd: 'optitech vpc project remove <vpc_endpoint_id> --project-id <id>',
   },
 };
 
-// Maps action word from operationId prefix → subcommand name in neonctl
+// Maps action word from operationId prefix → subcommand name in optitechctl
 const ACTION_TO_SUBCMD = {
   list: 'list',
   create: 'create',
@@ -271,7 +271,7 @@ function firstExecutableCall(body) {
 
 async function buildCliCoverage() {
   process.stderr.write('Building CLI coverage...\n');
-  // operationId → "neon top-cmd sub-cmd [...]"
+  // operationId → "optitech top-cmd sub-cmd [...]"
   const coverage = {};
 
   for (const file of NEONCTL_COMMAND_FILES) {
@@ -311,7 +311,7 @@ async function buildCliCoverage() {
           `[cli-coverage] ${apiMethod} matched by multiple CLI commands: [${matchingCmds.join(', ')}]. ` +
             `Pin one by adding ${apiMethod} to the CLI_MANUAL object near the top of ` +
             `scripts/build-coverage-data.mjs with the canonical command, e.g.\n` +
-            `  ${apiMethod}: { cmd: 'neon ${topCmd} ${matchingCmds[0]} <id>' }`
+            `  ${apiMethod}: { cmd: 'optitech ${topCmd} ${matchingCmds[0]} <id>' }`
         );
       }
 
@@ -324,7 +324,7 @@ async function buildCliCoverage() {
       }
 
       if (subCmd) {
-        coverage[apiMethod] = `neon ${topCmd} ${subCmd}`;
+        coverage[apiMethod] = `optitech ${topCmd} ${subCmd}`;
       }
     }
   }
@@ -402,8 +402,8 @@ function resolveOps(fnName, fnToApi, fnToFns, visited = new Set()) {
   return ops;
 }
 
-// Parse the NEON_HANDLERS object in tools.ts → { toolName: { apiCalls, fnCalls } }.
-// AST-based: finds the NEON_HANDLERS variable declaration, walks each
+// Parse the OPTITECH_HANDLERS object in tools.ts → { toolName: { apiCalls, fnCalls } }.
+// AST-based: finds the OPTITECH_HANDLERS variable declaration, walks each
 // property of its object-literal initializer (each property is a tool
 // name → async handler), and collects neonClient.X calls + calls to any
 // known fn in the handler body.
@@ -418,7 +418,7 @@ function parseNeonHandlers(src, knownFns) {
     if (
       ts.isVariableDeclaration(node) &&
       ts.isIdentifier(node.name) &&
-      node.name.text === 'NEON_HANDLERS' &&
+      node.name.text === 'OPTITECH_HANDLERS' &&
       node.initializer
     ) {
       // Unwrap `{} as const`, `{} satisfies T` etc. to reach the object literal

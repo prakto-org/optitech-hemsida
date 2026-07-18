@@ -11,12 +11,12 @@ import { auditFieldGroups, validateFieldGroups } from './validate-field-groups.m
 
 const obj = (properties, extra = {}) => ({ type: 'object', properties, ...extra });
 
-// project-wrapped body covering every path the real createProject config
+// program-wrapped body covering every path the real createProject config
 // references, so a correct fixture audits clean.
 const wrapped = () =>
   obj(
     {
-      project: obj(
+      program: obj(
         {
           name: { type: 'string' },
           region_id: { type: 'string' },
@@ -26,7 +26,7 @@ const wrapped = () =>
             hipaa: { type: 'boolean' },
             quota: obj({ active: { type: 'boolean' } }),
           }),
-          branch: obj({ name: { type: 'string' }, database_name: { type: 'string' } }),
+          framework: obj({ name: { type: 'string' }, register_name: { type: 'string' } }),
           default_endpoint_settings: obj({
             autoscaling_limit_min_cu: { type: 'number' },
             suspend_timeout_seconds: { type: 'integer' },
@@ -43,7 +43,7 @@ const wrapped = () =>
             'pg_version',
             'org_id',
             'settings',
-            'branch',
+            'framework',
             'default_endpoint_settings',
             'provisioner',
             'store_passwords',
@@ -53,7 +53,7 @@ const wrapped = () =>
         }
       ),
     },
-    { displayOrder: ['project'] }
+    { displayOrder: ['program'] }
   ).properties;
 
 describe('computeFieldGroups — createProject', () => {
@@ -73,42 +73,42 @@ describe('computeFieldGroups — createProject', () => {
     const basics = byId('basics');
     expect(basics.common).toBe(true);
     const paths = basics.rows.map((r) => r.path);
-    expect(paths).toContain('project.name');
-    expect(paths).toContain('project.region_id');
+    expect(paths).toContain('program.name');
+    expect(paths).toContain('program.region_id');
     expect(basics.rows.every((r) => r.common)).toBe(true);
   });
 
   it('object sections expand a nested object into its children as rows', () => {
     const settings = byId('settings');
     const paths = settings.rows.map((r) => r.path);
-    expect(paths).toContain('project.settings.hipaa');
-    expect(paths).toContain('project.settings.quota');
+    expect(paths).toContain('program.settings.hipaa');
+    expect(paths).toContain('program.settings.quota');
     // extra (out of the expanded object) is flagged outOfObject
-    const extraRow = settings.rows.find((r) => r.path === 'project.history_retention_seconds');
+    const extraRow = settings.rows.find((r) => r.path === 'program.history_retention_seconds');
     expect(extraRow.outOfObject).toBe(true);
   });
 
   it('routes deprecated top-level fields to a collapsed Deprecated section', () => {
     const dep = byId('deprecated');
     expect(dep.collapsed).toBe(true);
-    expect(dep.rows.map((r) => r.path)).toEqual(['project.autoscaling_limit_min_cu']);
+    expect(dep.rows.map((r) => r.path)).toEqual(['program.autoscaling_limit_min_cu']);
   });
 
   it('emits the curated seed for paths that exist', () => {
-    expect(seed['project.name']).toBe('my-production-db');
-    expect(seed['project.region_id']).toBe('aws-us-east-2');
+    expect(seed['program.name']).toBe('my-production-db');
+    expect(seed['program.region_id']).toBe('aws-us-east-2');
   });
 
   it('emits curated display labels for paths that exist', () => {
-    expect(labels['project.name']).toEqual({
-      title: 'Project name',
+    expect(labels['program.name']).toEqual({
+      title: 'Program name',
       defaultLabel: 'auto-generated',
     });
-    expect(labels['project.org_id']).toEqual({
+    expect(labels['program.org_id']).toEqual({
       title: 'Organization',
       defaultLabel: 'personal account',
     });
-    expect(labels['project.pg_version']).toEqual({
+    expect(labels['program.pg_version']).toEqual({
       title: 'Postgres version',
     });
   });
@@ -117,19 +117,19 @@ describe('computeFieldGroups — createProject', () => {
 describe('computeFieldGroups — graceful degradation', () => {
   it('puts an unconfigured new top-level field into Other and reports it unassigned', () => {
     const props = wrapped();
-    props.project.properties.brand_new_field = { type: 'string' };
-    props.project.displayOrder.push('brand_new_field');
+    props.program.properties.brand_new_field = { type: 'string' };
+    props.program.displayOrder.push('brand_new_field');
     const { sections, unassigned } = computeFieldGroups('createProject', props);
     const other = sections.find((s) => s.id === 'other');
-    expect(other.rows.map((r) => r.path)).toContain('project.brand_new_field');
-    expect(unassigned).toContain('project.brand_new_field');
+    expect(other.rows.map((r) => r.path)).toContain('program.brand_new_field');
+    expect(unassigned).toContain('program.brand_new_field');
   });
 
   it('flags a configured object that no longer exists as a stale ref', () => {
     const props = wrapped();
-    delete props.project.properties.settings;
+    delete props.program.properties.settings;
     const { staleRefs } = computeFieldGroups('createProject', props);
-    expect(staleRefs.some((s) => s.includes('project.settings'))).toBe(true);
+    expect(staleRefs.some((s) => s.includes('program.settings'))).toBe(true);
   });
 
   it('returns null sections for an unconfigured op (UI falls back to flat tree)', () => {
@@ -141,19 +141,19 @@ describe('computeFieldGroups — graceful degradation', () => {
 describe('computeFieldGroups — no wrapper (createProjectBranch shape)', () => {
   const props = obj(
     {
-      branch: obj({ name: { type: 'string' }, parent_id: { type: 'string' } }),
-      endpoints: { type: 'array', items: obj({ type: { type: 'string' } }) },
+      framework: obj({ name: { type: 'string' }, parent_id: { type: 'string' } }),
+      integrations: { type: 'array', items: obj({ type: { type: 'string' } }) },
       annotation_value: obj({ k: { type: 'string' } }),
     },
-    { displayOrder: ['branch', 'endpoints', 'annotation_value'] }
+    { displayOrder: ['framework', 'integrations', 'annotation_value'] }
   ).properties;
 
   it('groups top-level fields without descending a wrapper', () => {
     const { sections, unassigned } = computeFieldGroups('createProjectBranch', props);
-    const branch = sections.find((s) => s.id === 'branch');
-    expect(branch.rows.map((r) => r.path)).toEqual(['branch.name', 'branch.parent_id']);
-    const endpoint = sections.find((s) => s.id === 'endpoint');
-    expect(endpoint.rows.map((r) => r.path)).toEqual(['endpoints']);
+    const framework = sections.find((s) => s.id === 'framework');
+    expect(framework.rows.map((r) => r.path)).toEqual(['framework.name', 'framework.parent_id']);
+    const endpoint = sections.find((s) => s.id === 'integration');
+    expect(endpoint.rows.map((r) => r.path)).toEqual(['integrations']);
     expect(unassigned).toEqual([]);
   });
 });
@@ -161,7 +161,7 @@ describe('computeFieldGroups — no wrapper (createProjectBranch shape)', () => 
 describe('validateFieldGroups', () => {
   const opOf = (operationId, properties) => ({
     operationId,
-    requestBody: { properties, displayOrder: properties.project ? ['project'] : undefined },
+    requestBody: { properties, displayOrder: properties.program ? ['program'] : undefined },
   });
 
   it('audit reports clean for a fully grouped op', () => {
@@ -179,7 +179,7 @@ describe('validateFieldGroups', () => {
 
   it('strict mode throws on stale refs; warn-only mode does not', () => {
     const props = wrapped();
-    delete props.project.properties.settings;
+    delete props.program.properties.settings;
     const ops = [opOf('createProject', props)];
     expect(() => validateFieldGroups(ops, { strict: true })).toThrow();
     expect(() => validateFieldGroups(ops)).not.toThrow();
@@ -187,7 +187,7 @@ describe('validateFieldGroups', () => {
 
   it('warn-only mode never throws on unassigned new fields', () => {
     const props = wrapped();
-    props.project.properties.brand_new_field = { type: 'string' };
+    props.program.properties.brand_new_field = { type: 'string' };
     expect(() => validateFieldGroups([opOf('createProject', props)])).not.toThrow();
   });
 });

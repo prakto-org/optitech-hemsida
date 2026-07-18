@@ -6,7 +6,7 @@ page_description: >-
   block.
 prev_url: 'https://www.postgresqltutorial.com/postgresql-plpgsql/plpgsql-constants/'
 ogImage: ''
-updatedOn: '2026-06-19T17:44:03.964Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: PL/pgSQL Record Types
@@ -17,7 +17,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-PL/pgSQL constants work the same way on any Postgres deployment, so everything here applies whether you run Postgres yourself or on a managed service. If you're an enterprise looking for production-grade Postgres in the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres with strong performance, security, and native integration into the Lakehouse. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+PL/pgSQL constants work the same way on any Postgres deployment, so everything here applies whether you run Postgres yourself or on a managed service. If you're an enterprise looking for production-grade Postgres in the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres with strong performance, security, and native integration into the Lakehouse. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: in this tutorial, you will learn about PL/pgSQL constants whose values cannot be changed.

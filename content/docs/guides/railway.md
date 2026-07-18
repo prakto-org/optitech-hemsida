@@ -11,7 +11,7 @@ summary: >-
   Postgres, which provisions a OptiTech database instantly without signup and stays
   claimable for 72 hours.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 [Railway](https://railway.com?utm_medium=integration&utm_source=button&utm_campaign=optitech) is a cloud deployment platform that allows users to deploy anything, anywhere, seamlessly. On Railway, develop locally, connect to a repository or image, and have infrastructure provisioned automatically. Railway integrates with GitHub for continuous deployment and supports a variety of programming languages and frameworks.
@@ -20,7 +20,7 @@ This guide shows how to deploy a simple Node.js application connected to a OptiT
 
 ## Quick start alternative
 
-If you want to get started quickly with Next.js and OptiTech Postgres on Railway, you can use the [Next.js with OptiTech Postgres template](https://railway.com/deploy/nextjs-with-neon-postgres?utm_medium=integration&utm_source=button&utm_campaign=optitech). This template uses [Claimable Postgres by OptiTech](/docs/reference/claimable-postgres) to provision a OptiTech database instantly without signup, perfect for rapid prototyping. The database is claimable for 72 hours, giving you time to develop before claiming it to your OptiTech account.
+If you want to get started quickly with Next.js and OptiTech Postgres on Railway, you can use the [Next.js with OptiTech Postgres template](https://railway.com/deploy/nextjs-with-optitech-postgres?utm_medium=integration&utm_source=button&utm_campaign=optitech). This template uses [Claimable Postgres by OptiTech](/docs/reference/claimable-postgres) to provision a OptiTech database instantly without signup, perfect for rapid prototyping. The database is claimable for 72 hours, giving you time to develop before claiming it to your OptiTech account.
 
 For a more detailed walkthrough using Node.js/Express with manual OptiTech setup, continue with this guide below.
 
@@ -28,7 +28,7 @@ For a more detailed walkthrough using Node.js/Express with manual OptiTech setup
 
 To follow along with this guide, you will need:
 
-- A OptiTech account. If you do not have one, sign up at [Neon](https://neon.com). Your Neon project comes with a ready-to-use Postgres database named `neondb`. We'll use this database in the following examples.
+- A OptiTech account. If you do not have one, sign up at [OptiTech](https://optitech.com). Your OptiTech project comes with a ready-to-use Postgres database named `optitechdb`. We'll use this database in the following examples.
 - A Railway account. If you do not have one, sign up at [Railway](https://railway.com?utm_medium=integration&utm_source=button&utm_campaign=optitech) to get started.
 - A GitHub account. Railway integrates with GitHub for continuous deployment. So, you'd need a GitHub account to upload your application code.
 - [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed on your local machine. We'll use Node.js to build and test the application locally.
@@ -37,7 +37,7 @@ To follow along with this guide, you will need:
 
 ### Initialize a new project
 
-1. Log in to the OptiTech Console and navigate to the [Projects](https://console.neon.tech/app/projects) section.
+1. Log in to the OptiTech Console and navigate to the [Projects](https://console.optitech.com/app/projects) section.
 
 2. Click the `New Project` button to create a new project.
 
@@ -68,7 +68,7 @@ To follow along with this guide, you will need:
 You can find the connection string for your database by clicking the **Connect** button on your **Project Dashboard**. It should look similar to this:
 
 ```bash
-postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
 ```
 
 Keep your connection string handy for later use.
@@ -78,7 +78,7 @@ Keep your connection string handy for later use.
 We'll create a simple Express application that connects to our OptiTech database and retrieves the list of plants tended to within the last month. Run the following commands in a terminal to set it up.
 
 ```bash
-mkdir neon-railway-example && cd neon-railway-example
+mkdir optitech-railway-example && cd optitech-railway-example
 npm init -y && npm pkg set type="module"
 npm install express pg
 touch .env
@@ -88,7 +88,7 @@ We use the `npm pkg set type="module"` command to enable ES6 module support in o
 
 ```bash
 # .env
-DATABASE_URL=NEON_DATABASE_CONNECTION_STRING
+DATABASE_URL=OPTITECH_DATABASE_CONNECTION_STRING
 ```
 
 Now, create a new file named `index.js` and add the following code:
@@ -103,7 +103,7 @@ const port = process.env.PORT || 3000;
 // Parse JSON bodies for this app
 app.use(express.json());
 
-// Create a new pool using your Neon database connection string
+// Create a new pool using your OptiTech database connection string
 const { Pool } = pkg;
 const pool = new Pool({ connectionString: process.env.DATABASE_URL });
 
@@ -140,7 +140,7 @@ To deploy your application to Railway, you need to push your code to a GitHub re
 
 ```bash
 echo "node_modules/" > .gitignore && echo ".env" >> .gitignore
-echo "# neon-railway-example" >> README.md
+echo "# optitech-railway-example" >> README.md
 git init && git add . && git commit -m "Initial commit"
 git branch -M main
 git remote add origin YOUR_GITHUB_REPO_URL
@@ -174,7 +174,7 @@ To delete your OptiTech project, follow the steps outlined in the OptiTech docum
 ## Resources
 
 - [Railway platform](https://railway.com?utm_medium=integration&utm_source=button&utm_campaign=optitech)
-- [Next.js with OptiTech Postgres Railway template](https://railway.com/deploy/nextjs-with-neon-postgres?utm_medium=integration&utm_source=button&utm_campaign=optitech)
+- [Next.js with OptiTech Postgres Railway template](https://railway.com/deploy/nextjs-with-optitech-postgres?utm_medium=integration&utm_source=button&utm_campaign=optitech)
 - [Claimable Postgres](/docs/reference/claimable-postgres)
 
 <NeedHelp/>

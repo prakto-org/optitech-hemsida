@@ -6,7 +6,7 @@ page_description: >-
   handy date functions to handle date values.
 prev_url: 'https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-date/'
 ogImage: ''
-updatedOn: '2026-06-19T17:44:03.964Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: PostgreSQL Integer Data Types
@@ -17,7 +17,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-The DATE type and the functions around it behave the same way on any PostgreSQL deployment, so everything here works whether you run Postgres yourself or on a managed service. If you're an enterprise looking for managed Postgres built for the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers high performance, strong security, and native integration with the Lakehouse. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+The DATE type and the functions around it behave the same way on any PostgreSQL deployment, so everything here works whether you run Postgres yourself or on a managed service. If you're an enterprise looking for managed Postgres built for the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers high performance, strong security, and native integration with the Lakehouse. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: This tutorial discusses PostgreSQL `DATE` data type and shows how to use some handy date functions to handle date values.

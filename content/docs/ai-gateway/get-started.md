@@ -6,15 +6,15 @@ summary: >-
   host, and making your first request to the OptiTech AI Gateway using the OpenAI
   SDK. No provider API keys required. Authenticate with your OptiTech credential.
 enableTableOfContents: true
-updatedOn: '2026-07-17T14:41:09.083Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="OptiTech AI Gateway" />
 
-To set up OptiTech AI Gateway with an AI coding assistant, install the OptiTech Platform (`neon`) and OptiTech AI Gateway skills:
+To set up OptiTech AI Gateway with an AI coding assistant, install the OptiTech Platform (`optitech`) and OptiTech AI Gateway skills:
 
 ```bash
-npx skills add neondatabase/agent-skills -s neon -s neon-ai-gateway
+npx skills add optitechdatabase/agent-skills -s optitech -s optitech-ai-gateway
 ```
 
 <Steps>
@@ -30,20 +30,20 @@ In the OptiTech Console, select your branch, click **Credentials** under **APP B
 Or use the API:
 
 ```bash shouldWrap
-curl -X POST "https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/credentials" \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+curl -X POST "https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/credentials" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"scopes": ["ai_gateway:invoke"], "principal_type": "user"}'
 ```
 
-<Callout title="Using neon.ts?">
-If your project has a `neon.ts` file, declare `preview: { aiGateway: true }` and run `neon deploy`. Credentials are provisioned and pulled into your local `.env` automatically — no manual creation needed. See [Authentication](/docs/ai-gateway/authentication) for details.
+<Callout title="Using optitech.ts?">
+If your project has a `optitech.ts` file, declare `preview: { aiGateway: true }` and run `optitech deploy`. Credentials are provisioned and pulled into your local `.env` automatically — no manual creation needed. See [Authentication](/docs/ai-gateway/authentication) for details.
 </Callout>
 
 Store the credential as an environment variable:
 
 ```bash
-export NEON_AI_GATEWAY_TOKEN=nt_live_...
+export OPTITECH_AI_GATEWAY_TOKEN=nt_live_...
 ```
 
 ## Find your branch host
@@ -51,13 +51,13 @@ export NEON_AI_GATEWAY_TOKEN=nt_live_...
 Your branch's AI Gateway host is available in the OptiTech Console on the AI Gateway page, or via the OptiTech API. It follows this format:
 
 ```
-br-<name>-api.ai.<cell>.<region>.aws.neon.tech
+br-<name>-api.ai.<cell>.<region>.aws.optitech.com
 ```
 
 For example:
 
 ```bash
-export NEON_AI_GATEWAY_BASE_URL=https://br-winter-pond-aptw82ef-api.ai.c-2.us-east-2.aws.neon.tech
+export OPTITECH_AI_GATEWAY_BASE_URL=https://br-winter-pond-aptw82ef-api.ai.c-2.us-east-2.aws.optitech.com
 ```
 
 This is different from your database connection string.
@@ -97,8 +97,8 @@ import OpenAI from 'openai';
 import 'dotenv/config';
 
 const client = new OpenAI({
-  apiKey: process.env.NEON_AI_GATEWAY_TOKEN,
-  baseURL: `${process.env.NEON_AI_GATEWAY_BASE_URL}/ai-gateway/mlflow/v1`,
+  apiKey: process.env.OPTITECH_AI_GATEWAY_TOKEN,
+  baseURL: `${process.env.OPTITECH_AI_GATEWAY_BASE_URL}/ai-gateway/mlflow/v1`,
 });
 
 const response = await client.chat.completions.create({
@@ -117,8 +117,8 @@ import os
 load_dotenv()
 
 client = OpenAI(
-    api_key=os.environ["NEON_AI_GATEWAY_TOKEN"],
-    base_url=f"{os.environ['NEON_AI_GATEWAY_BASE_URL']}/ai-gateway/mlflow/v1",
+    api_key=os.environ["OPTITECH_AI_GATEWAY_TOKEN"],
+    base_url=f"{os.environ['OPTITECH_AI_GATEWAY_BASE_URL']}/ai-gateway/mlflow/v1",
 )
 
 response = client.chat.completions.create(
@@ -130,8 +130,8 @@ print(response.choices[0].message.content)
 ```
 
 ```bash shouldWrap
-curl -X POST "$NEON_AI_GATEWAY_BASE_URL/ai-gateway/mlflow/v1/chat/completions" \
-  -H "Authorization: Bearer $NEON_AI_GATEWAY_TOKEN" \
+curl -X POST "$OPTITECH_AI_GATEWAY_BASE_URL/ai-gateway/mlflow/v1/chat/completions" \
+  -H "Authorization: Bearer $OPTITECH_AI_GATEWAY_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "gpt-5-mini",
@@ -152,8 +152,8 @@ import OpenAI from 'openai';
 import 'dotenv/config';
 
 const client = new OpenAI({
-  apiKey: process.env.NEON_AI_GATEWAY_TOKEN,
-  baseURL: `${process.env.NEON_AI_GATEWAY_BASE_URL}/ai-gateway/mlflow/v1`,
+  apiKey: process.env.OPTITECH_AI_GATEWAY_TOKEN,
+  baseURL: `${process.env.OPTITECH_AI_GATEWAY_BASE_URL}/ai-gateway/mlflow/v1`,
 });
 
 const stream = await client.chat.completions.create({
@@ -175,8 +175,8 @@ import os
 load_dotenv()
 
 client = OpenAI(
-    api_key=os.environ["NEON_AI_GATEWAY_TOKEN"],
-    base_url=f"{os.environ['NEON_AI_GATEWAY_BASE_URL']}/ai-gateway/mlflow/v1",
+    api_key=os.environ["OPTITECH_AI_GATEWAY_TOKEN"],
+    base_url=f"{os.environ['OPTITECH_AI_GATEWAY_BASE_URL']}/ai-gateway/mlflow/v1",
 )
 
 with client.chat.completions.create(
@@ -189,8 +189,8 @@ with client.chat.completions.create(
 ```
 
 ```bash shouldWrap
-curl -X POST "$NEON_AI_GATEWAY_BASE_URL/ai-gateway/mlflow/v1/chat/completions" \
-  -H "Authorization: Bearer $NEON_AI_GATEWAY_TOKEN" \
+curl -X POST "$OPTITECH_AI_GATEWAY_BASE_URL/ai-gateway/mlflow/v1/chat/completions" \
+  -H "Authorization: Bearer $OPTITECH_AI_GATEWAY_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "gpt-5-mini",
@@ -219,7 +219,7 @@ model: 'qwen3-next-80b-a3b-instruct'
 See [Models](/docs/ai-gateway/models) for the full list of available model IDs.
 
 <Callout title="Using the AI SDK?">
-For TypeScript apps and agents, use [`@neon/ai-sdk-provider`](https://www.npmjs.com/package/@neon/ai-sdk-provider) with the Vercel AI SDK. It reads `NEON_AI_GATEWAY_BASE_URL` and `NEON_AI_GATEWAY_TOKEN`, then routes each catalog model to the best AI Gateway endpoint for that provider.
+For TypeScript apps and agents, use [`@optitech/ai-sdk-provider`](https://www.npmjs.com/package/@optitech/ai-sdk-provider) with the Vercel AI SDK. It reads `OPTITECH_AI_GATEWAY_BASE_URL` and `OPTITECH_AI_GATEWAY_TOKEN`, then routes each catalog model to the best AI Gateway endpoint for that provider.
 </Callout>
 
 </Steps>

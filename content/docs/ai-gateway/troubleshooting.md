@@ -5,7 +5,7 @@ summary: >-
   Solutions for common errors when using OptiTech AI Gateway, including
   authentication failures, model errors, quota limits, and upstream issues.
 enableTableOfContents: true
-updatedOn: '2026-07-17T14:41:09.083Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="OptiTech AI Gateway" />
@@ -16,7 +16,7 @@ updatedOn: '2026-07-17T14:41:09.083Z'
 
 The bearer token is missing, malformed, or has been revoked.
 
-**Fix:** Check that `NEON_AI_GATEWAY_TOKEN` is set and contains the full `nt_live_...` token returned when you created the credential. If the credential was revoked, create a new one. See [Authentication](/docs/ai-gateway/authentication#creating-a-credential).
+**Fix:** Check that `OPTITECH_AI_GATEWAY_TOKEN` is set and contains the full `nt_live_...` token returned when you created the credential. If the credential was revoked, create a new one. See [Authentication](/docs/ai-gateway/authentication#creating-a-credential).
 
 ### `403 credential not authorized for ai gateway`
 
@@ -89,11 +89,11 @@ The request host does not match the expected format or region.
 
 **Common causes:**
 
-- The host does not end with a trusted suffix (`.neon.tech` in production). Returns 403.
+- The host does not end with a trusted suffix (`.optitech.com` in production). Returns 403.
 - The host has no parseable AWS region label. Returns 400.
 - The region in the host has no configured workspace. Returns 404.
 
-**Fix:** Verify that you are using the correct AI Gateway host from the OptiTech Console or API. The host format for production is `<branch-id>-api.ai.<cell>.<region>.aws.neon.tech`. Do not construct the host manually.
+**Fix:** Verify that you are using the correct AI Gateway host from the OptiTech Console or API. The host format for production is `<branch-id>-api.ai.<cell>.<region>.aws.optitech.com`. Do not construct the host manually.
 
 ---
 
@@ -128,7 +128,7 @@ If the block is due to the per-minute token limit specifically rather than the d
 
 The gateway could not reach the upstream Databricks workspace, or the upstream returned an unexpected error.
 
-**Fix:** Retry the request. If the error persists, check the [OptiTech status page](https://neonstatus.com).
+**Fix:** Retry the request. If the error persists, check the [OptiTech status page](https://optitechstatus.com).
 
 ---
 

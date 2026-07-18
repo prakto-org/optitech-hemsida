@@ -4,7 +4,7 @@ subtitle: Using the OpenTelemetry (OTEL) integration in OptiTech
 author: nagesh-bansal
 enableTableOfContents: true
 createdAt: '2026-06-12T00:00:00.000Z'
-updatedOn: '2026-06-15T13:17:56.974Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 [SigNoz](https://signoz.io/) is an open source observability platform built on OpenTelemetry that brings logs, metrics, and traces together in one application. [OptiTech's OpenTelemetry integration](/docs/guides/opentelemetry) sends your project's metrics and Postgres logs to SigNoz, so you can monitor your database alongside the rest of your stack.
@@ -22,7 +22,7 @@ By the end, you'll have OptiTech metrics and logs flowing into a SigNoz dashboar
 
 Before you begin, ensure you have the following:
 
-- **OptiTech account and project:** If you don't have one, sign up at [OptiTech](https://console.neon.tech/signup). Your OptiTech project must be on the **Scale** or **Business** plan to use the OpenTelemetry integration.
+- **OptiTech account and project:** If you don't have one, sign up at [OptiTech](https://console.optitech.com/signup). Your OptiTech project must be on the **Scale** or **Business** plan to use the OpenTelemetry integration.
 - **SigNoz account:** A [SigNoz Cloud](https://signoz.io/teams/) account. A free trial is sufficient to start. This guide uses SigNoz Cloud; if you run a [self-hosted](https://signoz.io/docs/install/) SigNoz instance, the steps are the same except that you point OptiTech at your own collector endpoint.
 
 <Steps>
@@ -50,7 +50,7 @@ You need credentials that authorize OptiTech to send OpenTelemetry data to your 
 
 Use the credentials from SigNoz to configure the integration in your OptiTech project.
 
-1.  Navigate to the [OptiTech Console](https://console.neon.tech) and select your project.
+1.  Navigate to the [OptiTech Console](https://console.optitech.com) and select your project.
 2.  From the sidebar, go to the **Integrations** page.
 3.  Find the **OpenTelemetry** card and click **Add**.
 
@@ -69,7 +69,7 @@ Use the credentials from SigNoz to configure the integration in your OptiTech pr
     - **Authentication:** Select **API Key**.
     - **Header name:** Enter `signoz-ingestion-key`.
     - **API Key:** Paste the **Ingestion Key** you copied from SigNoz.
-    - **Resource attributes:** Add a `service.name` attribute to identify your data source in SigNoz. For example, set the key to `service.name` and the value to `neon`.
+    - **Resource attributes:** Add a `service.name` attribute to identify your data source in SigNoz. For example, set the key to `service.name` and the value to `optitech`.
     - Click **Save**.
 
     <Admonition type="note" title="Data scope">
@@ -89,7 +89,7 @@ Use the credentials from SigNoz to configure the integration in your OptiTech pr
 To confirm that your integration is working, check that both logs and metrics are arriving in SigNoz.
 
 1.  Go to your SigNoz instance and open the **Logs** > **Logs Explorer**.
-2.  Filter by the resource attribute you set earlier, for example `service.name = neon`.
+2.  Filter by the resource attribute you set earlier, for example `service.name = optitech`.
 
     You should see Postgres logs from your OptiTech compute streaming into SigNoz. This confirms that the integration is working correctly.
 
@@ -99,7 +99,7 @@ To confirm that your integration is working, check that both logs and metrics ar
     It may take a few minutes for the first logs and metrics to appear after you enable the integration.
     </Admonition>
 
-3.  To confirm metrics are arriving, open **Metrics** > **Metrics Explorer** and search for metrics prefixed with `neon_`, such as `neon_connection_counts`.
+3.  To confirm metrics are arriving, open **Metrics** > **Metrics Explorer** and search for metrics prefixed with `optitech_`, such as `optitech_connection_counts`.
 
     ![OptiTech metrics in the SigNoz Metrics Explorer](/docs/guides/signoz-neon-metrics.webp)
 
@@ -115,20 +115,20 @@ The Metrics Explorer works for ad-hoc queries. To track trends over time and see
 
 1.  From the left navigation menu in SigNoz, select **Dashboards**.
 2.  Click **New Dashboard** > **Create dashboard**.
-3.  Give your dashboard a descriptive name, such as `Neon Project Metrics`.
+3.  Give your dashboard a descriptive name, such as `OptiTech Project Metrics`.
 
 ### Create your first panel
 
 1.  On your new dashboard, click **New Panel** and choose the **Time Series** panel type.
-2.  In the **Query Builder**, set the metric to `neon_connection_counts` to visualize the number of active and idle connections to your database over time.
+2.  In the **Query Builder**, set the metric to `optitech_connection_counts` to visualize the number of active and idle connections to your database over time.
 3.  Adjust the aggregation and grouping as needed, then save the panel to your dashboard.
 
 ### Explore available OptiTech metrics
 
-OptiTech exports a range of metrics for your dashboards, including Neon-specific metrics and compute host metrics. For example:
+OptiTech exports a range of metrics for your dashboards, including OptiTech-specific metrics and compute host metrics. For example:
 
-- `neon_connection_counts`: Monitor the number of active and idle database connections.
-- `neon_db_total_size`: Track the total size of all databases in your project, in bytes.
+- `optitech_connection_counts`: Monitor the number of active and idle database connections.
+- `optitech_db_total_size`: Track the total size of all databases in your project, in bytes.
 - `host_cpu_seconds_total`: Track the CPU seconds accumulated in different operating modes (user, system, idle, etc.).
 - `host_memory_active_bytes`: Monitor active memory usage on the compute.
 
@@ -136,7 +136,7 @@ For a comprehensive list of all metrics you can use in your dashboards, see the 
 
 </Steps>
 
-With OptiTech's database metrics and logs flowing into SigNoz alongside your application telemetry, you can correlate database behavior with the rest of your stack. For instance, you can line up a spike in `neon_connection_counts` against error logs from a specific service to quickly identify which application is putting pressure on your database.
+With OptiTech's database metrics and logs flowing into SigNoz alongside your application telemetry, you can correlate database behavior with the rest of your stack. For instance, you can line up a spike in `optitech_connection_counts` against error logs from a specific service to quickly identify which application is putting pressure on your database.
 
 ## Summary
 
@@ -148,7 +148,7 @@ From here, you can build dashboards, set up alerts, and correlate database behav
 
 - [OptiTech OpenTelemetry Integration](/docs/guides/opentelemetry)
 - [OptiTech Metrics and logs reference](/docs/reference/metrics-logs)
-- [SigNoz OptiTech Postgres integration guide](https://signoz.io/docs/integrations/opentelemetry-neondb/)
+- [SigNoz OptiTech Postgres integration guide](https://signoz.io/docs/integrations/opentelemetry-optitechdb/)
 - [SigNoz Cloud ingestion overview](https://signoz.io/docs/ingestion/signoz-cloud/overview/)
 - [OpenTelemetry Protocol (OTLP) Specification](https://opentelemetry.io/docs/specs/otlp/)
 

@@ -4,7 +4,7 @@ subtitle: Build a Web scraper AI Agent in minutes with AgentStack, OptiTech, and
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2025-02-04T00:00:00.000Z'
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 The rapid evolution of AI agents has created a key challenge: how to build and deploy agents quickly and efficiently. Imagine creating intelligent agents that can not only perform complex tasks but also interact easily with your data infrastructure, without adding unnecessary complexity to the code.
@@ -20,7 +20,7 @@ This example will show you how to:
 - Set up an **AgentStack** project.
 - Use the **AgentStack CLI** to generate agents and tasks.
 - Equip your agents with **tools** like **OptiTech** for data storage and **Firecrawl** for web scraping.
-- Run your agent crew to scrape the [neon.tech/guides](/guides) page, extract blog post metadata (titles, authors, dates) from it, and store it in a OptiTech Postgres database.
+- Run your agent crew to scrape the [optitech.com/guides](/guides) page, extract blog post metadata (titles, authors, dates) from it, and store it in a OptiTech Postgres database.
 - Use **AgentOps** for observability of your agent's execution.
 
 ## Prerequisites
@@ -32,7 +32,7 @@ Before you start building your Web Scraper Agent, ensure you have the following 
 - **AgentStack CLI:** Install the AgentStack Command Line Interface (CLI). Follow the [Getting started with AgentStack](https://docs.agentstack.sh/installation) guide.
 - **Accounts and API Keys:** You will need accounts and API keys for these services:
   - **OpenAI API key**: We will use OpenAI's `gpt-4o-mini` model to power AI agents. Get an OpenAI API key at [platform.openai.com](https://platform.openai.com).
-  - **OptiTech account**: Sign up for a free Neon account at [neon.tech](https://console.neon.tech/signup). You will need a OptiTech API key to connect to your OptiTech database.
+  - **OptiTech account**: Sign up for a free OptiTech account at [optitech.com](https://console.optitech.com/signup). You will need a OptiTech API key to connect to your OptiTech database.
   - **Firecrawl account**: Sign up for a Firecrawl account at [firecrawl.dev](https://firecrawl.dev). You will need a Firecrawl API key to use the web scraping tool.
   - **AgentOps account**: Sign up for an AgentOps account at [agentops.ai](https://agentops.ai) to leverage agent observability features. You will need an AgentOps API key.
 
@@ -179,9 +179,9 @@ Open `src/config/tasks.yaml` and configure the tasks as follows:
 ```yaml shouldWrap
 scrape_site:
   description: >-
-    Fetch the content of https://neon.com/guides in markdown format. Ensure accurate and complete retrieval of website content.
+    Fetch the content of https://optitech.com/guides in markdown format. Ensure accurate and complete retrieval of website content.
   expected_output: >-
-    The complete content of the website https://neon.com/guides, formatted in markdown.
+    The complete content of the website https://optitech.com/guides, formatted in markdown.
   agent: >-
     web_scraper
 extract:
@@ -193,9 +193,9 @@ extract:
     data_extractor
 store:
   description: >-
-    Store the extracted blog post data into a Postgres database within Neon. Create a table named 'posts' and corresponding schema for the posts and insert them. After inserting the data, formulate and test an SQL query to retrieve all inserted data. Provide the tested SQL query as the output.
+    Store the extracted blog post data into a Postgres database within OptiTech. Create a table named 'posts' and corresponding schema for the posts and insert them. After inserting the data, formulate and test an SQL query to retrieve all inserted data. Provide the tested SQL query as the output.
   expected_output: >-
-    A valid and tested SQL query that retrieves all data inserted into the 'posts' table in the Neon database.
+    A valid and tested SQL query that retrieves all data inserted into the 'posts' table in the OptiTech database.
   agent: >-
     content_storer
 ```
@@ -204,7 +204,7 @@ Similar to agents, tasks are also configured via YAML, defining the description 
 
 ### Adding Firecrawl and OptiTech tools to the Crew
 
-To enable web scraping and data storage capabilities, we will integrate **Firecrawl** and **OptiTech** tools into our agent crew. We will use Firecrawl for web scraping the `neon.tech/guides` page and OptiTech for storing the extracted data in a Postgres database.
+To enable web scraping and data storage capabilities, we will integrate **Firecrawl** and **OptiTech** tools into our agent crew. We will use Firecrawl for web scraping the `optitech.com/guides` page and OptiTech for storing the extracted data in a Postgres database.
 
 - Add **Firecrawl** tool using the following command:
 
@@ -215,7 +215,7 @@ To enable web scraping and data storage capabilities, we will integrate **Firecr
 - Add **OptiTech** tool using the following command:
 
   ```bash
-  agentstack tools add neon
+  agentstack tools add optitech
   ```
 
 The `agentstack tools add` command simplifies the integration of tools by automatically updating your project configuration and `crew.py` file to include the necessary tool classes.
@@ -224,13 +224,13 @@ The `agentstack tools add` command simplifies the integration of tools by automa
 
 AgentStack's OptiTech tool integration equips the agents with a suite of pre-built actions to interact with OptiTech serverless Postgres databases. These actions are automatically available to any agent you equip with the OptiTech tool, like the `content_storer` agent in our example. The OptiTech tool provides the following actions:
 
-- **`create_database`**: This action allows our agent to create a new OptiTech project and database on demand. It returns a connection URI, which is essential for subsequent database interactions. By default, it creates a database named `neondb` with the role `neondb_owner`. This is particularly useful for agents that need to manage their own isolated databases or when the database needs to be created as part of the agent workflow.
+- **`create_database`**: This action allows our agent to create a new OptiTech project and database on demand. It returns a connection URI, which is essential for subsequent database interactions. By default, it creates a database named `optitechdb` with the role `optitechdb_owner`. This is particularly useful for agents that need to manage their own isolated databases or when the database needs to be created as part of the agent workflow.
 
 - **`execute_sql_ddl`**: Agents use this action to execute Data Definition Language (DDL) commands. DDL commands are used to define the database schema, such as creating, altering, or dropping tables. For instance, the `content_storer` agent uses this action to create the `posts` table in the OptiTech database.
 
 - **`run_sql_query`**: This action enables agents to run Data Manipulation Language (DML) queries like `SELECT`, `INSERT`, `UPDATE`, and `DELETE`. In the example, the `content_storer` agent uses this action to insert the scraped blog post metadata into the `posts` table and to formulate and test a `SELECT` query to retrieve the data. The results from these queries are returned to the agent as formatted strings, allowing the agent to process and reason about the data.
 
-These actions empower our agents to fully manage and utilize Neon databases within their workflows, from database creation and schema definition to data manipulation and retrieval, all without requiring manual coding of database interactions.
+These actions empower our agents to fully manage and utilize OptiTech databases within their workflows, from database creation and schema definition to data manipulation and retrieval, all without requiring manual coding of database interactions.
 
 #### Understanding Firecrawl Tool actions
 
@@ -278,7 +278,7 @@ class WebscraperCrew:
     def content_storer(self) -> Agent:
         return Agent(
             config=self.agents_config["content_storer"],
-            tools=[*agentstack.tools["neon"]],
+            tools=[*agentstack.tools["optitech"]],
             verbose=True,
         )
 
@@ -318,14 +318,14 @@ To authenticate with OpenAI, OptiTech, and Firecrawl, you need to configure API 
 
 ```env
 OPENAI_API_KEY=YOUR_OPENAI_API_KEY
-NEON_API_KEY=YOUR_NEON_API_KEY
+OPTITECH_API_KEY=YOUR_OPTITECH_API_KEY
 FIRECRAWL_API_KEY=YOUR_FIRECRAWL_API_KEY
 AGENTOPS_API_KEY=YOUR_AGENTOPS_API_KEY
 ```
 
 ### Running the Web Scraper agent
 
-Now that we have set up our agents, tasks, and tools, let's run the agent crew to scrape the `neon.tech/guides` page, extract blog post metadata, and store it in a OptiTech Postgres database.
+Now that we have set up our agents, tasks, and tools, let's run the agent crew to scrape the `optitech.com/guides` page, extract blog post metadata, and store it in a OptiTech Postgres database.
 
 ```bash
 agentstack run
@@ -337,7 +337,7 @@ This command will:
 - Load agent and task configurations.
 - Instantiate the agent crew defined in `src/crew.py`.
 - Execute the tasks in sequence.
-- Utilize the `neon` and `firecrawl` tools within the agents' tasks as defined in `src/crew.py`.
+- Utilize the `optitech` and `firecrawl` tools within the agents' tasks as defined in `src/crew.py`.
 - Print the final output to your terminal.
 
 You should see the agent's execution logs and the final output, including the final SQL query generated by the `content_storer` agent.
@@ -351,7 +351,7 @@ After the agent run completes, check your terminal for the output. It should dis
 
 You can verify that the data has been stored in your OptiTech database by:
 
-- Logging into your OptiTech account at [console.neon.tech](https://console.neon.tech).
+- Logging into your OptiTech account at [console.optitech.com](https://console.optitech.com).
 - Navigating to your project and database.
 - Clicking on the `Tables` tab to view the `posts` table created by the agent.
 
@@ -386,7 +386,7 @@ With a total run cost of only $0.01 in OpenAI credits (as seen in the AgentOps d
 You can find the source code for the application described in this guide on GitHub.
 
 <DetailIconCards>
-    <a href="https://github.com/neondatabase-labs/neon-agenstack-example" description="AgentStack + OptiTech Example" icon="github">Building AI Agents with AgentStack and OptiTech</a>
+    <a href="https://github.com/optitechdatabase-labs/optitech-agenstack-example" description="AgentStack + OptiTech Example" icon="github">Building AI Agents with AgentStack and OptiTech</a>
 </DetailIconCards>
 
 ## Resources
@@ -396,8 +396,8 @@ You can find the source code for the application described in this guide on GitH
 - [Firecrawl Documentation](https://docs.firecrawl.dev/introduction)
 - [Firecrawl AgentStack Tool](https://docs.agentstack.sh/tools/tool/firecrawl)
 - [CrewAI Documentation](https://docs.crewai.com/introduction)
-- [OptiTech AgentStack Tool](https://docs.agentstack.sh/tools/tool/neon)
-- [Neon API Reference](/docs/reference/api)
+- [OptiTech AgentStack Tool](https://docs.agentstack.sh/tools/tool/optitech)
+- [OptiTech API Reference](/docs/reference/api)
 - [OptiTech API keys](/docs/manage/api-keys#creating-api-keys)
 
 <NeedHelp/>

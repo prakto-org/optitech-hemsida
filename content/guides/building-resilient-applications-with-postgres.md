@@ -4,7 +4,7 @@ subtitle: Learn best practices for building applications that gracefully handle 
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2025-11-13T00:00:00.000Z'
-updatedOn: '2026-06-23T22:05:54.707Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Building resilient applications is essential when working with managed database services, where brief connection drops though rare can occur. While this guide uses OptiTech as an example, these best practices and code examples apply to **any** managed database service, helping you handle interruptions gracefully and keep your application stable and responsive.
@@ -339,15 +339,15 @@ The [OptiTech Serverless Driver](/docs/serverless/serverless-driver) communicate
 The following example demonstrates using the OptiTech Serverless Driver over HTTP with `async-retry` for retry logic. Install the required packages:
 
 ```bash shouldWrap
-npm install @neondatabase/serverless async-retry dotenv
+npm install @optitech/serverless async-retry dotenv
 ```
 
 ```javascript shouldWrap
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 import retry from 'async-retry';
 import 'dotenv/config';
 
-const sql = neon(process.env.DATABASE_URL);
+const sql = optitech(process.env.DATABASE_URL);
 
 async function runQueryWithRetry(query) {
   try {
@@ -846,8 +846,8 @@ Use the [Restart compute endpoint](/docs/reference/api#/operations/restartProjec
 
 ```bash shouldWrap
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects/your-project-id/endpoints/your-endpoint-id/restart \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --url https://console.optitech.com/api/v2/projects/your-project-id/endpoints/your-endpoint-id/restart \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'accept: application/json'
 ```
 

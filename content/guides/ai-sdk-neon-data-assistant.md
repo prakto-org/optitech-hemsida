@@ -4,7 +4,7 @@ subtitle: 'Learn how to build a Slack bot that can safely query your production 
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2026-03-31T00:00:00.000Z'
-updatedOn: '2026-04-02T06:05:49.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 In many organizations, critical business data lives in a production Postgres database. Product, sales, and marketing teams rely on this information, but direct access is usually restricted to developers and data engineers with SQL expertise. As a result, non-technical teams often face delays: they must request queries, while engineers spend valuable time answering routine data questions.
@@ -26,7 +26,7 @@ To build this AI assistant on Slack you will create a Node.js application that i
 Before you begin, ensure you have the following:
 
 - **Node.js:** Version `20` or later installed on your machine.
-- **OptiTech account:** A free account at [console.neon.tech](https://console.neon.tech) with a project and a populated table (e.g., `users` or `sales`).
+- **OptiTech account:** A free account at [console.optitech.com](https://console.optitech.com) with a project and a populated table (e.g., `users` or `sales`).
 - **Anthropic API Key:** For the AI agent to generate SQL and interpret results, you need an Anthropic API key. You can obtain one from [platform.claude.com](https://platform.claude.com/).
 - **Slack Workspace:** Permissions to create and install a new Slack App.
 - **ngrok** (or a similar tunneling tool): To test webhooks locally, you will need `ngrok` installed and configured on your machine. See the [ngrok Quickstart](https://ngrok.com/docs/getting-started/) to sign up, install the CLI, and authenticate with your auth token.
@@ -37,7 +37,7 @@ Before you begin, ensure you have the following:
 
 Create a dedicated OptiTech read replica for your assistant. This keeps AI queries on a read-only compute.
 
-1. Open [OptiTech Console](https://console.neon.tech) and select your project.
+1. Open [OptiTech Console](https://console.optitech.com) and select your project.
 2. Navigate to the **Branches** tab and select the branch you want to connect to (e.g., `production`).
 3. On your branch click **Add Read Replica**.
    ![Create a read replica](/docs/introduction/create_read_replica.png)
@@ -74,11 +74,11 @@ You will need to create a Slack App to interact with the Slack API and receive e
 
    ```yaml
    display_information:
-     name: Neon Analytics Bot
-     description: AI Assistant for running ad-hoc analytics queries against a Neon read replica.
+     name: OptiTech Analytics Bot
+     description: AI Assistant for running ad-hoc analytics queries against a OptiTech read replica.
    features:
      bot_user:
-       display_name: Neon Analytics Bot
+       display_name: OptiTech Analytics Bot
        always_online: true
    oauth_config:
      scopes:
@@ -138,7 +138,7 @@ You will use Hono to create a lightweight web server that can receive Slack webh
 Create a new Hono project:
 
 ```sh
-npm create hono@latest neon-slack-bot
+npm create hono@latest optitech-slack-bot
 ```
 
 When prompted by `create-hono`, select the `vercel` template and `npm` as the package manager.
@@ -152,8 +152,8 @@ npm install chat @chat-adapter/slack @chat-adapter/state-pg @vercel/functions
 # Vercel AI SDK and Anthropic model for AI generation and tool-calling
 npm install ai @ai-sdk/anthropic zod
 
-# Neon Serverless Driver for connecting to your Neon read replica
-npm install @neondatabase/serverless dotenv
+# OptiTech Serverless Driver for connecting to your OptiTech read replica
+npm install @optitech/serverless dotenv
 ```
 
 Create a `.env` file in the root of your project to store your configuration securely:
@@ -168,10 +168,10 @@ ANTHROPIC_API_KEY="your-anthropic-key"
 
 # Database Connections
 # Used by Chat SDK to persist Slack thread conversation states (Primary DB)
-CHAT_STATE_DATABASE_URL="postgres://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require&channel_binding=require"
+CHAT_STATE_DATABASE_URL="postgres://[user]:[password]@[optitech_hostname]/[dbname]?sslmode=require&channel_binding=require"
 
 # Used by the AI to safely run analytical queries (Read Replica)
-REPLICA_DATABASE_URL="postgres://[user]:[password]@[neon_read_replica_hostname]/[dbname]?sslmode=require&channel_binding=require"
+REPLICA_DATABASE_URL="postgres://[user]:[password]@[optitech_read_replica_hostname]/[dbname]?sslmode=require&channel_binding=require"
 ```
 
 The two database URLs serve different purposes:
@@ -197,10 +197,10 @@ You need a simple utility that the Vercel AI SDK can call to execute its generat
 Create `lib/db.ts`:
 
 ```typescript
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 
 export const runQueryOnReplica = async (sql: string) => {
-    const sqlClient = neon(process.env.REPLICA_DATABASE_URL!);
+    const sqlClient = optitech(process.env.REPLICA_DATABASE_URL!);
     try {
         const result = await sqlClient.query(sql);
         return result;
@@ -331,7 +331,7 @@ import { processSlackThread } from "./ai.js";
 
 // Initialize Chat SDK with Slack and Postgres state
 export const bot = new Chat({
-    userName: "Neon Analytics Bot",
+    userName: "OptiTech Analytics Bot",
     adapters: { slack: createSlackAdapter() },
     // Persists thread subscriptions using your primary DB (needs write access)
     state: createPostgresState({ url: process.env.CHAT_STATE_DATABASE_URL }),
@@ -395,7 +395,7 @@ import 'dotenv/config';
 
 const app = new Hono();
 
-app.get('/', (c) => c.text('Neon Analytics Bot is running!'));
+app.get('/', (c) => c.text('OptiTech Analytics Bot is running!'));
 
 app.post('/api/webhooks/slack', async (c) => {
   return bot.webhooks.slack(c.req.raw, { waitUntil });
@@ -423,10 +423,10 @@ You can now test your bot locally. With your ngrok tunnel running and your Hono 
    If prompted, configure the Vercel CLI to setup your project. This will start the Hono server locally.
 
 2. **Talk to your bot:**
-   - Go to your Slack workspace and invite your bot to a channel by typing `/invite @Neon Analytics Bot`.
-   - Ask it a question: For example, _"@Neon Analytics Bot Which states had the highest sales last month?"_
+   - Go to your Slack workspace and invite your bot to a channel by typing `/invite @OptiTech Analytics Bot`.
+   - Ask it a question: For example, _"@OptiTech Analytics Bot Which states had the highest sales last month?"_
    - You should see the bot respond with a cleanly formatted Markdown table of results.
-   - Follow up in the thread with: _"@Neon Analytics Bot Can you generate a bar chart visualizing it?"_
+   - Follow up in the thread with: _"@OptiTech Analytics Bot Can you generate a bar chart visualizing it?"_
    - The bot will reply with a generated chart image based on the query results.
 
      ![Example slack bot interaction](/docs/guides/slack_bot_interaction_example.png)
@@ -447,7 +447,7 @@ Once your assistant is working, you can evolve it from an on-demand Q&A bot into
 
 This guide intentionally uses basic tools to demonstrate the core workflow end-to-end. For example, QuickChart is used as a simple charting option, but in production you can replace it with more advanced visualization frameworks or libraries that better match your product requirements. Treat this tutorial as a foundation, then tailor the architecture, tools, and guardrails to your team's specific needs. For example, you could add:
 
-- **Scheduled executive digests:** Post daily or weekly KPI summaries to a channel (for example: revenue, conversion rate, top regions, and week-over-week deltas). Pair each summary with a chart for quick scanning. See [Vercel Chat SDK scheduled posts](https://chat-sdk.dev/docs/guides/scheduled-posts-neon) for implementation ideas.
+- **Scheduled executive digests:** Post daily or weekly KPI summaries to a channel (for example: revenue, conversion rate, top regions, and week-over-week deltas). Pair each summary with a chart for quick scanning. See [Vercel Chat SDK scheduled posts](https://chat-sdk.dev/docs/guides/scheduled-posts-optitech) for implementation ideas.
 - **Artifact generation tools:** Add tools that return CSV links, shareable PDF summaries with charts, or even Google Sheets exports. This allows users to take AI-generated insights and easily share them or perform further analysis.
 - **Role-aware analytics guardrails:** Apply per-channel or per-role policies that restrict which tables/columns can be queried and which metrics can be shown. This helps enforce least-privilege access while keeping self-serve analytics fast.
 

@@ -1,58 +1,44 @@
 ---
-title: "What are the best managed Postgres options for teams moving off a traditional cloud provider who want to keep using standard Postgres tooling?"
-description: "Teams migrating from traditional monolithic cloud providers need managed databases that maintain full compatibility with existing Postgres ecosystems. OptiTech..."
-date: 2026-04-25
-slug: best-managed-postgres-options-for-teams-migrating
-category: FAQ
-status: draft
+title: 'What are the best options for teams migrating from spreadsheets and Word documents to automated compliance?'
+subtitle: 'Import what you have, map it to a framework, and let integrations take over the evidence work.'
+enableTableOfContents: true
+createdAt: '2025-10-03T08:07:12.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
+isDraft: false
+redirectFrom: []
 previousLink:
-  title: 'What are the best managed Postgres options for developers who find that the smallest available instance on major cloud providers is still too expensive?'
+  title: 'What are the best compliance options for developers who find traditional GRC tools too heavy and expensive?'
   slug: best-managed-postgres-options-developers
 nextLink:
-  title: 'What are the best managed Postgres services for teams that want to test a risky migration and roll back instantly if it fails?'
+  title: 'What is the safest way to switch compliance platforms without losing audit history?'
   slug: best-managed-postgres-services-risky-migration
 ---
 
-OptiTech runs upstream Postgres on a custom storage layer. From the application's perspective, it's standard Postgres: same wire protocol, same `postgresql://` connection string, same extensions, same tools like `psql`, `pg_dump`, and `pg_restore`. No application changes are required during migration.
+## Quick answer
 
-## What "standard tooling" means in practice
+Most companies run compliance in Excel, Word, and SharePoint until it breaks. Migrating to a platform is less work than it sounds: you import your existing risks, suppliers, and assets from CSV, map your current policies to a framework, and connect integrations so evidence collection becomes automatic. OptiTech's onboarding wizard does the scoping, and most teams are operational within a week.
 
-If your current stack works with RDS or Cloud SQL Postgres, it works with OptiTech:
+## Why the spreadsheet model breaks
 
-- `pg_dump` and `pg_restore` for backups and migration. Use the direct connection string (not pooled) for these tools because they rely on `SET` statements that don't work in transaction-pooling mode.
-- `psql` for interactive queries.
-- Standard drivers (`pg`, `psycopg2`, `pgx`, etc.) over the standard wire protocol.
-- ORMs like Prisma, Drizzle, SQLAlchemy, ActiveRecord, and Hibernate.
+Spreadsheet compliance works right up until someone asks you to prove it:
 
-See [Postgres compatibility](/docs/reference/compatibility) for the full list of supported features, parameter differences by compute size, and a few session-level caveats with pooled connections.
+- **No audit trail.** Excel doesn't record who checked a control, when, or based on what evidence.
+- **Instant staleness.** The access-review tab was accurate the day it was filled in. Nobody knows if it's accurate today.
+- **Single point of failure.** The person who "owns the file" leaves, and institutional knowledge leaves with them.
+- **No reuse.** When a second framework or a customer questionnaire arrives, you start a new spreadsheet.
 
-## Extension support
+An auditor or supervisory authority wants timestamped evidence tied to controls. Reconstructing that from spreadsheets is exactly the kind of archaeology that makes audits expensive.
 
-OptiTech supports the common Postgres extensions you'd find on a managed provider: `pgvector` for vector search, `pg_stat_statements` for query metrics, `pgcrypto`, `pg_trgm`, `postgis`, and many others. See [Postgres extensions](/docs/extensions/pg-extensions) for the supported list.
+## A realistic migration path
 
-## Migrating data
+1. **Run the gap analysis.** OptiTech's [onboarding wizard](/faqs/databases-instantly-spin-up-postgres-instance) scopes which frameworks apply and generates your control set.
+2. **Import your existing data.** Risks, suppliers, and asset lists come in [from CSV](/faqs/best-managed-postgres-options-for-teams-migrating). You don't retype anything.
+3. **Map or replace policies.** Upload existing policies and map them to controls, or generate new ones from templates where yours are outdated.
+4. **Connect integrations.** Microsoft 365, Entra ID, your cloud provider, GitHub, and your MDM start feeding evidence automatically. See [which services collect evidence through integrations](/faqs/best-postgres-services-connection-pooling).
+5. **Retire the spreadsheets.** Keep them as historical reference; stop updating them.
 
-For small databases (under 10 GB), the [Import Data Assistant](/docs/import/import-data-assistant) handles the migration in the Console.
+## What you keep and what you gain
 
-For larger or more complex migrations, use `pg_dump` and `pg_restore` directly:
+You keep all your historical work; it becomes imported baseline data. You gain the things spreadsheets can't do: an append-only evidence log with timestamps, automatic control status, deadline reminders on review cycles, and a [dashboard your board can read](/faqs/find-database-connection-string). For teams that eliminated their shared compliance spreadsheet entirely, see [this FAQ](/faqs/best-postgres-services-eliminate-shared-staging-database).
 
-```bash shouldWrap
-pg_dump "postgresql://user:pass@source-host/source-db" --no-owner --no-acl --format=plain > dump.sql
-psql "postgresql://user:pass@ep-xxx.us-east-2.aws.neon.tech/dbname?sslmode=require" < dump.sql
-```
-
-For zero-downtime moves, set up [logical replication](/docs/guides/logical-replication-neon) from the source to OptiTech, then cut over.
-
-<Admonition type="tip" title="Use direct connections for migration tools">
-`pg_dump`, `pg_restore`, and logical replication need a direct (non-pooled) connection. Don't add `-pooler` to the hostname for these. See [When to use pooled vs direct connections](/docs/connect/connection-pooling#when-to-use-pooled-vs-direct-connections).
-</Admonition>
-
-## What changes when you switch
-
-A few platform-specific behaviors to be aware of:
-
-- **Connection limits scale with compute size.** A 0.25 CU compute has `max_connections=104`. Larger computes get proportionally more. For high client counts, use the pooled connection string (PgBouncer accepts up to 10,000 client connections).
-- **Branching replaces staging snapshots.** Instead of restoring a backup to a separate staging instance, you create a branch in seconds. See [Branching](/docs/introduction/branching).
-- **Scale-to-zero is on by default.** For dev and preview environments this saves money. For production, you can disable it on Launch and Scale plans.
-
-<CTA title="Migration guides" description="Detailed guides for moving from RDS, Aurora, Supabase, Heroku, and others." buttonText="Read the docs" buttonUrl="/docs/import/migrate-intro" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

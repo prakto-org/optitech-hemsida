@@ -12,7 +12,7 @@ enableTableOfContents: true
 redirectFrom:
   - /docs/quickstart/java
   - /docs/integrations/java
-updatedOn: '2026-07-14T19:04:57.024Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <CopyPrompt src="/prompts/java-prompt.md" 
@@ -24,7 +24,7 @@ You will learn how to set up a project, connect to your database, and perform ba
 
 ## Prerequisites
 
-- A OptiTech account. If you do not have one, see [Sign up](https://console.neon.tech/signup).
+- A OptiTech account. If you do not have one, see [Sign up](https://console.optitech.com/signup).
 - [Java Development Kit (JDK) 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) or later.
 - [Apache Maven](https://maven.apache.org/install.html) to manage project dependencies.
 
@@ -34,11 +34,11 @@ You will learn how to set up a project, connect to your database, and perform ba
 
 If you do not have one already, create a OptiTech project.
 
-1.  Navigate to the [Projects](https://console.neon.tech/app/projects) page in the [OptiTech Console](https://console.neon.tech).
+1.  Navigate to the [Projects](https://console.optitech.com/app/projects) page in the [OptiTech Console](https://console.optitech.com).
 2.  Click **New Project**.
 3.  Specify your project settings and click **Create Project**.
 
-Your project is created with a ready-to-use database named `neondb`. In the following steps, you will connect to this database from your Java application.
+Your project is created with a ready-to-use database named `optitechdb`. In the following steps, you will connect to this database from your Java application.
 
 ## Create a Java project
 
@@ -51,15 +51,15 @@ Create a project using the Maven `archetype:generate` command. This sets up a st
         -DarchetypeGroupId=org.apache.maven.archetypes \
         -DarchetypeArtifactId=maven-archetype-quickstart \
         -DarchetypeVersion=1.5 \
-        -DgroupId=com.neon.quickstart \
-        -DartifactId=neon-java-jdbc \
+        -DgroupId=com.optitech.quickstart \
+        -DartifactId=optitech-java-jdbc \
         -DinteractiveMode=false
     ```
 
 2.  Change into the newly created project directory.
 
     ```bash
-    cd neon-java-jdbc
+    cd optitech-java-jdbc
     ```
 
     > Open this directory in your preferred code editor (for example, VS Code, IntelliJ IDEA).
@@ -95,11 +95,11 @@ Create a project using the Maven `archetype:generate` command. This sets up a st
 
     This command compiles your Java code and downloads the required dependencies specified in `pom.xml`.
 
-## Store your Neon connection string
+## Store your OptiTech connection string
 
 Create a file named `.env` in your project's root directory. This file will securely store your database connection string.
 
-1.  In the [OptiTech Console](https://console.neon.tech), select your project on the **Dashboard**.
+1.  In the [OptiTech Console](https://console.optitech.com), select your project on the **Dashboard**.
 2.  Click **Connect** on your **Project Dashboard** to open the **Connect to your database** modal.
 3.  Select **Java** as your programming language.
     ![Connection modal](/docs/connect/java_connection_details.png)
@@ -107,21 +107,21 @@ Create a file named `.env` in your project's root directory. This file will secu
 5.  Create a file named `.env` in your project's root directory and add the connection string to it as shown below:
 
     ```text title=".env"
-    DATABASE_URL="jdbc:postgresql://[neon_hostname]/[dbname]?user=[user]&password=[password]&sslmode=require&channelBinding=require"
+    DATABASE_URL="jdbc:postgresql://[optitech_hostname]/[dbname]?user=[user]&password=[password]&sslmode=require&channelBinding=require"
     ```
 
-    > Replace `[user]`, `[password]`, `[neon_hostname]`, and `[dbname]` with your actual database credentials.
+    > Replace `[user]`, `[password]`, `[optitech_hostname]`, and `[dbname]` with your actual database credentials.
 
 ## Examples
 
-This section provides code examples for performing CRUD operations. The examples should be placed inside `src/main/java/com/neon/quickstart/`.
+This section provides code examples for performing CRUD operations. The examples should be placed inside `src/main/java/com/optitech/quickstart/`.
 
 ### Create a table and insert data
 
 Create a file named `CreateTable.java`. This class connects to your database, creates a table, and inserts data.
 
-```java title="src/main/java/com/neon/quickstart/CreateTable.java"
-package com.neon.quickstart;
+```java title="src/main/java/com/optitech/quickstart/CreateTable.java"
+package com.optitech.quickstart;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import java.sql.Connection;
@@ -205,7 +205,7 @@ The above code does the following:
 Run the code to create the table and insert the data using the following command:
 
 ```bash
-mvn exec:java -Dexec.mainClass="com.neon.quickstart.CreateTable"
+mvn exec:java -Dexec.mainClass="com.optitech.quickstart.CreateTable"
 ```
 
 When the code runs successfully, it produces the following output:
@@ -222,8 +222,8 @@ Inserted 3 rows of data.
 
 Create a file named `ReadData.java`. This class fetches all rows from the `books` table and prints them.
 
-```java title="src/main/java/com/neon/quickstart/ReadData.java"
-package com.neon.quickstart;
+```java title="src/main/java/com/optitech/quickstart/ReadData.java"
+package com.optitech.quickstart;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import java.sql.*;
@@ -263,7 +263,7 @@ The above code does the following:
 Run the code to read the data using the following command:
 
 ```bash
-mvn exec:java -Dexec.mainClass="com.neon.quickstart.ReadData"
+mvn exec:java -Dexec.mainClass="com.optitech.quickstart.ReadData"
 ```
 
 When the read logic runs, it produces the following output:
@@ -283,8 +283,8 @@ ID: 4, Title: Dune, Author: Frank Herbert, Year: 1965, In Stock: false
 
 Create a file named `UpdateData.java` to update the stock status of 'Dune' to `True`.
 
-```java title="src/main/java/com/neon/quickstart/UpdateData.java"
-package com.neon.quickstart;
+```java title="src/main/java/com/optitech/quickstart/UpdateData.java"
+package com.optitech.quickstart;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import java.sql.*;
@@ -321,13 +321,13 @@ The above code does the following:
 Run the code to update the data using the following command:
 
 ```bash
-mvn exec:java -Dexec.mainClass="com.neon.quickstart.UpdateData"
+mvn exec:java -Dexec.mainClass="com.optitech.quickstart.UpdateData"
 ```
 
 After running the update, verify the change by running the `ReadData` class again.
 
 ```bash
-mvn exec:java -Dexec.mainClass="com.neon.quickstart.ReadData"
+mvn exec:java -Dexec.mainClass="com.optitech.quickstart.ReadData"
 ```
 
 The updated output will be:
@@ -347,8 +347,8 @@ ID: 4, Title: Dune, Author: Frank Herbert, Year: 1965, In Stock: true
 
 Create a file named `DeleteData.java` to delete the book '1984' from the table.
 
-```java title="src/main/java/com/neon/quickstart/DeleteData.java"
-package com.neon.quickstart;
+```java title="src/main/java/com/optitech/quickstart/DeleteData.java"
+package com.optitech.quickstart;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import java.sql.*;
@@ -384,13 +384,13 @@ The above code does the following:
 Run the code to delete the data using the following command:
 
 ```bash
-mvn exec:java -Dexec.mainClass="com.neon.quickstart.DeleteData"
+mvn exec:java -Dexec.mainClass="com.optitech.quickstart.DeleteData"
 ```
 
 After running the delete, verify the change by running the `ReadData` class again.
 
 ```bash
-mvn exec:java -Dexec.mainClass="com.neon.quickstart.ReadData"
+mvn exec:java -Dexec.mainClass="com.optitech.quickstart.ReadData"
 ```
 
 The final output will be:
@@ -409,8 +409,8 @@ ID: 4, Title: Dune, Author: Frank Herbert, Year: 1965, In Stock: true
 
 The examples above execute each operation independently. For production code where multiple operations must succeed or fail together, wrap them in a transaction. Use `setAutoCommit(false)` to start a transaction, `commit()` on success, and `rollback()` in the catch block on failure.
 
-```java title="src/main/java/com/neon/quickstart/TransactionExample.java"
-package com.neon.quickstart;
+```java title="src/main/java/com/optitech/quickstart/TransactionExample.java"
+package com.optitech.quickstart;
 
 import io.github.cdimascio.dotenv.Dotenv;
 import java.sql.Connection;
@@ -476,7 +476,7 @@ public class TransactionExample {
 Run with:
 
 ```bash
-mvn exec:java -Dexec.mainClass="com.neon.quickstart.TransactionExample"
+mvn exec:java -Dexec.mainClass="com.optitech.quickstart.TransactionExample"
 ```
 
 </Steps>

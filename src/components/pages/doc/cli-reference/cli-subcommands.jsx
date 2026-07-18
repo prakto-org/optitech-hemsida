@@ -6,7 +6,7 @@ import { getNode, renderSubcommands } from './renderers';
 
 // Generated subcommand index table, e.g. <CliSubcommands command="projects" />.
 // On nested pages pass anchorParts so links target the page's prefixed
-// anchors: <CliSubcommands command="neon-auth oauth-provider" anchorParts="oauth-provider" />
+// anchors: <CliSubcommands command="optitech-auth oauth-provider" anchorParts="oauth-provider" />
 // links to #oauth-provider-add instead of a colliding #add.
 const CliSubcommands = ({ command, anchorParts = '' }) => (
   <Content

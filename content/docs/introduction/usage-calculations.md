@@ -8,7 +8,7 @@ summary: >-
   cost-tracking tooling. Plan-specific rates, transfer allowances, and
   granularity lookback limits are documented here.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This guide helps you use the OptiTech API to fetch your consumption data, convert raw metrics into human-readable numbers, and understand how your bill is calculated. To monitor usage in the OptiTech Console instead, see [Monitor billing and usage](/docs/introduction/monitor-usage).
@@ -20,13 +20,13 @@ It applies to **Launch**, **Scale**, **Agent**, and **Enterprise** plans. Consum
 The [consumption history endpoint](/docs/reference/api/consumption/get-consumption-history-per-project-v2) returns per-project, per-day (or per-hour, or per-month) usage for every billable metric.
 
 ```sh
-curl "https://console.neon.tech/api/v2/consumption_history/v2/projects?\
+curl "https://console.optitech.com/api/v2/consumption_history/v2/projects?\
 org_id=${ORG_ID}&from=2026-03-01T00:00:00Z&to=2026-04-01T00:00:00Z&\
 granularity=daily&metrics=compute_unit_seconds,root_branch_bytes_month,\
 child_branch_bytes_month,instant_restore_bytes_month,snapshot_storage_bytes_month,\
 extra_branches_month,public_network_transfer_bytes,private_network_transfer_bytes&\
 limit=100" \
-  -H "Authorization: Bearer ${NEON_API_KEY}"
+  -H "Authorization: Bearer ${OPTITECH_API_KEY}"
 ```
 
 Calling this endpoint does not wake suspended computes, so it is safe to poll without affecting your usage.
@@ -183,8 +183,8 @@ The consumption history API requires a paid plan. On the Free plan, you can trac
 Use `GET /projects/{project_id}` to check compute time, data transfer, and storage for the current billing period:
 
 ```sh
-curl "https://console.neon.tech/api/v2/projects/${PROJECT_ID}" \
-  -H "Authorization: Bearer ${NEON_API_KEY}"
+curl "https://console.optitech.com/api/v2/projects/${PROJECT_ID}" \
+  -H "Authorization: Bearer ${OPTITECH_API_KEY}"
 ```
 
 The response includes:
@@ -204,8 +204,8 @@ On paid plans, the [consumption history API](#fetch-your-usage) provides these a
 The Free plan caps storage per project based on `logical_size` across branches. Use `GET /projects/{project_id}/branches` to check each branch's size:
 
 ```sh
-curl "https://console.neon.tech/api/v2/projects/${PROJECT_ID}/branches" \
-  -H "Authorization: Bearer ${NEON_API_KEY}"
+curl "https://console.optitech.com/api/v2/projects/${PROJECT_ID}/branches" \
+  -H "Authorization: Bearer ${OPTITECH_API_KEY}"
 ```
 
 Each branch in the response includes a `logical_size` field (bytes). Sum across branches to get total project storage.

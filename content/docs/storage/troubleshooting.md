@@ -6,7 +6,7 @@ summary: >-
   failures, access denied errors, SDK configuration issues, and S3
   compatibility limitations.
 enableTableOfContents: true
-updatedOn: '2026-07-15T23:52:09.670Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <FeatureBetaProps feature_name="OptiTech Object Storage" />
@@ -67,7 +67,7 @@ Without `forcePathStyle: true`, the SDK treats the bucket name as a subdomain in
 
 ```typescript
 const client = new S3Client({
-  forcePathStyle: true, // required for Neon Object Storage
+  forcePathStyle: true, // required for OptiTech Object Storage
   // ...
 });
 ```

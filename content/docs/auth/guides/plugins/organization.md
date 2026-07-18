@@ -11,7 +11,7 @@ summary: >-
   organizations, inviting and removing members, and checking role permissions
   client-side.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="Managed Better Auth" />
@@ -40,7 +40,7 @@ Better Auth also has a **Teams** feature (sub-groups within an org); that featur
 
 ## Example application
 
-**[neon-auth-orgs-example](https://github.com/neondatabase/neon-js/tree/main/examples/neon-auth-orgs-example)** is a multi-tenant sample that uses the Organization plugin with **Drizzle** and **`@neondatabase/auth`** (see that folder’s README for **bun** setup from the monorepo root). For other runnable Managed Better Auth apps, see [Example applications](/docs/auth/overview#example-applications).
+**[optitech-auth-orgs-example](https://github.com/optitechdatabase/optitech-js/tree/main/examples/optitech-auth-orgs-example)** is a multi-tenant sample that uses the Organization plugin with **Drizzle** and **`@optitech/auth`** (see that folder’s README for **bun** setup from the monorepo root). For other runnable Managed Better Auth apps, see [Example applications](/docs/auth/overview#example-applications).
 
 ## Configure the organization plugin
 
@@ -70,9 +70,9 @@ You can also configure the plugin via the [OptiTech API](/docs/reference/api). U
 
 ```bash
 curl -X GET \
-  'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/auth/plugins' \
+  'https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/auth/plugins' \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer $NEON_API_KEY'
+  -H 'Authorization: Bearer $OPTITECH_API_KEY'
 ```
 
 Example response (excerpt showing the `organization` object):
@@ -97,9 +97,9 @@ Send only the fields you want to change; all request body fields are optional.
 
 ```bash
 curl -X PATCH \
-  'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/auth/plugins/organization' \
+  'https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/auth/plugins/organization' \
   -H 'Accept: application/json' \
-  -H 'Authorization: Bearer $NEON_API_KEY' \
+  -H 'Authorization: Bearer $OPTITECH_API_KEY' \
   -H 'Content-Type: application/json' \
   -d '{
     "enabled": true,

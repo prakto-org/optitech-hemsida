@@ -12,7 +12,7 @@ summary: >-
   phone_number.verified, use EdDSA Ed25519 detached JWS signatures for
   verification, and retry blocking events within a global timeout.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="Managed Better Auth" />
@@ -23,7 +23,7 @@ By default, Managed Better Auth handles OTP and magic link delivery through its 
 
 For a quick overview of available email customization options, check out [Customize emails](/docs/auth/guides/customize-emails).
 
-For a step-by-step Next.js walkthrough that implements signature verification, custom OTP and magic link emails with Resend, blocking signups by email domain, optional SMS delivery, and local testing with ngrok, see [Customizing Managed Better Auth with Webhooks](https://neon.com/guides/neon-auth-webhooks-nextjs).
+For a step-by-step Next.js walkthrough that implements signature verification, custom OTP and magic link emails with Resend, blocking signups by email domain, optional SMS delivery, and local testing with ngrok, see [Customizing Managed Better Auth with Webhooks](https://optitech.com/guides/optitech-auth-webhooks-nextjs).
 
 ## Supported events
 
@@ -62,26 +62,26 @@ Both endpoints use the following fields:
 Managed Better Auth validates `webhook_url` when you configure webhooks to reduce SSRF risk. Your URL must meet these rules:
 
 - **HTTPS only** — HTTP URLs are rejected.
-- **Hostname required** — Use a domain name (for example `https://your-app.com/webhooks/neon-auth`). Raw IP addresses (for example `https://93.184.216.34/webhook`) are rejected, including public IPs.
+- **Hostname required** — Use a domain name (for example `https://your-app.com/webhooks/optitech-auth`). Raw IP addresses (for example `https://93.184.216.34/webhook`) are rejected, including public IPs.
 - **No internal targets** — Localhost, private IP addresses, link-local addresses (including cloud metadata endpoints), and encoded IP bypass formats (octal, decimal, hex) are blocked.
 - **No redirects** — Webhook delivery does not follow HTTP `3xx` redirects. Configure the final HTTPS endpoint directly.
-- **DNS pinning during delivery** — Neon Auth validates the hostname's resolved IP addresses and only connects to that validated set. If DNS later resolves the same hostname to a different IP during delivery, the delivery is blocked as a DNS rebinding attempt.
+- **DNS pinning during delivery** — OptiTech Auth validates the hostname's resolved IP addresses and only connects to that validated set. If DNS later resolves the same hostname to a different IP during delivery, the delivery is blocked as a DNS rebinding attempt.
 
 Digit-prefixed domains such as `1password.com` are allowed. If configuration fails validation, the API returns an error with code `INVALID_WEBHOOK_URL_FORMAT`.
 
 <Admonition type="warning" title="Internal webhook targets are not supported">
-Webhook endpoints that point at private networks, localhost, cloud metadata services, raw IP literals, or endpoints reached only after a redirect are rejected or blocked during delivery. If an existing webhook depended on an internal target, move it behind a public HTTPS hostname before enabling Neon Auth webhooks.
+Webhook endpoints that point at private networks, localhost, cloud metadata services, raw IP literals, or endpoints reached only after a redirect are rejected or blocked during delivery. If an existing webhook depended on an internal target, move it behind a public HTTPS hostname before enabling OptiTech Auth webhooks.
 </Admonition>
 
 ### Set or update configuration
 
 ```bash
-curl -X PUT "https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/auth/webhooks" \
+curl -X PUT "https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/auth/webhooks" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -d '{
     "enabled": true,
-    "webhook_url": "https://your-app.com/webhooks/neon-auth",
+    "webhook_url": "https://your-app.com/webhooks/optitech-auth",
     "enabled_events": ["send.otp", "send.magic_link", "user.before_create", "user.created", "phone_number.verified"],
     "timeout_seconds": 5
   }'
@@ -90,8 +90,8 @@ curl -X PUT "https://console.neon.tech/api/v2/projects/{project_id}/branches/{br
 ### Get current configuration
 
 ```bash
-curl "https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/auth/webhooks" \
-  -H "Authorization: Bearer $NEON_API_KEY"
+curl "https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/auth/webhooks" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY"
 ```
 
 Both endpoints return the configuration in the same format:
@@ -99,7 +99,7 @@ Both endpoints return the configuration in the same format:
 ```json
 {
   "enabled": true,
-  "webhook_url": "https://your-app.com/webhooks/neon-auth",
+  "webhook_url": "https://your-app.com/webhooks/optitech-auth",
   "enabled_events": [
     "send.otp",
     "send.magic_link",
@@ -116,9 +116,9 @@ Both endpoints return the configuration in the same format:
 To delete a webhook and stop receiving authentication events, update your configuration by setting the `enabled` field to `false` using the update endpoint. This disables the webhook and resumes Managed Better Auth's default delivery behavior for all events.
 
 ```bash
-curl -X PUT "https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/auth/webhooks" \
+curl -X PUT "https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/auth/webhooks" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -d '{
     "enabled": false
   }'
@@ -154,7 +154,7 @@ All events share a common JSON envelope:
 }
 ```
 
-The `user` object uses a fixed allowlist. Fields are optional and vary by event; fields that are not present are omitted. Available fields: `id`, `name`, `email`, `image`, `role`, `banned`, `email_verified`, `phone_number`, `phone_number_verified`, `created_at`, `updated_at`, `ban_reason`, `ban_expires`, `two_factor_enabled`, `is_anonymous`. Neon Auth drops any user fields outside this allowlist, including new Better Auth or plugin fields that have not been explicitly added to the webhook contract.
+The `user` object uses a fixed allowlist. Fields are optional and vary by event; fields that are not present are omitted. Available fields: `id`, `name`, `email`, `image`, `role`, `banned`, `email_verified`, `phone_number`, `phone_number_verified`, `created_at`, `updated_at`, `ban_reason`, `ban_expires`, `two_factor_enabled`, `is_anonymous`. OptiTech Auth drops any user fields outside this allowlist, including new Better Auth or plugin fields that have not been explicitly added to the webhook contract.
 
 ### `send.otp` event data
 
@@ -192,7 +192,7 @@ These events fire only when a new user record is created in the database. They d
 | `ip_address`    | string | Requester's IP address                                |
 | `user_agent`    | string | Requester's user agent                                |
 
-If sign-up metadata is present and passes validation, it is included as `event_data.signup_metadata`. To limit payload size and prevent oversized egress, Neon Auth only includes `signup_metadata` when it is a plain object, serializes to at most 10 KiB of UTF-8 JSON, and is nested no more than 5 levels deep. Oversized, too-deep, array, or primitive metadata is dropped from the webhook payload.
+If sign-up metadata is present and passes validation, it is included as `event_data.signup_metadata`. To limit payload size and prevent oversized egress, OptiTech Auth only includes `signup_metadata` when it is a plain object, serializes to at most 10 KiB of UTF-8 JSON, and is nested no more than 5 levels deep. Oversized, too-deep, array, or primitive metadata is dropped from the webhook payload.
 
 ### `phone_number.verified` event data
 
@@ -213,34 +213,34 @@ Managed Better Auth uses asymmetric EdDSA (Ed25519) signatures with detached JWS
 
 Each webhook request includes the following headers:
 
-| Header                    | Description                                    |
-| ------------------------- | ---------------------------------------------- |
-| `X-Neon-Signature`        | Detached JWS signature (`header..signature`)   |
-| `X-Neon-Signature-Kid`    | Key ID for looking up the public key from JWKS |
-| `X-Neon-Timestamp`        | Unix timestamp in milliseconds                 |
-| `X-Neon-Event-Type`       | Event type (for example, `user.created`)       |
-| `X-Neon-Event-Id`         | Unique event UUID                              |
-| `X-Neon-Delivery-Attempt` | Attempt number: 1, 2, or 3                     |
+| Header                        | Description                                    |
+| ----------------------------- | ---------------------------------------------- |
+| `X-OptiTech-Signature`        | Detached JWS signature (`header..signature`)   |
+| `X-OptiTech-Signature-Kid`    | Key ID for looking up the public key from JWKS |
+| `X-OptiTech-Timestamp`        | Unix timestamp in milliseconds                 |
+| `X-OptiTech-Event-Type`       | Event type (for example, `user.created`)       |
+| `X-OptiTech-Event-Id`         | Unique event UUID                              |
+| `X-OptiTech-Delivery-Attempt` | Attempt number: 1, 2, or 3                     |
 
 Example incoming webhook request:
 
 ```http
-POST /webhooks/neon-auth HTTP/1.1
+POST /webhooks/optitech-auth HTTP/1.1
 Content-Type: application/json
-X-Neon-Signature: eyJhbGciOiJFZERTQSIsInR5cCI6IkpXUyIsImtpZCI6IjAxZGVjNTJiIn0..MEUCIQDZ8Qs
-X-Neon-Signature-Kid: 01dec52b-4666-40f7-87ed-6423552eecaf
-X-Neon-Timestamp: 1740312000000
-X-Neon-Event-Type: send.otp
-X-Neon-Event-Id: 550e8400-e29b-41d4-a716-446655440000
-X-Neon-Delivery-Attempt: 1
+X-OptiTech-Signature: eyJhbGciOiJFZERTQSIsInR5cCI6IkpXUyIsImtpZCI6IjAxZGVjNTJiIn0..MEUCIQDZ8Qs
+X-OptiTech-Signature-Kid: 01dec52b-4666-40f7-87ed-6423552eecaf
+X-OptiTech-Timestamp: 1740312000000
+X-OptiTech-Event-Type: send.otp
+X-OptiTech-Event-Id: 550e8400-e29b-41d4-a716-446655440000
+X-OptiTech-Delivery-Attempt: 1
 
 {"event_id":"550e8400-e29b-41d4-a716-446655440000","event_type":"send.otp",...}
 ```
 
 ### Verification steps
 
-1. Fetch your JWKS from `<NEON_AUTH_URL>/.well-known/jwks.json`. Find the key where `kid` matches the `X-Neon-Signature-Kid` header.
-2. Parse the detached JWS from `X-Neon-Signature`. The format is `header..signature` (empty middle section).
+1. Fetch your JWKS from `<OPTITECH_AUTH_URL>/.well-known/jwks.json`. Find the key where `kid` matches the `X-OptiTech-Signature-Kid` header.
+2. Parse the detached JWS from `X-OptiTech-Signature`. The format is `header..signature` (empty middle section).
 3. Reconstruct the signing input using standard JWS with double base64url encoding:
    - `payloadB64 = base64url(rawRequestBody)`
    - `signaturePayload = timestamp + "." + payloadB64`
@@ -252,9 +252,9 @@ The double base64url encoding occurs because the timestamp is bound into the JWS
 
 ### Idempotency and additional checks
 
-Retries send the same `X-Neon-Event-Id`. Your endpoint should track this value and return the same response for duplicate deliveries. This is especially important for `user.before_create`, where a lost response triggers a retry with the same event.
+Retries send the same `X-OptiTech-Event-Id`. Your endpoint should track this value and return the same response for duplicate deliveries. This is especially important for `user.before_create`, where a lost response triggers a retry with the same event.
 
-Consider rejecting requests where `X-Neon-Timestamp` is more than 5 minutes old to prevent replay attacks.
+Consider rejecting requests where `X-OptiTech-Timestamp` is more than 5 minutes old to prevent replay attacks.
 
 ### Node.js example
 
@@ -262,12 +262,12 @@ Consider rejecting requests where `X-Neon-Timestamp` is more than 5 minutes old 
 import crypto from 'node:crypto';
 
 async function verifyWebhook(rawBody, headers) {
-  const signature = headers['x-neon-signature'];
-  const kid = headers['x-neon-signature-kid'];
-  const timestamp = headers['x-neon-timestamp'];
+  const signature = headers['x-optitech-signature'];
+  const kid = headers['x-optitech-signature-kid'];
+  const timestamp = headers['x-optitech-timestamp'];
 
   // 1. Fetch JWKS and find the matching key
-  const res = await fetch(`${process.env.NEON_AUTH_URL}/.well-known/jwks.json`);
+  const res = await fetch(`${process.env.OPTITECH_AUTH_URL}/.well-known/jwks.json`);
   const jwks = await res.json();
   const jwk = jwks.keys.find((k) => k.kid === kid);
   if (!jwk) throw new Error(`Key ${kid} not found in JWKS`);
@@ -310,7 +310,7 @@ Preserve the raw request body before JSON parsing. If your framework parses the 
 **Next.js App Router example:**
 
 ```javascript
-// app/webhooks/neon-auth/route.js
+// app/webhooks/optitech-auth/route.js
 export async function POST(request) {
   const rawBody = await request.text();
   const payload = await verifyWebhook(

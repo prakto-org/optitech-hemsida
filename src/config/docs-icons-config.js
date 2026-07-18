@@ -46,6 +46,11 @@ const ICONS_CONFIG = {
     lightIconPath: '/images/technology-logos/aws-s3-bucket.svg',
     darkIconPath: null,
   },
+  aws: {
+    name: 'aws',
+    lightIconPath: '/images/technology-logos/aws.svg',
+    darkIconPath: '/images/technology-logos/aws-dark.svg',
+  },
   azure: {
     name: 'azure',
     lightIconPath: '/images/technology-logos/azure.svg',
@@ -55,6 +60,11 @@ const ICONS_CONFIG = {
     name: 'backblaze',
     lightIconPath: '/images/technology-logos/backblaze.svg',
     darkIconPath: null,
+  },
+  bankid: {
+    name: 'bankid',
+    lightIconPath: '/images/technology-logos/bankid.svg',
+    darkIconPath: '/images/technology-logos/bankid-dark.svg',
   },
   bemi: {
     name: 'bemi',
@@ -116,10 +126,20 @@ const ICONS_CONFIG = {
     lightIconPath: '/images/technology-logos/copilot.svg',
     darkIconPath: '/images/technology-logos/copilot-dark.svg',
   },
+  crowdstrike: {
+    name: 'crowdstrike',
+    lightIconPath: '/images/technology-logos/crowdstrike.svg',
+    darkIconPath: null,
+  },
   cursor: {
     name: 'cursor',
     lightIconPath: '/images/technology-logos/cursor.svg',
     darkIconPath: '/images/technology-logos/cursor-dark.svg',
+  },
+  cyberday: {
+    name: 'cyberday',
+    lightIconPath: '/images/technology-logos/cyberday.svg',
+    darkIconPath: '/images/technology-logos/cyberday-dark.svg',
   },
   database: {
     name: 'database',
@@ -156,6 +176,11 @@ const ICONS_CONFIG = {
     lightIconPath: '/images/technology-logos/dotnet.svg',
     darkIconPath: null,
   },
+  drata: {
+    name: 'drata',
+    lightIconPath: '/images/technology-logos/drata.svg',
+    darkIconPath: '/images/technology-logos/drata-dark.svg',
+  },
   draxlr: {
     name: 'draxlr',
     lightIconPath: '/images/technology-logos/draxlr.svg',
@@ -180,6 +205,11 @@ const ICONS_CONFIG = {
     name: 'entity',
     lightIconPath: '/images/technology-logos/entity.svg',
     darkIconPath: '/images/technology-logos/entity-dark.svg',
+  },
+  'entra-id': {
+    name: 'entra-id',
+    lightIconPath: '/images/technology-logos/entra-id.svg',
+    darkIconPath: null,
   },
   estuary: {
     name: 'estuary',
@@ -211,10 +241,20 @@ const ICONS_CONFIG = {
     lightIconPath: '/images/technology-logos/flyway.svg',
     darkIconPath: '/images/technology-logos/flyway-dark.svg',
   },
+  fortnox: {
+    name: 'fortnox',
+    lightIconPath: '/images/technology-logos/fortnox.svg',
+    darkIconPath: '/images/technology-logos/fortnox-dark.svg',
+  },
   github: {
     name: 'github',
     lightIconPath: '/images/technology-logos/github.svg',
     darkIconPath: '/images/technology-logos/github-dark.svg',
+  },
+  gitlab: {
+    name: 'gitlab',
+    lightIconPath: '/images/technology-logos/gitlab.svg',
+    darkIconPath: null,
   },
   go: {
     name: 'go',
@@ -224,6 +264,11 @@ const ICONS_CONFIG = {
   'google-cloud-sql': {
     name: 'google-cloud-sql',
     lightIconPath: '/images/technology-logos/google-cloud-sql.svg',
+    darkIconPath: null,
+  },
+  'google-workspace': {
+    name: 'google-workspace',
+    lightIconPath: '/images/technology-logos/google-workspace.svg',
     darkIconPath: null,
   },
   grafana: {
@@ -261,6 +306,16 @@ const ICONS_CONFIG = {
     lightIconPath: '/images/technology-logos/inngest.svg',
     darkIconPath: '/images/technology-logos/inngest-dark.svg',
   },
+  intune: {
+    name: 'intune',
+    lightIconPath: '/images/technology-logos/intune.svg',
+    darkIconPath: null,
+  },
+  jamf: {
+    name: 'jamf',
+    lightIconPath: '/images/technology-logos/jamf.svg',
+    darkIconPath: '/images/technology-logos/jamf-dark.svg',
+  },
   java: {
     name: 'java',
     lightIconPath: '/images/technology-logos/java.svg',
@@ -271,10 +326,20 @@ const ICONS_CONFIG = {
     lightIconPath: '/images/technology-logos/javascript.svg',
     darkIconPath: null,
   },
+  jira: {
+    name: 'jira',
+    lightIconPath: '/images/technology-logos/jira.svg',
+    darkIconPath: null,
+  },
   kafka: {
     name: 'kafka',
     lightIconPath: '/images/technology-logos/kafka.svg',
     darkIconPath: '/images/technology-logos/kafka-dark.svg',
+  },
+  kivra: {
+    name: 'kivra',
+    lightIconPath: '/images/technology-logos/kivra.svg',
+    darkIconPath: null,
   },
   knex: {
     name: 'knex',
@@ -315,6 +380,26 @@ const ICONS_CONFIG = {
     name: 'micronaut',
     lightIconPath: '/images/technology-logos/micronaut.svg',
     darkIconPath: '/images/technology-logos/micronaut-dark.svg',
+  },
+  'microsoft-365': {
+    name: 'microsoft-365',
+    lightIconPath: '/images/technology-logos/microsoft-365.svg',
+    darkIconPath: null,
+  },
+  'microsoft-defender': {
+    name: 'microsoft-defender',
+    lightIconPath: '/images/technology-logos/microsoft-defender.svg',
+    darkIconPath: null,
+  },
+  'microsoft-excel': {
+    name: 'microsoft-excel',
+    lightIconPath: '/images/technology-logos/microsoft-excel.svg',
+    darkIconPath: null,
+  },
+  'microsoft-teams': {
+    name: 'microsoft-teams',
+    lightIconPath: '/images/technology-logos/microsoft-teams.svg',
+    darkIconPath: null,
   },
   'neo-tax': {
     name: 'neo-tax',
@@ -446,6 +531,11 @@ const ICONS_CONFIG = {
     lightIconPath: '/images/technology-logos/rust.svg',
     darkIconPath: '/images/technology-logos/rust-dark.svg',
   },
+  secureframe: {
+    name: 'secureframe',
+    lightIconPath: '/images/technology-logos/secureframe.svg',
+    darkIconPath: '/images/technology-logos/secureframe-dark.svg',
+  },
   sequelize: {
     name: 'sequelize',
     lightIconPath: '/images/technology-logos/sequelize.svg',
@@ -455,6 +545,11 @@ const ICONS_CONFIG = {
     name: 'sequin',
     lightIconPath: '/images/technology-logos/sequin.svg',
     darkIconPath: '/images/technology-logos/sequin-dark.svg',
+  },
+  slack: {
+    name: 'slack',
+    lightIconPath: '/images/technology-logos/slack.svg',
+    darkIconPath: null,
   },
   snowflake: {
     name: 'snowflake',
@@ -470,6 +565,11 @@ const ICONS_CONFIG = {
     name: 'solidstart',
     lightIconPath: '/images/technology-logos/solidstart.svg',
     darkIconPath: null,
+  },
+  sprinto: {
+    name: 'sprinto',
+    lightIconPath: '/images/technology-logos/sprinto.svg',
+    darkIconPath: '/images/technology-logos/sprinto-dark.svg',
   },
   sqlalchemy: {
     name: 'sqlalchemy',
@@ -506,6 +606,11 @@ const ICONS_CONFIG = {
     lightIconPath: '/images/technology-logos/tanstack.svg',
     darkIconPath: '/images/technology-logos/tanstack-dark.svg',
   },
+  terraform: {
+    name: 'terraform',
+    lightIconPath: '/images/technology-logos/terraform.svg',
+    darkIconPath: null,
+  },
   'tortoise-orm': {
     name: 'tortoise-orm',
     lightIconPath: '/images/technology-logos/tortoise-orm.svg',
@@ -521,10 +626,20 @@ const ICONS_CONFIG = {
     lightIconPath: '/images/technology-logos/uploadcare.svg',
     darkIconPath: null,
   },
+  vanta: {
+    name: 'vanta',
+    lightIconPath: '/images/technology-logos/vanta.svg',
+    darkIconPath: '/images/technology-logos/vanta-dark.svg',
+  },
   vercel: {
     name: 'vercel',
     lightIconPath: '/images/technology-logos/vercel.svg',
     darkIconPath: '/images/technology-logos/vercel-dark.svg',
+  },
+  visma: {
+    name: 'visma',
+    lightIconPath: '/images/technology-logos/visma.svg',
+    darkIconPath: '/images/technology-logos/visma-dark.svg',
   },
   vue: {
     name: 'vue',

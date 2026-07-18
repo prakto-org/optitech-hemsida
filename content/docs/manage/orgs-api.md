@@ -8,7 +8,7 @@ summary: >-
   projects, require a personal admin key and reject organization API keys. A
   permission matrix maps each endpoint to its supported key type.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Learn how to manage OptiTech Organizations using the OptiTech API, including managing organization API keys, working with organization members, and handling member invitations.
@@ -26,7 +26,7 @@ Using an organization API key:
 
 ```bash
 curl --request GET \
-     --url 'https://console.neon.tech/api/v2/projects' \
+     --url 'https://console.optitech.com/api/v2/projects' \
      --header 'authorization: Bearer $ORG_API_KEY'
 ```
 
@@ -34,7 +34,7 @@ Using a personal API key:
 
 ```bash
 curl --request GET \
-     --url 'https://console.neon.tech/api/v2/projects?org_id=org-example-12345678' \
+     --url 'https://console.optitech.com/api/v2/projects?org_id=org-example-12345678' \
      --header 'authorization: Bearer $PERSONAL_API_KEY'
 ```
 
@@ -83,7 +83,7 @@ Lists all API keys for your organization. The response does not include the actu
 
 ```bash shouldWrap
 curl --request GET \
-     --url 'https://console.neon.tech/api/v2/organizations/{org_id}/api_keys' \
+     --url 'https://console.optitech.com/api/v2/organizations/{org_id}/api_keys' \
      --header 'authorization: Bearer $PERSONAL_API_KEY' | jq
 ```
 
@@ -114,7 +114,7 @@ Revokes the specified organization API key. This action cannot be reversed. You 
 
 ```bash
 curl --request DELETE \
-     --url 'https://console.neon.tech/api/v2/organizations/{org_id}/api_keys/{key_id}' \
+     --url 'https://console.optitech.com/api/v2/organizations/{org_id}/api_keys/{key_id}' \
      --header 'accept: application/json' \
      --header 'authorization: Bearer $PERSONAL_API_KEY' | jq
 ```
@@ -141,7 +141,7 @@ Retrieves information about your organization, including its name, plan, and cre
 
 ```bash shouldWrap
 curl --request GET \
-     --url 'https://console.neon.tech/api/v2/organizations/{org_id}' \
+     --url 'https://console.optitech.com/api/v2/organizations/{org_id}' \
      --header 'authorization: Bearer $PERSONAL_API_KEY' | jq
 ```
 
@@ -174,7 +174,7 @@ You can sort by `email`, `role`, or `joined_at` (default), set `sort_order` to `
 
 ```bash shouldWrap
 curl --request GET \
-     --url 'https://console.neon.tech/api/v2/organizations/{org_id}/members?limit=20&sort_by=joined_at&sort_order=desc' \
+     --url 'https://console.optitech.com/api/v2/organizations/{org_id}/members?limit=20&sort_by=joined_at&sort_order=desc' \
      --header 'accept: application/json' \
      --header 'authorization: Bearer $ORG_API_KEY' | jq
 ```
@@ -183,7 +183,7 @@ curl --request GET \
 
 ```bash shouldWrap
 curl --request GET \
-     --url 'https://console.neon.tech/api/v2/organizations/{org_id}/members?limit=20&sort_by=joined_at&sort_order=desc&cursor=eyJtZW1iZXJfaWQiOi...' \
+     --url 'https://console.optitech.com/api/v2/organizations/{org_id}/members?limit=20&sort_by=joined_at&sort_order=desc&cursor=eyJtZW1iZXJfaWQiOi...' \
      --header 'accept: application/json' \
      --header 'authorization: Bearer $ORG_API_KEY' | jq
 ```
@@ -226,7 +226,7 @@ Retrieves information about a specific member using their member ID (obtained fr
 
 ```bash shouldWrap
 curl --request GET \
-     --url 'https://console.neon.tech/api/v2/organizations/{org_id}/members/{member_id}' \
+     --url 'https://console.optitech.com/api/v2/organizations/{org_id}/members/{member_id}' \
      --header 'accept: application/json' \
      --header 'authorization: Bearer $ORG_API_KEY'
 ```
@@ -251,7 +251,7 @@ Changes a member's current role in the organization. If using your personal API 
 
 ```bash shouldWrap
 curl --request PATCH \
-     --url 'https://console.neon.tech/api/v2/organizations/members/{member_id}' \
+     --url 'https://console.optitech.com/api/v2/organizations/members/{member_id}' \
      --header 'accept: application/json' \
      --header 'authorization: Bearer $ORG_API_KEY' \
      --header 'content-type: application/json' \
@@ -278,7 +278,7 @@ You must use your personal API key and have admin-level permissions in the organ
 
 ```bash shouldWrap
 curl --request DELETE \
-     --url 'https://console.neon.tech/api/v2/organizations/{org_id}/members/{member_id}' \
+     --url 'https://console.optitech.com/api/v2/organizations/{org_id}/members/{member_id}' \
      --header 'accept: application/json' \
      --header 'authorization: Bearer $PERSONAL_API_KEY'
 ```
@@ -291,7 +291,7 @@ Retrieves a list of all pending invitations for the organization.
 
 ```bash shouldWrap
 curl --request GET \
-     --url 'https://console.neon.tech/api/v2/organizations/invitations' \
+     --url 'https://console.optitech.com/api/v2/organizations/invitations' \
      --header 'accept: application/json' \
      --header 'authorization: Bearer $ORG_API_KEY' | jq
 ```
@@ -327,7 +327,7 @@ You must use your personal API key and have admin-level permissions in the organ
 
 ```bash shouldWrap
 curl --request POST \
-     --url 'https://console.neon.tech/api/v2/organizations/{org_id}/invitations' \
+     --url 'https://console.optitech.com/api/v2/organizations/{org_id}/invitations' \
      --header 'accept: application/json' \
      --header 'authorization: Bearer $PERSONAL_API_KEY' \
      --header 'content-type: application/json' \

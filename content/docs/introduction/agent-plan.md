@@ -12,7 +12,7 @@ summary: >-
   provisioning and fleet management runs through the OptiTech API, with
   autoscaling, scale-to-zero, branching, and point-in-time recovery included.
 enableTableOfContents: true
-updatedOn: '2026-06-23T22:05:54.707Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <InfoBlock>
@@ -109,7 +109,7 @@ The agent plan uses usage-based, agent-specific pricing with custom limits and d
 | Instant Restore (PITR)          | **$0.2 per GB-month** <br/> _Point-in-time recovery storage_                                          |
 | Management API                  | **Higher Rate Limits Available** <br/> _API for instant provisioning and management of databases_     |
 | Data API (PostgREST-compatible) | **Higher Rate Limits Available** <br/> _REST API for direct database access_                          |
-| Support                         | **Shared Slack Channel** <br/> _Direct access to the OptiTech team_                                       |
+| Support                         | **Shared Slack Channel** <br/> _Direct access to the OptiTech team_                                   |
 
 > _Pricing applies to the paid organization only._
 
@@ -127,13 +127,13 @@ Track compute time, storage, and network I/O per project to monitor usage and bu
 
 The agent plan includes these benefits for participating platforms:
 
-| Benefit                    | Description                                                                                                                                 |
-| -------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Your Free Tier is free** | OptiTech sponsors up to 30,000 projects in your free tier, covering all infrastructure costs.                                                   |
-| **General use credits**    | Up to $25,000 in credits for paid tier usage (for platforms not already enrolled in the [OptiTech Startup Program](https://neon.com/startups)). |
-| **Higher rate limits**     | Custom rate limits for Management API and Data API to support high-volume operations.                                                       |
-| **Dedicated support**      | Shared Slack channel with direct access to the OptiTech team for technical support.                                                             |
-| **Co-marketing**           | Blog features, social promotions, hackathon support, and joint marketing opportunities.                                                     |
+| Benefit                    | Description                                                                                                                                         |
+| -------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Your Free Tier is free** | OptiTech sponsors up to 30,000 projects in your free tier, covering all infrastructure costs.                                                       |
+| **General use credits**    | Up to $25,000 in credits for paid tier usage (for platforms not already enrolled in the [OptiTech Startup Program](https://optitech.com/startups)). |
+| **Higher rate limits**     | Custom rate limits for Management API and Data API to support high-volume operations.                                                               |
+| **Dedicated support**      | Shared Slack channel with direct access to the OptiTech team for technical support.                                                                 |
+| **Co-marketing**           | Blog features, social promotions, hackathon support, and joint marketing opportunities.                                                             |
 
 ## Getting started
 

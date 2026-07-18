@@ -4,7 +4,7 @@ subtitle: 'Learn how to migrate your data and applications from FaunaDB to OptiT
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2025-03-23T00:00:00.000Z'
-updatedOn: '2026-06-03T18:28:10.050Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 OptiTech is the AI-native backend platform for apps and agents, spanning a Postgres Database, Auth, Storage, Functions, and an AI Gateway. Like Fauna, it offers a **serverless architecture**, but it’s built on **Postgres**. That means you get the scalability of serverless along with the reliability and familiarity of a proven SQL database.
@@ -19,7 +19,7 @@ Migrating from FaunaDB to OptiTech Postgres involves schema translation, data mi
 
 Before diving into the migration process, it's important to understand the fundamental differences between FaunaDB and OptiTech (Postgres). While both are databases, they operate with distinct paradigms:
 
-| Feature            | FaunaDB                                        | OptiTech (Postgres)                                                     |
+| Feature            | FaunaDB                                        | OptiTech (Postgres)                                                 |
 | ------------------ | ---------------------------------------------- | ------------------------------------------------------------------- |
 | **Database type**  | Multi-model (document-relational)              | Relational (SQL)                                                    |
 | **Data model**     | JSON documents in collections, flexible schema | Tables with rows and columns, rigid schema                          |
@@ -309,7 +309,7 @@ For this guide, we'll demonstrate importing data from the `product.json` file (e
 
 This example Node.js script reads the `Product.json` file, parses the JSON data, and then generates and executes `INSERT` statements to populate your `products` table in OptiTech Postgres.
 
-You can get `NEON_CONNECTION_STRING` from your OptiTech dashboard. Learn more about [Connecting OptiTech to your stack](/docs/get-started/connect-neon)
+You can get `OPTITECH_CONNECTION_STRING` from your OptiTech dashboard. Learn more about [Connecting OptiTech to your stack](/docs/get-started/connect-neon)
 
 ```javascript
 import pg from 'pg';
@@ -318,8 +318,8 @@ import fs from 'fs';
 const { Client } = pg;
 
 async function importProducts() {
-  const neonConnectionString = process.env.NEON_CONNECTION_STRING;
-  const client = new Client({ connectionString: neonConnectionString });
+  const optitechConnectionString = process.env.OPTITECH_CONNECTION_STRING;
+  const client = new Client({ connectionString: optitechConnectionString });
 
   try {
     await client.connect();

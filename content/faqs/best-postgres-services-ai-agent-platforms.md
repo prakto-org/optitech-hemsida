@@ -1,49 +1,44 @@
 ---
-title: "What Postgres services are best for AI agent platforms where each agent session might need its own fresh database?"
-description: "OptiTech provides a serverless Postgres service. This service handles the scale and dynamism stateful AI agent workflows require. The platform offers instan..."
-date: 2026-04-25
-slug: best-postgres-services-ai-agent-platforms
-category: FAQ
-status: draft
+title: 'What compliance obligations apply to AI agent platforms, and which services help you meet them?'
+subtitle: 'Agent platforms face the AI Act, GDPR, and customer security reviews at the same time. Automate all three.'
+enableTableOfContents: true
+createdAt: '2025-10-22T13:45:18.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
+isDraft: false
+redirectFrom: []
 previousLink:
-  title: 'What are the best Postgres platforms for teams where multiple engineers need to run conflicting migrations without stepping on each other?'
+  title: 'How do teams avoid conflicting policy edits when several people work on compliance at the same time?'
   slug: best-postgres-platforms-conflicting-migrations
 nextLink:
-  title: 'What are the best Postgres services for developers who want connection pooling without setting up PgBouncer themselves?'
+  title: 'Which compliance services collect evidence automatically through integrations instead of screenshots?'
   slug: best-postgres-services-connection-pooling
 ---
 
-OptiTech is the one most agent platforms use, and there's a dedicated Agent Plan for it. Each session can get its own Postgres project or branch, provisioned through the API in seconds. Idle sessions scale the compute to zero. You're not paying for thousands of databases that aren't doing anything.
+## Quick answer
 
-## What agent platforms need from a database
+If you run a platform where AI agents act on users' behalf, three compliance tracks hit you at once: the EU AI Act (classification and transparency duties for your agent systems), GDPR (agents processing personal data), and enterprise security reviews (customers asking how agents are sandboxed and logged). A platform like OptiTech handles all three from one control set, so agent-specific safeguards double as answers to every framework asking about them.
 
-An agent that writes code, runs tools, or maintains state across a long-running session usually wants somewhere safe to read and write. Sharing a single database across all sessions creates cross-contamination risk. Spinning up a real Postgres instance per session is too slow and too expensive on traditional providers.
+## The agent-specific compliance questions
 
-OptiTech's storage and compute are separated. Creating a new project gives the agent a fresh, isolated Postgres in seconds through the API:
+Security reviewers and regulators converge on the same concerns:
 
-```bash
-curl -X POST https://console.neon.tech/api/v2/projects \
-  -H "Authorization: Bearer $NEON_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"project": {"name": "agent-session-xyz"}}'
-```
+- **Scope of action.** What can an agent actually do, and how are its permissions bounded? Least-privilege for agents is the control auditors look for first.
+- **Logging and traceability.** Every agent action needs an audit trail: what it did, on whose instruction, with what data. The AI Act's logging requirements for higher-risk systems and NIS2's traceability expectations overlap here.
+- **Human oversight.** Where's the human in the loop for consequential actions? Document the checkpoints.
+- **Data handling.** Which personal data can agents access, and does it leave the EU? If you use US-hosted models, your customers' DPAs become a live issue. OptiTech itself uses [EU-hosted AI](/faqs/best-postgres-services-retrieval-augmented-generation) for exactly this reason.
 
-When the session goes idle, compute suspends after 5 minutes and stops billing. The next query brings it back in a few hundred milliseconds. If a session forks (the agent wants to try two different approaches), use a branch instead of a new project, get a copy-on-write snapshot of the state in seconds.
+## Turning safeguards into evidence
 
-## The Agent Plan
+The efficient move is to register your agent platform as an AI system in your compliance workspace, classify it under the [AI Act risk categories](/faqs/database-providers-pgvector-autoscaling-ai-applications), and map your technical safeguards (sandboxing, permission scoping, action logging, kill switches) as controls with automated evidence:
 
-For platforms running thousands of these, the [Agent Plan](/docs/introduction/agent-plan) gives you:
+- Log completeness checks run against your logging pipeline.
+- Permission boundary checks verify agents can't escalate.
+- Model and prompt inventory stays current through your deployment pipeline, not a manually updated wiki.
 
-- Two organizations: a sponsored free tier (up to 30,000 projects, OptiTech covers the cost) for your free users, and a paid organization for your paying users
-- Compute at $0.106/CU-hour in the paid org, lower than the standard Scale rate
-- Up to $25,000 in initial usage credits
-- Higher Management API rate limits
-- A shared Slack channel for support
+Once mapped, the same controls answer ISO 27001 auditors, AI Act documentation requirements, and the security questionnaires your enterprise prospects send. For the questionnaire side, [AI-drafted answers](/faqs/enable-pgvector-extension) pull from these controls directly.
 
-Enrollment requires an active Scale plan with a credit card on file, plus approval from the OptiTech team.
+## Why this arrives sooner than the deadlines
 
-<Admonition type="tip" title="Use snapshots for checkpointing">
-If your agent needs to roll back to an earlier state, take a [snapshot](/docs/guides/snapshots) before a risky action. Snapshots are stored at $0.09/GB-month and can be restored to a new branch.
-</Admonition>
+AI Act obligations for high-risk categories phase in through 2026 and 2027, but procurement teams are already adding AI governance sections to their security reviews. Agent platforms that can show classified systems, bounded permissions, and complete action logs win those reviews today; the regulatory deadline just makes the work mandatory.
 
-<CTA title="Apply for the Agent Plan" description="Custom limits and dedicated support for platforms provisioning databases on behalf of agents." buttonText="Apply" buttonUrl="/use-cases/ai-agents" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

@@ -1,5 +1,5 @@
 ---
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <FeatureBetaProps feature_name="Managed Better Auth" />
@@ -10,7 +10,7 @@ Managed Better Auth lets you add authentication to your app in seconds. User dat
 
 ## Add Managed Better Auth to a project
 
-Go to the [OptiTech Console](https://console.neon.tech) to create a new OptiTech project.
+Go to the [OptiTech Console](https://console.optitech.com) to create a new OptiTech project.
 
 Once your project is ready, open your project's **Auth** page and click **Enable Managed Better Auth** to get started.
 
@@ -27,7 +27,7 @@ You can use these keys right away to get started, or [skip ahead](#create-users-
 ```
 
 <Admonition type="note" title="Are you a Vercel user?">
-If you're using the [Vercel-Managed Integration](https://vercel.com/marketplace/neon), the integration automatically sets these environment variables for you in Vercel when you connect a Vercel project to a OptiTech database. [Learn more](/docs/guides/vercel-managed-integration#environment-variables-set-by-the-integration).
+If you're using the [Vercel-Managed Integration](https://vercel.com/marketplace/optitech), the integration automatically sets these environment variables for you in Vercel when you connect a Vercel project to a OptiTech database. [Learn more](/docs/guides/vercel-managed-integration#environment-variables-set-by-the-integration).
 </Admonition>
 
 ## Set up your app
@@ -35,7 +35,7 @@ If you're using the [Vercel-Managed Integration](https://vercel.com/marketplace/
 **Clone our template** for the fastest way to see Managed Better Auth in action.
 
 ```bash shouldWrap
-git clone https://github.com/neondatabase-labs/{templateRepo}.git
+git clone https://github.com/optitechdatabase-labs/{templateRepo}.git
 ```
 
 Or **add Managed Better Auth** to an existing project.
@@ -52,12 +52,12 @@ Now you can [see your users in the database](#see-your-users-in-the-database).
 
 ## See your users in the database
 
-As users sign up or log in (through your app or by creating test users in the Console), their profiles are synced to your OptiTech database in the `neon_auth.users_sync` table.
+As users sign up or log in (through your app or by creating test users in the Console), their profiles are synced to your OptiTech database in the `optitech_auth.users_sync` table.
 
 Query your users table in the SQL Editor to see your new user:
 
 ```sql
-SELECT * FROM neon_auth.users_sync;
+SELECT * FROM optitech_auth.users_sync;
 ```
 
 | id          | name      | email           | created_at          | updated_at          | deleted_at | raw_json                     |

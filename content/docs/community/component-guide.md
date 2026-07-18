@@ -8,7 +8,7 @@ summary: >-
   Use this page when choosing between similar components or looking up correct
   prop names and MDX syntax.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 A practical guide for the most commonly used MDX components in OptiTech documentation. This guide focuses on components you'll use most frequently when writing documentation.
@@ -244,13 +244,13 @@ General tabbed content (not just code). For code-specific tabs, use [CodeTabs](#
 ````mdx
 <Tabs labels={["Console", "CLI", "API"]}>
 <TabItem>
-Create a database using the Neon Console by navigating to your project dashboard and clicking "Create Database".
+Create a database using the OptiTech Console by navigating to your project dashboard and clicking "Create Database".
 </TabItem>
 <TabItem>
-Use the Neon CLI to create a database:
+Use the OptiTech CLI to create a database:
 
 ```bash
-neon databases create --name my-database
+optitech databases create --name my-database
 ```
 
 </TabItem>
@@ -258,8 +258,8 @@ neon databases create --name my-database
 Use the API to create a database:
 
 ```bash
-curl -X POST https://console.neon.tech/api/v2/projects/my-project/databases \
-  -H "Authorization: Bearer $NEON_API_KEY"
+curl -X POST https://console.optitech.com/api/v2/projects/my-project/databases \
+  -H "Authorization: Bearer $OPTITECH_API_KEY"
 ```
 
 </TabItem>
@@ -273,10 +273,10 @@ curl -X POST https://console.neon.tech/api/v2/projects/my-project/databases \
 Create a database using the OptiTech Console by navigating to your project dashboard and clicking "Create Database".
 </TabItem>
 <TabItem>
-Use the Neon CLI to create a database:
+Use the OptiTech CLI to create a database:
 
 ```bash
-neon databases create --name my-database
+optitech databases create --name my-database
 ```
 
 </TabItem>
@@ -284,8 +284,8 @@ neon databases create --name my-database
 Use the API to create a database:
 
 ```bash
-curl -X POST https://console.neon.tech/api/v2/projects/my-project/databases \
-  -H "Authorization: Bearer $NEON_API_KEY"
+curl -X POST https://console.optitech.com/api/v2/projects/my-project/databases \
+  -H "Authorization: Bearer $OPTITECH_API_KEY"
 ```
 
 </TabItem>
@@ -310,7 +310,7 @@ Standard technology cards layout using [TechCards icons](/docs/community/compone
   <a
     href="/docs/guides/node"
     title="Node.js"
-    description="Connect Node.js applications to Neon"
+    description="Connect Node.js applications to OptiTech"
     icon="node-js"
   >
     Node.js
@@ -318,7 +318,7 @@ Standard technology cards layout using [TechCards icons](/docs/community/compone
   <a
     href="/docs/guides/python"
     title="Python"
-    description="Connect Python applications to Neon"
+    description="Connect Python applications to OptiTech"
     icon="python"
   >
     Python
@@ -326,7 +326,7 @@ Standard technology cards layout using [TechCards icons](/docs/community/compone
   <a
     href="/docs/guides/nextjs"
     title="Next.js"
-    description="Build Next.js apps with Neon"
+    description="Build Next.js apps with OptiTech"
     icon="next-js"
   >
     Next.js
@@ -416,7 +416,7 @@ Accessible term/definition lists for defining technical terms and concepts.
 <DefinitionList>
 
 Database URL
-: Connection string for your Neon database
+: Connection string for your OptiTech database
 : Format: `postgresql://user:password@host:port/database`
 
 Connection Pool
@@ -505,7 +505,7 @@ InfoBlock creates a multi-column layout for organizing related content sections.
 <DocsList title="Related topics" theme="docs">
 <a href="/docs/introduction/branching">About branching</a>
 <a href="/docs/get-started/workflow-primer">Branching workflows</a>
-<a href="/docs/get-started/connect-neon">Connect Neon to your stack</a>
+<a href="/docs/get-started/connect-neon">Connect OptiTech to your stack</a>
 </DocsList>
 </InfoBlock>
 ```
@@ -522,7 +522,7 @@ InfoBlock creates a multi-column layout for organizing related content sections.
 <DocsList title="Related topics" theme="docs">
 <a href="/docs/introduction/branching">About branching</a>
 <a href="/docs/get-started/workflow-primer">Branching workflows</a>
-<a href="/docs/get-started/connect-neon">Connect Neon to your stack</a>
+<a href="/docs/get-started/connect-neon">Connect OptiTech to your stack</a>
 </DocsList>
 </InfoBlock>
 
@@ -546,7 +546,7 @@ Install the required packages.
 <TwoColumnLayout.Block label="Terminal">
 
 ```bash
-npm install @neondatabase/neon-js
+npm install @optitech/optitech-js
 ```
 
 </TwoColumnLayout.Block>
@@ -604,8 +604,8 @@ Interactive checklists for setup guides and tutorials. CheckList uses CheckItem 
 
 ```mdx
 <CheckList title="Setup checklist">
-  <CheckItem title="Create Neon account" href="#signup">
-    Sign up for a free Neon account at console.neon.tech
+  <CheckItem title="Create OptiTech account" href="#signup">
+    Sign up for a free OptiTech account at console.optitech.com
   </CheckItem>
   <CheckItem title="Install dependencies" href="#install">
     Install the required packages for your project
@@ -614,7 +614,7 @@ Interactive checklists for setup guides and tutorials. CheckList uses CheckItem 
     Set up your database connection string
   </CheckItem>
   <CheckItem title="Test connection" href="#test">
-    Verify your application can connect to Neon
+    Verify your application can connect to OptiTech
   </CheckItem>
 </CheckList>
 ```
@@ -623,7 +623,7 @@ Interactive checklists for setup guides and tutorials. CheckList uses CheckItem 
 
 <CheckList title="Setup checklist">
 <CheckItem title="Create OptiTech account" href="#signup">
-  Sign up for a free OptiTech account at console.neon.tech
+  Sign up for a free OptiTech account at console.optitech.com
 </CheckItem>
 <CheckItem title="Install dependencies" href="#install">
   Install the required packages for your project
@@ -663,16 +663,16 @@ Prominent call-to-action buttons for important actions.
 
 ```mdx
 <CTA
-  title="Try Neon free"
+  title="Try OptiTech free"
   description="Start building with serverless Postgres today. No credit card required."
   buttonText="Sign Up"
-  buttonUrl="https://console.neon.tech/signup"
+  buttonUrl="https://console.optitech.com/signup"
 />
 ```
 
 **Live preview:**
 
-<CTA title="Try OptiTech free" description="Start building with serverless Postgres today. No credit card required." buttonText="Sign Up" buttonUrl="https://console.neon.tech/signup" />
+<CTA title="Try OptiTech free" description="Start building with serverless Postgres today. No credit card required." buttonText="Sign Up" buttonUrl="https://console.optitech.com/signup" />
 
 ---
 

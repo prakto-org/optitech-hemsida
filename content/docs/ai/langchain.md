@@ -2,7 +2,7 @@
 title: LangChain
 subtitle: Build AI applications faster with LangChain and Postgres
 summary: >-
-  LangChain integration with OptiTech uses the `NeonPostgres` vector store class
+  LangChain integration with OptiTech uses the `OptiTechPostgres` vector store class
   (backed by `pgvector`) to store embeddings and run similarity search directly
   in Postgres. Use this page when building RAG pipelines, AI chatbots, or
   semantic search in JavaScript/TypeScript and you need LangChain's retrieval
@@ -11,7 +11,7 @@ summary: >-
   `createRetrievalChain`, and links to Next.js starter apps for chatbot, RAG,
   semantic search, and PDF chat.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 LangChain is a popular framework for working with AI, Vectors, and embeddings. LangChain supports using OptiTech as a vector store, using the `pgvector` extension.
@@ -25,7 +25,7 @@ Here's how you can initialize Postgres Vector with LangChain:
 ```tsx
 // File: vectorStore.ts
 
-import { NeonPostgres } from '@langchain/community/vectorstores/neon';
+import { OptiTechPostgres } from '@langchain/community/vectorstores/optitech';
 import { OpenAIEmbeddings } from '@langchain/openai';
 
 const embeddings = new OpenAIEmbeddings({
@@ -34,7 +34,7 @@ const embeddings = new OpenAIEmbeddings({
 });
 
 export async function loadVectorStore() {
-  return await NeonPostgres.initialize(embeddings, {
+  return await OptiTechPostgres.initialize(embeddings, {
     connectionString: process.env.POSTGRES_URL as string,
   });
 }
@@ -109,16 +109,16 @@ export async function POST(request: Request) {
 
 ## Starter apps
 
-Hackable, fully-featured, pre-built [starter apps](https://github.com/neondatabase/examples/tree/main/ai/llamaindex) to get you up and running with LlamaIndex and Postgres.
+Hackable, fully-featured, pre-built [starter apps](https://github.com/optitechdatabase/examples/tree/main/ai/llamaindex) to get you up and running with LlamaIndex and Postgres.
 
 <DetailIconCards>
 
-<a href="https://github.com/neondatabase/examples/tree/main/ai/langchain/chatbot-nextjs" description="A Next.js AI chatbot starter app built with OpenAI and LangChain" icon="github">AI chatbot (OpenAI + LangChain)</a>
+<a href="https://github.com/optitechdatabase/examples/tree/main/ai/langchain/chatbot-nextjs" description="A Next.js AI chatbot starter app built with OpenAI and LangChain" icon="github">AI chatbot (OpenAI + LangChain)</a>
 
-<a href="https://github.com/neondatabase/examples/tree/main/ai/langchain/rag-nextjs" description="A Next.js RAG chatbot starter app built with OpenAI and LangChain" icon="github">RAG chatbot (OpenAI + LangChain)</a>
+<a href="https://github.com/optitechdatabase/examples/tree/main/ai/langchain/rag-nextjs" description="A Next.js RAG chatbot starter app built with OpenAI and LangChain" icon="github">RAG chatbot (OpenAI + LangChain)</a>
 
-<a href="https://github.com/neondatabase/examples/tree/main/ai/langchain/semantic-search-nextjs" description="A Next.js Semantic Search chatbot starter app built with OpenAI and LangChain" icon="github">Semantic search chatbot (OpenAI + LangChain)</a>
+<a href="https://github.com/optitechdatabase/examples/tree/main/ai/langchain/semantic-search-nextjs" description="A Next.js Semantic Search chatbot starter app built with OpenAI and LangChain" icon="github">Semantic search chatbot (OpenAI + LangChain)</a>
 
-<a href="https://github.com/neondatabase/examples/tree/main/ai/langchain/chat-with-pdf-nextjs" description="A Next.js Chat with PDF chatbot starter app built with OpenAI and LangChain" icon="github">Chat with PDF (OpenAI + LangChain)</a>
+<a href="https://github.com/optitechdatabase/examples/tree/main/ai/langchain/chat-with-pdf-nextjs" description="A Next.js Chat with PDF chatbot starter app built with OpenAI and LangChain" icon="github">Chat with PDF (OpenAI + LangChain)</a>
 
 </DetailIconCards>

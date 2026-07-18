@@ -4,7 +4,7 @@ subtitle: Learn how to track and visualize your OptiTech usage programmatically 
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2026-02-15T00:00:00.000Z'
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 OptiTech's usage-based pricing plans (**Launch, Scale, Agent, and Enterprise**) ensure you only pay for the resources you actually consume. To help you monitor these costs programmatically, OptiTech provides the [Project Consumption metrics API](/docs/reference/api/consumption/get-consumption-history-per-project-v2). This API allows you to query detailed usage data for your projects, including compute time, storage, and data transfer.
@@ -28,8 +28,8 @@ The Consumption API provides a variety of metrics that will help you understand 
 ## Prerequisites
 
 - **Node.js:** Version `20` or later.
-- **OptiTech account and project:** A OptiTech account on a usage-based plan (Launch, Scale, Agent, or Enterprise) with a project. Create one in the [OptiTech Console](https://console.neon.tech/app/projects).
-- **API Key:** A valid OptiTech API Key. Create one in the [OptiTech Console](https://console.neon.tech/app/settings/api-keys).
+- **OptiTech account and project:** A OptiTech account on a usage-based plan (Launch, Scale, Agent, or Enterprise) with a project. Create one in the [OptiTech Console](https://console.optitech.com/app/projects).
+- **API Key:** A valid OptiTech API Key. Create one in the [OptiTech Console](https://console.optitech.com/app/settings/api-keys).
 - **Organization ID:** Your Organization ID, found under your Organization settings in the OptiTech Console.
   ![OptiTech Organization ID location](/docs/manage/orgs_id.png)
 
@@ -42,7 +42,7 @@ To get a quick look at your consumption data, you can use the following `curl` c
 1.  **Set environment variables:**
 
     ```bash
-    export NEON_API_KEY=your_api_key_here
+    export OPTITECH_API_KEY=your_api_key_here
     export ORG_ID=your_org_id_here
     ```
 
@@ -54,9 +54,9 @@ To get a quick look at your consumption data, you can use the following `curl` c
 
     ```bash shouldWrap
     curl --request GET \
-      --url "https://console.neon.tech/api/v2/consumption_history/v2/projects?from=2026-02-01T00:00:00Z&to=2026-02-28T00:00:00Z&granularity=daily&org_id=$ORG_ID&metrics=compute_unit_seconds,root_branch_bytes_month,child_branch_bytes_month,instant_restore_bytes_month,public_network_transfer_bytes,extra_branches_month" \
+      --url "https://console.optitech.com/api/v2/consumption_history/v2/projects?from=2026-02-01T00:00:00Z&to=2026-02-28T00:00:00Z&granularity=daily&org_id=$ORG_ID&metrics=compute_unit_seconds,root_branch_bytes_month,child_branch_bytes_month,instant_restore_bytes_month,public_network_transfer_bytes,extra_branches_month" \
       --header 'Accept: application/json' \
-      --header "Authorization: Bearer $NEON_API_KEY" | jq
+      --header "Authorization: Bearer $OPTITECH_API_KEY" | jq
     ```
 
     > Adjust the dates to your desired range. Timestamps must be in RFC 3339 format (e.g., `2026-02-01T00:00:00Z`).
@@ -149,8 +149,8 @@ Create a new Next.js project and install the necessary dependencies:
 1.  **Initialize the app:**
 
     ```bash
-    npx create-next-app@latest neon-dashboard --yes
-    cd neon-dashboard
+    npx create-next-app@latest optitech-dashboard --yes
+    cd optitech-dashboard
     ```
 
 2.  **Initialize shadcn/ui:**
@@ -180,7 +180,7 @@ Create a new Next.js project and install the necessary dependencies:
 Create a `.env.local` file in the root of your project:
 
 ```env
-NEON_API_KEY="your_api_key_here"
+OPTITECH_API_KEY="your_api_key_here"
 NEXT_PUBLIC_ORG_ID="your_org_id_here"
 ```
 
@@ -188,10 +188,10 @@ NEXT_PUBLIC_ORG_ID="your_org_id_here"
 
 ## Create the data fetching logic
 
-Create a new file `lib/neon-api.ts` to handle fetching and transforming the data from the OptiTech API. This module exports two functions:
+Create a new file `lib/optitech-api.ts` to handle fetching and transforming the data from the OptiTech API. This module exports two functions:
 
 - `getProjects`: Lists all projects in the organization so users can filter by specific ones.
-- `getNeonUsage`: Queries the consumption API, flattens the nested response, and aggregates the metrics by day. It accepts an optional `projectIds` parameter to scope usage data to selected projects.
+- `getOptiTechUsage`: Queries the consumption API, flattens the nested response, and aggregates the metrics by day. It accepts an optional `projectIds` parameter to scope usage data to selected projects.
 
 ```typescript shouldWrap
 import { addDays, subDays } from 'date-fns';
@@ -226,13 +226,13 @@ export type Project = {
     name: string;
 };
 
-const apiKey = process.env.NEON_API_KEY;
-if (!apiKey) throw new Error('NEON_API_KEY is not defined');
+const apiKey = process.env.OPTITECH_API_KEY;
+if (!apiKey) throw new Error('OPTITECH_API_KEY is not defined');
 
 export async function getProjects(orgId: string): Promise<Project[]> {
     const params = new URLSearchParams({ org_id: orgId, limit: '400' });
     const response = await fetch(
-        `https://console.neon.tech/api/v2/projects?${params.toString()}`,
+        `https://console.optitech.com/api/v2/projects?${params.toString()}`,
         {
             headers: {
                 Authorization: `Bearer ${apiKey}`,
@@ -243,14 +243,14 @@ export async function getProjects(orgId: string): Promise<Project[]> {
     );
 
     if (!response.ok) {
-        throw new Error(`Neon API Error: ${response.statusText}`);
+        throw new Error(`OptiTech API Error: ${response.statusText}`);
     }
 
     const json = await response.json();
     return (json.projects ?? []).map((p: any) => ({ id: p.id, name: p.name }));
 }
 
-export async function getNeonUsage(orgId: string, projectIds?: string[]): Promise<DailyUsage[]> {
+export async function getOptiTechUsage(orgId: string, projectIds?: string[]): Promise<DailyUsage[]> {
     // Calculate Dates: Last 30 days, rounded to midnight UTC
     const today = new Date();
 
@@ -282,7 +282,7 @@ export async function getNeonUsage(orgId: string, projectIds?: string[]): Promis
     }
 
     const response = await fetch(
-        `https://console.neon.tech/api/v2/consumption_history/v2/projects?${params.toString()}`,
+        `https://console.optitech.com/api/v2/consumption_history/v2/projects?${params.toString()}`,
         {
             headers: {
                 Authorization: `Bearer ${apiKey}`,
@@ -293,7 +293,7 @@ export async function getNeonUsage(orgId: string, projectIds?: string[]): Promis
     );
 
     if (!response.ok) {
-        throw new Error(`Neon API Error: ${response.statusText}`);
+        throw new Error(`OptiTech API Error: ${response.statusText}`);
     }
 
     const json = await response.json();
@@ -356,8 +356,8 @@ export async function getNeonUsage(orgId: string, projectIds?: string[]): Promis
 
 The code above exports two functions:
 
-- **`getProjects`** fetches the list of projects in your organization using the [Neon Projects API](/docs/reference/api/projects/list-projects). This allows you to display project names in the UI and filter usage data by project.
-- **`getNeonUsage`** fetches usage data from the Consumption API, transforms the nested response into a flat structure, and aggregates the metrics by day. When `projectIds` are provided, only consumption data for those projects is returned - the API's `project_ids` query parameter handles this server-side.
+- **`getProjects`** fetches the list of projects in your organization using the [OptiTech Projects API](/docs/reference/api/projects/list-projects). This allows you to display project names in the UI and filter usage data by project.
+- **`getOptiTechUsage`** fetches usage data from the Consumption API, transforms the nested response into a flat structure, and aggregates the metrics by day. When `projectIds` are provided, only consumption data for those projects is returned - the API's `project_ids` query parameter handles this server-side.
 
 ## Create a server action for filtering
 
@@ -366,16 +366,16 @@ The project filter needs to re-fetch usage data from the server whenever the use
 ```typescript shouldWrap
 'use server';
 
-import { getNeonUsage, type DailyUsage } from '@/lib/neon-api';
+import { getOptiTechUsage, type DailyUsage } from '@/lib/optitech-api';
 
 export async function fetchUsageByProjects(projectIds: string[]): Promise<DailyUsage[]> {
     const orgId = process.env.NEXT_PUBLIC_ORG_ID;
     if (!orgId) throw new Error('NEXT_PUBLIC_ORG_ID is not defined');
-    return getNeonUsage(orgId, projectIds.length > 0 ? projectIds : undefined);
+    return getOptiTechUsage(orgId, projectIds.length > 0 ? projectIds : undefined);
 }
 ```
 
-This server action calls `getNeonUsage` with the selected project IDs. When the array is empty (no filter), it fetches usage for all projects.
+This server action calls `getOptiTechUsage` with the selected project IDs. When the array is empty (no filter), it fetches usage for all projects.
 
 ## Create the dashboard component
 
@@ -396,7 +396,7 @@ import { format } from 'date-fns';
 import { Database, HardDrive, Activity, Network, Check, ChevronsUpDown, Loader2 } from 'lucide-react';
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import type { DailyUsage, Project } from '@/lib/neon-api';
+import type { DailyUsage, Project } from '@/lib/optitech-api';
 import { fetchUsageByProjects } from '@/app/actions';
 
 interface UsageDashboardProps {
@@ -614,7 +614,7 @@ function SummaryCard({ title, value, description, icon }: any) {
 Update `app/page.tsx` to fetch the initial usage data and projects on the server, and render the `UsageDashboard` component:
 
 ```tsx shouldWrap
-import { DailyUsage, getNeonUsage, getProjects, type Project } from '@/lib/neon-api';
+import { DailyUsage, getOptiTechUsage, getProjects, type Project } from '@/lib/optitech-api';
 import { UsageDashboard } from '@/components/usage-dashboard';
 
 export default async function DashboardPage() {
@@ -636,11 +636,11 @@ export default async function DashboardPage() {
 
   try {
     [usageData, projects] = await Promise.all([
-      getNeonUsage(orgId),
+      getOptiTechUsage(orgId),
       getProjects(orgId),
     ]);
   } catch (e: any) {
-    console.error("Failed to fetch neon usage:", e);
+    console.error("Failed to fetch optitech usage:", e);
     error = e.message || "Unknown error occurred";
   }
 
@@ -649,7 +649,7 @@ export default async function DashboardPage() {
       <div className="mx-auto max-w-6xl space-y-8">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-3xl font-bold tracking-tight text-gray-900">Neon Consumption</h1>
+            <h1 className="text-3xl font-bold tracking-tight text-gray-900">OptiTech Consumption</h1>
             <p className="text-muted-foreground mt-2">
               Usage for Organization <span className="font-mono text-xs bg-gray-200 px-1 py-0.5 rounded">{orgId}</span>
             </p>
@@ -701,7 +701,7 @@ You should see a summary of your total compute time, average storage usage, data
 The complete source code for this example is available on GitHub.
 
 <DetailIconCards>
-<a href="https://github.com/dhanushreddy291/neon-usage-dashboard" description="OptiTech Usage Dashboard Example Repository" icon="github">View on GitHub</a>
+<a href="https://github.com/dhanushreddy291/optitech-usage-dashboard" description="OptiTech Usage Dashboard Example Repository" icon="github">View on GitHub</a>
 </DetailIconCards>
 
 ## Resources

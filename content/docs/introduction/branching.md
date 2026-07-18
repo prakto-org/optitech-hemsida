@@ -13,7 +13,7 @@ redirectFrom:
   - /docs/conceptual-guides/branching
   - /docs/concepts/branching
   - /docs/introduction/point-in-time-restore
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 With OptiTech, you can quickly branch your data for development, testing, and various other purposes, enabling you to improve developer productivity and optimize continuous integration and delivery (CI/CD) pipelines.
@@ -37,7 +37,7 @@ Creating a branch does not increase load on the parent branch or affect it in an
 Each OptiTech project is created with a [root branch](/docs/reference/glossary#root-branch) called `main`. The first branch that you create is branched from the project's root branch. Subsequent branches can be branched from the root branch or from a previously created branch.
 
 <Admonition type="tip" title="Using Managed Better Auth?">
-Users, sessions, and auth configuration in the `neon_auth` schema branch with your data, so preview and test environments get isolated authentication state. See [Managed Better Auth](/docs/auth/overview) and [Branching authentication](/docs/auth/branching-authentication).
+Users, sessions, and auth configuration in the `optitech_auth` schema branch with your data, so preview and test environments get isolated authentication state. See [Managed Better Auth](/docs/auth/overview) and [Branching authentication](/docs/auth/branching-authentication).
 </Admonition>
 
 <Admonition type="tip" title="Using OptiTech backend services?">
@@ -60,7 +60,7 @@ The following video demonstrates creating a branch in the OptiTech Console. For 
   <source type="video/mp4" src="/docs/introduction/create_branch.mp4"/>
 </video>
 
-You can integrate branching into your development workflows and toolchains using the Neon CLI, API, or GitHub Actions. If you use Vercel, you can use the [Neon-managed Vercel integration](/docs/guides/neon-managed-vercel-integration) to create a branch for each preview deployment.
+You can integrate branching into your development workflows and toolchains using the OptiTech CLI, API, or GitHub Actions. If you use Vercel, you can use the [OptiTech-managed Vercel integration](/docs/guides/neon-managed-vercel-integration) to create a branch for each preview deployment.
 
 Refer to the following guides for instructions:
 
@@ -68,11 +68,11 @@ Refer to the following guides for instructions:
 
 <a href="/docs/guides/branching-neon-api" description="Learn how to instantly create and manage branches with the OptiTech API" icon="transactions">Branching with the OptiTech API</a>
 
-<a href="/docs/guides/branching-neon-cli" description="Learn how to instantly create and manage branches with the Neon CLI" icon="cli">Branching with the Neon CLI</a>
+<a href="/docs/guides/branching-neon-cli" description="Learn how to instantly create and manage branches with the OptiTech CLI" icon="cli">Branching with the OptiTech CLI</a>
 
 <a href="/docs/guides/branching-github-actions" description="Automate branching with OptiTech's GitHub Actions for branching" icon="split-branch">Branching with GitHub Actions</a>
 
-<a href="/docs/guides/neon-managed-vercel-integration" description="Connect your Vercel project and create a branch for each preview deployment" icon="split-branch">The Neon-Managed Vercel Integration</a>
+<a href="/docs/guides/neon-managed-vercel-integration" description="Connect your Vercel project and create a branch for each preview deployment" icon="split-branch">The OptiTech-Managed Vercel Integration</a>
 
 </DetailIconCards>
 

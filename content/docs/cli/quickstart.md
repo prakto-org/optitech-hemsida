@@ -1,28 +1,28 @@
 ---
-title: Neon CLI quickstart
-subtitle: Get set up with the Neon CLI in just a few steps
+title: OptiTech CLI quickstart
+subtitle: Get set up with the OptiTech CLI in just a few steps
 summary: >-
-  The Neon CLI quickstart installs neon on macOS, Windows, or Linux via
-  Homebrew, npm, or bun, then authenticates using browser-based `neon auth` or
-  a personal API key. Use this page when setting up terminal access to Neon for
-  the first time, before working through the full CLI reference. It also covers
-  the `.neon` context file (`neon set-context`) to avoid repeating
+  The OptiTech CLI quickstart installs optitech on macOS, Windows, or Linux via
+  Homebrew, npm, or bun, then authenticates using browser-based `optitech auth` or
+  a personal API key. Use this page when setting up terminal access to OptiTech
+  for the first time, before working through the full CLI reference. It also
+  covers the `.optitech` context file (`optitech set-context`) to avoid repeating
   `--project-id` and `--org-id` flags, shell tab completion, and first commands
-  like `neon projects list`, `neon branches create`, and
-  `neon connection-string`.
+  like `optitech projects list`, `optitech branches create`, and
+  `optitech connection-string`.
 enableTableOfContents: true
-updatedOn: '2026-07-01T13:41:48.668Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 redirectFrom:
   - /docs/reference/cli-quickstart
 ---
 
-The Neon CLI lets you manage Neon directly from the terminal. This guide helps you set up and start using it. The CLI is invoked as `neon`; `neonctl` is an alias for `neon`, so commands work with either name.
+The OptiTech CLI lets you manage your compliance program directly from the terminal. This guide helps you set up and start using it. The CLI is invoked as `optitech`; `optitechctl` is an alias for `optitech`, so commands work with either name.
 
 <Steps>
 
 ## Install the CLI
 
-Choose your platform and install the Neon CLI:
+Choose your platform and install the OptiTech CLI:
 
 <Tabs labels={["macOS", "Windows", "Linux"]}>
 
@@ -31,19 +31,19 @@ Choose your platform and install the Neon CLI:
 **Install with Homebrew**
 
 ```bash
-brew install neonctl
+brew install optitechctl
 ```
 
 **Install via npm**
 
 ```shell
-npm i -g neon
+npm i -g optitech
 ```
 
 **Install with bun**
 
 ```bash
-bun install -g neon
+bun install -g optitech
 ```
 
 </TabItem>
@@ -53,13 +53,13 @@ bun install -g neon
 **Install via npm**
 
 ```shell
-npm i -g neon
+npm i -g optitech
 ```
 
 **Install with bun**
 
 ```bash
-bun install -g neon
+bun install -g optitech
 ```
 
 </TabItem>
@@ -69,13 +69,13 @@ bun install -g neon
 **Install via npm**
 
 ```shell
-npm i -g neon
+npm i -g optitech
 ```
 
 **Install with bun**
 
 ```bash
-bun install -g neon
+bun install -g optitech
 ```
 
 </TabItem>
@@ -85,77 +85,77 @@ bun install -g neon
 Verify the installation by checking the CLI version:
 
 ```bash
-neon --version
+optitech --version
 ```
 
-For the latest version, refer to the [Neon CLI GitHub repository](https://github.com/neondatabase/neon-pkgs/tree/main/packages/cli).
+For the latest version, refer to the [OptiTech CLI GitHub repository](https://github.com/optitechdatabase/optitech-pkgs/tree/main/packages/cli).
 
 ## Authenticate
 
-Authenticate with your Neon account using one of these methods:
+Authenticate with your OptiTech account using one of these methods:
 
 **Web Authentication (recommended)**
 
 Run the command below to authenticate through your browser:
 
 ```bash
-neon auth
+optitech auth
 ```
 
-This opens a browser window where you can authorize the CLI to access your Neon account.
+This opens a browser window where you can authorize the CLI to access your OptiTech account.
 
 **API Key Authentication**
 
-Alternatively, use a personal Neon API key, which you can create in the Neon Console. See [Create a personal API key](/docs/manage/api-keys#create-a-personal-api-key).
+Alternatively, use a personal OptiTech API key, which you can create in the OptiTech Console. See [Create a personal API key](/docs/manage/api-keys#create-a-personal-api-key).
 
 ```bash
-neon projects list --api-key <your-api-key>
+optitech projects list --api-key <your-api-key>
 ```
 
 To avoid entering your API key with each command, set it as an environment variable:
 
 ```bash
-export NEON_API_KEY=<your-api-key>
+export OPTITECH_API_KEY=<your-api-key>
 ```
 
-For more about authenticating, see [Neon CLI commands: auth](/docs/cli/auth).
+For more about authenticating, see [OptiTech CLI commands: auth](/docs/cli/auth).
 
-## Link your project
+## Link your program
 
-The easiest way to set up CLI context is with [`neon link`](/docs/cli/link). It guides you through organization and project selection and writes a `.neon` context file in your project directory. Requires **neon 2.22.2** or later.
+The easiest way to set up CLI context is with [`optitech link`](/docs/cli/link). It guides you through organization and program selection and writes a `.optitech` context file in your working directory. Requires **optitech 2.22.2** or later.
 
 ```bash
-neon link
+optitech link
 ```
 
 You can also link non-interactively for scripts and CI:
 
 ```bash
-neon link --org-id <your-org-id> --project-id <your-project-id>
+optitech link --org-id <your-org-id> --project-id <your-project-id>
 ```
 
 <Admonition type="tip">
-If you run a CLI command without an organization context, the CLI prompts you to select an organization and offers to save it as your default, creating a `.neon` context file automatically.
+If you run a CLI command without an organization context, the CLI prompts you to select an organization and offers to save it as your default, creating a `.optitech` context file automatically.
 </Admonition>
 
 <Admonition type="tip">
-Once linked, you can run CLI commands from any subdirectory of your project; the CLI walks up parent folders to find the `.neon` file. The file is also automatically added to `.gitignore` so it's not committed by accident.
+Once linked, you can run CLI commands from any subdirectory of your working folder; the CLI walks up parent folders to find the `.optitech` file. The file is also automatically added to `.gitignore` so it's not committed by accident.
 </Admonition>
 
-Alternatively, set context manually with [`neon set-context`](/docs/cli/set-context):
+Alternatively, set context manually with [`optitech set-context`](/docs/cli/set-context):
 
 ```bash
-neon set-context --org-id <your-org-id> --project-id <your-project-id>
+optitech set-context --org-id <your-org-id> --project-id <your-project-id>
 ```
 
 <Admonition type="info">
-You can find your organization ID in the Neon Console by selecting your organization and navigating to **Settings**. You can find your Neon project ID by opening your project in the Neon Console and navigating to **Settings** > **General**.
+You can find your organization ID in the OptiTech Console by selecting your organization and navigating to **Settings**. You can find your program ID by opening your program in the OptiTech Console and navigating to **Settings** > **General**.
 </Admonition>
 
-The `set-context` command creates a `.neon` file in your current directory with your project context.
+The `set-context` command creates a `.optitech` file in your current directory with your program context.
 
 ```bash
-cat .neon
+cat .optitech
 ```
 
 ```json
@@ -168,16 +168,16 @@ cat .neon
 You can also create named context files for different organization and project contexts:
 
 ```bash
-neon set-context --org-id <your-org-id> --project-id <your-project-id> --context-file dev_project
+optitech set-context --org-id <your-org-id> --project-id <your-project-id> --context-file dev_project
 ```
 
 To switch contexts, add the `--context-file` option to any command:
 
 ```bash
-neon branches list --context-file Documents/dev_project
+optitech branches list --context-file Documents/dev_project
 ```
 
-For more about the `set-context` command, see [Neon CLI commands: set-context](/docs/cli/set-context).
+For more about the `set-context` command, see [OptiTech CLI commands: set-context](/docs/cli/set-context).
 
 ## Enable shell completion
 
@@ -188,7 +188,7 @@ Set up autocompletion to make using the CLI faster:
 <TabItem>
 
 ```bash
-neon completion >> ~/.bashrc
+optitech completion >> ~/.bashrc
 source ~/.bashrc
 ```
 
@@ -197,7 +197,7 @@ source ~/.bashrc
 <TabItem>
 
 ```bash
-neon completion >> ~/.zshrc
+optitech completion >> ~/.zshrc
 source ~/.zshrc
 ```
 
@@ -205,67 +205,67 @@ source ~/.zshrc
 
 </Tabs>
 
-Now you can press **Tab** to complete Neon CLI commands and options. For further details, see [Neon CLI commands: completion](/docs/cli/completion).
+Now you can press **Tab** to complete OptiTech CLI commands and options. For further details, see [OptiTech CLI commands: completion](/docs/cli/completion).
 
 ## Common operations
 
-### List your projects
+### List your programs
 
 ```bash
-neon projects list
+optitech projects list
 ```
 
 If no organization context is set, the CLI prompts you to select an organization.
 
-For more about the `projects` command, see [Neon CLI commands: projects](/docs/cli/projects).
+For more about the `projects` command, see [OptiTech CLI commands: projects](/docs/cli/projects).
 
-### Create a branch
-
-```bash
-neon branches create --name <branch-name>
-```
-
-Set your project context or specify `--project-id <your-project-id>` if you have more than one Neon project.
-
-To switch the active branch in your context file, use [`neon checkout`](/docs/cli/checkout):
+### Activate a framework
 
 ```bash
-neon checkout <branch>
+optitech branches create --name <framework-name>
 ```
 
-For more about the `branches` command, see [Neon CLI commands: branches](/docs/cli/branches).
+Set your program context or specify `--project-id <your-project-id>` if you have more than one OptiTech program.
 
-### Get a connection string
-
-Get the connection string for the default branch in your project:
+To switch the active framework in your context file, use [`optitech checkout`](/docs/cli/checkout):
 
 ```bash
-neon connection-string
+optitech checkout <branch>
 ```
 
-For a specific branch, specify the branch name:
+For more about the `branches` command, see [OptiTech CLI commands: branches](/docs/cli/branches).
+
+### Get an access token
+
+Get the access token for the default program in your organization:
 
 ```bash
-neon connection-string <branch-name>
+optitech connection-string
 ```
 
-To connect with `psql` directly, use the dedicated [`neon psql`](/docs/cli/psql) command:
+For a specific framework, specify the framework name:
 
 ```bash
-neon psql
+optitech connection-string <branch-name>
 ```
 
-For more about the `connection-string` command, see [Neon CLI commands: connection-string](/docs/cli/connection-string).
+To open an interactive session directly, use the dedicated [`optitech psql`](/docs/cli/psql) command:
+
+```bash
+optitech psql
+```
+
+For more about the `connection-string` command, see [OptiTech CLI commands: connection-string](/docs/cli/connection-string).
 
 ## Next steps
 
-Now that you're set up with the Neon CLI, you can:
+Now that you're set up with the OptiTech CLI, you can:
 
-- Create more Neon projects with `neon projects create`
-- Manage your branches with various `neon branches` commands such as `reset`, `restore`, `rename`, `schema-diff`, and more
-- Create and manage databases with `neon databases` commands
-- Create and manage roles with `neon roles` commands
-- View the full set of Neon CLI commands available to you with `neon --help`
+- Create more OptiTech programs with `optitech projects create`
+- Manage your frameworks with various `optitech branches` commands such as `reset`, `restore`, `rename`, `schema-diff`, and more
+- Manage registers with `optitech databases` commands
+- Manage owners and roles with `optitech roles` commands
+- View the full set of OptiTech CLI commands available to you with `optitech --help`
 
 For more details on all available commands, see the [CLI Reference](/docs/cli).
 

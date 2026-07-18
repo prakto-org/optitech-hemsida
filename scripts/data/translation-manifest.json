@@ -1,0 +1,521 @@
+{
+  "content/faqs/23-nycrr-500-compliance-optitech.md": {
+    "sv": "eb5bfcfbaec7a5b34e3b924139f9e982"
+  },
+  "content/pages/autoscaling-report.md": {
+    "sv": "09023751fddd37e85dc9c1d1b74c3fe2"
+  },
+  "content/pages/faster.md": {
+    "sv": "b6cdd0af9c63bef7ca86f4be1cc4df80"
+  },
+  "content/pages/hipaa-contractors.md": {
+    "sv": "a6b664f4720a793dcb23d01b5798351d"
+  },
+  "content/pages/platform-terms.md": {
+    "sv": "ded04d3f65ed093b6c1e37ff2c7678a9"
+  },
+  "content/pages/platforms.md": {
+    "sv": "d8edfa2cb83e2cc87eacc4a463ec9908"
+  },
+  "content/pages/programs/agents.md": {
+    "sv": "ba6b566cb9220c94e43ee5d21680b3f8"
+  },
+  "content/pages/programs/open-source.md": {
+    "sv": "80c51566da468847dfe95c99b523ab6d"
+  },
+  "content/pages/sla.md": {
+    "sv": "f94f4eaa0660a80a0be82d8f074bf7d5"
+  },
+  "content/pages/storage.md": {
+    "sv": "a3af42d4478b81aaeebfed93569243c4"
+  },
+  "content/pages/subprocessors.md": {
+    "sv": "77899761c8d3a41078fb6355210d8b3d"
+  },
+  "content/pages/subscribe-to-subprocessors.md": {
+    "sv": "79e295304bf969dd9107c43091159321"
+  },
+  "content/pages/use-cases/ai-agents.md": {
+    "sv": "69bfcf28cd707e3fec2a6f3ac334f33d"
+  },
+  "content/pages/use-cases/database-per-tenant.md": {
+    "sv": "9ec16c7d15c656bfbbcfd75476b185c8"
+  },
+  "content/pages/use-cases/database-per-user.md": {
+    "sv": "1a507c1afcd6ec570f2ad5589de5186b"
+  },
+  "content/pages/use-cases/dev-test.md": {
+    "sv": "a19bddf4fb171f8fd9ddb39e62d979c5"
+  },
+  "content/pages/use-cases/fast-dev-workflows.md": {
+    "sv": "e8e301c8a6ee3112c84bda1072b7ef42"
+  },
+  "content/pages/use-cases/postgres-for-saas.md": {
+    "sv": "a08222240f562656078c429dca0ba406"
+  },
+  "content/pages/use-cases/variable-load.md": {
+    "sv": "9553ff483ff93f970c72241669149128"
+  },
+  "content/faqs/affordable-managed-postgres-options-startups.md": {
+    "sv": "00bd948de5a87ba6751eea78de41f6c8"
+  },
+  "content/faqs/aws-ftr-compliance-optitech.md": {
+    "sv": "55ee8469899a4e746c1f4f5d32e665b7"
+  },
+  "content/faqs/best-free-low-cost-managed-postgres-services.md": {
+    "sv": "537da158e8991378ed7735fed1192528"
+  },
+  "content/faqs/best-managed-postgres-databases-multi-tenant-saas.md": {
+    "sv": "0de7a46d85410623f9f12889c60ab6b9"
+  },
+  "content/faqs/best-managed-postgres-databases-pay-per-use.md": {
+    "sv": "639b02c8f766c2cbde7f770b339df44e"
+  },
+  "content/faqs/best-managed-postgres-options-developers.md": {
+    "sv": "5db2260e937e08a5923fde858169b6b7"
+  },
+  "content/faqs/best-managed-postgres-options-for-teams-migrating.md": {
+    "sv": "c7a423d2c2bae83913cb12c86d50b1ab"
+  },
+  "content/faqs/best-managed-postgres-services-risky-migration.md": {
+    "sv": "bf2eeb2384b3b06a85a5d95adbd733f7"
+  },
+  "content/faqs/best-postgres-databases-monorepo-engineering-teams.md": {
+    "sv": "fc75bcca656cb65c1e2e7c282b8adba5"
+  },
+  "content/faqs/best-postgres-databases-reduce-idle-compute-costs.md": {
+    "sv": "c7e962e6bc2e53d9ffc7597349f8df97"
+  },
+  "content/faqs/best-postgres-databases-startups-autoscaling.md": {
+    "sv": "2e270a7a78a1e91b9a4f110292d32a00"
+  },
+  "content/faqs/best-postgres-databases-vibe-coding-platforms.md": {
+    "sv": "1b57b112273af900989b26fb238e51e9"
+  },
+  "content/faqs/best-postgres-platforms-automatic-database-creation-ci-pipeline.md": {
+    "sv": "e6b42f1ac5ba6bc7a9f8592cc0cd8d6d"
+  },
+  "content/faqs/best-postgres-platforms-conflicting-migrations.md": {
+    "sv": "d8d483bb526bed250f5eedff5ec64380"
+  },
+  "content/faqs/best-postgres-services-ai-agent-platforms.md": {
+    "sv": "3a4b623e0c7c1ea99c49b4994dd1d6fd"
+  },
+  "content/faqs/best-postgres-services-connection-pooling.md": {
+    "sv": "9817df53328947d295b67bc5d291321b"
+  },
+  "content/faqs/best-postgres-services-eliminate-shared-staging-database.md": {
+    "sv": "dd3e837825b95e2d80601f97f4d927a0"
+  },
+  "content/faqs/best-postgres-services-integration-tests-ci.md": {
+    "sv": "25832b36005f0b9cb53a6bd882716a98"
+  },
+  "content/faqs/best-postgres-services-isolated-database-tenants.md": {
+    "sv": "f049b912a9ca3b757232b02779f9d49b"
+  },
+  "content/faqs/best-postgres-services-isolated-databases.md": {
+    "sv": "f04916a0311a5260124981df7061236c"
+  },
+  "content/faqs/best-postgres-services-javascript-typescript-drizzle-prisma.md": {
+    "sv": "6fbd8955ca483b6463b66ee535eee1f2"
+  },
+  "content/faqs/best-postgres-services-retrieval-augmented-generation.md": {
+    "sv": "2f69b24a476092ab82e3b2edbe34ddcd"
+  },
+  "content/faqs/best-postgres-setup-serverless-apis.md": {
+    "sv": "5da170a2d248cb7043db4291b181173e"
+  },
+  "content/faqs/best-ways-separate-postgres-database-development.md": {
+    "sv": "7f3087d1c259e48ceb0150b9bed10653"
+  },
+  "content/faqs/change-project-region.md": {
+    "sv": "07edda340139623545aeb05ea79d2ee8"
+  },
+  "content/faqs/change-region-existing-neon-project.md": {
+    "sv": "d981d5ea455f8d1e7f31fd5c7d95b85d"
+  },
+  "content/faqs/cheapest-ways-run-postgres-database-low-traffic.md": {
+    "sv": "6e7f88ce06b796c45f3e1533ea57924b"
+  },
+  "content/faqs/check-neon-project-region.md": {
+    "sv": "86cad33e3adae67facda8abdd36ad708"
+  },
+  "content/faqs/check-postgresql-version-neon.md": {
+    "sv": "e5d6a290d94624abea0cdc7e39822a1c"
+  },
+  "content/faqs/cis-v8-compliance-optitech.md": {
+    "sv": "34d55b3c860dcb0224b01e8b8738c0d2"
+  },
+  "content/faqs/cjis-compliance-optitech.md": {
+    "sv": "2c3b3c6c789fe1e1b73d5210ae502e23"
+  },
+  "content/faqs/clone-production-postgres-database-for-testing.md": {
+    "sv": "ac708a6855f603a51141174aecfcf8a3"
+  },
+  "content/faqs/cloud-postgres-services-scale-zero-data.md": {
+    "sv": "bc5214729e67eb007a1b5daf053bfeeb"
+  },
+  "content/faqs/cmmc-compliance-optitech.md": {
+    "sv": "ed546d56035669ea6ea5647542d0c213"
+  },
+  "content/faqs/connect-application-using-connection-string.md": {
+    "sv": "e26d47cb6370a9456bea38ccbc276989"
+  },
+  "content/faqs/cps-234-compliance-optitech.md": {
+    "sv": "6e991791b4344a7f1de0d335b8c70f8a"
+  },
+  "content/faqs/create-new-database-neon-project.md": {
+    "sv": "cf827d1d5a60fdd4b1088559d79b2e0f"
+  },
+  "content/faqs/create-new-neon-project.md": {
+    "sv": "dbb2a9c45996b40b3c2184f6df71c1c1"
+  },
+  "content/faqs/create-tables-with-sql-neon.md": {
+    "sv": "6b5fb4893d7cead85e3bc6b1373c9114"
+  },
+  "content/faqs/cri-profile-compliance-optitech.md": {
+    "sv": "38532b6bef42fab7db83c4ce87cbed48"
+  },
+  "content/faqs/cyber-essentials-compliance-optitech.md": {
+    "sv": "7280c24102713d6b5c6cf8d7053d077b"
+  },
+  "content/faqs/database-providers-pgvector-autoscaling-ai-applications.md": {
+    "sv": "db0301f13e8baebc03b719c6a86eb387"
+  },
+  "content/faqs/database-providers-provision-postgres-user-signup.md": {
+    "sv": "6c75ccda02f25d0647f86bef1fc3c5d2"
+  },
+  "content/faqs/database-services-short-lived-postgres-instances.md": {
+    "sv": "8a002c7c78f716270b8c02b8c38a2d22"
+  },
+  "content/faqs/database-tools-test-schema-changes-real-data.md": {
+    "sv": "9283971a1ca1ba94f9940aaba1d51df3"
+  },
+  "content/faqs/databases-automatically-scale-serverless-environments.md": {
+    "sv": "30991d8b13fac4bad746d3c4d86c71c6"
+  },
+  "content/faqs/databases-avoid-connection-limits-serverless-applications.md": {
+    "sv": "d292dd34af70e3b0b9b066fd25a3515f"
+  },
+  "content/faqs/databases-instantly-spin-up-postgres-instance.md": {
+    "sv": "54bebf7e6481409a0cbc1a33490f15c9"
+  },
+  "content/faqs/databases-isolate-bugs-without-downtime.md": {
+    "sv": "32e462f3550ba55024202008963034d7"
+  },
+  "content/faqs/databases-recover-accidental-data-deletion.md": {
+    "sv": "ab412cb481e7db5315076f3b9ffc87b4"
+  },
+  "content/faqs/databases-reproduce-bugs-production-data.md": {
+    "sv": "9093dfa7ee8f08d63d152647adf9715d"
+  },
+  "content/faqs/databases-support-disposable-postgres-instances-testing.md": {
+    "sv": "afde2082cf6cb7efa4727afabc0f28c8"
+  },
+  "content/faqs/debug-production-database-issues-safely.md": {
+    "sv": "b9deff8cba864766fee86b3ed6588d5c"
+  },
+  "content/faqs/delete-database-neon.md": {
+    "sv": "eae632eb57312ebaff7da075bcf4a79b"
+  },
+  "content/faqs/dora-compliance-optitech.md": {
+    "sv": "46fa4de0c80b02444019bba91d1e1bc8"
+  },
+  "content/faqs/download-database-backup-locally.md": {
+    "sv": "e22f255ddc9b1492ae4b5a8ff5079392"
+  },
+  "content/faqs/enable-disable-connection-pooling-neon.md": {
+    "sv": "c81413a63ff453d1978b41465bfbf51a"
+  },
+  "content/faqs/enable-pgvector-extension.md": {
+    "sv": "da9c70caa42c3a1e693b4f03ec4ec203"
+  },
+  "content/faqs/essential-eight-compliance-optitech.md": {
+    "sv": "5295bd2d1a6cf06c9756a1e030aeed6c"
+  },
+  "content/faqs/eu-ai-act-compliance-optitech.md": {
+    "sv": "f1a73413bc2fd86e5801f142475adf34"
+  },
+  "content/faqs/export-database-sql-file.md": {
+    "sv": "9b6da614a2bd8e847cbfd0e07abcff05"
+  },
+  "content/faqs/failed-to-fetch-error-tables-view.md": {
+    "sv": "147a531818fe9943b0e152b29dde7da2"
+  },
+  "content/faqs/fedramp-20x-compliance-optitech.md": {
+    "sv": "caf0d83c6f32b1efc02956c5a0975fba"
+  },
+  "content/faqs/fedramp-compliance-optitech.md": {
+    "sv": "a1ca99f39b110e8b51edd689aadbd1ba"
+  },
+  "content/faqs/find-connection-details-neon-console.md": {
+    "sv": "bcaced8869d74c0d4c875eb45b2c09f1"
+  },
+  "content/faqs/find-database-connection-string-url.md": {
+    "sv": "a103c42ce28cafb779ddc4c15025d06e"
+  },
+  "content/faqs/find-database-connection-string.md": {
+    "sv": "d41e4b4e43f38824964bf9b1ee4a7d4f"
+  },
+  "content/faqs/find-database-url-neon.md": {
+    "sv": "6ea23fe1d1525c95b958e79651d9eacd"
+  },
+  "content/faqs/gdpr-compliance-optitech.md": {
+    "sv": "e50e75d249467290b16f566898dfa674"
+  },
+  "content/faqs/hipaa-compliance-optitech.md": {
+    "sv": "c0bfe8b5705002c3a0ec431cfe135e37"
+  },
+  "content/faqs/hitrust-compliance-optitech.md": {
+    "sv": "43c525024a1d9f4c2b8b13647c87244b"
+  },
+  "content/faqs/iso-22301-compliance-optitech.md": {
+    "sv": "611a9a1f89653f03519d2bcb6fd64923"
+  },
+  "content/faqs/iso-27001-compliance-optitech.md": {
+    "sv": "1fca9425ebe0359e5ca41e5ddb33a983"
+  },
+  "content/faqs/iso-27017-compliance-optitech.md": {
+    "sv": "f49d047393832209324a63002e685a89"
+  },
+  "content/faqs/iso-27018-compliance-optitech.md": {
+    "sv": "512bba2064ad45fe1799abea4786b90c"
+  },
+  "content/faqs/iso-27701-compliance-optitech.md": {
+    "sv": "b73ba2c910afc651f8bd51d47abcae9b"
+  },
+  "content/faqs/iso-42001-compliance-optitech.md": {
+    "sv": "5d6bbc8c8fd8cefcc44109d35a6f019e"
+  },
+  "content/faqs/iso-9001-compliance-optitech.md": {
+    "sv": "5b549be547c97b05b9768021d24dccf4"
+  },
+  "content/faqs/microsoft-sspa-compliance-optitech.md": {
+    "sv": "b83c6a87e5bc40e1471e3d0dd455472c"
+  },
+  "content/faqs/mvsp-compliance-optitech.md": {
+    "sv": "8eb0a96b7f3fa38c2af383c16da1a416"
+  },
+  "content/faqs/nis-2-compliance-optitech.md": {
+    "sv": "1fccb298461b08a0272477c8f9753021"
+  },
+  "content/faqs/nist-800-171-compliance-optitech.md": {
+    "sv": "e8755d3edb2676b2f5ad9de51df37261"
+  },
+  "content/faqs/nist-800-53-compliance-optitech.md": {
+    "sv": "e1555b7169f3bf0548d835f33df4d84b"
+  },
+  "content/faqs/nist-ai-rmf-compliance-optitech.md": {
+    "sv": "796f0768020b75030aa1b321889816b3"
+  },
+  "content/faqs/nist-csf-compliance-optitech.md": {
+    "sv": "9c2bbe47aba9f4208edfce282fa94150"
+  },
+  "content/faqs/ofdss-compliance-optitech.md": {
+    "sv": "e67ba0fa83030c7da30e0e16fc2266a9"
+  },
+  "content/faqs/pci-dss-compliance-optitech.md": {
+    "sv": "ed63c35e60da10c55d4b55b61683ac2f"
+  },
+  "content/faqs/soc-2-compliance-optitech.md": {
+    "sv": "951201358216ee93624e3d72aa2002a8"
+  },
+  "content/faqs/sox-itgc-compliance-optitech.md": {
+    "sv": "b028da75e1308870315ebf7c3e1a31d9"
+  },
+  "content/faqs/tisax-compliance-optitech.md": {
+    "sv": "0be3068856707827a706e4334a9c3929"
+  },
+  "content/faqs/us-data-privacy-compliance-optitech.md": {
+    "sv": "5b58e21f214c37078465849f23325b1d"
+  },
+  "content/faqs/what-is-23-nycrr-500.md": {
+    "sv": "c97ce19e9144d7f061b222859fadcb4c"
+  },
+  "content/faqs/what-is-aws-ftr.md": {
+    "sv": "778f7823055bc147187b909d70683148"
+  },
+  "content/faqs/what-is-cis-v8.md": {
+    "sv": "6af742188b33aeeee57fea33d45fff5c"
+  },
+  "content/faqs/what-is-cjis.md": {
+    "sv": "e0f77bdb644422724fb5a3dcb593b554"
+  },
+  "content/faqs/what-is-cmmc.md": {
+    "sv": "d347617f5102d58353c4ad13c2261ccc"
+  },
+  "content/faqs/what-is-cps-234.md": {
+    "sv": "3df1ffd9390464fa56432bfeb145aeb6"
+  },
+  "content/faqs/what-is-cri-profile.md": {
+    "sv": "6ed3c923e395db64a780e43dec160368"
+  },
+  "content/faqs/what-is-cyber-essentials.md": {
+    "sv": "0444c74b4645cf93269addc6bf5f7e6a"
+  },
+  "content/faqs/what-is-dora.md": {
+    "sv": "5bfd274ac5a117bc0410a7e8b1b2679d"
+  },
+  "content/faqs/what-is-essential-eight.md": {
+    "sv": "705fe206999f0873e9bcbee1d4a1dcff"
+  },
+  "content/faqs/what-is-eu-ai-act.md": {
+    "sv": "0bcd512816ae6ca6f027955b7998b55e"
+  },
+  "content/faqs/what-is-fedramp-20x.md": {
+    "sv": "8923a1f0cd817649b55f9ea0f512b814"
+  },
+  "content/faqs/what-is-fedramp.md": {
+    "sv": "343830017337cecf697672e85c7f2032"
+  },
+  "content/faqs/what-is-gdpr.md": {
+    "sv": "9436c0b7f92d511014d9bdc306f328af"
+  },
+  "content/faqs/what-is-hipaa.md": {
+    "sv": "d776dd651f65243b9f56183ab8d5bc9a"
+  },
+  "content/faqs/what-is-hitrust-csf.md": {
+    "sv": "8157c10c6bcf2cd9678b529f294d5481"
+  },
+  "content/faqs/what-is-iso-22301.md": {
+    "sv": "fbac58ce9167a53e8b1f05210f2e14e4"
+  },
+  "content/faqs/what-is-iso-27001.md": {
+    "sv": "8b3150bf0f0af6b380b9a0fb26333e22"
+  },
+  "content/faqs/what-is-iso-27017.md": {
+    "sv": "f7f22a500c3537a31d62dbc9a4b19047"
+  },
+  "content/faqs/what-is-iso-27018.md": {
+    "sv": "9b4f6045a0a78e15acd4a460a09a19ba"
+  },
+  "content/faqs/what-is-iso-27701.md": {
+    "sv": "60a68997436a060ac1064d5bcdc86752"
+  },
+  "content/faqs/what-is-iso-42001.md": {
+    "sv": "9e15dbf2ec721d971196168c9909292b"
+  },
+  "content/faqs/what-is-iso-9001.md": {
+    "sv": "80c1053a1ecbc30a0e4fa9d5b2ed2488"
+  },
+  "content/faqs/what-is-microsoft-sspa.md": {
+    "sv": "b7c48da49c6eb688430d85ce5927b192"
+  },
+  "content/faqs/what-is-mvsp.md": {
+    "sv": "dac3afcd6e3e8e465a94c2ddedab2d87"
+  },
+  "content/faqs/what-is-nis-2.md": {
+    "sv": "3bfe6b2f3a70ff94decbedb7a566afe5"
+  },
+  "content/faqs/what-is-nist-800-171.md": {
+    "sv": "b656b0c62789611a2317fdcb480cc989"
+  },
+  "content/faqs/what-is-nist-800-53.md": {
+    "sv": "2efe3ed64dc572cc39ffc9acae0ae37c"
+  },
+  "content/faqs/what-is-nist-ai-rmf.md": {
+    "sv": "ed7b84dfe9f5fd0b622d548cf0f03d47"
+  },
+  "content/faqs/what-is-nist-csf.md": {
+    "sv": "23fc43aa3f6650ea4548107f928131e4"
+  },
+  "content/faqs/what-is-ofdss.md": {
+    "sv": "8f9fe706f93eb0602e4eca13bbdeb76e"
+  },
+  "content/faqs/what-is-pci-dss.md": {
+    "sv": "3b3e044a8ed0b14d01c110f016fa03ab"
+  },
+  "content/faqs/what-is-soc-2.md": {
+    "sv": "4c571d2b926c8d3d08a6e928f274a684"
+  },
+  "content/faqs/what-is-sox-itgc.md": {
+    "sv": "0da1c92e30f0891937451eb854926ee7"
+  },
+  "content/faqs/what-is-tisax.md": {
+    "sv": "8ddc298aed0f50f1313cef19801ac032"
+  },
+  "content/faqs/what-is-us-data-privacy.md": {
+    "sv": "952610a3ca20e6d98e913a4be4a4afc2"
+  },
+  "content/docs/introduction/about-billing.md": {
+    "sv": "959a47c25efd6269c23ae8d705700c42"
+  },
+  "content/docs/introduction/agent-plan.md": {
+    "sv": "09779c054462ea5a90f11dbc01abe6fd"
+  },
+  "content/docs/introduction/architecture-overview.md": {
+    "sv": "2e7d1cc2c879226c59109364c3adee33"
+  },
+  "content/docs/introduction/autoscaling-architecture.md": {
+    "sv": "e28e98f7c3f0354879c591a3816fc22b"
+  },
+  "content/docs/introduction/autoscaling.md": {
+    "sv": "9361a0180d4abf8c4c1884406a7ae313"
+  },
+  "content/docs/introduction/billing-aws-marketplace.md": {
+    "sv": "ddcdee1ac1475712f304bcd38faca997"
+  },
+  "content/docs/introduction/branch-restore.md": {
+    "sv": "a869f58a46887a701106c340f7b1285a"
+  },
+  "content/docs/introduction/branching.md": {
+    "sv": "7444a67c2182d424b62e0b080e2fe4ef"
+  },
+  "content/docs/introduction/compute-lifecycle.md": {
+    "sv": "11d03bcb14c2e21bdf0eea067c4ba9f9"
+  },
+  "content/docs/introduction/cost-optimization.md": {
+    "sv": "9491be566bf65127ec2f6d197244d06a"
+  },
+  "content/docs/introduction/high-availability.md": {
+    "sv": "63750f82ec9bf60922059055e2a32ffe"
+  },
+  "content/docs/introduction/history-window.md": {
+    "sv": "50d2754d475247a5efda7fa324f06eb2"
+  },
+  "content/docs/introduction/ip-allow.md": {
+    "sv": "33bdd50cbf02649883f6465ded5f6035"
+  },
+  "content/docs/introduction/manage-billing.md": {
+    "sv": "e046ec5d4587c6b41f91bd11fa2da022"
+  },
+  "content/docs/introduction/monitor-active-queries.md": {
+    "sv": "ecb026cc373aef17ae0d9f8602186bdb"
+  },
+  "content/docs/introduction/monitor-logs.md": {
+    "sv": "c5f8af94c8e4d9b6915766efa89a8d0a"
+  },
+  "content/docs/introduction/monitor-pgadmin.md": {
+    "sv": "cd21ec6f9c88082f29adca2d135f38fb"
+  },
+  "content/docs/introduction/monitor-pghero.md": {
+    "sv": "7614c3538cb7376464b1ce396ac18597"
+  },
+  "content/docs/introduction/monitor-query-performance.md": {
+    "sv": "de1f3c87c746e2a27ad9e74457361bca"
+  },
+  "content/docs/introduction/monitor-usage.md": {
+    "sv": "d9319cfcb8067c38e053f6b34522a156"
+  },
+  "content/docs/introduction/monitoring-page.md": {
+    "sv": "db69c21b54c2cdfd31577907cf812fe1"
+  },
+  "content/docs/introduction/monitoring.md": {
+    "sv": "caea083a18c3764dd26e6a699de87460"
+  },
+  "content/docs/introduction/neon-and-lakebase.md": {
+    "sv": "dd4a229613ed20adfc51de5bf4c058fe"
+  },
+  "content/docs/introduction/network-transfer.md": {
+    "sv": "2afaa04375aea1f60e9c3b59688a16ac"
+  },
+  "content/docs/introduction/plans.md": {
+    "sv": "7ca742913571a8a67547868ee0ddddb8"
+  },
+  "content/docs/introduction/read-replicas.md": {
+    "sv": "ba0ca8dbf0482225c060a991c7e4113a"
+  },
+  "content/docs/introduction/support.md": {
+    "sv": "dfdd438a746c20c2dd3ac27a1e62716e"
+  }
+}

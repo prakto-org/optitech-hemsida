@@ -15,7 +15,7 @@ Last updated: 16 April 2026
 
 To support the delivery of our Services, OptiTech, LLC. may engage and use data processors with access to certain Customer Data. This page provides important information about the identity, location, and role of each Sub-processor.
 
-This Sub-Processor page is incorporated into the [DPA](https://neon.tech/dpa) and [Terms of Service](https://neon.tech/terms-of-service) or MSA entered into between Customer and OptiTech (whichever shall be applicable).
+This Sub-Processor page is incorporated into the [DPA](https://optitech.com/dpa) and [Terms of Service](https://optitech.com/terms-of-service) or MSA entered into between Customer and OptiTech (whichever shall be applicable).
 
 ## Updates to this page 
 
@@ -23,9 +23,9 @@ Due to the nature of our global business and our ongoing efforts to delight our 
 
 You may subscribe to notifications by email if we add or replace any Sub-Processors by clicking here:
 
-[Subscribe to updates](https://neon.com/subscribe-to-subprocessors)
+[Subscribe to updates](https://optitech.com/subscribe-to-subprocessors)
 
-We will only use the information you provide on this form to process your request for notices about our sub-processor list under our [DPA](https://neon.tech/dpa) and otherwise to provide you the OptiTech Services you subscribe to. For more information on how OptiTech protects your information, check out our [Privacy Policy](https://neon.tech/privacy-policy). 
+We will only use the information you provide on this form to process your request for notices about our sub-processor list under our [DPA](https://optitech.com/dpa) and otherwise to provide you the OptiTech Services you subscribe to. For more information on how OptiTech protects your information, check out our [Privacy Policy](https://optitech.com/privacy-policy). 
 
 OptiTech may use the following Sub-processors to deliver the Services to you:
 

@@ -7,14 +7,14 @@ summary: >-
   Minor release downgrades and version skipping are not supported. Upgrading
   to a new major version requires creating a new project and migrating data.
 enableTableOfContents: true
-updatedOn: '2026-06-18T20:46:14.637Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
-This topic outlines [OptiTech's Postgres Version Support Policy](#neon-version-support-policy).
+This topic outlines [OptiTech's Postgres Version Support Policy](#optitech-version-support-policy).
 
 ## The official Postgres versioning policy
 
-To better understand [OptiTech's Postgres Version Support Policy](#neon-version-support-policy), it’s helpful to first familiarize yourself with the official Postgres versioning policy and numbering system. You can refer to the official [PostgreSQL Versioning Policy](https://www.postgresql.org/support/versioning/) documentation for details, but here’s a condensed summary:
+To better understand [OptiTech's Postgres Version Support Policy](#optitech-version-support-policy), it’s helpful to first familiarize yourself with the official Postgres versioning policy and numbering system. You can refer to the official [PostgreSQL Versioning Policy](https://www.postgresql.org/support/versioning/) documentation for details, but here’s a condensed summary:
 
 ### Major versions
 
@@ -51,7 +51,7 @@ SELECT version();
 
 The first number is the major version. The second is the minor version, which OptiTech updates automatically.
 
-Your Postgres major version is also displayed in the **Project settings** widget on your OptiTech **Project Dashboard**. With the [Neon CLI](/docs/cli) installed and authenticated, `neon projects get <project_id> --output json` returns the same value in its `pg_version` field.
+Your Postgres major version is also displayed in the **Project settings** widget on your OptiTech **Project Dashboard**. With the [OptiTech CLI](/docs/cli) installed and authenticated, `optitech projects get <project_id> --output json` returns the same value in its `pg_version` field.
 
 ### Minor releases
 

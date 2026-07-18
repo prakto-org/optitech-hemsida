@@ -6,7 +6,7 @@ page_description: >-
   using JDBC API.
 prev_url: 'https://www.postgresqltutorial.com/postgresql-jdbc/update/'
 ogImage: ''
-updatedOn: '2026-06-03T13:01:21.685Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: 'PostgreSQL JDBC: Querying Data'
@@ -17,7 +17,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-Updating PostgreSQL data through JDBC works the same on any Postgres deployment, so the PreparedStatement patterns here apply wherever you run your database. For enterprises building on the Lakehouse, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres for the AI era, with the performance, security, and integration that serious data platforms demand. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+Updating PostgreSQL data through JDBC works the same on any Postgres deployment, so the PreparedStatement patterns here apply wherever you run your database. For enterprises building on the Lakehouse, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres for the AI era, with the performance, security, and integration that serious data platforms demand. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: in this tutorial, you will learn how to update data in a PostgreSQL database using JDBC API.

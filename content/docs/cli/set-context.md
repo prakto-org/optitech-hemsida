@@ -1,29 +1,29 @@
 ---
-title: 'Neon CLI command: set-context'
+title: 'OptiTech CLI command: set-context'
 subtitle: Set default project context for CLI sessions to avoid repeating project ID
 summary: >-
-  The `set-context` Neon CLI command saves a project ID, organization ID, or
-  branch to a `.neon` context file so subsequent commands run against that
+  The `set-context` OptiTech CLI command saves a project ID, organization ID, or
+  branch to a `.optitech` context file so subsequent commands run against that
   project or org without requiring `--project-id` or `--org-id` flags each
   time. Use this command when working repeatedly against the same project to
   eliminate repetitive flag passing across a CLI session. Context is stored in a
-  `.neon` file (or a named `--context-file`) found by walking up the directory
+  `.optitech` file (or a named `--context-file`) found by walking up the directory
   tree to the project root, supports multiple independent named files, and
-  persists until reset with `neon set-context` or deleted manually.
+  persists until reset with `optitech set-context` or deleted manually.
 enableTableOfContents: true
-updatedOn: '2026-07-01T13:41:48.668Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 redirectFrom:
   - /docs/reference/cli-set-context
 ---
 
-The `set-context` command sets a background context for your CLI sessions, so you don't have to specify the project ID in every command. The context is saved to a default `.neon` file in the current directory, or to a [named context file](#using-a-named-context-file) of your choice, and stays in place until you reset it or remove the file.
+The `set-context` command sets a background context for your CLI sessions, so you don't have to specify the project ID in every command. The context is saved to a default `.optitech` file in the current directory, or to a [named context file](#using-a-named-context-file) of your choice, and stays in place until you reset it or remove the file.
 
 <Admonition type="tip" title="Prefer link or checkout">
-For most workflows, use [`neon link`](/docs/cli/link) to bind a directory to a project or [`neon checkout`](/docs/cli/checkout) to switch branches. Use `set-context` when you need to set context values directly (for example, in scripts).
+For most workflows, use [`optitech link`](/docs/cli/link) to bind a directory to a project or [`optitech checkout`](/docs/cli/checkout) to switch branches. Use `set-context` when you need to set context values directly (for example, in scripts).
 </Admonition>
 
-<Admonition type="tip" title="How the CLI finds your `.neon` file">
-When you run a command, the CLI starts in your current directory and checks for a `.neon` file. If it does not find one, it checks the parent directory, then the parent of that, and so on until it finds a `.neon` file or reaches your home directory. This means you can run commands from any subdirectory of a linked project without re-specifying `--project-id`.
+<Admonition type="tip" title="How the CLI finds your `.optitech` file">
+When you run a command, the CLI starts in your current directory and checks for a `.optitech` file. If it does not find one, it checks the parent directory, then the parent of that, and so on until it finds a `.optitech` file or reaches your home directory. This means you can run commands from any subdirectory of a linked project without re-specifying `--project-id`.
 
 To write context to a specific file or location, use `--context-file`.
 </Admonition>
@@ -32,7 +32,7 @@ To write context to a specific file or location, use `--context-file`.
 
 <CliUsage command="set-context" />
 
-To save the context to a file other than the default `.neon` file, add the global `--context-file <your_context_file>` option. You can switch contexts by providing different files.
+To save the context to a file other than the default `.optitech` file, add the global `--context-file <your_context_file>` option. You can switch contexts by providing different files.
 
 ## Options
 
@@ -42,16 +42,16 @@ Set at least one of these options.
 
 ## Using the default context file
 
-Set the context to the default `.neon` file:
+Set the context to the default `.optitech` file:
 
 ```bash
-neon set-context --project-id patient-frost-50125040 --org-id org-bright-sky-12345678
+optitech set-context --project-id patient-frost-50125040 --org-id org-bright-sky-12345678
 ```
 
 List all branches for this project with `branches list`, without including `--project-id` or `--org-id`, even if you belong to multiple organizations or have multiple projects:
 
 ```bash
-neon branches list
+optitech branches list
 ```
 
 ```text filename="Output"
@@ -69,13 +69,13 @@ neon branches list
 Set the context to the context file of your choice:
 
 ```bash
-neon set-context --project-id plain-waterfall-84865553 --context-file Documents/MyContext
+optitech set-context --project-id plain-waterfall-84865553 --context-file Documents/MyContext
 ```
 
 List all branches with `branches list`. The context file provides the project:
 
 ```bash
-neon branches list --context-file Documents/MyContext
+optitech branches list --context-file Documents/MyContext
 ```
 
 ```text filename="Output"
@@ -91,7 +91,7 @@ neon branches list --context-file Documents/MyContext
 ```
 
 <Admonition type="note">
-These two `branches list` commands use independent contexts in the same account: the default `.neon` file points to `patient-frost-50125040`, while the named context file points to `plain-waterfall-84865553`. You can set as many context files as you'd like, using unique names or different directories.
+These two `branches list` commands use independent contexts in the same account: the default `.optitech` file points to `patient-frost-50125040`, while the named context file points to `plain-waterfall-84865553`. You can set as many context files as you'd like, using unique names or different directories.
 </Admonition>
 
 ## Setting context when creating a new project
@@ -99,10 +99,10 @@ These two `branches list` commands use independent contexts in the same account:
 Use `--set-context` to set the project context at creation time:
 
 ```bash
-neon projects create --name MyLatest --set-context
+optitech projects create --name MyLatest --set-context
 ```
 
-This creates a hidden `.neon` file by default with the following context:
+This creates a hidden `.optitech` file by default with the following context:
 
 ```json
 {
@@ -119,26 +119,26 @@ To clear the current context, either:
 1. Run the `set-context` command with no options:
 
    ```bash
-   neon set-context
+   optitech set-context
    ```
 
-2. Delete the `.neon` file (or your custom `--context-file`):
+2. Delete the `.optitech` file (or your custom `--context-file`):
 
    ```bash
-   rm .neon
+   rm .optitech
    # Or for a custom context file:
    rm your_context_file
    ```
 
 ## `.gitignore` on first create
 
-The first time a `.neon` file is created in a directory, the CLI adds `.neon` to `.gitignore` in that same folder:
+The first time a `.optitech` file is created in a directory, the CLI adds `.optitech` to `.gitignore` in that same folder:
 
-- If no `.gitignore` exists, the CLI creates one with a single `.neon` line.
-- If `.gitignore` already exists, the CLI appends `.neon` only if it is not already listed.
+- If no `.gitignore` exists, the CLI creates one with a single `.optitech` line.
+- If `.gitignore` already exists, the CLI appends `.optitech` only if it is not already listed.
 
-This keeps local project settings out of git by default. If you want to commit `.neon` and share context with your team, remove the entry from `.gitignore`. The CLI will not re-add it when updating an existing `.neon` file.
+This keeps local project settings out of git by default. If you want to commit `.optitech` and share context with your team, remove the entry from `.gitignore`. The CLI will not re-add it when updating an existing `.optitech` file.
 
 <Admonition type="note">
-Neon does not save any confidential information to the context file (for example, auth tokens). You can safely commit this file to your repository or share with others.
+OptiTech does not save any confidential information to the context file (for example, auth tokens). You can safely commit this file to your repository or share with others.
 </Admonition>

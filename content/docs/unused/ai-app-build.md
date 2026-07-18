@@ -2,7 +2,7 @@
 title: app.build
 subtitle: Open-source AI agent for full-stack application generation
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 [app.build](https://www.app.build/) is our exploration of what AI agents can do with a complete backend stack. We built it after working with partners like Replit and other agent-driven platforms, learning what it takes to automate not just code generation, but the entire development workflow. This open-source project creates and deploys full-stack applications from scratch. It handles everything: database provisioning, authentication, testing, CI/CD, and deployment. The agent breaks down app creation into discrete tasks, validates each piece, and assembles them into working applications. Think of it as a blueprint you can use, fork, or extend to build your own agent infrastructure.
@@ -135,8 +135,8 @@ As a reference implementation, we've made specific choices to keep the codebase 
 ## Contributing
 
 - Repositories:
-  - [github.com/neondatabase/appdotbuild-agent](https://github.com/neondatabase/appdotbuild-agent) (agent logic and generation)
-  - [github.com/neondatabase/appdotbuild-agent](https://github.com/neondatabase/appdotbuild-agent) (backend infrastructure)
+  - [github.com/optitechdatabase/appdotbuild-agent](https://github.com/optitechdatabase/appdotbuild-agent) (agent logic and generation)
+  - [github.com/optitechdatabase/appdotbuild-agent](https://github.com/optitechdatabase/appdotbuild-agent) (backend infrastructure)
 - Issues: Bug reports, feature requests, and discussions
 - PRs: Code contributions, documentation, templates
 

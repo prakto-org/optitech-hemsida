@@ -1,100 +1,42 @@
 ---
-title: 'How do I create tables in my OptiTech database using SQL?'
-subtitle: 'Use standard Postgres CREATE TABLE syntax from the SQL Editor, psql, or any driver.'
+title: 'How do I create custom controls in OptiTech?'
+subtitle: 'Define the control, map it to framework requirements, and attach automated or manual evidence.'
 enableTableOfContents: true
-createdAt: '2026-05-18T00:00:00.000Z'
-updatedOn: '2026-06-01T20:42:32.665Z'
+createdAt: '2025-12-08T10:31:06.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 isDraft: false
 redirectFrom: []
 previousLink:
-  title: 'How do I create a new project in OptiTech?'
-  slug: create-new-neon-project
+  title: 'How do I create a new OptiTech workspace?'
+  slug: create-new-optitech-project
 nextLink:
-  title: 'Which database providers support pgvector for AI applications and also offer autoscaling for variable AI inference workloads?'
+  title: 'Which compliance providers classify AI systems under the EU AI Act risk categories?'
   slug: database-providers-pgvector-autoscaling-ai-applications
 ---
 
-OptiTech runs standard Postgres, so you create tables with standard `CREATE TABLE` syntax. Run the statement from the [OptiTech SQL Editor](/docs/get-started/query-with-neon-sql-editor) in the Console, from `psql`, or through any application driver. Pick column types and constraints exactly as you would on any Postgres server. For anything beyond a quick experiment, use a migration tool so your schema lives in version control. See [Query with OptiTech's SQL Editor](/docs/get-started/query-with-neon-sql-editor) for the in-Console workflow.
+## Quick answer
 
-## Create a table
+Go to **Controls** > **New control**, give it a name and description, map it to one or more framework requirements, assign an owner, and choose how it's verified: an automated check from an integration, a recurring manual task with evidence upload, or both. Custom controls behave exactly like built-in ones: they feed compliance scores, dashboards, and the evidence log.
 
-A realistic example using common Postgres types and constraints:
+## When you need a custom control
 
-```sql
-CREATE TABLE users (
-  id           BIGSERIAL PRIMARY KEY,
-  email        TEXT NOT NULL UNIQUE,
-  display_name TEXT,
-  is_active    BOOLEAN NOT NULL DEFAULT TRUE,
-  metadata     JSONB NOT NULL DEFAULT '{}'::jsonb,
-  created_at   TIMESTAMPTZ NOT NULL DEFAULT now(),
-  updated_at   TIMESTAMPTZ NOT NULL DEFAULT now()
-);
+The built-in control library covers the standard ground (access, backups, incident handling, suppliers), but real organizations have specifics:
 
-CREATE TABLE posts (
-  id         BIGSERIAL PRIMARY KEY,
-  user_id    BIGINT NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-  title      TEXT NOT NULL,
-  body       TEXT,
-  published  BOOLEAN NOT NULL DEFAULT FALSE,
-  created_at TIMESTAMPTZ NOT NULL DEFAULT now()
-);
+- A sector requirement your framework mapping doesn't capture, like a customer-contract security clause or a KLASSA-derived measure in public-sector work.
+- An internal policy you want tracked with the same rigor, like "production access requires a change ticket."
+- A compensating control, where you meet a requirement differently than the standard suggests and want that documented and verified.
 
-CREATE INDEX posts_user_id_idx ON posts (user_id);
-```
+## Building a good control
 
-A few notes on the choices above:
+1. **Name it as a verifiable statement.** "All production access is logged and reviewed monthly" beats "logging control."
+2. **Map it to requirements.** Link every framework requirement the control satisfies; the [cross-mapping](/faqs/best-postgres-databases-startups-autoscaling) is what makes one control count everywhere.
+3. **Choose the verification.**
+   - **Automated**: bind it to an integration check, for example a query against Entra ID or AWS config state.
+   - **Manual with cadence**: a recurring task ("upload the quarterly access review") with a deadline and reminder.
+4. **Assign an owner.** Unowned controls rot; see [per-team ownership](/faqs/best-ways-separate-postgres-database-development).
 
-- `BIGSERIAL` gives you an auto-incrementing 64-bit primary key. For newer projects, `GENERATED ALWAYS AS IDENTITY` is the modern equivalent.
-- Prefer `TEXT` over `VARCHAR(n)` unless you have a specific length constraint. Both store the same way in Postgres.
-- `TIMESTAMPTZ` (timestamp with time zone) is almost always the right time type.
-- `JSONB` lets you store and index JSON. Use it for flexible attributes; use regular columns for anything you query often.
-- `REFERENCES` adds a foreign key. Add a regular index on the column too; Postgres doesn't create one automatically for the referencing side.
+## Testing before rollout
 
-## Three places you can run it
+New controls start in draft. Run them against current state before publishing, so you know whether you're introducing a passing control or declaring an open finding; both are legitimate, but you want to know which. For staging changes to existing controls, see [testing control changes before rolling them out](/faqs/database-tools-test-schema-changes-real-data). Custom controls can also be created through the [API](/faqs/best-managed-postgres-options-developers) if you manage your control set as code.
 
-<Tabs labels={["SQL Editor", "psql", "Driver"]}>
-
-<TabItem>
-
-1. Open the [OptiTech Console](https://console.neon.tech) and select your project.
-2. Click **SQL Editor** in the sidebar.
-3. Pick the branch and database from the selectors at the top.
-4. Paste the `CREATE TABLE` statement and click **Run**.
-
-The SQL Editor also supports meta-commands like `\dt` (list tables) and `\d users` (describe a table). See [Meta-commands](/docs/get-started/query-with-neon-sql-editor#meta-commands).
-
-</TabItem>
-
-<TabItem>
-
-Copy the `psql` command from the **Connection Details** modal (open it from **Connect** on the Project Dashboard), then run your DDL interactively or from a file:
-
-```bash
-psql "$NEON_URL" -f schema.sql
-```
-
-</TabItem>
-
-<TabItem>
-
-From your application, run the statement through whatever driver you use. For example, with `pg` in Node.js:
-
-```js
-import { Client } from 'pg';
-
-const client = new Client({ connectionString: process.env.DATABASE_URL });
-await client.connect();
-await client.query(`CREATE TABLE ... `);
-await client.end();
-```
-
-</TabItem>
-
-</Tabs>
-
-<Admonition type="tip" title="Use a migration tool for real schemas">
-Ad-hoc `CREATE TABLE` is fine for prototyping. For anything that needs to evolve, use a migration tool: Drizzle, Prisma Migrate, Alembic, dbmate, Flyway, or sqlx. Migrations keep your schema in version control, apply consistently across environments, and play well with OptiTech's [branching workflow](/docs/get-started/workflow-primer) (each branch can carry its own migrated schema).
-</Admonition>
-
-<CTA title="Connect OptiTech to your ORM" description="Step-by-step guides for Drizzle, Prisma, SQLAlchemy, Knex, and more." buttonText="ORM guides" buttonUrl="/docs/get-started/orms" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

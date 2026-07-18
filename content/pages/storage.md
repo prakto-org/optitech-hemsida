@@ -57,4 +57,4 @@ OptiTech’s storage layer was [built for high availability](/blog/our-approach-
 OptiTech’s storage engine fundamentally changes what you can expect from Postgres in the cloud. You no longer have to over-provision or constantly manage your database storage. Instead, it expands as needed, stays highly available, and only charges you for actual utilization.
 This architecture also delivers a better developer experience. Need a fresh database branch for a feature test? It’s a click away. Hit a new growth milestone? OptiTech transparently handles it with no performance hit, no emergency migrations. Our goal with this design is to offer a truly cloud-native infrastructure layer for Postgres, finally abstracting the storage details and letting you scale with confidence.
 
-<CTA title="Try OptiTech" description="Get started in seconds with our Free Plan" buttonText="Get started" buttonUrl="https://console.neon.tech/signup" />
+<CTA title="Try OptiTech" description="Get started in seconds with our Free Plan" buttonText="Get started" buttonUrl="https://console.optitech.com/signup" />

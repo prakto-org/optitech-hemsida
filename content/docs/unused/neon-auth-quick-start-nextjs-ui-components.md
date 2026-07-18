@@ -6,14 +6,14 @@ summary: >-
   components, including enabling authentication, installing the SDK, configuring
   environment variables, and creating an auth server instance.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 layout: wide
 ---
 
 <FeatureBetaProps feature_name="Managed Better Auth" />
 
 <Admonition type="note" title="Archived copy">
-This quick start is kept in the repo for reference but is not published on [neon.com/docs](https://neon.com/docs). Use the [Next.js quick start (API methods)](/docs/auth/quick-start/nextjs-api-only) and the [UI components reference](/docs/auth/reference/ui-components) instead.
+This quick start is kept in the repo for reference but is not published on [optitech.com/docs](https://optitech.com/docs). Use the [Next.js quick start (API methods)](/docs/auth/quick-start/nextjs-api-only) and the [UI components reference](/docs/auth/reference/ui-components) instead.
 </Admonition>
 
 <Admonition type="note">
@@ -25,7 +25,7 @@ Upgrading from Managed Better Auth SDK v0.1? See the [migration guide](/docs/aut
 <TwoColumnLayout.Step title="Enable Auth in your OptiTech project">
 <TwoColumnLayout.Block>
 
-Enable Auth in your [OptiTech project](https://console.neon.tech) and copy your Auth URL from Configuration.
+Enable Auth in your [OptiTech project](https://console.optitech.com) and copy your Auth URL from Configuration.
 
 **Console path:** Project → Branch → Auth → Configuration
 
@@ -54,7 +54,7 @@ cd my-app
 <TwoColumnLayout.Block>
 
 ```bash filename="Terminal"
-npm install @neondatabase/auth@latest
+npm install @optitech/auth@latest
 ```
 
 </TwoColumnLayout.Block>
@@ -73,8 +73,8 @@ Replace the Auth URL with your actual Auth URL from the OptiTech Console. Genera
 <TwoColumnLayout.Block>
 
 ```bash filename=".env"
-NEON_AUTH_BASE_URL=https://ep-xxx.neonauth.us-east-1.aws.neon.tech/neondb/auth
-NEON_AUTH_COOKIE_SECRET=your-secret-at-least-32-characters-long
+OPTITECH_AUTH_BASE_URL=https://ep-xxx.optitechauth.us-east-1.aws.optitech.com/optitechdb/auth
+OPTITECH_AUTH_COOKIE_SECRET=your-secret-at-least-32-characters-long
 ```
 
 </TwoColumnLayout.Block>
@@ -95,12 +95,12 @@ See the [Next.js Server SDK reference](/docs/auth/reference/nextjs-server) for c
 <TwoColumnLayout.Block>
 
 ```typescript filename="lib/auth/server.ts"
-import { createNeonAuth } from '@neondatabase/auth/next/server';
+import { createOptiTechAuth } from '@optitech/auth/next/server';
 
-export const auth = createNeonAuth({
-  baseUrl: process.env.NEON_AUTH_BASE_URL!,
+export const auth = createOptiTechAuth({
+  baseUrl: process.env.OPTITECH_AUTH_BASE_URL!,
   cookies: {
-    secret: process.env.NEON_AUTH_COOKIE_SECRET!,
+    secret: process.env.OPTITECH_AUTH_COOKIE_SECRET!,
   },
 });
 ```
@@ -162,7 +162,7 @@ Your Next.js project is now fully configured to use Managed Better Auth. Now, le
 <TwoColumnLayout.Step title="Configure the auth client">
 <TwoColumnLayout.Block>
 
-The Auth UI components need access to auth APIs. Create the auth client in `lib/auth/client.ts` file, which you'll pass to `NeonAuthUIProvider`.
+The Auth UI components need access to auth APIs. Create the auth client in `lib/auth/client.ts` file, which you'll pass to `OptiTechAuthUIProvider`.
 
 <Admonition type="note">
 The server-side `auth` instance was already created in a previous step. The client is separate and handles browser-side auth operations.
@@ -174,7 +174,7 @@ The server-side `auth` instance was already created in a previous step. The clie
 ```tsx filename="lib/auth/client.ts"
 'use client';
 
-import { createAuthClient } from '@neondatabase/auth/next';
+import { createAuthClient } from '@optitech/auth/next';
 
 export const authClient = createAuthClient();
 ```
@@ -185,7 +185,7 @@ export const authClient = createAuthClient();
 <TwoColumnLayout.Step title="Wrap app layout with auth provider">
 <TwoColumnLayout.Block>
 
-The `NeonAuthUIProvider` component wraps your application with authentication context and provides essential hooks and auth methods required by auth components throughout your app. To make authentication globally accessible, wrap your entire app with `NeonAuthUIProvider`.
+The `OptiTechAuthUIProvider` component wraps your application with authentication context and provides essential hooks and auth methods required by auth components throughout your app. To make authentication globally accessible, wrap your entire app with `OptiTechAuthUIProvider`.
 
 <Admonition type="important" title="Hydration Warning">
 Add `suppressHydrationWarning` to the `<html>` tag to prevent React hydration errors caused by `next-themes` client-side theme switching. This property only applies one level deep, so it won't block hydration warnings on other elements.
@@ -193,7 +193,7 @@ Add `suppressHydrationWarning` to the `<html>` tag to prevent React hydration er
 
 Copy and paste the following code into your `app/layout.tsx` file.
 
-The `NeonAuthUIProvider` can be fully customized with settings you have configured in OptiTech Console. For example:
+The `OptiTechAuthUIProvider` can be fully customized with settings you have configured in OptiTech Console. For example:
 
 - Add social providers like Google, GitHub, and Vercel on sign-in page
 - Allow your users to create and manage organizations in `/account/organizations`
@@ -203,7 +203,7 @@ The `NeonAuthUIProvider` can be fully customized with settings you have configur
 <summary>Example: Adding optional props</summary>
 
 ```tsx
-<NeonAuthUIProvider
+<OptiTechAuthUIProvider
   authClient={authClient}
   redirectTo="/account/settings"
   emailOTP
@@ -214,7 +214,7 @@ The `NeonAuthUIProvider` can be fully customized with settings you have configur
   organization // [!code ++]
 >
   {children}
-</NeonAuthUIProvider>
+</OptiTechAuthUIProvider>
 ```
 
 </details>
@@ -224,7 +224,7 @@ The `NeonAuthUIProvider` can be fully customized with settings you have configur
 
 ```tsx filename="app/layout.tsx"
 import { authClient } from '@/lib/auth/client'; // [!code ++]
-import { NeonAuthUIProvider, UserButton } from '@neondatabase/auth/react'; // [!code ++]
+import { OptiTechAuthUIProvider, UserButton } from '@optitech/auth/react'; // [!code ++]
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -240,7 +240,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'My Neon App',
+  title: 'My OptiTech App',
   description: 'A Next.js application with Managed Better Auth',
 };
 
@@ -254,7 +254,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <NeonAuthUIProvider  // [!code ++]
+        <OptiTechAuthUIProvider  // [!code ++]
           authClient={authClient} // [!code ++]
           redirectTo="/account/settings" // [!code ++]
           emailOTP // [!code ++]
@@ -263,7 +263,7 @@ export default function RootLayout({
             <UserButton size="icon" /> // [!code ++]
           </header> // [!code ++]
           {children} // [!code ++]
-        </NeonAuthUIProvider> // [!code ++]
+        </OptiTechAuthUIProvider> // [!code ++]
       </body>
     </html>
   );
@@ -286,7 +286,7 @@ See [UI Component Styles](/docs/auth/reference/ui-components#styling) for altern
 
 ```css filename="app/globals.css"
 @import "tailwindcss";
-@import "@neondatabase/auth/ui/tailwind"; // [!code ++]
+@import "@optitech/auth/ui/tailwind"; // [!code ++]
 
 ```
 
@@ -319,7 +319,7 @@ Create a dynamic route segment for authentication and account views in `app/auth
 Create a new page in `app/auth/[path]/page.tsx` and copy-paste following code:
 
 ```tsx
-import { AuthView } from '@neondatabase/auth/react';
+import { AuthView } from '@optitech/auth/react';
 
 export const dynamicParams = false;
 
@@ -341,8 +341,8 @@ export default async function AuthPage({ params }: { params: Promise<{ path: str
 Create a new page in `app/account/[path]/page.tsx` and copy-paste following code:
 
 ```tsx
-import { AccountView } from '@neondatabase/auth/react';
-import { accountViewPaths } from '@neondatabase/auth/react/ui/server';
+import { AccountView } from '@optitech/auth/react';
+import { accountViewPaths } from '@optitech/auth/react/ui/server';
 
 export const dynamicParams = false;
 
@@ -512,4 +512,4 @@ npm run dev
 
 - [Add email verification](/docs/auth/guides/email-verification)
 - [Learn how to branch your auth](/docs/auth/branching-authentication)
-- [More example apps](/docs/auth/overview#example-applications) in the **neon-js** `examples/` directory
+- [More example apps](/docs/auth/overview#example-applications) in the **optitech-js** `examples/` directory

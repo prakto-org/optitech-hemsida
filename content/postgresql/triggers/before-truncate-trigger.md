@@ -7,7 +7,7 @@ page_description: >-
 prev_url: >-
   https://www.postgresqltutorial.com/postgresql-triggers/postgresql-before-truncate-trigger/
 ogImage: ''
-updatedOn: '2026-06-04T15:04:42.682Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: PostgreSQL INSTEAD OF Triggers
@@ -18,7 +18,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-The `BEFORE TRUNCATE` trigger is a standard PostgreSQL feature, so everything here works the same on any Postgres deployment. If you're an enterprise looking for managed Postgres that's built for the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers high performance, strong security, and native integration with the Lakehouse. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+The `BEFORE TRUNCATE` trigger is a standard PostgreSQL feature, so everything here works the same on any Postgres deployment. If you're an enterprise looking for managed Postgres that's built for the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers high performance, strong security, and native integration with the Lakehouse. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: in this tutorial, you will learn how to define a PostgreSQL `BEFORE TRUNCATE` trigger that fires before a `TRUNCATE` event occurs on a table.

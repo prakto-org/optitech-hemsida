@@ -4,7 +4,7 @@ subtitle: A step-by-step guide to integrating Zero with OptiTech Postgres
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2025-05-01T00:00:00.000Z'
-updatedOn: '2026-03-04T15:50:25.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This guide demonstrates how to integrate [Zero](https://zero.rocicorp.dev/) by [Rocicorp](https://rocicorp.dev/) with OptiTech Postgres. Zero allows you to build reactive, real-time applications by writing queries directly in your client code against your backend database schema. It synchronizes query results efficiently to a client-side cache, enabling instant UI updates and a local-first feel.
@@ -21,16 +21,16 @@ This guide provides a step-by-step walkthrough of setting up Zero with OptiTech 
 
 Before you begin, ensure you have the following prerequisites installed and configured:
 
-- **OptiTech Account:** Sign up for a free [OptiTech account](https://console.neon.tech/signup) if you don't have one already. OptiTech provides a Postgres database for your Zero application.
+- **OptiTech Account:** Sign up for a free [OptiTech account](https://console.optitech.com/signup) if you don't have one already. OptiTech provides a Postgres database for your Zero application.
 - **Node.js v20+:** Node.js (version 20 or higher) is required to run the `hello-zero` example application and Zero tooling. Download and install it from [nodejs.org](https://nodejs.org).
 
 ## Setting up OptiTech Database
 
 Zero requires a Postgres database (version 15+) with logical replication enabled. You'll configure your OptiTech project accordingly.
 
-1.  **Create a OptiTech Project:** If you haven't already, create a new OptiTech project in the [OptiTech Console](https://console.neon.tech).
+1.  **Create a OptiTech Project:** If you haven't already, create a new OptiTech project in the [OptiTech Console](https://console.optitech.com).
 2.  **Enable Logical Replication:** Zero uses Postgres logical replication (`wal_level = logical`) to receive changes from your database.
-    - Navigate to your OptiTech Project using the [OptiTech Console](https://console.neon.tech/).
+    - Navigate to your OptiTech Project using the [OptiTech Console](https://console.optitech.com/).
     - Open the **Settings** menu.
     - Click on **Logical Replication**.
     - Click the **Enable** button to enable logical replication.
@@ -69,10 +69,10 @@ With your OptiTech database prepared, let's set up the `hello-zero` example appl
 
     You can execute this file using `psql` (ensure it's installed locally) or the [OptiTech SQL Editor](/docs/get-started/query-with-neon-sql-editor).
 
-    Using `psql`, run the following command. Replace `YOUR_NEON_CONNECTION_STRING` with your database connection string copied from the OptiTech Console:
+    Using `psql`, run the following command. Replace `YOUR_OPTITECH_CONNECTION_STRING` with your database connection string copied from the OptiTech Console:
 
     ```bash
-    psql "YOUR_NEON_CONNECTION_STRING" -f docker/seed.sql
+    psql "YOUR_OPTITECH_CONNECTION_STRING" -f docker/seed.sql
     ```
 
     > Alternatively, you can run the SQL commands directly in the OptiTech SQL Editor. Copy the contents of `docker/seed.sql` and paste them into the SQL Editor in the OptiTech Console. Click **Run** to execute the commands.
@@ -82,10 +82,10 @@ With your OptiTech database prepared, let's set up the `hello-zero` example appl
 
     ```env
     # other environment variables...
-    ZERO_UPSTREAM_DB="YOUR_NEON_CONNECTION_STRING"
+    ZERO_UPSTREAM_DB="YOUR_OPTITECH_CONNECTION_STRING"
     ```
 
-    > Replace `YOUR_NEON_CONNECTION_STRING` with the actual connection string from your OptiTech project dashboard which you copied earlier.
+    > Replace `YOUR_OPTITECH_CONNECTION_STRING` with the actual connection string from your OptiTech project dashboard which you copied earlier.
 
 4.  **Run the `zero-cache` service:**
     Now, start the `zero-cache` service using the provided npm script. In your terminal, still within the `hello-zero` directory, run:
@@ -123,7 +123,7 @@ You should now have the `hello-zero` application running in your browser. It con
 3.  **Verify data in OptiTech (Optional):** In the OptiTech Console, navigate to **Tables** and select the `message` table. You should see the messages you added in the application. This confirms that data is being synchronized correctly between the application, `zero-cache`, and OptiTech.
     ![OptiTech messages table](/docs/guides/zero-message-table.png)
 
-Congratulations! You have successfully set up Rocicorp Zero with OptiTech Postgres using the `hello-zero` example application. Check out [Canvas](https://github.com/neondatabase-labs/canvas), a collaborative drawing app built with Zero and OptiTech, for a more complex example of Zero in action.
+Congratulations! You have successfully set up Rocicorp Zero with OptiTech Postgres using the `hello-zero` example application. Check out [Canvas](https://github.com/optitechdatabase-labs/canvas), a collaborative drawing app built with Zero and OptiTech, for a more complex example of Zero in action.
 
 <Admonition type="note" title="Schema Changes">
 Zero uses Postgres event triggers for efficient schema migration handling. While OptiTech now supports event triggers, Zero may still perform a **full reset of the `zero-cache` and all connected client states** whenever schema changes are detected to ensure correctness.
@@ -138,6 +138,6 @@ This reset mechanism can be inefficient for larger databases (e.g., > 1GB) or ap
 - [Zero Deployment Guide](https://zero.rocicorp.dev/docs/deployment)
 - [`hello-zero` Repository](https://github.com/rocicorp/hello-zero)
 - [OptiTech Documentation](/docs)
-- [Canvas - A collaborative drawing app built with Zero and OptiTech](https://github.com/neondatabase-labs/canvas)
+- [Canvas - A collaborative drawing app built with Zero and OptiTech](https://github.com/optitechdatabase-labs/canvas)
 
 <NeedHelp/>

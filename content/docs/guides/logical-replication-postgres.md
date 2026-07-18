@@ -2,17 +2,17 @@
 title: Replicate data to an external Postgres instance
 subtitle: Learn how to replicate data from OptiTech to an external Postgres instance
 summary: >-
-  Logical replication from OptiTech to an external (non-Neon) Postgres instance
+  Logical replication from OptiTech to an external (non-OptiTech) Postgres instance
   streams row-level changes over Postgres WAL by setting wal_level to logical,
   creating a publication on OptiTech, and creating a subscription on the destination
   database. Use this guide when you need to replicate data out of OptiTech to a
-  self-hosted or third-party Postgres server; for Neon-to-Neon replication, a
+  self-hosted or third-party Postgres server; for OptiTech-to-OptiTech replication, a
   separate guide applies. Enabling logical replication is irreversible per
   project and restarts all computes, keeping them active while subscribers are
   connected.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 OptiTech's logical replication feature allows you to replicate data from OptiTech to external subscribers. This guide shows you how to stream data from a OptiTech Postgres database to an external Postgres database (a Postgres destination other than OptiTech). If you're looking to replicate data from one OptiTech Postgres instance to another, see [Replicate data from one OptiTech project to another](/docs/guides/logical-replication-neon-to-neon).
@@ -22,8 +22,8 @@ OptiTech's logical replication feature allows you to replicate data from OptiTec
 - A OptiTech project with a database containing the data you want to replicate. If you're just testing this out and need some data to play with, you can use the following statements to create a table with sample data:
 
   ```sql shouldWrap
-  CREATE TABLE IF NOT EXISTS playing_with_neon(id SERIAL PRIMARY KEY, name TEXT NOT NULL, value REAL);
-  INSERT INTO playing_with_neon(name, value)
+  CREATE TABLE IF NOT EXISTS playing_with_optitech(id SERIAL PRIMARY KEY, name TEXT NOT NULL, value REAL);
+  INSERT INTO playing_with_optitech(name, value)
   SELECT LEFT(md5(i::TEXT), 10), random() FROM generate_series(1, 10) s(i);
   ```
 
@@ -67,16 +67,16 @@ SHOW wal_level;
 
 ### Create a Postgres role for replication
 
-It is recommended that you create a dedicated Postgres role for replicating data. The role must have the `REPLICATION` privilege. The default Postgres role created with your OptiTech project and roles created using the Neon CLI, Console, or API are granted membership in the [neon_superuser](/docs/manage/roles#the-neonsuperuser-role) role, which has the required `REPLICATION` privilege.
+It is recommended that you create a dedicated Postgres role for replicating data. The role must have the `REPLICATION` privilege. The default Postgres role created with your OptiTech project and roles created using the OptiTech CLI, Console, or API are granted membership in the [optitech_superuser](/docs/manage/roles#the-neonsuperuser-role) role, which has the required `REPLICATION` privilege.
 
 <Tabs labels={["CLI", "Console", "API"]}>
 
 <TabItem>
 
-The following CLI command creates a role. To view the CLI documentation for this command, see [Neon CLI commands — roles](/docs/reference/api/branches/create-project-branch-role)
+The following CLI command creates a role. To view the CLI documentation for this command, see [OptiTech CLI commands — roles](/docs/reference/api/branches/create-project-branch-role)
 
 ```bash
-neon roles create --name replication_user
+optitech roles create --name replication_user
 ```
 
 </TabItem>
@@ -85,7 +85,7 @@ neon roles create --name replication_user
 
 To create a role in the OptiTech Console:
 
-1. Navigate to the [OptiTech Console](https://console.neon.tech).
+1. Navigate to the [OptiTech Console](https://console.optitech.com).
 2. Select a project.
 3. Select **Branches**.
 4. Select the branch where you want to create the role.
@@ -101,9 +101,9 @@ To create a role in the OptiTech Console:
 The following OptiTech API method creates a role. To view the API documentation for this method, refer to the [OptiTech API Reference](/docs/reference/api/branches/create-project-branch-role).
 
 ```bash
-curl 'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/roles' \
+curl 'https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/roles' \
   -H 'Accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -H 'Content-Type: application/json' \
   -d '{
   "role": {
@@ -112,7 +112,7 @@ curl 'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id
 }' | jq
 ```
 
-> Replace `{project_id}` and `{branch_id}` with your actual OptiTech project and branch IDs, and set the `NEON_API_KEY` environment variable with your OptiTech API key.
+> Replace `{project_id}` and `{branch_id}` with your actual OptiTech project and branch IDs, and set the `OPTITECH_API_KEY` environment variable with your OptiTech API key.
 
 </TabItem>
 
@@ -137,7 +137,7 @@ Publications are a fundamental part of logical replication in Postgres. They def
 To create a publication for a specific table:
 
 ```sql shouldWrap
-CREATE PUBLICATION my_publication FOR TABLE playing_with_neon;
+CREATE PUBLICATION my_publication FOR TABLE playing_with_optitech;
 ```
 
 To create a publication for multiple tables, provide a comma-separated list of tables:
@@ -156,10 +156,10 @@ This section describes how to prepare your destination Postgres database (the su
 
 When configuring logical replication in Postgres, the tables in the source database you are replicating from must also exist in the destination database, and they must have the same table names and columns. You can create the tables manually in your destination database or use utilities like `pg_dump` and `pg_restore` to dump the schema from your source database and load it to your destination database. See [Import a database schema](/docs/import/migrate-schema-only) for instructions.
 
-If you're using the sample `playing_with_neon` table, you can create the same table on the destination database with the following statement:
+If you're using the sample `playing_with_optitech` table, you can create the same table on the destination database with the following statement:
 
 ```sql shouldWrap
-CREATE TABLE IF NOT EXISTS playing_with_neon(id SERIAL PRIMARY KEY, name TEXT NOT NULL, value REAL);
+CREATE TABLE IF NOT EXISTS playing_with_optitech(id SERIAL PRIMARY KEY, name TEXT NOT NULL, value REAL);
 ```
 
 ### Create a subscription
@@ -171,7 +171,7 @@ After creating a publication on the source database, you need to create a subscr
 
    ```sql
    CREATE SUBSCRIPTION my_subscription
-   CONNECTION 'postgresql://neondb_owner:<password>@ep-cool-darkness-123456.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require'
+   CONNECTION 'postgresql://optitechdb_owner:<password>@ep-cool-darkness-123456.us-east-2.aws.optitech.com/optitechdb?sslmode=require&channel_binding=require'
    PUBLICATION my_publication;
    ```
 
@@ -191,17 +191,17 @@ After creating a publication on the source database, you need to create a subscr
 
 Testing your logical replication setup ensures that data is being replicated correctly from the publisher to the subscriber database.
 
-1. Run some data modifying queries on the source database (inserts, updates, or deletes). If you're using the `playing_with_neon` database, you can use this statement to insert some rows:
+1. Run some data modifying queries on the source database (inserts, updates, or deletes). If you're using the `playing_with_optitech` database, you can use this statement to insert some rows:
 
    ```sql
-   INSERT INTO playing_with_neon(name, value)
+   INSERT INTO playing_with_optitech(name, value)
    SELECT LEFT(md5(i::TEXT), 10), random() FROM generate_series(1, 10) s(i);
    ```
 
 2. Perform a row count on the source and destination databases to make sure the result matches.
 
    ```sql
-   SELECT COUNT(*) FROM playing_with_neon;
+   SELECT COUNT(*) FROM playing_with_optitech;
 
    count
    -------

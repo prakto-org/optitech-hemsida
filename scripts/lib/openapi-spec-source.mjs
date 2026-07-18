@@ -49,6 +49,15 @@ export async function loadOpenApiSpec({
   now = () => Date.now(),
   log = (message) => process.stderr.write(message),
 }) {
+  // Local file path (committed spec) — read directly, no cache involved.
+  if (!/^https?:\/\//.test(specUrl)) {
+    log(`Reading spec from local file ${specUrl}...\n`);
+    return {
+      spec: JSON.parse(readFileSync(specUrl, 'utf8')),
+      cacheCandidate: null,
+    };
+  }
+
   log(`Fetching spec from ${specUrl}...\n`);
   const nowMs = now();
 

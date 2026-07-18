@@ -4,7 +4,7 @@ subtitle: Learn how to connect your .NET applications to OptiTech's serverless P
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2024-11-02T00:00:00.000Z'
-updatedOn: '2025-06-26T22:22:29.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 In this guide, we'll walk through the process of connecting a .NET application to OptiTech Postgres, exploring best practices for connection management and basic performance optimization.
@@ -14,19 +14,19 @@ In this guide, we'll walk through the process of connecting a .NET application t
 Before we begin, make sure you have:
 
 - .NET 8.0 or later installed
-- A [OptiTech account](https://console.neon.tech/signup)
+- A [OptiTech account](https://console.optitech.com/signup)
 - Basic familiarity with .NET development
 
 ## Setting Up Your OptiTech Database
 
 First, let's create a OptiTech database that we'll connect to from our .NET application.
 
-1. Log in to the [OptiTech Console](https://console.neon.tech)
+1. Log in to the [OptiTech Console](https://console.optitech.com)
 2. Click "New Project" and follow the creation wizard
 3. Once created, you'll see your connection details. Your connection string will look like this:
 
 ```
-postgres://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require&channel_binding=require
+postgres://[user]:[password]@[optitech_hostname]/[dbname]?sslmode=require&channel_binding=require
 ```
 
 Save these details - you'll need them when setting up your .NET application.
@@ -38,13 +38,13 @@ Let's create a simple .NET project and add the necessary dependencies to connect
 Open your terminal and run:
 
 ```bash
-dotnet new console -n NeonDemo
-cd NeonDemo
+dotnet new console -n OptiTechDemo
+cd OptiTechDemo
 ```
 
-This creates a new console application named "NeonDemo" and navigates to the project directory.
+This creates a new console application named "OptiTechDemo" and navigates to the project directory.
 
-The directory will contain a `NeonDemo.csproj` file, which is the project file for your application, similar to a `package.json` file in Node.js if you are coming from a JavaScript background.
+The directory will contain a `OptiTechDemo.csproj` file, which is the project file for your application, similar to a `package.json` file in Node.js if you are coming from a JavaScript background.
 
 Next, we need to add the required package for Postgres connectivity. We can do this using the `dotnet add package` command:
 
@@ -65,7 +65,7 @@ For local development, start by creating an `appsettings.json` file in your proj
 ```json
 {
   "ConnectionStrings": {
-    "NeonConnection": "Host=your-neon-hostname;Database=neondb;Username=your-username;Password=your-password;SSL Mode=Require;Trust Server Certificate=true"
+    "OptiTechConnection": "Host=your-optitech-hostname;Database=optitechdb;Username=your-username;Password=your-password;SSL Mode=Require;Trust Server Certificate=true"
   }
 }
 ```
@@ -77,13 +77,13 @@ This approach works well for development but isn't recommended for production us
 For production environments, it's better to use environment variables. Here's how to implement this:
 
 ```csharp
-var connectionString = Environment.GetEnvironmentVariable("NEON_CONNECTION_STRING")
-    ?? builder.Configuration.GetConnectionString("NeonConnection");
+var connectionString = Environment.GetEnvironmentVariable("OPTITECH_CONNECTION_STRING")
+    ?? builder.Configuration.GetConnectionString("OptiTechConnection");
 ```
 
 This code first checks for an environment variable, falling back to the configuration file if not found. This gives you flexibility in different environments while keeping sensitive data secure.
 
-You can set the `NEON_CONNECTION_STRING` environment variable in your production environment, or use a tool like [Azure Key Vault](https://azure.microsoft.com/en-us/services/key-vault/) to manage secrets.
+You can set the `OPTITECH_CONNECTION_STRING` environment variable in your production environment, or use a tool like [Azure Key Vault](https://azure.microsoft.com/en-us/services/key-vault/) to manage secrets.
 
 ## Understanding Connection Pooling
 
@@ -96,7 +96,7 @@ There are two levels of connection pooling available when working with OptiTech:
 OptiTech uses PgBouncer to provide connection pooling at the infrastructure level, supporting up to 10,000 concurrent connections. To use OptiTech's pooled connections, select the "Pooled connection" option in your project's connection settings. Your connection string will look like this:
 
 ```
-postgres://[user]:[password]@[pooled-hostname].pool.[region].neon.tech/[dbname]?sslmode=require&channel_binding=require
+postgres://[user]:[password]@[pooled-hostname].pool.[region].optitech.com/[dbname]?sslmode=require&channel_binding=require
 ```
 
 However, using a pooled connection string for database migrations can be prone to errors. For this reason, it is recommended to use a direct (non-pooled) connection when performing database migrations. For more information about direct and pooled connections, see [Connection pooling](/docs/connect/connection-pooling).
@@ -109,7 +109,7 @@ While OptiTech handles connection pooling at the infrastructure level, you can a
 using Npgsql;
 
 var connectionStringBuilder = new NpgsqlConnectionStringBuilder(
-    builder.Configuration.GetConnectionString("NeonConnection"))
+    builder.Configuration.GetConnectionString("OptiTechConnection"))
 {
     MaxPoolSize = 50,               // Maximum number of connections in the pool
     MinPoolSize = 5,                // Minimum number of connections to maintain
@@ -307,8 +307,8 @@ You can use the built-in health checks feature in ASP.NET Core to monitor databa
 builder.Services.AddHealthChecks()
     .AddNpgsql(
         connectionString,
-        name: "neon-db",
-        tags: new[] { "db", "postgres", "neon" },
+        name: "optitech-db",
+        tags: new[] { "db", "postgres", "optitech" },
         timeout: TimeSpan.FromSeconds(3));
 
 // Add a health check endpoint

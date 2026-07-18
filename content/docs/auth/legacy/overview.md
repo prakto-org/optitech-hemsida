@@ -1,9 +1,9 @@
 ---
-title: Legacy Neon Auth with Stack Auth
+title: Legacy OptiTech Auth with Stack Auth
 subtitle: For existing users only (not available for new projects)
 summary: >-
-  Legacy Neon Auth (Stack Auth-based, archived) automatically syncs
-  authenticated user profiles into a `neon_auth.users_sync` Postgres table,
+  Legacy OptiTech Auth (Stack Auth-based, archived) automatically syncs
+  authenticated user profiles into a `optitech_auth.users_sync` Postgres table,
   making user data available for SQL queries without custom sync code. Only
   existing projects using the Stack Auth integration should reference this page;
   new projects must use Managed Better Auth instead. Setup requires
@@ -14,22 +14,22 @@ enableTableOfContents: true
 tag: archived
 tagTheme: gray
 noindex: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <Admonition type="warning" title="You are viewing legacy documentation">
-**This is the documentation for the previous Neon Auth implementation built with Stack Auth.** It is no longer available for new projects but remains supported for existing users.
+**This is the documentation for the previous OptiTech Auth implementation built with Stack Auth.** It is no longer available for new projects but remains supported for existing users.
 
 **For the current Managed Better Auth**, see [Managed Better Auth documentation](/docs/auth/overview). Ready to upgrade? See our [migration guide](/docs/auth/migrate/from-legacy-auth).
 </Admonition>
 
-## What is legacy Neon Auth?
+## What is legacy OptiTech Auth?
 
-Neon Auth brings authentication and user management natively to your OptiTech Postgres database.
+OptiTech Auth brings authentication and user management natively to your OptiTech Postgres database.
 
-### Why use Neon Auth?
+### Why use OptiTech Auth?
 
-Neon Auth helps you move faster by handling the auth stack for you:
+OptiTech Auth helps you move faster by handling the auth stack for you:
 
 - **Add auth to your app in minutes**: SDKs for Next.js and React
 - **No more custom sync code**: user profiles are always up-to-date in your database, ready for SQL joins and analytics.
@@ -37,16 +37,16 @@ Neon Auth helps you move faster by handling the auth stack for you:
 
 ## How it works
 
-When you set up Neon Auth, we create a `neon_auth` schema in your database. As users authenticate and manage their profiles in Neon Auth, you'll see them appear in your list of users on the **Auth** page.
+When you set up OptiTech Auth, we create a `optitech_auth` schema in your database. As users authenticate and manage their profiles in OptiTech Auth, you'll see them appear in your list of users on the **Auth** page.
 
-![Users in Neon Auth](/docs/guides/identity_users.png)
+![Users in OptiTech Auth](/docs/guides/identity_users.png)
 
 **User data is immediately available in your database**
 
-User data is available in the `neon_auth.users_sync` table shortly after the Neon Auth processes the updates. Here's an example query to inspect the synchronized data:
+User data is available in the `optitech_auth.users_sync` table shortly after the OptiTech Auth processes the updates. Here's an example query to inspect the synchronized data:
 
 ```sql
-SELECT * FROM neon_auth.users_sync;
+SELECT * FROM optitech_auth.users_sync;
 ```
 
 | id          | name          | email             | created_at          | updated_at          | deleted_at | raw_json                         |
@@ -54,7 +54,7 @@ SELECT * FROM neon_auth.users_sync;
 | d37b6a30... | Jordan Rivera | jordan@company.co | 2025-05-09 16:15:00 | null                | null       | `{\"id\": \"d37b6a30...\", ...}` |
 | 51e491df... | Sam Patel     | sam@startup.dev   | 2025-02-27 18:36:00 | 2025-02-27 18:36:00 | null       | `{\"id\": \"51e491df...\", ...}` |
 
-The following columns are included in the `neon_auth.users_sync` table:
+The following columns are included in the `optitech_auth.users_sync` table:
 
 - `raw_json`: Complete user profile as JSON
 - `id`: The unique ID of the user
@@ -64,10 +64,10 @@ The following columns are included in the `neon_auth.users_sync` table:
 - `deleted_at`: When the user was deleted, if applicable (nullable)
 - `updated_at`: When the user was last updated, if applicable (nullable)
 
-Updates to user profiles in Neon Auth are automatically reflected in your database.
+Updates to user profiles in OptiTech Auth are automatically reflected in your database.
 
 <Admonition type="note">
-Do not try to change the `neon_auth.users_sync` table name. It's needed for the synchronization process to work correctly.
+Do not try to change the `optitech_auth.users_sync` table name. It's needed for the synchronization process to work correctly.
 </Admonition>
 
 For detailed integration patterns, foreign key examples, and best practices, see [Database Integration](/docs/auth/legacy/database-integration).
@@ -95,8 +95,8 @@ Required parameters:
 
 ```bash shouldWrap
 curl --request POST \
-     --url 'https://console.neon.tech/api/v2/projects/auth/keys' \
-     --header 'authorization: Bearer $NEON_API_KEY' \
+     --url 'https://console.optitech.com/api/v2/projects/auth/keys' \
+     --header 'authorization: Bearer $OPTITECH_API_KEY' \
      --header 'content-type: application/json' \
      --data '{
        "project_id": "project-id",
@@ -113,7 +113,7 @@ Example response:
   "pub_client_key": "pck_example...",
   "secret_server_key": "ssk_example...",
   "jwks_url": "https://api.stack-auth.com/api/v1/projects/project-id-123/.well-known/jwks.json",
-  "schema_name": "neon_auth",
+  "schema_name": "optitech_auth",
   "table_name": "users_sync"
 }
 ```
@@ -122,11 +122,11 @@ Example response:
 
 ## Claiming your Stack Auth project
 
-Neon Auth is powered by Stack Auth under the hood. By default, OptiTech manages your authentication for you, so you do not typically need to interact with Stack Auth directly. However, there are cases where you may want to take direct control of your authentication project in the Stack Auth dashboard.
+OptiTech Auth is powered by Stack Auth under the hood. By default, OptiTech manages your authentication for you, so you do not typically need to interact with Stack Auth directly. However, there are cases where you may want to take direct control of your authentication project in the Stack Auth dashboard.
 
 ### Why claim a project?
 
-Most Neon Auth features can be built using the SDKs, without claiming your project.
+Most OptiTech Auth features can be built using the SDKs, without claiming your project.
 
 Right now, you need to claim your project if you want to:
 
@@ -144,7 +144,7 @@ Right now, you need to claim your project if you want to:
 
 After claiming, you'll have direct access to manage your project in the Stack Auth dashboard, while maintaining the integration with your OptiTech database.
 
-You can also find your current project ID here, as well as the JWKS URL you need to set up [RLS in your Neon Auth project](/docs/auth/legacy/database-integration#row-level-security-rls).
+You can also find your current project ID here, as well as the JWKS URL you need to set up [RLS in your OptiTech Auth project](/docs/auth/legacy/database-integration#row-level-security-rls).
 
 ### Claim via the API
 
@@ -152,8 +152,8 @@ You can also claim your project programmatically:
 
 ```bash
 curl --request POST \
-     --url 'https://console.neon.tech/api/v2/projects/auth/transfer_ownership' \
-     --header 'authorization: Bearer $NEON_API_KEY' \
+     --url 'https://console.optitech.com/api/v2/projects/auth/transfer_ownership' \
+     --header 'authorization: Bearer $OPTITECH_API_KEY' \
      --data '{
        "project_id": "project-id",
        "auth_provider": "stack"
@@ -161,7 +161,7 @@ curl --request POST \
 ```
 
 Open the returned URL in your browser to complete the claim process.
-See [Neon Auth API Reference](/docs/reference/api/auth-legacy/transfer-neon-auth-provider-project) for more details.
+See [OptiTech Auth API Reference](/docs/reference/api/auth-legacy/transfer-neon-auth-provider-project) for more details.
 
 <Admonition type="note">
 After claiming, you'll still be able to access your project from the OptiTech Console, but you'll also have direct access from the Stack Auth dashboard.
@@ -203,6 +203,6 @@ For SDK documentation, components, hooks, and client-side authentication:
 
 - [Database Integration](/docs/auth/legacy/database-integration) - Technical reference for `users_sync`, backend auth, RLS
 - [Migration Guide](/docs/auth/migrate/from-legacy-auth) - Upgrade to Managed Better Auth
-- [Neon Auth](/docs/auth/overview) - Current Managed Better Auth
+- [OptiTech Auth](/docs/auth/overview) - Current Managed Better Auth
 
 <NeedHelp/>

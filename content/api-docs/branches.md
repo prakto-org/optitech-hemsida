@@ -1,5 +1,5 @@
-Neon branches are copy-on-write clones of your database, created from any point in time. A new branch shares storage with its parent until it diverges. Common uses include per-PR preview environments, testing schema changes before promoting them, and point-in-time recovery.
+Frameworks are the regulations and standards you activate in a program, such as NIS2, DORA, GDPR, ISO 27001, or the EU AI Act. Activating a framework creates its requirements and controls, and cross-mapping reuses controls you already have in place.
 
-You cannot delete a project's root branch. You also cannot delete a branch that has children; delete all children first.
+You cannot deactivate a framework that other active frameworks are cross-mapped to; resolve the dependency first.
 
-See [Branching with the Neon API](/docs/guides/branching-neon-api) for end-to-end examples, and [Automate branching with GitHub Actions](/docs/guides/branching-github-actions) for CI/CD workflows using Neon's create, delete, reset, and schema diff actions.
+See [Activate frameworks with the OptiTech API](/docs/guides/branching-neon-api) for end-to-end examples, and [Run compliance checks with GitHub Actions](/docs/guides/branching-github-actions) for CI/CD workflows.

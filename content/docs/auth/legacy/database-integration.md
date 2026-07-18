@@ -1,42 +1,42 @@
 ---
-title: Legacy Neon Auth - Database Integration
+title: Legacy OptiTech Auth - Database Integration
 subtitle: 'Technical reference for users_sync table, backend auth, and RLS'
 summary: >-
-  The legacy Neon Auth `neon_auth.users_sync` table is automatically created
+  The legacy OptiTech Auth `optitech_auth.users_sync` table is automatically created
   and kept in sync with your Stack Auth provider, so you can query user data
   and add foreign keys without building custom webhook handlers. This reference
   covers foreign key patterns (CASCADE vs SET NULL), Row-Level Security setup
   using a Stack Auth JWKS URL, and backend token verification via JWT or the
-  Stack Auth REST API in Node.js and Python. Legacy Neon Auth is no longer
-  available for new projects; new projects should use Neon Auth with
+  Stack Auth REST API in Node.js and Python. Legacy OptiTech Auth is no longer
+  available for new projects; new projects should use OptiTech Auth with
   Better Auth.
 enableTableOfContents: true
 tag: archived
 tagTheme: gray
 noindex: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <Admonition type="warning" title="You are viewing legacy documentation">
-**This is the documentation for the previous Neon Auth implementation built with Stack Auth.** It is no longer available for new projects but remains supported for existing users.
+**This is the documentation for the previous OptiTech Auth implementation built with Stack Auth.** It is no longer available for new projects but remains supported for existing users.
 
 **For the current Managed Better Auth**, see [Managed Better Auth documentation](/docs/auth/overview). Ready to upgrade? See our [migration guide](/docs/auth/migrate/from-legacy-auth).
 </Admonition>
 
-This guide covers how to work with the `neon_auth.users_sync` table, authenticate backend requests, and implement Row-Level Security (RLS) with Legacy Neon Auth.
+This guide covers how to work with the `optitech_auth.users_sync` table, authenticate backend requests, and implement Row-Level Security (RLS) with Legacy OptiTech Auth.
 
 ## Database integration with users_sync
 
-Neon Auth simplifies database operations by automatically managing user data synchronization. Instead of building custom webhook handlers and sync logic, Neon Auth creates and maintains a `neon_auth.users_sync` table that's always up-to-date with your authentication provider. This eliminates the need for custom code to handle user creation, updates, and deletion events.
+OptiTech Auth simplifies database operations by automatically managing user data synchronization. Instead of building custom webhook handlers and sync logic, OptiTech Auth creates and maintains a `optitech_auth.users_sync` table that's always up-to-date with your authentication provider. This eliminates the need for custom code to handle user creation, updates, and deletion events.
 
 ### The users_sync table
 
-The `neon_auth.users_sync` table is automatically created and kept in sync by Neon Auth. No action is needed from you; it's immediately available for use in your schema and queries.
+The `optitech_auth.users_sync` table is automatically created and kept in sync by OptiTech Auth. No action is needed from you; it's immediately available for use in your schema and queries.
 
 **Table structure:**
 
 ```sql
--- schema of neon_auth.users_sync table (automatically created by Neon Auth)
+-- schema of optitech_auth.users_sync table (automatically created by OptiTech Auth)
 id TEXT PRIMARY KEY,
 raw_json JSONB,
 name TEXT,
@@ -64,7 +64,7 @@ You can reference the `users_sync` table directly with foreign keys. Here's an e
 CREATE TABLE todos (
     id SERIAL PRIMARY KEY,
     task TEXT NOT NULL,
-    user_id TEXT NOT NULL REFERENCES neon_auth.users_sync(id) ON DELETE CASCADE,
+    user_id TEXT NOT NULL REFERENCES optitech_auth.users_sync(id) ON DELETE CASCADE,
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 ```
@@ -73,7 +73,7 @@ CREATE TABLE todos (
 
 ```sql
 INSERT INTO todos (task, user_id)
-VALUES ('Buy groceries', 'user-id-from-neon-auth');
+VALUES ('Buy groceries', 'user-id-from-optitech-auth');
 ```
 
 **Querying with user data:**
@@ -84,7 +84,7 @@ SELECT
     u.name as user_name,
     u.email as user_email
 FROM todos t
-JOIN neon_auth.users_sync u ON t.user_id = u.id
+JOIN optitech_auth.users_sync u ON t.user_id = u.id
 WHERE u.deleted_at IS NULL;
 ```
 
@@ -92,7 +92,7 @@ WHERE u.deleted_at IS NULL;
 
 ### Foreign keys and the users_sync table
 
-Since the `neon_auth.users_sync` table is updated asynchronously, there may be a brief delay (usually less than 1 second) before a user's data appears in the table. Consider this possible delay when deciding whether to use foreign keys in your schema.
+Since the `optitech_auth.users_sync` table is updated asynchronously, there may be a brief delay (usually less than 1 second) before a user's data appears in the table. Consider this possible delay when deciding whether to use foreign keys in your schema.
 
 If you do choose to use foreign keys, make sure to specify an `ON DELETE` behavior that matches your needs: for example, `CASCADE` for personal data like todos or user preferences, and `SET NULL` for content like blog posts or comments that should persist after user deletion.
 
@@ -101,7 +101,7 @@ If you do choose to use foreign keys, make sure to specify an `ON DELETE` behavi
 CREATE TABLE todos (
     id SERIAL PRIMARY KEY,
     task TEXT NOT NULL,
-    user_id UUID NOT NULL REFERENCES neon_auth.users_sync(id) ON DELETE CASCADE,
+    user_id UUID NOT NULL REFERENCES optitech_auth.users_sync(id) ON DELETE CASCADE,
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -110,7 +110,7 @@ CREATE TABLE posts (
     id SERIAL PRIMARY KEY,
     title TEXT NOT NULL,
     content TEXT NOT NULL,
-    author_id UUID REFERENCES neon_auth.users_sync(id) ON DELETE SET NULL,
+    author_id UUID REFERENCES optitech_auth.users_sync(id) ON DELETE SET NULL,
     created_at TIMESTAMPTZ DEFAULT CURRENT_TIMESTAMP
 );
 ```
@@ -125,24 +125,24 @@ When querying data that relates to users:
 Here's an example of how to handle both in your queries:
 
 ```sql
-SELECT posts.*, neon_auth.users_sync.name as author_name
+SELECT posts.*, optitech_auth.users_sync.name as author_name
 FROM posts
-LEFT JOIN neon_auth.users_sync ON posts.author_id = neon_auth.users_sync.id
-WHERE neon_auth.users_sync.deleted_at IS NULL;
+LEFT JOIN optitech_auth.users_sync ON posts.author_id = optitech_auth.users_sync.id
+WHERE optitech_auth.users_sync.deleted_at IS NULL;
 ```
 
 ### Row-Level Security (RLS)
 
 Row-Level Security (RLS) lets you enforce access control directly in your database, providing an extra layer of security for your app's data.
 
-To get started adding RLS to your Neon Auth project:
+To get started adding RLS to your OptiTech Auth project:
 
-1. Go to the **Configuration** tab in your Neon Auth project.
+1. Go to the **Configuration** tab in your OptiTech Auth project.
 2. Copy the **JWKS URL** shown in the **Claim project** section.
 
    ![jwks in claim project section](/docs/changelog/neon_auth_jwks.png)
 
-   _This JWKS URL allows OptiTech RLS to validate authentication tokens issued by Neon Auth._
+   _This JWKS URL allows OptiTech RLS to validate authentication tokens issued by OptiTech Auth._
 
 3. In your OptiTech project, open **Settings > RLS** and paste the JWKS URL.
 4. Continue with the standard RLS setup:
@@ -158,16 +158,16 @@ For complete RLS implementation guides, see:
 ### Important Limitation
 
 <Admonition type="important">
-Neon Auth is not compatible with Private Link (OptiTech Private Networking). If you have Private Link enabled for your Neon project, Neon Auth will not work. This is because Neon Auth requires internet access to connect to third-party authentication providers, while Private Link restricts connections to private AWS networks.
+OptiTech Auth is not compatible with Private Link (OptiTech Private Networking). If you have Private Link enabled for your OptiTech project, OptiTech Auth will not work. This is because OptiTech Auth requires internet access to connect to third-party authentication providers, while Private Link restricts connections to private AWS networks.
 </Admonition>
 
 ## Backend integration
 
-To authenticate your endpoints, you need to send the user's access token in the headers of the request to your server, and then make a request to Neon Auth's server API to verify the user's identity.
+To authenticate your endpoints, you need to send the user's access token in the headers of the request to your server, and then make a request to OptiTech Auth's server API to verify the user's identity.
 
 ### Sending requests to your server endpoints
 
-To authenticate your own server endpoints using Neon Auth's server API, you need to protect your endpoints by sending the user's access token in the headers of the request.
+To authenticate your own server endpoints using OptiTech Auth's server API, you need to protect your endpoints by sending the user's access token in the headers of the request.
 
 On the client side, you can retrieve the access token from the `user` object by calling `user.getAuthJson()`. This will return an object containing `accessToken`.
 
@@ -185,10 +185,10 @@ const response = await fetch('/api/users/me', {
 
 ### Authenticating the user on the server endpoints
 
-Neon Auth provides two methods for authenticating users on your server endpoints:
+OptiTech Auth provides two methods for authenticating users on your server endpoints:
 
 1. **JWT Verification**: A fast, lightweight approach that validates the user's token locally without making external requests. While efficient, it provides only essential user information encoded in the JWT.
-2. **REST API Verification**: Makes a request to Neon Auth's servers to validate the token and retrieve comprehensive user information. This method provides access to the complete, up-to-date user profile.
+2. **REST API Verification**: Makes a request to OptiTech Auth's servers to validate the token and retrieve comprehensive user information. This method provides access to the complete, up-to-date user profile.
 
 #### Using JWT
 
@@ -230,8 +230,8 @@ try {
 const url = 'https://api.stack-auth.com/api/v1/users/me';
 const headers = {
   'x-stack-access-type': 'server',
-  'x-stack-project-id': 'your Neon Auth project ID',
-  'x-stack-secret-server-key': 'your Neon Auth server key',
+  'x-stack-project-id': 'your OptiTech Auth project ID',
+  'x-stack-secret-server-key': 'your OptiTech Auth server key',
   'x-stack-access-token': 'access token from the headers',
 };
 
@@ -253,8 +253,8 @@ import requests
 url = 'https://api.stack-auth.com/api/v1/users/me'
 headers = {
 'x-stack-access-type': 'server',
-'x-stack-project-id': 'your Neon Auth project ID',
-'x-stack-secret-server-key': 'your Neon Auth server key',
+'x-stack-project-id': 'your OptiTech Auth project ID',
+'x-stack-secret-server-key': 'your OptiTech Auth server key',
 'x-stack-access-token': 'access token from the headers',
 }
 
@@ -271,9 +271,9 @@ print('User is not authenticated', response.status_code, response.text)
 
 ## Related resources
 
-### Legacy Neon Auth
+### Legacy OptiTech Auth
 
-- [Legacy Overview](/docs/auth/legacy/overview) - What is Legacy Neon Auth, claiming projects, environment variables
+- [Legacy Overview](/docs/auth/legacy/overview) - What is Legacy OptiTech Auth, claiming projects, environment variables
 - [Migration Guide](/docs/auth/migrate/from-legacy-auth) - Upgrade to Managed Better Auth
 
 ### Stack Auth documentation
@@ -286,6 +286,6 @@ For SDK components, hooks, and OAuth configuration:
 
 - [Secure your app with RLS](/docs/guides/rls-tutorial) - RLS tutorial
 - [Simplify RLS with Drizzle](/docs/guides/rls-drizzle) - RLS with Drizzle ORM
-- [Neon Auth](/docs/auth/overview) - Current Managed Better Auth
+- [OptiTech Auth](/docs/auth/overview) - Current Managed Better Auth
 
 <NeedHelp/>

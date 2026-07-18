@@ -9,7 +9,7 @@ summary: >-
   timeouts, and pooling strategies for strict SLOs.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 OptiTech occasionally performs essential **platform maintenance** outside of [scheduled updates](/docs/manage/updates) performed on OptiTech computes. This means that you may experience brief disruptions from time to time for these important updates.
@@ -28,7 +28,7 @@ Whenever possible, we perform platform maintenance outside of normal business ho
 
 ## Where to check for maintenance
 
-For notification of planned platform maintenance, you can monitor or subscribe to the [OptiTech Status page](https://neonstatus.com/) for your region. To learn more, see [OptiTech Status](/docs/introduction/status).
+For notification of planned platform maintenance, you can monitor or subscribe to the [OptiTech Status page](https://optitechstatus.com/) for your region. To learn more, see [OptiTech Status](/docs/introduction/status).
 
 If there is ongoing maintenance, you'll see a **Maintenance** indicator at the top of the OptiTech Console. Clicking on the indicator takes you to the OptiTech Status page where you can read the maintenance notification.
 

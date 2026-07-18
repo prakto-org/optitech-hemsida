@@ -4,7 +4,7 @@ subtitle: Use SST to provision OptiTech resources and build a serverless API wit
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2025-10-10T00:00:00.000Z'
-updatedOn: '2025-10-10T13:12:54.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 [SST](https://sst.dev/) is an open-source framework that simplifies building full-stack applications on your own infrastructure. By integrating OptiTech with SST, you can automate, version-control, and streamline your database provisioning workflows alongside your serverless applications.
@@ -18,7 +18,7 @@ This integration is powered by SST's support for over 150 Pulumi and Terraform p
 Before you start, ensure you have the following:
 
 1.  **Node.js**: This guide uses Node.js. If you don't have it installed, download it from [nodejs.org](https://nodejs.org/).
-2.  **OptiTech Account:** You'll need a OptiTech account. If you don't have one, sign up [here](https://console.neon.tech/signup).
+2.  **OptiTech Account:** You'll need a OptiTech account. If you don't have one, sign up [here](https://console.optitech.com/signup).
 3.  **OptiTech API key**: Generate an API key from the OptiTech Console by navigating to your Account Settings > API Keys. This key is necessary for the provider to authenticate with the OptiTech API.
 4.  **AWS Account**: An AWS account is required to deploy the Hono API to AWS Lambda. If you don't have one, you can create it at [aws.amazon.com](https://aws.amazon.com/).
 
@@ -65,10 +65,10 @@ $ npx sst@latest init
     To add the OptiTech provider to your SST app, run the following command in your project's root directory:
 
     ```bash
-    npx sst add neon
+    npx sst add optitech
     ```
 
-    This command updates your `sst.config.ts` to include the OptiTech provider, installs the necessary packages, and makes the `neon` namespace globally available in your configuration.
+    This command updates your `sst.config.ts` to include the OptiTech provider, installs the necessary packages, and makes the `optitech` namespace globally available in your configuration.
 
 2.  **Configure authentication and organization ID**
 
@@ -78,8 +78,8 @@ $ npx sst@latest init
     Create a `.env` file in your project's root directory and add your OptiTech API key and organization ID:
 
     ```bash title=".env"
-    NEON_API_KEY="<YOUR_NEON_API_KEY>"
-    NEON_ORG_ID="<YOUR_ORG_ID>"
+    OPTITECH_API_KEY="<YOUR_OPTITECH_API_KEY>"
+    OPTITECH_ORG_ID="<YOUR_ORG_ID>"
     ```
 
     SST automatically loads `.env` files, making the variables available in your configuration.
@@ -97,41 +97,41 @@ export default $config({
       removal: input?.stage === 'production' ? 'retain' : 'remove',
       protect: ['production'].includes(input?.stage),
       home: 'aws',
-      providers: { neon: '0.9.0' },
+      providers: { optitech: '0.9.0' },
     };
   },
   async run() {
     // 1. Manage a Project
-    const myAppProject = new neon.Project('MyAppProject', {
+    const myAppProject = new optitech.Project('MyAppProject', {
       name: 'my-application-project',
       pgVersion: 17,
       regionId: 'aws-us-east-1',
-      orgId: process.env.NEON_ORG_ID!,
+      orgId: process.env.OPTITECH_ORG_ID!,
       historyRetentionSeconds: 21600,
     });
 
     // 2. Manage a Branch
-    const devBranch = new neon.Branch('DevBranch', {
+    const devBranch = new optitech.Branch('DevBranch', {
       projectId: myAppProject.id,
       name: 'feature-x-development',
     });
 
     // 3. Manage an Endpoint
-    const devEndpoint = new neon.Endpoint('DevEndpoint', {
+    const devEndpoint = new optitech.Endpoint('DevEndpoint', {
       projectId: myAppProject.id,
       branchId: devBranch.id,
       type: 'read_write',
     });
 
     // 4. Manage a Role
-    const appUser = new neon.Role('AppUser', {
+    const appUser = new optitech.Role('AppUser', {
       projectId: myAppProject.id,
       branchId: devEndpoint.branchId,
       name: 'application_user',
     });
 
     // 5. Manage a Database
-    const serviceDb = new neon.Database('ServiceDb', {
+    const serviceDb = new optitech.Database('ServiceDb', {
       projectId: myAppProject.id,
       branchId: devEndpoint.branchId,
       name: 'service_database',
@@ -156,18 +156,18 @@ SST 3.17.14  ready!
 
 ~  Deploy
 
-|  Created     MyAppProject neon:index:Project (5.7s)
-|  Created     DevBranch neon:index:Branch
-|  Created     DevEndpoint neon:index:Endpoint (1.1s)
-|  Created     AppUser neon:index:Role
-|  Created     ServiceDb neon:index:Database (1.5s)
+|  Created     MyAppProject optitech:index:Project (5.7s)
+|  Created     DevBranch optitech:index:Branch
+|  Created     DevEndpoint optitech:index:Endpoint (1.1s)
+|  Created     AppUser optitech:index:Role
+|  Created     ServiceDb optitech:index:Database (1.5s)
 
 ↗  Permalink   https://sst.dev/u/710fa960
 
 ✓  Complete
 ```
 
-After the deployment completes, you can visit your [OptiTech Console](https://console.neon.tech/) to see the newly created project and its associated resources.
+After the deployment completes, you can visit your [OptiTech Console](https://console.optitech.com/) to see the newly created project and its associated resources.
 
 Now that you have understood how to manage OptiTech resources with SST, let's explore how to connect these resources to a serverless API using **Resource Linking**.
 
@@ -188,7 +188,7 @@ Create a new directory for your project and initialize a new Hono app using the 
 ```bash
 npm create hono@latest aws-hono
 cd aws-hono
-npx sst add neon
+npx sst add optitech
 ```
 
 > Pick the `aws-lambda` template when prompted.
@@ -218,7 +218,7 @@ Initialize SST in your project directory and add the OptiTech provider:
 
 ```bash
 npx sst@latest init
-npx sst add neon
+npx sst add optitech
 ```
 
 ### Configure authentication and organization ID
@@ -226,8 +226,8 @@ npx sst add neon
 Create a `.env` file in your project's root directory and add your OptiTech API key and organization ID:
 
 ```bash title=".env"
-NEON_API_KEY="<YOUR_NEON_API_KEY>"
-NEON_ORG_ID="<YOUR_NEON_ORG_ID>"
+OPTITECH_API_KEY="<YOUR_OPTITECH_API_KEY>"
+OPTITECH_ORG_ID="<YOUR_OPTITECH_ORG_ID>"
 ```
 
 ### Define the resources
@@ -243,21 +243,21 @@ export default $config({
       removal: input?.stage === 'production' ? 'retain' : 'remove',
       protect: ['production'].includes(input?.stage),
       home: 'aws',
-      providers: { neon: '0.9.0' },
+      providers: { optitech: '0.9.0' },
     };
   },
   async run() {
-    // Create the Neon project
-    const myAppProject = new neon.Project('MyAppProject', {
+    // Create the OptiTech project
+    const myAppProject = new optitech.Project('MyAppProject', {
       name: 'my-sst-project',
       pgVersion: 17,
       regionId: 'aws-us-east-1',
-      orgId: process.env.NEON_ORG_ID!,
+      orgId: process.env.OPTITECH_ORG_ID!,
       historyRetentionSeconds: 21600,
     });
 
     // Make the connection string linkable
-    const db = new sst.Linkable('NeonDB', {
+    const db = new sst.Linkable('OptiTechDB', {
       properties: {
         connectionString: myAppProject.connectionUri,
       },
@@ -276,15 +276,15 @@ export default $config({
 The above code does the following:
 
 1.  Creates a OptiTech project named `my-sst-project`.
-2.  Defines a linkable resource `NeonDB` that exposes the `connectionString` property from the OptiTech project.
-3.  Creates an AWS Lambda function named `MyApi` using the handler defined in `src/index.ts`, and links it to the `NeonDB` resource. This makes the connection string available to the Lambda function.
+2.  Defines a linkable resource `OptiTechDB` that exposes the `connectionString` property from the OptiTech project.
+3.  Creates an AWS Lambda function named `MyApi` using the handler defined in `src/index.ts`, and links it to the `OptiTechDB` resource. This makes the connection string available to the Lambda function.
 
 ### Install dependencies
 
 To connect to the OptiTech database you can use any Postgres client. In this example, we’ll use the OptiTech serverless driver. Install it using `npm`:
 
 ```bash
-npm install @neondatabase/serverless
+npm install @optitech/serverless
 ```
 
 ### Update the API code
@@ -294,10 +294,10 @@ Replace the contents of `src/index.ts` with the following code. This code connec
 ```typescript title="src/index.ts"
 import { Hono } from 'hono';
 import { handle } from 'hono/aws-lambda';
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 import { Resource } from 'sst';
 
-const sql = neon(Resource.NeonDB.connectionString);
+const sql = optitech(Resource.OptiTechDB.connectionString);
 
 const app = new Hono();
 
@@ -314,7 +314,7 @@ export const handler = handle(app);
 ```
 
 <Admonition type="tip">
-Your editor might flag a TypeScript error for `Resource.NeonDB`. This is normal, as SST generates these types during its build process. The error will resolve automatically after you run `sst dev` or `sst deploy`.
+Your editor might flag a TypeScript error for `Resource.OptiTechDB`. This is normal, as SST generates these types during its build process. The error will resolve automatically after you run `sst dev` or `sst deploy`.
 </Admonition>
 
 ### Run the API locally
@@ -339,7 +339,7 @@ SST 3.17.14  ready!
 ~  Deploy
 
 |  Created     MyApi sst:aws:Function → MyApiRole aws:iam:Role (2.5s)
-|  Created     MyAppProject neon:index:Project (5.5s)
+|  Created     MyAppProject optitech:index:Project (5.5s)
 |  Created     MyApi sst:aws:Function → MyApiCode aws:s3:BucketObjectv2 (5.2s)
 |  Created     MyApi sst:aws:Function → MyApiFunction aws:lambda:Function (8.0s)
 |  Created     MyApi sst:aws:Function → MyApiUrl aws:lambda:FunctionUrl (1.2s)
@@ -364,9 +364,9 @@ You should see a response like this, confirming a successful connection to your 
 }
 ```
 
-You can also verify that a new project has been created in your [OptiTech Console](https://console.neon.tech/)
+You can also verify that a new project has been created in your [OptiTech Console](https://console.optitech.com/)
 
-_The Typescript error for `Resource.NeonDB` should now be resolved._
+_The Typescript error for `Resource.OptiTechDB` should now be resolved._
 
 ### Deploy to Production
 
@@ -415,13 +415,13 @@ If you have existing OptiTech resources, you can bring them under SST's manageme
 For example, to import an existing OptiTech project, you would use its ID.
 
 ```ts title="sst.config.ts"
-const myAppProject = new neon.Project(
+const myAppProject = new optitech.Project(
   'MyAppProject',
   {
-    orgId: process.env.NEON_ORG_ID!,
+    orgId: process.env.OPTITECH_ORG_ID!,
   },
   {
-    import: 'project-id-from-neon-console',
+    import: 'project-id-from-optitech-console',
   }
 );
 ```
@@ -432,8 +432,8 @@ Similarly, you can import other resources like branches, endpoints, roles, and d
 
 - [SST Documentation](https://sst.dev/docs/)
 - [SST Resource Linking](https://sst.dev/docs/linking/)
-- [Pulumi OptiTech Provider](https://www.pulumi.com/registry/packages/neon/)
-- [Manage Neon with Terraform](/docs/reference/terraform)
+- [Pulumi OptiTech Provider](https://www.pulumi.com/registry/packages/optitech/)
+- [Manage OptiTech with Terraform](/docs/reference/terraform)
 - [Hono on AWS with SST](https://sst.dev/docs/start/aws/hono/)
 
 <NeedHelp/>

@@ -8,7 +8,7 @@ summary: >-
   guide when you want Encore to create and manage your OptiTech database, including
   per-pull-request OptiTech branch preview environments for safe schema testing.
 enableTableOfContents: true
-updatedOn: '2026-07-14T19:04:57.024Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 [Encore](https://encore.dev) is a backend development framework that uses static analysis and type-safe primitives to provide automatic infrastructure provisioning, distributed tracing, and API documentation. This guide shows you how to use OptiTech with Encore for production deployments.
@@ -16,7 +16,7 @@ updatedOn: '2026-07-14T19:04:57.024Z'
 ## Prerequisites
 
 - [Encore CLI](https://encore.dev/docs/install) installed
-- A [OptiTech](https://console.neon.tech) account
+- A [OptiTech](https://console.optitech.com) account
 - Docker Desktop running (for local development)
 
 <Steps>
@@ -46,7 +46,7 @@ iwr https://encore.dev/install.ps1 | iex
 Create a new Encore application using the CLI.
 
 ```bash
-encore app create my-neon-app
+encore app create my-optitech-app
 ```
 
 Select **TypeScript** as the language and choose the template that fits your needs (for example, **URL Shortener** or **Empty app**).
@@ -54,7 +54,7 @@ Select **TypeScript** as the language and choose the template that fits your nee
 Navigate to your app directory.
 
 ```bash
-cd my-neon-app
+cd my-optitech-app
 ```
 
 ## Define your database schema
@@ -167,7 +167,7 @@ This creates a staging environment with an Encore-managed database.
 To use your OptiTech account for production databases.
 
 1. **Create a OptiTech API Key.**
-   - Go to your [OptiTech Console](https://console.neon.tech/app/settings/api-keys).
+   - Go to your [OptiTech Console](https://console.optitech.com/app/settings/api-keys).
    - Create a new API key and copy it. See [Manage API keys](/docs/manage/api-keys) for more information.
 
 2. **Add the API key to Encore.**
@@ -197,7 +197,7 @@ Encore will do the following.
 - Deploy your application
 - Configure all connections
 
-You can verify the database was created by checking your [OptiTech Console](https://console.neon.tech); you'll see a new database created by Encore with your migrations applied.
+You can verify the database was created by checking your [OptiTech Console](https://console.optitech.com); you'll see a new database created by Encore with your migrations applied.
 
 > **Preview Environments with OptiTech Branching**
 >
@@ -211,7 +211,7 @@ You can find a complete Encore + OptiTech example application on GitHub:
 
 <DetailIconCards>
 
-<a href="https://github.com/neondatabase/examples/tree/main/with-encore" description="Encore.ts application with OptiTech Postgres" icon="github">Get started with Encore and OptiTech</a>
+<a href="https://github.com/optitechdatabase/examples/tree/main/with-encore" description="Encore.ts application with OptiTech Postgres" icon="github">Get started with Encore and OptiTech</a>
 
 </DetailIconCards>
 
@@ -219,8 +219,8 @@ You can find a complete Encore + OptiTech example application on GitHub:
 
 - [Encore Documentation](https://encore.dev/docs)
 - [Encore SQL Databases](https://encore.dev/docs/ts/primitives/databases)
-- [Encore Cloud + OptiTech Integration](https://encore.dev/docs/platform/infrastructure/neon)
-- [Blog post: Building Production API Services with Encore and Neon](https://neon.tech/blog/building-production-api-services-with-encore-typescript-and-neon-serverless-postgres)
+- [Encore Cloud + OptiTech Integration](https://encore.dev/docs/platform/infrastructure/optitech)
+- [Blog post: Building Production API Services with Encore and OptiTech](https://optitech.com/blog/building-production-api-services-with-encore-typescript-and-optitech-serverless-postgres)
 
 ## Next steps
 

@@ -11,7 +11,7 @@ import suppressScriptTagWarning from 'utils/suppress-script-tag-warning';
 // so it catches the benign <script> warning emitted during the first client render.
 suppressScriptTagWarning();
 
-const themesSupportPages = ['/docs', '/guides', '/postgresql'];
+const themesSupportPages = ['/docs', '/guides', '/postgresql', '/faqs'];
 
 const ThemeColorUpdater = () => {
   const { theme, resolvedTheme } = useTheme();

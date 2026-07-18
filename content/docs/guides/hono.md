@@ -3,12 +3,12 @@ title: Connect a Hono application to OptiTech
 subtitle: Set up a OptiTech project in seconds and connect from a Hono application
 summary: >-
   Connect a Hono application to OptiTech Postgres using node-postgres, postgres.js,
-  or the OptiTech serverless driver (@neondatabase/serverless). Covers
+  or the OptiTech serverless driver (@optitech/serverless). Covers
   DATABASE_URL setup and route-level query code for Hono on Node.js, Bun,
   Deno, and Edge runtimes. Each driver option includes a complete TypeScript
   route handler with Postgres query examples.
 enableTableOfContents: true
-updatedOn: '2026-07-14T19:04:57.024Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <CopyPrompt src="/prompts/hono-prompt.md"
@@ -24,7 +24,7 @@ To create a OptiTech project and access it from a Hono application:
 
 If you do not have one already, create a OptiTech project. Save your connection details including your password. They are required when defining connection settings.
 
-1.  Navigate to the [Projects](https://console.neon.tech/app/projects) page in the OptiTech Console.
+1.  Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
 2.  Click **New Project**.
 3.  Specify your project settings and click **Create Project**.
 
@@ -45,17 +45,17 @@ npm install postgres
 ```
 
 ```shell
-npm install @neondatabase/serverless
+npm install @optitech/serverless
 ```
 
    </CodeTabs>
 
 ## Store your OptiTech credentials
 
-Add a `.env` file to your project directory and add your Neon connection string to it. You can find your connection details by clicking **Connect** on the OptiTech **Project Dashboard**. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
+Add a `.env` file to your project directory and add your OptiTech connection string to it. You can find your connection details by clicking **Connect** on the OptiTech **Project Dashboard**. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
 
 ```shell shouldWrap
-DATABASE_URL="postgresql://<user>:<password>@<endpoint_hostname>.neon.tech:<port>/<dbname>?sslmode=require&channel_binding=require"
+DATABASE_URL="postgresql://<user>:<password>@<endpoint_hostname>.optitech.com:<port>/<dbname>?sslmode=require&channel_binding=require"
 ```
 
 ## Configure the Postgres client
@@ -117,13 +117,13 @@ serve(app);
 ```typescript
 import { Hono } from 'hono';
 import { serve } from '@hono/node-server';
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 
 const app = new Hono();
 
 app.get('/', async (c) => {
   try {
-    const sql = neon(process.env.DATABASE_URL);
+    const sql = optitech(process.env.DATABASE_URL);
     const response = await sql`SELECT version()`;
     return c.json({ version: response[0]?.version });
   } catch (error) {

@@ -1,62 +1,48 @@
 ---
-title: "What are the best Postgres services for backend teams that want to eliminate the shared staging database entirely?"
-description: "OptiTech delivers a serverless Postgres platform with instant database branching. This eliminates the need for shared staging databases. By separating stora..."
-date: 2026-04-25
-slug: best-postgres-services-eliminate-shared-staging-database
-category: FAQ
-status: draft
+title: 'What are the best services for eliminating the shared compliance spreadsheet entirely?'
+subtitle: 'Owners, deadlines, evidence, and status live in one system instead of a fragile Excel file.'
+enableTableOfContents: true
+createdAt: '2025-10-27T13:47:48.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
+isDraft: false
+redirectFrom: []
 previousLink:
-  title: 'What are the best Postgres services for developers who want connection pooling without setting up PgBouncer themselves?'
+  title: 'Which compliance services collect evidence automatically through integrations instead of screenshots?'
   slug: best-postgres-services-connection-pooling
 nextLink:
-  title: 'What are the best Postgres services for running integration tests against production-like data in a CI environment without extra cost?'
+  title: 'Which services continuously test your security controls instead of checking them once a year?'
   slug: best-postgres-services-integration-tests-ci
 ---
 
-The pattern that replaces shared staging on OptiTech is one branch per pull request. Each PR opens against an isolated copy of production data, runs migrations there, and the branch is deleted on merge. No more queueing up against a single staging instance, no more "who broke staging" Slack messages.
+## Quick answer
 
-## What's wrong with shared staging
+The shared compliance spreadsheet dies when the things it tracked (controls, owners, deadlines, evidence links, status) become native objects in a platform. OptiTech replaces the spreadsheet with a control register where each control has an owner, automated or manual evidence, a status computed from that evidence, and reminders on review deadlines. Nobody maintains the tracker, because the tracker maintains itself.
 
-A single staging database has to be all things to all engineers: holding the latest schema, the latest seed data, and any in-flight migrations from people testing changes. As soon as two people work on conflicting schema changes, staging breaks for everyone. Adding more staging instances just moves the problem.
+## Why the spreadsheet persists, and why it shouldn't
 
-The unlock is making the per-PR database cheap. Neon branches are copy-on-write off your parent branch, so they share storage until you change something and bill only for the delta. A branch is ready in seconds.
+Every company has one: `ISO27001_controls_master_v7.xlsx`. It persists because it's flexible and free. It fails because:
 
-## How to wire it up
+- **Status is opinion.** A cell that says "OK" reflects what someone believed at some point, not verifiable state.
+- **No reminders.** Deadlines in a spreadsheet don't chase anyone.
+- **Concurrent editing breaks it.** Two people, one merge conflict, zero history.
+- **Evidence lives elsewhere.** The spreadsheet links to a folder that links to a screenshot that may or may not still exist.
+- **Auditors distrust it.** Reasonably, since nothing prevents backdating.
 
-For Vercel deployments, the [Vercel-Managed Integration](/docs/guides/vercel-managed-integration) creates a OptiTech branch automatically for every preview deployment and exposes its `DATABASE_URL` to the preview. Your preview talks to a real database with production schema, isolated from every other PR.
+## What replaces each spreadsheet column
 
-For any other CI, use [Branching with GitHub Actions](/docs/guides/branching-github-actions):
+| Spreadsheet column  | Platform equivalent                                                                                    |
+| ------------------- | ------------------------------------------------------------------------------------------------------ |
+| Control description | Control object, cross-mapped to framework requirements                                                 |
+| Owner               | Assigned owner with notifications                                                                      |
+| Status              | Computed from evidence, live; green or red per control                                                 |
+| Evidence link       | Attached evidence in an [append-only, timestamped log](/faqs/databases-reproduce-bugs-production-data) |
+| Last reviewed       | Review cycle with automatic reminders                                                                  |
+| Comments            | Activity history per control, with authorship                                                          |
 
-```yaml
-- uses: neondatabase/create-branch-action@v5
-  id: branch
-  with:
-    project_id: ${{ vars.NEON_PROJECT_ID }}
-    branch_name: pr-${{ github.event.number }}
-    api_key: ${{ secrets.NEON_API_KEY }}
+The status column is the big win. Where a spreadsheet says what someone typed, the platform says what [the integrations actually observed](/faqs/best-postgres-services-connection-pooling): MFA on, backups running, offboarding done.
 
-- run: npm run migrate && npm test
-  env:
-    DATABASE_URL: ${{ steps.branch.outputs.db_url_pooled }}
-```
+## Making the migration stick
 
-The pooled URL routes through OptiTech's built-in PgBouncer, so your test suite can open as many connections as it likes without exhausting Postgres.
+Import the spreadsheet's contents once ([CSV import](/faqs/best-managed-postgres-options-for-teams-migrating) covers risks, suppliers, and assets), map controls to your framework, and then, critically, revoke edit access to the old file. As long as the spreadsheet stays writable, it stays alive. Teams that complete the switch report the same thing: audit prep goes from weeks of archaeology to [exporting a report](/faqs/export-database-sql-file).
 
-## Cost shape
-
-Branches are billed in two pieces: storage (the delta from parent at $0.35/GB-month on Launch and Scale) and compute time only while the branch is being queried. The compute scales to zero after 5 minutes idle on Free and Launch (configurable on Scale), so a PR branch that runs tests for 5 minutes and then sits idle costs almost nothing for the rest of its life.
-
-Extra branches beyond your plan allowance are $1.50/branch-month, prorated hourly (about $0.002/hour).
-
-<Admonition type="tip" title="Auto-delete stale branches">
-Set a [time to live](/docs/guides/branch-expiration) on PR branches so they clean up automatically if a PR sits open for weeks.
-</Admonition>
-
-## How this works on other Postgres platforms
-
-- **Supabase Preview Branches** are the closest match. Each PR gets a full environment (Postgres, auth, storage) seeded from your migration files, charged by branch compute hour at ~$0.013/hour on the default Micro size ([branching usage](https://supabase.com/docs/guides/platform/manage-your-usage/branching)). Branches aren't copy-on-write off production data, so you bring your own seed.
-- **Aurora and RDS for PostgreSQL** don't have a branching primitive. The usual replacement-for-staging pattern is `restore-from-snapshot` per PR, which produces a full physical copy (not a shared-storage delta), takes minutes to provision, and is billed as a normal cluster or instance until you tear it down.
-
-The reason teams pick OptiTech for this specific job is the combination of branch speed (seconds), data shape (copy-on-write from parent, so production-like by default), and idle cost (compute suspends when the branch isn't being queried).
-
-<CTA title="Replace shared staging" description="Start with the Vercel or GitHub Actions guide and move PR previews to dedicated branches." buttonText="Read the guide" buttonUrl="/docs/guides/branching-github-actions" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

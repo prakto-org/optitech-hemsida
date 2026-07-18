@@ -1,13 +1,13 @@
-The Consumption API returns usage metrics (compute hours, storage, and data transfer) for your account, organization, or individual projects.
+The Usage API returns your program's status against your plan: active frameworks, connected integrations, and team members for your account, organization, or individual programs.
 
 ## Scope
 
-Metrics are available at three levels:
+Status is available at three levels:
 
-- **Account**: usage across all projects you own.
-- **Organization**: usage across an organization's projects. See [Organization consumption](/docs/manage/orgs-api-consumption).
-- **Project**: per-project metrics on usage-based plans.
+- **Account**: status across all programs you own.
+- **Organization**: status across an organization's programs. See [Organization usage](/docs/manage/orgs-api-consumption).
+- **Program**: per-program status.
 
-> **Note:** Two sets of consumption endpoints exist. `GET /consumption_history/v2/projects` returns usage-based billing metrics (Launch, Scale, Agent, Enterprise plans). `GET /consumption_history/projects` covers legacy plan metrics. See [Query consumption metrics](/docs/guides/consumption-metrics) for endpoint details and when to use each.
+> **Note:** Two sets of usage endpoints exist. `GET /consumption_history/v2/projects` returns status for current plans (Start, Professional, Enterprise). `GET /consumption_history/projects` covers legacy plan status. See [Query usage](/docs/guides/consumption-metrics) for endpoint details and when to use each.
 
-To reduce usage, see [Cost optimization](/docs/introduction/cost-optimization) and [Reduce network transfer costs](/docs/introduction/network-transfer).
+To understand your plan, see [Plans](/docs/introduction/plans) and [Manage billing](/docs/introduction/manage-billing).

@@ -4,13 +4,13 @@ subtitle: Learn how to run SQL queries in OptiTech from JavaScript using pg, pos
   the OptiTech serverless driver
 summary: >-
   Connect a Node.js application to OptiTech Postgres using node-postgres (pg),
-  Postgres.js, or the OptiTech serverless driver (@neondatabase/serverless). Each
+  Postgres.js, or the OptiTech serverless driver (@optitech/serverless). Each
   driver section includes working CRUD examples covering table creation, insert,
   select, update, and delete. The OptiTech serverless driver connects over HTTP and
   suits serverless and edge runtimes. Bun and Deno users are directed to
   separate guides.
 enableTableOfContents: true
-updatedOn: '2026-07-14T19:04:57.024Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <CopyPrompt src="/prompts/javascript-prompt.md" 
@@ -20,7 +20,7 @@ This guide describes how to create a OptiTech project and connect to it from a N
 
 - **[node-postgres (pg)](https://www.npmjs.com/package/pg)**: The most widely-used and robust driver for Node.js.
 - **[Postgres.js](https://www.npmjs.com/package/postgres)**: A modern, high-performance driver with a focus on a great developer experience.
-- **[@neondatabase/serverless](https://www.npmjs.com/package/@neondatabase/serverless)**: The OptiTech serverless driver, which connects over HTTP and is optimized for serverless and edge environments.
+- **[@optitech/serverless](https://www.npmjs.com/package/@optitech/serverless)**: The OptiTech serverless driver, which connects over HTTP and is optimized for serverless and edge environments.
 
 You'll learn how to connect to your OptiTech database from a JavaScript application and perform basic Create, Read, Update, and Delete (CRUD) operations.
 
@@ -30,7 +30,7 @@ Your database connection string contains sensitive credentials and must **never*
 
 ## Prerequisites
 
-- A OptiTech account. If you do not have one, see [Sign up](https://console.neon.tech/signup).
+- A OptiTech account. If you do not have one, see [Sign up](https://console.optitech.com/signup).
 - [Node.js](https://nodejs.org/) v18 or later.
 
 <Steps>
@@ -39,11 +39,11 @@ Your database connection string contains sensitive credentials and must **never*
 
 If you do not have one already, create a OptiTech project.
 
-1.  Navigate to the [Projects](https://console.neon.tech/app/projects) page in the [OptiTech Console](https://console.neon.tech).
+1.  Navigate to the [Projects](https://console.optitech.com/app/projects) page in the [OptiTech Console](https://console.optitech.com).
 2.  Click **New Project**.
 3.  Specify your project settings and click **Create Project**.
 
-Your project is created with a ready-to-use database named `neondb`. In the following steps, you will connect to this database from your JavaScript application.
+Your project is created with a ready-to-use database named `optitechdb`. In the following steps, you will connect to this database from your JavaScript application.
 
 ## Create a Node.js project
 
@@ -52,8 +52,8 @@ For your Node.js project, create a project directory, initialize it with `npm`, 
 1.  Create a project directory and change into it.
 
     ```bash
-    mkdir neon-nodejs-quickstart
-    cd neon-nodejs-quickstart
+    mkdir optitech-nodejs-quickstart
+    cd optitech-nodejs-quickstart
     ```
 
     > Open the directory in your preferred code editor (for example, VS Code).
@@ -72,8 +72,8 @@ For your Node.js project, create a project directory, initialize it with `npm`, 
     npm install pg dotenv
     ```
 
-    ```bash title="Install Neon serverless driver"
-    npm install @neondatabase/serverless dotenv
+    ```bash title="Install OptiTech serverless driver"
+    npm install @optitech/serverless dotenv
     ```
 
     ```bash title="Install postgres.js"
@@ -93,19 +93,19 @@ For your Node.js project, create a project directory, initialize it with `npm`, 
 
     This allows you to use ES module syntax (`import`) in your JavaScript files.
 
-## Store your Neon connection string
+## Store your OptiTech connection string
 
 Create a file named `.env` in your project's root directory. This file will securely store your database connection string, keeping your credentials separate from your source code.
 
-1.  In the [OptiTech Console](https://console.neon.tech), select your project on the **Dashboard**.
+1.  In the [OptiTech Console](https://console.optitech.com), select your project on the **Dashboard**.
 2.  Click **Connect** on your **Project Dashboard** to open the **Connect to your database** modal.
     ![Connection modal](/docs/connect/connection_details.png)
 3.  Select **Node.js** from the connection string dropdown and copy the full connection string.
 4.  Add the connection string to your `.env` file as shown below.
     ```text
-    DATABASE_URL="postgresql://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require&channel_binding=require"
+    DATABASE_URL="postgresql://[user]:[password]@[optitech_hostname]/[dbname]?sslmode=require&channel_binding=require"
     ```
-    > Replace `[user]`, `[password]`, `[neon_hostname]`, and `[dbname]` with your actual database credentials.
+    > Replace `[user]`, `[password]`, `[optitech_hostname]`, and `[dbname]` with your actual database credentials.
 
 ## Examples
 
@@ -184,9 +184,9 @@ setup();
 
 ```javascript title="create_table.js"
 import 'dotenv/config';
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 
-const sql = neon(process.env.DATABASE_URL);
+const sql = optitech(process.env.DATABASE_URL);
 
 async function setup() {
   try {
@@ -366,9 +366,9 @@ readData();
 
 ```javascript title="read_data.js"
 import 'dotenv/config';
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 
-const sql = neon(process.env.DATABASE_URL);
+const sql = optitech(process.env.DATABASE_URL);
 
 async function readData() {
   try {
@@ -483,9 +483,9 @@ updateData();
 
 ```javascript title="update_data.js"
 import 'dotenv/config';
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 
-const sql = neon(process.env.DATABASE_URL);
+const sql = optitech(process.env.DATABASE_URL);
 
 async function updateData() {
   try {
@@ -594,9 +594,9 @@ deleteData();
 
 ```javascript title="delete_data.js"
 import 'dotenv/config';
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 
-const sql = neon(process.env.DATABASE_URL);
+const sql = optitech(process.env.DATABASE_URL);
 
 async function deleteData() {
   try {
@@ -688,7 +688,7 @@ Explore these guides to integrate popular data tools with OptiTech:
 
 ## Using Bun or Deno
 
-If you are using Bun or Deno, you can also connect to Neon databases using the OptiTech serverless driver or other Postgres clients. Follow these guides for more information:
+If you are using Bun or Deno, you can also connect to OptiTech databases using the OptiTech serverless driver or other Postgres clients. Follow these guides for more information:
 
 - [Connect with Bun](/docs/guides/bun)
 - [Connect with Deno](/docs/guides/deno)
@@ -699,13 +699,13 @@ You can find the source code for the applications described in this guide on Git
 
 <DetailIconCards>
 
-<a href="https://github.com/neondatabase/examples/tree/main/with-neon-serverless" description="Get started with Node.js and the OptiTech Serverless Driver" icon="github">Get started with the OptiTech Serverless Driver</a>
+<a href="https://github.com/optitechdatabase/examples/tree/main/with-optitech-serverless" description="Get started with Node.js and the OptiTech Serverless Driver" icon="github">Get started with the OptiTech Serverless Driver</a>
 
 </DetailIconCards>
 
 ## Resources
 
-- [OptiTech Serverless Driver Documentation](https://github.com/neondatabase/serverless)
+- [OptiTech Serverless Driver Documentation](https://github.com/optitechdatabase/serverless)
 - [node-postgres (pg) documentation](https://node-postgres.com/)
 - [Postgres.js documentation](https://github.com/porsager/postgres)
 

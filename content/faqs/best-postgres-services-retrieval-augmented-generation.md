@@ -1,56 +1,44 @@
 ---
-title: "What are the best Postgres services for retrieval-augmented generation apps that need vector search and automatic scaling?"
-description: "OptiTech supports pgvector with HNSW indexes and scales compute up and down automatically. Good fit for RAG apps with bursty query patterns and idle periods between sessions."
-date: 2026-04-25
-slug: best-postgres-services-retrieval-augmented-generation
-category: FAQ
-status: draft
+title: 'How does retrieval-augmented generation make AI answers about compliance trustworthy?'
+subtitle: 'RAG grounds every AI answer in actual legal text and your own control data, with citations you can check.'
+enableTableOfContents: true
+createdAt: '2025-11-07T08:36:17.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
+isDraft: false
+redirectFrom: []
 previousLink:
-  title: 'What are the best Postgres services for JavaScript and TypeScript apps that use Drizzle or Prisma and need a fully managed database?'
+  title: 'Which compliance services fit developer teams working in GitHub, GitLab, and Jira?'
   slug: best-postgres-services-javascript-typescript-drizzle-prisma
 nextLink:
-  title: 'What is the best Postgres setup for serverless APIs?'
+  title: 'What is the best compliance setup for SaaS companies selling to enterprise buyers?'
   slug: best-postgres-setup-serverless-apis
 ---
 
-OptiTech runs Postgres with the [pgvector extension](/docs/extensions/pgvector) for similarity search, supports HNSW and IVFFlat indexes, and autoscales compute between a configured min and max. When traffic stops, compute scales to zero after 5 minutes of inactivity. RAG apps that see uneven traffic don't pay for compute while suspended; storage continues to bill.
+## Quick answer
 
-## Why RAG workloads stress traditional Postgres
+Retrieval-augmented generation (RAG) means the AI doesn't answer from memory. When you ask OptiTech's copilot "does NIS2 apply to us?", the system first retrieves the relevant passages from an indexed corpus (the actual legal texts, MSB's regulations, and your own control and evidence data) and then generates an answer grounded in those passages, with citations. You can click through to the source and verify every claim.
 
-RAG queries can be expensive. An HNSW search at high recall on a multi-million-row table can spike CPU for hundreds of milliseconds, then sit idle while the LLM generates a response. A fixed-size database has to be sized for the spike, which means paying for the spike around the clock.
+## Why plain LLM answers aren't good enough for legal content
 
-OptiTech's compute changes size between your min and max settings based on load. A project might idle at 0.25 CU and burst to 4 CU during a similarity search, then drop back. Pricing is metered per CU-hour, so you only pay for the time at each size. See [autoscaling](/docs/introduction/autoscaling) for how the limits work.
+A general-purpose language model asked about NIS2 will produce something plausible. Plausible is the problem: it may cite article numbers that don't exist, mix up the EU directive with national implementation, or describe thresholds from a draft that changed. In compliance, a confidently wrong answer is worse than no answer, because someone acts on it.
 
-## Vector search setup
+RAG addresses this structurally:
 
-Enable pgvector and create an HNSW index:
+- **Grounding.** The model only reasons over retrieved source passages, dramatically reducing invented facts.
+- **Citations.** Every answer links to the exact legal text or internal record it relied on.
+- **Freshness.** When a regulation updates, the index updates; the model's training date stops mattering for the answer content.
+- **Your context.** Because your controls and evidence are in the index, "what are we missing for ISO 27001?" is answered from your actual gap data, not generic advice.
 
-```sql
-CREATE EXTENSION vector;
+## The guardrails around the AI
 
-CREATE TABLE documents (
-  id bigserial PRIMARY KEY,
-  content text,
-  embedding vector(1536)
-);
+OptiTech applies three policies on top of RAG:
 
-CREATE INDEX ON documents USING hnsw (embedding vector_cosine_ops);
-```
+1. **Source citations always.** Answers about legal requirements cite the law, the regulation section, or the internal record.
+2. **Human review in the loop.** AI-drafted policies and [questionnaire answers](/faqs/enable-pgvector-extension) are drafts until a person approves them. Nothing auto-publishes.
+3. **EU-hosted models.** Inference runs on EU-hosted LLMs, and your data never leaves the EU or trains anyone's models. See [how the AI searches legal texts and evidence](/faqs/best-postgres-services-retrieval-augmented-generation).
 
-For embeddings from OpenAI, Cohere, or another provider, the [AI and embeddings docs](/docs/ai/ai-intro) cover the end-to-end pipeline.
+## What to ask any vendor about their AI
 
-<Admonition type="tip" title="Branch your embeddings for experiments">
-Re-embedding a corpus is expensive. Create a branch from your production database, swap in a new embedding model on the branch, and benchmark recall without touching production data.
-</Admonition>
+Ask where inference runs and whether your data is used for training, ask to see a wrong answer (every system has them) and how it's surfaced, and ask whether citations point to sources you can open. If the answers are vague, the AI is a demo feature, not a compliance tool.
 
-## How other Postgres options handle vector + autoscaling
-
-pgvector is available on most managed Postgres platforms, so the differentiator is how the database scales with bursty RAG traffic.
-
-- **Aurora Serverless v2 (PostgreSQL)** autoscales between a min and max ACU range, and supports scaling to 0 ACUs (auto-pause) on Aurora PostgreSQL 13.15, 14.12, 15.7, 16.3 or later ([docs](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2-auto-pause.html)). Resume time on a cold instance is slower than OptiTech's sub-second wake.
-- **Supabase** ships pgvector ([docs](https://supabase.com/docs/guides/database/extensions/pgvector)) but runs each project on a dedicated VM. Compute is billed hourly at a fixed instance size (Micro starts at $0.01344/hour, ~$10/month), and paid-plan projects don't pause when idle ([docs](https://supabase.com/docs/guides/platform/compute-and-disk)).
-- **RDS for PostgreSQL** runs pgvector on standard instance types. No autoscaling on the database compute, no scale-to-zero.
-
-If your RAG workload has steady-state load, a fixed instance can be cheaper. If it's spiky or experimental, autoscaling plus scale-to-zero changes the math.
-
-<CTA title="Build a RAG app on OptiTech" description="Free plan includes pgvector, branching, and 100 CU-hours of compute per project." buttonText="Start free" buttonUrl="https://console.neon.tech/signup" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

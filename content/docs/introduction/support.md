@@ -1,14 +1,13 @@
 ---
 title: Support
 summary: >-
-  OptiTech support plans map to pricing tiers. Free plan users get community
-  (Discord) support only. Launch adds billing-only tickets. Scale unlocks
-  Standard support, with optional Business or Production upgrades that include
-  response-time SLAs. Use this page to find which channels your plan includes,
-  understand how tickets are prioritized by severity, and review the general
-  support policy.
+  OptiTech support maps to pricing tiers. Start includes email support,
+  Professional adds priority handling, and Enterprise includes a dedicated
+  customer success manager with response-time SLAs. Use this page to find
+  which channels your plan includes, understand how tickets are prioritized
+  by severity, and review the general support policy.
 enableTableOfContents: true
-updatedOn: '2026-06-30T18:26:43.964Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This page outlines OptiTech's support plans, available channels, and policies. To learn how to access support, please refer to the [Support channels](#support-channels) section. Identify the channels available to you based on your plan and follow the links to navigate to the relevant information.
@@ -17,97 +16,84 @@ This page outlines OptiTech's support plans, available channels, and policies. T
 
 OptiTech's support plans are mapped to [OptiTech Pricing Plans](/docs/introduction/plans), as outlined in the following table.
 
-| OptiTech pricing plan | Support plan options                                                                                 |
-| :---------------- | :--------------------------------------------------------------------------------------------------- |
-| Free plan         | Community support                                                                                    |
-| Launch plan       | Billing support                                                                                      |
-| Scale plan        | • Standard support<br/>• Business support (additional fee)<br/>• Production support (additional fee) |
-
-Scale plan customers can upgrade to **Business** or **Production** support plans for an additional fee. In addition to all Standard support plan options, these plans offer a [response time SLA](#response-time-sla).
+| OptiTech pricing plan | Support plan options                                       |
+| :-------------------- | :--------------------------------------------------------- |
+| Start plan            | Email support                                              |
+| Professional plan     | Priority email support                                     |
+| Enterprise plan       | Dedicated customer success manager, with response time SLA |
 
 ## Support channels
 
 The support channels you can access differ according to your [Support Plan](#support-plans).
 
-| Support channels                                                              | Community support | Billing support | Standard support | Business support | Production support |
-| :---------------------------------------------------------------------------- | :---------------: | :-------------: | :--------------: | :--------------: | :----------------: |
-| [OptiTech Discord Server](#neon-discord-server) (not an official channel)         |      &check;      |     &check;     |     &check;      |     &check;      |      &check;       |
-| [OptiTech AI Chat Assistance](#neon-ai-chat-assistance) (not an official channel) |      &check;      |     &check;     |     &check;      |     &check;      |      &check;       |
-| [Support tickets](#support-tickets)                                           |         -         |       \*        |     &check;      |     &check;      |      &check;       |
-| [Slack channel](#slack-channel)                                               |         -         |        -        |       \*\*       |       \*\*       |        \*\*        |
-| [Dedicated Support Engineer](#dedicated-support-engineer)                     |         -         |        -        |       \*\*       |       \*\*       |        \*\*        |
-| [SLA](#response-time-sla)                                                     |         -         |        -        |        -         |     &check;      |      &check;       |
+| Support channels                                                          | Email support | Priority email support | Enterprise support |
+| :------------------------------------------------------------------------ | :-----------: | :--------------------: | :----------------: |
+| [OptiTech AI chat assistance](#optitech-ai-chat-assistance)               |    &check;    |        &check;         |      &check;       |
+| [Support tickets](#support-tickets)                                       |    &check;    |        &check;         |      &check;       |
+| [Slack channel](#slack-channel)                                           |       -       |           -            |         \*         |
+| [Dedicated customer success manager](#dedicated-customer-success-manager) |       -       |           -            |      &check;       |
+| [SLA](#response-time-sla)                                                 |       -       |           -            |      &check;       |
 
 <div style={{margin: '-30px 0 30px 0'}}>
-<small><sup>\*</sup> Under **Billing support** (Launch plan), you can only use [support tickets](#support-tickets) for **billing-related** issues. **Scale** plan and higher can use support tickets for **any** OptiTech issue. On paid plans, **Request billing support** on the [Billing](/docs/introduction/manage-billing#view-the-billing-page) page is the dedicated path for invoice and billing questions.</small><br/>
-<small><sup>\*\*</sup> [Slack channels](#slack-channel) and [Dedicated Support Engineers](#dedicated-support-engineer) are available for an additional fee for Standard, Business, and Production support plans.</small>
+<small><sup>\*</sup> [Slack channels](#slack-channel) are available for an additional fee on the Enterprise plan.</small>
 </div>
-
-### OptiTech Discord Server
-
-All OptiTech users have access to the [OptiTech Discord Server](https://discord.gg/92vNTzKDGp), where you can ask questions or see what others are doing with OptiTech. You will find OptiTech users and members of the OptiTech team actively engaged.
-
-<Admonition type="important">
-The [OptiTech Discord Server](https://discord.gg/92vNTzKDGp) is not an official OptiTech Support channel.
-</Admonition>
 
 ### OptiTech AI chat assistance
 
 OptiTech AI chat assistance is available to all OptiTech users. You can access it from these locations:
 
-- **OptiTech Console**: Open the Help menu (`?`) in the top right corner and select **Support**. This opens the **OptiTech AI Assistant** so you can ask questions about OptiTech.
+- **OptiTech Console**: Open the Help menu (`?`) in the top right corner and select **Support**. This opens the **OptiTech AI Assistant** so you can ask questions about the platform.
 - **OptiTech documentation**: Toggle **Ask OptiTech AI** on the [OptiTech documentation](/docs/introduction) site
-- **Discord**: Join the **#gpt-help** channel on the [OptiTech Discord server](https://discord.gg/92vNTzKDGp)
 
-OptiTech AI Chat assistants are updated regularly and built on various sources including the OptiTech documentation, the OptiTech website, the OptiTech API, and OptiTech GitHub repositories.
+OptiTech AI chat assistants are updated regularly and built on various sources including the OptiTech documentation, the OptiTech website, and the OptiTech API. For questions about regulations and your own compliance data, use the AI copilot inside the platform instead; its answers cite the legal texts they are based on.
 
 <Admonition type="important">
-OptiTech AI chat is not an official OptiTech Support channel.
+OptiTech AI chat is not an official OptiTech Support channel, and it is not legal advice.
 </Admonition>
 
 ### Support tickets
 
-**Launch** plan (**Billing support**): you can get help with **billing and invoices** (for example through [Request billing support](/docs/introduction/manage-billing#request-billing-support) on the Billing page). Support tickets tied to the console are limited to **billing-related** issues on this plan.
-
-**Scale** plan (**Standard support**) and plans with **Business** or **Production** support: you can open support tickets for **any** OptiTech issue. **Business** and **Production** add SLA response times on top of that.
-
-**Vercel-managed OptiTech integration**: if you use OptiTech through the Vercel-managed OptiTech integration and are on OptiTech's Scale plan, you can also open support tickets for any OptiTech issue.
+All plans can open support tickets for any OptiTech issue, including billing. **Professional** plan tickets are prioritized ahead of **Start** plan tickets, and **Enterprise** tickets carry a [response time SLA](#response-time-sla).
 
 You can reach the ticketing flow in these ways:
 
-1. **OptiTech AI Assistant**: Open the Help menu (`?`) in the top right corner and select **Support**. This opens the **OptiTech AI Assistant**. When your account is allowed to file a ticket, use **Open Support Ticket** in the assistant. **Launch** plan: use this only for **billing-related** problems (for invoice-specific requests, **Request billing support** on the Billing page is usually simpler). **Scale** and above: you can use **Open Support Ticket** for any eligible issue.
-2. **Billing page (paid plans)**: On the **Billing** page, select **Request billing support** in the page header (next to **View past invoices**). In the form, select a related invoice if you have one and describe your issue. You can also select **View past invoices**, open an invoice’s actions menu, and select **Request support** to open the same form with that invoice pre-selected. If you have no invoices yet, the header button may be disabled; open **Support** from the Help menu (`?`) to reach the OptiTech AI Assistant for billing-related help. Step-by-step detail is in [Manage billing](/docs/introduction/manage-billing#request-billing-support).
+1. **OptiTech AI Assistant**: Open the Help menu (`?`) in the top right corner and select **Support**. This opens the **OptiTech AI Assistant**. Use **Open Support Ticket** in the assistant to file a ticket.
+2. **Billing page**: On the **Billing** page, select **Request billing support** in the page header. In the form, select a related invoice if you have one and describe your issue.
 
 <Admonition type="tip">
-To ensure you receive responses from our support team, please whitelist the `help@databricks.com` email address in your email client. This prevents support responses from being filtered to your spam or junk folder.
+To ensure you receive responses from our support team, please whitelist the `contact@optitech.com` email address in your email client. This prevents support responses from being filtered to your spam or junk folder.
+</Admonition>
+
+<Admonition type="important" title="Incidents are not support tickets">
+If you are handling a security incident with a reporting deadline, use the incident flow inside the platform. It guides you through the MSB and IMY steps with deadline countdowns. Support can help you use the platform, but the incident flow is the fastest path to a submitted report.
 </Admonition>
 
 ### Slack channel
 
-[Slack connect](https://slack.com/intl/en-ie/connect) channels are available for an additional fee for Standard, Business, and Production support plan customers. To learn more, [contact our sales team](/contact-sales).
+[Slack connect](https://slack.com/intl/en-ie/connect) channels are available for an additional fee for Enterprise plan customers. To learn more, [contact our sales team](/contact-sales).
 
-### Dedicated Support Engineer
+### Dedicated customer success manager
 
-A dedicated engineer can develop in-depth knowledge of your systems, leading to more efficient issue resolution. This service is available for an additional fee for Standard, Business, and Production support plan customers. To learn more, [contact our sales team](/contact-sales).
+Every Enterprise plan includes a dedicated customer success manager who develops in-depth knowledge of your compliance program, helps with onboarding, and leads quarterly reviews. To learn more, [contact our sales team](/contact-sales).
 
 ### Response time SLA
 
-A response time SLA is available to OptiTech [Scale plan](/docs/introduction/plans) customers who have purchased a **Business** or **Production** support plan. If you are interested in purchasing one of these plans, [please reach out to our sales team](/contact-sales).
+A response time SLA is included for OptiTech [Enterprise plan](/docs/introduction/plans) customers. If you are interested in the Enterprise plan, [please reach out to our sales team](/contact-sales).
 
 #### Response times
 
-OptiTech aims to respond to all **Business** and **Production** support plan requests in a timely manner and as soon as practically possible. Customers are prioritized based on their support plan and the [Severity](#severity-levels) of their issue.
+OptiTech aims to respond to all support requests in a timely manner and as soon as practically possible. Customers are prioritized based on their support plan and the [Severity](#severity-levels) of their issue.
 
-The table below outlines OptiTech's response time guidelines for Business and Production support plans.
+The table below outlines OptiTech's response time guidelines for the Enterprise plan.
 
 These times relate to the time it takes OptiTech to respond to the Customer's initial request. This guideline only applies when submitting a support ticket through the OptiTech Console.
 
-| Severity Level | Business support plan | Production support plan |
-| -------------- | --------------------- | ----------------------- |
-| Severity 1     | Within 4 hours        | Within 1 hour           |
-| Severity 2     | Within 1 business day | Within 4 hours          |
-| Severity 3     | Within 1 business day | Within 1 business day   |
-| Severity 4     | Within 1 business day | Within 1 business day   |
+| Severity Level | Enterprise plan       |
+| -------------- | --------------------- |
+| Severity 1     | Within 1 hour         |
+| Severity 2     | Within 4 hours        |
+| Severity 3     | Within 1 business day |
+| Severity 4     | Within 1 business day |
 
 #### Severity levels
 
@@ -115,21 +101,21 @@ When the Customer submits an issue (with or without specifying a starting severi
 
 An explanation of each severity level is provided below.
 
-• **Severity 1** - Production system is down or severely impacted such that routine operation is impossible
+• **Severity 1** - The platform is down or severely impacted, or you cannot complete an authority report with a legal deadline (for example, the 24-hour MSB early warning)
 
-• **Severity 2** - Production issue where the system is functioning but in degraded or restricted capacity
+• **Severity 2** - The platform is functioning but in degraded or restricted capacity, such as failing evidence collection from an integration or reports that cannot be generated
 
-• **Severity 3** - Issue where minor functionality is impacted or a development issue occurs
+• **Severity 3** - Issue where minor functionality is impacted, such as sporadic sync failures or a billing question
 
 • **Severity 4** - Request for information or feature request with no impact on business operations
 
 ## General support policy
 
-OptiTech provides Support for eligible plans under the terms of this Support Policy as long as the Customer maintains a current subscription to one of the following OptiTech plans: Launch, Scale. For more information, see [plans](/docs/introduction/plans). “Support” means the services described in this Support Policy and does not include one-time services or other services not specified in this Support Policy, such as training, consulting, or custom development. Support for Free plan users is provided through [Discord](/discord). See OptiTech [plans](/docs/introduction/plans) and [pricing](/pricing) for more information about our plans.
+OptiTech provides Support for eligible plans under the terms of this Support Policy as long as the Customer maintains a current subscription to one of the following OptiTech plans: Start, Professional, Enterprise. For more information, see [plans](/docs/introduction/plans). “Support” means the services described in this Support Policy and does not include one-time services or other services not specified in this Support Policy, such as training, consulting, or custom development. See OptiTech [plans](/docs/introduction/plans) and [pricing](/pricing) for more information about our plans.
 
 Unless described otherwise, defined terms mentioned in this policy shall have the same meaning as defined in the [OptiTech Platform Terms](/platform-terms).
 
-We provide updates regarding any disruption in our Services on our [status page](https://neonstatus.com/). Please check this source first before seeking support.
+We provide updates regarding any disruption in our Services on our status page. Please check this source first before seeking support.
 
 ### Issue resolution
 
@@ -151,120 +137,4 @@ To ensure efficient resolution of issues, customers are expected to (1) provide 
 
 We reserve the right to modify, amend, or update this Support Policy, including the types of support offered, support hours, response times, and support plans, at any time and at our sole discretion. Any changes to the Support Policy will be effective immediately upon posting a revised version of this Support Policy. Continued use of our services after such modifications will constitute acknowledgment and acceptance of the changes.
 
-<a id="enterprise-support"></a>
-
-## Legacy enterprise support
-
-Customers on a legacy Enterprise plan can view support plan details in the following dropdown.
-
-<details>
-<summary>**Enterprise support (legacy)**</summary>
-
-### General support policy
-
-OptiTech provides Support for Enterprise plans under the terms of this Support Policy as long as the Customer maintains a current subscription to an Enterprise plan. "Support" means the services described in this Support Policy and does not include one-time services or other services not specified in this Support Policy, such as training, consulting, or custom development.
-
-Unless described otherwise, defined terms mentioned in this policy shall have the same meaning as defined in the [OptiTech Platform Terms](/platform-terms).
-
-We provide updates regarding any disruption in our Services on our [status page](https://neonstatus.com/). Please check this source first before seeking support.
-
-### Issue resolution
-
-OptiTech will make commercially reasonable efforts to resolve any Issues submitted by Enterprise customers. Such efforts may (at our discretion) include helping with diagnosis, suggesting workarounds, or changing the Product in a new release. An "Issue" is a material and verifiable failure of the Product to conform to its Documentation. Support will not be provided for the following: (1) use of the Products in a manner inconsistent with the applicable Documentation, (2) modifications to the Products not provided by or approved in writing by OptiTech, (3) use of the Products with third-party software not provided or approved by OptiTech. The Customer shall not submit Issues arising from any products other than the Products or otherwise use Support for unsupported products; this includes issues caused by third-party integrations.
-
-### Billing issues
-
-If you, the Customer, believe that your invoice or billing receipt is incorrect, we strongly encourage you to contact our Support team rather than filing a dispute with your card provider. Where available in the OptiTech Console, paid plans can use **Request billing support** on the **Billing** page; see [Request billing support](/docs/introduction/manage-billing#request-billing-support). Should a payment dispute be filed before getting in touch with us, we are limited in terms of the action we can take to resolve the matter. Once a dispute has been made with the card provider, the account associated with it and all deployments under it may be suspended until it has been resolved.
-
-### Response times
-
-OptiTech aims to respond to all Enterprise subscription requests in a timely manner and as soon as practically possible. Enterprise customers are prioritized based on the Severity of their issue and their specific Enterprise support tier (Standard, Gold, or Platinum). Response times are outlined in the target response time guidelines below.
-
-#### Enterprise target response times
-
-The table below outlines OptiTech's guidelines for the various support tiers of our Enterprise support plan.
-
-These times relate to the time it takes OptiTech to respond to the Customer's initial request. This guideline only applies when submitting a support ticket through the OptiTech Console.
-
-| Severity Level        | Enterprise Standard                      | Enterprise Gold                         | Enterprise Platinum                     |
-| --------------------- | ---------------------------------------- | --------------------------------------- | --------------------------------------- |
-| Severity 1 (Critical) | < 2 hours (during Normal Business Hours) | < 1 hour                                | < 1 hour                                |
-| Severity 2 (High)     | < 2 days (during Normal Business Hours)  | < 1 day                                 | < 4 hours                               |
-| Severity 3 (Normal)   | < 3 days (during Normal Business Hours)  | < 3 days (during Normal Business Hours) | < 3 days (during Normal Business Hours) |
-| Severity 4 (Low)      | < 3 days (during Normal Business Hours)  | < 3 days (during Normal Business Hours) | < 3 days (during Normal Business Hours) |
-
-#### Severity levels
-
-When the Customer submits an issue (with or without specifying a starting severity), OptiTech will reasonably assess its severity according to the appropriate severity levels defined below. OptiTech reserves the right to set, upgrade and downgrade severities of support tickets, on a case-by-case basis, considering any available mitigations, workarounds, and timely cooperation from Customers. OptiTech will explain the reasoning to the Customer and will resolve any disagreement regarding the severity as soon as is reasonably practicable. Critical and High-priority levels should not be used for low-impact issues or general questions!
-
-A detailed explanation of each severity level, including several examples, is provided below.
-
-##### Severity 1 (Critical)
-
-Catastrophic problems in the Customer's production system leading to loss of service or impact on the Customer's business:
-
-- Unavailability of the service
-- Security breaches that compromise the confidentiality, integrity, or availability of the database or its data.
-
-<Admonition type="note">
-If Critical is selected during the case creation, the customer will be asked to provide in-depth details on the business impact the issue has caused.
-</Admonition>
-
-Examples:
-
-- A complete outage of the service provided by OptiTech
-- Security breaches
-- Error impacting the project as a whole (all endpoints/db affected)
-- Error impacting multiple projects
-- EP/Branch/DB unreachable
-- Data corruption/Data loss
-
-##### Severity 2 (High)
-
-Means a high-impact problem in a customer's production systems. Essential operations are seriously disrupted, but a workaround exists that allows for continued essential operations.
-
-- Non-essential modifications to configuration, like adjusting database parameters or table schema
-- Minor performance concerns that have minimal impact on database usability
-- Minor issues related to application integrations, such as minor API connectivity problems
-- Small-scale challenges with data import/export, data transformation, or data loading processes
-
-Examples:
-
-- Partial outage of the service provided by OptiTech: service usable, but key feature unusable, for example:
-  - Cannot create a new branch
-  - Cannot execute a branch restore
-  - Cannot perform point-in-time recovery (PITR)
-  - Etc.
-- Any use case that would require a high load of manual work on the customer side to mitigate an issue on our end
-- Any use case which massively and negatively affects the customer's business
-
-##### Severity 3 (Normal)
-
-A medium-impact problem on a production or non-production system that involves:
-
-- Partial or limited loss of non-critical functionality
-- A usage problem that involves no loss in functionality
-- Customers can continue essential operations. Normal problems also include issues with non-production systems, such as test and development systems.
-
-Examples:
-
-- RCA for past outages or incidents (no disruption of the service at the moment)
-- Sporadic connection failure/timeouts/retries
-- Cannot connect with random third-party framework or tool (but can connect generally speaking)
-- Any use case which has a minor impact on the customer's business
-- Poor performing queries/ingestion
-- Billing issues
-
-##### Severity 4 (Low)
-
-A general usage question; there is no impact on the product's quality, performance, or functionality in a production or non-production system:
-
-- Any request for information, enhancement, or documentation clarification regarding the platform
-
-Examples:
-
-- Feature requests/feature enablement
-- General questions ("active time," "how to backup a DB," "how to ingest data") and feedback
-- Any use case that has no impact on the customer's business at all
-
-</details>
+<NeedHelp/>

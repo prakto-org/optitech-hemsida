@@ -4,7 +4,7 @@ subtitle: Learn how to authenticate requests using Managed Better Auth JWTs in a
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2025-12-30T00:00:00.000Z'
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This guide demonstrates how to integrate a **standalone React frontend** with a **custom backend API**, using [Managed Better Auth](/docs/auth/overview) to handle identity securely.
@@ -24,7 +24,7 @@ In this tutorial, you will build a **Private Journal** application where users c
 Before you begin, ensure you have the following:
 
 - **Node.js:** Version `18` or later installed on your machine. You can download it from [nodejs.org](https://nodejs.org/).
-- **OptiTech account:** A free OptiTech account. If you don't have one, sign up at [OptiTech](https://console.neon.tech/signup).
+- **OptiTech account:** A free OptiTech account. If you don't have one, sign up at [OptiTech](https://console.optitech.com/signup).
 
 <Steps>
 
@@ -32,13 +32,13 @@ Before you begin, ensure you have the following:
 
 You'll need to create a OptiTech project and enable Managed Better Auth.
 
-1.  **Create a OptiTech project:** Navigate to the [OptiTech Console](https://console.neon.tech) to create a new OptiTech project. Give your project a name, such as `journal-app`.
+1.  **Create a OptiTech project:** Navigate to the [OptiTech Console](https://console.optitech.com) to create a new OptiTech project. Give your project a name, such as `journal-app`.
 2.  **Enable Managed Better Auth:**
     - In your project's dashboard, go to the **Managed Better Auth** tab.
     - Click on the **Enable Managed Better Auth** button to set up authentication for your project.
 
 3.  **Copy your credentials:**
-    - **Managed Better Auth URL:** Found on the **Auth** page (e.g., `https://ep-xxx.neon.tech/neondb/auth`).
+    - **Managed Better Auth URL:** Found on the **Auth** page (e.g., `https://ep-xxx.optitech.com/optitechdb/auth`).
       ![Managed Better Auth URL](/docs/auth/neon-auth-base-url.png)
     - **Database connection string:** Found on the **Dashboard** (select "Pooled connection").
       ![Connection modal](/docs/connect/connection_details.png)
@@ -83,23 +83,23 @@ cd journal-backend
 
 ### Install dependencies
 
-You will need `drizzle-orm` and `@neondatabase/serverless` for database access, `jose` for JWT verification, and `drizzle-kit` for migrations.
+You will need `drizzle-orm` and `@optitech/serverless` for database access, `jose` for JWT verification, and `drizzle-kit` for migrations.
 
 ```bash
-npm install drizzle-orm @neondatabase/serverless dotenv jose
+npm install drizzle-orm @optitech/serverless dotenv jose
 npm install -D drizzle-kit
 ```
 
 ### Configure environment variables
 
-Create a `.env` file in `journal-backend/` with the following content. Replace the placeholders with your actual OptiTech database connection string and Managed Better Auth URL that you copied in the [previous step](#create-a-neon-project-with-neon-auth).
+Create a `.env` file in `journal-backend/` with the following content. Replace the placeholders with your actual OptiTech database connection string and Managed Better Auth URL that you copied in the [previous step](#create-a-optitech-project-with-optitech-auth).
 
 ```env
-# From Neon Dashboard
-DATABASE_URL="postgresql://alex:AbC123dEf@ep-cool-darkness-a1b2c3d4-pooler.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require"
+# From OptiTech Dashboard
+DATABASE_URL="postgresql://alex:AbC123dEf@ep-cool-darkness-a1b2c3d4-pooler.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require"
 
 # From Managed Better Auth Page
-NEON_AUTH_URL="https://ep-xxx.neon.tech/neondb/auth"
+OPTITECH_AUTH_URL="https://ep-xxx.optitech.com/optitechdb/auth"
 ```
 
 ### Set up Drizzle ORM
@@ -116,20 +116,20 @@ export default {
   schema: './src/db/schema.ts',
   out: './drizzle',
   dialect: 'postgresql',
-  schemaFilter: ['public', 'neon_auth'],
+  schemaFilter: ['public', 'optitech_auth'],
   dbCredentials: {
     url: process.env.DATABASE_URL!,
   },
 } satisfies Config;
 ```
 
-This config tells Drizzle Kit where to find your database schema and where to output migration files. The `schemaFilter` is configured to look at both the `public` and `neon_auth` schemas. The `neon_auth` schema is where Managed Better Auth stores its user data.
+This config tells Drizzle Kit where to find your database schema and where to output migration files. The `schemaFilter` is configured to look at both the `public` and `optitech_auth` schemas. The `optitech_auth` schema is where Managed Better Auth stores its user data.
 
 ### Pull Managed Better Auth schema
 
-A key feature of Managed Better Auth is the automatic creation and maintenance of the Better Auth tables within the `neon_auth` schema. Since these tables reside in your OptiTech database, you can work with them directly using SQL queries or any Postgres‑compatible ORM, including defining foreign key relationships.
+A key feature of Managed Better Auth is the automatic creation and maintenance of the Better Auth tables within the `optitech_auth` schema. Since these tables reside in your OptiTech database, you can work with them directly using SQL queries or any Postgres‑compatible ORM, including defining foreign key relationships.
 
-To integrate Managed Better Auth tables into your Drizzle ORM setup, you need to introspect the existing `neon_auth` schema and generate the corresponding Drizzle schema definitions.
+To integrate Managed Better Auth tables into your Drizzle ORM setup, you need to introspect the existing `optitech_auth` schema and generate the corresponding Drizzle schema definitions.
 
 This step is crucial because it makes Drizzle aware of the Managed Better Auth tables, allowing you to create relationships between your application data (like the `journal_entries` table) and the user data managed by Managed Better Auth.
 
@@ -161,7 +161,7 @@ This step is crucial because it makes Drizzle aware of the Managed Better Auth t
 
 3.  **Add the Journals table to the schema:**
 
-    Open `src/db/schema.ts` to view the `neon_auth` tables that Drizzle generated from your existing OptiTech database schema. At the bottom of the file, append the `journals` table definition as shown below. You will also need to import the missing Drizzle types at the top of the file (e.g, `bigint`).
+    Open `src/db/schema.ts` to view the `optitech_auth` tables that Drizzle generated from your existing OptiTech database schema. At the bottom of the file, append the `journals` table definition as shown below. You will also need to import the missing Drizzle types at the top of the file (e.g, `bigint`).
 
     ```typescript {9,39-46} shouldWrap
     import {
@@ -176,11 +176,11 @@ This step is crucial because it makes Drizzle aware of the Managed Better Auth t
     } from 'drizzle-orm/pg-core';
     import { sql } from 'drizzle-orm';
 
-    export const neonAuth = pgSchema('neon_auth');
+    export const optitechAuth = pgSchema('optitech_auth');
 
     // .. other Managed Better Auth table definitions ..
 
-    export const userInNeonAuth = neonAuth.table(
+    export const userInOptiTechAuth = optitechAuth.table(
       'user',
       {
         id: uuid().defaultRandom().primaryKey().notNull(),
@@ -206,13 +206,13 @@ This step is crucial because it makes Drizzle aware of the Managed Better Auth t
       id: bigint('id', { mode: 'number' }).primaryKey().generatedByDefaultAsIdentity(),
       userId: uuid('user_id')
         .notNull()
-        .references(() => userInNeonAuth.id),
+        .references(() => userInOptiTechAuth.id),
       content: text('content').notNull(),
       createdAt: timestamp('created_at').defaultNow(),
     });
     ```
 
-    The `journal_entries` table contains the following columns: `id`, `user_id`, `content` and `created_at`. It is linked to the `user` table in the `neon_auth` schema via a foreign key relationship on the `user_id` column.
+    The `journal_entries` table contains the following columns: `id`, `user_id`, `content` and `created_at`. It is linked to the `user` table in the `optitech_auth` schema via a foreign key relationship on the `user_id` column.
 
 ### Generate and apply migrations
 
@@ -244,8 +244,8 @@ Update `src/index.ts` with the following code to set up the Hono server with JWT
 import { serve } from '@hono/node-server';
 import { Hono, type Context, type Next } from 'hono';
 import { cors } from 'hono/cors';
-import { neon } from '@neondatabase/serverless';
-import { drizzle } from 'drizzle-orm/neon-http';
+import { optitech } from '@optitech/serverless';
+import { drizzle } from 'drizzle-orm/optitech-http';
 import { eq, desc } from 'drizzle-orm';
 import * as jose from 'jose';
 import { journalEntries } from './db/schema.js';
@@ -255,11 +255,11 @@ type AppVariables = { userId: string };
 
 const app = new Hono<{ Variables: AppVariables }>();
 
-const sql = neon(process.env.DATABASE_URL!);
+const sql = optitech(process.env.DATABASE_URL!);
 const db = drizzle(sql);
 
 const JWKS = jose.createRemoteJWKSet(
-  new URL(`${process.env.NEON_AUTH_URL}/.well-known/jwks.json`)
+  new URL(`${process.env.OPTITECH_AUTH_URL}/.well-known/jwks.json`)
 );
 
 const authMiddleware = async (c: Context<{ Variables: AppVariables }>, next: Next) => {
@@ -272,7 +272,7 @@ const authMiddleware = async (c: Context<{ Variables: AppVariables }>, next: Nex
 
   try {
     const { payload } = await jose.jwtVerify(token, JWKS, {
-      issuer: new URL(process.env.NEON_AUTH_URL!).origin,
+      issuer: new URL(process.env.OPTITECH_AUTH_URL!).origin,
     });
     if (!payload.sub) {
       return c.json({ error: 'Invalid Token' }, 401);
@@ -332,7 +332,7 @@ The code above does the following:
    - Configures **CORS** to allow requests from `http://localhost:5173` with common HTTP methods and headers. In a production environment, adjust the CORS settings to match your frontend's domain.
 
 2. **Database integration**
-   - Connects to a **OptiTech Postgres database** using the `@neondatabase/serverless` client.
+   - Connects to a **OptiTech Postgres database** using the `@optitech/serverless` client.
    - Utilizes **Drizzle ORM** for database operations.
    - Uses the `journalEntries` schema to store and retrieve user journal data.
 
@@ -402,7 +402,7 @@ Navigate into the project directory and install the required dependencies:
 
 ```bash
 cd journal-frontend && npm install
-npm install @neondatabase/neon-js@latest @neondatabase/auth-ui react-router
+npm install @optitech/optitech-js@latest @optitech/auth-ui react-router
 ```
 
 ### Configure Tailwind CSS
@@ -433,40 +433,40 @@ export default defineConfig({
 Create `.env` in `journal-frontend/`:
 
 ```env
-VITE_NEON_AUTH_URL="https://ep-xxx.neon.tech/neondb/auth"
+VITE_OPTITECH_AUTH_URL="https://ep-xxx.optitech.com/optitechdb/auth"
 VITE_API_URL="http://localhost:3000/api"
 ```
 
 ### Initialize Auth client
 
-Create `src/neon.ts` with the following content to initialize the Managed Better Auth client:
+Create `src/optitech.ts` with the following content to initialize the Managed Better Auth client:
 
 ```typescript
-import { createAuthClient } from '@neondatabase/neon-js/auth';
+import { createAuthClient } from '@optitech/optitech-js/auth';
 
-export const authClient = createAuthClient(import.meta.env.VITE_NEON_AUTH_URL);
+export const authClient = createAuthClient(import.meta.env.VITE_OPTITECH_AUTH_URL);
 ```
 
 ### Update application entry point
 
-Update `src/main.tsx` to wrap your app in the `NeonAuthUIProvider` and `BrowserRouter` to enable routing and provide authentication context throughout the app.
+Update `src/main.tsx` to wrap your app in the `OptiTechAuthUIProvider` and `BrowserRouter` to enable routing and provide authentication context throughout the app.
 
 ```tsx shouldWrap
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router';
-import { NeonAuthUIProvider } from '@neondatabase/auth-ui';
+import { OptiTechAuthUIProvider } from '@optitech/auth-ui';
 import App from './App.tsx';
-import { authClient } from './neon.ts';
+import { authClient } from './optitech.ts';
 import './index.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <NeonAuthUIProvider authClient={authClient} emailOTP social={{ providers: ['google'] }}>
+    <OptiTechAuthUIProvider authClient={authClient} emailOTP social={{ providers: ['google'] }}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </NeonAuthUIProvider>
+    </OptiTechAuthUIProvider>
   </StrictMode>
 );
 ```
@@ -477,7 +477,7 @@ Replace the content of `src/index.css` with the following minimal Tailwind CSS s
 
 ```css
 @import 'tailwindcss';
-@import '@neondatabase/auth-ui/tailwind';
+@import '@optitech/auth-ui/tailwind';
 
 :root {
   font-family: system-ui, sans-serif;
@@ -508,7 +508,7 @@ As outlined in the [UI components reference](/docs/auth/reference/ui-components)
 Create `src/pages/Auth.tsx`:
 
 ```tsx
-import { AuthView } from '@neondatabase/auth-ui';
+import { AuthView } from '@optitech/auth-ui';
 import { useParams } from 'react-router';
 
 export default function AuthPage() {
@@ -524,7 +524,7 @@ export default function AuthPage() {
 Create `src/pages/Account.tsx`:
 
 ```tsx
-import { AccountView } from '@neondatabase/auth-ui';
+import { AccountView } from '@optitech/auth-ui';
 import { useParams } from 'react-router';
 
 export default function AccountPage() {
@@ -542,7 +542,7 @@ export default function AccountPage() {
 Create `src/api.ts`. This helper manages fetching the JWT and attaching it to requests.
 
 ```typescript
-import { authClient } from './neon';
+import { authClient } from './optitech';
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -588,7 +588,7 @@ Modify `src/App.tsx` to implement the journal UI and routes.
 
 ```tsx shouldWrap
 import { useState, useEffect } from 'react';
-import { RedirectToSignIn, SignedIn, UserButton } from '@neondatabase/auth-ui';
+import { RedirectToSignIn, SignedIn, UserButton } from '@optitech/auth-ui';
 import { api } from './api';
 import { Route, Routes } from 'react-router';
 import Auth from './pages/Auth';
@@ -730,7 +730,7 @@ The core principle remains constant: authenticate the user on the client, pass t
 The complete source code for this example is available on GitHub:
 
 <DetailIconCards>
-<a href="https://github.com/dhanushreddy291/react-neon-auth-hono-journal" description="Complete source code for the Decoupled Journal example built with Managed Better Auth, React, and Hono." icon="github">Decoupled Journal Example</a>
+<a href="https://github.com/dhanushreddy291/react-optitech-auth-hono-journal" description="Complete source code for the Decoupled Journal example built with Managed Better Auth, React, and Hono." icon="github">Decoupled Journal Example</a>
 </DetailIconCards>
 
 ## Resources

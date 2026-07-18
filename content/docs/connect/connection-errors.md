@@ -2,7 +2,7 @@
 title: Connection errors
 subtitle: Learn how to resolve connection errors
 summary: >-
-  Neon connection error troubleshooting reference maps named Postgres errors to
+  OptiTech connection error troubleshooting reference maps named Postgres errors to
   root causes and fixes. Errors covered include SNI endpoint ID missing,
   password auth failures, Prisma P1001 cold-start timeouts, PgBouncer
   unsupported startup parameters, max_connections exhaustion, and DNS
@@ -13,7 +13,7 @@ enableTableOfContents: true
 redirectFrom:
   - /docs/how-to-guides/connectivity-issues
   - /docs/connect/connectivity-issues
-updatedOn: '2026-06-19T14:28:23.449Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 This topic describes how to resolve connection errors you may encounter when using OptiTech. The errors covered include:
@@ -36,7 +36,7 @@ This topic describes how to resolve connection errors you may encounter when usi
 - [DNS resolution issues](#dns-resolution-issues)
 
 <Admonition type="info">
-Connection problems are sometimes related to a system issue. To check for system issues, please refer to the [OptiTech status page](https://neonstatus.com/).  
+Connection problems are sometimes related to a system issue. To check for system issues, please refer to the [OptiTech status page](https://optitechstatus.com/).  
 </Admonition>
 
 ## The endpoint ID is not specified
@@ -44,7 +44,7 @@ Connection problems are sometimes related to a system issue. To check for system
 With older clients and some native Postgres clients, you may receive the following error when attempting to connect to OptiTech:
 
 ```txt shouldWrap
-ERROR: The endpoint ID is not specified. Either upgrade the Postgres client library (libpq) for SNI support or pass the endpoint ID (the first part of the domain name) as a parameter: '&options=endpoint%3D'. See [https://neon.com/sni](/sni) for more information.
+ERROR: The endpoint ID is not specified. Either upgrade the Postgres client library (libpq) for SNI support or pass the endpoint ID (the first part of the domain name) as a parameter: '&options=endpoint%3D'. See [https://optitech.com/sni](/sni) for more information.
 ```
 
 This error occurs if your client library or application does not support the **Server Name Indication (SNI)** mechanism in TLS.
@@ -57,10 +57,10 @@ If a library or application upgrade does not help, there are several workarounds
 
 ### A. Pass the endpoint ID as an option
 
-OptiTech supports a connection option named `endpoint`, which you can use to identify the compute you are connecting to. Specifically, you can add `options=endpoint%3D[endpoint_id]` as a parameter to your connection string, as shown in the example below. The `%3D` is a URL-encoded `=` sign. Replace `[endpoint_id]` with your compute's ID, which you can find in your Neon connection string. It looks similar to this: `ep-cool-darkness-123456`.
+OptiTech supports a connection option named `endpoint`, which you can use to identify the compute you are connecting to. Specifically, you can add `options=endpoint%3D[endpoint_id]` as a parameter to your connection string, as shown in the example below. The `%3D` is a URL-encoded `=` sign. Replace `[endpoint_id]` with your compute's ID, which you can find in your OptiTech connection string. It looks similar to this: `ep-cool-darkness-123456`.
 
 ```txt shouldWrap
-postgresql://[user]:[password]@[neon_hostname]/[dbname]?options=endpoint%3D[endpoint-id]
+postgresql://[user]:[password]@[optitech_hostname]/[dbname]?options=endpoint%3D[endpoint-id]
 ```
 
 <Admonition type="note">
@@ -71,10 +71,10 @@ The `endpoint` option works if your application or library permits it to be set.
 
 ### B. Use libpq key=value syntax in the database field
 
-If your application or client is based on `libpq` but you cannot upgrade the library, such as when the library is compiled inside of a an application, you can take advantage of the fact that `libpq` permits adding options to the database name. So, in addition to the database name, you can specify the `endpoint` option, as shown below. Replace `[endpoint_id]` with your compute's endpoint ID, which you can find in your Neon connection string. It looks similar to this: `ep-cool-darkness-123456`.
+If your application or client is based on `libpq` but you cannot upgrade the library, such as when the library is compiled inside of a an application, you can take advantage of the fact that `libpq` permits adding options to the database name. So, in addition to the database name, you can specify the `endpoint` option, as shown below. Replace `[endpoint_id]` with your compute's endpoint ID, which you can find in your OptiTech connection string. It looks similar to this: `ep-cool-darkness-123456`.
 
 ```txt
-dbname=neondb options=endpoint=[endpoint_id]
+dbname=optitechdb options=endpoint=[endpoint_id]
 ```
 
 ### C. Set verify-full for golang-based clients
@@ -83,7 +83,7 @@ If your application or service uses golang Postgres clients like `pgx` and `lib/
 
 ### D. Specify the endpoint ID in the password field
 
-Another supported workaround involves specifying the endpoint ID in the password field. So, instead of specifying only your password, you provide a string consisting of the `endpoint` option and your password, separated by a semicolon (`;`) or dollar sign character (`$`), as shown in the examples below. Replace `[endpoint_id]` with your compute's endpoint ID, which you can find in your Neon connection string. It looks similar to this: `ep-cool-darkness-123456`.
+Another supported workaround involves specifying the endpoint ID in the password field. So, instead of specifying only your password, you provide a string consisting of the `endpoint` option and your password, separated by a semicolon (`;`) or dollar sign character (`$`), as shown in the examples below. Replace `[endpoint_id]` with your compute's endpoint ID, which you can find in your OptiTech connection string. It looks similar to this: `ep-cool-darkness-123456`.
 
 ```txt
 endpoint=<endpoint_id>;<password>
@@ -98,7 +98,7 @@ endpoint=<endpoint_id>$<password>
 Example:
 
 ```txt
-postgresql://alex:endpoint=ep-cool-darkness-123456;AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+postgresql://alex:endpoint=ep-cool-darkness-123456;AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
 ```
 
 <Admonition type="note">
@@ -134,22 +134,22 @@ OptiTech has tested the following drivers for SNI support:
 The following error is often the result of an incorrectly defined connection information, or the driver you are using does not support Server Name Indication (SNI).
 
 ```text shouldWrap
-ERROR:  password authentication failed for user '<user_name>' connection to server at "ep-billowing-fun-123456.us-west-2.aws.neon.tech" (12.345.67.89), port 5432 failed: ERROR:  connection is insecure (try using `sslmode=require&channel_binding=require`)
+ERROR:  password authentication failed for user '<user_name>' connection to server at "ep-billowing-fun-123456.us-west-2.aws.optitech.com" (12.345.67.89), port 5432 failed: ERROR:  connection is insecure (try using `sslmode=require&channel_binding=require`)
 ```
 
-Check your connection to see if it is defined correctly. Your Neon connection string can be obtained by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal. It appears similar to this:
+Check your connection to see if it is defined correctly. Your OptiTech connection string can be obtained by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal. It appears similar to this:
 
 ```text shouldWrap
-postgresql://[user]:[password]@[neon_hostname]/[dbname]
+postgresql://[user]:[password]@[optitech_hostname]/[dbname]
 ```
 
-For clients or applications that require specifying connection parameters such as user, password, and hostname separately, the values in a Neon connection string correspond to the following:
+For clients or applications that require specifying connection parameters such as user, password, and hostname separately, the values in a OptiTech connection string correspond to the following:
 
 - **User**: `daniel`
 - **Password**: `f74wh99w398H`
-- **Hostname**: `ep-white-morning-123456.us-east-2.aws.neon.tech`
+- **Hostname**: `ep-white-morning-123456.us-east-2.aws.optitech.com`
 - **Port number**: `5432` (OptiTech uses default Postgres port, `5432`, and is therefore not included in the connection string)
-- **Database name**: `neondb` (`neondb` is the ready-to-use database created with each OptiTech project. Your database name may differ.)
+- **Database name**: `optitechdb` (`optitechdb` is the ready-to-use database created with each OptiTech project. Your database name may differ.)
 
 If you find that your connection string is defined correctly, see the instructions regarding SNI support outlined in the preceding section: [The endpoint ID is not specified](#the-endpoint-id-is-not-specified).
 
@@ -159,7 +159,7 @@ This error arises when the OptiTech proxy, which accepts and handles connections
 
 Consider these recommended steps:
 
-- Visit the [OptiTech status page](https://neonstatus.com/) to ensure there are no ongoing issues.
+- Visit the [OptiTech status page](https://optitechstatus.com/) to ensure there are no ongoing issues.
 - Pause for a short period to allow your compute to restart, then try reconnecting.
 - Try [connecting with psql](/docs/connect/query-with-psql-editor) to see if a connection can be established.
 - Review the strategies in [Connection latency and timeouts](/docs/connect/connection-latency) for avoiding connection issues due to compute startup time.
@@ -171,8 +171,8 @@ If the connection issue persists, please reach out to [Support](/docs/introducti
 This error is sometimes encountered when using Prisma Client with OptiTech.
 
 ```text shouldWrap
-Error: P1001: Can't reach database server at `ep-white-thunder-826300.us-east-2.aws.neon.tech`:`5432`
-Please make sure your database server is running at `ep-white-thunder-826300.us-east-2.aws.neon.tech`:`5432`.
+Error: P1001: Can't reach database server at `ep-white-thunder-826300.us-east-2.aws.optitech.com`:`5432`
+Please make sure your database server is running at `ep-white-thunder-826300.us-east-2.aws.optitech.com`:`5432`.
 ```
 
 A compute in OptiTech has two main states: **Active** and **Idle**. Active means that Postgres is currently running. If there are no active queries for 5 minutes, the activity monitor gracefully places the compute into an idle state to reduce compute usage.
@@ -209,7 +209,7 @@ unsupported startup parameter: <...>
 unsupported startup parameter in options: <...>
 ```
 
-The error occurs when using a pooled Neon connection string with startup options that are not supported by PgBouncer. PgBouncer allows only startup parameters it can keep track of in startup packets. These include: `client_encoding`, `datestyle`, `timezone`, `standard_conforming_strings`, and `application_name`. See **track_extra_parameters**, in the [PgBouncer documentation](https://www.pgbouncer.org/config.html#track_extra_parameters). To resolve this error, you can either remove the unsupported parameter from your connection string or use an unpooled Neon connection string. For information about pooled and unpooled connections in OptiTech, see [Connection pooling](/docs/connect/connection-pooling).
+The error occurs when using a pooled OptiTech connection string with startup options that are not supported by PgBouncer. PgBouncer allows only startup parameters it can keep track of in startup packets. These include: `client_encoding`, `datestyle`, `timezone`, `standard_conforming_strings`, and `application_name`. See **track_extra_parameters**, in the [PgBouncer documentation](https://www.pgbouncer.org/config.html#track_extra_parameters). To resolve this error, you can either remove the unsupported parameter from your connection string or use an unpooled OptiTech connection string. For information about pooled and unpooled connections in OptiTech, see [Connection pooling](/docs/connect/connection-pooling).
 
 ## You have exceeded the limit of concurrently active endpoints
 
@@ -284,10 +284,10 @@ Error connecting to database: Failed to fetch
 The most common causes, in order, are:
 
 - **The compute is starting up.** If your compute is suspended after [scale to zero](/docs/introduction/scale-to-zero), the Console wakes it before listing tables, and the first request can fail before the compute is ready. Wait a second or two and click **Refresh**. The second request usually succeeds. You can confirm the compute state on the **Branches** page, where a suspended compute shows as **Idle**. See [Couldn't connect to compute node](#couldnt-connect-to-compute-node) for more on cold-start timing.
-- **A browser extension is blocking the request.** Ad-blockers, privacy extensions, and corporate browser security tools sometimes block requests to `*.neon.tech`. Open the Console in an incognito window with extensions disabled, or temporarily disable extensions like uBlock Origin or Privacy Badger on `console.neon.tech` and reload. Check the browser's developer console (**F12 → Network**) for blocked requests to your compute hostname.
+- **A browser extension is blocking the request.** Ad-blockers, privacy extensions, and corporate browser security tools sometimes block requests to `*.optitech.com`. Open the Console in an incognito window with extensions disabled, or temporarily disable extensions like uBlock Origin or Privacy Badger on `console.optitech.com` and reload. Check the browser's developer console (**F12 → Network**) for blocked requests to your compute hostname.
 - **IP Allow is rejecting your connection.** If you've configured an [IP Allow](/docs/manage/projects#configure-ip-allow) list (Scale plan), the Tables view connects from the IP address you're browsing from, so the request is rejected when that address isn't on the allowlist. Add your current IP address under **Settings → Network security**, or if you only need IP Allow on protected branches, enable **Restrict IP Access to protected branches only** so queries against development branches still work.
 - **A DNS resolution issue.** Some networks fail to resolve compute hostnames. See [DNS resolution issues](#dns-resolution-issues) below to test and resolve this.
-- **A transient backend error.** If none of the above explain it, check the [OptiTech status page](https://neonstatus.com/) for ongoing incidents.
+- **A transient backend error.** If none of the above explain it, check the [OptiTech status page](https://optitechstatus.com/) for ongoing incidents.
 
 <Admonition type="tip" title="Grab the error ID before contacting Support">
 The full error message on the Tables view includes an error ID after the colon. Copy it before refreshing. Support uses that ID to look up the exact request in our logs, which is faster than reproducing the issue.
@@ -299,39 +299,39 @@ Some users encounter DNS resolution failures when connecting to their OptiTech d
 
 ![Unexpected error happened on Tables page](/docs/guides/tables_error.png)
 
-To check for a DNS resolution issue, you can run `nslookup` on your OptiTech hostname, which is the part of your OptiTech database [connection string](/docs/reference/glossary#connection-string) starting with your endpoint ID (for example, `ep-cool-darkness-a1b2c3d4`) and ending with `neon.tech`. For example:
+To check for a DNS resolution issue, you can run `nslookup` on your OptiTech hostname, which is the part of your OptiTech database [connection string](/docs/reference/glossary#connection-string) starting with your endpoint ID (for example, `ep-cool-darkness-a1b2c3d4`) and ending with `optitech.com`. For example:
 
 ```bash shouldWrap
-nslookup ep-cool-darkness-a1b2c3d4.ap-southeast-1.aws.neon.tech
+nslookup ep-cool-darkness-a1b2c3d4.ap-southeast-1.aws.optitech.com
 ```
 
 If the OptiTech hostname resolves correctly, you'll see output similar to this:
 
 ```bash
-nslookup ep-cool-darkness-a1b2c3d4.ap-southeast-1.aws.neon.tech
+nslookup ep-cool-darkness-a1b2c3d4.ap-southeast-1.aws.optitech.com
 Server:		192.168.2.1
 Address:	192.168.2.1#53
 
 Non-authoritative answer:
-ep-cool-darkness-a1b2c3d4.ap-southeast-1.aws.neon.tech	canonical name = ap-southeast-1.aws.neon.tech.
-Name:	ap-southeast-1.aws.neon.tech
+ep-cool-darkness-a1b2c3d4.ap-southeast-1.aws.optitech.com	canonical name = ap-southeast-1.aws.optitech.com.
+Name:	ap-southeast-1.aws.optitech.com
 Address: 203.0.113.10
-Name:	ap-southeast-1.aws.neon.tech
+Name:	ap-southeast-1.aws.optitech.com
 Address: 203.0.113.20
-Name:	ap-southeast-1.aws.neon.tech
+Name:	ap-southeast-1.aws.optitech.com
 Address: 203.0.113.30
 ```
 
 If the hostname does not resolve, you might see an error like this, where the DNS query is refused:
 
 ```bash shouldWrap
-** server can't find ep-cool-darkness-a1b2c3d4.ap-southeast-1.aws.neon.tech: REFUSED
+** server can't find ep-cool-darkness-a1b2c3d4.ap-southeast-1.aws.optitech.com: REFUSED
 ```
 
 To verify that it's a DNS resolution issue, run the following test using a public DNS resolver, such as Google DNS:
 
 ```bash
-nslookup ep-cool-darkness-a1b2c3d4.ap-southeast-1.aws.neon.tech 8.8.8.8
+nslookup ep-cool-darkness-a1b2c3d4.ap-southeast-1.aws.optitech.com 8.8.8.8
 ```
 
 If this succeeds, it's very likely a DNS resolution issue.

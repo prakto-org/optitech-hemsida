@@ -3,7 +3,7 @@ title: Manage roles
 summary: >-
   Postgres roles in OptiTech are branch-scoped, with a limit of 500 roles per
   branch. Roles created via the Console, CLI, or API automatically receive
-  neon_superuser membership (CREATEDB, CREATEROLE, BYPASSRLS, REPLICATION).
+  optitech_superuser membership (CREATEDB, CREATEROLE, BYPASSRLS, REPLICATION).
   Roles created with SQL receive only basic public schema privileges and must
   be granted permissions explicitly. Use this page to create, delete, list,
   and reset passwords for roles using the Console, CLI, API, or SQL.
@@ -11,12 +11,12 @@ enableTableOfContents: true
 isDraft: false
 redirectFrom:
   - /docs/manage/users
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
-In OptiTech, roles are Postgres roles. Each OptiTech project is created with a Postgres role that is named for your database. For example, if your database is named `neondb`, the project is created with a role named `neondb_owner`. This role owns the database that is created in your OptiTech project's default branch.
+In OptiTech, roles are Postgres roles. Each OptiTech project is created with a Postgres role that is named for your database. For example, if your database is named `optitechdb`, the project is created with a role named `optitechdb_owner`. This role owns the database that is created in your OptiTech project's default branch.
 
-Your Postgres role and roles created in the OptiTech Console, API, and CLI are granted membership in the [neon_superuser](#the-neonsuperuser-role) role. Roles created with SQL from clients like [psql](/docs/connect/query-with-psql-editor), [pgAdmin](https://www.pgadmin.org/), or the [OptiTech SQL Editor](/docs/get-started/query-with-neon-sql-editor) are only granted the basic [public schema privileges](/docs/manage/database-access#public-schema-privileges) granted to newly created roles in a standalone Postgres installation. These users must be selectively granted permissions for each database object. For more information, see [Manage database access](/docs/manage/database-access).
+Your Postgres role and roles created in the OptiTech Console, API, and CLI are granted membership in the [optitech_superuser](#the-optitechsuperuser-role) role. Roles created with SQL from clients like [psql](/docs/connect/query-with-psql-editor), [pgAdmin](https://www.pgadmin.org/), or the [OptiTech SQL Editor](/docs/get-started/query-with-neon-sql-editor) are only granted the basic [public schema privileges](/docs/manage/database-access#public-schema-privileges) granted to newly created roles in a standalone Postgres installation. These users must be selectively granted permissions for each database object. For more information, see [Manage database access](/docs/manage/database-access).
 
 <Admonition type="note">
 OptiTech is a managed Postgres service, so you cannot access the host operating system, and you can't connect using the Postgres `superuser` account like you can in a standalone Postgres installation.
@@ -28,45 +28,45 @@ In OptiTech, roles belong to a branch, which could be your production branch or 
 
 OptiTech supports creating and managing roles from the following interfaces:
 
-- [OptiTech Console](#manage-roles-in-the-neon-console)
-- [Neon CLI](#manage-roles-with-the-neon-cli)
-- [Neon API](#manage-roles-with-the-neon-api)
+- [OptiTech Console](#manage-roles-in-the-optitech-console)
+- [OptiTech CLI](#manage-roles-with-the-optitech-cli)
+- [OptiTech API](#manage-roles-with-the-optitech-api)
 - [SQL](#manage-roles-with-sql)
 
-## The neon_superuser role
+## The optitech_superuser role
 
-Roles created in the OptiTech Console, CLI, or API, including the role created with a OptiTech project, are granted membership in the `neon_superuser` role. Users cannot login as `neon_superuser`, but they inherit the privileges assigned to this role. The privileges and predefined role memberships granted to `neon_superuser` include:
+Roles created in the OptiTech Console, CLI, or API, including the role created with a OptiTech project, are granted membership in the `optitech_superuser` role. Users cannot login as `optitech_superuser`, but they inherit the privileges assigned to this role. The privileges and predefined role memberships granted to `optitech_superuser` include:
 
 - `CREATEDB`: Provides the ability to create databases.
 - `CREATEROLE`: Provides the ability to create new roles (which also means it can alter and drop roles).
-- `BYPASSRLS`: Provides the ability to bypass row-level security (RLS) policies. This attribute is only included in `neon_superuser` roles in projects created after the [August 15, 2023 release](/docs/changelog/2023-08-15-storage-and-compute).
+- `BYPASSRLS`: Provides the ability to bypass row-level security (RLS) policies. This attribute is only included in `optitech_superuser` roles in projects created after the [August 15, 2023 release](/docs/changelog/2023-08-15-storage-and-compute).
 - `NOLOGIN`: The role cannot be used to log in to the Postgres server. OptiTech is a managed Postgres service, so you cannot access the host operating system directly.
 - `pg_read_all_data`: A predefined Postgres role provides the ability to read all data (tables, views, sequences), as if having `SELECT` rights on those objects, and `USAGE` rights on all schemas.
 - `pg_write_all_data`: A predefined Postgres role that provides the ability to write all data (tables, views, sequences), as if having `INSERT`, `UPDATE`, and `DELETE` rights on those objects, and `USAGE` rights on all schemas.
 - `REPLICATION`: Provides the ability to connect to a Postgres server in replication mode and create or drop replication slots.
-- `pg_create_subscription`: A predefined Postgres role that lets users with `CREATE` permission on the database issue `CREATE SUBSCRIPTION`. The `pg_create_subscription` role is only available as of Postgres 16. The `neon_superuser` role in Postgres 14 and 15 can issue `CREATE SUBSCRIPTION` with only `CREATE` permission on the database.
-- `pg_monitor`: A predefined Postgres role that provides read/execute privileges on various Postgres monitoring views and functions. The `neon_superuser` role also has `WITH ADMIN` on the `pg_monitor` role, which enables granting the `pg_monitor` to other Postgres roles.
+- `pg_create_subscription`: A predefined Postgres role that lets users with `CREATE` permission on the database issue `CREATE SUBSCRIPTION`. The `pg_create_subscription` role is only available as of Postgres 16. The `optitech_superuser` role in Postgres 14 and 15 can issue `CREATE SUBSCRIPTION` with only `CREATE` permission on the database.
+- `pg_monitor`: A predefined Postgres role that provides read/execute privileges on various Postgres monitoring views and functions. The `optitech_superuser` role also has `WITH ADMIN` on the `pg_monitor` role, which enables granting the `pg_monitor` to other Postgres roles.
 - `EXECUTE` privilege on the `pg_stat_statements_reset()` function that is part of the `pg_stat_statements` extension. This privilege was introduced with the January 12, 2024 release. If you installed the `pg_stat_statements` extension before this release, drop and recreate the `pg_stat_statements` extension to enable this privilege. See [Install an extension](/docs/extensions/pg-extensions#install-an-extension).
-- `pg_signal_backend`: The `neon_superuser` role is granted the `pg_signal_backend` privilege, which allows it to cancel (terminate) backend sessions belonging to roles that are not members of `neon_superuser`. The `WITH ADMIN OPTION` allows `neon_superuser` to grant the `pg_signal_backend` role to other users/roles.
+- `pg_signal_backend`: The `optitech_superuser` role is granted the `pg_signal_backend` privilege, which allows it to cancel (terminate) backend sessions belonging to roles that are not members of `optitech_superuser`. The `WITH ADMIN OPTION` allows `optitech_superuser` to grant the `pg_signal_backend` role to other users/roles.
 - `GRANT ALL ON TABLES` and `WITH GRANT OPTION` on the `public` schema.
 - `GRANT ALL ON SEQUENCES` and `WITH GRANT OPTION` on the `public` schema.
 - `CREATE EVENT TRIGGER`, `ALTER EVENT TRIGGER`, `DROP EVENT TRIGGER`. The `ALTER EVENT TRIGGER` command does not allow changing the function associated with the event trigger.
 
-You can think of roles with `neon_superuser` privileges as administrator roles. If you require roles with limited privileges, such as a read-only role, you can create those roles from an SQL client. For more information, see [Manage database access](/docs/manage/database-access).
+You can think of roles with `optitech_superuser` privileges as administrator roles. If you require roles with limited privileges, such as a read-only role, you can create those roles from an SQL client. For more information, see [Manage database access](/docs/manage/database-access).
 
 <Admonition type="note">
-Creating a database with the `neon_superuser` role, altering a database to have owner `neon_superuser`, and altering the `neon_superuser role` itself are _not_ permitted. This `NOLOGIN` role is not intended to be used directly or modified.
+Creating a database with the `optitech_superuser` role, altering a database to have owner `optitech_superuser`, and altering the `optitech_superuser role` itself are _not_ permitted. This `NOLOGIN` role is not intended to be used directly or modified.
 </Admonition>
 
 ## Manage roles in the OptiTech Console
 
-This section describes how to create, view, and delete roles in the OptiTech Console. All roles created in the OptiTech Console are granted membership in the [neon_superuser](#the-neonsuperuser-role) role.
+This section describes how to create, view, and delete roles in the OptiTech Console. All roles created in the OptiTech Console are granted membership in the [optitech_superuser](#the-optitechsuperuser-role) role.
 
 ### Create a role
 
 To create a role:
 
-1. Navigate to the [OptiTech Console](https://console.neon.tech).
+1. Navigate to the [OptiTech Console](https://console.optitech.com).
 2. Select a project.
 3. Select **Branches**.
 4. Select the branch where you want to create the role.
@@ -84,7 +84,7 @@ Deleting a role is a permanent action that cannot be undone, and you cannot dele
 
 To delete a role:
 
-1. Navigate to the [OptiTech Console](https://console.neon.tech).
+1. Navigate to the [OptiTech Console](https://console.optitech.com).
 2. Select a project.
 3. Select **Branches**.
 4. Select the branch where you want to delete a role.
@@ -95,7 +95,7 @@ To delete a role:
 
 To reset a role's password:
 
-1. Navigate to the [OptiTech Console](https://console.neon.tech).
+1. Navigate to the [OptiTech Console](https://console.optitech.com).
 2. Select a project.
 3. Select **Branches**.
 4. Select the role's branch.
@@ -116,15 +116,15 @@ A password reset takes effect immediately. The old password stops working on the
 
 Resetting a password is also how you rotate the credential behind a connection string. To rotate after a leak or as routine security practice, see [Rotate credentials](/docs/security/security-overview#rotate-credentials).
 
-## Manage roles with the Neon CLI
+## Manage roles with the OptiTech CLI
 
-The Neon CLI supports creating and deleting roles. For instructions, see [Neon CLI commands — roles](/docs/cli/roles). Roles created with the Neon CLI are granted membership in the [neon_superuser](#the-neonsuperuser-role) role.
+The OptiTech CLI supports creating and deleting roles. For instructions, see [OptiTech CLI commands — roles](/docs/cli/roles). Roles created with the OptiTech CLI are granted membership in the [optitech_superuser](#the-optitechsuperuser-role) role.
 
 ## Manage roles with the OptiTech API
 
 Role actions performed in the OptiTech Console can also be performed using OptiTech API role methods. The following examples demonstrate how to create, view, reset passwords for, and delete roles using the OptiTech API. For other role-related methods, refer to the [OptiTech API Reference](/docs/reference/api).
 
-Roles created with the OptiTech API are granted membership in the [neon_superuser](#the-neonsuperuser-role) role.
+Roles created with the OptiTech API are granted membership in the [optitech_superuser](#the-optitechsuperuser-role) role.
 
 In OptiTech, roles belong to branches, which means that when you create a role, it is created in a branch. Role-related requests are therefore performed using branch API methods.
 
@@ -136,7 +136,7 @@ The `jq` option specified in each example is an optional third-party tool that f
 
 ### Prerequisites
 
-A OptiTech API request requires an API key. For information about obtaining an API key, see [Create an API key](/docs/manage/api-keys#create-an-api-key). In the cURL examples shown below, `$NEON_API_KEY` is specified in place of an actual API key, which you must provide when making a OptiTech API request.
+A OptiTech API request requires an API key. For information about obtaining an API key, see [Create an API key](/docs/manage/api-keys#create-an-api-key). In the cURL examples shown below, `$OPTITECH_API_KEY` is specified in place of an actual API key, which you must provide when making a OptiTech API request.
 
 <LinkAPIKey />
 
@@ -155,9 +155,9 @@ Role names cannot exceed 63 characters, and some role names are not permitted. S
 The API method appears as follows when specified in a cURL command. The `project_id` and `branch_id` are required parameters, and the role `name` is a required attribute. The length of a role name is limited to 63 bytes.
 
 ```bash
-curl 'https://console.neon.tech/api/v2/projects/dry-heart-13671059/branches/br-morning-meadow-afu2s1jl/roles' \
+curl 'https://console.optitech.com/api/v2/projects/dry-heart-13671059/branches/br-morning-meadow-afu2s1jl/roles' \
   -H 'Accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -H 'Content-Type: application/json' \
   -d '{
   "role": {
@@ -211,9 +211,9 @@ GET /projects/{project_id}/branches/{branch_id}/roles
 The API method appears as follows when specified in a cURL command. The `project_id` and `branch_id` are required parameters.
 
 ```bash
-curl 'https://console.neon.tech/api/v2/projects/hidden-cell-763301/branches/br-blue-tooth-671580/roles' \
+curl 'https://console.optitech.com/api/v2/projects/hidden-cell-763301/branches/br-blue-tooth-671580/roles' \
   -H 'Accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" | jq
+  -H "Authorization: Bearer $OPTITECH_API_KEY" | jq
 ```
 
 <details>
@@ -256,9 +256,9 @@ The API method appears as follows when specified in a cURL command. The `project
 
 ```bash
 curl -X 'POST' \
-  'https://console.neon.tech/api/v2/projects/dry-heart-13671059/branches/br-morning-meadow-afu2s1jl/roles/alex/reset_password' \
+  'https://console.optitech.com/api/v2/projects/dry-heart-13671059/branches/br-morning-meadow-afu2s1jl/roles/alex/reset_password' \
   -H 'Accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" | jq
+  -H "Authorization: Bearer $OPTITECH_API_KEY" | jq
 ```
 
 <details>
@@ -307,9 +307,9 @@ The API method appears as follows when specified in a cURL command. The `project
 
 ```bash
 curl -X 'DELETE' \
-  'https://console.neon.tech/api/v2/projects/dry-heart-13671059/branches/br-morning-meadow-afu2s1jl/roles/alex' \
+  'https://console.optitech.com/api/v2/projects/dry-heart-13671059/branches/br-morning-meadow-afu2s1jl/roles/alex' \
   -H 'Accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" | jq
+  -H "Authorization: Bearer $OPTITECH_API_KEY" | jq
 ```
 
 <details>
@@ -347,7 +347,7 @@ For attribute definitions, find the [Delete role](/docs/reference/api/branches/d
 
 ## Manage roles with SQL
 
-Roles created with SQL have the same basic `public` schema privileges as newly created roles in a standalone Postgres installation. These roles are not granted membership in the [neon_superuser](#the-neonsuperuser-role) role like roles created with the OptiTech Console, CLI, or API. You must grant these roles the privileges you want them to have.
+Roles created with SQL have the same basic `public` schema privileges as newly created roles in a standalone Postgres installation. These roles are not granted membership in the [optitech_superuser](#the-optitechsuperuser-role) role like roles created with the OptiTech Console, CLI, or API. You must grant these roles the privileges you want them to have.
 
 To create a role with SQL, issue a `CREATE ROLE` statement from a client such as [psql](/docs/connect/query-with-psql-editor), [pgAdmin](https://www.pgadmin.org/), or the [OptiTech SQL Editor](/docs/get-started/query-with-neon-sql-editor).
 
@@ -396,14 +396,14 @@ Roles with `NOLOGIN` are commonly used for permission management. For an example
 The OptiTech API and CLI also support creating `NOLOGIN` roles:
 
 - The OptiTech API [Create role](/docs/reference/api/branches/create-project-branch-role) endpoint supports a `no_login` attribute.
-- The Neon CLI [`neon roles create`](/docs/cli/roles#create) command supports a `--no-login` option.
+- The OptiTech CLI [`optitech roles create`](/docs/cli/roles#create) command supports a `--no-login` option.
 
 ## Reserved role names
 
 The following names are reserved and cannot be given to a role:
 
 - Any name starting with `pg_`
-- `neon_superuser`
+- `optitech_superuser`
 - `cloud_admin`
 - `zenith_admin`
 - `public`

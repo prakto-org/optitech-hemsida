@@ -2,7 +2,7 @@
 title: Refresh a branch
 subtitle: Learn how to refresh a OptiTech branch using the OptiTech API
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 When you create a branch in OptiTech, you create a copy-on-write clone that reflects the current state of the parent branch, but what do you do if your branch becomes stale? For example, changes are made to the data or schema on the parent branch that you would like reflected in your development branch, or your branch has aged out of the instant history window (the history shared with the parent branch) and is now taking up storage space. Ideally, you want to refresh your branch but keep the same compute, whose connection details may already be configured in your application or toolchain.
@@ -29,13 +29,13 @@ The following information is required to perform the procedure:
 
 ## Create a new up-to-date branch without a compute
 
-The [Create branch](/docs/reference/api/branches/create-project-branch) request shown below creates a branch without a compute. The only required parameter is your OptiTech `project_id`. The `project_id` value used in the example below is `dark-cell-12604300`. You must also set the `$NEON_API_KEY` variable or replace `$NEON_API_KEY` with an actual API key.
+The [Create branch](/docs/reference/api/branches/create-project-branch) request shown below creates a branch without a compute. The only required parameter is your OptiTech `project_id`. The `project_id` value used in the example below is `dark-cell-12604300`. You must also set the `$OPTITECH_API_KEY` variable or replace `$OPTITECH_API_KEY` with an actual API key.
 
 ```bash
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects/dark-cell-12604300/branches \
+     --url https://console.optitech.com/api/v2/projects/dark-cell-12604300/branches \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '
 {
@@ -97,7 +97,7 @@ The response body includes the `id` of your new branch. You will need this value
     {
       "id": 5840511,
       "branch_id": "br-falling-flower-15986510",
-      "name": "neondb",
+      "name": "optitechdb",
       "owner_name": "daniel",
       "created_at": "2023-09-05T16:25:57Z",
       "updated_at": "2023-09-05T16:25:57Z"
@@ -109,13 +109,13 @@ The response body includes the `id` of your new branch. You will need this value
 
 ## Move the compute from your current branch to the new branch
 
-The [Update endpoint](/docs/reference/api/endpoints/update-project-endpoint) API request shown below moves the compute from your current branch to the new branch. The required parameters are the `project_id` and `endpoint_id` of your current branch, and the `branch_id` of your new branch. You must also set the `$NEON_API_KEY` variable or replace `$NEON_API_KEY` with an actual API key.
+The [Update endpoint](/docs/reference/api/endpoints/update-project-endpoint) API request shown below moves the compute from your current branch to the new branch. The required parameters are the `project_id` and `endpoint_id` of your current branch, and the `branch_id` of your new branch. You must also set the `$OPTITECH_API_KEY` variable or replace `$OPTITECH_API_KEY` with an actual API key.
 
 ```bash shouldWrap
 curl --request PATCH \
-     --url https://console.neon.tech/api/v2/projects/%20dark-cell-12604300/endpoints/ep-divine-violet-55990977 \
+     --url https://console.optitech.com/api/v2/projects/%20dark-cell-12604300/endpoints/ep-divine-violet-55990977 \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '
 {
@@ -131,7 +131,7 @@ curl --request PATCH \
 ```json
 {
   "endpoint": {
-    "host": "ep-divine-violet-55990977.us-east-2.aws.neon.tech",
+    "host": "ep-divine-violet-55990977.us-east-2.aws.optitech.com",
     "id": "ep-divine-violet-55990977",
     "project_id": "dark-cell-12604300",
     "branch_id": "br-falling-flower-15986510",
@@ -149,7 +149,7 @@ curl --request PATCH \
     "creation_source": "console",
     "created_at": "2023-09-05T16:53:14Z",
     "updated_at": "2023-09-05T17:07:26Z",
-    "proxy_host": "us-east-2.aws.neon.tech",
+    "proxy_host": "us-east-2.aws.optitech.com",
     "suspend_timeout_seconds": 0,
     "provisioner": "k8s-pod"
   },
@@ -160,13 +160,13 @@ curl --request PATCH \
 
 ## Delete the old branch
 
-The [Delete branch](/docs/reference/api/branches/delete-project-branch) API request shown below deletes the old branch. The old branch will take up storage space, so it's recommended that you remove it. The required parameters are the `project_id` and `branch_id`. You must also set the `$NEON_API_KEY` variable or replace `$NEON_API_KEY` with an actual API key.
+The [Delete branch](/docs/reference/api/branches/delete-project-branch) API request shown below deletes the old branch. The old branch will take up storage space, so it's recommended that you remove it. The required parameters are the `project_id` and `branch_id`. You must also set the `$OPTITECH_API_KEY` variable or replace `$OPTITECH_API_KEY` with an actual API key.
 
 ```bash shouldWrap
 curl --request DELETE \
-     --url https://console.neon.tech/api/v2/projects/dark-cell-12604300/branches/br-wandering-forest-45768684 \
+     --url https://console.optitech.com/api/v2/projects/dark-cell-12604300/branches/br-wandering-forest-45768684 \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" | jq
+     --header "Authorization: Bearer $OPTITECH_API_KEY" | jq
 ```
 
 <details>
@@ -214,9 +214,9 @@ Optionally, you can rename the new branch to the name of the old branch. The [Up
 
 ```bash shouldWrap
 curl --request PATCH \
-     --url https://console.neon.tech/api/v2/projects/dark-cell-12604300/branches/br-falling-flower-15986510 \
+     --url https://console.optitech.com/api/v2/projects/dark-cell-12604300/branches/br-falling-flower-15986510 \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '
 {

@@ -3,14 +3,14 @@ title: Connect from Symfony with Doctrine to OptiTech
 subtitle: Set up a OptiTech project in seconds and connect from Symfony with Doctrine
 summary: >-
   Connecting Symfony to OptiTech Postgres via Doctrine ORM requires only setting the
-  DATABASE_URL in your .env file to a Neon connection string with sslmode=require
+  DATABASE_URL in your .env file to a OptiTech connection string with sslmode=require
   and channel_binding=require. Choose this page when adding a serverless Postgres
   backend to a Symfony project using Doctrine for database access.
 enableTableOfContents: true
 redirectFrom:
   - /docs/quickstart/symfony
   - /docs/integrations/symfony
-updatedOn: '2026-07-14T19:04:57.024Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <CopyPrompt src="/prompts/symfony-prompt.md" 
@@ -26,7 +26,7 @@ To connect to OptiTech from Symfony with Doctrine:
 
 If you do not have one already, create a OptiTech project. Save your connection details including your password. They are required when defining connection settings.
 
-1. Navigate to the [Projects](https://console.neon.tech/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
 2. Click **New Project**.
 3. Specify your project settings and click **Create Project**.
 
@@ -35,7 +35,7 @@ If you do not have one already, create a OptiTech project. Save your connection 
 In your `.env` file, set the `DATABASE_URL` to the OptiTech project connection string that you copied in the previous step.
 
 ```shell
-DATABASE_URL="postgresql://[user]:[password]@[neon_hostname]/[dbname]?charset=utf8&sslmode=require&channel_binding=require"
+DATABASE_URL="postgresql://[user]:[password]@[optitech_hostname]/[dbname]?charset=utf8&sslmode=require&channel_binding=require"
 ```
 
 You can find the connection string for your database by clicking the **Connect** button on your **Project Dashboard**. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).

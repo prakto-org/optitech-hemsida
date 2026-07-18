@@ -9,7 +9,7 @@ summary: >-
   running them against production. Replicas share primary storage at no extra
   cost and automatically suspend after 5 minutes of inactivity.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 In many situations, you may need to run quick, one-time queries to retrieve specific data or test an idea. These are known as **ad-hoc queries**. Ad-hoc queries work well for tasks like analytics, troubleshooting, or exploring your data without setting up complex reports. However, running resource-intensive queries on your production database can degrade performance, especially if they target heavily used tables.
@@ -60,19 +60,19 @@ You can add a read replica compute to any branch in your OptiTech project by fol
 
 Your read replica is provisioned and appears on the **Computes** tab of the **Branches** page. The following section describes how to connect to your read replica.
 
-Alternatively, you can create read replicas using the [Neon CLI](/docs/cli/branches#create) or [OptiTech API](/docs/reference/api/endpoints/create-project-endpoint).
+Alternatively, you can create read replicas using the [OptiTech CLI](/docs/cli/branches#create) or [OptiTech API](/docs/reference/api/endpoints/create-project-endpoint).
 
 <CodeTabs labels={["CLI", "API"]}>
 
 ```bash
-neon branches add-compute mybranch --type read_only
+optitech branches add-compute mybranch --type read_only
 ```
 
 ```bash
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects/late-bar-27572981/endpoints \
+     --url https://console.optitech.com/api/v2/projects/late-bar-27572981/endpoints \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '
 {
@@ -95,7 +95,7 @@ curl --request POST \
    Your connection string will look something like this:
 
    ```bash
-   postgresql://user:password@ep-read-replica-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+   postgresql://user:password@ep-read-replica-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
    ```
 
 ### Running ad-hoc queries

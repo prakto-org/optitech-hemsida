@@ -6,7 +6,7 @@ page_description: >-
   constraints with NOT VALID to add constraints to large tables without downtime
   or table scans.
 ogImage: ''
-updatedOn: '2026-06-03T13:01:21.685Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 enableTableOfContents: true
 previousLink:
   title: PostgreSQL 18 OAuth Support
@@ -17,7 +17,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-PostgreSQL 18's NOT NULL constraints with NOT VALID work on any Postgres deployment, so everything here applies whether you run Postgres yourself or on a managed service. If you're an enterprise looking for a managed cloud Postgres built for the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers the performance, security, and native Lakehouse integration you need to run mission-critical workloads. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+PostgreSQL 18's NOT NULL constraints with NOT VALID work on any Postgres deployment, so everything here applies whether you run Postgres yourself or on a managed service. If you're an enterprise looking for a managed cloud Postgres built for the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers the performance, security, and native Lakehouse integration you need to run mission-critical workloads. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: In this tutorial, you will learn how to use PostgreSQL 18's new NOT NULL constraints with NOT VALID to add constraints to large tables without lengthy table scans or extended downtime.

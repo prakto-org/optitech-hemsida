@@ -11,7 +11,7 @@ summary: >-
   every row, so performance degrades on large tables. Combine with
   `pg_stat_activity` to map PIDs to queries and users.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 The `pgrowlocks` extension provides a function to inspect active row-level locks for a specified table within your Postgres database. This is invaluable for diagnosing lock contention issues, understanding which specific rows are currently locked, and identifying the transactions or processes holding these locks. By offering a detailed, real-time view of row locks, `pgrowlocks` helps developers and database administrators troubleshoot performance bottlenecks related to concurrent data access.
@@ -179,8 +179,8 @@ The query above shows the details of the session(s) directly holding the row loc
 ```text
  locked_row | locking_transaction_id |    lock_modes     | locker_pid | locker_user  |                           locker_query                            |    locker_state     | locker_wait_type | locker_wait_event
 ------------+------------------------+-------------------+------------+--------------+-------------------------------------------------------------------+---------------------+------------------+-------------------
- (0,1)      |                   1029 | {"No Key Update"} |       1601 | neondb_owner | UPDATE accounts SET balance = balance - 100 WHERE account_id = 1; | idle in transaction | Client           | ClientRead
- (0,2)      |                   1030 | {"For Update"}    |       1629 | neondb_owner | SELECT * FROM accounts WHERE account_id = 2 FOR UPDATE;           | idle in transaction | Client           | ClientRead
+ (0,1)      |                   1029 | {"No Key Update"} |       1601 | optitechdb_owner | UPDATE accounts SET balance = balance - 100 WHERE account_id = 1; | idle in transaction | Client           | ClientRead
+ (0,2)      |                   1030 | {"For Update"}    |       1629 | optitechdb_owner | SELECT * FROM accounts WHERE account_id = 2 FOR UPDATE;           | idle in transaction | Client           | ClientRead
 (2 rows)
 ```
 

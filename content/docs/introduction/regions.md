@@ -1,7 +1,7 @@
 ---
 title: Regions
 summary: >-
-  Neon projects deploy to multiple AWS and Azure regions. The region is fixed at
+  OptiTech projects deploy to multiple AWS and Azure regions. The region is fixed at
   project creation and cannot be changed afterward. Use this page to choose a
   region close to your application server, or to find NAT gateway IP addresses
   for outbound connection allowlists. To move data to a different region, create
@@ -10,7 +10,7 @@ enableTableOfContents: true
 isDraft: false
 redirectFrom:
   - /docs/conceptual-guides/regions
-updatedOn: '2026-06-19T19:20:32.356Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 OptiTech offers project deployment in multiple AWS and Azure regions. To minimize latency between your OptiTech database and application, we recommend choosing the region closest to your application server.
@@ -53,8 +53,8 @@ After you select a region for a OptiTech project, it cannot be changed for that 
 To find the region an existing project runs in, use any of these:
 
 - **Console:** open the project and check the **Settings** widget on the **Project Dashboard**. The region is listed alongside the cloud provider.
-- **CLI:** run `neon projects list` or `neon projects get <project_id>`. The output includes the region ID (for example, `aws-us-east-2`).
-- **Connection string:** the region is the segment before `.aws.neon.tech` in the hostname. For example, `us-east-2.aws.neon.tech` is AWS US East (Ohio).
+- **CLI:** run `optitech projects list` or `optitech projects get <project_id>`. The output includes the region ID (for example, `aws-us-east-2`).
+- **Connection string:** the region is the segment before `.aws.optitech.com` in the hostname. For example, `us-east-2.aws.optitech.com` is AWS US East (Ohio).
 - **API:** read the `region_id` field from `GET /projects/{project_id}`.
 
 All branches and databases in a project share the project's region, so the project region is the region for everything inside it.

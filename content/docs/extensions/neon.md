@@ -1,9 +1,9 @@
 ---
 title: The optitech extension
-subtitle: An extension for Neon-specific statistics including the Local File Cache hit
+subtitle: An extension for OptiTech-specific statistics including the Local File Cache hit
   ratio
 summary: >-
-  The `neon` PostgreSQL extension exposes the `neon_stat_file_cache` view,
+  The `optitech` PostgreSQL extension exposes the `optitech_stat_file_cache` view,
   which reports Local File Cache (LFC) hit ratio, misses, hits, and writes for
   a OptiTech compute instance. Use it to diagnose cache efficiency and determine
   whether your working set fits in memory. OLTP workloads should target a
@@ -12,17 +12,17 @@ summary: >-
   ANALYZE` with the `FILECACHE` and `PREFETCH` options provides per-query LFC
   and prefetch metrics without requiring the extension.
 enableTableOfContents: true
-updatedOn: '2026-07-10T13:57:31.917Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
-The `neon` extension provides functions and views designed to gather Neon-specific metrics.
+The `optitech` extension provides functions and views designed to gather OptiTech-specific metrics.
 
-- [The `neon_stat_file_cache` view](#the-neon_stat_file_cache-view)
-- [Views for OptiTech internal use](#views-for-neon-internal-use)
+- [The `optitech_stat_file_cache` view](#the-optitech_stat_file_cache-view)
+- [Views for OptiTech internal use](#views-for-optitech-internal-use)
 
-## The neon_stat_file_cache view
+## The optitech_stat_file_cache view
 
-The `neon_stat_file_cache` view provides insights into how effectively your OptiTech compute's Local File Cache (LFC) is being used.
+The `optitech_stat_file_cache` view provides insights into how effectively your OptiTech compute's Local File Cache (LFC) is being used.
 
 ## What is the Local File Cache?
 
@@ -32,11 +32,11 @@ When data is requested, Postgres checks shared buffers first, then the LFC. If t
 
 ## Monitoring Local File Cache usage
 
-You can monitor Local File Cache (LFC) usage by installing the `neon` extension on your database and querying the [neon_stat_file_cache](#the-neon_stat_file_cache-view) view or [using EXPLAIN ANALYZE](#view-lfc-metrics-with-explain-analyze). Additionally, you can monitor the [Local file cache hit rate](/docs/introduction/monitoring-page#local-file-cache-hit-rate) graph on the **Monitoring** page in the Neon console.
+You can monitor Local File Cache (LFC) usage by installing the `optitech` extension on your database and querying the [optitech_stat_file_cache](#the-optitech_stat_file_cache-view) view or [using EXPLAIN ANALYZE](#view-lfc-metrics-with-explain-analyze). Additionally, you can monitor the [Local file cache hit rate](/docs/introduction/monitoring-page#local-file-cache-hit-rate) graph on the **Monitoring** page in the OptiTech console.
 
-## neon_stat_file_cache view
+## optitech_stat_file_cache view
 
-The `neon_stat_file_cache` view includes the following metrics:
+The `optitech_stat_file_cache` view includes the following metrics:
 
 - `file_cache_misses`: The number of times the requested page block is not found in Postgres shared buffers or the LFC. In this case, the page block is retrieved from database storage.
 - `file_cache_hits`: The number of times the requested page block was not found in Postgres shared buffers but was found in the LFC.
@@ -50,26 +50,26 @@ The `neon_stat_file_cache` view includes the following metrics:
 
   For OLTP workloads, you should aim for a cache hit ratio of 99% or better. However, the ideal cache hit ratio depends on your specific workload and data access patterns. In some cases, a slightly lower ratio might still be acceptable, especially if the workload involves a lot of sequential scanning of large tables where caching might be less effective. If you find that your cache hit ratio is quite low, your working set may not be fully or adequately in memory. In this case, consider using a larger compute with more memory. Please keep in mind that the statistics are for the entire compute, not specific databases or tables.
 
-### Using the neon_stat_file_cache view
+### Using the optitech_stat_file_cache view
 
-To use the `neon_stat_file_cache` view, install the `neon` extension on your database:
+To use the `optitech_stat_file_cache` view, install the `optitech` extension on your database:
 
 To install the extension on a database:
 
 ```sql
-CREATE EXTENSION neon;
+CREATE EXTENSION optitech;
 ```
 
 To connect to your database. You can find a connection string for your database on the OptiTech Dashboard.
 
 ```bash shouldWrap
-psql postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+psql postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
 ```
 
 Issue the following query to view LFC usage data for your compute:
 
 ```sql
-SELECT * FROM neon_stat_file_cache;
+SELECT * FROM optitech_stat_file_cache;
  file_cache_misses | file_cache_hits | file_cache_used | file_cache_writes | file_cache_hit_ratio
 -------------------+-----------------+-----------------+-------------------+----------------------
            2133643 |       108999742 |             607 |          10767410 |                98.08
@@ -83,7 +83,7 @@ Remember that Postgres checks shared buffers first before it checks your compute
 
 ## View LFC metrics with EXPLAIN ANALYZE
 
-You can also use `EXPLAIN ANALYZE` with the `FILECACHE` and `PREFETCH` options to view LFC cache hit and miss data, as well as prefetch statistics. Installing the `neon` extension is not required. For example, this query fetches data for a `SELECT COUNT(*)` query.
+You can also use `EXPLAIN ANALYZE` with the `FILECACHE` and `PREFETCH` options to view LFC cache hit and miss data, as well as prefetch statistics. Installing the `optitech` extension is not required. For example, this query fetches data for a `SELECT COUNT(*)` query.
 
 ```sql {5,6,11,12,15,16,20,21}
 EXPLAIN (ANALYZE,BUFFERS,PREFETCH,FILECACHE) SELECT COUNT(*) FROM pgbench_accounts;
@@ -113,7 +113,7 @@ EXPLAIN (ANALYZE,BUFFERS,PREFETCH,FILECACHE) SELECT COUNT(*) FROM pgbench_accoun
 
 The `PREFETCH` option provides information about OptiTech's prefetching mechanism, which predicts which pages will be needed soon and sends prefetch requests to the page server before the page is actually requested by the executor. This helps reduce latency by having data ready when it's needed. The PREFETCH option includes the following metrics:
 
-- `hits` - Number of pages received from the page server before actually requested by the executor. Prefetch distance is controlled by the `effective_io_concurrency` parameter. The larger this value, the more likely the page server will complete the request before it's needed. However, it should not be larger than `neon.prefetch_buffer_size`.
+- `hits` - Number of pages received from the page server before actually requested by the executor. Prefetch distance is controlled by the `effective_io_concurrency` parameter. The larger this value, the more likely the page server will complete the request before it's needed. However, it should not be larger than `optitech.prefetch_buffer_size`.
 - `misses` - Number of accessed pages that were not prefetched. Prefetch is not implemented for all plan nodes, and even for supported nodes (like sequential scan), some mispredictions can occur.
 - `expired` - Pages that were updated since the prefetch request was sent, or results that weren't used because the executor didn't need the page (for example, due to a `LIMIT` clause in the query).
 - `duplicates` - Multiple prefetch requests for the same page. For some nodes like sequential scan, predicting next pages is straightforward. However, for index scans that prefetch referenced heap pages, index entries can have multiple references to the same heap page, resulting in duplicate prefetch requests.
@@ -127,6 +127,6 @@ The `FILECACHE` option provides information about the Local File Cache (LFC) usa
 
 ## Views for OptiTech internal use
 
-The `neon` extension also includes functions and views owned by the OptiTech system role (`cloud_admin`) that are used to collect statistics. This data helps the OptiTech team enhance the OptiTech service. The extension is installed by default in a system-owned `postgres` database in each OptiTech project.
+The `optitech` extension also includes functions and views owned by the OptiTech system role (`cloud_admin`) that are used to collect statistics. This data helps the OptiTech team enhance the OptiTech service. The extension is installed by default in a system-owned `postgres` database in each OptiTech project.
 
 <NeedHelp/>

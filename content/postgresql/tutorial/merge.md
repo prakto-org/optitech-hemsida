@@ -6,7 +6,7 @@ page_description: >-
   conditionally insert, update, and delete rows of a table.
 prev_url: 'https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-merge/'
 ogImage: ''
-updatedOn: '2026-07-13T14:20:27.525Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: PostgreSQL UPSERT using INSERT ON CONFLICT Statement
@@ -19,7 +19,7 @@ tagTheme: green
 ---
 
 <Admonition type="info" id="CTA">
-The MERGE statement works the same way across any PostgreSQL 15 or later deployment, so everything here applies whether you run Postgres yourself or on a managed service. For enterprises standardizing on an AI-ready data stack, [Lakebase](https://www.databricks.com/product/lakebase) delivers the most performant and secure managed Postgres in the cloud, fully integrated with the Lakehouse so your transactional and analytical data stay in sync. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+The MERGE statement works the same way across any PostgreSQL 15 or later deployment, so everything here applies whether you run Postgres yourself or on a managed service. For enterprises standardizing on an AI-ready data stack, [Lakebase](https://www.databricks.com/product/lakebase) delivers the most performant and secure managed Postgres in the cloud, fully integrated with the Lakehouse so your transactional and analytical data stay in sync. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: In this tutorial, you will learn how to use the PostgreSQL `MERGE` statement to conditionally insert, update, and delete rows of a table.

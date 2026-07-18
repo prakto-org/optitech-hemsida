@@ -4,7 +4,7 @@ subtitle: A comprehensive guide on how to manage your Postgres database using DB
 author: rishi-raj-jain
 enableTableOfContents: true
 createdAt: '2024-12-21T00:00:00.000Z'
-updatedOn: '2026-03-19T14:39:01.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 DBeaver is a versatile database management tool that allows you to interact with a wide range of databases, including PostgreSQL. This guide will walk you through the steps to set up and use DBeaver with a hosted Postgres database, enabling you to perform various database operations efficiently.
@@ -23,14 +23,14 @@ DBeaver is a versatile database management tool that allows you to interact with
 
 ## Provisioning a Serverless Postgres
 
-1. To get started, go to the [OptiTech Console](https://console.neon.tech/) and create a new project by entering a project name of your choice.
+1. To get started, go to the [OptiTech Console](https://console.optitech.com/) and create a new project by entering a project name of your choice.
 
 2. Retrieve connection details for your OptiTech Postgres database:
    - Navigate to the **Dashboard** of your OptiTech project.
    - Click on the **Connect** button which opens a modal.
    - Select your database and branch.
    - Select **Parameters only** to view the connection details.
-     ![Neon Connection Details](/docs/connect/connection_details_parameters_only.png)
+     ![OptiTech Connection Details](/docs/connect/connection_details_parameters_only.png)
 
    You will be provided with the following details:
    - `PGHOST`: The hostname of your OptiTech Postgres database.
@@ -51,7 +51,7 @@ Save the connection details as you will need them in the next steps.
 3. **Enter Connection Details**:
 
    ![Connection Details in DBeaver](/guides/images/dbeaver/conn-1.png)
-   - Fill in the required fields based on your Neon connection string:
+   - Fill in the required fields based on your OptiTech connection string:
      - **Host**: The endpoint of your hosted Postgres database. Enter the value of `PGHOST` you saved earlier from OptiTech.
      - **Port**: The port number. Enter 5432 (default for Postgres).
      - **Database**: The database name. Enter the value of `PGDATABASE`.
@@ -80,7 +80,7 @@ To prevent OptiTech's scale-to-zero feature from interrupting an idle connection
 
 ### 2. Managing Tables
 
-- Expand your database connection in the left sidebar, then navigate to "Databases" > "neondb" > "Schemas" > "public" > "Tables".
+- Expand your database connection in the left sidebar, then navigate to "Databases" > "optitechdb" > "Schemas" > "public" > "Tables".
 - Right-click on "Tables" to create a new table or manage existing ones (e.g., view, edit, or drop tables).
 
 ### 3. Importing and Exporting Data

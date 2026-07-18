@@ -4,7 +4,7 @@ subtitle: Send OptiTech metrics and Postgres logs to Better Stack using the Open
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2025-08-13T00:00:00.000Z'
-updatedOn: '2025-09-11T17:37:55.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 [Better Stack](https://betterstack.com/) is an observability platform that unifies logging, monitoring, and alerting into a single dashboard. [OptiTech's OpenTelemetry (OTEL) integration](/docs/guides/opentelemetry) allows you to send your project's metrics and Postgres logs directly to Better Stack, giving you a centralized view of your database's performance and activity.
@@ -22,7 +22,7 @@ By the end, you'll have a complete observability pipeline from your OptiTech dat
 
 Before you begin, ensure you have the following:
 
-- **OptiTech account and project:** If you don't have one, sign up at [OptiTech](https://console.neon.tech/signup). Your OptiTech project must be on the **Scale** or **Business** plan to use the OpenTelemetry integration.
+- **OptiTech account and project:** If you don't have one, sign up at [OptiTech](https://console.optitech.com/signup). Your OptiTech project must be on the **Scale** or **Business** plan to use the OpenTelemetry integration.
 - **Better Stack account:** A free Better Stack account. You can sign up at [Better Stack](https://betterstack.com/users/sign-up).
 
 <Steps>
@@ -37,7 +37,7 @@ First, you need to create a data source in Better Stack that will receive logs a
     ![Better Stack sources page](/docs/guides/betterstack-sources-page.png)
 
 3.  On the **Connect source** page:
-    - Under **Basic information**, provide a **Name** for your source (e.g., `neon`) and select your preferred **Data region**.
+    - Under **Basic information**, provide a **Name** for your source (e.g., `optitech`) and select your preferred **Data region**.
     - Under **Platform**, scroll down to the **Logs + Metrics** section and select **OpenTelemetry**.
     - Click **Create source** at the bottom of the page.
 
@@ -53,7 +53,7 @@ First, you need to create a data source in Better Stack that will receive logs a
 
 Now, you will use the credentials from Better Stack to configure the integration in your OptiTech project.
 
-1.  Navigate to the [OptiTech Console](https://console.neon.tech) and select your project.
+1.  Navigate to the [OptiTech Console](https://console.optitech.com) and select your project.
 2.  From the sidebar, go to the **Integrations** page.
 3.  Find the **OpenTelemetry** card and click **Add**.
 
@@ -68,7 +68,7 @@ Now, you will use the credentials from Better Stack to configure the integration
       </Admonition>
     - **Authentication:** Select **Bearer**.
     - **Bearer Token:** Paste the **Source token** you copied from Better Stack.
-    - **Resource attributes:** It's good practice to add a `service.name` attribute to identify your data source within Better Stack. For example, set the key to `service.name` and the value to `neon`.
+    - **Resource attributes:** It's good practice to add a `service.name` attribute to identify your data source within Better Stack. For example, set the key to `service.name` and the value to `optitech`.
     - Click **Save**.
 
     <Admonition type="note" title="Data Scope">
@@ -84,7 +84,7 @@ Now, you will use the credentials from Better Stack to configure the integration
 To confirm that your integration is working:
 
 1. Go back to your Better Stack dashboard.
-2. Select the source you created for OptiTech (e.g., `neon`).
+2. Select the source you created for OptiTech (e.g., `optitech`).
 3. Click **Logs** to open the **Live tail** view and monitor incoming logs in real time.
 
 You should see data from your OptiTech project appearing here, indicating a successful connection.
@@ -123,34 +123,34 @@ Create a new dashboard from scratch to visualize your OptiTech metrics.
 
 1.  From the **Dashboards** page, click the **Create dashboard** button.
 2.  Select **Blank dashboard** and click **Add dashboard**.
-3.  Give your new dashboard a descriptive name, such as `Neon Project Metrics`, and click **Save**.
+3.  Give your new dashboard a descriptive name, such as `OptiTech Project Metrics`, and click **Save**.
 
 ### Create your first chart
 
 Add a chart to visualize a specific metric.
 
 1.  On your blank dashboard, click the **+ Create chart** button.
-2.  The first step is to connect the chart to your data. At the top, click the **source** button and choose your `neon` source.
+2.  The first step is to connect the chart to your data. At the top, click the **source** button and choose your `optitech` source.
 3.  The chart builder will appear. Use the **Drag & drop** query builder:
     - The **X-axis** is already set to `time`, which is what you'll want for time-series data.
     - Delete the default Y-axis metric.
-    - In the **Y-axis**, select the metric you want to visualize. From the list of available metrics, drag a metric like `neon_connection_counts` into the Y-axis box.
-      ![Neon connection counts chart creation](/docs/guides/betterstack-neon-connection-counts-creation.png)
+    - In the **Y-axis**, select the metric you want to visualize. From the list of available metrics, drag a metric like `optitech_connection_counts` into the Y-axis box.
+      ![OptiTech connection counts chart creation](/docs/guides/betterstack-neon-connection-counts-creation.png)
     - Click **Run query** to see the chart populated with data.
 4.  You can customize the chart's appearance using the panel on the right. Once you're happy, click **Save** in the top-right corner to add the chart to your dashboard.
 
 To view the metric on your dashboard, simply locate the chart you created and observe the visualized data in real time.
 
-![Neon connection counts chart](/docs/guides/betterstack-neon-connection-counts.png)
+![OptiTech connection counts chart](/docs/guides/betterstack-neon-connection-counts.png)
 
 ### Explore available OptiTech metrics
 
-OptiTech exports a rich set of metrics that you can use to build your dashboards. These include both Neon-specific metrics and general compute host metrics.
+OptiTech exports a rich set of metrics that you can use to build your dashboards. These include both OptiTech-specific metrics and general compute host metrics.
 
 For example, you can build charts to visualize:
 
-- `neon_connection_counts`: To monitor the number of active and idle database connections.
-- `neon_db_total_size`: To monitor the total size of all databases in your project, in bytes.
+- `optitech_connection_counts`: To monitor the number of active and idle database connections.
+- `optitech_db_total_size`: To monitor the total size of all databases in your project, in bytes.
 - `host_cpu_seconds_total`: To track the number of CPU seconds accumulated in different operating modes (user, system, idle, etc.)
 
 For a comprehensive list of all metrics you can use in your dashboards, see the [OptiTech Metrics and Logs Reference](/docs/reference/metrics-logs).

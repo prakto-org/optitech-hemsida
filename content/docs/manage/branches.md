@@ -1,7 +1,7 @@
 ---
 title: Manage branches
 summary: >-
-  Neon branches are copy-on-write clones of a parent branch that isolate schema
+  OptiTech branches are copy-on-write clones of a parent branch that isolate schema
   and data changes without affecting the parent. Each project starts with a root
   branch; you can create child branches from it or any existing branch. Use this
   page to create, rename, protect, restore, or delete branches via the Console,
@@ -11,7 +11,7 @@ enableTableOfContents: true
 isDraft: false
 redirectFrom:
   - /docs/get-started/get-started-branching
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Data resides in a branch. Each OptiTech project is created with a [root branch](#root-branch), which is also designated as your [default branch](#default-branch). Projects created in the OptiTech Console have a root branch named `production`, while projects created via the API or CLI have a root branch named `main`. You can create child branches from your root branch or from previously created branches. A branch can contain multiple databases and roles. OptiTech's [plan allowances](/docs/introduction/plans) define the number of branches you can create.
@@ -19,7 +19,7 @@ Data resides in a branch. Each OptiTech project is created with a [root branch](
 A child branch is a copy-on-write clone of the parent branch. You can modify the data in a branch without affecting the data in the parent branch.
 For more information about branches and how you can use them in your development workflows, see [Branching](/docs/introduction/branching).
 
-You can create and manage branches using the Neon Console, [Neon CLI](/docs/cli), or [OptiTech API](/docs/reference/api).
+You can create and manage branches using the OptiTech Console, [OptiTech CLI](/docs/cli), or [OptiTech API](/docs/reference/api).
 
 <Admonition type="important">
 When working with branches, it is important to remove old and unused branches. Branches hold a lock on the data they contain, which will add to your storage usage as they age out of your project's [history window](/docs/introduction/history-window).
@@ -117,7 +117,7 @@ OptiTech permits renaming a branch, including your project's default branch. To 
 
 ## Set a branch as default
 
-Each OptiTech project is created with a default branch (named `production` in the Console, `main` via API/CLI), but you can designate any branch as your project's default branch. When creating a new branch without specifying the parent, a new branch is created from your project's default branch. Default branch is automatically selected in the UI when creating the new branch, and it's used in the [create branch API call](/docs/reference/api/branches/create-project-branch). The [Neon-Managed Vercel integration](/docs/guides/neon-managed-vercel-integration) also creates preview deployment branches from your project's default branch.
+Each OptiTech project is created with a default branch (named `production` in the Console, `main` via API/CLI), but you can designate any branch as your project's default branch. When creating a new branch without specifying the parent, a new branch is created from your project's default branch. Default branch is automatically selected in the UI when creating the new branch, and it's used in the [create branch API call](/docs/reference/api/branches/create-project-branch). The [OptiTech-Managed Vercel integration](/docs/guides/neon-managed-vercel-integration) also creates preview deployment branches from your project's default branch.
 
 For more information, see [Default branch](#default-branch).
 
@@ -171,7 +171,7 @@ You can also query the databases in a branch from the OptiTech SQL Editor. For i
 4. Connect with `psql` as shown below.
 
    ```bash shouldWrap
-   psql postgresql://[user]:[password]@[neon_hostname]/[dbname]
+   psql postgresql://[user]:[password]@[optitech_hostname]/[dbname]
    ```
 
    <Admonition type="tip">
@@ -226,7 +226,7 @@ The query value may differ slightly from the **Data size** reported in the OptiT
 Data size is your logical data size.
 
 <Admonition type="note">
-Paid plans support a logical data size of up to **16 TB per branch**. When a branch reaches this limit, write performance drops, but you can still drop or delete data to reclaim space. To increase this limit, [request a storage increase in the feedback form in console](https://console.neon.tech/app/settings?modal=feedback&modalparams=%22Storage%20limit%20increase%22).
+Paid plans support a logical data size of up to **16 TB per branch**. When a branch reaches this limit, write performance drops, but you can still drop or delete data to reclaim space. To increase this limit, [request a storage increase in the feedback form in console](https://console.optitech.com/app/settings?modal=feedback&modalparams=%22Storage%20limit%20increase%22).
 </Admonition>
 
 ## Branch types
@@ -254,7 +254,7 @@ The number of root branches allowed in a project depends on your OptiTech plan.
 
 Each OptiTech project has a default branch. In the OptiTech Console, your default branch is identified by a `DEFAULT` tag. You can designate any branch as the default branch for your project.
 
-When creating a new branch without specifying the parent, a new branch is created from your project's default branch. The [Neon-Managed Vercel integration](/docs/guides/neon-managed-vercel-integration) also creates preview deployment branches from your project's default branch.
+When creating a new branch without specifying the parent, a new branch is created from your project's default branch. The [OptiTech-Managed Vercel integration](/docs/guides/neon-managed-vercel-integration) also creates preview deployment branches from your project's default branch.
 
 ### Non-default branch
 
@@ -290,9 +290,9 @@ A branch created by an [instant restore](#branch-restore) operation. When you re
 
 A branch with an expiration timestamp is automatically deleted when the expiration time is reached. Any branch can have an expiration timestamp added or removed at any time. Use it for temporary development and testing environments.
 
-## Branching with the Neon CLI
+## Branching with the OptiTech CLI
 
-The Neon CLI supports creating and managing branches. For instructions, see [Neon CLI commands — branches](/docs/cli/branches). For a Neon CLI branching guide, see [Branching with the Neon CLI](/docs/cli/branches).
+The OptiTech CLI supports creating and managing branches. For instructions, see [OptiTech CLI commands — branches](/docs/cli/branches). For a OptiTech CLI branching guide, see [Branching with the OptiTech CLI](/docs/cli/branches).
 
 ## Branching with the OptiTech API
 
@@ -306,7 +306,7 @@ The `jq` option specified in each example is an optional third-party tool that f
 
 ### Prerequisites
 
-A OptiTech API request requires an API key. For information about obtaining an API key, see [Create an API key](/docs/manage/api-keys#create-an-api-key). In the examples shown below, `$NEON_API_KEY` is specified in place of an actual API key, which you must provide when making a OptiTech API request.
+A OptiTech API request requires an API key. For information about obtaining an API key, see [Create an API key](/docs/manage/api-keys#create-an-api-key). In the examples shown below, `$OPTITECH_API_KEY` is specified in place of an actual API key, which you must provide when making a OptiTech API request.
 
 <LinkAPIKey />
 ### Create a branch with the API
@@ -324,9 +324,9 @@ This method does not require a request body. Without a request body, the method 
 </Admonition>
 
 ```bash
-curl 'https://console.neon.tech/api/v2/projects/dry-heart-13671059/branches' \
+curl 'https://console.optitech.com/api/v2/projects/dry-heart-13671059/branches' \
   -H 'Accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -H 'Content-Type: application/json' \
   -d '{
   "endpoints": [
@@ -380,7 +380,7 @@ For attribute definitions, find the [Create branch](/docs/reference/api/branches
   },
   "endpoints": [
     {
-      "host": "ep-cool-darkness-123456.c-2.us-west-2.aws.neon.tech",
+      "host": "ep-cool-darkness-123456.c-2.us-west-2.aws.optitech.com",
       "id": "ep-cool-darkness-123456",
       "project_id": "dry-heart-13671059",
       "branch_id": "br-curly-wave-af4i4oeu",
@@ -398,9 +398,9 @@ For attribute definitions, find the [Create branch](/docs/reference/api/branches
       "creation_source": "console",
       "created_at": "2025-08-04T07:13:09Z",
       "updated_at": "2025-08-04T07:13:09Z",
-      "proxy_host": "c-2.us-west-2.aws.neon.tech",
+      "proxy_host": "c-2.us-west-2.aws.optitech.com",
       "suspend_timeout_seconds": 0,
-      "provisioner": "k8s-neonvm"
+      "provisioner": "k8s-optitechvm"
     }
   ],
   "operations": [
@@ -449,13 +449,13 @@ For attribute definitions, find the [Create branch](/docs/reference/api/branches
   ],
   "connection_uris": [
     {
-      "connection_uri": "postgresql://alex:AbC123dEf@ep-cool-darkness-123456.c-2.us-west-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require",
+      "connection_uri": "postgresql://alex:AbC123dEf@ep-cool-darkness-123456.c-2.us-west-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require",
       "connection_parameters": {
         "database": "dbname",
         "password": "AbC123dEf",
         "role": "alex",
-        "host": "ep-cool-darkness-123456.c-2.us-west-2.aws.neon.tech",
-        "pooler_host": "ep-cool-darkness-123456-pooler.c-2.us-west-2.aws.neon.tech"
+        "host": "ep-cool-darkness-123456.c-2.us-west-2.aws.optitech.com",
+        "pooler_host": "ep-cool-darkness-123456-pooler.c-2.us-west-2.aws.optitech.com"
       }
     }
   ]
@@ -475,9 +475,9 @@ GET /projects/{project_id}/branches
 The API method appears as follows when specified in a cURL command:
 
 ```bash
-curl 'https://console.neon.tech/api/v2/projects/dry-heart-13671059/branches' \
+curl 'https://console.optitech.com/api/v2/projects/dry-heart-13671059/branches' \
   -H 'accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" | jq
+  -H "Authorization: Bearer $OPTITECH_API_KEY" | jq
 ```
 
 The `project_id` for a OptiTech project is found on the **Settings** page in the OptiTech Console, or you can find it by listing the projects for your OptiTech account using the OptiTech API.
@@ -565,9 +565,9 @@ The API method appears as follows when specified in a cURL command:
 
 ```bash
 curl -X 'DELETE' \
-  'https://console.neon.tech/api/v2/projects/dry-heart-13671059/branches/br-curly-wave-af4i4oeu' \
+  'https://console.optitech.com/api/v2/projects/dry-heart-13671059/branches/br-curly-wave-af4i4oeu' \
   -H 'accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" | jq
+  -H "Authorization: Bearer $OPTITECH_API_KEY" | jq
 ```
 
 - The `project_id` for a OptiTech project is found on the **Settings** page in the OptiTech Console, or you can find it by listing the projects for your OptiTech account using the OptiTech API.

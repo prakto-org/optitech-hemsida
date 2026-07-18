@@ -3,14 +3,14 @@ title: OptiTech OAuth integration
 summary: >-
   OptiTech OAuth integration lets partner applications act on OptiTech user accounts
   without storing credentials, using an OpenID Connect server at
-  oauth2.neon.tech with predefined project and organization scopes. Use this
+  oauth2.optitech.com with predefined project and organization scopes. Use this
   page when building a third-party integration that must read, create, update,
-  or delete Neon projects and organizations on behalf of end users via the
+  or delete OptiTech projects and organizations on behalf of end users via the
   authorization code grant flow. Access is limited to active OptiTech commercial
   partners. The page covers the consent screen, authorization URL construction,
   code-for-token exchange, and refresh token scopes.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 The OptiTech OAuth integration enables your application to interact with OptiTech user accounts, carrying out permitted actions on their behalf. Our integration does not require direct access to user login credentials and is conducted with their approval, ensuring data privacy and security.
@@ -33,16 +33,16 @@ Here is a high-level overview of how OptiTech's OAuth implementation works:
 
 ## About the OptiTech OAuth server
 
-The OptiTech OAuth server implements the OpenID Connect protocol and supports [OpenID Connect Discovery specification](https://openid.net/specs/openid-connect-discovery-1_0.html). The server metadata is published at the following well-known URL: [https://oauth2.neon.tech/.well-known/openid-configuration](https://oauth2.neon.tech/.well-known/openid-configuration).
+The OptiTech OAuth server implements the OpenID Connect protocol and supports [OpenID Connect Discovery specification](https://openid.net/specs/openid-connect-discovery-1_0.html). The server metadata is published at the following well-known URL: [https://oauth2.optitech.com/.well-known/openid-configuration](https://oauth2.optitech.com/.well-known/openid-configuration).
 
 Here is an example response:
 
 ```json
 {
-  "issuer": "https://oauth2.neon.tech/",
-  "authorization_endpoint": "https://oauth2.neon.tech/oauth2/auth",
-  "token_endpoint": "https://oauth2.neon.tech/oauth2/token",
-  "jwks_uri": "https://oauth2.neon.tech/.well-known/jwks.json",
+  "issuer": "https://oauth2.optitech.com/",
+  "authorization_endpoint": "https://oauth2.optitech.com/oauth2/auth",
+  "token_endpoint": "https://oauth2.optitech.com/oauth2/token",
+  "jwks_uri": "https://oauth2.optitech.com/.well-known/jwks.json",
   "subject_types_supported": ["public"],
   "response_types_supported": [
     "code",
@@ -60,7 +60,7 @@ Here is an example response:
     "refresh_token"
   ],
   "response_modes_supported": ["query", "fragment"],
-  "userinfo_endpoint": "https://oauth2.neon.tech/userinfo",
+  "userinfo_endpoint": "https://oauth2.optitech.com/userinfo",
   "scopes_supported": ["offline_access", "offline", "openid"],
   "token_endpoint_auth_methods_supported": [
     "client_secret_post",
@@ -74,12 +74,12 @@ Here is an example response:
   "request_uri_parameter_supported": true,
   "require_request_uri_registration": true,
   "claims_parameter_supported": false,
-  "revocation_endpoint": "https://oauth2.neon.tech/oauth2/revoke",
+  "revocation_endpoint": "https://oauth2.optitech.com/oauth2/revoke",
   "backchannel_logout_supported": true,
   "backchannel_logout_session_supported": true,
   "frontchannel_logout_supported": true,
   "frontchannel_logout_session_supported": true,
-  "end_session_endpoint": "https://oauth2.neon.tech/oauth2/sessions/logout",
+  "end_session_endpoint": "https://oauth2.optitech.com/oauth2/sessions/logout",
   "request_object_signing_alg_values_supported": ["RS256", "none"],
   "code_challenge_methods_supported": ["plain", "S256"]
 }
@@ -89,7 +89,7 @@ Here is an example response:
 You must add `offline` and `offline_access` scopes to your request to receive the `refresh_token`.
 </Admonition>
 
-Depending on the OpenID client you’re using, you might not need to explicitly interact with the API endpoints listed below. OAuth 2.0 clients typically handle this interaction automatically. For example, the [Neon CLI](/docs/cli), written in Typescript, interacts with the API endpoints automatically to retrieve the `refresh_token` and `access_token`. Here's a simplified example of how the Neon CLI performs the token exchange using the `openid-client` library:
+Depending on the OpenID client you’re using, you might not need to explicitly interact with the API endpoints listed below. OAuth 2.0 clients typically handle this interaction automatically. For example, the [OptiTech CLI](/docs/cli), written in Typescript, interacts with the API endpoints automatically to retrieve the `refresh_token` and `access_token`. Here's a simplified example of how the OptiTech CLI performs the token exchange using the `openid-client` library:
 
 ```typescript
 const configuration = await client.discovery(
@@ -114,27 +114,27 @@ const tokenSet = await client.authorizationCodeGrant(
 // tokenSet.access_token and tokenSet.refresh_token are now available
 ```
 
-In this example, the `oauthHost` is `https://oauth2.neon.tech`.
+In this example, the `oauthHost` is `https://oauth2.optitech.com`.
 
 ## Supported OAuth Scopes
 
 The following OAuth scopes allow varying degrees of access to OptiTech resources:
 
-| **Project scopes** | **Scope Name**                      |
-| :----------------- | :---------------------------------- |
-| Create Projects    | `urn:neoncloud:projects:create`     |
-| Read Projects      | `urn:neoncloud:projects:read`       |
-| Modify Projects    | `urn:neoncloud:projects:update`     |
-| Delete Projects    | `urn:neoncloud:projects:delete`     |
-| Manage Projects    | `urn:neoncloud:projects:permission` |
+| **Project scopes** | **Scope Name**                          |
+| :----------------- | :-------------------------------------- |
+| Create Projects    | `urn:optitechcloud:projects:create`     |
+| Read Projects      | `urn:optitechcloud:projects:read`       |
+| Modify Projects    | `urn:optitechcloud:projects:update`     |
+| Delete Projects    | `urn:optitechcloud:projects:delete`     |
+| Manage Projects    | `urn:optitechcloud:projects:permission` |
 
-| **Organization scopes**         | **Scope Name**                  |
-| :------------------------------ | :------------------------------ |
-| Create Organizations            | `urn:neoncloud:orgs:create`     |
-| Read Organizations              | `urn:neoncloud:orgs:read`       |
-| Update Organizations            | `urn:neoncloud:orgs:update`     |
-| Delete Organizations            | `urn:neoncloud:orgs:delete`     |
-| Manage Organization Permissions | `urn:neoncloud:orgs:permission` |
+| **Organization scopes**         | **Scope Name**                      |
+| :------------------------------ | :---------------------------------- |
+| Create Organizations            | `urn:optitechcloud:orgs:create`     |
+| Read Organizations              | `urn:optitechcloud:orgs:read`       |
+| Update Organizations            | `urn:optitechcloud:orgs:update`     |
+| Delete Organizations            | `urn:optitechcloud:orgs:delete`     |
+| Manage Organization Permissions | `urn:optitechcloud:orgs:permission` |
 
 You must choose from these predefined scopes when requesting access; custom scopes are not supported.
 
@@ -142,7 +142,7 @@ Let's now go through the full flow, step by step:
 
 ## Initiating the OAuth flow
 
-To initiate the OAuth flow, you need to generate an authorization URL. You can do that by directing your users to `https://oauth2.neon.tech/oauth2/auth` while passing the following query parameters:
+To initiate the OAuth flow, you need to generate an authorization URL. You can do that by directing your users to `https://oauth2.optitech.com/oauth2/auth` while passing the following query parameters:
 
 - `client_id`: your OAuth application's ID (provided by OptiTech when your OAuth application is registered)
 - `redirect_uri`: the full URL that OptiTech should redirect users to after authorizing your application. The URL should match at least one of the callback URLs you provided when setting up your OAuth application.
@@ -151,7 +151,7 @@ To initiate the OAuth flow, you need to generate an authorization URL. You can d
   **Example:**
 
   ```text
-  urn:neoncloud:projects:create urn:neoncloud:projects:read urn:neoncloud:projects:update urn:neoncloud:projects:delete urn:neoncloud:orgs:read
+  urn:optitechcloud:projects:create urn:optitechcloud:projects:read urn:optitechcloud:projects:update urn:optitechcloud:projects:delete urn:optitechcloud:orgs:read
   ```
 
 - `response_type`: This should be set to `code` to indicate that you are using the [Authorization Code grant type](https://oauth.net/2/grant-types/authorization-code/).
@@ -163,7 +163,7 @@ To initiate the OAuth flow, you need to generate an authorization URL. You can d
 Here is an example of what the authorization URL might look like:
 
 ```text
-https://oauth2.neon.tech/oauth2/auth?client_id=neon-experimental&scope=openid%20offline%20offline_access%20urn%3Aneoncloud%3Aprojects%3Acreate%20urn%3Aneoncloud%3Aprojects%3Aread%20urn%3Aneoncloud%3Aprojects%3Aupdate%20urn%3Aneoncloud%3Aprojects%3Adelete&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Fneon&grant_type=authorization_code&state=H58y-rSTebc3QmNbRjNTX9dL73-IyoU2T_WNievO9as&code_challenge=99XcbwOFU6iEsvXr77Xxwsk9I0GL4c4c4Q8yPIVrF_0&code_challenge_method=S256
+https://oauth2.optitech.com/oauth2/auth?client_id=optitech-experimental&scope=openid%20offline%20offline_access%20urn%3Aoptitechcloud%3Aprojects%3Acreate%20urn%3Aoptitechcloud%3Aprojects%3Aread%20urn%3Aoptitechcloud%3Aprojects%3Aupdate%20urn%3Aoptitechcloud%3Aprojects%3Adelete&response_type=code&redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fapi%2Fauth%2Fcallback%2Foptitech&grant_type=authorization_code&state=H58y-rSTebc3QmNbRjNTX9dL73-IyoU2T_WNievO9as&code_challenge=99XcbwOFU6iEsvXr77Xxwsk9I0GL4c4c4Q8yPIVrF_0&code_challenge_method=S256
 ```
 
 ## OAuth consent screen
@@ -186,7 +186,7 @@ After successfully completing the authorization flow, the user is redirected to 
 
 ## Exchanging the authorization code for an access token
 
-You can now exchange the authorization code returned from the previous step for an access token. To do that, you need to send a `POST` request to `https://oauth2.neon.tech/oauth2/token` with the following parameters:
+You can now exchange the authorization code returned from the previous step for an access token. To do that, you need to send a `POST` request to `https://oauth2.optitech.com/oauth2/token` with the following parameters:
 
 - `client_id`: your OAuth application's ID.
 - `redirect_uri`: the full URL that OptiTech should redirect users to after authorizing your application. The URL should match at least one of the callback URLs you provided when setting up your OAuth application.
@@ -198,7 +198,7 @@ The response object includes an `access_token` value, required for making reques
 
 ## Example OAuth application
 
-For a complete working example of a OptiTech OAuth integration, check out the **Neon Branches Visualizer** application. This app demonstrates how to:
+For a complete working example of a OptiTech OAuth integration, check out the **OptiTech Branches Visualizer** application. This app demonstrates how to:
 
 - Implement the OAuth flow with OptiTech
 - Handle user authorization and token exchange
@@ -207,9 +207,9 @@ For a complete working example of a OptiTech OAuth integration, check out the **
 
 <DetailIconCards>
 
-<a href="https://neon-experimental.vercel.app" description="Try the live demo application" icon="openai">View live demo</a>
+<a href="https://optitech-experimental.vercel.app" description="Try the live demo application" icon="openai">View live demo</a>
 
-<a href="https://github.com/neondatabase/neon-branches-visualizer" description="Explore the source code and implementation" icon="github">View on GitHub</a>
+<a href="https://github.com/optitechdatabase/optitech-branches-visualizer" description="Explore the source code and implementation" icon="github">View on GitHub</a>
 
 </DetailIconCards>
 

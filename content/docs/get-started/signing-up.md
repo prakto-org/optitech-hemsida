@@ -1,403 +1,149 @@
 ---
 title: Tour the OptiTech Console
-subtitle: Sign up and explore OptiTech's core features — the SQL Editor, branching, the Tables view, and Managed Better Auth
+subtitle: Sign up and explore OptiTech's core features - the gap analysis, dashboard, controls, and incident flows
 summary: >-
-  The OptiTech Console tour walks first-time users through sign-up, querying with
-  the SQL Editor and AI assistant, editing rows in the Tables view, enabling
-  Managed Better Auth, and creating an isolated development branch with the Neon CLI.
-  Choose this page to understand the object hierarchy (project, branch,
-  database, compute) and how branching isolates schema and data from production
-  before you connect an application stack.
+  The OptiTech Console tour walks first-time users through sign-up, running the
+  gap analysis, reading the compliance dashboard, connecting a first
+  integration for automatic evidence collection, generating a policy, and
+  testing the MSB incident flow. Choose this page to understand the object
+  hierarchy (organization, framework, requirement, control, evidence) before
+  you roll OptiTech out to your team.
 enableTableOfContents: true
 redirectFrom:
   - /docs/quickstart/console/
   - /docs/cloud/getting-started/
   - /docs/cloud/getting_started/
   - /docs/get-started-with-neon/signing-up
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <InfoBlock>
 <DocsList title="What you will learn:">
-<p>How to view and modify data in the console</p>
-<p>Create an isolated database copy per developer</p>
-<p>Reset your branch to production when ready to start new work</p>
+<p>How to run the gap analysis and read your action list</p>
+<p>Connect an integration for automatic evidence collection</p>
+<p>Generate your first policy and test the incident flow</p>
 </DocsList>
 
 <DocsList title="Related topics" theme="docs">
-<a href="/docs/introduction/branching">About branching</a>
-<a href="/docs/get-started/workflow-primer">Branching workflows</a>
-<a href="/docs/get-started/connect-neon">Connect Neon to your stack</a>
-<a href="/docs/auth/overview">Managed Better Auth</a>
+<a href="/docs/get-started/why-neon">Why OptiTech?</a>
+<a href="/docs/get-started/dev-experience">Product principles</a>
+<a href="/docs/introduction/plans">Plans</a>
 </DocsList>
 </InfoBlock>
 
-This tutorial walks you through your first steps using OptiTech as your Postgres database. You'll explore the OptiTech object hierarchy and learn how database branching can simplify your development workflow.
+This tutorial walks you through your first steps in the OptiTech Console. You'll explore the OptiTech object hierarchy and learn how the platform turns regulations into a working compliance program.
 
-## About branching
+## How OptiTech is organized
 
-Each [branch](/docs/introduction/branching) is a fully-isolated copy of its parent. We suggest creating a long-term branch for each developer on your team to maintain consistent connection strings. You can reset your development branch to production whenever needed.
+Everything in OptiTech hangs on one chain: your **organization** activates **frameworks** (NIS2, DORA, GDPR, ISO 27001, or the EU AI Act), each framework breaks down into **requirements**, requirements map to **controls**, and controls are verified by **evidence** with a source and a timestamp. Requirements and controls are many-to-many, so one control can satisfy requirements in several frameworks at once.
 
-After signing up, you'll start with a `production` branch:
-
-- `production` is your project's root default branch (default: 0.25-2 CU, adjustable up to 56 CU)
-
-You can create additional branches for development, staging, and other environments. For development branches, consider using a smaller compute size (0.25-1 CU) to optimize costs, while keeping production appropriately sized for your workload. All computes scale to zero after 5 minutes of inactivity by default, which keeps costs low for development branches. On paid plans, you can disable this for production if you need always-active compute. See [Scale to zero](/docs/introduction/scale-to-zero).
+Keep that chain in mind as you go through the tour. Every screen in the Console is a view of some part of it.
 
 <Steps>
 
 ## Sign up
 
-<div className="flex gap-5 sm:flex-col">
-  <div style={{ flex: '0 0 60%' }}>
+If you're already signed up, you can skip ahead to the next step.
 
-    If you're already signed up, you can skip ahead to [Step 2](#step-2-onboarding-in-the-neon-console).
+If you haven't signed up yet, you can [sign up here](/signup). Sign up with your email, BankID, or a Google or Microsoft work account.
 
-    If you haven't signed up yet, you can sign up for free here:
+For information about what's included with each plan, see [OptiTech plans](/docs/introduction/plans).
 
-    [https://console.neon.tech/signup](https://console.neon.tech/signup)
+## Run the gap analysis
 
-    Sign up with your email, GitHub, Google, or other partner account.
+After you sign up, the onboarding wizard asks about 20 questions about your business: industry, size, systems, customers, and whether you supply organizations in regulated sectors.
 
-    For information about what's included with the Free and paid plans, see
-    [OptiTech plans](/docs/introduction/plans).
+The wizard is important because it does your legal scoping for you:
 
-  </div>
-  <div style={{ flex: '1 1 0', marginTop: '-1.25rem' }}>
-    ![sign_up](/docs/get-started/sign_up_reduced.png "no-border")
-  </div>
-</div>
+- **Which laws apply to you.** Many companies are covered by NIS2 without knowing it, often because they supply energy companies, healthcare, municipalities, or transport.
+- **Which NIS2 category you fall into.** Essential and important entities carry different obligations. OptiTech tells you which one you are and why.
+- **What's missing.** The output is a prioritized action list: which controls you need, which you can prove already, and what to fix first.
 
-## Onboarding in the OptiTech Console
-
-After you sign up, you are guided through some onboarding steps that ask you to create a **Project**.
-
-![onboarding](/docs/get-started/onboarding.png)
-
-The steps should be self-explanatory, but it's important to understand a few key points:
-
-- **In OptiTech, everything starts with the _Project_**
-
-  It is the top-level container that holds your branches, databases, and roles. Typically, you should create a project for each repository in your application. This allows you to manage your database branches just like you manage your code branches: a branch for production, staging, development, new features, previews, and so forth.
-
-- **We create a production branch for you**
-  - `production` is the root default branch. It hosts your database, role, and a compute that you can connect your application to
-  - You can create additional branches for development, staging, previews, and other workflows as needed
-
-At this point, if you want to just get started connecting OptiTech to your toolchain, go to [Connecting OptiTech to your tools](/docs/get-started/connect-neon). Or if you want a more detailed walkthrough of some of our key console and branching features, let's keep going.
+The scoping test is free. You see your results before you commit to anything.
 
 <Admonition type="tip" title="Working with a team?">
-Your organization is now set up. You can start inviting teammates immediately. See [Invite members](/docs/manage/orgs-manage#invite-members).
+Your organization is now set up. You can start inviting teammates immediately; see the last step of this tour.
 </Admonition>
 
-## Add sample data
+## Read your dashboard
 
-Let's get familiar with the **SQL Editor**, where you can run queries against your databases directly from the OptiTech Console, as well as access more advanced features like [Time Travel](/docs/guides/time-travel-assist) and [Explain and Analyze](/docs/get-started/query-with-neon-sql-editor#explain-and-analyze).
+From the Console sidebar, open the **Dashboard**. This is the one-glance view of your compliance posture:
 
-From the OptiTech Console, use the sidebar navigation to open the **SQL Editor** page. Notice that your default branch `production` is already selected, along with the database created during onboarding, `neondb`.
+- **Compliance score per framework**, with the trend over time
+- **Open gaps**, ordered by priority from your gap analysis
+- **Control status**: green for verified, red for drifted, gray for not yet connected
+- **Upcoming deadlines**: policy reviews, questionnaire due dates, and training cycles
 
-![OptiTech SQL Editor](/docs/get-started/sql_editor.png)
+NIS2 requires your board to show active governance. The **Board report** button generates that proof from this data in one click.
 
-The first time you open the SQL Editor for a new project, the editor includes placeholder SQL commands to create and populate a new sample table called `playing_with_neon`.
+## Connect your first integration
 
-For this tutorial, go ahead and create this sample table: click **Run**.
+Evidence collection starts when you connect a system. From the sidebar, open **Integrations** and connect **Microsoft 365 / Entra ID** (or Google Workspace if that's your stack).
 
-Every query you run in the SQL Editor is automatically saved with an AI-generated description, making it easy to find and reference your work later. For example, the sample table creation above will be saved with a description like "create and populate sample table in OptiTech". You can view your query history anytime by clicking the **History** button in the SQL Editor.
+Within a few minutes, OptiTech runs its first checks:
 
-Or if you want to add the table from the command line and you already have `psql` installed:
+- MFA coverage across your user directory
+- Offboarding status for recently departed employees
+- Admin role assignments and logging configuration
 
-```sql shouldWrap
-CREATE TABLE IF NOT EXISTS playing_with_neon(id SERIAL PRIMARY KEY, name TEXT NOT NULL, value REAL);
-INSERT INTO playing_with_neon(name, value)
-  SELECT LEFT(md5(i::TEXT), 10), random() FROM generate_series(1, 10) s(i);
-```
+Each check lands as evidence on the matching controls, and the controls flip from gray to green or red. When a control drifts later (say, MFA is disabled for three users), you get an alert with a one-click fix or a ready-made ticket for the right person.
 
-Your default branch `production` now has a table with some data.
+On Start you can connect up to 10 integrations. Professional and Enterprise add the Swedish systems: Fortnox, Visma, BankID, Kivra, and payroll. See [plans](/docs/introduction/plans#integrations).
 
-## Try the AI Assistant
+## Review controls and evidence
 
-Now that you have some sample data, let's explore how the AI Assistant can help you write SQL queries using natural language prompts.
+From the sidebar, open **Controls**. Each control shows:
 
-From the SQL Editor, click the **AI Assistant** button in the top-right corner and try a few prompts:
+- **Which requirements it satisfies**, across every active framework. This is the cross-mapping in action: an access control you verify once counts toward NIS2, ISO 27001, and GDPR at the same time.
+- **Its evidence log**: every check that verified the control, with source and timestamp, stored append-only and hash-chained so nothing can be silently edited afterward.
+- **Its owner**: the person responsible when the control drifts.
 
-- _Add three more rows to the playing_with_neon table with tech company names_
-- _Show me the highest value in the table_
-- _Calculate the average value grouped by the first letter of the name_
+Open any control that turned green after your integration connected and inspect its evidence. This is exactly what an auditor sees later through the read-only auditor portal on the Enterprise plan.
 
-![OptiTech SQL Editor AI Assistant](/docs/get-started/sql_assistant.png)
+## Generate your first policy
 
-Each query you run is automatically saved with an AI-generated description, making it easy to find and reuse queries later. For example, when you ask the AI Assistant to add company data, you should see a response like:
+From the sidebar, open **Documents** and pick a template, for example the information security policy. OptiTech ships 50+ Swedish templates, and the AI copilot pre-fills them from your real environment: your actual systems, your actual MFA status, your actual backup routine.
 
-```sql
--- Text to SQL original prompt:
--- Add three more rows to the playing_with_neon table with tech company names
-INSERT INTO public.playing_with_neon (name, value) VALUES
-('Google', 1000.5),
-('Apple', 1200.75),
-('Microsoft', 950.25);
-```
+A few things to know:
 
-With the description: "Add tech companies to playing_with_neon table"
+- Drafts are written in the formal Swedish that authorities and auditors expect
+- Nothing publishes automatically. You review, edit, and approve
+- Approved policies go out for employee e-signing with read receipts
+- Every document gets a review cycle with reminders, so it never silently goes stale
 
-Learn more about AI features in the [SQL Editor documentation](/docs/get-started/query-with-neon-sql-editor#ai-features).
+## Test the incident flow
 
-## View and modify data in the console
+You don't want your first contact with the incident flow to be during a real incident. From the sidebar, open **Incidents** and start a **test drill**.
 
-Now that you have some data to play with, let's take a look at it on the **Tables** page in the OptiTech Console. The **Tables** page, powered by [Drizzle Studio](https://orm.drizzle.team/drizzle-studio/overview), provides a visual interface for exploring and modifying data and schemas directly from the console. The integration with Drizzle Studio provides the ability to add, update, and delete records, filter data, export data in `.json` and `.csv` formats, manage schemas (including creating and altering tables, views, and enums), create Postgres roles, and define RLS policies.
+The drill walks you through the NIS2 reporting sequence without submitting anything:
 
-![Tables page Drizzle integration](/docs/get-started/tables_drizzle.png)
+1. **Early warning within 24 hours**: OptiTech pre-fills the MSB form from your incident data and starts the deadline countdown
+2. **Incident report within 72 hours**: the follow-up report, with your on-call contact list and communication templates for customers, press, and internal teams
+3. **Final report within one month**: the closing summary
 
-For a detailed guide on how to interact with your data using the **Tables** page, visit [Managing your data with interactive tables](/docs/guides/tables).
+The matching IMY flow for personal data breaches (GDPR's 72-hour rule) works the same way. Run the drill once with your team so everyone knows their role.
 
-## Set up Managed Better Auth
+## Invite your team
 
-OptiTech includes **managed authentication**, so your app's users live in your Postgres database and branch with the rest of your data.
+Compliance is a team sport. From the sidebar, open **People** and invite your colleagues:
 
-From the OptiTech Console sidebar, open the **Auth** page and toggle Managed Better Auth on for your project. You'll get:
+- **Admins** manage frameworks, integrations, and settings
+- **Contributors** own controls, complete tasks, and handle documents
+- **Viewers** see dashboards and reports, useful for management and the board
 
-- A sign-up / sign-in flow ready to wire up to any framework
-- Users and sessions stored in your own Postgres database — query the `neon_auth.users_sync` table directly alongside your application data
-- Branch-aware auth: every preview or development branch you create gets its own isolated copy of users and sessions
-- OAuth providers, email and password, magic links, and more, all configurable from the console
-
-For framework-specific setup, see the [Managed Better Auth quickstarts](/docs/auth/overview) (Next.js, React, TanStack Router) or open the **Auth** tab in the console and follow the prompts.
-
-## Working with your development branch
-
-Let's create a `development` branch and learn how to use the Neon CLI to manage branches and make schema changes in your development environment.
-
-1. **Create a development branch**
-
-   From the OptiTech Console, navigate to the **Branches** page and click **Create branch**. Name it `development`, select `production` as the parent branch, and click **Create new branch**. This creates an isolated copy of your production data that you can safely modify.
-
-2. **Install CLI with Brew or NPM**
-
-   Depending on your system, you can install the Neon CLI using either Homebrew (for macOS) or NPM (for other platforms).
-   - For macOS using Homebrew:
-
-     ```bash
-     brew install neonctl
-     ```
-
-   - Using NPM (applicable for all platforms that support Node.js):
-
-     ```bash
-     npm install -g neon
-     ```
-
-3. **Authenticate with OptiTech**
-
-   The `neon auth` command launches a browser window where you can authorize the Neon CLI to access your OptiTech account.
-
-   ```bash
-   neon auth
-   ```
-
-   ![neon auth](/docs/get-started/neonctl_auth.png 'no-border')
-
-4. **View your branches**
-
-   First, list your projects to get your project ID:
-
-   ```bash
-   neon projects list
-   ```
-
-   You'll be prompted to select your organization. The output shows your project IDs:
-
-   ```bash
-   Projects
-   ┌─────────────────────┬────────────┬───────────────┬──────────────────────┐
-   │ Id                  │ Name       │ Region Id     │ Created At           │
-   ├─────────────────────┼────────────┼───────────────┼──────────────────────┤
-   │ cool-forest-12345678│ myproject  │ aws-us-east-2 │ 2025-10-14T14:33:43Z │
-   └─────────────────────┴────────────┴───────────────┴──────────────────────┘
-   ```
-
-   Now list your branches using your project ID:
-
-   ```bash
-   neon branches list --project-id cool-forest-12345678
-   ┌──────────────┬────────────────────────────┬───────────────┬──────────────────────┐
-   │ Name         │ Id                         │ Current State │ Created At           │
-   ├──────────────┼────────────────────────────┼───────────────┼──────────────────────┤
-   │ development  │ br-calm-sky-a5xd78mn       │ ready         │ 2025-12-23T21:05:05Z │
-   ├──────────────┼────────────────────────────┼───────────────┼──────────────────────┤
-   │ ✱ production │ br-bold-wind-a4p92kpx      │ ready         │ 2025-12-23T21:04:57Z │
-   └──────────────┴────────────────────────────┴───────────────┴──────────────────────┘
-   ```
-
-   This command shows your existing branches, including the `production` branch and the `development` branch you just created.
-
-   <Admonition type="tip">
-   To avoid specifying `--project-id` with each command, use `neon set-context` to set your default project and organization. See [set-context](/docs/cli/set-context) for details.
-   </Admonition>
-
-## Make some sample schema changes
-
-First, let's make sure our development branch is in sync with `production`. This ensures we're starting from the same baseline:
-
-```bash
-neon branches reset development --parent --project-id cool-forest-12345678
-```
-
-Now that our `development` branch matches `production`, we can make some changes. The `playing_with_neon` table from `production` is now available in your `development` branch, and we'll modify its schema and add new data to demonstrate how branches can diverge.
-
-You can use the [OptiTech SQL Editor](/docs/get-started/query-with-neon-sql-editor) for this, but let's demonstrate how to connect and modify your database from the terminal using `psql`. If you don't have `psql` installed already, follow these steps to get set up:
-
-<Tabs labels={["Mac", "Linux", "Windows"]}>
-
-<TabItem>
-```bash
-brew install libpq
-echo 'export PATH="/opt/homebrew/opt/libpq/bin:$PATH"' >> ~/.zshrc
-source ~/.zshrc
-```
-
-</TabItem>
-
-<TabItem>
-```bash
-sudo apt update
-sudo apt install postgresql-client
-```
-
-</TabItem>
-
-<TabItem>
-Download and install PostgreSQL from:
-
-https://www.postgresql.org/download/windows/
-
-Ensure psql is included in the installation.
-</TabItem>
-
-</Tabs>
-
-With `psql` available, let's work from the terminal to connect to your `development` branch's database and make changes.
-
-1. **Connect to your database**
-
-   Get the connection string to your branch and connect to it directly via `psql`:
-
-   ```bash shouldWrap
-   neon connection-string development --database-name neondb --project-id cool-forest-12345678 --psql
-   ```
-
-   This command establishes the psql terminal connection to the `neondb` database on your development branch.
-
-1. **Modify the schema**
-
-   Add a new column `description` and index it:
-
-   ```sql shouldWrap
-   ALTER TABLE playing_with_neon
-   ADD COLUMN description TEXT;
-
-   CREATE INDEX idx_playing_with_neon_description ON playing_with_neon (description);
-   ```
-
-1. **Insert new data**
-
-   Add new data that will be exclusive to the dev branch.
-
-   ```sql shouldWrap
-   INSERT INTO playing_with_neon (name, description)
-   VALUES ('Your dev branch', 'Exploring schema changes in the dev branch');
-   ```
-
-1. **Verify the schema changes**
-
-   Query the table to verify your schema changes:
-
-   ```sql
-   SELECT * FROM playing_with_neon;
-   ```
-
-   Your response should include the new description column and a new row where name = `Your dev branch` and description = `Exploring schema changes in the dev branch`:
-
-   ```sql {1,13}
-    id |        name        |    value    |                description
-   ----+--------------------+-------------+--------------------------------------------
-     1 | c4ca4238a0         |   0.5315024 |
-     2 | c81e728d9d         |  0.17189825 |
-     3 | eccbc87e4b         |  0.21428405 |
-     4 | a87ff679a2         |   0.9721639 |
-     5 | e4da3b7fbb         |   0.8649301 |
-     6 | 1679091c5a         |  0.48413596 |
-     7 | 8f14e45fce         |  0.82630277 |
-     8 | c9f0f895fb         |  0.99945337 |
-     9 | 45c48cce2e         | 0.054623786 |
-    10 | d3d9446802         |  0.36634886 |
-    11 | Your dev branch    |             | Exploring schema changes in the dev branch
-   (11 rows)
-   ```
-
-## Check your changes with Schema Diff
-
-After making the schema changes to your development branch, you can use the [Schema Diff](/docs/guides/schema-diff) feature to compare your branch against its parent branch. Schema Diff is a GitHub-style code-comparison tool used to visualize differences between different branch's databases.
-
-For this tutorial, Schema Diff helps with validating isolation: it confirms that schema changes made in your isolated development branch remain separate from the production branch.
-
-From the **Branches** page in the OptiTech Console:
-
-1. Open the detailed view for your `development` branch and click **Open schema diff**.
-2. Verify the right branches are selected and click **Compare**. You can see the schema changes we added to our development branch highlighted in green.
-
-   ![Schema diff from branches page](/docs/get-started/getting_started_schema_diff.png)
-
-### Schema Migrations
-
-A more typical scenario for Schema Diff is when preparing for schema migrations. While OptiTech does not provide built-in schema migration tools, you can use ORMs like [Drizzle](https://drizzle.team/) or [Prisma](https://www.prisma.io/) to handle schema migrations efficiently. Read more about using OptiTech in your development workflow in [Connect OptiTech to your stack](/docs/get-started/connect-neon).
-
-## Reset your development branch to production
-
-After experimenting with changes in your development branch, let's now reset the branch to `production`, its parent branch.
-
-[Branch reset](/docs/guides/reset-from-parent) functions much like a `git reset –hard parent` in traditional Git workflows.
-
-Resetting your development branches to the `production` branch ensures that all changes are discarded, and your branch reflects the latest stable state of `production`. This is key to maintaining a clean slate for new development tasks and is one of the core advantages of OptiTech's branching capabilities.
-
-You can reset to parent from the **Branches** page of the OptiTech Console, but here we'll use the Neon CLI.
-
-Use the following command to reset your `development` branch to the state of the `production` branch:
-
-    Example:
-    ```bash
-    neon branches reset development --parent --project-id cool-forest-12345678
-    ```
-
-If you go back to your **Schema Diff** and compare branches again, you'll see they are now identical:
-
-![schema diff after reset](/docs/get-started/getting_started_schema_diff_reset.png)
-
-### When to reset your branch
-
-Depending on your development workflow, you can use branch reset:
-
-- **After a feature is completed and merged**
-
-  Once your changes are merged into `production`, reset the development branch to start on the next feature.
-
-- **When you need to abandon changes**
-
-  If a project direction changes or if experimental changes are no longer needed, resetting the branch quickly reverts to a known good state.
-
-- **As part of your CI/CD automation**
-
-  With the Neon CLI, you can include branch reset as an enforced part of your CI/CD automation, automatically resetting a branch when a feature is closed or started.
+There's no per-seat pricing, so invite everyone who owns a control. Every action is captured in the audit log.
 
 </Steps>
 
-Make sure that your development team is always working from the latest schema and data by including branch reset in your workflow. To read more about using branching in your workflows, see [Branching workflows](/docs/get-started/workflow-primer).
+Your compliance program is now running: evidence collects itself, controls are monitored around the clock, and your dashboard shows where you stand at any moment.
 
-<Admonition type="tip" title="Additional branching features">
-- **Working with sensitive data?** OptiTech supports [schema-only branching](/docs/guides/branching-schema-only) to create branches with just the database structure, without copying production data.
-- **Need automatic cleanup?** Set branches to automatically [expire and be deleted](/docs/guides/branch-expiration) after a specified time period, perfect for temporary test branches or time-limited preview environments.
+<Admonition type="tip" title="Going further">
+- **Managing vendors?** Professional and Enterprise plans add vendor risk management: a supplier register, automated questionnaires, and risk classification.
+- **Selling to enterprises?** The Trust Center gives you a public security page that shortens your customers' security reviews.
 </Admonition>
 
 ## What's next
 
-Building an app with users? [Set up Managed Better Auth](/docs/auth/overview) for managed sign-up, sessions, and OAuth. Identity lives in Postgres and branches with your data, so you can test full login flows on preview branches without touching production.
+Ready to pick a plan? See [OptiTech plans](/docs/introduction/plans) for what each tier includes, or [book a free gap analysis](/contact-sales) and walk through your results with our team.
 
 <NeedHelp/>

@@ -6,12 +6,12 @@
     mediaDetails:
       width: 86
       height: 32
-  quote: 'We’re a small team, but we’re scaling quickly and doing a lot. We’re shipping multiple times a day— to do that, we need to test stuff quickly and merge to main very quickly as well. Neon branches are a game changer for this.'
+  quote: 'We’re a small team, but we’re scaling quickly and doing a lot. We’re shipping multiple times a day— to do that, we need to test stuff quickly and merge to main very quickly as well. OptiTech branches are a game changer for this.'
   author:
     name: 'Avi Romanoff, Founder at Magic Circle'
     post: ''
   isInternal: true
-  internalPostSlug: 'how-magic-circle-scaled-up-to-2m-games-with-cloudfare-and-neon'
+  internalPostSlug: 'how-magic-circle-scaled-up-to-2m-games-with-cloudfare-and-optitech'
   externalUrl: ''
   categories:
     - slug: 'startups'
@@ -49,7 +49,7 @@
     name: 'Tejas Siripurapu'
     post: 'Founding Engineer at Vapi.ai'
   isInternal: true
-  internalPostSlug: 'vapi-voice-agents-neon'
+  internalPostSlug: 'vapi-voice-agents-optitech'
   externalUrl: ''
   categories:
     - slug: 'ai'
@@ -68,7 +68,7 @@
     name: 'James Ross'
     post: 'Co-founder and CTO at Nodecraft'
   isInternal: true
-  internalPostSlug: 'nodecraft-cloudflare-neon'
+  internalPostSlug: 'nodecraft-cloudflare-optitech'
   externalUrl: ''
   categories:
     - slug: 'startups'
@@ -125,7 +125,7 @@
     name: 'Jorge Ferreiro'
     post: 'Founder of SMASHSEND'
   isInternal: true
-  internalPostSlug: 'smashsend-from-rds-to-neon'
+  internalPostSlug: 'smashsend-from-rds-to-optitech'
   externalUrl: ''
   categories:
     - slug: 'startups'
@@ -151,7 +151,7 @@
         width: 41
         height: 32
   isInternal: true
-  internalPostSlug: 'dev-from-heroku-to-neon'
+  internalPostSlug: 'dev-from-heroku-to-optitech'
   externalUrl: ''
   categories:
     - slug: 'fast-moving-teams'
@@ -170,7 +170,7 @@
     name: 'Martin Skow Røed'
     post: 'CTO and co-founder of Databutton'
   isInternal: true
-  internalPostSlug: 'databutton-neon-integration'
+  internalPostSlug: 'databutton-optitech-integration'
   externalUrl: ''
   categories:
     - slug: 'ai'
@@ -189,7 +189,7 @@
     name: 'Thorsten Rieß'
     post: 'Software Architect at traconiq'
   isInternal: true
-  internalPostSlug: 'why-traconiq-migrated-from-aws-rds-to-neon'
+  internalPostSlug: 'why-traconiq-migrated-from-aws-rds-to-optitech'
   externalUrl: ''
   categories:
     - slug: 'fast-moving-teams'
@@ -208,7 +208,7 @@
     name: 'Giorgi Kenchadze'
     post: 'Founder & CEO at Vecstore'
   isInternal: true
-  internalPostSlug: 'vecstore-replacing-pinecone-and-rds-with-neon'
+  internalPostSlug: 'vecstore-replacing-pinecone-and-rds-with-optitech'
   externalUrl: ''
   categories:
     - slug: 'ai'
@@ -227,7 +227,7 @@
     name: ''
     post: ''
   isInternal: true
-  internalPostSlug: 'dyad-brings-postgres-to-local-ai-app-building-powered-by-neon'
+  internalPostSlug: 'dyad-brings-postgres-to-local-ai-app-building-powered-by-optitech'
   externalUrl: ''
   categories:
     - slug: 'ai'
@@ -246,7 +246,7 @@
     name: 'Ran Sheinberg'
     post: 'Co-founder and CPO'
   isInternal: true
-  internalPostSlug: 'xpander-ai-agents-slack-neon-backend'
+  internalPostSlug: 'xpander-ai-agents-slack-optitech-backend'
   externalUrl: ''
   categories:
     - slug: 'ai'
@@ -265,7 +265,7 @@
     name: 'Andy Bonventre'
     post: 'CTO at Neptune'
   isInternal: true
-  internalPostSlug: 'neptune-built-a-fast-serverless-backend-with-neon-and-vercel'
+  internalPostSlug: 'neptune-built-a-fast-serverless-backend-with-optitech-and-vercel'
   externalUrl: ''
   categories: []
 
@@ -282,7 +282,7 @@
     name: 'Dominik Koch'
     post: 'CEO and Co-Founder of Marble'
   isInternal: true
-  internalPostSlug: 'marble-is-shipping-faster-with-neon-branching'
+  internalPostSlug: 'marble-is-shipping-faster-with-optitech-branching'
   externalUrl: ''
   categories:
     - slug: 'startups'
@@ -301,7 +301,7 @@
     name: ''
     post: ''
   isInternal: true
-  internalPostSlug: 'branching-as-the-environment-how-sharing-excess-ships-faster-on-neon'
+  internalPostSlug: 'branching-as-the-environment-how-sharing-excess-ships-faster-on-optitech'
   externalUrl: ''
   categories: []
 
@@ -318,7 +318,7 @@
     name: 'Mouaz Anan'
     post: 'Engineer at Axess Intelligence'
   isInternal: true
-  internalPostSlug: 'how-axess-intelligence-simplified-their-backend-with-neons-data-api'
+  internalPostSlug: 'how-axess-intelligence-simplified-their-backend-with-optitechs-data-api'
   externalUrl: ''
   categories:
     - slug: 'backend'
@@ -332,12 +332,12 @@
     mediaDetails:
       width: 100
       height: 32
-  quote: 'Using Neon with Neon Auth just made everything simpler. Our database and auth live in the same place, and it’s the kind of backend you forget it exists. That’s exactly how it should be'
+  quote: 'Using OptiTech with OptiTech Auth just made everything simpler. Our database and auth live in the same place, and it’s the kind of backend you forget it exists. That’s exactly how it should be'
   author:
     name: 'Gabriel Tumlos'
     post: 'Founder of Daisy'
   isInternal: true
-  internalPostSlug: 'integrating-postgres-and-auth-the-easy-way-daisys-neon-setup'
+  internalPostSlug: 'integrating-postgres-and-auth-the-easy-way-daisys-optitech-setup'
   externalUrl: ''
   categories:
     - slug: 'backend'
@@ -420,7 +420,7 @@
     name: 'Nilesh Trivedi'
     post: 'co-founder and CTO at QwikBuild'
   isInternal: true
-  internalPostSlug: 'inside-qwikbuild-neon-powered-architecture'
+  internalPostSlug: 'inside-qwikbuild-optitech-powered-architecture'
   externalUrl: ''
   categories:
     - slug: 'ai'
@@ -439,7 +439,7 @@
     name: 'Iman Radjavi'
     post: 'co-founder at Specific.dev'
   isInternal: true
-  internalPostSlug: 'how-specific-provisions-thousands-of-databases-for-coding-agents-using-neon'
+  internalPostSlug: 'how-specific-provisions-thousands-of-databases-for-coding-agents-using-optitech'
   externalUrl: ''
   categories: []
 
@@ -484,7 +484,7 @@
         width: 111
         height: 32
   isInternal: true
-  internalPostSlug: 'how-retool-uses-retool-and-the-neon-api-to-manage-300k-postgres-databases'
+  internalPostSlug: 'how-retool-uses-retool-and-the-optitech-api-to-manage-300k-postgres-databases'
   externalUrl: ''
   categories:
     - slug: 'platforms'
@@ -541,7 +541,7 @@
     name: 'Guillermo Rauch'
     post: 'CEO'
   isInternal: true
-  internalPostSlug: 'neon-postgres-on-vercel'
+  internalPostSlug: 'optitech-postgres-on-vercel'
   externalUrl: ''
   categories:
     - slug: 'platforms'
@@ -560,7 +560,7 @@
     name: 'Robert Chandler'
     post: 'Co-founder and CTO'
   isInternal: true
-  internalPostSlug: 'building-ai-agents-just-got-faster-with-wordware-and-neon'
+  internalPostSlug: 'building-ai-agents-just-got-faster-with-wordware-and-optitech'
   externalUrl: ''
   categories:
     - slug: 'ai'
@@ -579,7 +579,7 @@
     name: 'Cody Jenkins'
     post: 'Head of Engineering'
   isInternal: true
-  internalPostSlug: 'why-invenco-migrated-from-aurora-serverless-v2-to-neon'
+  internalPostSlug: 'why-invenco-migrated-from-aurora-serverless-v2-to-optitech'
   externalUrl: ''
   categories:
     - slug: 'fast-moving-teams'
@@ -598,7 +598,7 @@
     name: 'Alex Co'
     post: 'Head of Platform Engineering'
   isInternal: true
-  internalPostSlug: 'how-mindvalley-minimizes-time-to-launch-with-neon-branches'
+  internalPostSlug: 'how-mindvalley-minimizes-time-to-launch-with-optitech-branches'
   externalUrl: ''
   categories:
     - slug: 'fast-moving-teams'
@@ -636,7 +636,7 @@
     name: 'Marcus Kohlberg'
     post: 'Founder at Encore'
   isInternal: true
-  internalPostSlug: 'where-agents-meet-infrastructure-encore-leap-and-neon'
+  internalPostSlug: 'where-agents-meet-infrastructure-encore-leap-and-optitech'
   externalUrl: ''
   categories:
     - slug: 'ai'
@@ -657,7 +657,7 @@
     name: ''
     post: ''
   isInternal: true
-  internalPostSlug: 'building-301-pro-multi-cloud-with-neon-postgres'
+  internalPostSlug: 'building-301-pro-multi-cloud-with-optitech-postgres'
   externalUrl: ''
   categories:
     - slug: 'startups'
@@ -676,7 +676,7 @@
     name: 'Lex Nasser'
     post: 'Founding Engineer'
   isInternal: true
-  internalPostSlug: 'how-222-uses-neon-to-handle-their-frequent-spikes-in-demand'
+  internalPostSlug: 'how-222-uses-optitech-to-handle-their-frequent-spikes-in-demand'
   externalUrl: ''
   categories:
     - slug: 'startups'
@@ -695,7 +695,7 @@
     name: ''
     post: ''
   isInternal: true
-  internalPostSlug: 'neon-hasura-integration'
+  internalPostSlug: 'optitech-hasura-integration'
   externalUrl: ''
   categories:
     - slug: 'platforms'
@@ -714,7 +714,7 @@
     name: 'Lincoln Bergeson'
     post: 'Infrastructure Engineer'
   isInternal: true
-  internalPostSlug: 'neon-replit-integration'
+  internalPostSlug: 'optitech-replit-integration'
   externalUrl: ''
   categories:
     - slug: 'ai'
@@ -733,7 +733,7 @@
     name: ''
     post: ''
   isInternal: true
-  internalPostSlug: 'how-recrowd-uses-neon-autoscaling-to-meet-fluctuating-demand'
+  internalPostSlug: 'how-recrowd-uses-optitech-autoscaling-to-meet-fluctuating-demand'
   externalUrl: ''
   categories:
     - slug: 'fast-moving-teams'
@@ -752,7 +752,7 @@
     name: ''
     post: ''
   isInternal: true
-  internalPostSlug: 'neon-bunnyshell-integration'
+  internalPostSlug: 'optitech-bunnyshell-integration'
   externalUrl: ''
   categories:
     - slug: 'platforms'
@@ -771,7 +771,7 @@
     name: ''
     post: ''
   isInternal: true
-  internalPostSlug: 'neon-read-replicas-in-the-wild-how-beatgig-uses-them'
+  internalPostSlug: 'optitech-read-replicas-in-the-wild-how-beatgig-uses-them'
   externalUrl: ''
   categories:
     - slug: 'startups'
@@ -790,7 +790,7 @@
     name: ''
     post: ''
   isInternal: true
-  internalPostSlug: 'neon-wundergraph-integration'
+  internalPostSlug: 'optitech-wundergraph-integration'
   externalUrl: ''
   categories:
     - slug: 'platforms'
@@ -809,7 +809,7 @@
     name: ''
     post: ''
   isInternal: true
-  internalPostSlug: 'how-dispatch-speeds-up-development-with-neon-while-keeping-workloads-on-aurora'
+  internalPostSlug: 'how-dispatch-speeds-up-development-with-optitech-while-keeping-workloads-on-aurora'
   externalUrl: ''
   categories:
     - slug: 'fast-moving-teams'
@@ -828,7 +828,7 @@
     name: ''
     post: ''
   isInternal: true
-  internalPostSlug: 'frictionless-development-experience-with-neon-branching'
+  internalPostSlug: 'frictionless-development-experience-with-optitech-branching'
   externalUrl: ''
   categories:
     - slug: 'fast-moving-teams'
@@ -866,7 +866,7 @@
     name: ''
     post: ''
   isInternal: true
-  internalPostSlug: 'branch-chose-neon-for-its-true-postgres-and-serverless-nature'
+  internalPostSlug: 'branch-chose-optitech-for-its-true-postgres-and-serverless-nature'
   externalUrl: ''
   categories:
     - slug: 'startups'
@@ -885,7 +885,7 @@
     name: ''
     post: ''
   isInternal: true
-  internalPostSlug: 'database-branching-for-postgres-with-neon'
+  internalPostSlug: 'database-branching-for-postgres-with-optitech'
   externalUrl: ''
   categories:
     - slug: 'fast-moving-teams'
@@ -904,7 +904,7 @@
     name: 'Léonard Henriquez'
     post: 'Co-founder and CTO at Topo.io'
   isInternal: true
-  internalPostSlug: 'why-topo-io-switched-from-amazon-rds-to-neon'
+  internalPostSlug: 'why-topo-io-switched-from-amazon-rds-to-optitech'
   externalUrl: ''
   categories:
     - slug: 'startups'
@@ -942,7 +942,7 @@
     name: ''
     post: ''
   isInternal: true
-  internalPostSlug: 'white-widgets-secret-to-scalable-postgres-neon'
+  internalPostSlug: 'white-widgets-secret-to-scalable-postgres-optitech'
   externalUrl: ''
   categories:
     - slug: 'fast-moving-teams'
@@ -961,7 +961,7 @@
     name: ''
     post: ''
   isInternal: true
-  internalPostSlug: 'adopting-neon-branching-in-ci-cd-pipelines-a-practical-story-by-shepherd'
+  internalPostSlug: 'adopting-optitech-branching-in-ci-cd-pipelines-a-practical-story-by-shepherd'
   externalUrl: ''
   categories:
     - slug: 'fast-moving-teams'
@@ -980,7 +980,7 @@
     name: ''
     post: ''
   isInternal: true
-  internalPostSlug: 'how-cedalio-uses-neon-for-an-efficient-development-workflow'
+  internalPostSlug: 'how-cedalio-uses-optitech-for-an-efficient-development-workflow'
   externalUrl: ''
   categories:
     - slug: 'startups'
@@ -999,7 +999,7 @@
     name: ''
     post: ''
   isInternal: true
-  internalPostSlug: 'comigo-ai-is-using-neon-to-transform-adhd-support-with-ai'
+  internalPostSlug: 'comigo-ai-is-using-optitech-to-transform-adhd-support-with-ai'
   externalUrl: ''
   categories:
     - slug: 'ai'

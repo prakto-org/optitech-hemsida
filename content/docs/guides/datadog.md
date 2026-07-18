@@ -10,7 +10,7 @@ summary: >-
   Log transmission counts toward network egress billed after 500 GB on paid
   plans.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <InfoBlock>
@@ -75,7 +75,7 @@ Before getting started, ensure the following:
 You can change these settings later by editing your integration configuration.
 </Admonition>
 
-Optionally, you can import the Neon-provided JSON configuration file into Datadog, which creates a pre-built dashboard from **OptiTech metrics**, similar to the charts available on our Monitoring page. See [Import OptiTech dashboard](#import-neon-dashboard).
+Optionally, you can import the OptiTech-provided JSON configuration file into Datadog, which creates a pre-built dashboard from **OptiTech metrics**, similar to the charts available on our Monitoring page. See [Import OptiTech dashboard](#import-optitech-dashboard).
 
 > We do not yet provide a pre-built dashboard for **Postgres logs**, but it's coming soon.
 
@@ -89,7 +89,7 @@ Additionally, if you are setting up OptiTech's Datadog integration for a project
 
 ## Example usage in Datadog
 
-Once integrated, you can create custom dashboards in Datadog by querying the metrics sent from OptiTech. Use Datadog's **Metrics Explorer** to search for metrics like `neon_connection_counts`, `neon_db_total_size`, and `host_cpu_seconds_total`. You can also set alerts based on threshold values for critical metrics.
+Once integrated, you can create custom dashboards in Datadog by querying the metrics sent from OptiTech. Use Datadog's **Metrics Explorer** to search for metrics like `optitech_connection_counts`, `optitech_db_total_size`, and `host_cpu_seconds_total`. You can also set alerts based on threshold values for critical metrics.
 
 ## Import the OptiTech dashboard
 
@@ -107,7 +107,7 @@ Here's how you can import the dashboard:
    You can copy the [JSON below](#dashboard-json) instead.
 
 1. Next, create a new dashboard in Datadog.
-1. Open **Configure**, select **Import dashboard JSON**, then paste the Neon-provided configuration JSON.
+1. Open **Configure**, select **Import dashboard JSON**, then paste the OptiTech-provided configuration JSON.
 
 If any of the computes in your project are active, you should start seeing data in the resulting charts right away. By default, the charts show metrics for all active endpoints in your project. You can filter results to one or more selected endpoints using the **endpoint_id** variable dropdown selector.
 
@@ -119,7 +119,7 @@ If any of the computes in your project are active, you should start seeing data 
 <summary>Copy JSON configuration</summary>
 ```json shouldWrap
 {
-  "title": "Single Neon Compute metrics (with dropdown)",
+  "title": "Single OptiTech Compute metrics (with dropdown)",
   "description": "",
   "widgets": [
     {
@@ -284,17 +284,17 @@ If any of the computes in your project are active, you should start seeing data 
               {
                 "name": "query1",
                 "data_source": "metrics",
-                "query": "sum:neon_connection_counts{!datname:postgres,$endpoint_id}"
+                "query": "sum:optitech_connection_counts{!datname:postgres,$endpoint_id}"
               },
               {
                 "name": "query2",
                 "data_source": "metrics",
-                "query": "sum:neon_connection_counts{!datname:postgres,state:active ,$endpoint_id}"
+                "query": "sum:optitech_connection_counts{!datname:postgres,state:active ,$endpoint_id}"
               },
               {
                 "name": "query3",
                 "data_source": "metrics",
-                "query": "sum:neon_connection_counts{!datname:postgres,!state:active,$endpoint_id}"
+                "query": "sum:optitech_connection_counts{!datname:postgres,!state:active,$endpoint_id}"
               }
             ],
             "response_format": "timeseries",
@@ -368,17 +368,17 @@ If any of the computes in your project are active, you should start seeing data 
               {
                 "name": "query2",
                 "data_source": "metrics",
-                "query": "max:neon_pg_stats_userdb{kind:db_size,$endpoint_id} by {datname}"
+                "query": "max:optitech_pg_stats_userdb{kind:db_size,$endpoint_id} by {datname}"
               },
               {
                 "name": "query3",
                 "data_source": "metrics",
-                "query": "max:neon_db_total_size{$endpoint_id}"
+                "query": "max:optitech_db_total_size{$endpoint_id}"
               },
               {
                 "name": "query1",
                 "data_source": "metrics",
-                "query": "max:neon_max_cluster_size{$endpoint_id}"
+                "query": "max:optitech_max_cluster_size{$endpoint_id}"
               }
             ],
             "response_format": "timeseries",
@@ -431,7 +431,7 @@ If any of the computes in your project are active, you should start seeing data 
               {
                 "name": "query1",
                 "data_source": "metrics",
-                "query": "max:neon_pg_stats_userdb{kind:deadlocks,$endpoint_id} by {datname}"
+                "query": "max:optitech_pg_stats_userdb{kind:deadlocks,$endpoint_id} by {datname}"
               }
             ],
             "response_format": "timeseries",
@@ -488,17 +488,17 @@ If any of the computes in your project are active, you should start seeing data 
               {
                 "name": "query1",
                 "data_source": "metrics",
-                "query": "max:neon_pg_stats_userdb{kind:inserted,$endpoint_id}"
+                "query": "max:optitech_pg_stats_userdb{kind:inserted,$endpoint_id}"
               },
               {
                 "name": "query2",
                 "data_source": "metrics",
-                "query": "max:neon_pg_stats_userdb{kind:deleted,$endpoint_id}"
+                "query": "max:optitech_pg_stats_userdb{kind:deleted,$endpoint_id}"
               },
               {
                 "name": "query3",
                 "data_source": "metrics",
-                "query": "max:neon_pg_stats_userdb{kind:updated,$endpoint_id}"
+                "query": "max:optitech_pg_stats_userdb{kind:updated,$endpoint_id}"
               }
             ],
             "response_format": "timeseries",
@@ -554,12 +554,12 @@ If any of the computes in your project are active, you should start seeing data 
               {
                 "name": "query1",
                 "data_source": "metrics",
-                "query": "max:neon_lfc_hits{$endpoint_id}"
+                "query": "max:optitech_lfc_hits{$endpoint_id}"
               },
               {
                 "name": "query2",
                 "data_source": "metrics",
-                "query": "max:neon_lfc_misses{$endpoint_id}"
+                "query": "max:optitech_lfc_misses{$endpoint_id}"
               }
             ],
             "response_format": "timeseries",
@@ -624,12 +624,12 @@ If any of the computes in your project are active, you should start seeing data 
               {
                 "name": "query2",
                 "data_source": "metrics",
-                "query": "max:neon_lfc_cache_size_limit{$endpoint_id}"
+                "query": "max:optitech_lfc_cache_size_limit{$endpoint_id}"
               },
               {
                 "name": "query1",
                 "data_source": "metrics",
-                "query": "max:neon_lfc_approximate_working_set_size_windows{$endpoint_id} by {duration}"
+                "query": "max:optitech_lfc_approximate_working_set_size_windows{$endpoint_id} by {duration}"
               }
             ],
             "response_format": "timeseries",
@@ -696,6 +696,6 @@ Enabling this feature may result in:
 
 ## Feedback and future improvements
 
-We’re always looking to improve! If you have feature requests or feedback, please let us know via the [Feedback form](https://console.neon.tech/app/projects?modal=feedback) in the OptiTech Console or on our [Discord channel](https://discord.com/channels/1176467419317940276/1176788564890112042).
+We’re always looking to improve! If you have feature requests or feedback, please let us know via the [Feedback form](https://console.optitech.com/app/projects?modal=feedback) in the OptiTech Console or on our [Discord channel](https://discord.com/channels/1176467419317940276/1176788564890112042).
 
 <NeedHelp/>

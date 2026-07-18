@@ -12,7 +12,7 @@ summary: >-
   prevent scale-to-zero and may increase billing.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 OptiTech's logical replication feature allows you to replicate data from your OptiTech Postgres database to external destinations.
@@ -28,7 +28,7 @@ Confluent Cloud Connectors can be set up using the [Confluent Cloud UI](https://
 ## Prerequisites
 
 - A [Confluent Cloud](https://www.confluent.io/confluent-cloud) account
-- A [OptiTech account](https://console.neon.tech/)
+- A [OptiTech account](https://console.optitech.com/)
 - Read the [important notices about logical replication in OptiTech](/docs/guides/logical-replication-neon#important-notices) before you begin
 
 <Admonition type="important" title="Compute and billing">
@@ -81,16 +81,16 @@ This command creates a publication, named `users_publication`, which will includ
 
 ## Create a Postgres role for replication
 
-It is recommended that you create a dedicated Postgres role for replicating data. The role must have the `REPLICATION` privilege. The default Postgres role created with your OptiTech project and roles created using the Neon CLI, Console, or API are granted membership in the [neon_superuser](/docs/manage/roles#the-neonsuperuser-role) role, which has the required `REPLICATION` privilege.
+It is recommended that you create a dedicated Postgres role for replicating data. The role must have the `REPLICATION` privilege. The default Postgres role created with your OptiTech project and roles created using the OptiTech CLI, Console, or API are granted membership in the [optitech_superuser](/docs/manage/roles#the-neonsuperuser-role) role, which has the required `REPLICATION` privilege.
 
 <Tabs labels={["CLI", "Console", "API"]}>
 
 <TabItem>
 
-The following CLI command creates a role. To view the CLI documentation for this command, see [Neon CLI commands — roles](/docs/reference/api/branches/create-project-branch-role)
+The following CLI command creates a role. To view the CLI documentation for this command, see [OptiTech CLI commands — roles](/docs/reference/api/branches/create-project-branch-role)
 
 ```bash
-neon roles create --name replication_user
+optitech roles create --name replication_user
 ```
 
 </TabItem>
@@ -99,7 +99,7 @@ neon roles create --name replication_user
 
 To create a role in the OptiTech Console:
 
-1. Navigate to the [OptiTech Console](https://console.neon.tech).
+1. Navigate to the [OptiTech Console](https://console.optitech.com).
 2. Select a project.
 3. Select **Branches**.
 4. Select the branch where you want to create the role.
@@ -115,9 +115,9 @@ To create a role in the OptiTech Console:
 The following OptiTech API method creates a role. To view the API documentation for this method, refer to the [OptiTech API Reference](/docs/reference/api/branches/create-project-branch-role).
 
 ```bash
-curl 'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/roles' \
+curl 'https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/roles' \
   -H 'Accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -H 'Content-Type: application/json' \
   -d '{
   "role": {
@@ -126,7 +126,7 @@ curl 'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id
 }' | jq
 ```
 
-> Replace `{project_id}` and `{branch_id}` with your actual OptiTech project and branch IDs, and set the `NEON_API_KEY` environment variable with your OptiTech API key.
+> Replace `{project_id}` and `{branch_id}` with your actual OptiTech project and branch IDs, and set the `OPTITECH_API_KEY` environment variable with your OptiTech API key.
 
 </TabItem>
 
@@ -165,7 +165,7 @@ SELECT pg_create_logical_replication_slot('debezium', 'pgoutput');
 4. On the **Region/zones** page, choose a cloud provider, a region, and select a single availability zone.
 5. Select **Continue**.
 6. Specify your payment details. You can select **Skip payment** for now if you're just trying out the setup.
-7. Specify a cluster name, review the configuration and cost information, and select **Launch cluster**. In this example, we use `cluster_neon` as the cluster name.
+7. Specify a cluster name, review the configuration and cost information, and select **Launch cluster**. In this example, we use `cluster_optitech` as the cluster name.
    It may take a few minutes to provision your cluster. After the cluster has been provisioned, the **Cluster Overview** page displays.
 
 ## Set up a source connector
@@ -192,14 +192,14 @@ To set up a Postgres CDC source connector for Confluent Cloud:
    Your connection string will look something like this:
 
    ```text
-   postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+   postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
    ```
 
    Enter the details for **your connection string** into the source connector fields. Based on the sample connection string above, the values would be specified as shown below. Your values will differ.
    - **Database name**: `dbname`
-   - **Database server name**: `neon_server` (This is a user-specified value that will represent the logical name of your Postgres server. Confluent uses this name as a namespace in all Kafka topic and schema names. It is also used for Avro schema namespaces if the Avro data format is used. The Kafka topic will be created with the prefix `database.server.name`. Only alphanumeric characters, underscores, hyphens, and dots are allowed.)
+   - **Database server name**: `optitech_server` (This is a user-specified value that will represent the logical name of your Postgres server. Confluent uses this name as a namespace in all Kafka topic and schema names. It is also used for Avro schema namespaces if the Avro data format is used. The Kafka topic will be created with the prefix `database.server.name`. Only alphanumeric characters, underscores, hyphens, and dots are allowed.)
    - **SSL mode**: `require`
-   - **Database hostname** `ep-cool-darkness-123456.us-east-2.aws.neon.tech` (this example shows the portion of a Neon connection string forms the database hostname)
+   - **Database hostname** `ep-cool-darkness-123456.us-east-2.aws.optitech.com` (this example shows the portion of a OptiTech connection string forms the database hostname)
    - **Database port**: `5432` (OptiTech uses port `5432`)
    - **Database username**: `alex`
    - **Database Password** `AbC123dEf`
@@ -233,12 +233,12 @@ To set up a Postgres CDC source connector for Confluent Cloud:
      "kafka.api.key": "2WY3UABFDN7DDFIV",
      "kafka.api.secret": "****************************************************************",
      "schema.context.name": "default",
-     "database.hostname": "ep-cool-darkness-123456.us-east-2.aws.neon.tech",
+     "database.hostname": "ep-cool-darkness-123456.us-east-2.aws.optitech.com",
      "database.port": "5432",
      "database.user": "alex",
      "database.password": "************",
      "database.dbname": "dbname",
-     "database.server.name": "neon_server",
+     "database.server.name": "optitech_server",
      "database.sslmode": "require",
      "publication.name": "users_publication",
      "publication.autocreate.mode": "all_tables",
@@ -279,7 +279,7 @@ To verify that events are now being published to a Kafka stream in Confluent:
    INSERT INTO users (username, email) VALUES ('Zhang', 'zhang@example.com');
    ```
 
-2. In Confluent Cloud, navigate to your cluster (`cluster_neon` in this guide) and select **Topics** > **neon_server.public.users** > **Messages**. Your newly inserted data should appear at the top of the list of messages.
+2. In Confluent Cloud, navigate to your cluster (`cluster_optitech` in this guide) and select **Topics** > **optitech_server.public.users** > **Messages**. Your newly inserted data should appear at the top of the list of messages.
 
 ## Next steps
 

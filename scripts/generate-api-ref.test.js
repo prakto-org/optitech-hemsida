@@ -46,7 +46,7 @@ function coverageCommands(entry) {
 
 function resolveCoverageCommand(schema, command) {
   const tokens = command
-    .replace(/^neon\s+/, '')
+    .replace(/^optitech\s+/, '')
     .split(/\s+/)
     .filter(Boolean);
   let node = null;
@@ -94,7 +94,7 @@ describe('toSlug', () => {
 
 describe('toTagSlug', () => {
   it('lowercases simple tag', () => {
-    expect(toTagSlug('Project')).toBe('project');
+    expect(toTagSlug('Program')).toBe('program');
   });
 
   it('handles spaces', () => {
@@ -145,9 +145,9 @@ describe('toSdkMethodName', () => {
 // ---------------------------------------------------------------------------
 
 describe('mergeParams', () => {
-  const pathParam = { name: 'project_id', in: 'path', required: true };
+  const pathParam = { name: 'program_id', in: 'path', required: true };
   const opParam = { name: 'limit', in: 'query', required: false };
-  const opOverride = { name: 'project_id', in: 'path', required: true, description: 'override' };
+  const opOverride = { name: 'program_id', in: 'path', required: true, description: 'override' };
 
   it('combines path-level and op-level params', () => {
     const result = mergeParams([pathParam], [opParam]);
@@ -443,9 +443,9 @@ describe('getRawSchemaAt', () => {
 
 describe('stripMarkdownLinks', () => {
   it('strips inline links leaving label text', () => {
-    expect(stripMarkdownLinks('See [Manage projects](https://neon.tech/docs) for details.')).toBe(
-      'See Manage projects for details.'
-    );
+    expect(
+      stripMarkdownLinks('See [Manage programs](https://optitech.com/docs) for details.')
+    ).toBe('See Manage programs for details.');
   });
 
   it('leaves plain text unchanged', () => {
@@ -457,8 +457,8 @@ describe('stripMarkdownLinks', () => {
   });
 
   it('does not strip bare URLs', () => {
-    expect(stripMarkdownLinks('Visit https://neon.tech for more.')).toBe(
-      'Visit https://neon.tech for more.'
+    expect(stripMarkdownLinks('Visit https://optitech.com for more.')).toBe(
+      'Visit https://optitech.com for more.'
     );
   });
 
@@ -510,11 +510,11 @@ describe('getRequestBodyExample', () => {
     const body = {
       content: {
         'application/json': {
-          examples: { ex: { value: { project: { name: 'test' } } } },
+          examples: { ex: { value: { program: { name: 'test' } } } },
         },
       },
     };
-    expect(getRequestBodyExample(body)).toEqual({ project: { name: 'test' } });
+    expect(getRequestBodyExample(body)).toEqual({ program: { name: 'test' } });
   });
 
   it('gets value from example field', () => {
@@ -536,48 +536,48 @@ describe('getRequestBodyExample', () => {
 
 describe('toCurlExample', () => {
   it('generates GET with no body', () => {
-    const result = toCurlExample('GET', '/projects', [], null);
-    expect(result).toContain('curl "https://console.neon.tech/api/v2/projects"');
-    expect(result).toContain('-H "Authorization: Bearer $NEON_API_KEY"');
+    const result = toCurlExample('GET', '/programs', [], null);
+    expect(result).toContain('curl "https://api.optitech.com/v1/programs"');
+    expect(result).toContain('-H "Authorization: Bearer $OPTITECH_API_KEY"');
     expect(result).not.toContain('-X GET');
   });
 
   it('includes -X for non-GET methods', () => {
-    const result = toCurlExample('POST', '/projects', [], null);
+    const result = toCurlExample('POST', '/programs', [], null);
     expect(result).toContain('-X POST');
   });
 
   it('replaces path params with env var style', () => {
-    const result = toCurlExample('GET', '/projects/{project_id}', [], null);
-    expect(result).toContain('$PROJECT_ID');
-    expect(result).not.toContain('{project_id}');
+    const result = toCurlExample('GET', '/programs/{program_id}', [], null);
+    expect(result).toContain('$PROGRAM_ID');
+    expect(result).not.toContain('{program_id}');
   });
 
   it('includes body and content-type for POST with example', () => {
     const body = {
       content: {
         'application/json': {
-          examples: { ex: { value: { project: { name: 'test' } } } },
+          examples: { ex: { value: { program: { name: 'test' } } } },
         },
       },
     };
-    const result = toCurlExample('POST', '/projects', [], body);
+    const result = toCurlExample('POST', '/programs', [], body);
     expect(result).toContain('-H "Content-Type: application/json"');
-    expect(result).toContain('-d \'{"project":{"name":"test"}}\'');
+    expect(result).toContain('-d \'{"program":{"name":"test"}}\'');
   });
 
   it('no Content-Type header when no request body example', () => {
-    const result = toCurlExample('DELETE', '/projects/{project_id}', [], null);
+    const result = toCurlExample('DELETE', '/programs/{program_id}', [], null);
     expect(result).not.toContain('Content-Type');
   });
 
   it('appends required query params to URL using example value', () => {
     const params = [
-      { name: 'database_name', in: 'query', required: true, example: 'neondb' },
-      { name: 'role_name', in: 'query', required: true, example: 'neondb_owner' },
+      { name: 'register_name', in: 'query', required: true, example: 'optitechdb' },
+      { name: 'role_name', in: 'query', required: true, example: 'optitechdb_owner' },
     ];
-    const result = toCurlExample('GET', '/projects/{project_id}/connection_uri', params, null);
-    expect(result).toContain('?database_name=neondb&role_name=neondb_owner');
+    const result = toCurlExample('GET', '/programs/{program_id}/connection_uri', params, null);
+    expect(result).toContain('?register_name=optitechdb&role_name=optitechdb_owner');
   });
 
   it('uses env-style placeholders when no example exists for a required query param', () => {
@@ -588,7 +588,7 @@ describe('toCurlExample', () => {
 
   it('does not add query string for optional query params', () => {
     const params = [{ name: 'limit', in: 'query', required: false, example: 10 }];
-    const result = toCurlExample('GET', '/projects', params, null);
+    const result = toCurlExample('GET', '/programs', params, null);
     expect(result).not.toContain('?');
   });
 });
@@ -600,17 +600,17 @@ describe('toCurlExample', () => {
 describe('toTypescriptExample', () => {
   it('generates call with no path params', () => {
     const result = toTypescriptExample('listProjects', []);
-    expect(result).toContain("import { createNeonClient, raw } from '@neon/sdk';");
+    expect(result).toContain("import { createOptiTechClient, raw } from '@optitech/sdk';");
     expect(result).toContain('raw.listProjects({');
-    expect(result).toContain('client: neon.client');
+    expect(result).toContain('client: optitech.client');
   });
 
   it('generates call with path params', () => {
-    const params = [{ name: 'project_id', in: 'path', required: true }];
+    const params = [{ name: 'program_id', in: 'path', required: true }];
     const result = toTypescriptExample('getProject', params);
     expect(result).toContain('raw.getProject({');
     expect(result).toContain('path: {');
-    expect(result).toContain('project_id: process.env.PROJECT_ID');
+    expect(result).toContain('program_id: process.env.PROGRAM_ID');
   });
 
   it('applies SDK method name transformation', () => {
@@ -627,32 +627,32 @@ describe('toTypescriptExample', () => {
 
   it('includes required query params with example value', () => {
     const params = [
-      { name: 'project_id', in: 'path', required: true, example: null },
-      { name: 'database_name', in: 'query', required: true, example: 'neondb' },
-      { name: 'role_name', in: 'query', required: true, example: 'neondb_owner' },
+      { name: 'program_id', in: 'path', required: true, example: null },
+      { name: 'register_name', in: 'query', required: true, example: 'optitechdb' },
+      { name: 'role_name', in: 'query', required: true, example: 'optitechdb_owner' },
     ];
     const result = toTypescriptExample('getConnectionUri', params);
     expect(result).toContain('raw.getConnectionUri({');
-    expect(result).toContain('project_id: process.env.PROJECT_ID');
+    expect(result).toContain('program_id: process.env.PROGRAM_ID');
     expect(result).toContain('query: {');
-    expect(result).toContain('database_name: "neondb"');
-    expect(result).toContain('role_name: "neondb_owner"');
+    expect(result).toContain('register_name: "optitechdb"');
+    expect(result).toContain('role_name: "optitechdb_owner"');
   });
 
   it('passes path params before the request body for path-only body calls', () => {
-    const params = [{ name: 'project_id', in: 'path', required: true, example: null }];
+    const params = [{ name: 'program_id', in: 'path', required: true, example: null }];
     const result = toTypescriptExample('updateProject', params, {
       content: {
         'application/json': {
           schema: {},
-          example: { project: { name: 'renamed-project' } },
+          example: { program: { name: 'renamed-program' } },
         },
       },
     });
 
     expect(result).toContain('raw.updateProject({');
-    expect(result).toContain('project_id: process.env.PROJECT_ID');
-    expect(result).toContain('body: {\n    project: {');
+    expect(result).toContain('program_id: process.env.PROGRAM_ID');
+    expect(result).toContain('body: {\n    program: {');
   });
 
   it('preserves boolean query examples', () => {
@@ -674,13 +674,13 @@ describe('toTypescriptExample', () => {
       content: {
         'application/json': {
           schema: {},
-          example: { project: { name: 'my-db' } },
+          example: { program: { name: 'my-db' } },
         },
       },
     });
 
     expect(result).toContain('raw.createProject({');
-    expect(result).toContain('body: {\n    project: {');
+    expect(result).toContain('body: {\n    program: {');
     expect(result).not.toContain('path:');
   });
 });
@@ -694,25 +694,25 @@ describe('buildRepresentativeExamples', () => {
     const operation = {
       operationId: 'createProject',
       method: 'POST',
-      path: '/projects',
+      path: '/programs',
       parameters: [],
     };
     const seed = {
-      'project.name': 'my-production-db',
-      'project.region_id': 'aws-us-east-2',
-      'project.pg_version': 17,
+      'program.name': 'my-production-db',
+      'program.region_id': 'aws-us-east-2',
+      'program.pg_version': 17,
     };
 
     const examples = buildRepresentativeExamples(operation, seed, null);
 
     expect(examples.body).toEqual({
-      project: {
+      program: {
         name: 'my-production-db',
         region_id: 'aws-us-east-2',
         pg_version: 17,
       },
     });
-    expect(examples.curl).toContain('-d \'{"project":{"name":"my-production-db"');
+    expect(examples.curl).toContain('-d \'{"program":{"name":"my-production-db"');
     expect(examples.curl).toContain('"pg_version":17');
     expect(examples.typescript).toContain('raw.createProject({');
     expect(examples.typescript).toContain('name: "my-production-db"');
@@ -722,10 +722,10 @@ describe('buildRepresentativeExamples', () => {
     const operation = {
       operationId: 'createProject',
       method: 'POST',
-      path: '/projects',
+      path: '/programs',
       parameters: [],
     };
-    const bodyExample = { project: { name: 'from-spec' } };
+    const bodyExample = { program: { name: 'from-spec' } };
 
     expect(buildRepresentativeExamples(operation, null, bodyExample).body).toEqual(bodyExample);
   });
@@ -734,34 +734,34 @@ describe('buildRepresentativeExamples', () => {
     const operation = {
       operationId: 'updateProject',
       method: 'PATCH',
-      path: '/projects/{project_id}',
-      parameters: [{ name: 'project_id', in: 'path', required: true }],
+      path: '/programs/{program_id}',
+      parameters: [{ name: 'program_id', in: 'path', required: true }],
     };
 
-    const examples = buildRepresentativeExamples(operation, { 'project.name': 'my-db' }, null);
+    const examples = buildRepresentativeExamples(operation, { 'program.name': 'my-db' }, null);
 
-    expect(examples.curl).toContain('/projects/$PROJECT_ID"');
-    expect(examples.curl).not.toContain('/projects/{project_id}');
-    expect(examples.curl).not.toContain('/projects/%24PROJECT_ID');
+    expect(examples.curl).toContain('/programs/$PROGRAM_ID"');
+    expect(examples.curl).not.toContain('/programs/{program_id}');
+    expect(examples.curl).not.toContain('/programs/%24PROGRAM_ID');
     expect(examples.typescript).toContain('raw.updateProject({');
-    expect(examples.typescript).toContain('project_id: process.env.PROJECT_ID');
+    expect(examples.typescript).toContain('program_id: process.env.PROGRAM_ID');
   });
 
   it('ignores prototype-affecting seed paths', () => {
     const operation = {
       operationId: 'createProject',
       method: 'POST',
-      path: '/projects',
+      path: '/programs',
       parameters: [],
     };
 
     const examples = buildRepresentativeExamples(
       operation,
-      { 'project.name': 'my-db', '__proto__.polluted': true, 'constructor.prototype.bad': true },
+      { 'program.name': 'my-db', '__proto__.polluted': true, 'constructor.prototype.bad': true },
       null
     );
 
-    expect(examples.body).toEqual({ project: { name: 'my-db' } });
+    expect(examples.body).toEqual({ program: { name: 'my-db' } });
     expect({}.polluted).toBeUndefined();
     expect({}.bad).toBeUndefined();
   });
@@ -771,13 +771,13 @@ describe('buildRepresentativeExamples', () => {
       {
         operationId: 'createRole',
         method: 'POST',
-        path: '/projects/{project_id}/roles',
+        path: '/programs/{program_id}/owners',
         parameters: [],
       },
       {
         'role.password': 'AbC123dEf',
         'role.connection_uri':
-          'postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname',
+          'postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname',
       },
       null
     );
@@ -797,24 +797,24 @@ describe('buildRepresentativeExamples', () => {
 describe('toLlmsTxtLine', () => {
   const op = {
     method: 'GET',
-    path: '/projects',
-    summary: 'List projects',
+    path: '/programs',
+    summary: 'List programs',
     tag: 'projects',
     id: 'list-projects',
   };
 
   it('formats correctly', () => {
     expect(toLlmsTxtLine(op)).toBe(
-      'GET /projects — List projects — /docs/reference/api/projects/list-projects'
+      'GET /programs — List programs — /docs/reference/api/projects/list-projects'
     );
   });
 
   it('does not include interface tags', () => {
     const opWithAll = {
       ...op,
-      cli: { command: 'neon projects list' },
+      cli: { command: 'optitech programs list' },
       mcp: { tool: 'list_projects' },
-      console: { breadcrumb: 'Projects' },
+      console: { breadcrumb: 'Programs' },
     };
     expect(toLlmsTxtLine(opWithAll)).not.toContain('[');
   });
@@ -829,12 +829,12 @@ describe('toAgentMarkdown', () => {
     id: 'list-projects',
     operationId: 'listProjects',
     method: 'GET',
-    path: '/projects',
+    path: '/programs',
     tag: 'projects',
-    tagDisplay: 'Project',
+    tagDisplay: 'Program',
     stability: null,
-    summary: 'List projects',
-    description: 'Retrieves a list of projects.',
+    summary: 'List programs',
+    description: 'Retrieves a list of programs.',
     parameters: [
       {
         name: 'limit',
@@ -849,23 +849,23 @@ describe('toAgentMarkdown', () => {
     response: { status: '200', description: 'OK', example: null, properties: null },
     errors: [{ status: 'default', description: 'Error' }],
     examples: {
-      curl: 'curl "https://console.neon.tech/api/v2/projects" \\\n  -H "Authorization: Bearer $NEON_API_KEY"',
+      curl: 'curl "https://api.optitech.com/v1/programs" \\\n  -H "Authorization: Bearer $OPTITECH_API_KEY"',
       typescript:
-        "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.listProjects({\n  client: neon.client\n});",
+        "import { createOptiTechClient, raw } from '@optitech/sdk';\n\nconst optitech = createOptiTechClient({ apiKey: process.env.OPTITECH_API_KEY });\nconst { data } = await raw.listProjects({\n  client: optitech.client\n});",
       bodyExample: null,
     },
-    cli: { command: 'neon projects list' },
+    cli: { command: 'optitech programs list' },
     mcp: { tool: 'list_projects' },
-    console: { breadcrumb: 'Projects' },
+    console: { breadcrumb: 'Programs' },
   };
 
   it('starts with breadcrumb line', () => {
     const md = toAgentMarkdown(op);
-    expect(md).toMatch(/^> API Reference \/ Project \/ List projects/);
+    expect(md).toMatch(/^> API Reference \/ Program \/ List programs/);
   });
 
   it('includes METHOD path heading', () => {
-    expect(toAgentMarkdown(op)).toContain('## GET /projects');
+    expect(toAgentMarkdown(op)).toContain('## GET /programs');
   });
 
   it('includes Parameters section', () => {
@@ -896,7 +896,7 @@ describe('toAgentMarkdown', () => {
 
   it('inlines large response examples in per-operation markdown', () => {
     const largeExample = {
-      project: Object.fromEntries(
+      program: Object.fromEntries(
         Array.from({ length: 45 }, (_, index) => [`field_${index}`, `value_${index}`])
       ),
     };
@@ -914,16 +914,16 @@ describe('toAgentMarkdown', () => {
     const md = toAgentMarkdown({
       ...op,
       requestBody: {
-        properties: { project: { type: 'object', properties: { name: { type: 'string' } } } },
-        requiredFields: ['project'],
+        properties: { program: { type: 'object', properties: { name: { type: 'string' } } } },
+        requiredFields: ['program'],
       },
       examples: {
         ...op.examples,
         representative: {
-          body: { project: { name: 'my-production-db' } },
-          curl: 'curl "https://console.neon.tech/api/v2/projects" -d \'{"project":{"name":"my-production-db"}}\'',
+          body: { program: { name: 'my-production-db' } },
+          curl: 'curl "https://api.optitech.com/v1/programs" -d \'{"program":{"name":"my-production-db"}}\'',
           typescript:
-            "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.createProject({\n  client: neon.client,\n  body: {\n    project: { name: 'my-production-db' }\n  }\n});",
+            "import { createOptiTechClient, raw } from '@optitech/sdk';\n\nconst optitech = createOptiTechClient({ apiKey: process.env.OPTITECH_API_KEY });\nconst { data } = await raw.createProject({\n  client: optitech.client,\n  body: {\n    program: { name: 'my-production-db' }\n  }\n});",
         },
       },
     });
@@ -934,12 +934,12 @@ describe('toAgentMarkdown', () => {
   });
 
   it('includes CLI block when cli is set', () => {
-    expect(toAgentMarkdown(op)).toContain('neon projects list');
+    expect(toAgentMarkdown(op)).toContain('optitech programs list');
   });
 
   it('omits CLI block when cli is null', () => {
     const opNoCli = { ...op, cli: null };
-    expect(toAgentMarkdown(opNoCli)).not.toContain('# neonctl');
+    expect(toAgentMarkdown(opNoCli)).not.toContain('# optitechctl');
   });
 
   it('includes MCP section when tool is set', () => {
@@ -955,7 +955,7 @@ describe('toAgentMarkdown', () => {
 
   it('includes Console section when breadcrumb is set', () => {
     expect(toAgentMarkdown(op)).toContain('### Console');
-    expect(toAgentMarkdown(op)).toContain('Projects');
+    expect(toAgentMarkdown(op)).toContain('Programs');
   });
 
   it('omits Console section when breadcrumb is null', () => {
@@ -974,9 +974,9 @@ describe('toFullMarkdownEntry', () => {
       description: 'Large response operation.',
       parameters: [],
       examples: {
-        curl: 'curl "https://console.neon.tech/api/v2/large"',
+        curl: 'curl "https://api.optitech.com/v1/large"',
         typescript:
-          "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.getLargeThing({\n  client: neon.client\n});",
+          "import { createOptiTechClient, raw } from '@optitech/sdk';\n\nconst optitech = createOptiTechClient({ apiKey: process.env.OPTITECH_API_KEY });\nconst { data } = await raw.getLargeThing({\n  client: optitech.client\n});",
       },
       response: {
         status: '200',
@@ -995,25 +995,25 @@ describe('generateLlmsFull', () => {
       projects: [
         {
           operationId: 'listProjects',
-          summary: 'List projects',
+          summary: 'List programs',
           method: 'GET',
-          path: '/projects',
-          description: 'Retrieves projects.',
+          path: '/programs',
+          description: 'Retrieves programs.',
           parameters: [],
           examples: {
-            curl: 'curl "https://console.neon.tech/api/v2/projects"',
+            curl: 'curl "https://api.optitech.com/v1/programs"',
             typescript:
-              "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.listProjects({\n  client: neon.client\n});",
+              "import { createOptiTechClient, raw } from '@optitech/sdk';\n\nconst optitech = createOptiTechClient({ apiKey: process.env.OPTITECH_API_KEY });\nconst { data } = await raw.listProjects({\n  client: optitech.client\n});",
           },
           response: { status: '200', description: 'OK', example: null, properties: null },
         },
       ],
     });
 
-    expect(md).toContain('# Neon Management API - Full Reference');
-    expect(md).toContain('https://neon.com/docs/reference/api/llms.txt');
-    expect(md).toContain('# Projects');
-    expect(md).toContain('## List projects · GET /projects');
+    expect(md).toContain('# OptiTech Management API - Full Reference');
+    expect(md).toContain('https://optitech.com/docs/reference/api/llms.txt');
+    expect(md).toContain('# Programs');
+    expect(md).toContain('## List programs · GET /programs');
     expect(md).toContain('const { data } = await raw.listProjects({');
   });
 });
@@ -1024,9 +1024,9 @@ describe('generateLlmsFull', () => {
 
 describe('toNavYaml', () => {
   const ops = [
-    { tag: 'projects', tagDisplay: 'Project', summary: 'List projects', id: 'list-projects' },
-    { tag: 'projects', tagDisplay: 'Project', summary: 'Create project', id: 'create-project' },
-    { tag: 'branches', tagDisplay: 'Branch', summary: 'List branches', id: 'list-branches' },
+    { tag: 'projects', tagDisplay: 'Program', summary: 'List programs', id: 'list-projects' },
+    { tag: 'projects', tagDisplay: 'Program', summary: 'Create program', id: 'create-project' },
+    { tag: 'branches', tagDisplay: 'Framework', summary: 'List frameworks', id: 'list-frameworks' },
     { tag: 'auth-legacy', tagDisplay: 'Auth (legacy)', summary: 'Get auth', id: 'get-auth' },
   ];
 
@@ -1036,14 +1036,14 @@ describe('toNavYaml', () => {
 
   it('uses tag-config display names for known tags', () => {
     const yaml = toNavYaml(ops);
-    expect(yaml).toContain('title: "Projects"');
-    expect(yaml).toContain('title: "Branches"');
+    expect(yaml).toContain('title: "Programs"');
+    expect(yaml).toContain('title: "Frameworks"');
     expect(yaml).toContain('title: "Legacy Auth"');
   });
 
   it('puts auth-legacy last among known tags', () => {
     const yaml = toNavYaml(ops);
-    const projectIdx = yaml.indexOf('title: "Projects"');
+    const projectIdx = yaml.indexOf('title: "Programs"');
     const legacyIdx = yaml.indexOf('title: "Legacy Auth"');
     expect(legacyIdx).toBeGreaterThan(projectIdx);
   });
@@ -1053,12 +1053,12 @@ describe('toNavYaml', () => {
   });
 
   it('quotes titles', () => {
-    expect(toNavYaml(ops)).toContain('title: "List projects"');
+    expect(toNavYaml(ops)).toContain('title: "List programs"');
   });
 
   it('escapes double quotes in titles', () => {
     const tricky = [
-      { tag: 'projects', tagDisplay: 'Project', summary: 'Say "hello"', id: 'say-hello' },
+      { tag: 'projects', tagDisplay: 'Program', summary: 'Say "hello"', id: 'say-hello' },
     ];
     expect(toNavYaml(tricky)).toContain('\\"hello\\"');
   });
@@ -1067,7 +1067,7 @@ describe('toNavYaml', () => {
     const deprecated = [
       {
         tag: 'projects',
-        tagDisplay: 'Project',
+        tagDisplay: 'Program',
         summary: 'Legacy endpoint',
         id: 'legacy-endpoint',
         deprecated: true,
@@ -1100,12 +1100,12 @@ describe('buildCliFlags', () => {
   const cliSchema = {
     globalOptions: {},
     commands: {
-      projects: {
+      programs: {
         options: {},
         commands: {
           create: {
             options: {
-              'org-id': { type: 'string', description: 'Org to own the project' },
+              'org-id': { type: 'string', description: 'Org to own the program' },
               name: { type: 'string', description: 'Display name' },
             },
             commands: {},
@@ -1124,21 +1124,21 @@ describe('buildCliFlags', () => {
 
   it('sets apiEquiv when a CLI flag maps to an API parameter', () => {
     const paramProps = [{ name: 'org_id', in: 'query' }];
-    const flags = buildCliFlags('neon projects list', cliSchema, paramProps);
+    const flags = buildCliFlags('optitech programs list', cliSchema, paramProps);
     const orgFlag = flags.find((f) => f.name === 'org-id');
     expect(orgFlag.apiEquiv).toBe('org_id');
   });
 
   it('does not set apiEquiv when a CLI flag is only a request-body field', () => {
     const paramProps = [];
-    const flags = buildCliFlags('neon projects create', cliSchema, paramProps);
+    const flags = buildCliFlags('optitech programs create', cliSchema, paramProps);
     const orgFlag = flags.find((f) => f.name === 'org-id');
     expect(orgFlag.apiEquiv).toBeUndefined();
   });
 
   it('sets no mapping when the flag has no API parameter twin', () => {
     const paramProps = [];
-    const flags = buildCliFlags('neon projects create', cliSchema, paramProps);
+    const flags = buildCliFlags('optitech programs create', cliSchema, paramProps);
     const nameFlag = flags.find((f) => f.name === 'name');
     expect(nameFlag.apiEquiv).toBeUndefined();
   });
@@ -1150,45 +1150,47 @@ describe('buildCliFlags', () => {
 
 describe('CLI coverage fixtures', () => {
   const cliCoverage = readJsonFixture('scripts/data/cli-coverage.json');
-  const neonctlSchema = readJsonFixture('scripts/docs-checks/neonctl/schema.json');
+  const optitechctlSchema = readJsonFixture('scripts/docs-checks/neonctl/schema.json');
 
-  it('includes Neon Auth coverage for representative operations', () => {
-    expect(cliCoverage.createNeonAuth).toBe('neon neon-auth enable');
-    expect(cliCoverage.getNeonAuth).toBe('neon neon-auth status');
-    expect(cliCoverage.createBranchNeonAuthNewUser).toBe('neon neon-auth user create');
+  it('includes OptiTech Auth coverage for representative operations', () => {
+    expect(cliCoverage.createNeonAuth).toBe('optitech optitech-auth enable');
+    expect(cliCoverage.getNeonAuth).toBe('optitech optitech-auth status');
+    expect(cliCoverage.createBranchNeonAuthNewUser).toBe('optitech optitech-auth user create');
     expect(coverageCommands(cliCoverage.updateNeonAuthAllowLocalhost)).toEqual([
-      'neon neon-auth domain allow-localhost enable',
-      'neon neon-auth domain allow-localhost disable',
+      'optitech optitech-auth domain allow-localhost enable',
+      'optitech optitech-auth domain allow-localhost disable',
     ]);
   });
 
-  it('includes neon-auth in the committed neonctl schema', () => {
-    expect(neonctlSchema.commands['neon-auth']).toBeTruthy();
-    expect(resolveCoverageCommand(neonctlSchema, 'neon neon-auth enable').path).toEqual([
-      'neon-auth',
-      'enable',
-    ]);
+  it('includes optitech-auth in the committed optitechctl schema', () => {
+    expect(optitechctlSchema.commands['optitech-auth']).toBeTruthy();
+    expect(resolveCoverageCommand(optitechctlSchema, 'optitech optitech-auth enable').path).toEqual(
+      ['optitech-auth', 'enable']
+    );
     expect(
-      resolveCoverageCommand(neonctlSchema, 'neon neon-auth domain allow-localhost enable').path
-    ).toEqual(['neon-auth', 'domain', 'allow-localhost', 'enable']);
+      resolveCoverageCommand(
+        optitechctlSchema,
+        'optitech optitech-auth domain allow-localhost enable'
+      ).path
+    ).toEqual(['optitech-auth', 'domain', 'allow-localhost', 'enable']);
   });
 
   it('uses schema-valid VPC CLI commands', () => {
-    expect(cliCoverage.listProjectVPCEndpoints).toBe('neon vpc project list --project-id <id>');
+    expect(cliCoverage.listProjectVPCEndpoints).toBe('optitech vpc project list --project-id <id>');
     expect(cliCoverage.assignProjectVPCEndpoint).toBe(
-      'neon vpc project restrict <vpc_endpoint_id> --project-id <id>'
+      'optitech vpc project restrict <vpc_endpoint_id> --project-id <id>'
     );
     expect(cliCoverage.deleteProjectVPCEndpoint).toBe(
-      'neon vpc project remove <vpc_endpoint_id> --project-id <id>'
+      'optitech vpc project remove <vpc_endpoint_id> --project-id <id>'
     );
-    expect(cliCoverage.deleteOrganizationVPCEndpoint).toContain('neon vpc endpoint remove');
-    expect(cliCoverage.getOrganizationVPCEndpointDetails).toContain('neon vpc endpoint status');
+    expect(cliCoverage.deleteOrganizationVPCEndpoint).toContain('optitech vpc endpoint remove');
+    expect(cliCoverage.getOrganizationVPCEndpointDetails).toContain('optitech vpc endpoint status');
   });
 
   it('all cli-coverage commands resolve to a schema command', () => {
     for (const [operationId, entry] of Object.entries(cliCoverage)) {
       for (const command of coverageCommands(entry)) {
-        const { node } = resolveCoverageCommand(neonctlSchema, command);
+        const { node } = resolveCoverageCommand(optitechctlSchema, command);
         expect(node, `${operationId}: ${command}`).toBeTruthy();
       }
     }
@@ -1200,12 +1202,12 @@ describe('CLI coverage fixtures', () => {
 // ---------------------------------------------------------------------------
 
 describe('appendCliPositionals', () => {
-  const projectIdParam = { name: 'project_id', in: 'path', required: true };
+  const projectIdParam = { name: 'program_id', in: 'path', required: true };
 
   const schema = {
     globalOptions: {},
     commands: {
-      projects: {
+      programs: {
         options: {},
         commands: {
           get: { positionals: ['id'], options: {}, commands: {} },
@@ -1213,8 +1215,8 @@ describe('appendCliPositionals', () => {
           delete: { positionals: ['id'], options: {}, commands: {} },
         },
       },
-      branches: {
-        options: { 'project-id': { type: 'string' } },
+      frameworks: {
+        options: { 'program-id': { type: 'string' } },
         commands: {
           get: { positionals: ['id|name'], options: {}, commands: {} },
         },
@@ -1223,14 +1225,14 @@ describe('appendCliPositionals', () => {
   };
 
   it('appends positional as <param_name> when uncovered path param exists', () => {
-    const result = appendCliPositionals('neon projects get', schema, [projectIdParam]);
-    expect(result).toBe('neon projects get <project_id>');
+    const result = appendCliPositionals('optitech programs get', schema, [projectIdParam]);
+    expect(result).toBe('optitech programs get <program_id>');
   });
 
   it('appends multiple positionals when multiple uncovered path params', () => {
     const params = [
-      { name: 'project_id', in: 'path', required: true },
-      { name: 'branch_id', in: 'path', required: true },
+      { name: 'program_id', in: 'path', required: true },
+      { name: 'framework_id', in: 'path', required: true },
     ];
     const schemaTwo = {
       globalOptions: {},
@@ -1243,39 +1245,41 @@ describe('appendCliPositionals', () => {
         },
       },
     };
-    const result = appendCliPositionals('neon op run', schemaTwo, params);
-    expect(result).toBe('neon op run <project_id> <branch_id>');
+    const result = appendCliPositionals('optitech op run', schemaTwo, params);
+    expect(result).toBe('optitech op run <program_id> <framework_id>');
   });
 
   it('leaves command unchanged when positionals already present (< token)', () => {
-    const result = appendCliPositionals('neon branches get <id|name>', schema, [projectIdParam]);
-    expect(result).toBe('neon branches get <id|name>');
+    const result = appendCliPositionals('optitech frameworks get <id|name>', schema, [
+      projectIdParam,
+    ]);
+    expect(result).toBe('optitech frameworks get <id|name>');
   });
 
   it('leaves command unchanged when positionals already present ([ token)', () => {
-    const result = appendCliPositionals('neon op [opts]', schema, [projectIdParam]);
-    expect(result).toBe('neon op [opts]');
+    const result = appendCliPositionals('optitech op [opts]', schema, [projectIdParam]);
+    expect(result).toBe('optitech op [opts]');
   });
 
   it('leaves command unchanged when no positionals in schema', () => {
-    const result = appendCliPositionals('neon projects list', schema, [projectIdParam]);
-    expect(result).toBe('neon projects list');
+    const result = appendCliPositionals('optitech programs list', schema, [projectIdParam]);
+    expect(result).toBe('optitech programs list');
   });
 
   it('leaves command unchanged when path param is already covered by a flag', () => {
-    // branches get has project-id as an inherited flag option
-    const result = appendCliPositionals('neon branches get', schema, [projectIdParam]);
-    expect(result).toBe('neon branches get');
+    // frameworks get has program-id as an inherited flag option
+    const result = appendCliPositionals('optitech frameworks get', schema, [projectIdParam]);
+    expect(result).toBe('optitech frameworks get');
   });
 
   it('returns command unchanged when cliSchema is null', () => {
-    const result = appendCliPositionals('neon projects get', null, [projectIdParam]);
-    expect(result).toBe('neon projects get');
+    const result = appendCliPositionals('optitech programs get', null, [projectIdParam]);
+    expect(result).toBe('optitech programs get');
   });
 
   it('returns command unchanged when command path not found in schema', () => {
-    const result = appendCliPositionals('neon unknown cmd', schema, [projectIdParam]);
-    expect(result).toBe('neon unknown cmd');
+    const result = appendCliPositionals('optitech unknown cmd', schema, [projectIdParam]);
+    expect(result).toBe('optitech unknown cmd');
   });
 });
 
@@ -1284,15 +1288,15 @@ describe('appendCliPositionals', () => {
 // ---------------------------------------------------------------------------
 
 describe('resolveCliPositionals', () => {
-  const branchIdParam = { name: 'branch_id', in: 'path', required: true };
-  const projectIdParam = { name: 'project_id', in: 'path', required: true };
+  const branchIdParam = { name: 'framework_id', in: 'path', required: true };
+  const projectIdParam = { name: 'program_id', in: 'path', required: true };
   const roleNameParam = { name: 'role_name', in: 'path', required: true };
 
   const schema = {
     globalOptions: {},
     commands: {
-      branches: {
-        options: { 'project-id': { type: 'string' } },
+      frameworks: {
+        options: { 'program-id': { type: 'string' } },
         commands: {
           get: { positionals: ['id|name'], options: {}, commands: {} },
         },
@@ -1302,12 +1306,12 @@ describe('resolveCliPositionals', () => {
         commands: {
           get: {
             positionals: ['role'],
-            options: { 'project-id': { type: 'string' } },
+            options: { 'program-id': { type: 'string' } },
             commands: {},
           },
         },
       },
-      projects: {
+      programs: {
         options: {},
         commands: {
           get: { positionals: ['id'], options: {}, commands: {} },
@@ -1322,55 +1326,60 @@ describe('resolveCliPositionals', () => {
     },
   };
 
-  it('maps standalone <id|name> token to branch_id for neon branches get', () => {
-    // project_id is covered by --project-id flag; branch_id is uncovered → mapped to <id|name>
-    const { command, positionals } = resolveCliPositionals('neon branches get <id|name>', schema, [
-      projectIdParam,
-      branchIdParam,
-    ]);
-    expect(command).toBe('neon branches get <id|name>');
-    expect(positionals).toEqual([{ display: '<id|name>', apiEquiv: 'branch_id' }]);
+  it('maps standalone <id|name> token to framework_id for optitech frameworks get', () => {
+    // program_id is covered by --program-id flag; framework_id is uncovered → mapped to <id|name>
+    const { command, positionals } = resolveCliPositionals(
+      'optitech frameworks get <id|name>',
+      schema,
+      [projectIdParam, branchIdParam]
+    );
+    expect(command).toBe('optitech frameworks get <id|name>');
+    expect(positionals).toEqual([{ display: '<id|name>', apiEquiv: 'framework_id' }]);
   });
 
-  it('treats <role> as standalone and <id> after --project-id as flag-embedded', () => {
-    // neon roles get <role> --project-id <id>
+  it('treats <role> as standalone and <id> after --program-id as flag-embedded', () => {
+    // optitech roles get <role> --program-id <id>
     // <role> is standalone → apiEquiv: first uncovered path param by index
-    // <id> follows --project-id → NOT standalone → not in positionals
-    // In this schema, roles get has --project-id in its options, so project_id is covered.
-    // paramProps order: [role_name, project_id] → uncovered = [role_name] → <role> maps to role_name
+    // <id> follows --program-id → NOT standalone → not in positionals
+    // In this schema, roles get has --program-id in its options, so program_id is covered.
+    // paramProps order: [role_name, program_id] → uncovered = [role_name] → <role> maps to role_name
     const params = [roleNameParam, projectIdParam];
     const { command, positionals } = resolveCliPositionals(
-      'neon roles get <role> --project-id <id>',
+      'optitech roles get <role> --program-id <id>',
       schema,
       params
     );
-    expect(command).toBe('neon roles get <role> --project-id <id>');
+    expect(command).toBe('optitech roles get <role> --program-id <id>');
     expect(positionals).toHaveLength(1);
     expect(positionals[0].display).toBe('<role>');
     expect(positionals[0].apiEquiv).toBe('role_name');
   });
 
-  it('auto-appends positional from schema and maps it to project_id', () => {
-    // neon projects get has positionals: ['id'] in schema, no < in command → appended
-    const { command, positionals } = resolveCliPositionals('neon projects get', schema, [
+  it('auto-appends positional from schema and maps it to program_id', () => {
+    // optitech programs get has positionals: ['id'] in schema, no < in command → appended
+    const { command, positionals } = resolveCliPositionals('optitech programs get', schema, [
       projectIdParam,
     ]);
-    expect(command).toBe('neon projects get <project_id>');
-    expect(positionals).toEqual([{ display: '<project_id>', apiEquiv: 'project_id' }]);
+    expect(command).toBe('optitech programs get <program_id>');
+    expect(positionals).toEqual([{ display: '<program_id>', apiEquiv: 'program_id' }]);
   });
 
   it('returns empty positionals when command has no positional tokens', () => {
-    const { command, positionals } = resolveCliPositionals('neon op run', schema, [projectIdParam]);
-    expect(command).toBe('neon op run');
+    const { command, positionals } = resolveCliPositionals('optitech op run', schema, [
+      projectIdParam,
+    ]);
+    expect(command).toBe('optitech op run');
     expect(positionals).toEqual([]);
   });
 
   it('returns token with apiEquiv null when cliSchema is null', () => {
     // No schema → no coverage computation, apiEquiv is null
-    const { command, positionals } = resolveCliPositionals('neon branches get <id|name>', null, [
-      branchIdParam,
-    ]);
-    expect(command).toBe('neon branches get <id|name>');
+    const { command, positionals } = resolveCliPositionals(
+      'optitech frameworks get <id|name>',
+      null,
+      [branchIdParam]
+    );
+    expect(command).toBe('optitech frameworks get <id|name>');
     expect(positionals).toHaveLength(1);
     expect(positionals[0].display).toBe('<id|name>');
     expect(positionals[0].apiEquiv).toBeNull();
@@ -1428,12 +1437,12 @@ describe('computeDisplayOrder', () => {
   // authors can reorder fields without changing the spec.
   it('respects manual FIELD_ORDER override over heuristic scoring', () => {
     const properties = {
-      branch: {},
-      project: {},
+      framework: {},
+      program: {},
       operations: {},
       connection_uris: {},
       roles: {},
-      databases: {},
+      registers: {},
       endpoints: {},
     };
     const order = computeDisplayOrder('createProject', properties, [], 'response');
@@ -1447,10 +1456,10 @@ describe('computeDisplayOrder', () => {
       id: {},
       name: {},
       description: {},
-      project_id: {},
+      program_id: {},
     };
-    const order = computeDisplayOrder('listFoo', properties, ['project_id'], 'response');
-    expect(order[0]).toBe('project_id');
+    const order = computeDisplayOrder('listFoo', properties, ['program_id'], 'response');
+    expect(order[0]).toBe('program_id');
     expect(order[order.length - 1]).toBe('created_at');
     // `id` outranks `name` by the scorer (70 vs 68).
     expect(order.indexOf('id')).toBeLessThan(order.indexOf('name'));
@@ -1483,13 +1492,13 @@ describe('buildOperationData', () => {
   it('derives slug from operationId for a normal op (no oneOf note)', () => {
     const spec = {
       paths: {
-        '/projects/{id}': {
+        '/programs/{id}': {
           get: {
             operationId: 'getProject',
             tags: ['Project'],
             responses: {
               200: {
-                description: 'Project found',
+                description: 'Program found',
                 content: {
                   'application/json': {
                     schema: { type: 'object', properties: { id: { type: 'string' } } },
@@ -1501,11 +1510,11 @@ describe('buildOperationData', () => {
         },
       },
     };
-    const data = callBuild(spec, '/projects/{id}', 'get');
+    const data = callBuild(spec, '/programs/{id}', 'get');
     expect(data.id).toBe('get-project');
     expect(data.operationId).toBe('getProject');
     expect(data.response).toBeTruthy();
-    expect(data.response.description).toBe('Project found');
+    expect(data.response.description).toBe('Program found');
     expect(data.response.descriptionHtml).not.toContain('variant');
   });
 

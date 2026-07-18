@@ -11,7 +11,7 @@ summary: >-
   metrics that match your invoice or for Launch plan access, use the Query
   consumption metrics page instead.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 Using the OptiTech API, you can query project-level consumption metrics with the legacy endpoint. The Management API only allows this path for **Scale plans and above** (legacy **Scale, Business, and Enterprise**, and usage-based **Scale** and higher). It is **not** available on **Launch**; use [`GET /consumption_history/v2/projects`](/docs/guides/consumption-metrics) instead. On every eligible plan, this endpoint returns **legacy metrics** only (active time, compute time, written data, synthetic storage). On a usage-based plan, those metrics do not match your invoice; for invoice-aligned metrics use the [project metrics endpoint](/docs/guides/consumption-metrics) in Query consumption metrics.
@@ -49,7 +49,7 @@ Both endpoints return metrics that align with legacy billing. Default metrics ar
 **Endpoint:**
 
 ```bash
-GET https://console.neon.tech/api/v2/consumption_history/projects
+GET https://console.optitech.com/api/v2/consumption_history/projects
 ```
 
 Retrieves consumption metrics per project at the chosen granularity. The same **Scale plans and above** access rule applies as for the account endpoint (not available on **Launch**—use [v2 project metrics](/docs/guides/consumption-metrics) instead). Results are ordered by time in ascending order (oldest to newest). History begins at the time of upgrade. Issuing a call to this API does not wake a project's compute endpoint.
@@ -87,15 +87,15 @@ The **`include_v1_metrics`** parameter is deprecated; use **`metrics`** instead.
 
 ## Example request and response
 
-Replace `$NEON_API_KEY` with your API key and include `org_id` if needed.
+Replace `$OPTITECH_API_KEY` with your API key and include `org_id` if needed.
 
 ### Project-level
 
 ```bash shouldWrap
 curl --request GET \
-  --url 'https://console.neon.tech/api/v2/consumption_history/projects?from=2024-06-30T00:00:00Z&to=2024-07-02T00:00:00Z&granularity=daily&org_id=org-ocean-art-12345678&limit=10' \
+  --url 'https://console.optitech.com/api/v2/consumption_history/projects?from=2024-06-30T00:00:00Z&to=2024-07-02T00:00:00Z&granularity=daily&org_id=org-ocean-art-12345678&limit=10' \
   --header 'accept: application/json' \
-  --header 'authorization: Bearer $NEON_API_KEY'
+  --header 'authorization: Bearer $OPTITECH_API_KEY'
 ```
 
 <details>
@@ -158,9 +158,9 @@ Example request for the next page (using the `cursor` from the previous response
 
 ```bash shouldWrap
 curl --request GET \
-     --url 'https://console.neon.tech/api/v2/consumption_history/projects?cursor=divine-tree-77657175&limit=10&from=2024-06-30T00%3A00%3A00Z&to=2024-07-02T00%3A00%3A00Z&granularity=daily&org_id=org-ocean-art-12345678' \
+     --url 'https://console.optitech.com/api/v2/consumption_history/projects?cursor=divine-tree-77657175&limit=10&from=2024-06-30T00%3A00%3A00Z&to=2024-07-02T00%3A00%3A00Z&granularity=daily&org_id=org-ocean-art-12345678' \
      --header 'accept: application/json' \
-     --header 'authorization: Bearer $NEON_API_KEY'
+     --header 'authorization: Bearer $OPTITECH_API_KEY'
 ```
 
 In the URL above, the **`cursor`** parameter is `cursor=divine-tree-77657175`. Replace that value with the `cursor` from your previous response's `pagination` object.

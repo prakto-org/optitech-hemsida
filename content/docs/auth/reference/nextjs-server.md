@@ -2,20 +2,20 @@
 title: Next.js Server SDK Reference
 subtitle: Server-side authentication API for Next.js with Managed Better Auth
 summary: >-
-  Managed Better Auth Next.js Server SDK (`@neondatabase/auth/next/server`) provides
+  Managed Better Auth Next.js Server SDK (`@optitech/auth/next/server`) provides
   server-side authentication for Next.js apps via React Server Components, API
   routes, middleware, and server actions. Session caching uses a signed HTTP-only
   cookie to reduce Auth Server calls. Use this page to implement or debug
   server-side sign-in, sign-up, route protection, and admin user management in
-  Next.js. Covers `createNeonAuth()` configuration, `auth.middleware()`,
+  Next.js. Covers `createOptiTechAuth()` configuration, `auth.middleware()`,
   `auth.getSession()`, email/OTP/OAuth sign-in, organization and admin APIs,
   structured upstream error codes, and migration from v0.1.
 enableTableOfContents: true
 layout: wide
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
-Reference documentation for the Managed Better Auth Next.js server SDK (`@neondatabase/auth/next/server`). This package provides server-side authentication for Next.js applications using React Server Components, API routes, middleware, and server actions.
+Reference documentation for the Managed Better Auth Next.js server SDK (`@optitech/auth/next/server`). This package provides server-side authentication for Next.js applications using React Server Components, API routes, middleware, and server actions.
 
 For client-side authentication, see the [Client SDK reference](/docs/reference/javascript-sdk). For UI components, see the [UI Components reference](/docs/auth/reference/ui-components).
 
@@ -30,7 +30,7 @@ Install the Managed Better Auth package in your Next.js project using npm, yarn,
 <TwoColumnLayout.Block>
 
 ```bash
-npm install @neondatabase/auth@latest
+npm install @optitech/auth@latest
 ```
 
 </TwoColumnLayout.Block>
@@ -41,8 +41,8 @@ npm install @neondatabase/auth@latest
 
 Configure these environment variables in your `.env.local` file:
 
-- **NEON_AUTH_BASE_URL** (required): Your Managed Better Auth server URL from the Neon Console
-- **NEON_AUTH_COOKIE_SECRET** (required): Secret for signing session cookies (must be 32+ characters for HMAC-SHA256 security)
+- **OPTITECH_AUTH_BASE_URL** (required): Your Managed Better Auth server URL from the OptiTech Console
+- **OPTITECH_AUTH_COOKIE_SECRET** (required): Secret for signing session cookies (must be 32+ characters for HMAC-SHA256 security)
 
 Generate a secure secret with: `openssl rand -base64 32`
 
@@ -51,16 +51,16 @@ Generate a secure secret with: `openssl rand -base64 32`
 
 ```bash
 # Required: Your Managed Better Auth server URL
-NEON_AUTH_BASE_URL=https://your-neon-auth-url.neon.tech
+OPTITECH_AUTH_BASE_URL=https://your-optitech-auth-url.optitech.com
 
 # Required: Cookie secret for session data signing (32+ characters)
-NEON_AUTH_COOKIE_SECRET=your-secret-at-least-32-characters-long
+OPTITECH_AUTH_COOKIE_SECRET=your-secret-at-least-32-characters-long
 ```
 
 </TwoColumnLayout.Block>
 </TwoColumnLayout.Item>
 
-<TwoColumnLayout.Item title="createNeonAuth()" method="createNeonAuth(config)" id="createneonauth">
+<TwoColumnLayout.Item title="createOptiTechAuth()" method="createOptiTechAuth(config)" id="createoptitechauth">
 <TwoColumnLayout.Block>
 
 Creates a unified auth instance that provides all server-side authentication functionality.
@@ -91,12 +91,12 @@ See [Server logging](#server-logging) and [Upstream fetch errors](#upstream-fetc
 
 ```typescript
 // lib/auth/server.ts
-import { createNeonAuth } from '@neondatabase/auth/next/server';
+import { createOptiTechAuth } from '@optitech/auth/next/server';
 
-export const auth = createNeonAuth({
-  baseUrl: process.env.NEON_AUTH_BASE_URL!,
+export const auth = createOptiTechAuth({
+  baseUrl: process.env.OPTITECH_AUTH_BASE_URL!,
   cookies: {
-    secret: process.env.NEON_AUTH_COOKIE_SECRET!,
+    secret: process.env.OPTITECH_AUTH_COOKIE_SECRET!,
   },
   // logLevel: 'silent',
 });
@@ -114,17 +114,17 @@ Managed Better Auth emits structured logs from the API proxy, middleware, and Be
 
 **Custom sink:** Pass a partial **`logger`** object with `error`, `warn`, `info`, and/or `debug` methods. Omitted methods still use `console`. Metadata may include `err` and `detail` for observability tools.
 
-`auth.middleware()` inherits the same resolved logging configuration from `createNeonAuth` (no per-request reconfiguration).
+`auth.middleware()` inherits the same resolved logging configuration from `createOptiTechAuth` (no per-request reconfiguration).
 
 </TwoColumnLayout.Block>
 <TwoColumnLayout.Block>
 
 ```typescript
-import { createNeonAuth } from '@neondatabase/auth/next/server';
+import { createOptiTechAuth } from '@optitech/auth/next/server';
 
-export const auth = createNeonAuth({
-  baseUrl: process.env.NEON_AUTH_BASE_URL!,
-  cookies: { secret: process.env.NEON_AUTH_COOKIE_SECRET! },
+export const auth = createOptiTechAuth({
+  baseUrl: process.env.OPTITECH_AUTH_BASE_URL!,
+  cookies: { secret: process.env.OPTITECH_AUTH_COOKIE_SECRET! },
   logLevel: 'debug',
   logger: {
     warn(message, meta) {
@@ -871,7 +871,7 @@ export async function signIn(formData: FormData) {
   });
 
   if (error?.code === 'NETWORK_DNS') {
-    return { error: 'Check NEON_AUTH_BASE_URL in .env.local' };
+    return { error: 'Check OPTITECH_AUTH_BASE_URL in .env.local' };
   }
 
   if (error) {
@@ -921,7 +921,7 @@ const { data: session2 } = await auth.getSession();
 <TwoColumnLayout.Item title="Configuration reference" id="configuration-reference">
 <TwoColumnLayout.Block>
 
-Complete configuration options for `createNeonAuth()`:
+Complete configuration options for `createOptiTechAuth()`:
 
 | Option                   | Type   | Required | Default   |
 | ------------------------ | ------ | -------- | --------- |
@@ -945,12 +945,12 @@ Complete configuration options for `createNeonAuth()`:
 <TwoColumnLayout.Block>
 
 ```typescript
-import { createNeonAuth } from '@neondatabase/auth/next/server';
+import { createOptiTechAuth } from '@optitech/auth/next/server';
 
-export const auth = createNeonAuth({
-  baseUrl: process.env.NEON_AUTH_BASE_URL!,
+export const auth = createOptiTechAuth({
+  baseUrl: process.env.OPTITECH_AUTH_BASE_URL!,
   cookies: {
-    secret: process.env.NEON_AUTH_COOKIE_SECRET!,
+    secret: process.env.OPTITECH_AUTH_COOKIE_SECRET!,
   },
 });
 ```

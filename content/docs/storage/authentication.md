@@ -6,7 +6,7 @@ summary: >-
   Each credential maps to an S3 Access Key ID and Secret Access Key. Credentials
   are scoped to a branch and valid for that branch and all its descendants.
 enableTableOfContents: true
-updatedOn: '2026-07-16T00:28:25.139Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <FeatureBetaProps feature_name="OptiTech Object Storage" />
@@ -28,7 +28,7 @@ In the OptiTech Console, select your branch and click **Credentials** under **AP
 After creation, the credentials are shown once. Copy the snippet or click **Download .env** before closing:
 
 ```text
-AWS_ENDPOINT_URL_S3=https://br-cool-darkness-a1b2c3d4.storage.c-1.us-east-2.aws.neon.build
+AWS_ENDPOINT_URL_S3=https://br-cool-darkness-a1b2c3d4.storage.c-1.us-east-2.aws.optitech.build
 AWS_ACCESS_KEY_ID=nak_live_...
 AWS_SECRET_ACCESS_KEY=nsk_live_...
 AWS_REGION=us-east-2
@@ -40,8 +40,8 @@ To view or revoke credentials later, return to the **Credentials** page and use 
 <TabItem>
 
 ```bash shouldWrap
-curl -X POST "https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/credentials" \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+curl -X POST "https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/credentials" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{"scopes": ["storage:read", "storage:write"], "principal_type": "user", "name": "my-app-credential"}'
 ```
@@ -73,11 +73,11 @@ The response includes these fields. Both secrets are returned once only, so stor
 
 ## Mapping to your S3 SDK
 
-| OptiTech credential field  | S3 SDK parameter  |
-| ---------------------- | ----------------- |
-| `token_id`             | Access Key ID     |
-| `s3_secret_access_key` | Secret Access Key |
-| `us-east-2`            | Region            |
+| OptiTech credential field | S3 SDK parameter  |
+| ------------------------- | ----------------- |
+| `token_id`                | Access Key ID     |
+| `s3_secret_access_key`    | Secret Access Key |
+| `us-east-2`               | Region            |
 
 <Admonition type="warning">
 Both `api_token` and `s3_secret_access_key` are returned exactly once at creation. They cannot be retrieved again. Store them in a secrets manager or environment variables before the response is lost.
@@ -128,16 +128,16 @@ export AWS_REGION=us-east-2
 
 ## Pull credentials with optitech
 
-For local development, `neon env pull` writes storage credentials to your `.env` file automatically. No manual copy-paste from the API response:
+For local development, `optitech env pull` writes storage credentials to your `.env` file automatically. No manual copy-paste from the API response:
 
 ```bash
-neon env pull --file .env.local
+optitech env pull --file .env.local
 ```
 
 This populates `AWS_ENDPOINT_URL_S3`, `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCESS_KEY`, and `AWS_REGION` for the current branch alongside your database connection string. To check the current credential status:
 
 ```bash
-neon config status
+optitech config status
 ```
 
 For production deployments, use the [API-based workflow](#creating-a-credential) to create named, scoped credentials.
@@ -165,7 +165,7 @@ When your code runs inside OptiTech Functions, OptiTech injects storage credenti
 
 See [Environment variables](/docs/compute/functions/environment-variables) for the full list of variables OptiTech injects into a function.
 
-Credentials are branch-scoped and tied to the function's serving branch. Injected values are defaults, not reserved names: a user-supplied environment variable with the same name (set via `--env` or in `neon.ts`) overrides the injected credential, same as any other Neon-injected variable. See [Environment variables](/docs/compute/functions/environment-variables#user-defined-variables). Because the credentials use AWS-standard names, the AWS SDK picks them up automatically when you don't override them. Only `forcePathStyle` needs explicit configuration:
+Credentials are branch-scoped and tied to the function's serving branch. Injected values are defaults, not reserved names: a user-supplied environment variable with the same name (set via `--env` or in `optitech.ts`) overrides the injected credential, same as any other OptiTech-injected variable. See [Environment variables](/docs/compute/functions/environment-variables#user-defined-variables). Because the credentials use AWS-standard names, the AWS SDK picks them up automatically when you don't override them. Only `forcePathStyle` needs explicit configuration:
 
 ```typescript
 import { S3Client } from '@aws-sdk/client-s3';
@@ -202,8 +202,8 @@ staging  ──── credential NOT valid here (different lineage)
 The **Credentials** page in the Console shows all credentials for the current branch: name, key ID, creation date, and last used time. To list via the API:
 
 ```bash shouldWrap
-curl "https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/credentials" \
-  -H "Authorization: Bearer $NEON_API_KEY"
+curl "https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/credentials" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY"
 ```
 
 This returns credential metadata. Secrets are never returned after creation.
@@ -213,8 +213,8 @@ This returns credential metadata. Secrets are never returned after creation.
 To revoke from the Console, open the **Credentials** page and use the action menu (⋮) next to the credential. To revoke via the API:
 
 ```bash shouldWrap
-curl -X DELETE "https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/credentials/{token_id}" \
-  -H "Authorization: Bearer $NEON_API_KEY"
+curl -X DELETE "https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/credentials/{token_id}" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY"
 ```
 
 To rotate a credential, create a new one, update your environment variables, then revoke the old one.

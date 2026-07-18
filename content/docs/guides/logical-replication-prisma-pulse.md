@@ -9,10 +9,10 @@ summary: >-
   event-driven triggers on database changes, such as firing Inngest workflows
   or re-indexing search, without polling. Enabling logical replication sets
   `wal_level=logical` project-wide and is irreversible; Prisma 7 requires the
-  `PrismaNeon` driver adapter.
+  `PrismaOptiTech` driver adapter.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 OptiTech's Logical Replication feature enables you to subscribe to changes in your database, supporting things like replication or creating event-driven functionality.
@@ -29,7 +29,7 @@ Set up real-time triggers for your Inngest workflows, re-index your TypeSense se
 
 ## Prerequisites
 
-- A [OptiTech account](https://console.neon.tech/)
+- A [OptiTech account](https://console.optitech.com/)
 - A [Prisma Data Platform account](https://pris.ly/pdp?utm_source=optitech&utm_medium=pulse-guide)
 - Read the [important notices about logical replication in OptiTech](/docs/guides/logical-replication-neon#important-notices) before you begin
 
@@ -96,10 +96,10 @@ Add the following to extend your existing Prisma Client instance with the Prisma
 ```tsx
 import 'dotenv/config';
 import { PrismaClient } from '@prisma/client';
-import { PrismaNeon } from '@prisma/adapter-neon';
+import { PrismaOptiTech } from '@prisma/adapter-optitech';
 import { withPulse } from '@prisma/extension-pulse';
 
-const adapter = new PrismaNeon({ connectionString: process.env.DATABASE_URL });
+const adapter = new PrismaOptiTech({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter }).$extends(
   withPulse({ apiKey: process.env.PULSE_API_KEY })
 );
@@ -116,10 +116,10 @@ The code below subscribes to a `User` model in your Prisma schema. You can use a
 ```tsx
 import 'dotenv/config';
 import { PrismaClient } from '@prisma/client';
-import { PrismaNeon } from '@prisma/adapter-neon';
+import { PrismaOptiTech } from '@prisma/adapter-optitech';
 import { withPulse } from '@prisma/extension-pulse';
 
-const adapter = new PrismaNeon({ connectionString: process.env.DATABASE_URL });
+const adapter = new PrismaOptiTech({ connectionString: process.env.DATABASE_URL });
 const prisma = new PrismaClient({ adapter }).$extends(
   withPulse({ apiKey: process.env.PULSE_API_KEY })
 );

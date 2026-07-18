@@ -165,7 +165,7 @@ const ApiTagPage = async ({
 
       <ApiEndpointsTable operations={operations} tagDisplay={tagDisplay} />
 
-      <DocFooter slug={currentSlug} gitHubPath={null} />
+      <DocFooter slug={currentSlug} />
 
       <NavigationLinks
         className="mt-6"

@@ -6,7 +6,7 @@ page_description: >-
   a sequence object to generate a sequence of numbers.
 prev_url: 'https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-sequences/'
 ogImage: /postgresqltutorial/PostgreSQL-Sequence-simple-example.png
-updatedOn: '2026-06-19T17:44:03.964Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: Using PostgreSQL SERIAL to Create Auto-increment Column
@@ -17,7 +17,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-Sequences work the same way across any PostgreSQL deployment, so everything here applies whether you run Postgres yourself or use a managed service. If you're an enterprise building for the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres with the performance, security, and native Lakehouse integration your workloads demand. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+Sequences work the same way across any PostgreSQL deployment, so everything here applies whether you run Postgres yourself or use a managed service. If you're an enterprise building for the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres with the performance, security, and native Lakehouse integration your workloads demand. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: in this tutorial, you will learn about the PostgreSQL sequences and how to use a sequence object to generate a sequence of numbers.

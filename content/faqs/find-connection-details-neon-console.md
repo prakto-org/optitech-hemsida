@@ -1,66 +1,33 @@
 ---
-title: 'Where can I find my database connection details in the OptiTech Console?'
-subtitle: 'Everything you need lives in the Connect widget on the Project Dashboard.'
+title: 'Where do I find my integration connection details in the OptiTech Console?'
+subtitle: 'Each integration page shows connection status, granted permissions, last sync, and the checks it feeds.'
 enableTableOfContents: true
-createdAt: '2026-05-18T00:00:00.000Z'
-updatedOn: '2026-06-01T20:42:32.665Z'
+createdAt: '2026-01-21T14:23:34.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 isDraft: false
 redirectFrom: []
 previousLink:
-  title: 'Why am I getting ''Error connecting to database: Failed to fetch'' in the OptiTech Console Tables view?'
+  title: 'How do I fix a "failed to fetch" error in the OptiTech controls view?'
   slug: failed-to-fetch-error-tables-view
 nextLink:
-  title: 'Where can I find my database connection string or URL in OptiTech?'
+  title: 'Where can I find my public Trust Center URL in OptiTech?'
   slug: find-database-connection-string-url
 ---
 
-Open your project in the [OptiTech Console](https://console.neon.tech) and click **Connect** on the **Project Dashboard**. The **Connect to your database** modal lists every detail you need to connect: branch, compute, database, role, host, password, and a constructed connection string. They all live in this one widget rather than being scattered across the Console.
+## Quick answer
 
-## Open the Connect widget
+Go to **Integrations** in the OptiTech Console and select the integration. Its detail page shows everything about the connection: status and last successful sync, the account or tenant it's connected to, the exact permissions granted, the credential type and its age, and the list of checks the integration feeds. This page is both your operational view and your documentation of what the connection can access.
 
-1. Sign in to the [OptiTech Console](https://console.neon.tech) and select your project.
-2. On the **Project Dashboard**, click **Connect**.
+## What each section tells you
 
-The modal opens with everything wired up for the branch and role you select.
+- **Status and last sync**: green with a recent timestamp means evidence is flowing. Errors and warnings link to [sync troubleshooting](/faqs/failed-to-fetch-error-tables-view).
+- **Connected account**: which Entra tenant, AWS organization, or GitHub org the integration reads from, so multi-tenant organizations can verify they connected the right one.
+- **Permissions**: the granted scopes, stated in the provider's own terms (for example, which Graph API scopes). This is the section to show a security reviewer asking what the integration can reach; the answer should be read-only scopes, per [the agentless collection model](/faqs/connect-application-using-connection-string).
+- **Credential info**: type (OAuth app, service account, API key), created date, and rotation status, feeding the [credential rotation routine](/faqs/find-connection-details-neon-console).
+- **Checks fed**: every automated check that depends on this integration, with links to the controls they verify. This is also your impact preview for disconnecting: you see exactly which controls would lose monitoring.
 
-## What you'll see in the widget
+## Why these details end up in your compliance documentation
 
-| Field                             | What it is                                                                                                             |
-| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| **Branch**                        | The branch you're connecting to. Defaults to your project's root branch (`main` or `production`).                      |
-| **Compute**                       | The compute endpoint serving the branch. Each branch has at least one read-write compute.                              |
-| **Database**                      | The Postgres database on that branch. Defaults to `neondb` if you didn't pick a custom name.                           |
-| **Role**                          | The Postgres role you'll authenticate as. Defaults to the role created with the project (for example, `neondb_owner`). |
-| **Connection string**             | The full `postgresql://...` URL with role, password, host, and database name.                                          |
-| **Connection pooling** toggle     | Adds `-pooler` to the hostname for connection pooling through PgBouncer.                                               |
-| **Reset password** (in role menu) | Generates a new password for the selected role.                                                                        |
-| **Save in 1Password**             | Saves the connection details to 1Password if the browser extension is installed.                                       |
+Your compliance platform's integrations are themselves access relationships that your program should account for. The integration page gives you the facts for your records: OptiTech appears in your supplier register, the granted scopes belong in your access documentation, and the connection is part of the answer when a customer asks who can read your tenant data. Convenient, then, that the page is exportable like [everything else](/faqs/export-database-sql-file).
 
-The pooled and direct hostnames differ only by the `-pooler` suffix. For example:
-
-```text
-Direct: ep-cool-darkness-a1b2c3d4.us-east-2.aws.neon.tech
-Pooled: ep-cool-darkness-a1b2c3d4-pooler.us-east-2.aws.neon.tech
-```
-
-The compute ID (the `ep-...` segment) is the same in both. See [Connection pooling](/docs/connect/connection-pooling) for when to use each.
-
-## Individual fields for a `.env` file
-
-If your app needs the components separately, copy them from the modal into your `.env`:
-
-```text
-PGHOST=ep-cool-darkness-a1b2c3d4-pooler.us-east-2.aws.neon.tech
-PGDATABASE=dbname
-PGUSER=alex
-PGPASSWORD=AbC123dEf
-PGPORT=5432
-```
-
-OptiTech uses the default Postgres port, `5432`. See [Connect from any app](/docs/connect/connect-from-any-app#get-a-connection-string-from-the-neon-console) for more.
-
-<Admonition type="tip" title="Looking for code snippets?">
-The Connect modal also shows ready-to-paste examples for Node.js, Python, Go, Java, Rust, and other languages, with the connection string baked in. Switch the **Connection examples** dropdown to your language of choice.
-</Admonition>
-
-<CTA title="See the full Connect reference" description="Learn about pooled vs direct connections, SNI workarounds, and language-specific notes." buttonText="Read the docs" buttonUrl="/docs/connect/connect-from-any-app" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

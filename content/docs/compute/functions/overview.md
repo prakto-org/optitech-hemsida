@@ -1,108 +1,99 @@
 ---
-title: OptiTech Functions
-subtitle: Deploy a backend onto your OptiTech branch, next to your data.
+title: Incident reporting and risk
+subtitle: Guided authority flows and a risk register, next to your evidence.
 summary: >-
-  OptiTech Functions are serverless compute you deploy onto a OptiTech branch. Host an
-  API, AI agent, real-time server, or webhook handler that runs next to your
-  Postgres data, with DATABASE_URL injected automatically.
+  OptiTech's incident flows guide you through NIS2's MSB sequence and GDPR's
+  IMY flow with pre-filled forms, deadline countdowns, and communication
+  templates. The risk register links every risk to the controls that mitigate
+  it and the evidence that proves they work.
 enableTableOfContents: true
 redirectFrom:
   - /docs/compute/functions/preview-access
-updatedOn: '2026-07-16T13:37:43.975Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
-OptiTech Functions are serverless compute you deploy onto a OptiTech branch, so your backend code runs right next to your database. Use them to host an API, an AI agent, a real-time server, or a webhook handler without standing up separate infrastructure.
+OptiTech's incident flows guide you through authority reporting with the legal deadlines wired in, so a 24-hour early warning is a checklist instead of a crisis. Use them for NIS2 incidents to MSB, personal data breaches to IMY, and the drills that make the real thing routine.
 
-What makes OptiTech Functions different from lambda-style serverless?
+What makes OptiTech's incident handling different from an alert channel?
 
-- **Next to your data.** Same region as the branch, with `DATABASE_URL` (plus [AI Gateway](/docs/ai-gateway/overview) and [Object Storage](/docs/storage/overview) credentials) injected automatically. No cross-region hops, and no credentials to wire up.
-- **Long-running.** Start responding within 15 minutes, then keep streaming while data flows, so agents and WebSocket/SSE servers aren't cut off by a short execution limit. They're still serverless: idle functions can be evicted (see [Runtime limits](/docs/compute/functions/reference/runtime-limits)).
-- **Branches with your data.** Each branch runs its own function at its own URL against its own database state.
+- **Deadlines wired in.** The countdown starts the moment you open the incident, with each authority's clock (24 hours, 72 hours, one month) visible the whole way. No spreadsheet math under pressure.
+- **Pre-filled forms.** The MSB and IMY forms populate from your incident data, your on-call contact list is attached, and communication templates for customers, press, and internal channels are one click away.
+- **Connected to your controls.** Incidents link to the controls that failed, feed the risk register, and land in the same evidence chain your auditor reviews.
 
-Functions run on OptiTech's own compute platform, the same infrastructure that runs your Postgres, so they sit in the same region as your data.
+Incidents run on the same platform as your evidence, so the post-incident report writes itself from data that already exists.
 
-> Functions are in beta and available only in **AWS US East (Ohio) (`aws-us-east-2`)**, so create your project there to use them. Functions are free to use during beta, subject to usage limits, on any plan.
+> Run a test drill before you need the real thing. Teams that have drilled once handle the 24-hour deadline as process instead of panic.
 
-<Admonition type="important" title="JavaScript and TypeScript only">
-OptiTech Functions currently run JavaScript or TypeScript on the Node.js runtime. Deploy JS/TS handlers, or code that bundles to JS for Node.js 24. Other runtimes and language targets aren't supported during beta.
+<Admonition type="important" title="Reporting duties are yours">
+OptiTech pre-fills, tracks, and reminds, but the legal duty to report stays with your organization. Nothing is submitted to an authority without your explicit confirmation.
 </Admonition>
 
 ## Get started
 
 <DetailIconCards>
 
-<a href="/docs/compute/functions/get-started" description="Deploy your first function and call it over HTTP in under 5 minutes." icon="code">Quickstart</a>
+<a href="/docs/get-started/full-backend-quickstart" description="Run your first incident drill as part of getting audit-ready." icon="code">Run a drill</a>
 
-<a href="/docs/compute/functions/agents" description="Run streaming, tool-calling AI agents next to your data." icon="openai">AI agents</a>
+<a href="/docs/frameworks/nis2" description="The MSB sequence: early warning, report, and final report." icon="openai">The MSB flow</a>
 
-<a href="/docs/compute/functions/websockets" description="Hold long-lived connections open with WebSockets or SSE." icon="globe">WebSockets and SSE</a>
+<a href="/docs/frameworks/gdpr" description="The 72-hour personal data breach flow to IMY." icon="globe">The IMY flow</a>
 
-<a href="/docs/compute/functions/authentication" description="Verify callers before a function does any work." icon="lock-landscape">Authentication</a>
+<a href="/docs/get-started/signing-up" description="Set owners and on-call contacts in the Console tour." icon="lock-landscape">On-call contacts</a>
 
-<a href="/docs/compute/functions/environment-variables" description="Neon-injected variables and how to add your own secrets." icon="gear">Environment variables</a>
+<a href="/docs/introduction/plans" description="Incident flows and the risk register are included on every plan." icon="gear">Plan availability</a>
 
-<a href="/docs/compute/functions/deploy" description="CLI and API reference for deploying and managing functions." icon="cli">Deploy and manage</a>
+<a href="/docs/get-started/why-neon" description="How risks, controls, and evidence connect in one chain." icon="cli">The risk model</a>
 
-<a href="/docs/compute/functions/logs" description="View, search, and download a function's logs in the Console." icon="search">Logs</a>
+<a href="/docs/introduction/plans#enterprise-features" description="Give supervisors read-only access during an inspection." icon="search">Auditor portal</a>
 
-<a href="/docs/compute/functions/reference/runtime-limits" description="Timeouts, slug constraints, memory, and other hard limits." icon="sparkle">Runtime limits</a>
+<a href="/docs/introduction/support" description="Severity 1 handling when the platform itself is your problem." icon="sparkle">Support severities</a>
 
 </DetailIconCards>
 
-## Request/response, not background jobs
+## A flow, not a form
 
-A function is always requested (by a `fetch`, a browser, an agent) and always returns a web response: JSON, an HTTP stream, an SSE feed, or a WebSocket upgrade.
+An incident in OptiTech is always a sequence (detect, assess, report, close) and always produces a record: the timeline, the decisions, who was notified, and what was filed.
 
-That makes functions a fit for request/response work, and not for background jobs. Background jobs and workflows are the other kind of compute: queued, retryable, cancellable work with its own lifecycle, like sending a welcome email after signup. Those need a job queue or workflow engine to own that lifecycle. Today you can pair a function with a third-party queue or scheduler like [Upstash QStash](https://upstash.com/docs/qstash) or [Inngest](https://www.inngest.com): the service owns the queue, retries, and scheduling, and invokes your function over HTTP to run each job. A native OptiTech job queue and workflow engine is a separate, upcoming offering.
+That makes the flows a fit for reportable incidents, not for routine alerts. Routine drift (a failed check, a missing signature) stays in the task system with its own lifecycle. An incident starts when something meets your reporting threshold, and the assessment step exists precisely to make that call with the criteria in front of you:
 
-Any module whose default export provides a `fetch(request)` method that returns a `Response` is a function. It embraces the web platform standards: the Fetch API's `Request` and `Response` interface, the same handler shape used by other serverless runtimes and standardized by [WinterTC](https://wintertc.org/). That can be an object with a `fetch` method:
-
-```ts
-export default {
-  fetch: (request: Request) => new Response('Hello world'),
-};
+```text
+Early warning to MSB              due in 21h 14m
+Incident report to MSB            due in 69h 14m
+Final report to MSB               due in 29 days
 ```
 
-Or a bare async function:
+The risk register works the same way in reverse: risks are scored on likelihood times impact, linked to mitigating controls, and updated by reality. When an incident closes, its lessons land as risk updates:
 
-```ts
-export default async function handler(request: Request) {
-  return new Response('Hello world');
-}
+```text
+Risk: Ransomware via phishing     score 12 -> 16
+Linked controls: 3 verified, 1 drifted
+Treatment plan: MFA hardening     owner: Dana Smith
 ```
 
-A [Hono](https://hono.dev) app exports the object shape, so `export default app` works directly. Hono is the recommended framework.
+## When to use the incident flows
 
-## When to use OptiTech Functions
+- **NIS2 incidents**: significant disruptions to your services, reported to MSB on the three-step clock. See [NIS2](/docs/frameworks/nis2).
+- **Personal data breaches**: the GDPR assessment and the 72-hour IMY flow, including notification templates for those affected. See [GDPR](/docs/frameworks/gdpr).
+- **DORA incidents**: classification and reporting for financial-sector requirements. See [DORA](/docs/frameworks/dora).
+- **Drills**: the full sequence without submitting anything, for onboarding and annual exercises.
+- **Customer notifications**: incidents that trigger contractual duties to customers, with the communication templates attached.
+- **Near misses**: log what almost happened, feed the risk register, skip the authority steps.
 
-- **REST APIs and CRUD backends**: request in, JSON out, queries running next to Postgres. See [Quickstart](/docs/compute/functions/get-started).
-- **AI agents**: stream tokens back across multiple model calls and tool invocations without a short execution limit cutting the run off. See [AI agents](/docs/compute/functions/agents).
-- **Real-time apps**: WebSocket servers for chat and presence, or SSE for live updates. See [WebSockets and SSE](/docs/compute/functions/websockets).
-- **MCP servers**: expose database-backed tools to AI clients over a single `fetch` endpoint. See the [with-mcp example](https://github.com/neondatabase/examples/tree/main/with-mcp).
-- **File upload APIs**: receive a file, write it to [Object Storage](/docs/storage/overview), return a result.
-- **Webhook handlers and bots**: receive events and query Postgres in the same region.
+## How incidents fit with your program
 
-## How Functions fit with your app
+Incident handling is a capability, not a silo. The flows draw on everything else the platform knows. Two common shapes:
 
-Functions are backend primitives, not full-stack app hosting. Host your app on Vercel, Netlify, or another frontend host; reach for a function for the long-running, stateful slice of your backend that belongs next to your data. Two common shapes:
+- **The incident starts in OptiTech.** A drifted control escalates: what the check saw becomes the incident's first evidence, and the affected requirement is already linked when you open the flow.
+- **The incident starts outside.** Your SOC, MSP, or an employee reports something. You open an incident, and OptiTech pulls in the relevant controls, contacts, and deadlines while you assess.
 
-- **Add a function to a full-stack app.** Your Next.js or TanStack Start app owns the UI, auth, and most routes. When one workload outgrows the host's short serverless limit (a WebSocket or SSE server, or a long-running agent), move only that piece onto a function and call it directly from the client. See [Authentication](/docs/compute/functions/authentication) for the direct-call pattern.
-- **Run the backend on functions.** When the frontend is client-only (a React or TanStack SPA), the client calls functions directly: REST APIs, request/response agents, MCP servers, and anything stateful that belongs close to Postgres and Object Storage.
+## The three deadlines
 
-## Starter templates
-
-Each example is a complete, runnable build. Read the source on GitHub, or scaffold one with `neon bootstrap --template <id>` (it copies the files, links a OptiTech project, and pulls env vars). You can also browse them at [build-on-neon.vercel.app](https://build-on-neon.vercel.app/).
-
-| Example                  | `--template`        | Source                                                                                              | OptiTech services                                   | Stack                 |
-| ------------------------ | ------------------- | --------------------------------------------------------------------------------------------------- | ----------------------------------------------- | --------------------- |
-| REST API                 | `hono`              | [with-hono](https://github.com/neondatabase/examples/tree/main/with-hono)                           | Functions, Postgres                             | Hono, Drizzle         |
-| Image-generation agent   | `ai-sdk`            | [with-ai-sdk](https://github.com/neondatabase/examples/tree/main/with-ai-sdk)                       | Functions, Postgres, AI Gateway, Object Storage | AI SDK, Drizzle       |
-| Personal-assistant agent | `mastra`            | [with-mastra](https://github.com/neondatabase/examples/tree/main/with-mastra)                       | Functions, Postgres, AI Gateway                 | Mastra                |
-| MCP server               | `mcp`               | [with-mcp](https://github.com/neondatabase/examples/tree/main/with-mcp)                             | Functions, Postgres                             | Hono, Drizzle         |
-| Realtime chat            | `realtime-chat`     | [with-realtime-chat](https://github.com/neondatabase/examples/tree/main/with-realtime-chat)         | Functions, Postgres, Managed Better Auth        | Next.js, Hono         |
-| Realtime counter         | `realtime-sse`      | [with-realtime-sse](https://github.com/neondatabase/examples/tree/main/with-realtime-sse)           | Functions, Postgres                             | TanStack Router, Hono |
-| Discord bot              | `discord-bot-http`  | [bots/discord-bot-http](https://github.com/neondatabase/examples/tree/main/bots/discord-bot-http)   | Functions, Postgres                             | Drizzle               |
-| Telegram bot             | `telegram-bot-http` | [bots/telegram-bot-http](https://github.com/neondatabase/examples/tree/main/bots/telegram-bot-http) | Functions, Postgres                             | Drizzle               |
-| WhatsApp bot             | `whatsapp-bot-http` | [bots/whatsapp-bot-http](https://github.com/neondatabase/examples/tree/main/bots/whatsapp-bot-http) | Functions, Postgres                             | Drizzle               |
+| Step                | `deadline` | What OptiTech prepares              | Where it goes | Included on |
+| ------------------- | ---------- | ----------------------------------- | ------------- | ----------- |
+| Early warning       | `24h`      | Pre-filled MSB form, on-call list   | MSB           | Every plan  |
+| Incident report     | `72h`      | Severity and impact assessment      | MSB           | Every plan  |
+| Final report        | `1 month`  | Causes, mitigation, lessons         | MSB           | Every plan  |
+| Breach notification | `72h`      | Risk assessment, notification texts | IMY           | Every plan  |
+| DORA classification | `per DORA` | Classification and report           | Supervisor    | Enterprise  |
 
 <NeedHelp/>

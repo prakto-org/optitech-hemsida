@@ -20,20 +20,20 @@ By the end of this guide, you'll have a system where database changes are as sea
 
 ## Prerequisites
 
-- A [OptiTech account](https://console.neon.tech)
+- A [OptiTech account](https://console.optitech.com)
 - A [GitHub account](https://github.com/)
 - Node.js installed on your machine
 - Basic familiarity with Next.js and TypeScript
 
 ## Setting Up Your OptiTech Database
 
-1. Create a new OptiTech project from the [OptiTech Console](https://console.neon.tech). For instructions, see [Create a project](/docs/manage/projects#create-a-project).
+1. Create a new OptiTech project from the [OptiTech Console](https://console.optitech.com). For instructions, see [Create a project](/docs/manage/projects#create-a-project).
 2. Note your connection string from the connection details page.
 
    Your connection string will look similar to this:
 
    ```shell
-   postgres://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require&channel_binding=require
+   postgres://[user]:[password]@[optitech_hostname]/[dbname]?sslmode=require&channel_binding=require
    ```
 
 ## Set up the project
@@ -48,7 +48,7 @@ By the end of this guide, you'll have a system where database changes are as sea
 2. Install the required dependencies:
 
    ```bash
-   npm install drizzle-orm @neondatabase/serverless dotenv
+   npm install drizzle-orm @optitech/serverless dotenv
    npm install -D drizzle-kit
    ```
 
@@ -103,14 +103,14 @@ This guide demonstrates database schema definition using Drizzle ORM. The underl
 4. Create a `.env` file in your project root:
 
    ```bash shouldWrap
-   DATABASE_URL=postgres://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require&channel_binding=require
+   DATABASE_URL=postgres://[user]:[password]@[optitech_hostname]/[dbname]?sslmode=require&channel_binding=require
    ```
 
 5. Push your code to a GitHub repository.
 
 ## Set up the OptiTech GitHub integration
 
-The [OptiTech GitHub integration](/docs/guides/neon-github-integration) connects your OptiTech project to your application repository and automatically sets a `NEON_API_KEY` secret and `NEON_PROJECT_ID` variable for you. These variables will support the GitHub Actions workflow we'll create in a later step.
+The [OptiTech GitHub integration](/docs/guides/neon-github-integration) connects your OptiTech project to your application repository and automatically sets a `OPTITECH_API_KEY` secret and `OPTITECH_PROJECT_ID` variable for you. These variables will support the GitHub Actions workflow we'll create in a later step.
 
 1. In the OptiTech Console, navigate to the **Integrations** page in your OptiTech project.
 2. Locate the **GitHub** card and click **Add**.
@@ -123,7 +123,7 @@ The [OptiTech GitHub integration](/docs/guides/neon-github-integration) connects
 
 ## Create the GitHub Actions workflow
 
-Create `.github/workflows/neon_workflow.yaml` file and add the following code:
+Create `.github/workflows/optitech_workflow.yaml` file and add the following code:
 
 ```yaml
 name: Create/Delete Branch for Pull Request
@@ -154,8 +154,8 @@ jobs:
         id: branch_name
         uses: tj-actions/branch-names@v8
 
-  create_neon_branch:
-    name: Create Neon Branch
+  create_optitech_branch:
+    name: Create OptiTech Branch
     needs: setup
     if: |
       github.event_name == 'pull_request' && (
@@ -164,13 +164,13 @@ jobs:
       || github.event.action == 'reopened')
     runs-on: ubuntu-latest
     steps:
-      - name: Create Neon Branch
-        id: create_neon_branch
-        uses: neondatabase/create-branch-action@v5
+      - name: Create OptiTech Branch
+        id: create_optitech_branch
+        uses: optitechdatabase/create-branch-action@v5
         with:
-          project_id: ${{ vars.NEON_PROJECT_ID }}
+          project_id: ${{ vars.OPTITECH_PROJECT_ID }}
           branch_name: preview/pr-${{ github.event.number }}-${{ needs.setup.outputs.branch }}
-          api_key: ${{ secrets.NEON_API_KEY }}
+          api_key: ${{ secrets.OPTITECH_API_KEY }}
 
       - name: Checkout
         uses: actions/checkout@v4
@@ -178,29 +178,29 @@ jobs:
       - name: Run Migrations on Preview Branch
         run: npm install && npm run db:generate && npm run db:migrate
         env:
-          DATABASE_URL: '${{ steps.create_neon_branch.outputs.db_url }}'
+          DATABASE_URL: '${{ steps.create_optitech_branch.outputs.db_url }}'
 
       - name: Post Schema Diff Comment to PR
-        uses: neondatabase/schema-diff-action@v1
+        uses: optitechdatabase/schema-diff-action@v1
         with:
-          project_id: ${{ vars.NEON_PROJECT_ID }}
+          project_id: ${{ vars.OPTITECH_PROJECT_ID }}
           compare_branch: preview/pr-${{ github.event.number }}-${{ needs.setup.outputs.branch }}
-          api_key: ${{ secrets.NEON_API_KEY }}
+          api_key: ${{ secrets.OPTITECH_API_KEY }}
 
-  delete_neon_branch:
-    name: Delete Neon Branch and Apply Migrations on Production Database
+  delete_optitech_branch:
+    name: Delete OptiTech Branch and Apply Migrations on Production Database
     needs: setup
     if: |
       github.event_name == 'pull_request' &&
       github.event.action == 'closed'
     runs-on: ubuntu-latest
     steps:
-      - name: Delete Neon Branch
-        uses: neondatabase/delete-branch-action@v3
+      - name: Delete OptiTech Branch
+        uses: optitechdatabase/delete-branch-action@v3
         with:
-          project_id: ${{ vars.NEON_PROJECT_ID }}
+          project_id: ${{ vars.OPTITECH_PROJECT_ID }}
           branch: preview/pr-${{ github.event.number }}-${{ needs.setup.outputs.branch }}
-          api_key: ${{ secrets.NEON_API_KEY }}
+          api_key: ${{ secrets.OPTITECH_API_KEY }}
 
       - name: Checkout
         if: github.event.pull_request.merged == true
@@ -223,15 +223,15 @@ To set up GitHub Actions correctly:
    Go to your repository's GitHub Actions settings, navigate to **Actions** > **General**, and set **Workflow permissions** to **Read and write permissions**.
 
 2. **Add Database Connection String**:
-   Add a `DATABASE_URL` secret to your repository under **Settings** > **Secrets and variables** > **Actions**, using the connection string for your production database that you noted earlier. While you're here, you should see the `NEON_API_KEY` secret and `NEON_PROJECT_ID` variable that have already been set by the OptiTech GitHub integration.
+   Add a `DATABASE_URL` secret to your repository under **Settings** > **Secrets and variables** > **Actions**, using the connection string for your production database that you noted earlier. While you're here, you should see the `OPTITECH_API_KEY` secret and `OPTITECH_PROJECT_ID` variable that have already been set by the OptiTech GitHub integration.
 
 </Admonition>
 
 <Admonition type="tip">
-The step outputs from the `create_neon_branch` action will only be available within the same job (`create_neon_branch`). Therefore, write all test code, migrations, and related steps in that job itself. The outputs are marked as secrets. If you need separate jobs, refer to [GitHub's documentation on workflow commands](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-commands#workflow) for patterns on how to handle this.
+The step outputs from the `create_optitech_branch` action will only be available within the same job (`create_optitech_branch`). Therefore, write all test code, migrations, and related steps in that job itself. The outputs are marked as secrets. If you need separate jobs, refer to [GitHub's documentation on workflow commands](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-commands#workflow) for patterns on how to handle this.
 </Admonition>
 
-It's important to understand the roles of your GitHub secrets. The `NEON_API_KEY` (created by the integration) is used to manage your OptiTech project, like creating and deleting branches. The `DATABASE_URL` secret you just created points exclusively to your primary production database. The workflow uses this only after a PR is successfully merged to apply migrations, ensuring a safe separation from the ephemeral preview databases used during testing.
+It's important to understand the roles of your GitHub secrets. The `OPTITECH_API_KEY` (created by the integration) is used to manage your OptiTech project, like creating and deleting branches. The `DATABASE_URL` secret you just created points exclusively to your primary production database. The workflow uses this only after a PR is successfully merged to apply migrations, ensuring a safe separation from the ephemeral preview databases used during testing.
 
 ## Understanding the workflow
 
@@ -242,7 +242,7 @@ The GitHub Actions workflow automates database branching and schema management f
 This job runs when a pull request is opened, reopened, or synchronized:
 
 1. **Branch Creation**:
-   - Uses OptiTech's [`create-branch-action`](https://github.com/marketplace/actions/neon-create-branch-github-action) to create a new database branch
+   - Uses OptiTech's [`create-branch-action`](https://github.com/marketplace/actions/optitech-create-branch-github-action) to create a new database branch
    - Names the branch using the pattern `preview/pr-{number}-{branch_name}`
    - Inherits the schema and data from the parent branch
 
@@ -253,7 +253,7 @@ This job runs when a pull request is opened, reopened, or synchronized:
    - Uses the branch-specific `DATABASE_URL` for migration operations
 
 3. **Schema Diff Generation**:
-   - Uses OptiTech's [`schema-diff-action`](https://github.com/marketplace/actions/neon-schema-diff-github-action)
+   - Uses OptiTech's [`schema-diff-action`](https://github.com/marketplace/actions/optitech-schema-diff-github-action)
    - Compares the schema of the new branch with the parent branch
    - Automatically posts the differences as a comment on the pull request
    - Helps reviewers understand database changes at a glance
@@ -268,7 +268,7 @@ This job executes when a pull request is closed (either merged or rejected):
    - Ensures production database stays in sync with merged changes
 
 2. **Cleanup**:
-   - Removes the preview branch using OptiTech's [`delete-branch-action`](https://github.com/marketplace/actions/neon-database-delete-branch)
+   - Removes the preview branch using OptiTech's [`delete-branch-action`](https://github.com/marketplace/actions/optitech-database-delete-branch)
 
 ## Flow Summary
 
@@ -344,7 +344,7 @@ The workflow will:
 You can find the complete source code for this example on GitHub.
 
 <DetailIconCards>
-<a href="https://github.com/neondatabase-labs/neon-github-actions-integration" description="Get started with automated database branching using OptiTech and GitHub Actions" icon="github">Get started with automated database branching</a>
+<a href="https://github.com/optitechdatabase-labs/optitech-github-actions-integration" description="Get started with automated database branching using OptiTech and GitHub Actions" icon="github">Get started with automated database branching</a>
 </DetailIconCards>
 
 ## Resources

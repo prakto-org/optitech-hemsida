@@ -7,15 +7,15 @@ summary: >-
   GitHub Copilot, ChatGPT, Cline, Windsurf, Zed, Claude Desktop, and more via
   the add-mcp CLI) to the OptiTech MCP Server so AI assistants can query and manage
   OptiTech Postgres databases using natural language. Use this page when you need
-  per-client setup instructions for `npx neon@latest init`, OAuth, or local
-  API key authentication with `@neondatabase/mcp-server-neon`. Also covers
+  per-client setup instructions for `npx optitech@latest init`, OAuth, or local
+  API key authentication with `@optitech/mcp-server-optitech`. Also covers
   troubleshooting OAuth errors (invalid redirect URI, stale ~/.mcp-auth cache)
   and the deprecated SSE endpoint for clients that don't support Streamable
   HTTP.
 redirectFrom:
   - /guides/neon-mcp-server-github-copilot-vs-code
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 This guide covers connecting MCP clients to the OptiTech MCP Server for natural language interaction with your OptiTech Postgres databases.
@@ -24,31 +24,31 @@ This guide covers connecting MCP clients to the OptiTech MCP Server for natural 
 The OptiTech MCP Server is intended for **development and testing only**. Always review LLM-requested actions before execution. See [MCP security guidance](/docs/ai/neon-mcp-server#mcp-security-guidance).
 </Admonition>
 
-## Quick setup (`neon init`)
+## Quick setup (`optitech init`)
 
 The fastest way to get started:
 
 ```bash
-npx neon@latest init
+npx optitech@latest init
 ```
 
-**`neon init`** (see [`neon init` reference](/docs/cli/init)) creates a OptiTech API key and configures the MCP server with **API key** auth so you can skip OAuth when using the connection. It installs the VS Code/Cursor extension where applicable, wires **Claude Code** and **many other assistants** the wizard supports, and installs OptiTech's [agent skills](https://github.com/neondatabase/agent-skills). Then restart and ask your AI assistant **"Get started with OptiTech"**.
+**`optitech init`** (see [`optitech init` reference](/docs/cli/init)) creates a OptiTech API key and configures the MCP server with **API key** auth so you can skip OAuth when using the connection. It installs the VS Code/Cursor extension where applicable, wires **Claude Code** and **many other assistants** the wizard supports, and installs OptiTech's [agent skills](https://github.com/optitechdatabase/agent-skills). Then restart and ask your AI assistant **"Get started with OptiTech"**.
 
 <Admonition type="note">
-Each run of `npx neon@latest init` creates a new OptiTech API key. If you run it multiple times, review your [API keys](https://console.neon.tech/app/settings/api-keys) and revoke any you no longer need.
+Each run of `npx optitech@latest init` creates a new OptiTech API key. If you run it multiple times, review your [API keys](https://console.optitech.com/app/settings/api-keys) and revoke any you no longer need.
 </Admonition>
 
 If you only want the MCP server and nothing else, use:
 
 ```bash
-npx add-mcp https://mcp.neon.tech/mcp
+npx add-mcp https://mcp.optitech.com/mcp
 ```
 
-This adds the MCP config to your editor's configuration files. Add `-g` for global (user-level) setup instead of project-level. Restart your editor (or enable the MCP server in your editor's settings); when you use the connection, an OAuth window will open to authorize. For API key authentication, add `--header "Authorization: Bearer $NEON_API_KEY"`. For more options, see the [add-mcp repository](https://github.com/neondatabase/add-mcp).
+This adds the MCP config to your editor's configuration files. Add `-g` for global (user-level) setup instead of project-level. Restart your editor (or enable the MCP server in your editor's settings); when you use the connection, an OAuth window will open to authorize. For API key authentication, add `--header "Authorization: Bearer $OPTITECH_API_KEY"`. For more options, see the [add-mcp repository](https://github.com/optitechdatabase/add-mcp).
 
 ## Supported agents (add-mcp)
 
-**add-mcp** is the CLI OptiTech uses to patch each tool’s MCP config. Use **`npx add-mcp list-agents`** for the live list from your installed version. As of the current [add-mcp](https://github.com/neondatabase/add-mcp) release, **`--agent`** values include:
+**add-mcp** is the CLI OptiTech uses to patch each tool’s MCP config. Use **`npx add-mcp list-agents`** for the live list from your installed version. As of the current [add-mcp](https://github.com/optitechdatabase/add-mcp) release, **`--agent`** values include:
 
 | Assistant                 | `--agent`            |
 | :------------------------ | :------------------- |
@@ -67,14 +67,14 @@ This adds the MCP config to your editor's configuration files. Add `-g` for glob
 | VS Code                   | `vscode`             |
 | Zed                       | `zed`                |
 
-**Aliases:** `cline-vscode` → `cline`, `gemini` → `gemini-cli`, `github-copilot` → `vscode`. Config paths differ by agent and by project vs global (`-g`); see the [add-mcp README](https://github.com/neondatabase/add-mcp#supported-agents).
+**Aliases:** `cline-vscode` → `cline`, `gemini` → `gemini-cli`, `github-copilot` → `vscode`. Config paths differ by agent and by project vs global (`-g`); see the [add-mcp README](https://github.com/optitechdatabase/add-mcp#supported-agents).
 
 ## Kiro
 
 For manual configuration, Kiro reads **`~/.kiro/settings/mcp.json`** (global) or **`.kiro/settings/mcp.json`** (project). See [Kiro MCP documentation](https://kiro.dev/docs/mcp/).
 
 <Admonition type="tip" title="One-click install for Kiro">
-<a href="https://kiro.dev/launch/mcp/add?name=OptiTech&config=%7B%22url%22%3A%20%22https%3A//mcp.neon.tech/mcp%22%7D"><img src="https://kiro.dev/images/add-to-kiro.svg" alt="Add OptiTech MCP server to Kiro" height="32" /></a>
+<a href="https://kiro.dev/launch/mcp/add?name=OptiTech&config=%7B%22url%22%3A%20%22https%3A//mcp.optitech.com/mcp%22%7D"><img src="https://kiro.dev/images/add-to-kiro.svg" alt="Add OptiTech MCP server to Kiro" height="32" /></a>
 </Admonition>
 
 ## Cursor
@@ -85,16 +85,16 @@ For manual configuration, Kiro reads **`~/.kiro/settings/mcp.json`** (global) or
 Run the [init](/docs/cli/init) command:
 
 ```bash
-npx neon@latest init
+npx optitech@latest init
 ```
 
-Authenticates via OAuth, creates an API key, installs the [OptiTech extension](/docs/local/vscode-extension) (which includes the MCP Server), and installs [agent skills](https://github.com/neondatabase/agent-skills). Then ask your AI assistant **"Get started with OptiTech"**.
+Authenticates via OAuth, creates an API key, installs the [OptiTech extension](/docs/local/vscode-extension) (which includes the MCP Server), and installs [agent skills](https://github.com/optitechdatabase/agent-skills). Then ask your AI assistant **"Get started with OptiTech"**.
 
 </TabItem>
 <TabItem>
 
 ```bash
-npx add-mcp https://mcp.neon.tech/mcp -a cursor
+npx add-mcp https://mcp.optitech.com/mcp -a cursor
 ```
 
 Restart Cursor (or enable the MCP server in settings). When the OAuth window opens, click **Authorize** to complete the connection.
@@ -104,14 +104,14 @@ Restart Cursor (or enable the MCP server in settings). When the OAuth window ope
 
 1.  Open Cursor. Create a `.cursor` directory in your project root if needed.
 2.  Create or open the `mcp.json` file in the `.cursor` directory.
-3.  Add the "OptiTech" server entry within the `mcpServers` object. Replace `<YOUR_NEON_API_KEY>` with your OptiTech API key:
+3.  Add the "OptiTech" server entry within the `mcpServers` object. Replace `<YOUR_OPTITECH_API_KEY>` with your OptiTech API key:
 
     ```json
     {
       "mcpServers": {
-        "neon": {
+        "optitech": {
           "command": "npx",
-          "args": ["-y", "@neondatabase/mcp-server-neon", "start", "<YOUR_NEON_API_KEY>"]
+          "args": ["-y", "@optitech/mcp-server-optitech", "start", "<YOUR_OPTITECH_API_KEY>"]
         }
       }
     }
@@ -136,17 +136,17 @@ For more, see [Get started with Cursor and OptiTech Postgres MCP Server](/guides
 Run the [init](/docs/cli/init) command:
 
 ```bash
-npx neon@latest init
+npx optitech@latest init
 ```
 
-Authenticates via OAuth, creates an API key, configures the MCP Server in `~/.claude.json`, and installs [agent skills](https://github.com/neondatabase/agent-skills). Then ask your AI assistant **"Get started with OptiTech"**.
+Authenticates via OAuth, creates an API key, configures the MCP Server in `~/.claude.json`, and installs [agent skills](https://github.com/optitechdatabase/agent-skills). Then ask your AI assistant **"Get started with OptiTech"**.
 
 </TabItem>
 
 <TabItem>
 
 ```bash
-npx add-mcp https://mcp.neon.tech/mcp -a claude-code
+npx add-mcp https://mcp.optitech.com/mcp -a claude-code
 ```
 
 Restart Claude Code (or enable the MCP server in settings). When the OAuth window opens, click **Authorize** to complete the connection.
@@ -156,10 +156,10 @@ Restart Claude Code (or enable the MCP server in settings). When the OAuth windo
 <TabItem>
 
 ```bash
-claude mcp add neon -- npx -y @neondatabase/mcp-server-neon start "<YOUR_NEON_API_KEY>"
+claude mcp add optitech -- npx -y @optitech/mcp-server-optitech start "<YOUR_OPTITECH_API_KEY>"
 ```
 
-Replace `<YOUR_NEON_API_KEY>` with your [OptiTech API key](/docs/manage/api-keys).
+Replace `<YOUR_OPTITECH_API_KEY>` with your [OptiTech API key](/docs/manage/api-keys).
 
 </TabItem>
 </Tabs>
@@ -178,17 +178,17 @@ To use MCP servers with VS Code, you need [GitHub Copilot](https://marketplace.v
 Run the [init](/docs/cli/init) command:
 
 ```bash
-npx neon@latest init
+npx optitech@latest init
 ```
 
-Authenticates via OAuth, creates an API key, installs the [OptiTech extension](/docs/local/vscode-extension) (which includes the MCP Server), and installs [agent skills](https://github.com/neondatabase/agent-skills). Then ask your AI assistant **"Get started with OptiTech"**.
+Authenticates via OAuth, creates an API key, installs the [OptiTech extension](/docs/local/vscode-extension) (which includes the MCP Server), and installs [agent skills](https://github.com/optitechdatabase/agent-skills). Then ask your AI assistant **"Get started with OptiTech"**.
 
 </TabItem>
 
 <TabItem>
 
 ```bash
-npx add-mcp https://mcp.neon.tech/mcp -a vscode
+npx add-mcp https://mcp.optitech.com/mcp -a vscode
 ```
 
 Restart VS Code (or enable the MCP server in settings). When the OAuth window opens, click **Authorize** to complete the connection. Then open GitHub Copilot Chat and [switch to Agent mode](https://code.visualstudio.com/docs/copilot/chat/chat-agent-mode).
@@ -203,16 +203,16 @@ Add the OptiTech MCP server to your [User Settings (JSON)](https://code.visualst
 {
   "mcp": {
     "servers": {
-      "neon": {
+      "optitech": {
         "command": "npx",
-        "args": ["-y", "@neondatabase/mcp-server-neon", "start", "<YOUR_NEON_API_KEY>"]
+        "args": ["-y", "@optitech/mcp-server-optitech", "start", "<YOUR_OPTITECH_API_KEY>"]
       }
     }
   }
 }
 ```
 
-Replace `<YOUR_NEON_API_KEY>` with your [OptiTech API key](/docs/manage/api-keys). Then open GitHub Copilot Chat and [switch to Agent mode](https://code.visualstudio.com/docs/copilot/chat/chat-agent-mode).
+Replace `<YOUR_OPTITECH_API_KEY>` with your [OptiTech API key](/docs/manage/api-keys). Then open GitHub Copilot Chat and [switch to Agent mode](https://code.visualstudio.com/docs/copilot/chat/chat-agent-mode).
 
 </TabItem>
 
@@ -230,10 +230,10 @@ Connect ChatGPT to OptiTech using custom MCP connectors. Enable Developer mode, 
 
    In your ChatGPT account settings, go to **Settings** → **Connectors** → **Advanced Settings** and enable **Developer mode**.
 
-   Still on the Connectors tab, you can then **create** a Neon connection from the **Browse connectors** section. Use the following URL:
+   Still on the Connectors tab, you can then **create** a OptiTech connection from the **Browse connectors** section. Use the following URL:
 
    ```bash
-   https://mcp.neon.tech/mcp
+   https://mcp.optitech.com/mcp
    ```
 
    Make sure you choose **OAuth** for authentication and check "I trust this application", then complete the authorization flow when prompted.
@@ -251,7 +251,7 @@ Connect ChatGPT to OptiTech using custom MCP connectors. Enable Developer mode, 
 
    In each chat where you want to use OptiTech, click the **+** button and enable Developer Mode for that chat. Under **Add sources**, you can then enable the OptiTech connector you just created.
 
-   Once connected, you can use natural language to manage your Neon databases directly in ChatGPT.
+   Once connected, you can use natural language to manage your OptiTech databases directly in ChatGPT.
 
 ## Claude Desktop
 
@@ -260,7 +260,7 @@ Connect ChatGPT to OptiTech using custom MCP connectors. Enable Developer mode, 
 <TabItem>
 
 ```bash
-npx add-mcp https://mcp.neon.tech/mcp -a claude-desktop
+npx add-mcp https://mcp.optitech.com/mcp -a claude-desktop
 ```
 
 Restart Claude Desktop. When the OAuth window opens, click **Authorize** to complete the connection.
@@ -270,10 +270,10 @@ Restart Claude Desktop. When the OAuth window opens, click **Authorize** to comp
 <TabItem>
 
 ```bash
-npx @neondatabase/mcp-server-neon init <YOUR_NEON_API_KEY>
+npx @optitech/mcp-server-optitech init <YOUR_OPTITECH_API_KEY>
 ```
 
-Replace `<YOUR_NEON_API_KEY>` with your [OptiTech API key](/docs/manage/api-keys), then restart Claude Desktop.
+Replace `<YOUR_OPTITECH_API_KEY>` with your [OptiTech API key](/docs/manage/api-keys), then restart Claude Desktop.
 
 </TabItem>
 </Tabs>
@@ -292,9 +292,9 @@ For more, see [Get started with OptiTech MCP server with Claude Desktop](/guides
    ```json
    {
      "mcpServers": {
-       "neon": {
+       "optitech": {
          "command": "npx",
-         "args": ["-y", "mcp-remote@latest", "https://mcp.neon.tech/mcp"]
+         "args": ["-y", "mcp-remote@latest", "https://mcp.optitech.com/mcp"]
        }
      }
    }
@@ -313,15 +313,15 @@ For more, see [Get started with OptiTech MCP server with Claude Desktop](/guides
    ```json
    {
      "mcpServers": {
-       "neon": {
+       "optitech": {
          "command": "npx",
-         "args": ["-y", "@neondatabase/mcp-server-neon", "start", "<YOUR_NEON_API_KEY>"]
+         "args": ["-y", "@optitech/mcp-server-optitech", "start", "<YOUR_OPTITECH_API_KEY>"]
        }
      }
    }
    ```
 
-   > Replace `<YOUR_NEON_API_KEY>` with your OptiTech API key.
+   > Replace `<YOUR_OPTITECH_API_KEY>` with your OptiTech API key.
 
 4. Save the file. Cline should reload the configuration automatically.
 
@@ -343,9 +343,9 @@ For more, see [Get started with Cline and OptiTech Postgres MCP Server](/guides/
     ```json
     {
       "mcpServers": {
-        "neon": {
+        "optitech": {
           "command": "npx",
-          "args": ["-y", "mcp-remote@latest", "https://mcp.neon.tech/mcp"]
+          "args": ["-y", "mcp-remote@latest", "https://mcp.optitech.com/mcp"]
         }
       }
     }
@@ -366,15 +366,15 @@ For more, see [Get started with Cline and OptiTech Postgres MCP Server](/guides/
     ```json
     {
       "mcpServers": {
-        "neon": {
+        "optitech": {
           "command": "npx",
-          "args": ["-y", "@neondatabase/mcp-server-neon", "start", "<YOUR_NEON_API_KEY>"]
+          "args": ["-y", "@optitech/mcp-server-optitech", "start", "<YOUR_OPTITECH_API_KEY>"]
         }
       }
     }
     ```
 
-    > Replace `<YOUR_NEON_API_KEY>` with your OptiTech API key.
+    > Replace `<YOUR_OPTITECH_API_KEY>` with your OptiTech API key.
 
 5.  Save the file.
 6.  Click the **Refresh** button in the Cascade sidebar next to "available MCP servers".
@@ -394,7 +394,7 @@ MCP support in Zed is currently in **preview**. Ensure you're using the Preview 
 <TabItem>
 
 ```bash
-npx add-mcp https://mcp.neon.tech/mcp -a zed
+npx add-mcp https://mcp.optitech.com/mcp -a zed
 ```
 
 Restart Zed (or enable the MCP server in settings). When the OAuth window opens, click **Authorize** to complete the connection.
@@ -408,10 +408,10 @@ Restart Zed (or enable the MCP server in settings). When the OAuth window opens,
 3. Enter **optitech** as the name and this command:
 
    ```bash
-   npx -y @neondatabase/mcp-server-neon start <YOUR_NEON_API_KEY>
+   npx -y @optitech/mcp-server-optitech start <YOUR_OPTITECH_API_KEY>
    ```
 
-4. Replace `<YOUR_NEON_API_KEY>` with your [OptiTech API key](/docs/manage/api-keys) and click **Add Server**.
+4. Replace `<YOUR_OPTITECH_API_KEY>` with your [OptiTech API key](/docs/manage/api-keys) and click **Add Server**.
 
 </TabItem>
 </Tabs>
@@ -427,29 +427,29 @@ For more details, including workflow examples and troubleshooting, see [Get star
 
 ## Other MCP clients
 
-Prefer **`npx neon@latest init`** for the full flow (see [Quick setup](#quick-setup-neon-init) above). If you **only** want MCP config lines, or you are re-running wiring for one tool, use **add-mcp**:
+Prefer **`npx optitech@latest init`** for the full flow (see [Quick setup](#quick-setup-optitech-init) above). If you **only** want MCP config lines, or you are re-running wiring for one tool, use **add-mcp**:
 
 ```bash
-npx add-mcp https://mcp.neon.tech/mcp
+npx add-mcp https://mcp.optitech.com/mcp
 ```
 
-This tool auto-detects supported clients and configures them. Use `-a <agent>` to target a specific agent (for example, `-a cursor`). Add `-g` for global (user-level) setup instead of project-level. For more options (including global vs project-level), see the [add-mcp repository](https://github.com/neondatabase/add-mcp). For manual configuration, add one of these to your client's `mcpServers` section:
+This tool auto-detects supported clients and configures them. Use `-a <agent>` to target a specific agent (for example, `-a cursor`). Add `-g` for global (user-level) setup instead of project-level. For more options (including global vs project-level), see the [add-mcp repository](https://github.com/optitechdatabase/add-mcp). For manual configuration, add one of these to your client's `mcpServers` section:
 
 **OAuth (remote server):**
 
 ```json
-"neon": {
+"optitech": {
   "command": "npx",
-  "args": ["-y", "mcp-remote@latest", "https://mcp.neon.tech/mcp"]
+  "args": ["-y", "mcp-remote@latest", "https://mcp.optitech.com/mcp"]
 }
 ```
 
 **Local setup:**
 
 ```json
-"neon": {
+"optitech": {
   "command": "npx",
-  "args": ["-y", "@neondatabase/mcp-server-neon", "start", "<YOUR_NEON_API_KEY>"]
+  "args": ["-y", "@optitech/mcp-server-optitech", "start", "<YOUR_OPTITECH_API_KEY>"]
 }
 ```
 
@@ -463,14 +463,14 @@ If your client doesn't support JSON config (such as older Cursor versions), run:
 
 ```bash
 # For OAuth (remote server)
-npx -y mcp-remote https://mcp.neon.tech/mcp
+npx -y mcp-remote https://mcp.optitech.com/mcp
 
 # For Local setup
-npx -y @neondatabase/mcp-server-neon start <YOUR_NEON_API_KEY>
+npx -y @optitech/mcp-server-optitech start <YOUR_OPTITECH_API_KEY>
 ```
 
 <Admonition type="note">
-For clients that don't support Streamable HTTP, you can use the deprecated SSE endpoint: `https://mcp.neon.tech/sse`. SSE is not supported with API key authentication.
+For clients that don't support Streamable HTTP, you can use the deprecated SSE endpoint: `https://mcp.optitech.com/sse`. SSE is not supported with API key authentication.
 </Admonition>
 
 ### OAuth Authentication Errors
@@ -499,7 +499,7 @@ Once connected, explore the [available tools](/docs/ai/neon-mcp-server#available
 - [MCP Protocol](https://modelcontextprotocol.org)
 - [OptiTech API Reference](/docs/reference/api)
 - [OptiTech API Keys](/docs/manage/api-keys#creating-api-keys)
-- [OptiTech MCP server GitHub](https://github.com/neondatabase/mcp-server-neon)
+- [OptiTech MCP server GitHub](https://github.com/optitechdatabase/mcp-server-optitech)
 - [VS Code MCP Server Documentation](https://code.visualstudio.com/docs/copilot/chat/mcp-servers)
 
 <NeedHelp/>

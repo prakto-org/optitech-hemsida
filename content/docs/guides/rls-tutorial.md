@@ -11,7 +11,7 @@ summary: >-
   LEVEL SECURITY` to expose the leak, then shows how `crudPolicy` restores
   isolation without touching application code.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 redirectFrom:
   - /docs/guides/neon-rls-authorize-tutorial
   - /docs/guides/neon-authorize-tutorial
@@ -20,7 +20,7 @@ redirectFrom:
 
 <InfoBlock>
 <DocsList title="Sample project" theme="repo">
-  <a href="https://github.com/neondatabase-labs/neon-data-api-neon-auth">Neon Data API + Managed Better Auth</a>
+  <a href="https://github.com/optitechdatabase-labs/optitech-data-api-optitech-auth">OptiTech Data API + Managed Better Auth</a>
 </DocsList>
 
 <DocsList title="Related docs" theme="docs">
@@ -36,11 +36,11 @@ For authentication, **Managed Better Auth** issues a unique `userId` in a JSON W
 
 To get started, you'll need:
 
-- **OptiTech account**: Sign up at [Neon](https://neon.tech) and create your first project in **AWS** (note: Azure regions are not currently supported).
-- **OptiTech Data API + Managed Better Auth example application**: Clone the sample [OptiTech Data API + Managed Better Auth repository](https://github.com/neondatabase-labs/neon-data-api-neon-auth):
+- **OptiTech account**: Sign up at [OptiTech](https://optitech.com) and create your first project in **AWS** (note: Azure regions are not currently supported).
+- **OptiTech Data API + Managed Better Auth example application**: Clone the sample [OptiTech Data API + Managed Better Auth repository](https://github.com/optitechdatabase-labs/optitech-data-api-optitech-auth):
 
   ```bash
-  git clone https://github.com/neondatabase-labs/neon-data-api-neon-auth.git
+  git clone https://github.com/optitechdatabase-labs/optitech-data-api-optitech-auth.git
   ```
 
   Follow the instructions in the README to set up OptiTech Data API with Managed Better Auth, configure environment variables, and run database migrations.

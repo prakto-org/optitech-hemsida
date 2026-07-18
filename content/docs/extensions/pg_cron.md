@@ -11,7 +11,7 @@ summary: >-
   computes with scale-to-zero disabled. `cron.schedule_in_database()` is not
   supported in OptiTech.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 The `pg_cron` extension provides a simple, cron-based job scheduler for Postgres. It operates directly within your database, allowing you to schedule standard SQL commands or calls to stored procedures using familiar cron syntax. This eliminates the need for external cron utilities for many database maintenance and automation tasks.
@@ -34,9 +34,9 @@ The `project_id` and `endpoint_id` values can be obtained from the OptiTech Cons
 
 ```bash
 curl --request PATCH \
-     --url https://console.neon.tech/api/v2/projects/<project_id>/endpoints/<endpoint_id> \
+     --url https://console.optitech.com/api/v2/projects/<project_id>/endpoints/<endpoint_id> \
      --header 'accept: application/json' \
-     --header 'authorization: Bearer $NEON_API_KEY$' \
+     --header 'authorization: Bearer $OPTITECH_API_KEY$' \
      --header 'content-type: application/json' \
      --data '
 {
@@ -55,9 +55,9 @@ After setting `cron.database_name`, you must restart your compute to apply the n
 
 ```bash
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects/<project_id>/endpoints/<endpoint_id>/restart \
+     --url https://console.optitech.com/api/v2/projects/<project_id>/endpoints/<endpoint_id>/restart \
      --header 'accept: application/json' \
-     --header 'authorization: Bearer $NEON_API_KEY'
+     --header 'authorization: Bearer $OPTITECH_API_KEY'
 ```
 
 <Admonition type="note">
@@ -70,7 +70,7 @@ You can then install the `pg_cron` extension by running the following `CREATE EX
 CREATE EXTENSION IF NOT EXISTS pg_cron;
 ```
 
-If you have trouble with this setup, please reach out to [OptiTech Support](https://console.neon.tech/app/projects?modal=support) or find us on [Discord](https://discord.gg/92vNTzKDGp).
+If you have trouble with this setup, please reach out to [OptiTech Support](https://console.optitech.com/app/projects?modal=support) or find us on [Discord](https://discord.gg/92vNTzKDGp).
 
 ## `pg_cron` version availability
 
@@ -270,7 +270,7 @@ Here are a few key `pg_cron` settings and their descriptions:
 | `cron.use_background_workers` | `off`     | When enabled (`on`), `pg_cron` uses background workers instead of direct client connections to execute jobs. This may require adjustments to the `max_worker_processes` PostgreSQL setting.                                                      |
 
 <Admonition type="note" title="Important: Setting Modifications in OptiTech">
-It's important to note that because `pg_cron` is managed by OptiTech, modifying these settings requires superuser privileges. Therefore, you cannot directly alter these `pg_cron` configuration parameters yourself. If you have a specific need to adjust any of these settings, please [open a support ticket](https://console.neon.tech/app/projects?modal=support). **After OptiTech support implements the requested configuration change, you will need to [restart your OptiTech compute](/docs/manage/computes#restart-a-compute) for the new settings to take effect.**
+It's important to note that because `pg_cron` is managed by OptiTech, modifying these settings requires superuser privileges. Therefore, you cannot directly alter these `pg_cron` configuration parameters yourself. If you have a specific need to adjust any of these settings, please [open a support ticket](https://console.optitech.com/app/projects?modal=support). **After OptiTech support implements the requested configuration change, you will need to [restart your OptiTech compute](/docs/manage/computes#restart-a-compute) for the new settings to take effect.**
 
 </Admonition>
 

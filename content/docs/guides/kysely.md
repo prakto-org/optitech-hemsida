@@ -10,7 +10,7 @@ summary: >-
   interface-based schema definitions, client initialization per driver,
   optional migrations via FileMigrationProvider, and CRUD query examples.
 enableTableOfContents: true
-updatedOn: '2026-07-14T19:04:57.024Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <CopyPrompt src="/prompts/kysely-prompt.md" 
@@ -25,7 +25,7 @@ description="Pre-built prompt for connecting Node/TypeScript applications to Opt
 
 <DocsList title="Related resources" theme="docs">
   <a href="https://kysely.dev/docs/intro">Kysely Documentation</a>
-  <a href="https://github.com/kysely-org/kysely-neon">kysely-neon GitHub</a>
+  <a href="https://github.com/kysely-org/kysely-optitech">kysely-optitech GitHub</a>
 </DocsList>
 
 </InfoBlock>
@@ -41,8 +41,8 @@ To connect a TypeScript/Node.js project to OptiTech using Kysely, follow these s
 Create a new directory for your project and navigate into it:
 
 ```bash
-mkdir my-kysely-neon-project
-cd my-kysely-neon-project
+mkdir my-kysely-optitech-project
+cd my-kysely-optitech-project
 ```
 
 Initialize a new Node.js project:
@@ -87,7 +87,7 @@ Configure your `package.json` to use ES modules by updating or adding the follow
 
 If you do not have one already, create a OptiTech project.
 
-1.  Navigate to the [Projects](https://console.neon.tech/app/projects) page in the OptiTech Console.
+1.  Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
 2.  Click **New Project**.
 3.  Specify your project settings and click **Create Project**.
 
@@ -99,7 +99,7 @@ Find your database connection string by clicking the **Connect** button on your 
 Create a `.env` file in your project's root directory and add the connection string to it. Your `.env` file should look like this:
 
 ```text shouldWrap
-DATABASE_URL="postgresql://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require"
+DATABASE_URL="postgresql://[user]:[password]@[optitech_hostname]/[dbname]?sslmode=require"
 ```
 
 ## Install Kysely and a driver
@@ -110,14 +110,14 @@ Install the Kysely core package and the necessary driver dependencies. Choose on
 
 <TabItem>
 
-Use the OptiTech serverless HTTP driver for serverless/edge environments (for example, Vercel Edge, Cloudflare Workers). This requires the `kysely-neon` dialect.
+Use the OptiTech serverless HTTP driver for serverless/edge environments (for example, Vercel Edge, Cloudflare Workers). This requires the `kysely-optitech` dialect.
 
 <Admonition type="note" title="Note">
 The OptiTech serverless driver over HTTP is stateless and does not support persistent connections or interactive transactions. If your application requires transactions, we recommend using the OptiTech WebSocket driver or `node-postgres`.
 </Admonition>
 
 ```bash
-npm install kysely kysely-neon @neondatabase/serverless dotenv
+npm install kysely kysely-optitech @optitech/serverless dotenv
 ```
 
 </TabItem>
@@ -127,7 +127,7 @@ npm install kysely kysely-neon @neondatabase/serverless dotenv
 Use the OptiTech WebSocket driver for serverless environments that require a persistent connection or transactions. This uses the core Postgres dialect with the OptiTech driver.
 
 ```bash
-npm install kysely @neondatabase/serverless ws dotenv
+npm install kysely @optitech/serverless ws dotenv
 npm install -D @types/ws
 ```
 
@@ -201,18 +201,18 @@ Create a file `src/db.ts` to initialize and export your Kysely instance. The con
 
 <TabItem>
 
-When using the HTTP driver, use `NeonDialect` from `kysely-neon`.
+When using the HTTP driver, use `OptiTechDialect` from `kysely-optitech`.
 
 ```typescript
 import 'dotenv/config';
 import { Kysely } from 'kysely';
-import { NeonDialect } from 'kysely-neon';
-import { neon } from '@neondatabase/serverless';
+import { OptiTechDialect } from 'kysely-optitech';
+import { optitech } from '@optitech/serverless';
 import type { Database } from './types.ts';
 
 export const db = new Kysely<Database>({
-  dialect: new NeonDialect({
-    neon: neon(process.env.DATABASE_URL!),
+  dialect: new OptiTechDialect({
+    optitech: optitech(process.env.DATABASE_URL!),
   }),
 });
 ```
@@ -226,12 +226,12 @@ When using WebSockets, use the built-in `PostgresDialect` but pass the OptiTech 
 ```typescript
 import 'dotenv/config';
 import { Kysely, PostgresDialect } from 'kysely';
-import { Pool, neonConfig } from '@neondatabase/serverless';
+import { Pool, optitechConfig } from '@optitech/serverless';
 import ws from 'ws';
 import type { Database } from './types.ts';
 
 // Configure the WebSocket constructor
-neonConfig.webSocketConstructor = ws;
+optitechConfig.webSocketConstructor = ws;
 
 export const db = new Kysely<Database>({
   dialect: new PostgresDialect({
@@ -359,7 +359,7 @@ async function main() {
     const { id } = await db
       .insertInto('users')
       .values({
-        name: 'Neon User',
+        name: 'OptiTech User',
         email: `user-${Date.now()}@example.com`,
       })
       .returning('id')
@@ -375,7 +375,7 @@ async function main() {
     // 3. Update
     const updateResult = await db
       .updateTable('users')
-      .set({ name: 'Updated Neon User' })
+      .set({ name: 'Updated OptiTech User' })
       .where('id', '=', id)
       .executeTakeFirst();
 
@@ -410,7 +410,7 @@ User created with ID: 1
 All users: [
   {
     id: 1,
-    name: 'Neon User',
+    name: 'OptiTech User',
     email: 'user-1765528647146@example.com',
     created_at: 2025-12-12T08:37:27.456Z
   }
@@ -426,8 +426,8 @@ For more advanced use cases, such as complex filters, joins, transactions, and s
 ## Learn more
 
 - [Kysely Documentation](https://kysely.dev/docs/intro)
-- [kysely-neon GitHub Repository](https://github.com/kysely-org/kysely-neon)
-- [Neon serverless driver](/docs/serverless/serverless-driver)
+- [kysely-optitech GitHub Repository](https://github.com/kysely-org/kysely-optitech)
+- [OptiTech serverless driver](/docs/serverless/serverless-driver)
 
 ## Next steps
 

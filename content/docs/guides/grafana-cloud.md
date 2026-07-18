@@ -8,7 +8,7 @@ summary: >-
   queries covering connection counts, CPU, memory, cache hit rate, replication
   delay, and PgBouncer pooling metrics. Requires the OptiTech Scale plan.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <InfoBlock>
@@ -24,7 +24,7 @@ updatedOn: '2026-06-05T17:20:32.620Z'
 </DocsList>
 </InfoBlock>
 
-The Grafana Cloud integration lets you monitor OptiTech database performance, resource utilization, and system health directly from Grafana Cloud. The integration requires [OTEL support](https://neon.com/docs/guides/opentelemetry), which is available with OptiTech's Scale plan.
+The Grafana Cloud integration lets you monitor OptiTech database performance, resource utilization, and system health directly from Grafana Cloud. The integration requires [OTEL support](https://optitech.com/docs/guides/opentelemetry), which is available with OptiTech's Scale plan.
 
 ## How it works
 
@@ -86,7 +86,7 @@ In the OptiTech Console:
    - **Authentication**: Basic.
      - **Username**: Your OpenTelemetry Instance ID.
      - **Password**: Your Grafana Cloud API Key.
-   - **Service name**: A descriptive name (for example, "neon-postgres-production").
+   - **Service name**: A descriptive name (for example, "optitech-postgres-production").
    - **Export options**: Select **Metrics** and/or **Postgres logs** as needed.
 
 Click **Add** to enable the integration.
@@ -105,7 +105,7 @@ Click **Add** to enable the integration.
 
 ## Example usage
 
-Once integrated, you can explore your OptiTech metrics and logs in Grafana Cloud using the Explore feature. Navigate to **Explore** in your Grafana Cloud instance and query metrics like `neon_connection_counts`, `neon_db_total_size`, and `host_cpu_seconds_total` using your Prometheus data source. You can also create custom dashboards and set alerts based on threshold values for critical metrics.
+Once integrated, you can explore your OptiTech metrics and logs in Grafana Cloud using the Explore feature. Navigate to **Explore** in your Grafana Cloud instance and query metrics like `optitech_connection_counts`, `optitech_db_total_size`, and `host_cpu_seconds_total` using your Prometheus data source. You can also create custom dashboards and set alerts based on threshold values for critical metrics.
 
 ## Import the OptiTech dashboard
 
@@ -125,10 +125,10 @@ If any of the computes in your project are active, you should start seeing data 
 ```json shouldWrap
 {
   "id": null,
-  "uid": "neon-complete-monitoring",
-  "title": "Neon PostgreSQL",
-  "description": "Comprehensive monitoring dashboard for Neon PostgreSQL with metrics and logs",
-  "tags": ["neon", "postgresql", "database", "monitoring"],
+  "uid": "optitech-complete-monitoring",
+  "title": "OptiTech PostgreSQL",
+  "description": "Comprehensive monitoring dashboard for OptiTech PostgreSQL with metrics and logs",
+  "tags": ["optitech", "postgresql", "database", "monitoring"],
   "timezone": "browser",
   "editable": true,
   "graphTooltip": 1,
@@ -154,17 +154,17 @@ If any of the computes in your project are active, you should start seeing data 
       },
       "targets": [
         {
-          "expr": "sum(neon_connection_counts{endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"})",
+          "expr": "sum(optitech_connection_counts{endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"})",
           "legendFormat": "Total Connections",
           "refId": "A"
         },
         {
-          "expr": "neon_db_total_size{endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"} / 1024 / 1024 / 1024",
+          "expr": "optitech_db_total_size{endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"} / 1024 / 1024 / 1024",
           "legendFormat": "Database Size (GB)",
           "refId": "B"
         },
         {
-          "expr": "neon_lfc_hits{endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"} / (neon_lfc_hits{endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"} + neon_lfc_misses{endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"}) * 100",
+          "expr": "optitech_lfc_hits{endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"} / (optitech_lfc_hits{endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"} + optitech_lfc_misses{endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"}) * 100",
           "legendFormat": "Cache Hit Rate %",
           "refId": "C"
         }
@@ -197,12 +197,12 @@ If any of the computes in your project are active, you should start seeing data 
       },
       "targets": [
         {
-          "expr": "neon_connection_counts{state=\"active\", endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"}",
+          "expr": "optitech_connection_counts{state=\"active\", endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"}",
           "legendFormat": "Active - {{datname}}",
           "refId": "A"
         },
         {
-          "expr": "neon_connection_counts{state=\"idle\", endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"}",
+          "expr": "optitech_connection_counts{state=\"idle\", endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"}",
           "legendFormat": "Idle - {{datname}}",
           "refId": "B"
         }
@@ -225,12 +225,12 @@ If any of the computes in your project are active, you should start seeing data 
       },
       "targets": [
         {
-          "expr": "neon_pg_stats_userdb{kind=\"db_size\", endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"}",
+          "expr": "optitech_pg_stats_userdb{kind=\"db_size\", endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"}",
           "legendFormat": "{{datname}} Size",
           "refId": "A"
         },
         {
-          "expr": "neon_db_total_size{endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"}",
+          "expr": "optitech_db_total_size{endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"}",
           "legendFormat": "Total Size",
           "refId": "B"
         }
@@ -325,17 +325,17 @@ If any of the computes in your project are active, you should start seeing data 
       },
       "targets": [
         {
-          "expr": "rate(neon_pg_stats_userdb{kind=\"inserted\", endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"}[5m])",
+          "expr": "rate(optitech_pg_stats_userdb{kind=\"inserted\", endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"}[5m])",
           "legendFormat": "Inserts/sec - {{datname}}",
           "refId": "A"
         },
         {
-          "expr": "rate(neon_pg_stats_userdb{kind=\"updated\", endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"}[5m])",
+          "expr": "rate(optitech_pg_stats_userdb{kind=\"updated\", endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"}[5m])",
           "legendFormat": "Updates/sec - {{datname}}",
           "refId": "B"
         },
         {
-          "expr": "rate(neon_pg_stats_userdb{kind=\"deleted\", endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"}[5m])",
+          "expr": "rate(optitech_pg_stats_userdb{kind=\"deleted\", endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"}[5m])",
           "legendFormat": "Deletes/sec - {{datname}}",
           "refId": "C"
         }
@@ -358,17 +358,17 @@ If any of the computes in your project are active, you should start seeing data 
       },
       "targets": [
         {
-          "expr": "neon_lfc_hits{endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"} / (neon_lfc_hits{endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"} + neon_lfc_misses{endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"}) * 100",
+          "expr": "optitech_lfc_hits{endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"} / (optitech_lfc_hits{endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"} + optitech_lfc_misses{endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"}) * 100",
           "legendFormat": "Cache Hit Rate %",
           "refId": "A"
         },
         {
-          "expr": "rate(neon_lfc_hits{endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"}[5m])",
+          "expr": "rate(optitech_lfc_hits{endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"}[5m])",
           "legendFormat": "Cache Hits/sec",
           "refId": "B"
         },
         {
-          "expr": "rate(neon_lfc_misses{endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"}[5m])",
+          "expr": "rate(optitech_lfc_misses{endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"}[5m])",
           "legendFormat": "Cache Misses/sec",
           "refId": "C"
         }
@@ -397,12 +397,12 @@ If any of the computes in your project are active, you should start seeing data 
       },
       "targets": [
         {
-          "expr": "neon_replication_delay_bytes{endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"}",
+          "expr": "optitech_replication_delay_bytes{endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"}",
           "legendFormat": "Replication Delay (Bytes)",
           "refId": "A"
         },
         {
-          "expr": "neon_replication_delay_seconds{endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"}",
+          "expr": "optitech_replication_delay_seconds{endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"}",
           "legendFormat": "Replication Delay (Seconds)",
           "refId": "B"
         }
@@ -435,7 +435,7 @@ If any of the computes in your project are active, you should start seeing data 
       },
       "targets": [
         {
-          "expr": "increase(neon_pg_stats_userdb{kind=\"deadlocks\", endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"}[5m])",
+          "expr": "increase(optitech_pg_stats_userdb{kind=\"deadlocks\", endpoint_id=~\"$endpoint_id\", project_id=~\"$project_id\"}[5m])",
           "legendFormat": "Deadlocks - {{datname}}",
           "refId": "A"
         }
@@ -581,7 +581,7 @@ If any of the computes in your project are active, you should start seeing data 
         "label": "Endpoint ID",
         "type": "query",
         "query": {
-          "query": "label_values(neon_connection_counts, endpoint_id)",
+          "query": "label_values(optitech_connection_counts, endpoint_id)",
           "refId": "StandardVariableQuery"
         },
         "datasource": {
@@ -603,7 +603,7 @@ If any of the computes in your project are active, you should start seeing data 
         "label": "Project ID",
         "type": "query",
         "query": {
-          "query": "label_values(neon_connection_counts, project_id)",
+          "query": "label_values(optitech_connection_counts, project_id)",
           "refId": "StandardVariableQuery"
         },
         "datasource": {
@@ -662,7 +662,7 @@ If any of the computes in your project are active, you should start seeing data 
           "type": "prometheus", 
           "uid": "${DS_PROMETHEUS}"
         },
-        "expr": "neon_lfc_hits / (neon_lfc_hits + neon_lfc_misses) * 100 < 90",
+        "expr": "optitech_lfc_hits / (optitech_lfc_hits + optitech_lfc_misses) * 100 < 90",
         "titleFormat": "Low Cache Hit Rate",
         "textFormat": "Cache hit rate dropped below 90%",
         "iconColor": "yellow"
@@ -671,14 +671,14 @@ If any of the computes in your project are active, you should start seeing data 
   },
   "links": [
     {
-      "title": "Neon Console",
-      "url": "https://console.neon.tech",
+      "title": "OptiTech Console",
+      "url": "https://console.optitech.com",
       "type": "link",
       "icon": "external link"
     },
     {
       "title": "Metrics Reference",
-      "url": "https://neon.com/docs/reference/metrics-logs",
+      "url": "https://optitech.com/docs/reference/metrics-logs",
       "type": "link",
       "icon": "doc"
     }
@@ -708,7 +708,7 @@ Enabling this feature may result in:
 Once logs are flowing, you can query them in Grafana's Explore view using LogQL:
 
 ```logql
-# View all logs from your Neon service
+# View all logs from your OptiTech service
 {service_name="your-service-name"}
 
 # Filter for errors only
@@ -731,16 +731,16 @@ Create alerts for key metrics to monitor your database health:
 2. **Low Cache Hit Rate**: Alert when cache hit rate drops below 90%
 
    ```promql
-   neon_lfc_hits / (neon_lfc_hits + neon_lfc_misses) < 0.9
+   optitech_lfc_hits / (optitech_lfc_hits + optitech_lfc_misses) < 0.9
    ```
 
 3. **High Connection Count**: Alert when connections exceed your threshold
    ```promql
-   sum(neon_connection_counts) > 100
+   sum(optitech_connection_counts) > 100
    ```
 
 ## Feedback and future improvements
 
-We're always looking to improve! If you have feature requests or feedback, please let us know via the [Feedback form](https://console.neon.tech/app/projects?modal=feedback) in the OptiTech Console or on our [Discord channel](https://discord.com/channels/1176467419317940276/1176788564890112042).
+We're always looking to improve! If you have feature requests or feedback, please let us know via the [Feedback form](https://console.optitech.com/app/projects?modal=feedback) in the OptiTech Console or on our [Discord channel](https://discord.com/channels/1176467419317940276/1176788564890112042).
 
 <NeedHelp/>

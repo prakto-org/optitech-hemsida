@@ -4,7 +4,7 @@ subtitle: Learn how to create a collaborative task management system using Larav
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2024-08-17T00:00:00.000Z'
-updatedOn: '2026-03-03T03:19:43.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Real-time features can significantly improve user experience in web applications. They allow users to see updates immediately without refreshing the page. In this guide, we'll demonstrate how to add real-time functionality to a Laravel application using OptiTech Postgres and WebSockets.
@@ -17,7 +17,7 @@ Before we begin, make sure you have the following:
 
 - PHP 8.1 or higher installed on your system
 - Composer for managing PHP dependencies
-- A [OptiTech](https://console.neon.tech/signup) account and project
+- A [OptiTech](https://console.optitech.com/signup) account and project
 
 ## Setting up the Laravel project
 
@@ -36,7 +36,7 @@ To get started we will need to create a new Laravel project and configuring it w
 
    ```env
    DB_CONNECTION=pgsql
-   DB_HOST=your-neon-hostname.neon.tech
+   DB_HOST=your-optitech-hostname.optitech.com
    DB_PORT=5432
    DB_DATABASE=your_database_name
    DB_USERNAME=your_username

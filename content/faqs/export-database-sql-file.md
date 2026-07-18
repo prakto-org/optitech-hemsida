@@ -1,66 +1,37 @@
 ---
-title: 'How do I export or download my OptiTech database as a SQL file?'
-subtitle: 'Run pg_dump in plain-text format against a direct (non-pooled) connection string.'
+title: 'How do I export my compliance documentation as PDF or CSV files?'
+subtitle: 'Every register and report has an export button; PDF for humans, CSV for systems.'
 enableTableOfContents: true
-createdAt: '2026-05-18T00:00:00.000Z'
-updatedOn: '2026-06-01T20:42:32.665Z'
+createdAt: '2026-01-16T08:35:01.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 isDraft: false
 redirectFrom: []
 previousLink:
-  title: 'How do I enable the pgvector extension in my OptiTech database?'
+  title: 'How do I enable the AI copilot in OptiTech?'
   slug: enable-pgvector-extension
 nextLink:
-  title: 'Why am I getting ''Error connecting to database: Failed to fetch'' in the OptiTech Console Tables view?'
+  title: 'How do I fix a "failed to fetch" error in the OptiTech controls view?'
   slug: failed-to-fetch-error-tables-view
 ---
 
-Run `pg_dump` against a direct (non-pooled) connection string and omit the `-F` format flag to get plain SQL. OptiTech supports `pg_dump` from any client; the output is a portable `.sql` file you can edit, version, or replay with `psql`. See [Migrate data from Postgres with pg_dump and pg_restore](/docs/import/migrate-from-postgres) for the full command reference.
+## Quick answer
 
-## Export a plain SQL dump
+Use the **Export** button on any register or report view. Policies and reports export as PDF with metadata (version, publication date, approver); structured registers (controls, risks, suppliers, findings) export as CSV; and framework reports export as a combined PDF package suitable for handing to an auditor or customer. For the complete workspace archive instead of individual exports, see [downloading a full copy of your data](/faqs/download-database-backup-locally).
 
-Grab the **direct** connection string from the **Connect** widget on your Project Dashboard (toggle **Connection pooling** off so the hostname has no `-pooler` suffix). Then run:
+## The exports you'll actually use
 
-```bash shouldWrap
-pg_dump -d "postgresql://alex:AbC123dEf@ep-cool-darkness-a1b2c3d4.us-east-2.aws.neon.tech/neondb" -f dump.sql
-```
+- **Policy PDFs** for the customer who asks for your information security policy, stamped with version and approval metadata so the recipient can see it's the governed document, not a draft.
+- **The compliance report per framework**: status summary, control list with statuses, open findings, and evidence references. This is the standard attachment for enterprise security reviews that don't accept a [Trust Center link](/faqs/find-database-connection-string-url).
+- **The risk register as CSV** for the management meeting that wants it in a spreadsheet, and the **supplier register as CSV** for procurement reconciliations.
+- **The board report as PDF**: compliance score trend, incidents, and top risks in management language; see [where to find your compliance score](/faqs/find-database-connection-string).
+- **The DORA ICT contract register** in the structured format the regulation expects, if the DORA package is active.
 
-The result is a human-readable SQL script that recreates schema, data, and other objects in order.
+## Exports carry their context
 
-### Useful flags
+A recurring audit problem with exported documents is provenance: is this PDF actually what was in force in March? OptiTech exports embed generation timestamp, workspace, and version identifiers, and the export event is logged. For evidence-bearing exports, the referenced evidence entries include their [append-only log positions](/faqs/databases-reproduce-bugs-production-data), so a recipient can request verification against the chain.
 
-```bash
-# Schema only, no data
-pg_dump -d "$NEON_URL" --schema-only -f schema.sql
+## Automating recurring exports
 
-# Data only, no DDL
-pg_dump -d "$NEON_URL" --data-only -f data.sql
+Anything exportable manually is exportable through the [API](/faqs/best-managed-postgres-options-developers): schedule the monthly board PDF, push the findings CSV into your BI tool, or archive the quarterly framework report automatically. Teams with document-retention rules typically automate the archival exports and keep manual export for ad hoc requests.
 
-# Skip ALTER OWNER statements (recommended when restoring to a different role)
-pg_dump -d "$NEON_URL" --no-owner -f dump.sql
-
-# One specific table
-pg_dump -d "$NEON_URL" -t public.customers -f customers.sql
-```
-
-The `--no-owner` flag is useful because roles created through OptiTech are members of `neon_superuser` but aren't full Postgres superusers, so they can't run `ALTER OWNER`. See [Database object ownership considerations](/docs/import/migrate-from-postgres#database-object-ownership-considerations).
-
-## Plain SQL vs custom format
-
-For programmatic restore with `pg_restore`, the custom-format archive is more flexible (parallel restore, selective object restore, compression):
-
-```bash
-pg_dump -Fc -d "$NEON_URL" -f dump.dump
-pg_restore -d "$TARGET_URL" dump.dump
-```
-
-Choose plain SQL when you want to read, edit, or grep the output, or replay it with `psql -f dump.sql`. Choose `-Fc` when you want to restore selectively or in parallel.
-
-<Admonition type="warning" title="Don't dump over a pooled connection">
-`pg_dump` uses session-level `SET` statements that aren't supported by OptiTech's PgBouncer transaction-mode pooling. Always use the direct hostname (no `-pooler` segment) for dumps. See PgBouncer issues [452](https://github.com/pgbouncer/pgbouncer/issues/452) and [976](https://github.com/pgbouncer/pgbouncer/issues/976) for background.
-</Admonition>
-
-<Admonition type="tip" title="Match client and server versions">
-Use `pg_dump` from the same major Postgres version as your OptiTech project, or newer. Run `pg_dump -V` to check. Older clients can produce incomplete dumps for newer server features.
-</Admonition>
-
-<CTA title="See the full pg_dump reference for OptiTech" description="Includes parallel dumps, ownership handling, large objects, and piping pg_dump to pg_restore." buttonText="Read the migration guide" buttonUrl="/docs/import/migrate-from-postgres" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

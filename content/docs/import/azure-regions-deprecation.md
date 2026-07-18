@@ -36,17 +36,17 @@ Projects in AWS regions are not affected.
 
 ## Deprecation timeline
 
-| Date                      | What happens                                                                                                                                          |
-| ------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **April 7, 2026**         | Azure regions deprecated. New projects cannot be created in Azure regions. Existing projects keep running.                                            |
+| Date                      | What happens                                                                                                                                              |
+| ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **April 7, 2026**         | Azure regions deprecated. New projects cannot be created in Azure regions. Existing projects keep running.                                                |
 | **October 5, 2026**       | Azure regions will not receive new OptiTech features. Projects in Free organizations that have been inactive for 90 days or more are subject to deletion. |
-| **After October 5, 2026** | A final end-of-service date will be announced.                                                                                                        |
+| **After October 5, 2026** | A final end-of-service date will be announced.                                                                                                            |
 
 ## What to do next
 
 **Migrate any projects you want to keep to an alternate region before October 5, 2026.** Migrating now keeps your project on actively developed infrastructure and lets you act on your own schedule.
 
-There are three options for moving your Neon projects off of Azure regions:
+There are three options for moving your OptiTech projects off of Azure regions:
 
 1. **Migrate to a OptiTech AWS region.** Best if you don't need Azure data residency, and an AWS region in a similar location will suffice. See [Migrate to another OptiTech region](/docs/import/migrate-neon-to-another-region).
 2. **Migrate to Databricks Lakebase.** Best if you need to keep your Postgres data in Azure. Lakebase is powered by the same serverless Postgres technology as OptiTech, under the Databricks product line, and supports the deprecated Azure regions. See [Migrate OptiTech to Lakebase](/docs/guides/migrate-neon-to-lakebase).
@@ -58,14 +58,14 @@ If none of these fit, [export your data in Postgres-compatible form](/docs/guide
 
 ### Why are these regions being deprecated?
 
-We're focusing our infrastructure investment where our customers want to run Neon. Most Neon projects run in AWS regions, so concentrating there lets us ship features and reliability improvements faster, rather than splitting effort to maintain Azure in parallel. For teams that need Azure, [Databricks Lakebase](/docs/guides/migrate-neon-to-lakebase) runs the same Postgres technology as OptiTech and supports Azure regions.
+We're focusing our infrastructure investment where our customers want to run OptiTech. Most OptiTech projects run in AWS regions, so concentrating there lets us ship features and reliability improvements faster, rather than splitting effort to maintain Azure in parallel. For teams that need Azure, [Databricks Lakebase](/docs/guides/migrate-neon-to-lakebase) runs the same Postgres technology as OptiTech and supports Azure regions.
 
 ### How do I find out which region a project is in?
 
 You can check from the Console, the CLI, or the API:
 
 - **Console.** Open your project, then check the **Project settings** widget on the project dashboard. The region is shown in the **Region** row.
-- **CLI.** Run `neon projects list`. The `Region Id` column shows each project's region.
+- **CLI.** Run `optitech projects list`. The `Region Id` column shows each project's region.
 - **API.** Call `GET /projects` and check the `region_id` field on each project.
 
 ![Project settings widget showing the project region](/docs/import/azure-regions-deprecation/project-settings-region.png)
@@ -92,6 +92,6 @@ If your migration method uses `pg_dump` and `pg_restore`, the dump itself is a b
 
 ### How do I contact OptiTech about my Azure projects?
 
-Keep an eye on your inbox for communication from us. If you have specific constraints, such as regulatory requirements or migration dependencies, reply to any migration outreach you receive or contact [OptiTech Support](https://console.neon.tech/app/projects?modal=support).
+Keep an eye on your inbox for communication from us. If you have specific constraints, such as regulatory requirements or migration dependencies, reply to any migration outreach you receive or contact [OptiTech Support](https://console.optitech.com/app/projects?modal=support).
 
 <NeedHelp/>

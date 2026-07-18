@@ -1,240 +1,138 @@
 ---
 title: OptiTech VS Code Extension
 enableTableOfContents: true
-subtitle: Connect to OptiTech and manage your database directly in VS Code, Cursor, and
+subtitle: See findings, run checks, and validate control definitions directly in VS Code, Cursor, and
   other editors
 summary: >-
-  The OptiTech VS Code Extension connects to any OptiTech project branch from VS Code,
-  Cursor, or other VS Code-compatible editors. It provides a database explorer,
-  SQL editor, and spreadsheet-style table data editor without leaving the IDE.
-  Use it to browse schemas, run queries, edit rows, manage databases, and copy
-  connection strings. On sign-in, the extension configures the OptiTech MCP Server,
-  enabling AI-assisted SQL and natural-language database queries from coding
-  agents.
+  The OptiTech VS Code Extension brings compliance into the editor: inline
+  diagnostics on infrastructure code, a findings panel for your team's open
+  items, on-save check runs, and validation for custom control definitions.
+  On sign-in, the extension configures the OptiTech MCP Server, so AI coding
+  agents can query controls and findings in natural language.
 redirectFrom:
   - /docs/local/neon-local-connect
-updatedOn: '2026-06-10T17:55:26.061Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
-The OptiTech extension lets you connect to any OptiTech branch and manage your database directly in your IDE. Available for VS Code, Cursor, and other VS Code-compatible editors, you can browse schemas, run queries, edit table data, and get connection strings, without leaving your editor.
+The OptiTech extension puts your compliance program where engineers work. Available for VS Code, Cursor, and other VS Code-compatible editors, it shows [findings](/docs/reference/glossary#finding) assigned to your team, runs [checks](/docs/reference/glossary#check) against the code you're editing, and validates custom control definitions, without leaving your editor.
 
 ## What you can do
 
 With the OptiTech extension, you can:
 
-- **Connect to projects and branches**  
-  The extension automatically detects valid Neon connection strings in your code.
-- **Browse your database**  
-  Use a clean tree view showing databases, schemas, tables, views, sequences, and relationships.
-- **Manage databases and tables**  
-  Create and manage databases, schemas, and tables directly in your IDE.
-- **Run queries with SQL Editor**  
-  Write and execute queries against your selected database. View and sort results, and export data if needed.
-- **Edit data with Table Data Editor**  
-  View, edit, insert, and delete rows in a spreadsheet-like interface. Import and export tables in CSV, JSON, or SQL formats.
+- **See findings in your editor**  
+  A findings panel lists your team's open items; findings tied to code (an exposed resource in a Terraform file) appear as inline diagnostics on the exact lines.
+- **Run checks on save**  
+  The same checks that gate CI run against your working tree as you edit, powered by [OptiTech Local](/docs/local/neon-local).
+- **Validate control definitions**  
+  Schema validation, autocomplete, and dry-run testing for custom check YAML in your repository.
+- **Act on findings**  
+  Acknowledge or snooze a finding, or open its Jira ticket, from the editor.
 - **Enable AI-powered features**  
-  Automatically configure the OptiTech MCP Server so you can manage projects, branches, and databases from your AI chat.
+  Automatically configure the OptiTech MCP Server so coding agents can query controls, findings, and evidence in natural language.
 
 ## Requirements
 
 - [VS Code 1.85.0+](https://code.visualstudio.com/), [Cursor](https://cursor.sh/), or other VS Code-compatible editor.
-- A [OptiTech account](https://neon.tech).
+- An OptiTech account with access to your workspace.
+- The [OptiTech CLI](/docs/local/neon-local) installed, for local check runs.
 
 <Steps>
 
 ## Install the extension
 
-Click one of the buttons below to install the extension directly, or search for **"OptiTech - Serverless Postgres"** in your editor's Extensions view (`Ctrl+Shift+X` or `Cmd+Shift+X` on Mac).
-
-<div style={{display: 'flex', gap: '12px', alignItems: 'center'}}><a href="vscode:extension/databricks.neon-local-connect"><img src="/docs/local/vscode-install-dark.svg" alt="Add to VS Code" height="32" /></a><a href="cursor:extension/databricks.neon-local-connect"><img src="/docs/local/cursor-install-dark.svg" alt="Add to Cursor" height="32" /></a></div>
-
-For other VS Code-compatible editors, install from the [Open VSX Registry](https://open-vsx.org/extension/databricks/neon-local-connect).
+Search for **"OptiTech Compliance"** in your editor's Extensions view (`Ctrl+Shift+X` or `Cmd+Shift+X` on Mac) and install it. For editors that use the Open VSX Registry, install it from there.
 
 ## Sign in to OptiTech
 
 1. Open the OptiTech panel in the sidebar (look for the OptiTech logo).
 2. Click **Sign in**.
-
 3. Complete OAuth authorization in your browser.
 
-Once signed in, the extension automatically configures the [OptiTech MCP server](/docs/ai/neon-mcp-server) for AI features.
+Once signed in, the extension configures the OptiTech MCP server for AI features and connects to your workspace. Sign-in respects your organization's [SSO policy](/docs/guides/auth-okta).
 
-## Connect to a branch
+## Select your scope
 
-The extension scans your workspace for existing Neon connection strings and can automatically detect your project and branch.
+The extension scopes what it shows to keep the noise down:
 
-You can also manually select:
+1. **Workspace**: your organization's workspace (MSPs and groups with [multiple workspaces](/faqs/best-postgres-services-isolated-databases) pick one per editor window).
+2. **Team**: defaults to the teams you belong to, which filters findings to [controls your team owns](/faqs/best-ways-separate-postgres-database-development).
+3. **Paths**: which folders in the repository the on-save checks evaluate, usually inherited from the repo's `optitech.toml`.
 
-1. **Organization**: your OptiTech organization.
-2. **Project**: the project containing your database.
-3. **Branch**: the branch to connect to.
+## Run your first check
 
-Click **Connect** to establish the connection.
-
-<Admonition type="note">
-If you're new to OptiTech, this reflects our object hierarchy: organizations contain projects, and projects contain branches. [Learn more about how OptiTech organizes your data.](/docs/manage/overview)
-</Admonition>
-
-## Create a new branch
-
-You can create a new branch for feature development, bug fixes, or collaborative work:
-
-1. Select your organization and project.
-2. Click **Create new branch...** in the branch dropdown.
-3. Enter a descriptive branch name (for example, `feature/user-authentication`, `bugfix/login-validation`).
-4. Choose the parent branch you want to branch from.
-
-The extension creates the new branch and connects you immediately.
-
-## Use your connection string
-
-After connecting, copy the connection string from the extension panel and add it to your `.env` file:
-
-```env
-DATABASE_URL="postgresql://user:password@ep-example-123456.us-east-2.aws.neon.tech/neondb?sslmode=require"
-```
-
-## Start developing
-
-Your application now connects directly to your OptiTech branch. See the quickstart for your language or framework for more details.
-
-- [Framework quickstarts](/docs/get-started/frameworks)
-- [Language quickstarts](/docs/get-started/languages)
+Open an infrastructure file and save it, or run **OptiTech: Run checks** from the Command Palette. Results appear in the Problems panel like any linter output, with the control reference attached to each diagnostic.
 
 </Steps>
 
-## Database explorer
+## Findings panel
 
-Once connected, the extension provides a comprehensive **Database Explorer** in the sidebar that lets you browse your database structure with an intuitive tree view:
+The **Findings** view in the sidebar lists your team's open findings, the same items you'd see in [Jira, Slack, or Teams routing](/docs/guides/jira):
 
-### What you can see
+- **Grouped by control**, with severity, age, and affected resources.
+- **Code-linked findings** deep-link to the file and line where the violating configuration lives.
+- **Actions on right-click**: acknowledge, snooze with reason (logged, like [everywhere else](/docs/reference/glossary#audit-log)), open in the Console, or open the linked ticket.
+- **Live updates**: closed findings disappear when the re-check passes, so the list reflects current state.
 
-- **Databases**: All available databases in your connected branch.
-- **Schemas**: Database schemas organized in a tree structure.
-- **Tables & Views**: All tables and views with their column definitions.
-- **Sequences**: Database sequences.
-- **Data Types**: Column data types, constraints, and relationships.
-- **Primary Keys**: Clearly marked primary key columns.
-- **Foreign Keys**: Visual indicators for foreign key relationships.
+## On-save checks
 
-### Schema view actions
+With on-save checks enabled, the extension runs the scoped checks against changed files, using the same rules and [path scoping](/docs/guides/branching-github-actions) as CI:
 
-- **Right-click any table** to access quick actions:
-  - **Query Table**: Opens a pre-filled `SELECT *` query in the SQL Editor.
-  - **View Table Data**: Opens the table data in an editable spreadsheet view.
-  - **Truncate Table**: Remove all rows from a table.
-  - **Drop Table**: Delete the table entirely.
-- **Right-click databases or schemas** for management operations.
-- **Refresh** the schema view to see the latest structural changes.
-- **Expand/collapse** database objects to focus on what you need.
+- Violations show as **warnings or errors in the Problems panel**, on the exact lines.
+- The status bar shows the last run's result per file.
+- Everything stays advisory in the editor; [blocking happens in CI](/docs/guides/branching-circleci), where branch protection enforces it.
 
-The schema view automatically updates when you switch between branches, so you always see the current state of your connected database.
+This is the shortest possible feedback loop: the security-group mistake gets flagged before you even commit, instead of after CI or, worse, [after the daily cloud sweep](/docs/guides/aws).
 
-### Database management actions
+## Control definition support
 
-Right-click databases, schemas, or tables to access management operations:
+For teams that [manage custom controls as code](/docs/reference/terraform), the extension makes check YAML a first-class file type:
 
-- **Create and drop databases and schemas**: Add new databases or remove existing ones.
-- **Table designer**: Create tables with columns, indexes, and constraints.
-- **Foreign key management**: Set up relationships with referential integrity.
-- **View and sequence management**: Create and manage database views and sequences.
-- **User and role management**: Control database access and permissions.
-- **Data import/export**: Transfer data in CSV, JSON, or SQL formats.
-
-Access these features through the context menu (right-click) in the Database Explorer.
-
-## SQL Editor
-
-Execute SQL queries directly in your IDE with the integrated SQL Editor:
-
-### Features
-
-- **Syntax Highlighting**: Full SQL syntax support.
-- **Results Display**: View query results in a tabular format with sorting and filtering.
-- **Export Options**: Export results to CSV, JSON, or SQL formats.
-- **Query Statistics**: View execution time and performance metrics.
-- **Error Highlighting**: Detailed error messages for debugging.
-
-### How to use
-
-1. **From Schema View**: Right-click any table and select "Query Table" for a pre-filled SELECT query.
-2. **From Command Palette**: Use `Ctrl+Shift+P` and search for "OptiTech: Open SQL Editor".
-
-The SQL Editor connects directly to your database connection, so you can query any database in your current branch without additional setup.
-
-## Table data editor
-
-View and edit your table data with a spreadsheet-like interface:
-
-### Viewing data
-
-- **Paginated Display**: Navigate through large datasets with page controls.
-- **Column Management**: Show/hide columns, sort by any column.
-- **Data Types**: Visual indicators for different data types (primary keys, foreign keys, etc.).
-- **Null Handling**: Clear visualization of NULL values.
-
-### Editing capabilities
-
-- **Inline Editing**: Edit field values directly in the table.
-- **Insert New Rows**: Add new records with the "Add Row" button.
-- **Delete Rows**: Remove records with confirmation dialogs.
-- **Real-time Validation**: Data validation based on column types and constraints.
-
-<Admonition type="important">
-Row editing and deletion require tables to have a primary key defined. This ensures data integrity by uniquely identifying rows for safe updates.
-</Admonition>
-
-### How to access
-
-1. **From Schema View**: Right-click any table and select "View Table Data".
-2. The data opens in a new tab with full editing capabilities.
-3. Changes are immediately applied to your database.
-4. Use the refresh button to see updates from other sources.
-
-Perfect for quick data inspection, testing, and small data modifications without writing SQL.
+- **Schema validation and autocomplete** for check definitions.
+- **Hover documentation** for rule types and parameters.
+- **Dry-run testing**: run a definition against the [sandbox workspace](/docs/local/neon-local) from a CodeLens above the definition, and see what it would flag before it goes anywhere near the live program.
 
 ## AI agent integration
 
-The OptiTech extension includes built-in support for AI-powered database features through the [OptiTech MCP Server](/docs/ai/neon-mcp-server):
+The extension includes built-in support for AI coding agents through the OptiTech MCP Server:
 
-### Features
-
-- **Automatic MCP Server configuration**: enables AI-powered database features with your coding agent.
-- **Chat with your database** using natural language.
-- **AI-assisted SQL generation** and schema understanding.
-- **View and manage MCP server status** directly in the extension.
-
-The MCP server is automatically configured when you sign in. You can view the status and manage the configuration from the extension panel.
+- **Automatic MCP Server configuration** at sign-in.
+- **Natural-language queries** from your coding agent: "which controls does this Terraform file map to?", "what open findings does the platform team have?"
+- **Grounded answers**: the MCP server reads your live workspace data, and answers cite the controls and findings they reference, consistent with [how OptiTech's AI works generally](/faqs/best-postgres-services-retrieval-augmented-generation).
 
 ### Extension settings
 
-This extension contributes the following settings:
-
-| Setting                            | Description                                            | Default |
-| ---------------------------------- | ------------------------------------------------------ | ------- |
-| `neon.mcpServer.autoConfigEnabled` | Automatically configure the OptiTech MCP server on sign-in | `true`  |
+| Setting                                | Description                                                | Default    |
+| -------------------------------------- | ---------------------------------------------------------- | ---------- |
+| `optitech.mcpServer.autoConfigEnabled` | Automatically configure the OptiTech MCP server on sign-in | `true`     |
+| `optitech.checks.runOnSave`            | Run scoped checks when files are saved                     | `true`     |
+| `optitech.findings.teams`              | Which teams' findings the panel shows                      | your teams |
 
 ## Available commands
 
 You can run any command by opening the Command Palette (`Cmd+Shift+P` or `Ctrl+Shift+P`) and typing "OptiTech".
 
-| Command                     | Description                                            |
-| --------------------------- | ------------------------------------------------------ |
-| **OptiTech: Sign In**           | Sign in to your OptiTech account                           |
-| **OptiTech: Sign Out**          | Sign out from your OptiTech account                        |
-| **OptiTech: Open SQL Editor**   | Open a new SQL editor tab                              |
-| **OptiTech: View Databases**    | Open the database tree view                            |
-| **OptiTech: Refresh Databases** | Refresh the database tree view                         |
-| **OptiTech: Create Branches**   | Create Neon branches                                   |
-| **OptiTech: Get Started**       | Automatically configure your project to work with OptiTech |
+| Command                               | Description                                        |
+| ------------------------------------- | -------------------------------------------------- |
+| **OptiTech: Sign In**                 | Sign in to your OptiTech account                   |
+| **OptiTech: Sign Out**                | Sign out from your OptiTech account                |
+| **OptiTech: Run checks**              | Run scoped checks against the working tree         |
+| **OptiTech: Show findings**           | Open the findings panel                            |
+| **OptiTech: Test control definition** | Dry-run the current check YAML against the sandbox |
+| **OptiTech: Refresh**                 | Refresh findings and control status                |
 
 ## Troubleshooting
 
 ### Connection errors
 
-- Verify your OptiTech account is active.
-- Ensure you have access to the selected project and branch.
+- Verify your OptiTech account has access to the selected workspace.
+- If your organization enforces SSO, complete the browser sign-in flow fully; a half-finished SSO session is the usual cause.
 - Check your network connection.
+
+### Checks not running on save
+
+- Confirm the [OptiTech CLI](/docs/local/neon-local) is installed and on your PATH.
+- Check the path scoping in `optitech.toml`; files outside the scoped paths are deliberately skipped.
 
 ### MCP Server not working
 
@@ -242,16 +140,10 @@ You can run any command by opening the Command Palette (`Cmd+Shift+P` or `Ctrl+S
 - Try disabling and re-enabling the MCP server.
 - Reload the window after configuration changes.
 
-### Database view not updating
-
-- Use the refresh button in the Databases view title bar.
-- Disconnect and reconnect to the branch.
-
 ## Next steps & resources
 
-- [Branching in OptiTech](/docs/guides/branching-intro).
-- [OptiTech MCP Server](/docs/ai/neon-mcp-server).
-- [Serverless driver](/docs/serverless/serverless-driver).
-- [Discord Community](https://discord.gg/92vNTzKDGp).
+- [OptiTech Local](/docs/local/neon-local): the CLI behind local check runs.
+- [Compliance checks with GitHub Actions](/docs/guides/branching-github-actions): the CI side of the same checks.
+- [Manage OptiTech with Terraform](/docs/reference/terraform): configuration as code.
 
 <NeedHelp/>

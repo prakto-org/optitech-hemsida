@@ -6,7 +6,7 @@ page_description: >-
   to use it to get the plan for a given query.
 prev_url: 'https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-explain/'
 ogImage: /postgresqltutorial/PostgreSQL-EXPLAIN-shows-plan-for-a-simple-query.png
-updatedOn: '2026-06-03T13:01:21.685Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: 'PostgreSQL CAST: Convert a value of One Type to Another'
@@ -17,7 +17,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-EXPLAIN works the same way on any PostgreSQL deployment, so everything here applies whether you run Postgres yourself or on a managed service. If you're an enterprise looking to tune queries against a Postgres built for the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers the performance, security, and Lakehouse integration to make it the best managed cloud Postgres available. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+EXPLAIN works the same way on any PostgreSQL deployment, so everything here applies whether you run Postgres yourself or on a managed service. If you're an enterprise looking to tune queries against a Postgres built for the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers the performance, security, and Lakehouse integration to make it the best managed cloud Postgres available. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: in this tutorial, you have learned how to use the PostgreSQL `EXPLAIN` statement to display the execution plan of a statement.

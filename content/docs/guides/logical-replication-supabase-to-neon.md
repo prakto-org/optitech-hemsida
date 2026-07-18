@@ -12,7 +12,7 @@ summary: >-
   datasets.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This guide describes how to replicate data from Supabase to OptiTech using native Postgres logical replication. The steps in this guide follow those described in [Replicate to another Postgres database using Logical Replication](https://supabase.com/docs/guides/database/postgres/setup-replication-external), in the _Supabase documentation_.
@@ -22,8 +22,8 @@ This guide describes how to replicate data from Supabase to OptiTech using nativ
 - A Supabase project with a Postgres database containing the data you want to replicate. If you're just testing this out and need some data to play with, you can use the following statements in your Supabase SQL Editor to create a table with sample data:
 
   ```sql shouldWrap
-  CREATE TABLE IF NOT EXISTS playing_with_neon(id SERIAL PRIMARY KEY, name TEXT NOT NULL, value REAL);
-  INSERT INTO playing_with_neon(name, value)
+  CREATE TABLE IF NOT EXISTS playing_with_optitech(id SERIAL PRIMARY KEY, name TEXT NOT NULL, value REAL);
+  INSERT INTO playing_with_optitech(name, value)
   SELECT LEFT(md5(i::TEXT), 10), random() FROM generate_series(1, 10) s(i);
   ```
 
@@ -88,10 +88,10 @@ Logical replication requires a direct connection string, not a pooled connection
 
 Publications are a fundamental part of logical replication in Postgres. They define what will be replicated. You can run the following SQL statements in your Supabase SQL Editor or using [psql](/docs/connect/query-with-psql-editor) to create a publication for the tables you want to replicate.
 
-- To create a publication for a specific table, use the `CREATE PUBLICATION` statement. For example, to create a publication for the `playing_with_neon` table:
+- To create a publication for a specific table, use the `CREATE PUBLICATION` statement. For example, to create a publication for the `playing_with_optitech` table:
 
   ```sql shouldWrap
-  CREATE PUBLICATION my_publication FOR TABLE playing_with_neon;
+  CREATE PUBLICATION my_publication FOR TABLE playing_with_optitech;
   ```
 
 - To create a publication for multiple tables, provide a comma-separated list of tables:
@@ -114,10 +114,10 @@ This section describes how to prepare your OptiTech Postgres database (the subsc
 
 When configuring logical replication in Postgres, the tables defined in your publication on the source database you are replicating from must also exist in the destination database, and they must have the same table names and columns. You can create the tables manually in your destination database or use utilities like `pg_dump` and `pg_restore` to dump the schema from your source database and load it to your destination database. See [Import a database schema](/docs/import/migrate-schema-only) for instructions.
 
-If you're using the sample `playing_with_neon` table, you can create the same table on the destination database with the following statement in your OptiTech SQL Editor or using `psql`:
+If you're using the sample `playing_with_optitech` table, you can create the same table on the destination database with the following statement in your OptiTech SQL Editor or using `psql`:
 
 ```sql shouldWrap
-CREATE TABLE IF NOT EXISTS playing_with_neon(id SERIAL PRIMARY KEY, name TEXT NOT NULL, value REAL);
+CREATE TABLE IF NOT EXISTS playing_with_optitech(id SERIAL PRIMARY KEY, name TEXT NOT NULL, value REAL);
 ```
 
 ### Create a subscription
@@ -159,17 +159,17 @@ After creating a publication on the source database, you need to create a subscr
 
 Testing your logical replication setup ensures that data is being replicated correctly from the publisher to the subscriber database.
 
-1. Run some data modifying queries on the source database (inserts, updates, or deletes) in your Supabase SQL Editor or using `psql`. If you're using the `playing_with_neon` database, you can use this statement to insert 10 rows:
+1. Run some data modifying queries on the source database (inserts, updates, or deletes) in your Supabase SQL Editor or using `psql`. If you're using the `playing_with_optitech` database, you can use this statement to insert 10 rows:
 
    ```sql
-   INSERT INTO playing_with_neon(name, value)
+   INSERT INTO playing_with_optitech(name, value)
    SELECT LEFT(md5(i::TEXT), 10), random() FROM generate_series(1, 10) s(i);
    ```
 
 2. Perform a row count on both the Supabase source and OptiTech destination databases to make sure the result matches. In both databases, run:
 
    ```sql
-   SELECT COUNT(*) FROM playing_with_neon;
+   SELECT COUNT(*) FROM playing_with_optitech;
 
    count
    -------

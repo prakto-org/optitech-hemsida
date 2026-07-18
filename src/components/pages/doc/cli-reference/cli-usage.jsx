@@ -4,7 +4,7 @@ import Content from 'components/shared/content';
 
 import { getNode, renderUsage } from './renderers';
 
-// Generated synopsis code block for a neonctl command, e.g.
+// Generated synopsis code block for a optitechctl command, e.g.
 // <CliUsage command="branches create" />. Never emits headings — the
 // right-rail ToC only sees markdown headings in the page source.
 const CliUsage = ({ command }) => (

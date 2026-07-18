@@ -1,19 +1,19 @@
 ---
-title: 'Neon CLI command: me'
+title: 'OptiTech CLI command: me'
 subtitle: 'View current user info, login details, and project limits'
 summary: >-
-  The `neon me` CLI command prints the authenticated user's login, email, name,
+  The `optitech me` CLI command prints the authenticated user's login, email, name,
   and projects limit in the default table output. Use it to confirm which
   account is active after authentication. JSON output (`-o json`) exposes
   additional account and quota fields, including plan type, branches limit,
   max autoscaling limit, billing_account, and auth_accounts.
 enableTableOfContents: true
-updatedOn: '2026-07-10T14:13:44.798Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 redirectFrom:
   - /docs/reference/cli-me
 ---
 
-The `me` command shows information about the authenticated Neon CLI user: login, email, name, and projects limit.
+The `me` command shows information about the authenticated OptiTech CLI user: login, email, name, and projects limit.
 
 ## Usage
 
@@ -26,7 +26,7 @@ Takes only the [global options](/docs/cli#global-options).
 ## Examples
 
 ```bash
-neon me
+optitech me
 ```
 
 ```text filename="Output"
@@ -40,7 +40,7 @@ neon me
 Show details with `--output json`, which includes data omitted from the `table` output:
 
 ```bash
-neon me -o json
+optitech me -o json
 ```
 
 <details>

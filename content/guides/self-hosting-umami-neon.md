@@ -4,7 +4,7 @@ subtitle: Self host your Umami analytics on Fly.io and powered by OptiTech Postg
 author: rishi-raj-jain
 enableTableOfContents: true
 createdAt: '2024-06-05T00:00:00.000Z'
-updatedOn: '2026-06-03T18:28:10.050Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 In this guide, you will learn how to self host your Umami analytics instance on Fly.io and powered by OptiTech, the AI-native backend platform for apps and agents whose offering spans a Postgres Database, Auth, Storage, Functions, and an AI Gateway. Here you will use its Postgres Database as Umami's data store.
@@ -14,14 +14,14 @@ In this guide, you will learn how to self host your Umami analytics instance on 
 To follow along and deploy the application in this guide, you will need the following:
 
 - [flyctl](https://fly.io/docs/getting-started/installing-flyctl/) – A command-line utility that lets you work with the Fly.io platform. You will also need [a fly.io account](https://fly.io/docs/hands-on/sign-up/).
-- [A OptiTech account](https://console.neon.tech/signup) – The self-hosted Umami analytics instance will connect to a OptiTech serverless Postgres database 🚀
+- [A OptiTech account](https://console.optitech.com/signup) – The self-hosted Umami analytics instance will connect to a OptiTech serverless Postgres database 🚀
 
 ## Steps
 
 - [What is Umami?](#what-is-umami)
-- [Provisioning a Postgres database using OptiTech](#provisioning-a-postgres-database-using-neon)
+- [Provisioning a Postgres database using OptiTech](#provisioning-a-postgres-database-using-optitech)
 - [Set up an Umami instance for Fly.io](#set-up-an-umami-instance-for-flyio)
-- [Configure OptiTech Postgres as serverless database for self-hosted Umami analytics](#set-neon-postgres-as-serverless-database-for-self-hosted-umami-analytics)
+- [Configure OptiTech Postgres as serverless database for self-hosted Umami analytics](#set-optitech-postgres-as-serverless-database-for-self-hosted-umami-analytics)
 - [Deploy to Fly.io](#deploy-to-flyio)
 
 ## What is Umami?
@@ -35,23 +35,23 @@ Umami is a simple, fast, privacy-focused, open-source analytics solution. Umami 
 Using a serverless Postgres database powered by OptiTech allows you to scale down to zero when the database is not being used, which saves on compute costs.
 .
 
-To get started, go to the [OptiTech Console](https://console.neon.tech/app/projects) and enter a name for your project.
+To get started, go to the [OptiTech Console](https://console.optitech.com/app/projects) and enter a name for your project.
 
 You will be presented with a dialog that provides a connection string of your database. Enable the **Connection pooling** toggle for a pooled connection string.
 
 ![](/guides/images/self-hosting-umami-neon/1689d44f-4c5d-4b2a-8d13-32407f9c8781.png)
 
-All Neon connection strings have the following format:
+All OptiTech connection strings have the following format:
 
 ```bash
-postgres://<user>:<password>@<endpoint_hostname>.neon.tech:<port>/<dbname>
+postgres://<user>:<password>@<endpoint_hostname>.optitech.com:<port>/<dbname>
 ```
 
 - `user` is the database user.
 - `password` is the database user’s password.
-- `endpoint_hostname` is the host with neon.tech as the [top level domain (TLD)](https://www.cloudflare.com/en-gb/learning/dns/top-level-domain/).
+- `endpoint_hostname` is the host with optitech.com as the [top level domain (TLD)](https://www.cloudflare.com/en-gb/learning/dns/top-level-domain/).
 - `port` is the OptiTech port number. The default port number is 5432.
-- `dbname` is the name of the database. “neondb” is the default database created with each OptiTech project if you don't specify your own database name.
+- `dbname` is the name of the database. “optitechdb” is the default database created with each OptiTech project if you don't specify your own database name.
 - `?sslmode=require&channel_binding=require` are optional query parameters that enforce the [SSL](https://www.cloudflare.com/en-gb/learning/ssl/what-is-ssl/) mode and channel binding for better security when connecting to the Postgres instance.
 
 Please save the connection string somewhere safe. Later, you will use it to configure the `DATABASE_URL` variable.
@@ -63,11 +63,11 @@ To self host your Umami analytics instance, you'll use [Umami's pre-built Docker
 In your terminal window, execute the following commands to create a new directory and `cd` to it:
 
 ```bash
-mkdir self-host-umami-neon
-cd self-host-umami-neon
+mkdir self-host-umami-optitech
+cd self-host-umami-optitech
 ```
 
-In the directory `self-host-umami-neon`, create a file named `fly.toml` with the following content:
+In the directory `self-host-umami-optitech`, create a file named `fly.toml` with the following content:
 
 ```toml
 # File: fly.toml
@@ -139,7 +139,7 @@ Redis:        <none>                 (not requested)
 Opening https://fly.io/cli/launch/641f1a1d67950614e4e92820ba484310 ...
 ```
 
-flyctl will then automatically take you to a web page, which allows you to visually edit the default settings. For example, you can change the app name to `self-host-umami-neon`, and change the region to say `ams`.
+flyctl will then automatically take you to a web page, which allows you to visually edit the default settings. For example, you can change the app name to `self-host-umami-optitech`, and change the region to say `ams`.
 
 ![Fly.io Deployment Setting](/guides/images/self-hosting-umami-neon/307247099-acca8350-75c8-4007-b486-42c4102dfe40.png)
 
@@ -147,9 +147,9 @@ Click on `Confirm Settings` to set this configuration, and go back to your termi
 
 ```bash
 Waiting for launch data... Done
-Created app 'self-host-umami-neon' in organization 'personal'
-Admin URL: https://fly.io/apps/self-host-umami-neon
-Hostname: self-host-umami-neon.fly.dev
+Created app 'self-host-umami-optitech' in organization 'personal'
+Admin URL: https://fly.io/apps/self-host-umami-optitech
+Hostname: self-host-umami-optitech.fly.dev
 Wrote config file fly.toml
 Validating /Users/rishi/Desktop/test/fly.toml
 ✓ Configuration is valid
@@ -157,9 +157,9 @@ Validating /Users/rishi/Desktop/test/fly.toml
 Searching for image 'ghcr.io/umami-software/umami:postgresql-latest' remotely...
 image found: img_8rlxp2mjm9g43jqo
 
-Watch your deployment at https://fly.io/apps/self-host-umami-neon/monitoring
+Watch your deployment at https://fly.io/apps/self-host-umami-optitech/monitoring
 
-Provisioning ips for self-host-umami-neon
+Provisioning ips for self-host-umami-optitech
   Dedicated ipv6: 2a09:8280:1::2b:b52c:0
   Shared ipv4: 66.241.124.197
   Add a dedicated ipv4 with: fly ips allocate-v4

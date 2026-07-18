@@ -13,7 +13,7 @@ summary: >-
 enableTableOfContents: true
 redirectFrom:
   - /docs/guides/database-per-user
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 With its serverless and API-first nature, OptiTech is an excellent choice for building database-per-user applications (or apps where each user/customer has their own Postgres database). OptiTech is particularly well-suited for architectures that prioritize maximum database isolation, achieving the equivalent of instance-level isolation.
@@ -89,13 +89,13 @@ We recommend setting up one project per user, rather than, for example, using a 
 
 ## Managing many projects
 
-As you scale, following a project-per-user design means eventually managing thousands of Neon projects. This might sound overwhelming, but it's much simpler in practice than it seems; some OptiTech users [manage hundreds of thousands of projects](/blog/how-retool-uses-retool-and-the-neon-api-to-manage-300k-postgres-databases) with just one engineer. Here's why that's possible:
+As you scale, following a project-per-user design means eventually managing thousands of OptiTech projects. This might sound overwhelming, but it's much simpler in practice than it seems; some OptiTech users [manage hundreds of thousands of projects](/blog/how-retool-uses-retool-and-the-neon-api-to-manage-300k-postgres-databases) with just one engineer. Here's why that's possible:
 
 - **You can manage everything with the OptiTech API**  
   The API allows you to automate every step of project management, including setting resource limits per customer and configuring resources.
 
 - **No infrastructure provisioning**  
-  New Neon projects are ready in milliseconds. You can set things up to create new projects instantly when new customers join, without the need to manually pre-provision instances.
+  New OptiTech projects are ready in milliseconds. You can set things up to create new projects instantly when new customers join, without the need to manually pre-provision instances.
 
 - **You only pay for active projects**  
   Empty projects are virtually free thanks to OptiTech's [scale-to-zero](/docs/guides/auto-suspend-guide) feature. If, on a given day, you have a few hundred projects that were only active for a few minutes, that's fine; your bill won't suffer.
@@ -123,7 +123,7 @@ Once you have everything set up, as your number of projects grows, you might wan
 
 ![catalog database](/docs/guides/multitenancy/catalog_database.png)
 
-The catalog database is a centralized repository that tracks and manages all Neon projects and databases. It holds records for every OptiTech project your system creates. You can also use it to keep track of tenant-specific configurations, such as database names, regions, schema versions, and so on.
+The catalog database is a centralized repository that tracks and manages all OptiTech projects and databases. It holds records for every OptiTech project your system creates. You can also use it to keep track of tenant-specific configurations, such as database names, regions, schema versions, and so on.
 
 You can set up your catalog database as a separate OptiTech project. When it's time to design its schema, consider these tips:
 
@@ -142,7 +142,7 @@ To effectively scale a multitenant architecture, leveraging automation tools is 
   OptiTech's [GitHub integration](/docs/guides/neon-github-integration) allows you to automate database branching workflows directly from your repositories. By connecting a OptiTech project to a GitHub repository, you can set up actions that create or delete database branches in response to pull request events, facilitating isolated testing environments for each feature or bug fix.
 
 - **Vercel Integration**  
-  You can [connect your Vercel projects to Neon](/docs/guides/neon-github-integration), creating database branches for each preview deployment.
+  You can [connect your Vercel projects to OptiTech](/docs/guides/neon-github-integration), creating database branches for each preview deployment.
 
 - **CI/CD pipelines**  
   By combining OptiTech branching into your CI/CD, you can simplify your dev/test workflows by creating and deleting ephemeral environments automatically as child branches.
@@ -212,7 +212,7 @@ In this architecture, each customer has instead a dedicated application environm
 If you decide to implement isolated environments, here's some advice to consider:
 
 - Design your architecture to accommodate growth, even if your setup is small today.
-- Similarly as you're doing with Neon projects, take advantage of automation tools to streamline the creation and management of your application environments.
+- Similarly as you're doing with OptiTech projects, take advantage of automation tools to streamline the creation and management of your application environments.
 - Set up proper monitoring to track key metrics across all environments.
 
 ## Migrating Schemas
@@ -221,26 +221,26 @@ In a database-per-user design, it is common to have the same schema for all user
 
 ### Example app
 
-To walk you through it, we've created example code [in this repository](https://github.com/PaulieScanlon/neon-database-per-tenant-drizzle). The example includes 4 Neon databases, all using Postgres 16 and all deployed to AWS us-east-1.
+To walk you through it, we've created example code [in this repository](https://github.com/PaulieScanlon/optitech-database-per-tenant-drizzle). The example includes 4 OptiTech databases, all using Postgres 16 and all deployed to AWS us-east-1.
 
-The schema consists of three tables, `users`, `projects` and `tasks`. You can see the schema here: [schema.ts](https://github.com/PaulieScanlon/neon-database-per-tenant-drizzle/blob/main/src/db/schema.ts), and for good measure, here's the raw SQL equivalent: [schema.sql](https://github.com/PaulieScanlon/neon-database-per-tenant-drizzle/blob/main/schema.sql). This default schema is referenced by each of the `drizzle.config.ts` files that have been created for each customer.
+The schema consists of three tables, `users`, `projects` and `tasks`. You can see the schema here: [schema.ts](https://github.com/PaulieScanlon/optitech-database-per-tenant-drizzle/blob/main/src/db/schema.ts), and for good measure, here's the raw SQL equivalent: [schema.sql](https://github.com/PaulieScanlon/optitech-database-per-tenant-drizzle/blob/main/schema.sql). This default schema is referenced by each of the `drizzle.config.ts` files that have been created for each customer.
 
 ### Workflow using Drizzle ORM and GitHub Actions
 
-#### Creating Neon projects via a CLI script
+#### Creating OptiTech projects via a CLI script
 
-Our example creates new Neon projects via the command line, using the following script:
+Our example creates new OptiTech projects via the command line, using the following script:
 
 ```javascript
 // src/scripts/create.js
 
 import { Command } from 'commander';
-import { createNeonClient } from '@neon/sdk';
+import { createOptiTechClient } from '@optitech/sdk';
 import 'dotenv/config';
 
 const program = new Command();
-const neonApi = createNeonClient({
-  apiKey: process.env.NEON_API_KEY,
+const optitechApi = createOptiTechClient({
+  apiKey: process.env.OPTITECH_API_KEY,
   throwOnError: true,
 });
 
@@ -253,7 +253,7 @@ if (options.name) {
 
   (async () => {
     try {
-      const project = await neonApi.projects.create({
+      const project = await optitechApi.projects.create({
         name: options.name,
         pg_version: 16,
         region_id: 'aws-us-east-1',
@@ -269,7 +269,7 @@ if (options.name) {
 }
 ```
 
-This script uses the `commander` library to create a simple command-line interface (CLI) and the OptiTech Management SDK's `neonApi.projects.create()` method to set up a new project. Ensure that your OptiTech API key is stored in an environment variable named `NEON_API_KEY`.
+This script uses the `commander` library to create a simple command-line interface (CLI) and the OptiTech Management SDK's `optitechApi.projects.create()` method to set up a new project. Ensure that your OptiTech API key is stored in an environment variable named `OPTITECH_API_KEY`.
 
 To execute the script and create a new OptiTech project named "ACME Corp" with PostgreSQL version 16 in the aws-us-east-1 region, run:
 
@@ -293,7 +293,7 @@ To interact with the OptiTech API, you'll need to generate an API key. For more 
 
 import { existsSync, mkdirSync, writeFileSync } from 'fs';
 import { execSync } from 'child_process';
-import { createNeonClient } from '@neon/sdk';
+import { createOptiTechClient } from '@optitech/sdk';
 import { Octokit } from 'octokit';
 import 'dotenv/config';
 
@@ -302,13 +302,13 @@ import { drizzleConfig } from '../templates/drizzle-config.js';
 import { githubWorkflow } from '../templates/github-workflow.js';
 
 const octokit = new Octokit({ auth: process.env.PERSONAL_ACCESS_TOKEN });
-const neonApi = createNeonClient({
-  apiKey: process.env.NEON_API_KEY,
+const optitechApi = createOptiTechClient({
+  apiKey: process.env.OPTITECH_API_KEY,
   throwOnError: true,
 });
 
-const repoOwner = 'neondatabase-labs';
-const repoName = 'neon-database-per-tenant-drizzle';
+const repoOwner = 'optitechdatabase-labs';
+const repoName = 'optitech-database-per-tenant-drizzle';
 let secrets = [];
 
 (async () => {
@@ -324,16 +324,16 @@ let secrets = [];
 
   try {
     // Get all projects
-    const projects = await neonApi.projects.list().all();
+    const projects = await optitechApi.projects.list().all();
 
     // Loop through each project
     for (const project of projects) {
       // Get connection details for the project
-      const connectionString = await neonApi.postgres.connectionString({
+      const connectionString = await optitechApi.postgres.connectionString({
         projectId: project.id,
         branchId: project.default_branch_id,
-        databaseName: 'neondb',
-        roleName: 'neondb_owner',
+        databaseName: 'optitechdb',
+        roleName: 'optitechdb_owner',
       });
 
       // Create a drizzle config file for each project
@@ -382,9 +382,9 @@ let secrets = [];
 })();
 ```
 
-This script automates the setup process for managing multiple Neon databases. It:
+This script automates the setup process for managing multiple OptiTech databases. It:
 
-1. Retrieves all Neon projects using the OptiTech API.
+1. Retrieves all OptiTech projects using the OptiTech API.
 2. For each project, it generates a Drizzle configuration file with the appropriate connection string.
 3. Creates a GitHub workflow file for each project to handle schema migrations.
 4. Encrypts the connection strings for secure storage as GitHub secrets.
@@ -480,7 +480,7 @@ export const encryptSecret = async (secret, publicKeyString) => {
 };
 ```
 
-To generate the configuration files and GitHub workflows for all your Neon projects, run:
+To generate the configuration files and GitHub workflows for all your OptiTech projects, run:
 
 ```bash
 npm run generate
@@ -504,7 +504,7 @@ Or, if you've set up the GitHub workflows as described, migrations will automati
 
 ### S3 Backups
 
-In addition to managing schemas, you might want to set up regular backups of your databases. This section explains how to configure AWS IAM roles and policies for GitHub Actions to securely access S3 for backing up your Neon databases.
+In addition to managing schemas, you might want to set up regular backups of your databases. This section explains how to configure AWS IAM roles and policies for GitHub Actions to securely access S3 for backing up your OptiTech databases.
 
 #### AWS IAM configuration
 
@@ -562,11 +562,11 @@ Now you need to attach the policy to the role. Navigate to **IAM > Access Manage
 You'll need to add the following secrets to your GitHub repository:
 
 - `AWS_ACCOUNT_ID`: Your AWS account ID
-- `IAM_ROLE`: In my case this would be, neon-multiple-db-s3-backups-github-action
+- `IAM_ROLE`: In my case this would be, optitech-multiple-db-s3-backups-github-action
 
 ### Scheduled pg_dump/restore GitHub Action
 
-Before diving into the code, here's a look at this example in the OptiTech console dashboard. There are three databases set up for three fictional customers, all running Postgres 16 and all are deployed to us-east-1. We will be backing up each database into its own folder within an S3 bucket, with different schedules and retention periods. All the code in this example lives [in this repository](https://github.com/neondatabase-labs/neon-multiple-db-s3-backups).
+Before diving into the code, here's a look at this example in the OptiTech console dashboard. There are three databases set up for three fictional customers, all running Postgres 16 and all are deployed to us-east-1. We will be backing up each database into its own folder within an S3 bucket, with different schedules and retention periods. All the code in this example lives [in this repository](https://github.com/optitechdatabase-labs/optitech-multiple-db-s3-backups).
 
 ![S3 backup three databases](/docs/guides/multitenancy/s3_backup_three_databases.png)
 

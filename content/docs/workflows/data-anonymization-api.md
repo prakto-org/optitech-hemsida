@@ -11,7 +11,7 @@ summary: >-
   one. Anonymized branches cannot be restored or have their read-write
   endpoint deleted.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This page provides detailed API documentation for data anonymization. For conceptual overview and usage instructions, see [Data Anonymization](/docs/workflows/data-anonymization).
@@ -43,21 +43,21 @@ Creates a new branch with anonymized data using PostgreSQL Anonymizer for static
 
 ```bash
 curl -X POST \
-  'https://console.neon.tech/api/v2/projects/{project_id}/branch_anonymized' \
-  -H 'Authorization: Bearer $NEON_API_KEY' \
+  'https://console.optitech.com/api/v2/projects/{project_id}/branch_anonymized' \
+  -H 'Authorization: Bearer $OPTITECH_API_KEY' \
   -H 'Accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
     "masking_rules": [
       {
-        "database_name": "neondb",
+        "database_name": "optitechdb",
         "schema_name": "public",
         "table_name": "users",
         "column_name": "email",
         "masking_function": "pg_catalog.concat(anon.dummy_uuidv4(), '@example.com')"
       },
       {
-        "database_name": "neondb",
+        "database_name": "optitechdb",
         "schema_name": "public",
         "table_name": "users",
         "column_name": "age",
@@ -109,7 +109,7 @@ Returns the created branch object with `restricted_actions` indicating operation
   },
   "endpoints": [
     {
-      "host": "ep-fragrant-breeze-a1b2c3d4.us-east-1.aws.neon.tech",
+      "host": "ep-fragrant-breeze-a1b2c3d4.us-east-1.aws.optitech.com",
       "id": "ep-fragrant-breeze-a1b2c3d4",
       "project_id": "purple-moon-12345678",
       "branch_id": "br-divine-feather-a1b2c3d4",
@@ -132,9 +132,9 @@ Returns the created branch object with `restricted_actions` indicating operation
       "creation_source": "console",
       "created_at": "2025-10-16T02:58:58Z",
       "updated_at": "2025-10-16T02:58:58Z",
-      "proxy_host": "us-east-1.aws.neon.tech",
+      "proxy_host": "us-east-1.aws.optitech.com",
       "suspend_timeout_seconds": 0,
-      "provisioner": "k8s-neonvm"
+      "provisioner": "k8s-optitechvm"
     }
   ],
   "operations": [
@@ -165,7 +165,7 @@ Returns the created branch object with `restricted_actions` indicating operation
   "roles": [
     {
       "branch_id": "br-divine-feather-a1b2c3d4",
-      "name": "neondb_owner",
+      "name": "optitechdb_owner",
       "protected": false,
       "created_at": "2025-09-12T13:47:59Z",
       "updated_at": "2025-09-12T13:47:59Z"
@@ -175,21 +175,21 @@ Returns the created branch object with `restricted_actions` indicating operation
     {
       "id": 21560101,
       "branch_id": "br-divine-feather-a1b2c3d4",
-      "name": "neondb",
-      "owner_name": "neondb_owner",
+      "name": "optitechdb",
+      "owner_name": "optitechdb_owner",
       "created_at": "2025-09-12T13:47:59Z",
       "updated_at": "2025-09-12T13:47:59Z"
     }
   ],
   "connection_uris": [
     {
-      "connection_uri": "postgresql://neondb_owner:somepass@ep-fragrant-breeze-a1b2c3d4.us-east-1.aws.neon.tech/neondb?sslmode=require",
+      "connection_uri": "postgresql://optitechdb_owner:somepass@ep-fragrant-breeze-a1b2c3d4.us-east-1.aws.optitech.com/optitechdb?sslmode=require",
       "connection_parameters": {
-        "database": "neondb",
+        "database": "optitechdb",
         "password": "somepass",
-        "role": "neondb_owner",
-        "host": "ep-fragrant-breeze-a1b2c3d4.us-east-1.aws.neon.tech",
-        "pooler_host": "ep-fragrant-breeze-a1b2c3d4-pooler.us-east-1.aws.neon.tech"
+        "role": "optitechdb_owner",
+        "host": "ep-fragrant-breeze-a1b2c3d4.us-east-1.aws.optitech.com",
+        "pooler_host": "ep-fragrant-breeze-a1b2c3d4-pooler.us-east-1.aws.optitech.com"
       }
     }
   ]
@@ -212,8 +212,8 @@ Retrieves the current status of an anonymized branch, including state and progre
 
 ```bash
 curl -X GET \
-  'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/anonymized_status' \
-  -H 'Authorization: Bearer $NEON_API_KEY' \
+  'https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/anonymized_status' \
+  -H 'Authorization: Bearer $OPTITECH_API_KEY' \
   -H 'Accept: application/json'
 ```
 
@@ -249,8 +249,8 @@ Starts or restarts the anonymization process for branches in `initialized`, `err
 
 ```bash
 curl -X POST \
-  'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/anonymize' \
-  -H 'Authorization: Bearer $NEON_API_KEY' \
+  'https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/anonymize' \
+  -H 'Authorization: Bearer $OPTITECH_API_KEY' \
   -H 'Accept: application/json'
 ```
 
@@ -284,8 +284,8 @@ Retrieves all masking rules defined for the specified anonymized branch.
 
 ```bash
 curl -X GET \
-  'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/masking_rules' \
-  -H 'Authorization: Bearer $NEON_API_KEY' \
+  'https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/masking_rules' \
+  -H 'Authorization: Bearer $OPTITECH_API_KEY' \
   -H 'Accept: application/json'
 ```
 
@@ -296,14 +296,14 @@ curl -X GET \
 {
   "masking_rules": [
     {
-      "database_name": "neondb",
+      "database_name": "optitechdb",
       "schema_name": "public",
       "table_name": "users",
       "column_name": "age",
       "masking_function": "anon.random_int_between(25,65)"
     },
     {
-      "database_name": "neondb",
+      "database_name": "optitechdb",
       "schema_name": "public",
       "table_name": "users",
       "column_name": "email",
@@ -333,14 +333,14 @@ The API replaces all masking rules with the provided array. To add a new rule, i
 
 ```bash
 curl -X PATCH \
-  'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/masking_rules' \
-  -H 'Authorization: Bearer $NEON_API_KEY' \
+  'https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/masking_rules' \
+  -H 'Authorization: Bearer $OPTITECH_API_KEY' \
   -H 'Accept: application/json' \
   -H 'Content-Type: application/json' \
   -d '{
     "masking_rules": [
       {
-        "database_name": "neondb",
+        "database_name": "optitechdb",
         "schema_name": "public",
         "table_name": "users",
         "column_name": "email",
@@ -359,7 +359,7 @@ Returns the updated list of masking rules for the branch.
 {
   "masking_rules": [
     {
-      "database_name": "neondb",
+      "database_name": "optitechdb",
       "schema_name": "public",
       "table_name": "users",
       "column_name": "email",

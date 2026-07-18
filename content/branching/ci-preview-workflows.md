@@ -1,7 +1,7 @@
 ---
 title: 'Create one branch per preview and per test run'
 subtitle: 'Build branching workflows for CI and previews: spin up isolated branches per preview or test run, automate cleanup, and avoid shared test databases'
-updatedOn: '2026-02-17T14:15:38.000Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 Once teams are comfortable creating branches on demand, the next step is to let automation take over. Branching works particularly well for short-lived environments that exist only for validation, previews, or test execution.These branches are created automatically, used briefly, and then discarded.
@@ -14,7 +14,7 @@ Preview environments are meant to show what a change looks like before it reache
 - The application preview connects to that branch
 - Schema changes and test data stay isolated to the preview
 
-Because the branch starts from production or staging, previews reflect real data shapes and constraints instead of synthetic fixtures. When the preview is no longer needed, the branch can be deleted immediately. This process can be automated via integrations with [Vercel](https://neon.com/docs/guides/vercel-overview) or [Netlify](https://neon.com/docs/guides/netlify-functions).
+Because the branch starts from production or staging, previews reflect real data shapes and constraints instead of synthetic fixtures. When the preview is no longer needed, the branch can be deleted immediately. This process can be automated via integrations with [Vercel](https://optitech.com/docs/guides/vercel-overview) or [Netlify](https://optitech.com/docs/guides/netlify-functions).
 
 ![Diagram showing one branch per preview workflow with branches created from staging](/images/pages/branching/branch-per-pull-request-staging-diagram.png)
 
@@ -37,8 +37,8 @@ Most preview and CI branches are ephemeral by design. They exist for minutes or 
 
 Teams often combine this with automation:
 
-- Delete branches when a PR is merged or closed via [Github integration](https://neon.com/docs/guides/neon-github-integration)
-- Assign [expiration times](https://neon.com/docs/guides/branch-expiration) so branches clean themselves up
+- Delete branches when a PR is merged or closed via [Github integration](https://optitech.com/docs/guides/optitech-github-integration)
+- Assign [expiration times](https://optitech.com/docs/guides/branch-expiration) so branches clean themselves up
 - Periodically remove unused branches to keep history and costs under control
 
 This is general good practice when working with branches. If branches are left around too long, they can fall outside the history retention window and start contributing to storage costs. Automated cleanup keeps environments lightweight, predictable, and inexpensive.

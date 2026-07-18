@@ -11,7 +11,7 @@ summary: >-
   templates are not yet available; webhook-based delivery is the current
   customization path.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="Managed Better Auth" />
@@ -24,8 +24,8 @@ For deeper customization, use webhooks to intercept email events and send fully 
 
 Managed Better Auth fires two events when it needs to send an email to a user:
 
-| Event             | Triggers when                                      | Without webhook                           |
-| ----------------- | -------------------------------------------------- | ----------------------------------------- |
+| Event             | Triggers when                                      | Without webhook                               |
+| ----------------- | -------------------------------------------------- | --------------------------------------------- |
 | `send.otp`        | A verification code needs delivery                 | OptiTech sends the code via its default email |
 | `send.magic_link` | A magic link or password reset link needs delivery | OptiTech sends the link via its default email |
 
@@ -37,7 +37,7 @@ See the [Webhooks reference](/docs/auth/guides/webhooks) for configuration, payl
 
 Using webhooks, you can customize every aspect of the email experience:
 
-- **Sender identity:** Use your own domain and sender name instead of `auth@mail.myneon.app`
+- **Sender identity:** Use your own domain and sender name instead of `auth@mail.myoptitech.app`
 - **App name and branding:** Replace OptiTech's default branding with your app's logo, colors, and name
 - **Subject line and body:** Write custom HTML templates with your own copy
 - **Verification links:** Wrap the link from the `send.magic_link` payload in your branded email template, or build a custom redirect URL using the raw `token`
@@ -125,16 +125,16 @@ import { Resend } from 'resend';
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 async function verifyWebhook(rawBody: string, headers: Headers) {
-  const signature = headers.get('x-neon-signature');
-  const kid = headers.get('x-neon-signature-kid');
-  const timestamp = headers.get('x-neon-timestamp');
+  const signature = headers.get('x-optitech-signature');
+  const kid = headers.get('x-optitech-signature-kid');
+  const timestamp = headers.get('x-optitech-timestamp');
 
   if (!signature || !kid || !timestamp) {
-    throw new Error('Missing required Neon webhook headers');
+    throw new Error('Missing required OptiTech webhook headers');
   }
 
   // 1. Fetch JWKS and find the matching key
-  const res = await fetch(`${process.env.NEON_AUTH_BASE_URL}/.well-known/jwks.json`);
+  const res = await fetch(`${process.env.OPTITECH_AUTH_BASE_URL}/.well-known/jwks.json`);
   const jwks = await res.json();
   const jwk = jwks.keys.find((k: { kid: string }) => k.kid === kid);
   if (!jwk) throw new Error(`Key ${kid} not found in JWKS`);

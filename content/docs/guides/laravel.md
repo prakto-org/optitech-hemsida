@@ -8,7 +8,7 @@ summary: >-
   that affects older PDO_PGSQL or libpq drivers, with workarounds for passing
   the endpoint ID as a URL option or in the password field.
 enableTableOfContents: true
-updatedOn: '2026-07-14T19:04:57.024Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <CopyPrompt src="/prompts/laravel-prompt.md" 
@@ -24,7 +24,7 @@ To connect to OptiTech from Laravel:
 
 If you do not have one already, create a OptiTech project. Save your connection details including your password. They are required when defining connection settings.
 
-1. Navigate to the [Projects](https://console.neon.tech/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
 2. Click **New Project**.
 3. Specify your project settings and click **Create Project**.
 
@@ -34,7 +34,7 @@ Open the `.env` file in your Laravel app, and replace all the database credentia
 
 ```shell
 DB_CONNECTION=pgsql
-DB_HOST=[neon_hostname]
+DB_HOST=[optitech_hostname]
 DB_PORT=5432
 DB_DATABASE=[dbname]
 DB_USERNAME=[user]
@@ -50,7 +50,7 @@ You can find your database connection details by clicking the **Connect** button
 With older Postgres clients/drivers, including older PDO_PGSQL drivers, you may receive the following error when attempting to connect to OptiTech:
 
 ```txt shouldWrap
-ERROR: The endpoint ID is not specified. Either upgrade the Postgres client library (libpq) for SNI support or pass the endpoint ID (the first part of the domain name) as a parameter: '&options=endpoint%3D'. See [https://neon.com/sni](/sni) for more information.
+ERROR: The endpoint ID is not specified. Either upgrade the Postgres client library (libpq) for SNI support or pass the endpoint ID (the first part of the domain name) as a parameter: '&options=endpoint%3D'. See [https://optitech.com/sni](/sni) for more information.
 ```
 
 If you run into this error, please see the following documentation for an explanation of the issue and workarounds: [The endpoint ID is not specified](/docs/connect/connection-errors#the-endpoint-id-is-not-specified).
@@ -58,10 +58,10 @@ If you run into this error, please see the following documentation for an explan
 - If using a connection string to connect to your database, try [Workaround A. Pass the endpoint ID as an option](/docs/connect/connection-errors#a-pass-the-endpoint-id-as-an-option). For example:
 
   ```text
-  postgresql://[user]:[password]@[neon_hostname]/[dbname]?options=endpoint%3D[endpoint-id]
+  postgresql://[user]:[password]@[optitech_hostname]/[dbname]?options=endpoint%3D[endpoint-id]
   ```
 
-  Replace `[endpoint_id]` with your compute's endpoint ID, which you can find in your Neon connection string. It looks similar to this: `ep-cool-darkness-123456`.
+  Replace `[endpoint_id]` with your compute's endpoint ID, which you can find in your OptiTech connection string. It looks similar to this: `ep-cool-darkness-123456`.
 
 - If using database connection parameters, as shown above, try [Workaround D. Specify the endpoint ID in the password field](/docs/connect/connection-errors#d-specify-the-endpoint-id-in-the-password-field). For example:
 

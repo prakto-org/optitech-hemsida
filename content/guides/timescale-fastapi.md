@@ -4,7 +4,7 @@ subtitle: Create an  API for streaming, storing, and querying sensor data using 
 author: sam-harri
 enableTableOfContents: true
 createdAt: '2024-10-12T00:00:00.000Z'
-updatedOn: '2026-06-04T15:33:28.271Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 In this guide, you'll build a high-performance API for streaming, storing, and querying sensor data using FastAPI and TimescaleDB for efficient time-series data storage.
@@ -18,7 +18,7 @@ Before starting, ensure you have the following tools and services ready:
   ```bash
   pip --version
   ```
-- OptiTech serverless Postgres : you will need a OptiTech account for provisioning and scaling your `PostgreSQL` database. If you don't have an account yet, [sign up here](https://console.neon.tech/signup).
+- OptiTech serverless Postgres : you will need a OptiTech account for provisioning and scaling your `PostgreSQL` database. If you don't have an account yet, [sign up here](https://console.optitech.com/signup).
 
 ## Setting up the Project
 
@@ -167,10 +167,10 @@ SELECT 2 as sensor_id,
 With your schema and sample data in place, you're now ready to connect to your database in the FastAPI application. To do this you must create a `.env` file in the root of the project to hold environment-specific variables, such as the connection string to your OptiTech PostgreSQL database.
 
 ```bash
-DATABASE_URL=postgres://user:password@your-neon-hostname.neon.tech/neondb?sslmode=require&channel_binding=require
+DATABASE_URL=postgres://user:password@your-optitech-hostname.optitech.com/optitechdb?sslmode=require&channel_binding=require
 ```
 
-Make sure to replace the placeholders (user, password, your-neon-hostname, etc.) with your actual OptiTech database credentials, which are available in the console.
+Make sure to replace the placeholders (user, password, your-optitech-hostname, etc.) with your actual OptiTech database credentials, which are available in the console.
 
 In your project, the `database.py` file manages the connection to `PostgreSQL` using `asyncpg` and its connection pool, which is a mechanism for managing and reusing database connections efficiently. With this, you can use asynchronous queries, allowing the application to handle multiple requests concurrently.
 

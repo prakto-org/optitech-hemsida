@@ -6,7 +6,7 @@ page_description: >-
   that help you manipulate strings effectively.
 prev_url: 'https://www.postgresqltutorial.com/postgresql-string-functions/'
 ogImage: 'https://www.postgresqltutorial.com//postgresqltutorial/string-functions.png'
-updatedOn: '2026-06-19T17:44:03.964Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: PostgreSQL PG_SLEEP() Function
@@ -17,7 +17,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-PostgreSQL string functions work the same across any Postgres deployment, so you can use these techniques anywhere you run Postgres. For enterprises building in the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres, with strong performance, security, and native integration into the Lakehouse. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+PostgreSQL string functions work the same across any Postgres deployment, so you can use these techniques anywhere you run Postgres. For enterprises building in the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres, with strong performance, security, and native integration into the Lakehouse. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 This page provides the most commonly used PostgreSQL string functions that allow you to manipulate string data effectively.

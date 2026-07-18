@@ -12,7 +12,7 @@ summary: >-
 tag: new
 tagTheme: green
 enableTableOfContents: true
-updatedOn: '2026-07-13T14:20:27.525Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <Admonition type="note" title="Snapshots">
@@ -93,7 +93,7 @@ You can restore from any time that falls within your project's [history window](
 To restore a branch to an earlier point in time, use the syntax `^self` in the `<source id|name>` field of the `branches restore` command. For example:
 
 ```bash shouldWrap
-neon branches restore development ^self@2025-01-01T00:00:00Z --preserve-under-name development_old
+optitech branches restore development ^self@2025-01-01T00:00:00Z --preserve-under-name development_old
 ```
 
 This command resets the target branch `development` to its state at the start of 2025. The command also preserves the original state of the branch in a backup file called `development_old` using the `preserve-under-name` parameter (mandatory when resetting to self).
@@ -125,9 +125,9 @@ In the following example, we are restoring branch `br-twilight-river-31791249` t
 
 ```bash shouldWrap
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects/floral-disk-86322740/branches/br-twilight-river-31791249/restore \
+     --url https://console.optitech.com/api/v2/projects/floral-disk-86322740/branches/br-twilight-river-31791249/restore \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '
 {
@@ -161,9 +161,9 @@ To create a snapshot manually, click **Create snapshot**. This captures the curr
 You can create a snapshot from a branch using the [Create snapshot](/docs/reference/api/snapshots/create-snapshot) endpoint. A snapshot can be created from a specific timestamp (RFC 3339 format) or LSN (for example 16/B3733C50) within the branch's [history window](/docs/introduction/history-window). The `timestamp` and `lsn` parameters are mutually exclusive; you can use one or the other, not both.
 
 ```bash
-curl -X POST "https://console.neon.tech/api/v2/projects/project_id/branches/branch_id/snapshot" \
+curl -X POST "https://console.optitech.com/api/v2/projects/project_id/branches/branch_id/snapshot" \
   -H "Content-Type: application/json" \
-  -H 'authorization: Bearer $NEON_API_KEY' \
+  -H 'authorization: Bearer $OPTITECH_API_KEY' \
   -d '{
     "timestamp": "2025-07-29T21:00:00Z",
     "name": "my_snapshot",
@@ -182,9 +182,9 @@ The parameters used in the example above:
 You can change a snapshot's expiration after it is created using the [Update snapshot](/docs/reference/api/snapshots/update-snapshot) endpoint. Set `expires_at` to a future timestamp to extend or change the retention deadline, or send `null` to clear it so the snapshot never expires. Omit the field to leave the expiration unchanged.
 
 ```bash
-curl -X PATCH "https://console.neon.tech/api/v2/projects/project_id/snapshots/snapshot_id" \
+curl -X PATCH "https://console.optitech.com/api/v2/projects/project_id/snapshots/snapshot_id" \
   -H "Content-Type: application/json" \
-  -H 'authorization: Bearer $NEON_API_KEY' \
+  -H 'authorization: Bearer $OPTITECH_API_KEY' \
   -d '{
     "snapshot": {
       "expires_at": "2026-12-31T00:00:00Z"
@@ -269,8 +269,8 @@ GET /projects/{project_id}/branches/{branch_id}/backup_schedule
 ```
 
 ```bash shouldWrap
-curl 'https://console.neon.tech/api/v2/projects/<project_id>/branches/<branch_id>/backup_schedule' \
-  -H 'Authorization: Bearer $NEON_API_KEY' | jq
+curl 'https://console.optitech.com/api/v2/projects/<project_id>/branches/<branch_id>/backup_schedule' \
+  -H 'Authorization: Bearer $OPTITECH_API_KEY' | jq
 ```
 
 **Example response:**
@@ -306,8 +306,8 @@ The request body must include a `schedule` array. Each item in the array can spe
 **Example: set a daily schedule**
 
 ```bash shouldWrap
-curl -X PUT "https://console.neon.tech/api/v2/projects/<project_id>/branches/<branch_id>/backup_schedule" \
-  -H 'Authorization: Bearer $NEON_API_KEY' \
+curl -X PUT "https://console.optitech.com/api/v2/projects/<project_id>/branches/<branch_id>/backup_schedule" \
+  -H 'Authorization: Bearer $OPTITECH_API_KEY' \
   -H 'Content-Type: application/json' \
   -d '{
     "schedule": [
@@ -357,8 +357,8 @@ To update a backup schedule via API, use the same PUT endpoint and request forma
 **To turn off a backup schedule:** Send a PUT request with an empty `schedule` array in the request body:
 
 ```bash shouldWrap
-curl -X PUT "https://console.neon.tech/api/v2/projects/<project_id>/branches/<branch_id>/backup_schedule" \
-  -H 'Authorization: Bearer $NEON_API_KEY' \
+curl -X PUT "https://console.optitech.com/api/v2/projects/<project_id>/branches/<branch_id>/backup_schedule" \
+  -H 'Authorization: Bearer $OPTITECH_API_KEY' \
   -H 'Content-Type: application/json' \
   -d '{
     "schedule": []
@@ -409,9 +409,9 @@ Use this option if you want to restore the snapshot data immediately without ins
 A one-step restore operation is performed using the [Restore snapshot](/docs/reference/api/snapshots/restore-snapshot) endpoint. This operation creates a new branch, restores the snapshot to the new branch, and moves computes from your current branch to the new branch.
 
 ```bash
-curl -X POST "https://console.neon.tech/api/v2/projects/project_id/snapshots/snapshot_id/restore?name=restored_branch" \
+curl -X POST "https://console.optitech.com/api/v2/projects/project_id/snapshots/snapshot_id/restore?name=restored_branch" \
   -H "Content-Type: application/json" \
-  -H 'authorization: Bearer $NEON_API_KEY' \
+  -H 'authorization: Bearer $OPTITECH_API_KEY' \
   -d '{
     "name": "restored_branch",
     "finalize_restore": false
@@ -469,9 +469,9 @@ Use this option if you need to inspect the restored data before you switch over 
     The first step in a multi-step restore operation is to restore the snapshot to a new branch using the [Restore snapshot](/docs/reference/api/snapshots/restore-snapshot) endpoint:
 
     ```bash
-    curl -X POST "https://console.neon.tech/api/v2/projects/project_id/snapshots/snapshot_id/restore" \
+    curl -X POST "https://console.optitech.com/api/v2/projects/project_id/snapshots/snapshot_id/restore" \
     -H "Content-Type: application/json" \
-    -H 'authorization: Bearer $NEON_API_KEY' \
+    -H 'authorization: Bearer $OPTITECH_API_KEY' \
     -d '{
        "name": "my_restored_branch",
        "finalize_restore": false
@@ -487,9 +487,9 @@ Use this option if you need to inspect the restored data before you switch over 
           You can find the `snapshot_id` using the [List project snapshots](/docs/reference/api/snapshots/list-snapshots) endpoint.
 
              ```bash
-             curl -X GET "https://console.neon.tech/api/v2/projects/project_id/snapshots" \
+             curl -X GET "https://console.optitech.com/api/v2/projects/project_id/snapshots" \
              -H "Content-Type: application/json" \
-             -H "Authorization: Bearer $NEON_API_KEY" |jq
+             -H "Authorization: Bearer $OPTITECH_API_KEY" |jq
              ```
 
        </Admonition>
@@ -504,9 +504,9 @@ Use this option if you need to inspect the restored data before you switch over 
 
     ```bash
     curl --request GET \
-      --url 'https://console.neon.tech/api/v2/projects/project_id/connection_uri?branch_id=branch_id&database_name=db_name&role_name=role_name&pooled=true' \
+      --url 'https://console.optitech.com/api/v2/projects/project_id/connection_uri?branch_id=branch_id&database_name=db_name&role_name=role_name&pooled=true' \
       --header 'accept: application/json' \
-      --header 'authorization: Bearer $NEON_API_KEY' |jq
+      --header 'authorization: Bearer $OPTITECH_API_KEY' |jq
     ```
 
 3.  **Finalize the restore**
@@ -519,9 +519,9 @@ Use this option if you need to inspect the restored data before you switch over 
     - If the original branch was **protected**, that protection is **moved** to the branch that ends up with your restored data (the renamed branch that keeps your connection string). The previous branch is no longer protected, so your [protected branch](/docs/guides/protected-branches) count stays correct.
 
     ```bash
-    curl -X POST "https://console.neon.tech/api/v2/projects/project_id/branches/branch_id/finalize_restore" \
+    curl -X POST "https://console.optitech.com/api/v2/projects/project_id/branches/branch_id/finalize_restore" \
     -H "Content-Type: application/json" \
-    -H 'authorization: Bearer $NEON_API_KEY' |jq
+    -H 'authorization: Bearer $OPTITECH_API_KEY' |jq
     ```
 
     Parameters:

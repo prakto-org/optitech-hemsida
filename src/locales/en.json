@@ -1,0 +1,594 @@
+{
+  "home": {
+    "hero": {
+      "label": "Compliance automation for the Nordics",
+      "title": "OptiTech is the compliance platform\nbuilt for Nordic businesses.",
+      "primaryCta": "Get a free gap analysis",
+      "secondaryCta": "See pricing",
+      "services": {
+        "gapAnalysis": {
+          "title": "Gap Analysis",
+          "description": "Automatic scoping of NIS2, DORA, GDPR, and ISO 27001 requirements."
+        },
+        "aiDocumentation": {
+          "title": "AI Documentation",
+          "description": "Policies and plans generated in correct regulatory language."
+        },
+        "evidenceCollection": {
+          "title": "Evidence Collection",
+          "description": "Integrations verify MFA, offboarding, and backups around the clock."
+        },
+        "incidentReporting": {
+          "title": "Incident Reporting",
+          "description": "Guided MSB flow: early warning in 24 hours, report in 72."
+        },
+        "vendorManagement": {
+          "title": "Vendor Management",
+          "description": "Questionnaires, risk classing, and DORA-ready ICT registers."
+        }
+      }
+    },
+    "toc": {
+      "ai": "AI Copilot",
+      "autoscaling": "Continuous Compliance",
+      "branching": "Instant Gap Analysis",
+      "auth": "Incident Reporting",
+      "features": "Transparent Pricing"
+    },
+    "ai": {
+      "heading": "<strong>An AI copilot fluent in Swedish law.</strong> Ask a question in plain language and the AI does the hard work.",
+      "ideAlt": "OptiTech AI copilot",
+      "tryPrompt": "Try for yourself, start automating with OptiTech now.",
+      "askFromTools": "Ask OptiTech AI from your tools:"
+    },
+    "autoscaling": {
+      "heading": "<strong>Continuous compliance.</strong> Keep operating without worrying about audits. Never pay for consultant reports that expire in months.",
+      "tabs": ["Avoid incidents", "Save costs"],
+      "stats": [
+        "control checks run by OptiTech every day",
+        "in consultant fees saved by OptiTech customers every day"
+      ],
+      "legend": ["OptiTech automation", "Compliance workload", "Manual consultant-driven work"],
+      "note": "By connecting to your systems, OptiTech automatically collects evidence and verifies controls to fit your obligations."
+    },
+    "branching": {
+      "heading": "<strong>Instant gap analysis.</strong> Answer 20 questions to map exactly which laws apply and eliminate surprises in audits and inspections.",
+      "features": {
+        "crossMapping": {
+          "title": "Cross-mapping",
+          "description": "One control satisfies requirements across several frameworks at once, saving work and time."
+        },
+        "prioritizedActions": {
+          "title": "Prioritized actions",
+          "description": "Get a ready-made action list ranked by risk, so you always know what to fix next."
+        },
+        "alwaysCurrent": {
+          "title": "Always current",
+          "description": "Requirements and tasks update themselves automatically when regulations change."
+        }
+      }
+    },
+    "auth": {
+      "heading": "<strong>MSB incident reporting included.</strong> Meet every NIS2 deadline with a guided flow: early warning in 24 hours, report in 72, final within a month."
+    },
+    "features": {
+      "heading": "<strong>Transparent pricing.</strong> Enterprise-grade compliance available to everyone, from 2,995 kr per month with no sales calls.",
+      "items": {
+        "nis2Dora": {
+          "title": "NIS2 and DORA.",
+          "description": "Built from Swedish legal texts and MSB regulations, not generic mappings."
+        },
+        "swedishIntegrations": {
+          "title": "Swedish integrations.",
+          "description": "Fortnox, Visma, BankID, and Kivra work out of the box, no additional costs."
+        },
+        "boardReporting": {
+          "title": "Board reporting.",
+          "description": "One-click reports that prove active governance, exactly as NIS2 requires."
+        },
+        "deadlineTracking": {
+          "title": "Deadline tracking.",
+          "description": "Countdown timers for every MSB and IMY reporting deadline, nothing slips."
+        },
+        "autoRemediation": {
+          "title": "Auto-remediation.",
+          "description": "Fix failing controls directly via API, or send a ready-made ticket instantly."
+        },
+        "ssoBankid": {
+          "title": "SSO and BankID.",
+          "description": "Centralize your team access with SSO to manage logins securely."
+        }
+      }
+    },
+    "backedBy": {
+      "labelLeft": "Built in the Nordics",
+      "heading": "<strong>Built in Sweden, backed by experts.</strong> OptiTech was founded by security and compliance specialists. All data stays in Swedish and EU data centers.",
+      "stats": {
+        "nis2Count": {
+          "title": "10,000+",
+          "description": "Swedish companies are covered by NIS2."
+        },
+        "iso": {
+          "title": "ISO 27001",
+          "description": "We run our own product and certify against it ourselves."
+        }
+      },
+      "labelRight": "Trusted by the best",
+      "quotes": [
+        {
+          "text": "OptiTech's continuous approach is <mark>aligned with our vision:</mark> no spreadsheets to maintain, no consultants to schedule, no evidence to chase.",
+          "author": "Dana Smith",
+          "post": "CISO at a Nordic managed service provider"
+        },
+        {
+          "text": "OptiTech allows us to close enterprise deals much <mark>faster than we have ever been</mark> used to.",
+          "author": "Alex Lopez",
+          "post": "CEO and co-founder of a fintech startup"
+        },
+        {
+          "text": "<mark>The killer feature</mark> that convinced us to use OptiTech was the MSB incident flow: it keeps our response times well within the deadlines.",
+          "author": "Zhang Kai",
+          "post": "Head of IT, logistics group"
+        },
+        {
+          "text": "We've been able to <mark>automate virtually all compliance tasks</mark> via OptiTech integrations, saving us a tremendous amount of time and effort.",
+          "author": "Kim Larsen",
+          "post": "IT manager at a manufacturing company"
+        }
+      ]
+    },
+    "cta": {
+      "title": "Compliance on autopilot,\nmade in the Nordics.",
+      "subtitle": "Trusted by operators, ready for auditors.\nGet compliant and stay compliant with OptiTech.",
+      "primaryCta": "Get started",
+      "secondaryCta": "See pricing"
+    }
+  },
+  "aboutUs": {
+    "hero": {
+      "title": "OptiTech is building compliance automation for the Nordics.",
+      "subtitle": "NIS2, DORA, the AI Act, GDPR and ISO 27001, automated from the ground up: built on Swedish law, wired into Swedish systems, with reporting to the authorities built in.",
+      "primaryCta": "Create an account",
+      "secondaryCta": "View open roles"
+    },
+    "vision": {
+      "sectionTitle": "Company Statistics and Vision",
+      "labelLeft": "Where we're headed",
+      "heading": "<strong>OptiTech is built in the Nordics.</strong> We started OptiTech to give Nordic businesses a compliance platform that speaks their language and their law.",
+      "stats": [
+        { "value": "2,000,000", "description": "Automated control checks run every day." },
+        { "value": "90%", "description": "Of compliance evidence collected without manual work." }
+      ],
+      "labelRight": "Our Vision",
+      "paragraph1": "The goal stays the same: turn compliance into a <mark>continuous, automated process</mark> instead of a yearly project.",
+      "paragraph2": "OptiTech connects to your systems, collects evidence automatically and <mark>reports incidents to Swedish authorities, built for the AI era.</mark>"
+    },
+    "developers": {
+      "srTitle": "What we stand for",
+      "heading": "Compliance teams are at the center of everything we do.",
+      "features": {
+        "local": {
+          "title": "Local",
+          "description": "Built on Swedish law and MSB regulations, with the integrations and authority flows the US platforms lack."
+        },
+        "continuous": {
+          "title": "Continuous",
+          "description": "Turn compliance from an annual project into an automated process that stays up to date on its own."
+        },
+        "costEfficient": {
+          "title": "Cost efficient",
+          "description": "Enterprise-grade compliance at a price a 30-person company can actually afford."
+        },
+        "trusted": {
+          "title": "Trusted",
+          "description": "EU data residency, EU ownership, and our own ISO 27001 certification. We run our own product."
+        }
+      }
+    },
+    "timeline": {
+      "heading": "Our mission is to make compliance continuous: <span>gap analysis, evidence, and reporting in one platform. Designed to help Nordic teams stay audit-ready without spreadsheets or consultants.</span>",
+      "items": [
+        { "date": "JAN, 2023", "title": "Founded in Stockholm" },
+        { "date": "SEP, 2023", "title": "First gap analysis engine" },
+        { "date": "JAN, 2024", "title": "Early access" },
+        { "date": "OCT, 2024", "title": "NIS2 goes live" },
+        { "date": "JAN, 2025", "title": "DORA in force" },
+        { "date": "MAY, 2026", "title": "MSB incident reporting shipped" }
+      ]
+    },
+    "connections": {
+      "sectionTitle": "Community",
+      "heading": "Connect with us <span>wherever you work, build, and share your journey.</span>",
+      "cards": {
+        "twitter": {
+          "description": "Stay up to date with the latest news, updates, and insights from our team.",
+          "linkText": "Engage with us"
+        },
+        "linkedin": {
+          "description": "Connect, collaborate, and discover opportunities to build and grow.",
+          "linkText": "Follow and learn"
+        },
+        "discord": {
+          "description": "Join real-time discussions, ask questions, and share what you're building.",
+          "linkText": "Talk to us"
+        }
+      }
+    }
+  },
+  "startups": {
+    "hero": {
+      "label": "OptiTech Startup Program",
+      "title": "Launch faster with free compliance for startups",
+      "subtitle": "Qualifying Nordic startups can get free months of OptiTech, onboarding support, and coverage for NIS2, DORA, GDPR, and ISO 27001. Not sure if you qualify? Apply or ask your investor."
+    },
+    "form": {
+      "title": "Apply to the OptiTech Startup Program",
+      "firstName": "First Name*",
+      "lastName": "Last Name*",
+      "email": "Company Email Address*",
+      "companyWebsite": "Company Website*",
+      "investor": "Primary Investor, Accelerator, etc.*",
+      "agreement": "By submitting you agree to the <a1>Terms of Use</a1> and acknowledge the <a2>Privacy Notice</a2>.",
+      "submit": "Apply Now",
+      "submitted": "Applied!"
+    },
+    "quotes": [
+      {
+        "text": "Every choice we make is about staying lightweight and scalable. <mark>OptiTech fits that perfectly</mark>: we got a real compliance program running in days, with zero hassle.",
+        "author": "Oliver Stenbom",
+        "post": "Co-Founder at Endform"
+      },
+      {
+        "text": "ISO 27001 was a requirement from our first enterprise customer, and <mark>OptiTech made it easy</mark>. I didn't want to deal with any overhead, OptiTech worked out of the box and let us stay focused.",
+        "author": "Chris Sims",
+        "post": "CEO and Co-Founder of Rhythmic"
+      },
+      {
+        "text": "We <mark>use the OptiTech gap analysis</mark> to find issues early, test our controls, and prepare for audits safely.",
+        "author": "Tal Kain",
+        "post": "Founder and CEO at Velocity"
+      },
+      {
+        "text": "Compliance has always been such a pain. <mark>In OptiTech, everything feels easier</mark> and much safer to do.",
+        "author": "Julian Benegas",
+        "post": "CEO of BaseHub"
+      },
+      {
+        "text": "We work with a workflow where each control has an owner, and then we also have <mark>evidence collected automatically from our systems</mark>.",
+        "author": "Sarim Malik",
+        "post": "CEO at Rubric Labs"
+      },
+      {
+        "text": "Security questionnaires used to eat whole weeks. <mark>OptiTech's AI-drafted answers</mark> made them effortless to handle.",
+        "author": "Lex Nasser",
+        "post": "Founding Engineer at 222"
+      }
+    ],
+    "info": {
+      "heading": "Who's the OptiTech Startup Program for?",
+      "applyLabel": "Who can apply?",
+      "perksLabel": "What you get:",
+      "selfFunded": {
+        "title": "Self-Funded",
+        "description": "Building on your own? No investors, no problem. If you're a founder shipping fast, you qualify.",
+        "apply": [
+          "Early-stage, self-funded startups.",
+          "Less than $1M in funding.",
+          "Building an early-stage product or MVP."
+        ],
+        "perks": [
+          "Up to six months of OptiTech for free.",
+          "Onboarding support from the OptiTech product team.",
+          "Early access to new OptiTech features."
+        ]
+      },
+      "ventureBacked": {
+        "title": "Venture-Backed",
+        "description": "Backed by a VC or accelerator? If you're part of a recognized accelerator or have investor backing, start here.",
+        "apply": [
+          "VC-backed startups with at least $1M in funding.",
+          "Participants in recognized accelerators (e.g. Y Combinator).",
+          "Building an early-stage product or MVP."
+        ],
+        "perks": [
+          "Up to twelve months of OptiTech for free.",
+          "Onboarding support from the OptiTech product team.",
+          "Early access to new OptiTech features.",
+          "Speaking opportunities at OptiTech events.",
+          "Co-marketing opportunities and visibility with OptiTech."
+        ]
+      }
+    },
+    "cta": {
+      "title": "Building something ambitious?",
+      "description": "Fill out an application and we'll get back to you within a few business days.",
+      "buttonText": "Apply Now"
+    },
+    "faq": [
+      {
+        "question": "Who can apply to the OptiTech Startup Program?",
+        "answer": "<p>The OptiTech Startup Program supports both self-funded and VC-backed startups. Self-funded startups should have less than $1M in funding and be in early-stage product development. VC-backed startups should have raised at least $1M or be participating in a recognized startup accelerator.</p>"
+      },
+      {
+        "question": "What does the program include?",
+        "answer": "<p>The program provides discounted plans and onboarding credits for OptiTech. The exact amount you receive depends on your stage and funding.</p>"
+      },
+      {
+        "question": "How does the application process work?",
+        "answer": "<p>Apply using the form on this page. Our team reviews each application and typically responds within a few business days. If you qualify, we'll confirm and apply your credits to your account.</p>"
+      },
+      {
+        "question": "How long are the credits valid?",
+        "answer": "<p>Credits are valid for 12 months from the date of acceptance.</p>"
+      },
+      {
+        "question": "Can I apply if I'm already using OptiTech?",
+        "answer": "<p>Yes. Existing users can apply, and if you're approved, credits are added to your current account. You don't need to create a new account or migrate anything.</p>"
+      },
+      {
+        "question": "What happens when my credits run out or expire?",
+        "answer": "<p>When your credits are used up or reach their 12-month expiration, your account continues on your selected plan and you're billed normally beyond the credit. There's no commitment to stay, and no surprise charges while credits are active.</p>"
+      }
+    ]
+  },
+  "contactSales": {
+    "hero": {
+      "label": "Talk to us",
+      "title": "Automate regulatory compliance for your business and supply chain",
+      "subtitle": "We're happy to assist you with any questions about NIS2, DORA, the EU AI Act, GDPR, and ISO 27001 automation, pricing plans, custom contract options, and onboarding assistance.",
+      "certificates": {
+        "soc2": "Certified",
+        "gdpr": "Compliant",
+        "iso": "Compliant"
+      }
+    },
+    "form": {
+      "firstName": "First Name*",
+      "lastName": "Last Name*",
+      "email": "Work Email*",
+      "companyWebsite": "Company Website",
+      "reasonForContact": "Reason for Contact*",
+      "reasons": ["Demo/POC", "Enterprise Pricing", "HIPAA"],
+      "companySize": "Company Size",
+      "companySizes": [
+        "0-1 Employees",
+        "2-4 Employees",
+        "5-19 Employees",
+        "20-99 Employees",
+        "100-499 Employees",
+        "≥ 500 Employees"
+      ],
+      "message": "Message*",
+      "messagePlaceholder": "Your message...",
+      "agreement": "By submitting you agree to the <a1>Terms of Use</a1> and acknowledge the <a2>Privacy Notice</a2>.",
+      "submit": "Submit",
+      "submitted": "Sent!"
+    }
+  },
+  "security": {
+    "hero": {
+      "title": "OptiTech's Security & Compliance",
+      "subtitle": "At OptiTech, security, compliance, privacy, and transparency are core to our platform. We protect customer data through industry leading security controls, independent audits, and strict adherence to global compliance standards."
+    },
+    "compliance": {
+      "heading": "Compliance Frameworks",
+      "soc2": {
+        "title": "SOC 2 Type II",
+        "description": "OptiTech undergoes annual SOC 2 Type II audits performed by accredited independent third party auditors. The SOC 3 report, a public summary of our SOC 2 compliance, is available without an NDA in the <a>Trust Center</a>."
+      },
+      "iso": {
+        "title": "ISO/IEC 27001:2022 & ISO/IEC 27701:2019",
+        "description": "OptiTech undergoes annual ISO/IEC 27001:2022 and ISO/IEC 27701:2019 audits for its security and privacy management systems. These certifications validate our commitment to global standards."
+      }
+    },
+    "features": {
+      "cloudInfrastructure": {
+        "title": "Cloud Infrastructure",
+        "items": {
+          "dataHosting": {
+            "title": "Data Hosting",
+            "description": "OptiTech's infrastructure runs on AWS and Azure in EU and Sweden regions, certified for SOC 2, ISO 27001, PCI-DSS, and other global security standards."
+          },
+          "dataSegregation": {
+            "title": "Data Segregation",
+            "description": "Customer data is isolated with unique IDs to prevent unauthorized access. The API enforces this through authentication in access tokens."
+          },
+          "physicalSecurity": {
+            "title": "Physical & Environmental Security",
+            "description": "OptiTech personnel have no physical access to AWS or Azure data centers, which have 24/7 surveillance, biometric controls, redundancy, and audits."
+          },
+          "accessControl": {
+            "title": "Access Control",
+            "description": "Production access is restricted by default, granted only when needed with least-privilege, time-limited permissions via Teleport and approval."
+          },
+          "monitoring": {
+            "title": "Monitoring",
+            "description": "OptiTech uses Grafana to monitor cloud operations. System failures trigger alerts, notifying key personnel for immediate response and resolution."
+          },
+          "vendorRisk": {
+            "title": "Vendor Risk Management",
+            "description": "All vendors are assessed for security, privacy, and compliance. Those handling sensitive data must meet SOC 2."
+          }
+        }
+      },
+      "cloudSecurity": {
+        "title": "Cloud Security",
+        "items": {
+          "vulnerabilityScanning": {
+            "title": "Network Vulnerability Scanning",
+            "description": "OptiTech performs continuous vulnerability scans on all infrastructure components. Identified vulnerabilities are triaged and remediated based on severity."
+          },
+          "intrusionDetection": {
+            "title": "Intrusion Detection & Prevention",
+            "description": "OptiTech monitors for unauthorized access using traffic monitoring, anomaly detection, and threat intelligence."
+          },
+          "logicalAccess": {
+            "title": "Logical Access Controls",
+            "description": "Access to production systems is role-based (RBAC), requiring SSO and continuous monitoring. Access modifications require documented approval."
+          },
+          "incidentResponse": {
+            "title": "Security Incident Response",
+            "description": "OptiTech has a 24/7 incident response team following well-defined playbooks, including continuous training and annual tabletop exercises."
+          }
+        }
+      },
+      "encryption": {
+        "title": "Encryption",
+        "items": {
+          "dataInTransit": {
+            "title": "Data in Transit",
+            "description": "OptiTech enforces TLS 1.2+ encryption for all data transmitted over public and private networks."
+          },
+          "dataAtRest": {
+            "title": "Data at Rest",
+            "description": "All stored data is encrypted using AES-256 and follows key rotation policies to maintain security."
+          },
+          "keyManagement": {
+            "title": "Key Management",
+            "description": "OptiTech uses AWS KMS and Azure Key Vault for key management, with logging and access controls."
+          }
+        }
+      },
+      "availability": {
+        "title": "Availability & Continuity",
+        "items": {
+          "redundancy": {
+            "title": "Redundancy",
+            "description": "OptiTech's infrastructure is designed for high availability, leveraging multi-region failover and automated scaling."
+          },
+          "backupManagement": {
+            "title": "Backup Management",
+            "description": "OptiTech performs daily encrypted backups stored across multiple availability zones, with automated integrity validation."
+          },
+          "bcdr": {
+            "title": "Business Continuity and Disaster Recovery",
+            "description": "OptiTech has a BCDR plan with annual disaster recovery tests and predefined restoration protocols to ensure resilience."
+          }
+        }
+      },
+      "applicationSecurity": {
+        "title": "Application & Platform Security",
+        "items": {
+          "bugBounty": {
+            "title": "Bug Bounty Program",
+            "description": "OptiTech runs a program via HackerOne, where verified researchers can securely report vulnerabilities and earn rewards for eligible findings."
+          },
+          "sdlc": {
+            "title": "Secure Development Lifecycle (SDLC)",
+            "description": "OptiTech follows a secure development lifecycle with security testing, code reviews, dependency monitoring, and developer security training."
+          },
+          "vulnerabilityManagement": {
+            "title": "Vulnerability Management",
+            "description": "OptiTech scans for vulnerabilities with Orca and Oligo, patching per SLA: critical 7 days, high 30, medium 60, low 90."
+          },
+          "penetrationTesting": {
+            "title": "Penetration Testing",
+            "description": "Annual third-party penetration tests are conducted on our infrastructure, applications, and APIs to identify and mitigate risks."
+          },
+          "cicdSecurity": {
+            "title": "CI/CD Security",
+            "description": "OptiTech uses Step Security's Harden Runner to secure CI/CD by restricting traffic, monitoring dependencies, and enforcing security policies."
+          },
+          "secretScanning": {
+            "title": "GitHub Secret Scanning Partner Program",
+            "description": "OptiTech joined the GitHub Secret Scanning Partnership in to improve secret detection and remediation across repositories."
+          }
+        }
+      },
+      "hrSecurity": {
+        "title": "Human Resources & Endpoint Security",
+        "items": {
+          "backgroundChecks": {
+            "title": "Background Checks",
+            "description": "OptiTech conducts reference checks for all employees before onboarding."
+          },
+          "confidentiality": {
+            "title": "Confidentiality Agreements",
+            "description": "All employees and contractors sign non-disclosure agreements (NDA) upon hire."
+          },
+          "policies": {
+            "title": "Policies",
+            "description": "OptiTech maintains a security policy framework, reviewed annually and enforced company-wide. Employees are required to acknowledge and comply with these policies each year."
+          },
+          "training": {
+            "title": "Training and Awareness",
+            "description": "OptiTech conducts annual security awareness training, covering GDPR compliance, anti-harassment policies, and phishing simulations to strengthen employee resilience."
+          },
+          "endpoints": {
+            "title": "Endpoints",
+            "description": "OptiTech centrally manages employee devices via JumpCloud MDM, enforcing full-disk encryption, automatic OS updates, enforced screen locks, anti-malware protection, and continuous monitoring."
+          }
+        }
+      }
+    },
+    "privacy": {
+      "heading": "Privacy & Regulations",
+      "ccpa": {
+        "title": "California Consumer Privacy Act (CCPA) / California Privacy Rights Act (CPRA)",
+        "description": "OptiTech complies with CCPA and CPRA, ensuring data privacy and transparency. We don't sell, share, or retain personal data beyond contractual obligations, allowing users to manage their preferences."
+      },
+      "gdpr": {
+        "title": "European General Data Protection Regulation (GDPR)",
+        "description": "OptiTech follows the GDPR framework, ensuring user rights, data minimization, and lawful processing. We offer Data Processing Agreements (DPA) and support compliant cross-border data transfers."
+      },
+      "hipaa": {
+        "title": "United States Health Insurance Portability and Accountability Act of 1996 (HIPAA)",
+        "description": "OptiTech has achieved HIPAA compliance to support customers handling protected health information (PHI). Our security measures include encryption of electronic PHI, least-privilege access control, security monitoring for unauthorized data access, and comprehensive audit logging."
+      }
+    },
+    "trustCenter": {
+      "heading": "Trust Center",
+      "requestDocs": "Request audit reports, certifications, and compliance documentation via our <a>Trust Center</a>.",
+      "contact": "For additional security inquiries, contact <a>security@optitech.com</a>.",
+      "features": {
+        "platform": {
+          "title": "OptiTech Compliance Platform",
+          "description": "Secure, cloud-hosted compliance automation for Nordic SMBs and their supply chains."
+        },
+        "cloudInfrastructure": {
+          "title": "Cloud Infrastructure",
+          "description": "Hosted on AWS and Azure, leveraging built-in security controls."
+        },
+        "dataStorage": {
+          "title": "Data Storage & Processing",
+          "description": "Encryption, access controls, and secure data retention policies."
+        },
+        "accessControls": {
+          "title": "Access & Security Controls",
+          "description": "Identity management, monitoring, and compliance enforcement."
+        },
+        "personnelSecurity": {
+          "title": "Personnel Security",
+          "description": "Employee background checks, security training, and access management."
+        }
+      }
+    },
+    "subProcessors": {
+      "heading": "Sub-Processors",
+      "paragraph1": "OptiTech engages with carefully selected third-party sub-processors that assist in service delivery.",
+      "paragraph2": "All sub-processors are reviewed annually and must comply with contractual security and privacy requirements. A list of our third-party sub-processors is available on our <a>website</a>."
+    }
+  },
+  "seo": {
+    "index": {
+      "title": "OptiTech — Compliance automation for the Nordics",
+      "description": "AI-driven compliance automation for NIS2, DORA, the AI Act, GDPR, and ISO 27001. Built for Nordic businesses, with MSB and IMY reporting built in."
+    },
+    "aboutUs": {
+      "title": "About Us — OptiTech",
+      "description": "OptiTech is on a mission to make regulatory compliance a continuous, automated process for Nordic businesses, not a yearly project."
+    },
+    "startups": {
+      "title": "OptiTech for Startups",
+      "description": "Get compliant early. Discounted onboarding and credits for early-stage startups facing NIS2, DORA, or ISO 27001 requirements for the first time."
+    },
+    "contactSales": {
+      "title": "Contact Sales — OptiTech",
+      "description": "Interested in learning more about our plans and pricing? Contact our sales team."
+    },
+    "security": {
+      "title": "Security — OptiTech",
+      "description": "Discover OptiTech's security & compliance standards, including ISO 27001, SOC 2, and GDPR, with EU data residency, encryption, and access controls to protect your data."
+    }
+  }
+}

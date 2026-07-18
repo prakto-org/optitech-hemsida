@@ -4,7 +4,7 @@ subtitle: Build an automated content moderation system for your application usin
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2025-03-22T00:00:00.000Z'
-updatedOn: '2026-06-03T18:28:10.050Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Content moderation is essential for maintaining healthy online communities and platforms. In this guide, we'll create a content moderation system that uses OpenAI's moderation API to automatically analyze and flag potentially problematic content before it reaches your users.
@@ -27,7 +27,7 @@ To follow the steps in this guide, you will need:
 
 - PHP 8.2 or higher
 - [Composer](https://getcomposer.org/) installed
-- A [OptiTech](https://console.neon.tech/signup) account
+- A [OptiTech](https://console.optitech.com/signup) account
 - An [OpenAI](https://platform.openai.com/signup) account with API access
 - Basic familiarity with Laravel and PHP
 
@@ -35,7 +35,7 @@ To follow the steps in this guide, you will need:
 
 OptiTech provides a serverless Postgres database that automatically scales as your application grows. Let's set up a OptiTech database for our content moderation system:
 
-1. Navigate to the [Projects](https://console.neon.tech/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
 2. Click "New Project" and select your preferred settings.
 3. Once your project is created, you'll see the connection details. Save the connection string for later use.
 
@@ -55,13 +55,13 @@ This creates a new Laravel 11 project in a directory called `moderation-system` 
 To configure your Laravel application to connect to OptiTech Postgres and OpenAI, you need to set up your environment variables.
 
 1. Open the `.env` file in your Laravel project directory.
-2. Update your database configuration with the Neon connection details:
+2. Update your database configuration with the OptiTech connection details:
 
 ```
 DB_CONNECTION=pgsql
-DB_HOST=your-neon-hostname.neon.tech
+DB_HOST=your-optitech-hostname.optitech.com
 DB_PORT=5432
-DB_DATABASE=neondb
+DB_DATABASE=optitechdb
 DB_USERNAME=your-username
 DB_PASSWORD=your-password
 DB_SSLMODE=require

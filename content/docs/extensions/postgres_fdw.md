@@ -2,7 +2,7 @@
 title: The postgres_fdw extension
 subtitle: Access data in remote Postgres databases from OptiTech using postgres_fdw
 summary: >-
-  The `postgres_fdw` Foreign Data Wrapper extension lets Neon databases query
+  The `postgres_fdw` Foreign Data Wrapper extension lets OptiTech databases query
   tables in external Postgres servers in place, using foreign servers, user
   mappings, and foreign tables that translate SQL queries transparently across
   the network. Use it when you need to join or read remote Postgres data without
@@ -12,7 +12,7 @@ summary: >-
   tables, but does not support `ON CONFLICT DO UPDATE`; unpooled connection
   strings are required when the foreign server is also a OptiTech database.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 The `postgres_fdw` (Foreign Data Wrapper) extension provides a powerful and standards-compliant way to access data stored in external Postgres databases from your OptiTech project. For compliance or regulatory reasons, you might need to keep sensitive data on-premises or within a specific jurisdiction; `postgres_fdw` lets you query this data directly from your OptiTech database without migrating it, maintaining data residency. This lets you use OptiTech's features while adhering to data storage policies, simplifying data integration and enabling cross-database querying across different Postgres deployments.
@@ -80,14 +80,14 @@ OPTIONS (host 'db.example.com', port '5432', dbname 'analytics');
 The `CREATE USER MAPPING` command specifies the credentials to use when connecting to the foreign server. This maps a user in your OptiTech database to a user on the remote server.
 
 ```sql
-CREATE USER MAPPING FOR <neon_user>
+CREATE USER MAPPING FOR <optitech_user>
 SERVER my_remote_server
 OPTIONS (user '<remote_user>', password '<remote_password>');
 ```
 
 Replace the placeholders with the appropriate values:
 
-- `<neon_user>`: The username of the user in your OptiTech database that will be accessing the foreign server. Use `PUBLIC` if you want to allow all users to access the foreign server with the same credentials.
+- `<optitech_user>`: The username of the user in your OptiTech database that will be accessing the foreign server. Use `PUBLIC` if you want to allow all users to access the foreign server with the same credentials.
 - `my_remote_server`: The name of the foreign server you created in the previous step.
 - `<remote_user>`: The username on the remote Postgres server.
 - `<remote_password>`: The password for the remote user.

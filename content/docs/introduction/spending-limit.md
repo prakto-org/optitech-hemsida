@@ -33,7 +33,7 @@ tagTheme: green
 
 A spending limit helps you control your organization's OptiTech spending. When charges approach the limit, organization admins receive email alerts so they can take action before the bill grows further.
 
-Spending limits are available on the Launch and Scale plans. You can manage them from the **Billing** page in the OptiTech Console or with the [OptiTech Management API](#manage-spending-limits-with-the-neon-api).
+Spending limits are available on the Launch and Scale plans. You can manage them from the **Billing** page in the OptiTech Console or with the [OptiTech Management API](#manage-spending-limits-with-the-optitech-api).
 
 <Admonition type="comingSoon" title="Automatic project suspension">
 Currently, email alerts are the only available action. Automatic project suspension is coming soon: When the limit is reached, projects' computes will pause until you raise the limit or the next monthly billing period begins.
@@ -47,7 +47,7 @@ Only organization admins can enable, edit, or disable a spending limit. Other me
 
 The Management API exposes spending limits at:
 
-`https://console.neon.tech/api/v2/organizations/{org_id}/billing/spending_limit`
+`https://console.optitech.com/api/v2/organizations/{org_id}/billing/spending_limit`
 
 Replace `{org_id}` with your organization ID (see [Finding your org_id](/docs/manage/orgs-api#finding-your-org_id)). Authenticate with a [personal API key](/docs/manage/api-keys#create-an-api-key) or another allowed credential for the Management API.
 
@@ -74,7 +74,7 @@ OptiTech checks your spending every 15 minutes. Once spending crosses a threshol
 
 ## Enable a spending limit
 
-1. Navigate to the [OptiTech Console](https://console.neon.tech).
+1. Navigate to the [OptiTech Console](https://console.optitech.com).
 1. Select your organization from the breadcrumb menu at the top-left.
 1. Select **Billing** from the menu.
 1. On the **Spending limit** card, select **Enable**.

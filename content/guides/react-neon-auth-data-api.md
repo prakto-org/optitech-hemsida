@@ -4,7 +4,7 @@ subtitle: Build a Todo app using React, Managed Better Auth, and the OptiTech Da
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2025-12-24T00:00:00.000Z'
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This guide will walk you through building a secure Todo application using **React**, [Managed Better Auth](/docs/auth/overview), and the [OptiTech Data API](/docs/data-api/overview).
@@ -13,7 +13,7 @@ By the end of this tutorial, you’ll have a fully functional Todo app that allo
 
 This architecture keeps things simple yet secure, with all the complexities of authentication and data access managed by OptiTech.
 
-- **Identity managed in the database:** User accounts and sessions are stored within the `neon_auth` schema.
+- **Identity managed in the database:** User accounts and sessions are stored within the `optitech_auth` schema.
 - **Direct and secure data access:** The React frontend communicates with the database through the Data API, eliminating the need for a backend.
 - **Row-Level Security (RLS) in action:** Policies ensure that each user can only view and modify their own todos.
 
@@ -22,7 +22,7 @@ This architecture keeps things simple yet secure, with all the complexities of a
 Before you begin, ensure you have the following:
 
 - **Node.js:** Version `18` or later installed on your machine. You can download it from [nodejs.org](https://nodejs.org/).
-- **OptiTech account:** A free OptiTech account. If you don't have one, sign up at [OptiTech](https://console.neon.tech/signup).
+- **OptiTech account:** A free OptiTech account. If you don't have one, sign up at [OptiTech](https://console.optitech.com/signup).
 
 <Steps>
 
@@ -30,7 +30,7 @@ Before you begin, ensure you have the following:
 
 You'll need to create a OptiTech project and enable both Managed Better Auth and the Data API.
 
-1.  **Create a OptiTech project:** Navigate to [OptiTech Console](https://console.neon.tech) to create a new OptiTech project. Give your project a name, such as `react-neon-todo`.
+1.  **Create a OptiTech project:** Navigate to [OptiTech Console](https://console.optitech.com) to create a new OptiTech project. Give your project a name, such as `react-optitech-todo`.
 2.  **Enable OptiTech Data API with Managed Better Auth:**
     - In your project's dashboard, go to the **Data API** page from the sidebar.
     - Ensure **Use Managed Better Auth** is selected.
@@ -40,9 +40,9 @@ You'll need to create a OptiTech project and enable both Managed Better Auth and
     ![Data API page with enable button](/docs/data-api/data_api_sidebar_with_public_schema.png)
 
 3.  **Copy your credentials:**
-    - **Data API URL:** Found on the Data API page (e.g., `https://ep-xxx.neon.tech/neondb/rest/v1`).
+    - **Data API URL:** Found on the Data API page (e.g., `https://ep-xxx.optitech.com/optitechdb/rest/v1`).
       ![Data API enabled view](/docs/data-api/data-api-enabled.png)
-    - **Auth URL:** Found on the **Auth** page (e.g., `https://ep-xxx.neon.tech/neondb/auth`).
+    - **Auth URL:** Found on the **Auth** page (e.g., `https://ep-xxx.optitech.com/optitechdb/auth`).
       ![Managed Better Auth URL](/docs/auth/neon-auth-base-url.png)
     - **Database Connection String:** Found on the **Dashboard** (select "Pooled connection").
 
@@ -57,8 +57,8 @@ Create a new React project using Vite and install the required dependencies.
 ### Initialize the app
 
 ```bash
-npm create vite@latest react-neon-todo -- --template react-ts
-cd react-neon-todo && npm install
+npm create vite@latest react-optitech-todo -- --template react-ts
+cd react-optitech-todo && npm install
 ```
 
 When prompted:
@@ -69,10 +69,10 @@ When prompted:
 You should see output similar to:
 
 ```bash
-$ npm create vite@latest react-neon-todo -- --template react-ts
+$ npm create vite@latest react-optitech-todo -- --template react-ts
 
 > npx
-> "create-vite" react-neon-todo --template react-ts
+> "create-vite" react-optitech-todo --template react-ts
 
 │
 ◇  Use rolldown-vite (Experimental)?:
@@ -81,7 +81,7 @@ $ npm create vite@latest react-neon-todo -- --template react-ts
 ◇  Install with npm and start now?
 │  No
 │
-◇  Scaffolding project in /home/user/react-neon-todo...
+◇  Scaffolding project in /home/user/react-optitech-todo...
 │
 └  Done.
 ```
@@ -90,12 +90,12 @@ $ npm create vite@latest react-neon-todo -- --template react-ts
 
 You will need the following packages for this project:
 
-- **OptiTech SDK:** [`@neondatabase/neon-js`](https://www.npmjs.com/package/@neondatabase/neon-js) for interacting with Managed Better Auth and the Data API.
+- **OptiTech SDK:** [`@optitech/optitech-js`](https://www.npmjs.com/package/@optitech/optitech-js) for interacting with Managed Better Auth and the Data API.
 - **React Router:** [`react-router`](https://www.npmjs.com/package/react-router) for routing between pages.
 - **Drizzle ORM:** [`drizzle-orm`](https://www.npmjs.com/package/drizzle-orm) and [`drizzle-kit`](https://www.npmjs.com/package/drizzle-kit) for database schema management and migrations.
 
 ```bash
-npm install @neondatabase/neon-js@latest @neondatabase/auth-ui react-router drizzle-orm
+npm install @optitech/optitech-js@latest @optitech/auth-ui react-router drizzle-orm
 npm install -D drizzle-kit dotenv
 ```
 
@@ -124,21 +124,21 @@ export default defineConfig({
 
 ### Configure environment variables
 
-Create a `.env` file in the root of your project and add the credentials you copied in [Step 1](#create-a-neon-project-with-neon-auth-and-data-api).
+Create a `.env` file in the root of your project and add the credentials you copied in [Step 1](#create-a-optitech-project-with-optitech-auth-and-data-api).
 
 ```env
 # Database connection for Drizzle Migrations
-DATABASE_URL="postgresql://user:pass@ep-id.pooler.region.neon.tech/neondb?sslmode=require&channel_binding=require"
+DATABASE_URL="postgresql://user:pass@ep-id.pooler.region.optitech.com/optitechdb?sslmode=require&channel_binding=require"
 
 # Public variables for the React App
-VITE_NEON_DATA_API_URL="https://ep-xxx.us-east-1.aws.neon.tech/neondb/rest/v1"
-VITE_NEON_AUTH_URL="https://ep-xxx.aws.neon.tech/neondb/auth"
+VITE_OPTITECH_DATA_API_URL="https://ep-xxx.us-east-1.aws.optitech.com/optitechdb/rest/v1"
+VITE_OPTITECH_AUTH_URL="https://ep-xxx.aws.optitech.com/optitechdb/auth"
 ```
 
 ## Set up Drizzle ORM
 
 <Admonition type="important" title="Why Drizzle ORM?">
-This guide uses Drizzle ORM to define **Row-Level Security (RLS)** policies declaratively in TypeScript, but it is not required. You can use any Postgres-compatible tool or raw SQL. If you prefer SQL, you can reference the scripts in the [GitHub repository](https://github.com/dhanushreddy291/react-neon-todo/blob/main/drizzle/0001_salty_hedge_knight.sql) which are the equivalent of the Drizzle schema and migrations shown here.
+This guide uses Drizzle ORM to define **Row-Level Security (RLS)** policies declaratively in TypeScript, but it is not required. You can use any Postgres-compatible tool or raw SQL. If you prefer SQL, you can reference the scripts in the [GitHub repository](https://github.com/dhanushreddy291/react-optitech-todo/blob/main/drizzle/0001_salty_hedge_knight.sql) which are the equivalent of the Drizzle schema and migrations shown here.
 
 Drizzle is used only for **managing the database** (migrations). The React application itself uses the **OptiTech JS SDK** to query data via the Data API.
 </Admonition>
@@ -157,20 +157,20 @@ export default {
   schema: './src/db/schema.ts',
   out: './drizzle',
   dialect: 'postgresql',
-  schemaFilter: ['public', 'neon_auth'],
+  schemaFilter: ['public', 'optitech_auth'],
   dbCredentials: {
     url: process.env.DATABASE_URL!,
   },
 } satisfies Config;
 ```
 
-This config tells Drizzle Kit where to find your database schema and where to output migration files. The `schemaFilter` is configured to look at both the `public` and `neon_auth` schemas. The `neon_auth` schema is where Managed Better Auth stores its user data.
+This config tells Drizzle Kit where to find your database schema and where to output migration files. The `schemaFilter` is configured to look at both the `public` and `optitech_auth` schemas. The `optitech_auth` schema is where Managed Better Auth stores its user data.
 
 ### Pull Managed Better Auth schema
 
-A key feature of Managed Better Auth is the automatic creation and maintenance of the Better Auth tables within the `neon_auth` schema. Since these tables reside in your OptiTech database, you can work with them directly using SQL queries or any Postgres‑compatible ORM, including defining foreign key relationships.
+A key feature of Managed Better Auth is the automatic creation and maintenance of the Better Auth tables within the `optitech_auth` schema. Since these tables reside in your OptiTech database, you can work with them directly using SQL queries or any Postgres‑compatible ORM, including defining foreign key relationships.
 
-To integrate Managed Better Auth tables into your Drizzle ORM setup, you need to introspect the existing `neon_auth` schema and generate the corresponding Drizzle schema definitions.
+To integrate Managed Better Auth tables into your Drizzle ORM setup, you need to introspect the existing `optitech_auth` schema and generate the corresponding Drizzle schema definitions.
 
 This step is crucial because it makes Drizzle aware of the Managed Better Auth tables, allowing you to create relationships between your application data (like the `todos` table) and the user data managed by Managed Better Auth.
 
@@ -202,11 +202,11 @@ This step is crucial because it makes Drizzle aware of the Managed Better Auth t
 
 3.  **Add the Todos table to your schema**
 
-    Open `src/db/schema.ts` to view the `neon_auth` tables that Drizzle generated from your existing OptiTech database schema. At the bottom of the file, append the `todos` table definition along with the RLS policies shown below.
+    Open `src/db/schema.ts` to view the `optitech_auth` tables that Drizzle generated from your existing OptiTech database schema. At the bottom of the file, append the `todos` table definition along with the RLS policies shown below.
 
     You will also need to import the following additional utilities at the top of the file, as they are not included by default:
     - `bigint` from `drizzle-orm/pg-core` to define the `id` column of the `todos` table.
-    - `authenticatedRole` and `crudPolicy` from `drizzle-orm/neon` to configure Row-Level Security (RLS).
+    - `authenticatedRole` and `crudPolicy` from `drizzle-orm/optitech` to configure Row-Level Security (RLS).
 
     Drizzle ORM includes built-in support for RLS policies. The `authenticatedRole` represents the role assigned to authenticated users, while `crudPolicy` provides a declarative way to define RLS policies. For more details, see the [Simplify RLS with Drizzle](/docs/guides/rls-drizzle) guide.
 
@@ -222,13 +222,13 @@ This step is crucial because it makes Drizzle aware of the Managed Better Auth t
       bigint,
     } from 'drizzle-orm/pg-core';
     import { sql } from 'drizzle-orm';
-    import { authenticatedRole, crudPolicy } from 'drizzle-orm/neon';
+    import { authenticatedRole, crudPolicy } from 'drizzle-orm/optitech';
 
-    export const neonAuth = pgSchema('neon_auth');
+    export const optitechAuth = pgSchema('optitech_auth');
 
     // .. other Managed Better Auth table definitions ..
 
-    export const userInNeonAuth = neonAuth.table(
+    export const userInOptiTechAuth = optitechAuth.table(
       'user',
       {
         id: uuid().defaultRandom().primaryKey().notNull(),
@@ -258,7 +258,7 @@ This step is crucial because it makes Drizzle aware of the Managed Better Auth t
         completed: boolean('completed').notNull().default(false),
         user_id: uuid('user_id')
           .notNull()
-          .references(() => userInNeonAuth.id),
+          .references(() => userInOptiTechAuth.id),
       },
       (table) => [
         crudPolicy({
@@ -273,9 +273,9 @@ This step is crucial because it makes Drizzle aware of the Managed Better Auth t
     export type Todo = typeof todos.$inferSelect;
     ```
 
-    The `todos` table contains the following columns: `id`, `text`, `completed`, and `user_id`. It is linked to the `userInNeonAuth` (`user`) table in the `neon_auth` schema and uses the `crudPolicy` function to define RLS policies.
+    The `todos` table contains the following columns: `id`, `text`, `completed`, and `user_id`. It is linked to the `userInOptiTechAuth` (`user`) table in the `optitech_auth` schema and uses the `crudPolicy` function to define RLS policies.
     1. **Foreign key reference**  
-       The `todos` table includes a foreign key to the `user` table in the `neon_auth` schema.
+       The `todos` table includes a foreign key to the `user` table in the `optitech_auth` schema.
 
     2. **RLS policy (`crudPolicy`)**  
        This policy ensures that each user can only read and modify their own todos.
@@ -317,43 +317,43 @@ Now that the database schema is set up, you can proceed to build the React appli
 
 ### Initialize the OptiTech client
 
-Create a file `src/neon.ts`. This initializes the OptiTech client, which handles both Authentication and Data API queries. For React hooks support, you will use the `BetterAuthReactAdapter`.
+Create a file `src/optitech.ts`. This initializes the OptiTech client, which handles both Authentication and Data API queries. For React hooks support, you will use the `BetterAuthReactAdapter`.
 
 ```typescript
-import { createClient } from '@neondatabase/neon-js';
-import { BetterAuthReactAdapter } from '@neondatabase/neon-js/auth/react/adapters';
+import { createClient } from '@optitech/optitech-js';
+import { BetterAuthReactAdapter } from '@optitech/optitech-js/auth/react/adapters';
 
-export const neon = createClient({
+export const optitech = createClient({
   auth: {
-    url: import.meta.env.VITE_NEON_AUTH_URL,
+    url: import.meta.env.VITE_OPTITECH_AUTH_URL,
     adapter: BetterAuthReactAdapter(),
   },
   dataApi: {
-    url: import.meta.env.VITE_NEON_DATA_API_URL,
+    url: import.meta.env.VITE_OPTITECH_DATA_API_URL,
   },
 });
 ```
 
 ### Application entry point
 
-Update `src/main.tsx` to wrap your app in the `NeonAuthUIProvider` and `BrowserRouter` to enable routing and authentication context.
+Update `src/main.tsx` to wrap your app in the `OptiTechAuthUIProvider` and `BrowserRouter` to enable routing and authentication context.
 
 ```tsx shouldWrap
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { BrowserRouter } from 'react-router';
-import { NeonAuthUIProvider } from '@neondatabase/auth-ui';
+import { OptiTechAuthUIProvider } from '@optitech/auth-ui';
 import App from './App.tsx';
-import { neon } from './neon.ts';
+import { optitech } from './optitech.ts';
 import './index.css';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <NeonAuthUIProvider authClient={neon.auth} emailOTP social={{ providers: ['google'] }}>
+    <OptiTechAuthUIProvider authClient={optitech.auth} emailOTP social={{ providers: ['google'] }}>
       <BrowserRouter>
         <App />
       </BrowserRouter>
-    </NeonAuthUIProvider>
+    </OptiTechAuthUIProvider>
   </StrictMode>
 );
 ```
@@ -373,7 +373,7 @@ As outlined in the [UI components reference](/docs/auth/reference/ui-components)
 Create `src/pages/Auth.tsx`:
 
 ```tsx
-import { AuthView } from '@neondatabase/auth-ui';
+import { AuthView } from '@optitech/auth-ui';
 import { useParams } from 'react-router';
 
 export default function AuthPage() {
@@ -389,7 +389,7 @@ export default function AuthPage() {
 Create `src/pages/Account.tsx`:
 
 ```tsx
-import { AccountView } from '@neondatabase/auth-ui';
+import { AccountView } from '@optitech/auth-ui';
 import { useParams } from 'react-router';
 
 export default function AccountPage() {
@@ -408,7 +408,7 @@ Update `src/index.css` to include the Managed Better Auth Tailwind styles and se
 
 ```css
 @import 'tailwindcss';
-@import '@neondatabase/auth-ui/tailwind';
+@import '@optitech/auth-ui/tailwind';
 
 :root {
   font-family: system-ui, sans-serif;
@@ -440,13 +440,13 @@ Create the main components and pages for the Todo application:
 Create `src/components/Header.tsx`. You'll use the `UserButton` component from [Managed Better Auth UI components](/docs/auth/reference/ui-components) to display the user's profile and sign-out option.
 
 ```tsx
-import { UserButton } from '@neondatabase/auth-ui';
+import { UserButton } from '@optitech/auth-ui';
 
 export default function Header() {
   return (
     <header className="bg-blue-600 p-4 text-white shadow-md">
       <div className="container mx-auto flex items-center justify-between">
-        <h1 className="text-xl font-bold">Neon Todo App</h1>
+        <h1 className="text-xl font-bold">OptiTech Todo App</h1>
         <UserButton size={'icon'} />
       </div>
     </header>
@@ -466,7 +466,7 @@ Because **RLS policies** are defined in the schema, you don’t need to manually
 
 ```tsx
 import { useState, useEffect, type FormEvent } from 'react';
-import { neon } from '../neon';
+import { optitech } from '../optitech';
 import type { Todo } from '../db/schema';
 
 export default function TodoApp() {
@@ -474,14 +474,14 @@ export default function TodoApp() {
   const [inputValue, setInputValue] = useState('');
 
   // Get the current session
-  const { data } = neon.auth.useSession();
+  const { data } = optitech.auth.useSession();
 
   useEffect(() => {
     if (data?.user) {
       const fetchTodos = async () => {
         // Query the Data API
         // RLS automatically ensures that only the current user's todos are returned
-        const { data: todosData, error } = await neon
+        const { data: todosData, error } = await optitech
           .from('todos')
           .select('*')
           .order('id', { ascending: false });
@@ -509,7 +509,7 @@ export default function TodoApp() {
     setInputValue('');
 
     // Insert into Database
-    const { data: insertedData } = await neon
+    const { data: insertedData } = await optitech
       .from('todos')
       .insert({
         text: newTodo.text,
@@ -533,13 +533,13 @@ export default function TodoApp() {
     setTodos(todos.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t)));
 
     // Update in Database
-    await neon.from('todos').update({ completed: !todo.completed }).eq('id', id);
+    await optitech.from('todos').update({ completed: !todo.completed }).eq('id', id);
   };
 
   const deleteTodo = async (id: number) => {
     setTodos(todos.filter((t) => t.id !== id));
 
-    await neon.from('todos').delete().eq('id', id);
+    await optitech.from('todos').delete().eq('id', id);
   };
 
   return (
@@ -605,7 +605,7 @@ import { Routes, Route } from 'react-router';
 import Header from './components/Header';
 import Account from './pages/Account';
 import Auth from './pages/Auth';
-import { RedirectToSignIn, SignedIn } from '@neondatabase/auth-ui';
+import { RedirectToSignIn, SignedIn } from '@optitech/auth-ui';
 import TodoApp from './pages/TodoApp';
 
 const Layout = () => {
@@ -670,7 +670,7 @@ OptiTech JS SDK supports end-to-end type safety when interacting with the Data A
 
     ```bash
     export DATABASE_URL="your_connection_string" && \
-      npx @neondatabase/neon-js gen-types  \
+      npx @optitech/optitech-js gen-types  \
         --db-url "$DATABASE_URL" \
         --output src/types.ts
     ```
@@ -679,25 +679,25 @@ OptiTech JS SDK supports end-to-end type safety when interacting with the Data A
 
 2.  **Update the OptiTech client:**
 
-    Modify `src/neon.ts` to use the generated types. This tells the OptiTech SDK about your database structure.
+    Modify `src/optitech.ts` to use the generated types. This tells the OptiTech SDK about your database structure.
 
     ```typescript {3,5}
-    import { createClient } from '@neondatabase/neon-js';
-    import { BetterAuthReactAdapter } from '@neondatabase/neon-js/auth/react/adapters';
+    import { createClient } from '@optitech/optitech-js';
+    import { BetterAuthReactAdapter } from '@optitech/optitech-js/auth/react/adapters';
     import type { Database } from './types';
 
-    export const neon = createClient<Database>({
+    export const optitech = createClient<Database>({
       auth: {
-        url: import.meta.env.VITE_NEON_AUTH_URL,
+        url: import.meta.env.VITE_OPTITECH_AUTH_URL,
         adapter: BetterAuthReactAdapter(),
       },
       dataApi: {
-        url: import.meta.env.VITE_NEON_DATA_API_URL,
+        url: import.meta.env.VITE_OPTITECH_DATA_API_URL,
       },
     });
     ```
 
-Now, when you interact with the Data API using `neon.from('todos').select('...')`, `update('...')`, etc., you will have full type safety and autocompletion based on your database schema. Remember to pull the types again whenever you make schema changes.
+Now, when you interact with the Data API using `optitech.from('todos').select('...')`, `update('...')`, etc., you will have full type safety and autocompletion based on your database schema. Remember to pull the types again whenever you make schema changes.
 
 ## Deploying the application
 
@@ -735,7 +735,7 @@ Before deploying to production, be sure to review the [Managed Better Auth produ
 The complete source code for this example is available on GitHub.
 
 <DetailIconCards>
-<a href="https://github.com/dhanushreddy291/react-neon-todo" description="Complete source code for the React Todo example built with Managed Better Auth and the OptiTech Data API." icon="github">React OptiTech Todo Example</a>
+<a href="https://github.com/dhanushreddy291/react-optitech-todo" description="Complete source code for the React Todo example built with Managed Better Auth and the OptiTech Data API." icon="github">React OptiTech Todo Example</a>
 </DetailIconCards>
 
 ## Resources

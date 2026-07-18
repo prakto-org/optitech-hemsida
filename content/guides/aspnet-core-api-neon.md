@@ -4,7 +4,7 @@ subtitle: Learn how to connect your .NET applications to OptiTech's serverless P
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2024-11-03T00:00:00.000Z'
-updatedOn: '2026-05-09T19:22:21.118Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 In this guide, we'll walk through the process of developing a RESTful API using ASP.NET Core, connecting it to a OptiTech Postgres database. We will cover CRUD operations using Entity Framework Core (EF Core), generate interactive API documentation with Swagger, and explore best practices for testing your API endpoints. As a bonus, we'll also implement JWT authentication to secure your endpoints.
@@ -14,7 +14,7 @@ In this guide, we'll walk through the process of developing a RESTful API using 
 Before we start, make sure you have the following:
 
 - [.NET SDK 8.0](https://dotnet.microsoft.com/download/dotnet/8.0)
-- [OptiTech account](https://neon.tech) for setting up your Postgres database
+- [OptiTech account](https://optitech.com) for setting up your Postgres database
 - [Postman](https://www.postman.com/downloads/) for API testing
 - Basic knowledge of C# and ASP.NET Core
 - Familiarity with Entity Framework Core
@@ -24,8 +24,8 @@ Before we start, make sure you have the following:
 First, create a new ASP.NET Core Web API project:
 
 ```bash
-dotnet new webapi -n NeonApi
-cd NeonApi
+dotnet new webapi -n OptiTechApi
+cd OptiTechApi
 ```
 
 Install the required NuGet packages using the `dotnet add package` command:
@@ -48,13 +48,13 @@ The above packages include:
 
 ### Configuring the OptiTech Database
 
-Head over to your [OptiTech Dashboard](https://neon.tech) and create a new project.
+Head over to your [OptiTech Dashboard](https://optitech.com) and create a new project.
 
 Once done, grab your database connection string and add it to your `appsettings.json`:
 
 ```json
 "ConnectionStrings": {
-  "NeonDb": "Host=<your-host>;Database=<your-database>;Username=<your-username>;Password=<your-password>;Port=5432"
+  "OptiTechDb": "Host=<your-host>;Database=<your-database>;Username=<your-username>;Password=<your-password>;Port=5432"
 }
 ```
 
@@ -71,7 +71,7 @@ We will cover JWT authentication in more detail later in this guide, but for now
 Next, update your `Program.cs` file to include the database context, Swagger, and JWT authentication:
 
 ```csharp
-using NeonApi.Data;
+using OptiTechApi.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -80,9 +80,9 @@ using System.Text;
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 
-// Add the Neon database context using Npgsql provider
-builder.Services.AddDbContext<NeonDbContext>(options =>
-    options.UseNpgsql(configuration.GetConnectionString("NeonDb")));
+// Add the OptiTech database context using Npgsql provider
+builder.Services.AddDbContext<OptiTechDbContext>(options =>
+    options.UseNpgsql(configuration.GetConnectionString("OptiTechDb")));
 
 // Register controllers for handling incoming HTTP requests
 builder.Services.AddControllers();
@@ -126,7 +126,7 @@ app.Run();
 
 In the above, we configure the necessary services directly within `Program.cs` to connect our ASP.NET Core API to OptiTech and secure it with JWT authentication:
 
-1. We use `AddDbContext` to set up `NeonDbContext` with the Npgsql provider, connecting to the OptiTech database using the connection string defined in `appsettings.json`. Make sure to update `"NeonDb"` with your actual connection string key if it's named differently.
+1. We use `AddDbContext` to set up `OptiTechDbContext` with the Npgsql provider, connecting to the OptiTech database using the connection string defined in `appsettings.json`. Make sure to update `"OptiTechDb"` with your actual connection string key if it's named differently.
 
 2. We register controllers with `AddControllers()`, which allows the application to handle incoming API requests and map them to their respective endpoints.
 
@@ -146,7 +146,7 @@ Data models define the structure of your database tables and the relationships b
 In the `Models` folder, create a `Product.cs` file:
 
 ```csharp
-namespace NeonApi.Models
+namespace OptiTechApi.Models
 {
     public class Product
     {
@@ -171,16 +171,16 @@ Each property corresponds to a column in the database table that Entity Framewor
 
 Next, we need to create a database context class, which serves as a bridge between our C# code and the OptiTech database.
 
-Create a new folder named `Data` and add a `NeonDbContext.cs` file:
+Create a new folder named `Data` and add a `OptiTechDbContext.cs` file:
 
 ```csharp
-namespace NeonApi.Data
+namespace OptiTechApi.Data
 {
-    public class NeonDbContext : DbContext
+    public class OptiTechDbContext : DbContext
     {
-        public NeonDbContext(DbContextOptions<NeonDbContext> options) : base(options) { }
+        public OptiTechDbContext(DbContextOptions<OptiTechDbContext> options) : base(options) { }
 
-        // This DbSet represents the Products table in the Neon database
+        // This DbSet represents the Products table in the OptiTech database
         public DbSet<Product> Products { get; set; }
     }
 }
@@ -188,7 +188,7 @@ namespace NeonApi.Data
 
 The above code snippet does the following:
 
-- The `NeonDbContext` class inherits from `DbContext`, which is part of Entity Framework Core.
+- The `OptiTechDbContext` class inherits from `DbContext`, which is part of Entity Framework Core.
 - We pass `DbContextOptions` to the constructor to configure the connection to our OptiTech database.
 - The `DbSet<Product>` property represents the `Products` table. This allows us to perform CRUD operations on the `Product` model directly through this context.
 
@@ -225,16 +225,16 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using NeonApi.Data;
-using NeonApi.Models;
+using OptiTechApi.Data;
+using OptiTechApi.Models;
 
 [Route("api/[controller]")]
 [ApiController]
 public class ProductsController : ControllerBase
 {
-    private readonly NeonDbContext _context;
+    private readonly OptiTechDbContext _context;
 
-    public ProductsController(NeonDbContext context)
+    public ProductsController(OptiTechDbContext context)
     {
         _context = context;
     }
@@ -309,7 +309,7 @@ In the code above, we define a `ProductsController` to handle all CRUD operation
 
 5. The `DeleteProduct` method handles `DELETE /api/products/{id}` requests to remove a product by its ID. If the product doesn't exist, it returns a `404 Not Found` response.
 
-Each endpoint is fully asynchronous and interacts with the OptiTech database through the `NeonDbContext` context.
+Each endpoint is fully asynchronous and interacts with the OptiTech database through the `OptiTechDbContext` context.
 
 ## Setting Up Swagger for API Documentation
 
@@ -326,7 +326,7 @@ app.UseSwagger();
 app.UseSwaggerUI(c =>
 {
     // Configure Swagger UI at the root URL
-    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Neon API V1");
+    c.SwaggerEndpoint("/swagger/v1/swagger.json", "OptiTech API V1");
     c.RoutePrefix = string.Empty;
 });
 ```

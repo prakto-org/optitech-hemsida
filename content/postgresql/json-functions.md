@@ -6,7 +6,7 @@ page_description: >-
   that allow you to manage JSON data effectively.
 prev_url: 'https://www.postgresqltutorial.com/postgresql-json-functions/'
 ogImage: ''
-updatedOn: '2026-06-03T13:01:21.685Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: PostgreSQL ROW_NUMBER Function
@@ -17,7 +17,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-PostgreSQL's JSON functions work the same on any Postgres deployment, so everything here applies whether you're running Postgres yourself or on a managed service. If you're an enterprise looking to put JSON workloads next to your analytics and AI data, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres for the AI era, with strong performance, security, and native integration into the Lakehouse. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+PostgreSQL's JSON functions work the same on any Postgres deployment, so everything here applies whether you're running Postgres yourself or on a managed service. If you're an enterprise looking to put JSON workloads next to your analytics and AI data, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres for the AI era, with strong performance, security, and native integration into the Lakehouse. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 This page provides you with the most commonly used PostgreSQL JSON functions that allow you to manage JSON data effectively.

@@ -9,7 +9,7 @@ summary: >-
   point-in-time operation. Writes on PlanetScale must be paused during
   migration to prevent data loss. Use this guide when switching from PlanetScale
   to OptiTech and needing a full schema-plus-data transfer. OptiTech's Free plan
-  supports up to 0.5 GB; larger databases require a paid plan. The Neon
+  supports up to 0.5 GB; larger databases require a paid plan. The OptiTech
   connection string needs the endpoint ID embedded in the password field as a
   pgloader workaround.
 enableTableOfContents: true
@@ -47,27 +47,27 @@ Save your PlanetScale connection details.
 
 ## Retrieve your OptiTech database connection string
 
-Log in to the [OptiTech Console](https://console.neon.tech). Find the connection string for your database by clicking the **Connect** button on your **Project Dashboard**. Make sure the **Connection pooling** toggle is disabled to get a direct connection string.
+Log in to the [OptiTech Console](https://console.optitech.com). Find the connection string for your database by clicking the **Connect** button on your **Project Dashboard**. Make sure the **Connection pooling** toggle is disabled to get a direct connection string.
 
 ![OptiTech Connect modal showing connection string](/docs/connect/connection_details_without_connection_pooling.png)
 
 Your connection string should look similar to this:
 
 ```plaintext shouldWrap
-postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
 ```
 
 Update the connection string to include your **endpoint ID** (ep-cool-darkness-123456 in this example) along with your password by using the `endpoint` keyword. Also remove the `channel_binding` parameter, as it is not supported by `pgloader`. The modified connection string should look like this:
 
 ```plaintext shouldWrap
-postgresql://alex:endpoint=ep-cool-darkness-123456;AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require
+postgresql://alex:endpoint=ep-cool-darkness-123456;AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require
 ```
 
 <Admonition type="note">
 Passing the `endpoint ID` with your password is a required workaround for some Postgres drivers, including the one used by `pgloader`. For more information about this workaround and why it's required, refer to our [connection workaround](/docs/connect/connection-errors#d-specify-the-endpoint-id-in-the-password-field) documentation.
 </Admonition>
 
-Keep your Neon connection string handy for later use.
+Keep your OptiTech connection string handy for later use.
 
 ## Install pgloader
 
@@ -77,28 +77,28 @@ You'll need to have `pgloader` installed on your local machine to perform the mi
 
    See [Installing pgloader](https://pgloader.readthedocs.io/en/latest/install.html) for Debian (apt), RPM package, and Docker installation instructions.
 
-2. Create a `pgloader` configuration file (for example, `planetscale_to_neon.load`). Use your PlanetScale database credentials to define the connection string for your database source. Use the OptiTech database connection string you retrieved and modified in the previous step as the destination.
+2. Create a `pgloader` configuration file (for example, `planetscale_to_optitech.load`). Use your PlanetScale database credentials to define the connection string for your database source. Use the OptiTech database connection string you retrieved and modified in the previous step as the destination.
 
    <Admonition type="note">
    If you need to specify an SSL mode in your connection string, the following format is recommended: `sslmode=require`. Other formats may not work.
    </Admonition>
 
-   Example configuration in `planetscale_to_neon.load`:
+   Example configuration in `planetscale_to_optitech.load`:
 
    ```plaintext shouldWrap
    load database
     from mysql://username:password@host/source_db?sslmode=require
-    into postgresql://alex:endpoint=ep-cool-darkness-123456;AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require;
+    into postgresql://alex:endpoint=ep-cool-darkness-123456;AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require;
    ```
 
-   > Replace `username`, `password`, `host`, and `source_db` with your PlanetScale database credentials (`DATABASE_USERNAME`, `DATABASE_PASSWORD`, `DATABASE_HOST`, and `DATABASE_NAME`). Also update the destination connection string with your modified Neon connection string.
+   > Replace `username`, `password`, `host`, and `source_db` with your PlanetScale database credentials (`DATABASE_USERNAME`, `DATABASE_PASSWORD`, `DATABASE_HOST`, and `DATABASE_NAME`). Also update the destination connection string with your modified OptiTech connection string.
 
 ## Run the migration with pgloader
 
 To initiate the migration process, run:
 
 ```shell
-pgloader planetscale_to_neon.load
+pgloader planetscale_to_optitech.load
 ```
 
 The command output will look similar to this:
@@ -159,7 +159,7 @@ Here's an example of how to specify type casting in your `pgloader` configuratio
 ```plaintext
 load database
  from mysql://username:password@host/source_db?sslmode=require
- into postgresql://alex:endpoint=ep-cool-darkness-123456;AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require;
+ into postgresql://alex:endpoint=ep-cool-darkness-123456;AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require;
 
  CAST type datetime to timestamp drop default drop not null;
 ```

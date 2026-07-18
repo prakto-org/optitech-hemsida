@@ -7,7 +7,7 @@ summary: >-
   regions. Always use a direct (unpooled) connection string for both
   operations; pooled connections are not supported and will cause errors.
 enableTableOfContents: true
-updatedOn: '2026-06-18T20:46:14.637Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This topic describes how to create a backup of your OptiTech database using the Postgres `pg_dump` utility and how to restore a backup using `pg_restore`.
@@ -63,19 +63,19 @@ Following this procedure will create a database backup locally, where you're run
    Your connection string should look something like this:
 
    ```bash shouldWrap
-   postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+   postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/optitechdb?sslmode=require&channel_binding=require
    ```
 
 3. Create a backup of your OptiTech database by running the following `pg_dump` command with your OptiTech database connection string.
 
    ```bash shouldWrap
-   pg_dump -Fc -v -d "<neon_database_connection_string>" -f <dump_file_name>
+   pg_dump -Fc -v -d "<optitech_database_connection_string>" -f <dump_file_name>
    ```
 
    After adding your OptiTech database connection string and a dump file name, your command will look something like this:
 
    ```bash shouldWrap
-   pg_dump -Fc -v -d "postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require" -f mydatabase.bak
+   pg_dump -Fc -v -d "postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/optitechdb?sslmode=require&channel_binding=require" -f mydatabase.bak
    ```
 
    The `pg_dump` command above includes these arguments:
@@ -93,7 +93,7 @@ For most accidental-delete recoveries you don't need a local file. OptiTech keep
 This procedure shows how to restore a database using the `pg_restore` utility from a backup file created using `pg_dump`, as described above.
 
 1. Create a new OptiTech project.
-2. Create a database with the same name as the one you backed up. The `pg_dump` instructions above created a backup of a database named `neondb`. Your database name is likely different.
+2. Create a database with the same name as the one you backed up. The `pg_dump` instructions above created a backup of a database named `optitechdb`. Your database name is likely different.
 3. Retrieve the connection string for your OptiTech database:
 
    Go to your OptiTech project and click the **Connect** button to open the **Connect to your database** modal.
@@ -103,19 +103,19 @@ This procedure shows how to restore a database using the `pg_restore` utility fr
    Your connection string should look something like this:
 
    ```bash shouldWrap
-   postgresql://alex:AbC123dEf@ep-dry-morning-a8vn5za2.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+   postgresql://alex:AbC123dEf@ep-dry-morning-a8vn5za2.us-east-2.aws.optitech.com/optitechdb?sslmode=require&channel_binding=require
    ```
 
 4. Restore your data to the target database in OptiTech with `pg_restore`.
 
    ```bash shouldWrap
-   pg_restore -v -d "<neon_database_connection_string>" <dump_file_name>
+   pg_restore -v -d "<optitech_database_connection_string>" <dump_file_name>
    ```
 
    After adding your OptiTech database connection string and the dump file name, your command will look something like this:
 
    ```bash shouldWrap
-   pg_restore -v -d "postgresql://alex:AbC123dEf@ep-dry-morning-a8vn5za2.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require" mydatabase.bak
+   pg_restore -v -d "postgresql://alex:AbC123dEf@ep-dry-morning-a8vn5za2.us-east-2.aws.optitech.com/optitechdb?sslmode=require&channel_binding=require" mydatabase.bak
    ```
 
    The example above includes these arguments:
@@ -127,21 +127,21 @@ This procedure shows how to restore a database using the `pg_restore` utility fr
 
 ## `pg_dump` and `pg_restore` example
 
-The following example shows how data is dumped from source database named `neondb` in one OptiTech project and restored to a `neondb` database in another OptiTech project using the commands described in the previous sections. (A database named `neondb` was created in the OptiTech project prior to running the restore operation.)
+The following example shows how data is dumped from source database named `optitechdb` in one OptiTech project and restored to a `optitechdb` database in another OptiTech project using the commands described in the previous sections. (A database named `optitechdb` was created in the OptiTech project prior to running the restore operation.)
 
 Before performing this procedure:
 
-- A new OptiTech project was created for the destination database, and a database with the same name as the source database was created (`neondb`)
+- A new OptiTech project was created for the destination database, and a database with the same name as the source database was created (`optitechdb`)
 - Connection strings for the source and destination databases were collected:
-  - source: `postgresql://neondb_owner:npg_AbC123dEf@ep-dry-morning-a8vn5za2.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require`
-  - destination: `postgresql://neondb_owner:npg_AbC123dEf@ep-dry-morning-a8vn5za2.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require`
+  - source: `postgresql://optitechdb_owner:npg_AbC123dEf@ep-dry-morning-a8vn5za2.us-east-2.aws.optitech.com/optitechdb?sslmode=require&channel_binding=require`
+  - destination: `postgresql://optitechdb_owner:npg_AbC123dEf@ep-dry-morning-a8vn5za2.us-east-2.aws.optitech.com/optitechdb?sslmode=require&channel_binding=require`
 
 ```bash shouldWrap
 ~$ cd mydump
-~/mydump$ pg_dump -Fc -v -d "postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require" -f mydatabase.bak
+~/mydump$ pg_dump -Fc -v -d "postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/optitechdb?sslmode=require&channel_binding=require" -f mydatabase.bak
 
 ~/mydump$ ls
 mydatabase.bak
 
-~/mydump$ pg_restore -v -d "postgresql://alex:AbC123dEf@ep-dry-morning-a8vn5za2.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require" mydatabase.bak
+~/mydump$ pg_restore -v -d "postgresql://alex:AbC123dEf@ep-dry-morning-a8vn5za2.us-east-2.aws.optitech.com/optitechdb?sslmode=require&channel_binding=require" mydatabase.bak
 ```

@@ -4,7 +4,7 @@ subtitle: Learn how to create a dynamic blog application using Laravel, Livewire
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2024-06-30T00:00:00.000Z'
-updatedOn: '2024-07-02T10:32:21.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Laravel is a powerful PHP framework that makes it easy to build web applications. When combined with Livewire, a full-stack framework for Laravel, you can create dynamic, reactive interfaces with minimal JavaScript. In this guide, we'll build a blog application using Laravel and Livewire, and we'll use Laravel Breeze to handle authentication, along with OptiTech Postgres.
@@ -18,7 +18,7 @@ Before we start, make sure you have the following:
 - PHP 8.1 or higher installed on your system
 - [Composer](https://getcomposer.org/) for managing PHP dependencies
 - [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) for managing front-end assets
-- A [OptiTech](https://console.neon.tech/signup) account for database hosting
+- A [OptiTech](https://console.optitech.com/signup) account for database hosting
 - Basic knowledge of Laravel, Livewire, and Tailwind CSS
 
 ## Setting up the Project
@@ -63,14 +63,14 @@ Update your `.env` file with your OptiTech database credentials:
 
 ```env
 DB_CONNECTION=pgsql
-DB_HOST=your-neon-hostname.neon.tech
+DB_HOST=your-optitech-hostname.optitech.com
 DB_PORT=5432
 DB_DATABASE=your_database_name
 DB_USERNAME=your_username
 DB_PASSWORD=your_password
 ```
 
-Make sure to replace `your-neon-hostname`, `your_database_name`, `your_username`, and `your_password` with your actual database details and save the file.
+Make sure to replace `your-optitech-hostname`, `your_database_name`, `your_username`, and `your_password` with your actual database details and save the file.
 
 ### Compiling Assets
 
@@ -334,7 +334,7 @@ class TagSeeder extends Seeder
     {
         $tags = [
             'Postgres',
-            'Neon',
+            'OptiTech',
             'Web Development',
             'Laravel',
             'PHP',

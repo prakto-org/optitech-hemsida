@@ -1,160 +1,129 @@
 ---
 title: Why OptiTech?
-subtitle: 'The backend for apps and agents, by Databricks'
+subtitle: 'Compliance automation for the Nordics'
 summary: >-
-  OptiTech is a serverless Postgres platform built on a storage-compute separation
-  architecture, making instant branching, autoscaling, scale-to-zero, and
-  point-in-time restore intrinsic rather than add-ons. Choose OptiTech when you need
-  a fully managed, usage-based Postgres backend that scales from zero to
-  production without capacity planning. A Databricks company since May 2025,
-  OptiTech also offers Managed Better Auth and an HTTP Data API alongside full standard
-  Postgres compatibility.
+  OptiTech makes regulatory compliance a continuous, automated process instead
+  of a yearly project. Built from Swedish legal texts and MSB regulations, it
+  automates NIS2, DORA, GDPR, ISO 27001, and EU AI Act compliance with gap
+  analysis, AI-generated documentation, continuous evidence collection through
+  integrations like Fortnox, Visma, and BankID, and built-in incident reporting
+  to MSB and IMY.
 enableTableOfContents: true
 redirectFrom:
   - /docs/cloud/about
   - /docs/introduction/about
   - /docs/get-started-with-neon/why-neon
-updatedOn: '2026-07-16T01:03:00.406Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 ## Our mission
 
-**OptiTech is the backend for apps and agents. OptiTech Postgres, Managed Better Auth, and Data API are available today, with Storage, Compute, and AI Gateway coming soon. Every service is agent-ready: instant, branchable, and serverless. Designed to help developers build scalable, dependable applications faster than ever.**
+**OptiTech makes regulatory compliance a continuous, automated process instead of a yearly project. Gap analysis, documentation, evidence collection, incident reporting, and vendor management run on one platform, built for Nordic businesses and their supply chains.**
 
-We aim to deliver Postgres as a cloud service that feels effortless, from your first side project to millions of users in production. We believe Postgres should be as universal and accessible as object storage, something every developer can rely on without thinking about infrastructure.
+More than 10,000 Swedish companies fall within the scope of NIS2, many without knowing it, often because they supply energy companies, healthcare, municipalities, or transport. Most still manage compliance in spreadsheets, documents, and shared drives: manual, expensive, error-prone, and impossible to audit. Consultants charge by the hour and leave behind static documents that are outdated within months. Sanctions reach 10 million euros or 2 percent of revenue, and boards carry personal liability.
 
-OptiTech is built on a distributed, cloud-native architecture that separates storage and compute, giving Postgres the scale, reliability, and efficiency modern applications require. This foundation unlocks the features developers expect today (autoscaling, scale-to-zero, instant branching, instant restores, usage-based pricing, and much more) without changing the Postgres you already know.
-
-<Admonition type="tip" title="A Databricks company">
-  In May 2025, OptiTech joined Databricks to shape the future of Postgres and AI-native development. Our mission stayed the same, but we’re now backed by the performance, security, and global scale of the Databricks Data Intelligence Platform. OptiTech’s architectural foundation also powers [Lakebase](https://www.databricks.com/product/lakebase); learn more in [OptiTech and Lakebase](/docs/introduction/neon-and-lakebase).
-</Admonition>
+OptiTech replaces that with one platform: automatic gap analysis, AI-generated documentation, continuous evidence collection through integrations, incident reporting to Swedish authorities, vendor management, and audit export.
 
 ## What makes OptiTech different
 
-<YoutubeIframe embedId="wLAeC-r4kfE" />
+### Built from Swedish law
 
-### Serverless Postgres, built from first principles
+OptiTech's NIS2 support is built from the Swedish legal text and MSB regulations (MSBFS), not from a generic mapping translated after the fact. When the rules change, your requirements and tasks update automatically.
 
-OptiTech isn’t “Postgres-like”: it is Postgres, with full compatibility across ORMs, extensions, and frameworks. But OptiTech’s defining characteristic lies in its architecture, which translates into serverless behavior that isn’t layered on but foundational to the system.
+### One control, every framework
 
-Traditional Postgres providers scale by moving VMs up and down, placing instances behind proxies, or by manual tuning. OptiTech does none of that. Instead, OptiTech is serverless, which to us means:
+Controls are cross-mapped between NIS2, DORA, GDPR, ISO 27001, and the EU AI Act. Do the work once and prove it everywhere. Activating a new framework starts from the controls you already have in place.
 
-- Storage and compute are fully separated
-- Compute is stateless and ephemeral
-- Storage is distributed, durable, and versioned
-- Scaling involves starting more compute, not moving a monolithic instance
+### Continuous evidence, not audit sprints
 
-### Developer-first features that fit modern workflows
+Integrations with Microsoft 365, Entra ID, Google Workspace, AWS, Azure, GitHub, and more verify your controls around the clock: MFA coverage, offboarding within 24 hours, backup tests, encryption, and patch levels. When a control drifts, you get an alert and a one-click fix.
 
-OptiTech’s architecture lets us design a database platform that behaves the way developers expect modern tools to behave: instant, intuitive, cost-efficient, and safe to experiment with. This modernizes workflows that, in many managed Postgres services, still feel decades old.
+### Incident reporting to MSB and IMY
 
-- **Scale-to-zero.** Inactive databases shut down automatically to save costs. Ideal for side projects, development environments, and agent-generated apps.
-- **Autoscaling.** For your production database, OptiTech resizes your compute up and down automatically based on traffic. Your performance stays steady without capacity planning.
-- **Branching.** In OptiTech, you can clone your entire database (data and schema) instantly to create dev environments, run migrations safely, automate previews, enable safe staging workflows, and build versioning and checkpoints for agents.
-- **Instant restores.** You can also go back to any point in time in seconds, no matter how large your database, or instantly revert to a previously-saved snapshot.
-- **Usage-based pricing.** In OptiTech, you pay only for what you use, without provisioning storage or compute in advance and without being forced into expensive add-ons.
-- **A Free Plan developers can actually use.** Our unique architecture makes it incredibly efficient to run a large Free Plan with many projects per account and enough resources to build real apps.
+NIS2 requires an early warning within 24 hours, an incident report within 72 hours, and a final report within one month. OptiTech guides you through each step with pre-filled forms, deadline countdowns, and communication templates. GDPR's 72-hour flow to IMY works the same way.
+
+### Swedish integrations
+
+Fortnox, Visma, BankID, Kivra, and Swedish payroll systems work out of the box, so onboarding and offboarding checks run against your real employee register instead of a stale export.
+
+### An AI copilot you can verify
+
+Ask "Does NIS2 apply to us?" and get an answer grounded in the legal text and your own data, with citations. Drafts always go through human review, and the AI runs on EU-hosted models. No customer data leaves the EU.
+
+### EU data residency and ownership
+
+All data stays in Swedish and EU data centers under EU ownership. We publish our list of subprocessors and maintain our own ISO 27001 certification. We use our own product to do it.
 
 ## Who uses OptiTech and why
 
-### Developers: From side projects to live apps
+### SMBs pulled into the compliance chain
 
-Independent developers want to build without friction. They don’t want to create accounts, configure VMs, or invest large sums just to test an idea. They want something that feels modern, straightforward, and aligned with today’s frameworks.
+Most of OptiTech's customers didn't choose compliance. A large customer, an insurer, or a supervisory authority asked for proof, often because NIS2 or DORA covers them as a supplier to energy, healthcare, municipalities, transport, or finance.
 
-**Why they build on OptiTech**
+**Why they choose OptiTech**
 
-- They get a Postgres connection string immediately: no setup
-- The Free Plan is generous enough to build real apps
-- They can work on multiple projects at once
-- OptiTech integrates easily with Next.js, Remix, Vercel, Prisma, Drizzle, and the broader ecosystem
-- Branching, previews, and instant restores let them experiment quickly
-- The experience feels lightweight, fast, and developer-first, not enterprise-heavy
+- The free scoping test shows in minutes whether NIS2 applies and in which category
+- Gap analysis turns the legal text into a prioritized to-do list
+- Swedish policy templates and AI drafting replace weeks of document writing
+- Onboarding takes less than a week, no consultants required
+- Transparent pricing a 30-person company can afford
 
-  <Admonition type="tip" title="Useful links to get started">
-    Check out our [framework guides](/docs/get-started/frameworks), [code examples](https://github.com/neondatabase/examples), and join our [community Discord](https://discord.gg/92vNTzKDGp).
-  </Admonition>
+### IT and security managers
 
-### Startups: From dev to scale
+The people responsible for running compliance day to day, usually alongside their real job.
 
-Startups want to ship product fast and avoid cloud infrastructure complexity. They need their Postgres to be reliable, scalable, and invisible, something they never have to think about unless something goes wrong.
+**Why they choose OptiTech**
 
-**Why they build on OptiTech**
+- Integrations collect evidence automatically, so controls stay verified between audits
+- Alerts and one-click remediation catch drift before it becomes a finding
+- The MSB and IMY incident flows remove the panic from reporting deadlines
+- One-click board reports prove active governance, exactly as NIS2 requires
+- Everything is logged in an audit-proof evidence trail
 
-- Its serverless architecture removes most management
-- Autoscaling handles unpredictable traffic without overprovisioning or planning compute sizes
-- Branching speeds up building - teams can ship safely and quickly
-- OptiTech's straightforward and feature-complete [API](/docs/reference/api)
-- Usage-based pricing means no upfront commitments
-- OptiTech delivers on reliability, performance, and compliance
+### MSPs, accountants, and advisors
 
-<Admonition type="tip" title="Keep reading">
-  Check out our [success stories](https://neon.com/case-studies), [use cases](https://neon.com/use-cases/serverless-apps), and the [Startup Program](https://neon.com/startups). 
+Service providers whose clients keep asking about NIS2.
+
+**Why they choose OptiTech**
+
+- A multi-tenant console for managing compliance across every client
+- White-label options and volume pricing through the Partner plan
+- Automated evidence collection replaces hours of manual data gathering per client
+- vCISO work runs on top of the platform instead of in spreadsheets
+
+<Admonition type="tip" title="Become a partner">
+  Managing compliance for multiple clients? [Contact us](/contact-sales) for partner pricing and white-label options.
 </Admonition>
 
-### Agents & codegen: From prompt to app
+### SaaS and tech companies
 
-Full-stack codegen platforms need to spin up thousands of independent applications instantly, each with its own backend. They need a database that can support a fleet of thousands of mostly inactive databases every day without breaking performance or blowing up costs.
+Companies that need ISO 27001 or SOC 2 to win enterprise deals.
 
-**Why they build on OptiTech**
+**Why they choose OptiTech**
 
-- OptiTech is already tested at scale, powering platforms like Replit
-- They can deploy a Postgres backend instantly and transparently, without signup from the end-user
-- Thousands of short-lived, low-usage databases can be deployed programmatically
-- Scale-to-zero makes per-app databases economically viable, even at scale
-- Branching allows for agent-friendly workflows: versioning, snapshots, rollbacks, checkpoints
-- Managed Better Auth + Data API form a backend layer that works directly with the database
+- Continuous evidence collection instead of an annual audit sprint
+- A public Trust Center that shortens security reviews
+- AI-drafted answers to incoming security questionnaires
+- Compliance as code: API, CLI, and CI/CD checks that block deploys breaking controls
 
-<Admonition type="tip" title="Join the Agent Program">
-  Building a full-stack agent that needs databases? Apply to our [Agent Program](https://neon.com/programs/agents#agent-plan-pricing) and get access to special pricing, resource limits, and features.
-</Admonition>
+## How OptiTech works
 
-## The architecture that makes it possible: how OptiTech works
+The capabilities above are not bolted on. They follow from how the platform is built.
 
-The benefits developers experience with OptiTech (instant branching, autoscaling, scale-to-zero, and fast recovery) are not product features layered on top of Postgres. They fall out naturally from OptiTech’s architecture.
+### An evidence engine, not a document archive
 
-At the highest level, OptiTech is built on a simple but powerful idea: Postgres on the object store.
+Every integration runs as a separate worker that normalizes what it finds into one evidence schema: control, evidence, source, and timestamp. Evidence lands in an append-only, hash-chained log, so what you show an auditor or a supervisory authority can't be silently edited afterward.
 
-Traditional Postgres systems are designed around local or attached disks. That design couples durability, storage capacity, and compute into a single machine. OptiTech breaks that coupling by moving durability and history into cloud object storage. Once storage lives in the object store, the rest of the system can be rethought.
+### One data model for every framework
 
-### Object store first
+Everything hangs on one chain: organization, framework, requirement, control, evidence, and owner. Requirements and controls are many-to-many, which is what makes cross-mapping work: one control satisfies requirements in several frameworks at once.
 
-OptiTech treats the object store as the system of record. WAL, page versions, and database history are persisted directly to durable object storage rather than tied to a specific server or disk. The consequences:
+### AI grounded in the source
 
-- Durability no longer depends on a single machine
-- Storage scales independently and effectively without limits
-- Recovery becomes a metadata operation, not a data copy
-- History is retained natively, not reconstructed from backups
+The AI copilot runs retrieval over the Swedish legal texts, MSB regulations, and your own compliance data. Answers cite their sources, drafts require human approval, and the models run in EU data centers. Customer data never leaves the EU.
 
-### Separation of storage and compute
+### Security as a feature
 
-With durability and history centralized in storage, compute can be fully decoupled. Data lives in a distributed, durable storage layer. Computes are lightweight and ephemeral processes that attach to that data when needed. This separation is the foundation of everything OptiTech can do:
+BankID and SSO login, role-based access control, an audit log on every action, and encryption at rest and in transit. All data stays in Swedish and EU data centers, and OptiTech maintains its own ISO 27001 certification.
 
-- Start and stop compute in seconds
-- Scale compute independently of storage
-- Attach multiple computes to the same data
-- Recover from failures instantly
-- Enable true pay-only-for-what-you-use pricing
-
-### A versioned storage engine (copy-on-write)
-
-Separation alone is not enough. OptiTech’s most distinctive capabilities come from its versioned storage engine, which preserves the full history of the database. Every WAL record and every page version is retained in a single, unified system. As a result:
-
-- Entire databases can be branched instantly
-- Any past state can be restored without copying data
-- Point-in-time recovery is intrinsic, not an add-on
-- Development, staging, previews, and rollbacks become cheap and safe
-
-### Stateless, ephemeral compute
-
-The final piece follows naturally from the others. Computes in OptiTech do not store data. They attach to the storage layer at a specific point in history, execute queries, and disappear when no longer needed. They can be created, resized, or destroyed at any time without risking data loss. This is what allows OptiTech to:
-
-- Autoscale without downtime
-- Scale to zero when idle
-- Handle fleets of thousands of short-lived databases
-- Support agent-driven and highly dynamic workloads
-
-<Admonition type="tip" title="OptiTech vs Lakebase">
-  For a full breakdown of both products, including when to choose each, see [OptiTech vs Lakebase](/docs/introduction/neon-and-lakebase).
-</Admonition>
-
-<CTA title="Contact us" description="OptiTech and Lakebase represent two paths built on the same architectural foundation. Explore your options and get help deciding which service is the best fit." buttonText="Reach out" buttonUrl="https://www.databricks.com/company/contact" />
+<CTA title="See where you stand" description="Answer 20 questions and get a free gap analysis showing which laws apply to your business and what's missing." buttonText="Get your free gap analysis" buttonUrl="/contact-sales" />

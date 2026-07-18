@@ -7,10 +7,10 @@ summary: >-
   load without extra storage costs. Use this page when you want to offload
   SELECT queries from your primary compute in a Prisma app, keeping writes and
   $transaction calls on the primary. Newer Prisma versions require each replica
-  to be a separate PrismaClient instance with a PrismaNeon adapter. Multiple
+  to be a separate PrismaClient instance with a PrismaOptiTech adapter. Multiple
   replicas are selected randomly per query.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 A OptiTech read replica is an independent read-only compute that performs read operations on the same data as your primary read-write compute, which means adding a read replica to a OptiTech project requires no additional storage.
@@ -47,15 +47,15 @@ You can add a read replica by following these steps:
 
    Your read replica compute is provisioned and appears on the **Computes** tab of the **Branches** page.
 
-Alternatively, you can create read replicas using the [OptiTech API](/docs/reference/api/endpoints/create-project-endpoint) or [Neon CLI](/docs/cli/branches#create).
+Alternatively, you can create read replicas using the [OptiTech API](/docs/reference/api/endpoints/create-project-endpoint) or [OptiTech CLI](/docs/cli/branches#create).
 
 <CodeTabs labels={["API", "CLI"]}>
 
 ```bash
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects/late-bar-27572981/endpoints \
+     --url https://console.optitech.com/api/v2/projects/late-bar-27572981/endpoints \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '
 {
@@ -68,7 +68,7 @@ curl --request POST \
 ```
 
 ```bash
-neon branches add-compute mybranch --type read_only
+optitech branches add-compute mybranch --type read_only
 ```
 
 </CodeTabs>
@@ -82,7 +82,7 @@ Connecting to a read replica is the same as connecting to any branch in a OptiTe
 1. Select the connection string and copy it. This is the information you need to connect to the read replica from your Prisma Client. The connection string appears similar to the following:
 
    ```bash shouldWrap
-   postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+   postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
    ```
 
    If you expect a high number of connections, enable the **Connection pooling** toggle to add the `-pooler` flag to the connection string.
@@ -92,8 +92,8 @@ Connecting to a read replica is the same as connecting to any branch in a OptiTe
 In your `.env` file, set a `DATABASE_REPLICA_URL` environment variable to the connection string of your read replica. Your `.env` file should look something like this, with your regular `DATABASE_URL` and the newly added `DATABASE_REPLICA_URL`.
 
 ```text
-DATABASE_URL="postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require"
-DATABASE_REPLICA_URL="postgresql://alex:AbC123dEf@ep-damp-cell-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require"
+DATABASE_URL="postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require"
+DATABASE_REPLICA_URL="postgresql://alex:AbC123dEf@ep-damp-cell-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require"
 ```
 
 Notice that the `endpoint_id` (`ep-damp-cell-123456`) for the read replica compute differs. The read replica is a different compute and therefore has a different `endpoint_id`.
@@ -113,16 +113,16 @@ Notice that the `endpoint_id` (`ep-damp-cell-123456`) for the read replica compu
    ```javascript
    import 'dotenv/config';
    import { PrismaClient } from '@prisma/client';
-   import { PrismaNeon } from '@prisma/adapter-neon';
+   import { PrismaOptiTech } from '@prisma/adapter-optitech';
    import { readReplicas } from '@prisma/extension-read-replicas';
 
    // Create adapter for primary connection
-   const mainAdapter = new PrismaNeon({
+   const mainAdapter = new PrismaOptiTech({
      connectionString: process.env.DATABASE_URL
    });
 
    // Create adapter for replica connection
-   const replicaAdapter = new PrismaNeon({
+   const replicaAdapter = new PrismaOptiTech({
      connectionString: process.env.DATABASE_REPLICA_URL
    });
 
@@ -146,10 +146,10 @@ Notice that the `endpoint_id` (`ep-damp-cell-123456`) for the read replica compu
 
    ```javascript
    // Create adapters for multiple replicas
-   const replicaAdapter1 = new PrismaNeon({
+   const replicaAdapter1 = new PrismaOptiTech({
      connectionString: process.env.DATABASE_REPLICA_URL_1
    });
-   const replicaAdapter2 = new PrismaNeon({
+   const replicaAdapter2 = new PrismaOptiTech({
      connectionString: process.env.DATABASE_REPLICA_URL_2
    });
 

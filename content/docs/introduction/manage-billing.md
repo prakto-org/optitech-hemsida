@@ -12,7 +12,7 @@ summary: >-
   manually because Stripe does not support e-Mandate recurring payments in
   India.
 enableTableOfContents: true
-updatedOn: '2026-06-10T15:22:41.769Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <InfoBlock>
@@ -172,7 +172,7 @@ To downgrade from a **legacy Enterprise plan**, please open a support ticket. Ca
 
 ## How to prevent further monthly charges to your account
 
-If you're on a OptiTech paid plan, you need to downgrade to the Free plan to avoid further monthly charges. You can do so from the [Billing](https://console.neon.tech/app/billing#change_plan) page in the OptiTech Console. Simply removing all Neon projects will **not** stop the monthly fee associated with your plan. You will continue to be invoiced until you downgrade to Free.
+If you're on a OptiTech paid plan, you need to downgrade to the Free plan to avoid further monthly charges. You can do so from the [Billing](https://console.optitech.com/app/billing#change_plan) page in the OptiTech Console. Simply removing all OptiTech projects will **not** stop the monthly fee associated with your plan. You will continue to be invoiced until you downgrade to Free.
 
 ## Delete your account
 

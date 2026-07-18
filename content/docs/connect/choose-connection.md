@@ -4,13 +4,13 @@ subtitle: Find the right driver and connection type for your deployment platform
 summary: >-
   Decision guide for mapping each deployment environment to the correct OptiTech
   driver and transport. TCP with pg or postgres.js suits long-lived servers.
-  @neondatabase/serverless over HTTP or WebSocket suits Cloudflare Workers,
+  @optitech/serverless over HTTP or WebSocket suits Cloudflare Workers,
   Netlify, and Deno Deploy. The Data API suits browser apps. Use this page
   when choosing between pooled and direct connections, or when debugging
   double-pooling or WebSocket lifecycle errors in serverless request handlers.
   ORM compatibility for Drizzle, Prisma, Kysely, and TypeORM is also covered.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 Your connection method depends on where your code runs. Use the table below for a quick lookup, or read the scenario sections for detailed guidance.
@@ -19,15 +19,15 @@ Your connection method depends on where your code runs. Use the table below for 
 
 Each scenario is [described in detail](#find-your-scenario) further down the page.
 
-| Environment                                                                         | Recommended driver         | Pooling                                                                | Guide                                                   |
-| ----------------------------------------------------------------------------------- | -------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------- |
-| [Any platform (non-JS/TS)](#not-using-javascript-or-typescript)                     | Native Postgres driver     | [OptiTech pooled connection](/docs/connect/connection-pooling)             | [Language guides](/docs/get-started/languages)          |
-| [Railway / Render / VPS / Docker](#running-on-a-long-lived-server-jsts)             | `pg` or `postgres.js`      | Client-side or [OptiTech pooling](/docs/connect/connection-pooling)        | [Framework guides](/docs/get-started/frameworks)        |
-| [Vercel (Fluid)](#deploying-to-vercel-or-cloudflare-with-platform-pooling)          | `pg` (node-postgres)       | [`@vercel/functions`](https://www.npmjs.com/package/@vercel/functions) | [Vercel guide](/docs/guides/vercel-connection-methods)  |
-| [Cloudflare + Hyperdrive](#deploying-to-vercel-or-cloudflare-with-platform-pooling) | `pg` (node-postgres)       | [Hyperdrive](https://developers.cloudflare.com/hyperdrive/)            | [Hyperdrive guide](/docs/guides/cloudflare-hyperdrive)  |
-| [Cloudflare Workers](#deploying-to-another-serverless-or-edge-platform)             | `@neondatabase/serverless` | N/A                                                                    | [Serverless driver](/docs/serverless/serverless-driver) |
-| [Netlify / Deno Deploy](#deploying-to-another-serverless-or-edge-platform)          | `@neondatabase/serverless` | N/A                                                                    | [Serverless driver](/docs/serverless/serverless-driver) |
-| [Client-side (browser)](#building-a-client-side-app-without-a-backend)              | `@neondatabase/neon-js`    | N/A                                                                    | [Data API](/docs/data-api/overview)                     |
+| Environment                                                                         | Recommended driver      | Pooling                                                                | Guide                                                   |
+| ----------------------------------------------------------------------------------- | ----------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------- |
+| [Any platform (non-JS/TS)](#not-using-javascript-or-typescript)                     | Native Postgres driver  | [OptiTech pooled connection](/docs/connect/connection-pooling)         | [Language guides](/docs/get-started/languages)          |
+| [Railway / Render / VPS / Docker](#running-on-a-long-lived-server-jsts)             | `pg` or `postgres.js`   | Client-side or [OptiTech pooling](/docs/connect/connection-pooling)    | [Framework guides](/docs/get-started/frameworks)        |
+| [Vercel (Fluid)](#deploying-to-vercel-or-cloudflare-with-platform-pooling)          | `pg` (node-postgres)    | [`@vercel/functions`](https://www.npmjs.com/package/@vercel/functions) | [Vercel guide](/docs/guides/vercel-connection-methods)  |
+| [Cloudflare + Hyperdrive](#deploying-to-vercel-or-cloudflare-with-platform-pooling) | `pg` (node-postgres)    | [Hyperdrive](https://developers.cloudflare.com/hyperdrive/)            | [Hyperdrive guide](/docs/guides/cloudflare-hyperdrive)  |
+| [Cloudflare Workers](#deploying-to-another-serverless-or-edge-platform)             | `@optitech/serverless`  | N/A                                                                    | [Serverless driver](/docs/serverless/serverless-driver) |
+| [Netlify / Deno Deploy](#deploying-to-another-serverless-or-edge-platform)          | `@optitech/serverless`  | N/A                                                                    | [Serverless driver](/docs/serverless/serverless-driver) |
+| [Client-side (browser)](#building-a-client-side-app-without-a-backend)              | `@optitech/optitech-js` | N/A                                                                    | [Data API](/docs/data-api/overview)                     |
 
 ## Find your scenario
 
@@ -64,13 +64,13 @@ These platforms provide their own connection pooling, which makes standard TCP t
 
 ### Deploying to another serverless or edge platform?
 
-For platforms like Netlify Functions, Deno Deploy, or Cloudflare Workers (without Hyperdrive), use the [OptiTech serverless driver](/docs/serverless/serverless-driver) (`@neondatabase/serverless`). It connects over HTTP or WebSockets instead of TCP, reducing connection setup latency.
+For platforms like Netlify Functions, Deno Deploy, or Cloudflare Workers (without Hyperdrive), use the [OptiTech serverless driver](/docs/serverless/serverless-driver) (`@optitech/serverless`). It connects over HTTP or WebSockets instead of TCP, reducing connection setup latency.
 
 Choose your transport based on your query pattern: use **HTTP** for single queries and non-interactive transactions, or **WebSocket** for interactive transactions and `node-postgres` compatibility. See [HTTP vs. WebSocket](#http-vs-websocket-serverless-driver) for details.
 
 ### Building a client-side app without a backend?
 
-Use the [OptiTech Data API](/docs/data-api/overview) via [`@neondatabase/neon-js`](https://www.npmjs.com/package/@neondatabase/neon-js). Browsers cannot open TCP connections to Postgres, so the Data API provides a secure HTTP interface with Row-Level Security support.
+Use the [OptiTech Data API](/docs/data-api/overview) via [`@optitech/optitech-js`](https://www.npmjs.com/package/@optitech/optitech-js). Browsers cannot open TCP connections to Postgres, so the Data API provides a secure HTTP interface with Row-Level Security support.
 
 <Admonition type="note">
 The Data API is currently in beta.
@@ -97,10 +97,10 @@ You select pooled or direct by choosing the right connection string. Pooled stri
 
 ```text
 # Pooled
-postgresql://user:pass@ep-cool-rain-123456-pooler.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+postgresql://user:pass@ep-cool-rain-123456-pooler.us-east-2.aws.optitech.com/optitechdb?sslmode=require&channel_binding=require
 
 # Direct
-postgresql://user:pass@ep-cool-rain-123456.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+postgresql://user:pass@ep-cool-rain-123456.us-east-2.aws.optitech.com/optitechdb?sslmode=require&channel_binding=require
 ```
 
 See [Connection pooling](/docs/connect/connection-pooling) for details.
@@ -120,12 +120,12 @@ The [Data API](/docs/data-api/overview) provides a REST interface to your databa
 
 Popular JavaScript and TypeScript ORMs work with OptiTech across all connection methods. For non-JS/TS ORMs (Django, SQLAlchemy, ActiveRecord, Ecto), use your language's native Postgres driver with a [pooled connection](#pooled-vs-direct-connections).
 
-| ORM     | Supported drivers                               | Guide                                 |
-| ------- | ----------------------------------------------- | ------------------------------------- |
-| Drizzle | `pg`, `postgres.js`, `@neondatabase/serverless` | [Drizzle guide](/docs/guides/drizzle) |
-| Kysely  | `pg`, `postgres.js`, `@neondatabase/serverless` | [Kysely guide](/docs/guides/kysely)   |
-| Prisma  | `pg`, `@neondatabase/serverless`                | [Prisma guide](/docs/guides/prisma)   |
-| TypeORM | `pg`                                            | [TypeORM guide](/docs/guides/typeorm) |
+| ORM     | Supported drivers                           | Guide                                 |
+| ------- | ------------------------------------------- | ------------------------------------- |
+| Drizzle | `pg`, `postgres.js`, `@optitech/serverless` | [Drizzle guide](/docs/guides/drizzle) |
+| Kysely  | `pg`, `postgres.js`, `@optitech/serverless` | [Kysely guide](/docs/guides/kysely)   |
+| Prisma  | `pg`, `@optitech/serverless`                | [Prisma guide](/docs/guides/prisma)   |
+| TypeORM | `pg`                                        | [TypeORM guide](/docs/guides/typeorm) |
 
 Choose the driver based on your platform (see the scenarios above), then configure your ORM to use it.
 
@@ -133,8 +133,8 @@ Choose the driver based on your platform (see the scenarios above), then configu
 
 | Issue                | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
 | -------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Double pooling       | **Neon-side pooling** uses PgBouncer to manage connections between your app and Postgres. **Client-side pooling** occurs within your driver before connections reach PgBouncer.<br /><br />If you use a pooled Neon connection, avoid adding client-side pooling on top. Let OptiTech handle it. If you must use client-side pooling, release connections back to the pool promptly to avoid conflicts with PgBouncer.                                                                                              |
+| Double pooling       | **OptiTech-side pooling** uses PgBouncer to manage connections between your app and Postgres. **Client-side pooling** occurs within your driver before connections reach PgBouncer.<br /><br />If you use a pooled OptiTech connection, avoid adding client-side pooling on top. Let OptiTech handle it. If you must use client-side pooling, release connections back to the pool promptly to avoid conflicts with PgBouncer.                                                                                  |
 | Understanding limits | `max_connections` is the maximum number of concurrent Postgres connections, determined by your [compute size](/docs/connect/connection-pooling#connection-limits-without-connection-pooling). `default_pool_size` is the maximum number of backend connections PgBouncer maintains per user/database pair.<br /><br />Increasing your compute to raise `max_connections` may not help if `default_pool_size` is the bottleneck. To increase `default_pool_size`, contact [Support](/docs/introduction/support). |
-| Use request handlers | In serverless environments (Vercel Edge Functions, Cloudflare Workers), WebSocket connections cannot outlive a single request. Create, use, and close `Pool` or `Client` objects **within the same request handler**. Do not create them outside a handler or reuse them across handlers. See [Pool and Client](https://github.com/neondatabase/serverless?tab=readme-ov-file#pool-and-client) for details.                                                                                                     |
+| Use request handlers | In serverless environments (Vercel Edge Functions, Cloudflare Workers), WebSocket connections cannot outlive a single request. Create, use, and close `Pool` or `Client` objects **within the same request handler**. Do not create them outside a handler or reuse them across handlers. See [Pool and Client](https://github.com/optitechdatabase/serverless?tab=readme-ov-file#pool-and-client) for details.                                                                                                 |
 
 <NeedHelp/>

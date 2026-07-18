@@ -9,7 +9,7 @@ summary: >-
   or Managed Better Auth. Collaborators have no organization-level access and are limited
   to the specific projects they have been invited to.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 In OptiTech, roles determine what actions you can take within an organization and its projects. This page provides a detailed breakdown of permissions for each role: **Admin**, **Member**, and **Collaborator**.
@@ -56,15 +56,15 @@ The following table shows what each role can do at the project level:
 
 The following table shows what each role can do regarding integrations:
 
-| Action                                               | Admin | Member | Collaborator |
-| ---------------------------------------------------- | :---: | :----: | :----------: |
-| Install GitHub integration                           |  ✅   |   ❌   |      ❌      |
-| Install Managed Better Auth                          |  ✅   |   ❌   |      ❌      |
+| Action                                                   | Admin | Member | Collaborator |
+| -------------------------------------------------------- | :---: | :----: | :----------: |
+| Install GitHub integration                               |  ✅   |   ❌   |      ❌      |
+| Install Managed Better Auth                              |  ✅   |   ❌   |      ❌      |
 | Install the Vercel-managed OptiTech integration\*        |  ✅   |   ❌   |      ❌      |
-| Connect project to GitHub integration                |  ✅   |   ✅   |      ❌      |
-| Connect project to Neon-managed Vercel integration\* |  ✅   |   ✅   |      ❌      |
+| Connect project to GitHub integration                    |  ✅   |   ✅   |      ❌      |
+| Connect project to OptiTech-managed Vercel integration\* |  ✅   |   ✅   |      ❌      |
 
-\*OptiTech's Vercel-managed integration is managed entirely in Vercel and uses Vercel's permission system. For the Neon-managed Vercel integration, projects must first be made available in Vercel before they can be connected to OptiTech.
+\*OptiTech's Vercel-managed integration is managed entirely in Vercel and uses Vercel's permission system. For the OptiTech-managed Vercel integration, projects must first be made available in Vercel before they can be connected to OptiTech.
 
 ## Snapshot management
 
@@ -85,7 +85,7 @@ The following table shows what each role can do with [snapshots](/docs/guides/sn
 ## Notes and limitations (#notes-and-limitations)
 
 - **Branch management**: All users are currently able to manage [protected branches](/docs/guides/protected-branches), regardless of their role or permission level. Granular permissions for this feature are not yet implemented.
-- **Permissions and roles**: The current permissions system may not meet all needs for granular control. Share your feedback and requirements for more detailed permissions settings via the [Feedback](https://console.neon.tech/app/projects?modal=feedback) form or our [Discord feedback channel](https://discord.com/channels/1176467419317940276/1176788564890112042).
+- **Permissions and roles**: The current permissions system may not meet all needs for granular control. Share your feedback and requirements for more detailed permissions settings via the [Feedback](https://console.optitech.com/app/projects?modal=feedback) form or our [Discord feedback channel](https://discord.com/channels/1176467419317940276/1176788564890112042).
 - <a id="email-notifications" aria-hidden="true"></a>**Email notifications**: For **organization-owned** projects, OptiTech sends **approaching maximum storage** notification emails to **organization Admins** only, not to all Members. Admins are responsible for billing and plan limits at the organization level, which aligns with who can [manage organization billing](/docs/manage/user-permissions#organization-management).
 
 <NeedHelp/>

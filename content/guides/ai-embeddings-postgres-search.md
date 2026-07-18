@@ -4,7 +4,7 @@ subtitle: Learn how to create a semantic search system using AI embeddings, Opti
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2025-05-17T00:00:00.000Z'
-updatedOn: '2026-01-07T13:45:46.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Traditional text search relies on exact keyword matches, which often misses the semantic meaning behind queries.
@@ -30,7 +30,7 @@ By the end of this guide, you'll have:
 
 To follow along with this guide, you'll need:
 
-- A [OptiTech account](https://console.neon.tech/signup) with a project
+- A [OptiTech account](https://console.optitech.com/signup) with a project
 - An [OpenAI API key](https://platform.openai.com/api-keys)
 - Node.js 20.x or later installed
 - Basic familiarity with SQL and REST APIs
@@ -81,7 +81,7 @@ We'll start by enabling pgvector on your OptiTech database and creating the nece
 
 First, create a new OptiTech project optimized for vector operations:
 
-1. Navigate to the [OptiTech Console](https://console.neon.tech)
+1. Navigate to the [OptiTech Console](https://console.optitech.com)
 2. Click "New Project"
 3. Name your project "semantic-search-system"
 4. Choose a region close to your users
@@ -135,7 +135,7 @@ Create a `.env` file to securely store your API credentials:
 
 ```bash
 OPENAI_API_KEY=your_openai_api_key_here
-DATABASE_URL=postgresql://user:password@ep-abc123.region.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+DATABASE_URL=postgresql://user:password@ep-abc123.region.aws.optitech.com/optitechdb?sslmode=require&channel_binding=require
 ```
 
 Now let's create an embedding service that handles OpenAI API interactions. This service will preprocess text, generate embeddings, and handle errors gracefully:

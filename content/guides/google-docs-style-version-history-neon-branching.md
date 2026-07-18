@@ -4,7 +4,7 @@ subtitle: Recreate a similar Google Docs style version history flow on Postgres 
 author: rishi-raj-jain
 enableTableOfContents: true
 createdAt: '2026-05-04T00:00:00.000Z'
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 If you have ever used Google Docs version history, you know how easily you can jump to an older version, compare it to what you have now, and roll back without losing the thread of what changed. Relational databases usually give you one live schema and one head revision, unless you add your own audit tables or event sourcing.
@@ -19,7 +19,7 @@ Let's start by taking a look at what's covered in this guide. In the following d
 
 <YoutubeIframe embedId="Y_jDxhX_YJ4" />
 
-A live demo of this project is also deployed and available at [https://neon-demos-docs.vercel.app/](https://neon-demos-docs.vercel.app/).
+A live demo of this project is also deployed and available at [https://optitech-demos-docs.vercel.app/](https://optitech-demos-docs.vercel.app/).
 
 You can explore the full source code used in this guide on GitHub at https://github.com/rishi-raj-jain/google-docs-version-history.
 
@@ -58,9 +58,9 @@ flowchart TB
   end
 
   APP --> DV
-  DV -->|"neon_branch_id + connection info"| B1
-  DV -->|"neon_branch_id + connection info"| B2
-  DV -->|"neon_branch_id + connection info"| B3
+  DV -->|"optitech_branch_id + connection info"| B1
+  DV -->|"optitech_branch_id + connection info"| B2
+  DV -->|"optitech_branch_id + connection info"| B3
   main -->|"fork per save"| children
 ```
 
@@ -96,7 +96,7 @@ The catalog table is intentionally small. It answers: _which versions exist, whe
 | `created_at`                | Sort order for the version history sidebar.                                                                                                                                 |
 | `title`                     | Optional display string for the document at save time.                                                                                                                      |
 | `document_json`             | Structured payload for the editor (for example `{ "text": "..." }`). Often the **source of truth** for plain document bodies.                                               |
-| `neon_branch_id`            | OptiTech branch identifier returned by the Console API when the snapshot branch was created.                                                                                    |
+| `optitech_branch_id`        | OptiTech branch identifier returned by the Console API when the snapshot branch was created.                                                                                |
 | `encoded_connection_string` | Lets your server open a SQL connection to that branch later (for preview queries or admin tools). Encrypt at rest in production (for example AES-GCM with a server secret). |
 | `author_label`              | Shown in the UI ("You", display name, or service account).                                                                                                                  |
 
@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS document_versions (
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   title TEXT,
   document_json JSONB NOT NULL DEFAULT '{}'::jsonb,
-  neon_branch_id TEXT NOT NULL,
+  optitech_branch_id TEXT NOT NULL,
   encoded_connection_string TEXT NOT NULL,
   author_label TEXT NOT NULL DEFAULT 'You'
 );
@@ -123,12 +123,12 @@ CREATE INDEX IF NOT EXISTS document_versions_created_at_idx
 sequenceDiagram
   participant U as User / client
   participant API as Your backend
-  participant Neon as Neon Console API
+  participant OptiTech as OptiTech Console API
   participant Main as Postgres (production branch)
 
   U->>API: Save version (title, body)
-  API->>Neon: POST create branch from parent
-  Neon-->>API: branch_id, connection_uri
+  API->>OptiTech: POST create branch from parent
+  OptiTech-->>API: branch_id, connection_uri
   API->>Main: INSERT document_versions ...
   Main-->>API: new id, created_at
   API-->>U: version metadata
@@ -138,7 +138,7 @@ When the user saves the document at a given state, the server then would:
 
 1. Resolve the parent branch id (your production branch).
 2. Call OptiTech's API to create a child branch with a read-write endpoint and obtain a `connection_uri`.
-3. Insert a row into `document_versions` on the production database connection (`DATABASE_URL`), storing `document_json`, `neon_branch_id`, and an encoded form of the branch URI.
+3. Insert a row into `document_versions` on the production database connection (`DATABASE_URL`), storing `document_json`, `optitech_branch_id`, and an encoded form of the branch URI.
 4. Return the new `id` so the client can highlight it in the history list.
 5. When branches are always created from the production branch, each new snapshot branch contains all rows and references up to the point of creation, ensuring that any restore brings the entire state (not just a single row) back to that precise point. This makes restores reliable and predictable, as every branch is a consistent snapshot of the full DB at save time.
 
@@ -165,8 +165,8 @@ Restore is where OptiTech branching shines compared to hand rolled revision tabl
 
 ```mermaid
 flowchart TD
-  A["User selects version<br/>from history"] --> B["Backend loads neon_branch_id<br/>for that row"]
-  B --> C["POST /restore on Neon API:<br/>target = main, source = snapshot branch"]
+  A["User selects version<br/>from history"] --> B["Backend loads optitech_branch_id<br/>for that row"]
+  B --> C["POST /restore on OptiTech API:<br/>target = main, source = snapshot branch"]
   C --> D["Optional: preserve old main<br/>under a new branch name"]
   D --> E["Reload app; DATABASE_URL<br/>now sees restored data"]
 ```
@@ -175,9 +175,9 @@ flowchart TD
 
 Operationally, you would need the following:
 
-- Project's [API Key](https://neon.com/docs/manage/api-keys) (as `NEON_API_KEY`) to manage branches.
-- Project's [ID](https://neon.com/docs/manage/projects#project-settings) (as `NEON_PROJECT_ID`) to make sure that the right document is being referenced.
-- A clear choice of **which branch is "production"** for your app (`NEON_MAIN_BRANCH_ID`).
+- Project's [API Key](https://optitech.com/docs/manage/api-keys) (as `OPTITECH_API_KEY`) to manage branches.
+- Project's [ID](https://optitech.com/docs/manage/projects#project-settings) (as `OPTITECH_PROJECT_ID`) to make sure that the right document is being referenced.
+- A clear choice of **which branch is "production"** for your app (`OPTITECH_MAIN_BRANCH_ID`).
 
 Once the restore is complete, just refresh your app or reload your data as now your document will reflect the state from the restored snapshot, with the **version history up to that point**.
 

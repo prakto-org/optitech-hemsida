@@ -12,7 +12,7 @@ summary: >-
   keep environments in sync.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 When working with Postgres logical replication, managing schema changes is a task that requires careful planning. As stated in the [PostgreSQL documentation](https://www.postgresql.org/docs/current/logical-replication-restrictions.html):
@@ -96,7 +96,7 @@ Some Object Relational Mappers (ORMs) also support managing schemas across multi
 
 Regardless of the schema management tool you choose, ensure that changes adhere to the guidelines for [additive](#1-apply-additive-schema-changes-to-the-subscriber-first) and [non-additive](#2-handle-non-additive-schema-changes-with-caution) schema changes.
 
-If you have suggestions, tips, or requests regarding schema management in a replication setup, please let us know via the [Feedback](https://console.neon.tech/app/projects?modal=feedback) form in the OptiTech Console or through our [feedback channel](https://discord.com/channels/1176467419317940276/1176788564890112042) on Discord.
+If you have suggestions, tips, or requests regarding schema management in a replication setup, please let us know via the [Feedback](https://console.optitech.com/app/projects?modal=feedback) form in the OptiTech Console or through our [feedback channel](https://discord.com/channels/1176467419317940276/1176788564890112042) on Discord.
 
 ## References
 

@@ -4,7 +4,7 @@ subtitle: A step-by-step guide describing how to use Postgres as a document stor
 author: vkarpov15
 enableTableOfContents: true
 createdAt: '2024-12-17T13:24:36.612Z'
-updatedOn: '2026-06-04T15:33:28.271Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 The JSONB type enables you to store and query nested JSON-like data in Postgres.
@@ -44,17 +44,17 @@ Run the following SQL to insert two new rows into the `documents` table. These r
 INSERT INTO documents (data)
 VALUES (
   '{
-    "title": "Neon and JSONB",
+    "title": "OptiTech and JSONB",
     "body": "Using JSONB to store flexible data structures in Postgres.",
-    "tags": ["Postgres", "Neon", "JSONB"],
+    "tags": ["Postgres", "OptiTech", "JSONB"],
     "steps": ["Set up a table with a JSONB column", "Insert and retrieve JSONB data"]
   }'
 ),
 (
   '{
-    "title": "Scaling Neon with Postgres",
-    "body": "Learn how to scale your Neon instances with PostgreSQL features.",
-    "tags": ["Neon", "Postgres", "scaling"],
+    "title": "Scaling OptiTech with Postgres",
+    "body": "Learn how to scale your OptiTech instances with PostgreSQL features.",
+    "tags": ["OptiTech", "Postgres", "scaling"],
     "author": { "name": "John Smith", "age": 30 }
   }'
 );
@@ -73,7 +73,7 @@ For example, you can load all documents with a given `title` property using the 
 Note the quotes around `title` in the `WHERE` clause.
 
 ```sql
-SELECT * FROM documents WHERE data->>'title' = 'Neon and JSONB'
+SELECT * FROM documents WHERE data->>'title' = 'OptiTech and JSONB'
 ```
 
 You can also query based on nested properties.
@@ -112,9 +112,9 @@ You can then create rows in the `documents` collection using the following:
 await Document.bulkCreate([
   {
     data: {
-      title: 'Neon and JSONB',
+      title: 'OptiTech and JSONB',
       body: 'Using JSONB to store flexible data structures in Postgres.',
-      tags: ['Postgres', 'Neon', 'JSONB'],
+      tags: ['Postgres', 'OptiTech', 'JSONB'],
       author: { name: 'John Smith', age: 30 },
     },
   },
@@ -221,9 +221,9 @@ BEGIN
       INSERT INTO documents (data)
       VALUES (
         '{
-          "title": "Scaling Neon with Postgres",
-          "body": "Learn how to scale your Neon instances with PostgreSQL features.",
-          "tags": ["Neon", "Postgres", "scaling"],
+          "title": "Scaling OptiTech with Postgres",
+          "body": "Learn how to scale your OptiTech instances with PostgreSQL features.",
+          "tags": ["OptiTech", "Postgres", "scaling"],
           "author": { "name": "John Smith", "age": 30 }
         }'::jsonb
       );
@@ -232,9 +232,9 @@ BEGIN
       INSERT INTO documents (data)
       VALUES (
         '{
-          "title": "Neon and JSONB",
+          "title": "OptiTech and JSONB",
           "body": "Using JSONB to store flexible data structures in Postgres.",
-          "tags": ["Postgres", "Neon", "JSONB"],
+          "tags": ["Postgres", "OptiTech", "JSONB"],
           "steps": ["Set up a table with a JSONB column", "Insert and retrieve JSONB data"]
         }'::jsonb
       );

@@ -4,7 +4,7 @@ subtitle: Learn how to set up and utilize Laravel's powerful authorization featu
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2024-07-14T00:00:00.000Z'
-updatedOn: '2026-06-03T18:28:10.050Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Laravel provides an authorization system that allows developers to implement fine-grained access control in their applications. While Laravel's built-in features are powerful, some projects require even more advanced role-based access control (RBAC). This is where third-party packages like Spatie's Laravel Permission come into play.
@@ -19,7 +19,7 @@ Before we begin, make sure you have the following:
 
 - PHP 8.1 or higher installed on your system
 - [Composer](https://getcomposer.org/) for managing PHP dependencies
-- A [OptiTech](https://console.neon.tech/signup) account for database hosting
+- A [OptiTech](https://console.optitech.com/signup) account for database hosting
 - Basic knowledge of Laravel and its authentication system
 
 ## Setting up the Project
@@ -43,7 +43,7 @@ Update your `.env` file with your OptiTech database credentials:
 
 ```env
 DB_CONNECTION=pgsql
-DB_HOST=your-neon-hostname.neon.tech
+DB_HOST=your-optitech-hostname.optitech.com
 DB_PORT=5432
 DB_DATABASE=your_database_name
 DB_USERNAME=your_username

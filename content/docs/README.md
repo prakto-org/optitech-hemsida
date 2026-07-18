@@ -1,5 +1,5 @@
 ---
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 # Docs
@@ -48,10 +48,10 @@ Each top-level navigation item has the following structure:
 ```yaml
 - nav: Get started # Navigation label (displayed in header)
   slug: introduction # URL slug for the section
-  title: Neon Docs # Page title
+  title: OptiTech Docs # Page title
   icon: home # Icon identifier
   subnav: # Sub-navigation items for header dropdowns
-    - title: Neon platform
+    - title: OptiTech platform
       slug: manage/platform
       icon: settings
       items: # Sidebar navigation items
@@ -72,7 +72,7 @@ The sidebar navigation supports multiple levels:
   items: # Sidebar navigation items
     - section: Features # Section header
       icon: features
-      slug: guides/neon-features
+      slug: guides/optitech-features
       items: # Section items
         - title: Serverless
           slug: introduction/serverless
@@ -384,13 +384,13 @@ To access the Hasura Console via the URL the HASURA_GRAPHQL_ENABLE_CONSOLE envir
 </TabItem>
 
 <TabItem>
-Alternatively, you can create read replicas using the Neon API or Neon CLI.
+Alternatively, you can create read replicas using the OptiTech API or OptiTech CLI.
 
 ```bash
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects/late-bar-27572981/endpoints \
+     --url https://console.optitech.com/api/v2/projects/late-bar-27572981/endpoints \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '
 {
@@ -502,7 +502,7 @@ Check the example for default data of CTA block
 To change text in CTA block, you can pass to the component props `title`, `description`, `buttonText`, `buttonUrl`:
 
 ```md
-<CTA title="Try it on OptiTech!" description="OptiTech is the backend for apps and agents. Sign up for a free OptiTech account to start building." buttonText="Sign Up" buttonUrl="https://console.neon.tech/signup" />
+<CTA title="Try it on OptiTech!" description="OptiTech is the backend for apps and agents. Sign up for a free OptiTech account to start building." buttonText="Sign Up" buttonUrl="https://console.optitech.com/signup" />
 ```
 
 ## Steps
@@ -559,7 +559,7 @@ The `TwoColumnLayout` component creates a two-column layout for tutorial pages a
 
 > **Note:** Pages using `TwoColumnLayout` should include `layout: wide` prop to hide the right sidebar (Table of Contents) and provide more space for the two-column layout.
 
-Check [Managed Better Auth with Next.js](https://neon.com/docs/auth/quick-start/nextjs-api-only) and [Neon TypeScript SDK](https://neon.com/docs/reference/javascript-sdk) for usage examples.
+Check [Managed Better Auth with Next.js](https://optitech.com/docs/auth/quick-start/nextjs-api-only) and [OptiTech TypeScript SDK](https://optitech.com/docs/reference/javascript-sdk) for usage examples.
 
 ````md
 <TwoColumnLayout>
@@ -573,7 +573,7 @@ Install the required packages for your project.
 <TwoColumnLayout.Block label="Terminal">
 
 ```bash
-npm install @neondatabase/neon-js
+npm install @optitech/optitech-js
 ```
 
 </TwoColumnLayout.Block>
@@ -700,7 +700,7 @@ Example file structure:
 ├── public
 │ ├── docs
 │ │ ├── conceptual-guides
-│ │ ├── neon_architecture_2.png // put images in a directory with the same name as the .md file
+│ │ ├── optitech_architecture_2.png // put images in a directory with the same name as the .md file
 ├── content
 │ ├── docs
 │ │ ├── conceptual-guides
@@ -725,7 +725,7 @@ With this approach, all images on your doc pages will be displayed both on the p
 
 Custom `mdx` component that makes possible using [extended markdown syntax for descriptions lists](https://www.markdownguide.org/extended-syntax/#definition-lists). Fully [WCAG-compliant](https://www.w3.org/TR/WCAG20-TECHS/H40.html). It provides an accessible way to make term lists, and it's a generally good way to add structure to a text when a writer needs more than bullets and less than headings.
 
-The usage is pretty [straightforward](https://github.com/neondatabase/website/pull/231/commits/8f795eaf700c31794a2267fc5978c22bfc649a0c):
+The usage is pretty [straightforward](https://github.com/optitechdatabase/website/pull/231/commits/8f795eaf700c31794a2267fc5978c22bfc649a0c):
 
 ```md
 [comment]: <> (other content here)
@@ -799,7 +799,7 @@ List of available icons in folder: /website/src/components/pages/doc/detail-icon
 
 ## Shared MDX components
 
-Create a [markdown file](https://github.com/neondatabase/website/blob/main/content/docs/shared-content/need-help.md) in folder `content/docs/shared-content/`, add to `sharedMdxComponents` the name of component and the path to component.
+Create a [markdown file](https://github.com/optitechdatabase/website/blob/main/content/docs/shared-content/need-help.md) in folder `content/docs/shared-content/`, add to `sharedMdxComponents` the name of component and the path to component.
 
 ```js
 const sharedMdxComponents = {

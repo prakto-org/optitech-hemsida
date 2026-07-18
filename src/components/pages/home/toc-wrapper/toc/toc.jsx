@@ -1,22 +1,25 @@
 'use client';
 
 import { useThrottleCallback } from '@react-hook/throttle';
+import { useTranslations } from 'next-intl';
 import { useEffect, useRef, useState } from 'react';
 
 import Link from 'components/shared/link';
 import { cn } from 'utils/cn';
 
-const SECTIONS = [
-  { id: 'ai', title: 'AI Copilot', theme: 'dark' },
-  { id: 'autoscaling', title: 'Continuous Compliance', theme: 'light' },
-  { id: 'branching', title: 'Instant Gap Analysis', theme: 'dark' },
-  { id: 'auth', title: 'Incident Reporting', theme: 'dark' },
-  { id: 'features', title: 'Transparent Pricing', theme: 'dark' },
+const SECTION_META = [
+  { id: 'ai', theme: 'dark' },
+  { id: 'autoscaling', theme: 'light' },
+  { id: 'branching', theme: 'dark' },
+  { id: 'auth', theme: 'dark' },
+  { id: 'features', theme: 'dark' },
 ];
 
 const THROTTLE_DELAY = 100;
 
 const Toc = () => {
+  const t = useTranslations('home.toc');
+  const SECTIONS = SECTION_META.map(({ id, theme }) => ({ id, theme, title: t(id) }));
   const [activeSection, setActiveSection] = useState(SECTIONS[0].id);
   const [currentTheme, setCurrentTheme] = useState('dark');
   const tocRef = useRef(null);

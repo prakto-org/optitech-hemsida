@@ -1,4 +1,4 @@
-// Markdown renderers for the Neon CLI reference, driven by `schema.json`
+// Markdown renderers for the OptiTech CLI reference, driven by `schema.json`
 // (produced by generate-schema.js). Two consumers import these functions so
 // the rendered content can never diverge:
 //
@@ -11,23 +11,23 @@
 // Running this file directly (`npm run cli-docs -- preview`) emits every
 // fragment to fragments/ as a local preview of what the components render.
 //
-// The binary is documented as `neon`; `$0` in yargs usage strings is
-// rendered as `neon`. (The package ships both `neon` and `neonctl` bins;
-// docs standardize on `neon`.)
+// The binary is documented as `optitech`; `$0` in yargs usage strings is
+// rendered as `optitech`. (The package ships both `optitech` and `optitechctl` bins;
+// docs standardize on `optitech`.)
 
 const fs = require('fs');
 const path = require('path');
 
 const SCHEMA_PATH = path.join(__dirname, 'schema.json');
 const FRAGMENTS_DIR = path.join(__dirname, 'fragments');
-const BINARY = 'neon';
+const BINARY = 'optitech';
 
 function loadSchema() {
   return JSON.parse(fs.readFileSync(SCHEMA_PATH, 'utf8'));
 }
 
 // Resolves a space-separated command path ("branches create",
-// "neon-auth oauth-provider add") to a schema node.
+// "optitech-auth oauth-provider add") to a schema node.
 function resolveCommand(schema, parts) {
   let node = null;
   let pool = schema.commands;
@@ -144,7 +144,7 @@ function renderUsage(node, parts) {
   return ['```bash', usage, '```'].join('\n');
 }
 
-// `anchorParts` prefixes anchors for nested pages: on the neon-auth page,
+// `anchorParts` prefixes anchors for nested pages: on the optitech-auth page,
 // the oauth-provider group's `add` row must link to `#oauth-provider-add`,
 // not `#add` (which a sibling group may also use).
 function renderSubcommands(node, anchorParts = []) {

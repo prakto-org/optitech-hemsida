@@ -4,7 +4,7 @@ subtitle: Learn how to create a multi-step form with Laravel Volt, Folio, and Op
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2024-10-19T00:00:00.000Z'
-updatedOn: '2025-06-23T15:22:02.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 In this guide, we'll walk through the process of building a multi-step form using Laravel [Volt](https://livewire.laravel.com/docs/volt), [Folio](https://laravel.com/docs/11.x/folio), and OptiTech Postgres.
@@ -19,7 +19,7 @@ Before we begin, make sure you have:
 
 - PHP 8.1 or higher installed
 - Composer for managing PHP dependencies
-- A [OptiTech](https://console.neon.tech/signup) account for Postgres hosting
+- A [OptiTech](https://console.optitech.com/signup) account for Postgres hosting
 - Basic familiarity with Laravel and Postgres
 
 ## Setting up the Project
@@ -57,14 +57,14 @@ Update your `.env` file with your OptiTech Postgres credentials:
 
 ```env
 DB_CONNECTION=pgsql
-DB_HOST=your-neon-hostname.neon.tech
+DB_HOST=your-optitech-hostname.optitech.com
 DB_PORT=5432
 DB_DATABASE=your_database_name
 DB_USERNAME=your_username
 DB_PASSWORD=your_password
 ```
 
-Replace `your-neon-hostname.neon.tech`, `your_database_name`, `your_username`, and `your_password` with your OptiTech Postgres connection details.
+Replace `your-optitech-hostname.optitech.com`, `your_database_name`, `your_username`, and `your_password` with your OptiTech Postgres connection details.
 
 ## Database Design
 

@@ -4,7 +4,7 @@ subtitle: Learn how to revert a failed deployment and schema migration in Larave
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2024-05-26T00:00:00.000Z'
-updatedOn: '2026-02-01T13:23:47.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Deploying new features and updates is an essential part of maintaining a modern web application. However, not every deployment goes as planned.
@@ -112,7 +112,7 @@ If rolling back migrations doesn't solve the issue, [OptiTech's backup and resto
 
 ### Restoration steps
 
-To restore your database using OptiTech, you can either use the OptiTech dashboard or the Neon CLI or API. Follow the steps outlined in [OptiTech's Branch Restore Guide](/docs/introduction/branch-restore#how-to-use-instant-restore):
+To restore your database using OptiTech, you can either use the OptiTech dashboard or the OptiTech CLI or API. Follow the steps outlined in [OptiTech's Branch Restore Guide](/docs/introduction/branch-restore#how-to-use-instant-restore):
 
 After restoring the database, align your codebase with the restored data to ensure consistency.
 

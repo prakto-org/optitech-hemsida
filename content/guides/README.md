@@ -1,5 +1,5 @@
 ---
-updatedOn: '2026-05-13T19:04:49.209Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 # Guides
@@ -214,13 +214,13 @@ To access the Hasura Console via the URL the HASURA_GRAPHQL_ENABLE_CONSOLE envir
 </TabItem>
 
 <TabItem>
-Alternatively, you can create read replicas using the Neon API or Neon CLI.
+Alternatively, you can create read replicas using the OptiTech API or OptiTech CLI.
 
 ```bash
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects/late-bar-27572981/endpoints \
+     --url https://console.optitech.com/api/v2/projects/late-bar-27572981/endpoints \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '
 {
@@ -284,7 +284,7 @@ Check the example for default data of CTA block
 To change text in CTA block, you can pass to the component props `title`, `description`, `buttonText`, `buttonUrl`:
 
 ```md
-<CTA title="Try it on OptiTech!" description="OptiTech is Serverless Postgres built for the cloud. Explore Postgres features and functions in our user-friendly SQL editor. Sign up for a free account to get started." buttonText="Sign Up" buttonUrl="https://console.neon.tech/signup" />
+<CTA title="Try it on OptiTech!" description="OptiTech is Serverless Postgres built for the cloud. Explore Postgres features and functions in our user-friendly SQL editor. Sign up for a free account to get started." buttonText="Sign Up" buttonUrl="https://console.optitech.com/signup" />
 ```
 
 ## Images
@@ -297,7 +297,7 @@ Example file structure:
 ├── public
 │ ├── guides
 │ │ ├── conceptual-guides
-│ │ ├── neon_architecture_2.png // put images in a directory with the same name as the .md file
+│ │ ├── optitech_architecture_2.png // put images in a directory with the same name as the .md file
 ├── content
 │ ├── guides
 │ │ ├── conceptual-guides
@@ -322,7 +322,7 @@ With this approach, all images on your guide pages will be displayed both on the
 
 Custom `mdx` component that makes possible using [extended markdown syntax for descriptions lists](https://www.markdownguide.org/extended-syntax/#definition-lists). Fully [WCAG-compliant](https://www.w3.org/TR/WCAG20-TECHS/H40.html). It provides an accessible way to make term lists, and it's a generally good way to add structure to a text when a writer needs more than bullets and less than headings.
 
-The usage is pretty [straightforward](https://github.com/neondatabase/website/pull/231/commits/8f795eaf700c31794a2267fc5978c22bfc649a0c):
+The usage is pretty [straightforward](https://github.com/optitechdatabase/website/pull/231/commits/8f795eaf700c31794a2267fc5978c22bfc649a0c):
 
 ```md
 [comment]: <> (other content here)
@@ -385,16 +385,16 @@ Another term for smoke test
 ```md
 <DetailIconCards>
 
-<a href="https://api-guides.neon.tech/reference/getting-started-with-neon-api" description="Collaborate on open-source projects" icon="github">Headless vector search</a>
+<a href="https://api-guides.optitech.com/reference/getting-started-with-optitech-api" description="Collaborate on open-source projects" icon="github">Headless vector search</a>
 
-<a href="https://api-guides.neon.tech/reference/getting-started-with-neon-api" description="Collaborate on open-source projects" icon="github">Open AI completions</a>
+<a href="https://api-guides.optitech.com/reference/getting-started-with-optitech-api" description="Collaborate on open-source projects" icon="github">Open AI completions</a>
 
 </DetailIconCards>
 ```
 
 ## Shared MDX components
 
-Create a [markdown file](https://github.com/neondatabase/website/blob/main/content/docs/shared-content/need-help.md) in folder `content/docs/shared-content/`, add to `sharedMdxComponents` the name of component and the path to component.
+Create a [markdown file](https://github.com/optitechdatabase/website/blob/main/content/docs/shared-content/need-help.md) in folder `content/docs/shared-content/`, add to `sharedMdxComponents` the name of component and the path to component.
 
 ```js
 const sharedMdxComponents = {

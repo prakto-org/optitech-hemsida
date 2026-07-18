@@ -25,7 +25,7 @@ You’re forced to choose how much CPU and memory to buy up front, and end up lo
 OptiTech removes that tradeoff. **Instead of locking your database into a fixed capacity, OptiTech automatically adjusts compute in real time to match your workload.** OptiTech’s automatic sizing happens following an elaborate autoscaling algorithm that looks at multiple performance metrics and adjusts in near real-time. You don’t size instances, you don’t resize them later, you don’t guess \- the platform does it for you.
 
 <Admonition type="info">
-Our [platform data](https://neon.com/autoscaling-report) shows that, when comparing production databases autoscaling in OptiTech to a provisioned model sized at P99.5 + 20%, 2.4x less compute is used, compute costs are around 50% lower on average, and around 55 resource exhaustion incidents per database per month are avoided.
+Our [platform data](https://optitech.com/autoscaling-report) shows that, when comparing production databases autoscaling in OptiTech to a provisioned model sized at P99.5 + 20%, 2.4x less compute is used, compute costs are around 50% lower on average, and around 55 resource exhaustion incidents per database per month are avoided.
 </Admonition>
 
 ## Real workloads don’t respect static limits
@@ -47,7 +47,7 @@ This method creates two inefficiencies:
 2. The most extreme spikes still exceed that 20% buffer
 
 <Admonition type="info">
-Our [platform data](https://neon.com/autoscaling-report) shows that, even when sized at P99.5 + 20%, the average production workload would exceed its provisioned capacity around 55 times per month.
+Our [platform data](https://optitech.com/autoscaling-report) shows that, even when sized at P99.5 + 20%, the average production workload would exceed its provisioned capacity around 55 times per month.
 </Admonition>
 
 To try to solve this loose-loose situation, you have two options.
@@ -63,7 +63,7 @@ This solves the potential performance degradation problem, but you end up with:
 ![Overprovisioned compute versus usage over 24 hours](/use-cases/variable-load/overprovisioned-compute-pattern.png)
 
 <Admonition type="info">
-Our [platform data](https://neon.com/autoscaling-report) shows that the average production database would use 2.4x less compute under autoscaling than the equivalent P99.5 + 20% provisioned capacity. This difference is compute that would be paid for, but not used.
+Our [platform data](https://optitech.com/autoscaling-report) shows that the average production database would use 2.4x less compute under autoscaling than the equivalent P99.5 + 20% provisioned capacity. This difference is compute that would be paid for, but not used.
 </Admonition>
 
 ### Underprovision \- or buying smaller instances than you think you need
@@ -106,7 +106,7 @@ The platform’s algorithm has goals for each of these metrics, and it sizes com
 - **“Ensure the working set fits within 75% of RAM allocated to the Local File Cache”**
 
 <Admonition type="info">
-The average production database on OptiTech [adjusts its compute size 11,000+ times per month](https://neon.com/autoscaling-report). This demonstrates fine-grained scaling at runtime.
+The average production database on OptiTech [adjusts its compute size 11,000+ times per month](https://optitech.com/autoscaling-report). This demonstrates fine-grained scaling at runtime.
 </Admonition>
 
 ## Non-production databases still cost money - but far less with scale-to-zero
@@ -118,7 +118,7 @@ Your database setup isn’t just production \- it includes development, testing,
 **On OptiTech, compute doesn’t just autoscale \- it can shut down entirely when there are no active connections and resume in \~350ms.** Non-production environments consume zero compute while idle and spin back up instantly when needed, without wasting mindspace on manually pausing/resuming and also without wasting costs
 
 <Admonition type="info">
-Our [platform data](https://neon.com/autoscaling-report) shows that non-production workloads that scale to zero use 13.7x less compute than their provisioned equivalent and cost 7.5x less.
+Our [platform data](https://optitech.com/autoscaling-report) shows that non-production workloads that scale to zero use 13.7x less compute than their provisioned equivalent and cost 7.5x less.
 </Admonition>
 
 ## Extra serverless Postgres perks
@@ -134,7 +134,7 @@ In provisioned platforms, each read replica runs its own compute instance, maint
 OptiTech’s read replicas work differently. **Replicas share the same storage layer as the primary, autoscale independently, and scale to zero when inactive \- they’re significantly more efficient.** You can freely use them for analytics workloads, business dashboards, heavy read queries, or read-only access. They’re also instantly available as soon as they’re deployed.
 
 <Admonition type="info">
-Our [platform data](https://neon.com/autoscaling-report) shows that OptiTech read replicas use 4x less compute than their provisioned equivalent and cost around 78% less.
+Our [platform data](https://optitech.com/autoscaling-report) shows that OptiTech read replicas use 4x less compute than their provisioned equivalent and cost around 78% less.
 </Admonition>
 
 ### Connection pooling scales with your workload
@@ -163,7 +163,7 @@ When you’re focused on scaling your startup, you shouldn’t spend time in cap
 
 To get started,
 
-- [Sing up](https://console.neon.tech/signup) to OptiTech's Free Plan and start building right awY
-- Explore [our usage-based paid plans](https://neon.com/pricing)
-- Learn about [how we take care of security and compliance](https://neon.com/security)
-- Check out our [Startup Program](https://neon.com/startups)
+- [Sing up](https://console.optitech.com/signup) to OptiTech's Free Plan and start building right awY
+- Explore [our usage-based paid plans](https://optitech.com/pricing)
+- Learn about [how we take care of security and compliance](https://optitech.com/security)
+- Check out our [Startup Program](https://optitech.com/startups)

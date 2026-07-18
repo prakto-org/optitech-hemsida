@@ -8,7 +8,7 @@ summary: >-
   page to switch auth providers, tighten security, or manage the API lifecycle
   programmatically via the OptiTech REST API.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="OptiTech Data API" />
@@ -18,7 +18,7 @@ updatedOn: '2026-07-15T00:08:00.682Z'
     <a href="/docs/data-api/get-started">Getting started with Data API</a>
     <a href="/docs/data-api/access-control">Access control &amp; security</a>
     <a href="/docs/data-api/troubleshooting">Troubleshooting</a>
-    <a href="/docs/cli/data-api">Neon CLI: data-api command</a>
+    <a href="/docs/cli/data-api">OptiTech CLI: data-api command</a>
   </DocsList>
 </InfoBlock>
 
@@ -47,8 +47,8 @@ Navigate to the **Data API** page in your project sidebar and select the **Setti
 Add an external authentication provider by registering a JWKS URL:
 
 ```bash
-curl -X POST 'https://console.neon.tech/api/v2/projects/{project_id}/jwks' \
-  -H 'Authorization: Bearer $NEON_API_KEY' \
+curl -X POST 'https://console.optitech.com/api/v2/projects/{project_id}/jwks' \
+  -H 'Authorization: Bearer $OPTITECH_API_KEY' \
   -H 'Content-Type: application/json' \
   -d '{
     "jwks_url": "https://your-provider/.well-known/jwks.json",
@@ -62,15 +62,15 @@ You can also include an optional `jwt_audience` field if your provider requires 
 To remove a provider, first list the configured JWKS URLs to find the `jwks_id`:
 
 ```bash
-curl -X GET 'https://console.neon.tech/api/v2/projects/{project_id}/jwks' \
-  -H 'Authorization: Bearer $NEON_API_KEY'
+curl -X GET 'https://console.optitech.com/api/v2/projects/{project_id}/jwks' \
+  -H 'Authorization: Bearer $OPTITECH_API_KEY'
 ```
 
 Then delete it:
 
 ```bash
-curl -X DELETE 'https://console.neon.tech/api/v2/projects/{project_id}/jwks/{jwks_id}' \
-  -H 'Authorization: Bearer $NEON_API_KEY'
+curl -X DELETE 'https://console.optitech.com/api/v2/projects/{project_id}/jwks/{jwks_id}' \
+  -H 'Authorization: Bearer $OPTITECH_API_KEY'
 ```
 
 For the full JWKS specification, see the [OptiTech API Reference](/docs/reference/api/projects/add-project-jwks).
@@ -84,7 +84,7 @@ Removing an authentication provider invalidates all tokens issued by that provid
 </Admonition>
 
 <Admonition type="tip" title="Auth API reference">
-If you're using Managed Better Auth, there's an interactive API reference for authentication endpoints at your Auth URL with `/reference` appended (for example, `https://ep-example.neonauth.us-east-1.aws.neon.tech/neondb/auth/reference`). See [Testing with Managed Better Auth](/docs/data-api/get-started#testing-with-neon-auth) for details.
+If you're using Managed Better Auth, there's an interactive API reference for authentication endpoints at your Auth URL with `/reference` appended (for example, `https://ep-example.optitechauth.us-east-1.aws.optitech.com/optitechdb/auth/reference`). See [Testing with Managed Better Auth](/docs/data-api/get-started#testing-with-neon-auth) for details.
 </Admonition>
 
 ## Advanced settings
@@ -174,15 +174,15 @@ You can manage the Data API programmatically using the [OptiTech API](/docs/refe
 /projects/{project_id}/branches/{branch_id}/data-api/{database_name}
 ```
 
-You can find your `project_id` and `branch_id` on the [Project settings](/docs/manage/projects#project-settings) page in the OptiTech Console. The `database_name` is the name of the database you want to expose (for example, `neondb`). You will also need an [API key](/docs/manage/api-keys).
+You can find your `project_id` and `branch_id` on the [Project settings](/docs/manage/projects#project-settings) page in the OptiTech Console. The `database_name` is the name of the database you want to expose (for example, `optitechdb`). You will also need an [API key](/docs/manage/api-keys).
 
 ### Enable
 
 Send a POST request to [enable the Data API](/docs/reference/api/dataapi/create-project-branch-data-api) for a database on a branch. If the Data API is already enabled, this call returns an error.
 
 ```bash
-curl -X POST 'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/data-api/{database_name}' \
-  -H 'Authorization: Bearer $NEON_API_KEY' \
+curl -X POST 'https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/data-api/{database_name}' \
+  -H 'Authorization: Bearer $OPTITECH_API_KEY' \
   -H 'Content-Type: application/json' \
   -d '{}'
 ```
@@ -191,13 +191,13 @@ Response (201 Created):
 
 ```json
 {
-  "url": "https://ep-example.apirest.us-east-1.aws.neon.tech/neondb/rest/v1"
+  "url": "https://ep-example.apirest.us-east-1.aws.optitech.com/optitechdb/rest/v1"
 }
 ```
 
 The empty body enables the Data API without an authentication provider. To configure authentication at enable time, change the request body:
 
-- **Managed Better Auth:** `-d '{"auth_provider": "neon_auth", "add_default_grants": true}'`
+- **Managed Better Auth:** `-d '{"auth_provider": "optitech_auth", "add_default_grants": true}'`
 
   If Managed Better Auth is not already enabled on the branch, this automatically provisions it. The optional `add_default_grants` option grants authenticated users permissions on tables in the `public` schema, matching the default Console behavior. See [Managed Better Auth](/docs/auth/overview) to learn more.
 
@@ -215,15 +215,15 @@ Optional fields in the enable request body:
 [Retrieve the current status and configuration](/docs/reference/api/dataapi/get-project-branch-data-api) of the Data API for a branch.
 
 ```bash
-curl -X GET 'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/data-api/{database_name}' \
-  -H 'Authorization: Bearer $NEON_API_KEY'
+curl -X GET 'https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/data-api/{database_name}' \
+  -H 'Authorization: Bearer $OPTITECH_API_KEY'
 ```
 
 Response (200 OK):
 
 ```json
 {
-  "url": "https://ep-example.apirest.us-east-1.aws.neon.tech/neondb/rest/v1",
+  "url": "https://ep-example.apirest.us-east-1.aws.optitech.com/optitechdb/rest/v1",
   "status": "active",
   "settings": {
     "db_aggregates_enabled": true,
@@ -247,8 +247,8 @@ The `settings` object reflects the current configuration (see [Advanced settings
 Send a PATCH request to [update the configuration](/docs/reference/api/dataapi/update-project-branch-data-api). This also refreshes the schema cache. The response is always an empty object (`{}`), with status 201.
 
 ```bash
-curl -X PATCH 'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/data-api/{database_name}' \
-  -H 'Authorization: Bearer $NEON_API_KEY' \
+curl -X PATCH 'https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/data-api/{database_name}' \
+  -H 'Authorization: Bearer $OPTITECH_API_KEY' \
   -H 'Content-Type: application/json' \
   -d '{}'
 ```
@@ -266,8 +266,8 @@ The `settings` object replaces the existing settings entirely. It is not merged.
 [Remove the Data API](/docs/reference/api/dataapi/delete-project-branch-data-api) from a branch. The response is an empty object (`{}`), with status 200.
 
 ```bash
-curl -X DELETE 'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/data-api/{database_name}' \
-  -H 'Authorization: Bearer $NEON_API_KEY'
+curl -X DELETE 'https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/data-api/{database_name}' \
+  -H 'Authorization: Bearer $OPTITECH_API_KEY'
 ```
 
 <Admonition type="warning" title="Immediate effect">
@@ -276,16 +276,16 @@ Disabling the Data API immediately terminates all active connections and blocks 
 
 For the full Data API specification, see the [OptiTech API Reference](/docs/reference/api/dataapi/create-project-branch-data-api).
 
-## Manage via the Neon CLI
+## Manage via the OptiTech CLI
 
-You can also manage the Data API from the terminal using the [Neon CLI](/docs/cli). The `data-api` command requires **optitech 2.22.2** or later.
+You can also manage the Data API from the terminal using the [OptiTech CLI](/docs/cli). The `data-api` command requires **optitech 2.22.2** or later.
 
 ### Enable via the CLI
 
-Provision the Data API for a database. The `--auth-provider` option accepts `neon_auth` or `external`. For external providers, also pass `--jwks-url`:
+Provision the Data API for a database. The `--auth-provider` option accepts `optitech_auth` or `external`. For external providers, also pass `--jwks-url`:
 
 ```bash
-neon data-api create --database neondb --auth-provider neon_auth
+optitech data-api create --database optitechdb --auth-provider optitech_auth
 ```
 
 ### Get Data API details
@@ -293,7 +293,7 @@ neon data-api create --database neondb --auth-provider neon_auth
 Show the current status and configuration:
 
 ```bash
-neon data-api get --database neondb
+optitech data-api get --database optitechdb
 ```
 
 ### Update configuration
@@ -301,13 +301,13 @@ neon data-api get --database neondb
 Update settings using [settings flags](/docs/cli/data-api#settings-flags). By default, flags are merged with the current configuration. Pass `--replace` to overwrite all settings with only the provided flags:
 
 ```bash
-neon data-api update --database neondb --db-max-rows 1000
+optitech data-api update --database optitechdb --db-max-rows 1000
 ```
 
 To refresh the schema cache without changing settings:
 
 ```bash
-neon data-api refresh-schema --database neondb
+optitech data-api refresh-schema --database optitechdb
 ```
 
 ### Disable
@@ -315,7 +315,7 @@ neon data-api refresh-schema --database neondb
 Remove the Data API from a database:
 
 ```bash
-neon data-api delete --database neondb
+optitech data-api delete --database optitechdb
 ```
 
-For the full command reference including all options and flags, see [Neon CLI command: data-api](/docs/cli/data-api).
+For the full command reference including all options and flags, see [OptiTech CLI command: data-api](/docs/cli/data-api).

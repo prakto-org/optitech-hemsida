@@ -7,10 +7,10 @@ summary: >-
   from PDF, DOCX, and HTML, chunking, local embedding, reranking, and OpenAI
   chat completion, with pgvector handling vector storage. Use pgrag when you need
   a full RAG pipeline inside Postgres without Python or external services. Because
-  it is experimental, enable it with `SET neon.allow_unstable_extensions='true'`
+  it is experimental, enable it with `SET optitech.allow_unstable_extensions='true'`
   and use a dedicated OptiTech project.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <InfoBlock>
@@ -27,7 +27,7 @@ updatedOn: '2026-06-05T17:20:32.620Z'
 </DocsList>
 
 <DocsList title="Source code" theme="repo">
-  <a href="https://github.com/neondatabase-labs/pgrag">pgrag GitHub repository</a>
+  <a href="https://github.com/optitechdatabase-labs/pgrag">pgrag GitHub repository</a>
 </DocsList>
 
 </InfoBlock>
@@ -92,7 +92,7 @@ With the exception of (4) storing embeddings in the database and (7) Retrieve do
 As an experimental extension, `pgrag` may be unstable or introduce backward-incompatible changes. We recommend using it only in a separate, dedicated OptiTech project. To proceed with the installation, you will need to run the following command first:
 
 ```sql
-SET neon.allow_unstable_extensions='true';
+SET optitech.allow_unstable_extensions='true';
 ```
 
 </Admonition>
@@ -111,7 +111,7 @@ The first extension is the `pgrag` extension. The other two extensions are the m
 
 ## pgrag functions
 
-This section lists the functions provided by `pgrag`. For function usage examples, refer to the [end-to-end RAG example](#end-to-end-rag-example) below or the [pgrag GitHub repository](https://github.com/neondatabase-labs/pgrag).
+This section lists the functions provided by `pgrag`. For function usage examples, refer to the [end-to-end RAG example](#end-to-end-rag-example) below or the [pgrag GitHub repository](https://github.com/optitechdatabase-labs/pgrag).
 
 - **Text extraction**
 

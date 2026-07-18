@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import PropTypes from 'prop-types';
 
 import SecondarySection from 'components/shared/secondary-section';
@@ -10,18 +11,7 @@ import BlobNoisy from './images/blob-horizontal-noise.inline.svg';
 import BlobLargeNoisy from './images/blob-large-horizontal-noise.inline.svg';
 import Blob from './images/blob.inline.svg';
 
-const STATS_DATA = [
-  {
-    icon: databaseIcon,
-    value: '2,000,000',
-    description: 'Automated control checks run every day.',
-  },
-  {
-    icon: gearIcon,
-    value: '90%',
-    description: 'Of compliance evidence collected without manual work.',
-  },
-];
+const STAT_ICONS = [databaseIcon, gearIcon];
 
 const StatCard = ({ icon, value, description }) => (
   <div className="flex w-[212px] flex-col gap-5 xl:w-48 xl:gap-4 lg:w-40 lg:gap-3.5 md:w-full">
@@ -50,51 +40,51 @@ StatCard.propTypes = {
   description: PropTypes.string.isRequired,
 };
 
-const Vision = () => (
-  <SecondarySection title="Company Statistics and Vision" className="md:pb-[26px]">
-    <div className="flex gap-x-[140px] xl:gap-x-32 lg:gap-x-12 md:flex-col md:gap-y-20">
-      <div className="relative flex-1 before:absolute before:top-0 before:-left-8 before:h-full before:w-px before:bg-gray-new-50 xl:ml-8 md:ml-0 md:before:hidden">
-        <SectionLabel icon="arrow">Where we&apos;re headed</SectionLabel>
+const Vision = () => {
+  const t = useTranslations('aboutUs.vision');
+  const STATS_DATA = t.raw('stats').map((stat, index) => ({ ...stat, icon: STAT_ICONS[index] }));
+  const mark = (chunks) => (
+    <mark className="rounded-sm bg-[#39A57D]/60 text-black-pure">{chunks}</mark>
+  );
 
-        <h3 className="mt-5 max-w-[736px] text-5xl leading-dense font-normal tracking-tighter text-gray-new-40 xl:max-w-[600px] xl:text-[36px] lg:max-w-full lg:text-2xl md:mt-4 md:text-xl">
-          <span className="text-black-pure">OptiTech is built in the Nordics.</span> We started
-          OptiTech to give Nordic businesses a compliance platform that speaks their language and
-          their law.
-        </h3>
+  return (
+    <SecondarySection title={t('sectionTitle')} className="md:pb-[26px]">
+      <div className="flex gap-x-[140px] xl:gap-x-32 lg:gap-x-12 md:flex-col md:gap-y-20">
+        <div className="relative flex-1 before:absolute before:top-0 before:-left-8 before:h-full before:w-px before:bg-gray-new-50 xl:ml-8 md:ml-0 md:before:hidden">
+          <SectionLabel icon="arrow">{t('labelLeft')}</SectionLabel>
 
-        <div className="mt-[194px] flex gap-x-24 xl:mt-[136px] xl:gap-x-16 lg:gap-x-8 md:mt-9 md:flex-col md:gap-y-7 md:pr-24">
-          {STATS_DATA.map((stat, index) => (
-            <StatCard key={index} {...stat} />
-          ))}
+          <h3 className="mt-5 max-w-[736px] text-5xl leading-dense font-normal tracking-tighter text-gray-new-40 xl:max-w-[600px] xl:text-[36px] lg:max-w-full lg:text-2xl md:mt-4 md:text-xl">
+            {t.rich('heading', {
+              strong: (chunks) => <span className="text-black-pure">{chunks}</span>,
+            })}
+          </h3>
+
+          <div className="mt-[194px] flex gap-x-24 xl:mt-[136px] xl:gap-x-16 lg:gap-x-8 md:mt-9 md:flex-col md:gap-y-7 md:pr-24">
+            {STATS_DATA.map((stat, index) => (
+              <StatCard key={index} {...stat} />
+            ))}
+          </div>
+        </div>
+
+        <div className="relative grid w-[416px] content-between before:absolute before:top-0 before:-left-8 before:h-full before:w-px before:bg-gray-new-50 xl:w-[320px] lg:order-0 lg:w-[238px] md:w-full md:gap-y-4 md:before:hidden">
+          <SectionLabel icon="arrow">{t('labelRight')}</SectionLabel>
+
+          <div className="grid gap-y-10 xl:gap-y-9 lg:gap-y-7 md:gap-y-4">
+            <p className="text-xl leading-normal tracking-tighter text-black-pure xl:text-lg lg:text-base md:text-[15px]">
+              {t.rich('paragraph1', { mark })}
+            </p>
+
+            <p className="text-xl leading-normal tracking-tighter text-black-pure xl:text-lg lg:text-base md:mr-8 md:text-[15px]">
+              {t.rich('paragraph2', { mark })}
+            </p>
+          </div>
         </div>
       </div>
-
-      <div className="relative grid w-[416px] content-between before:absolute before:top-0 before:-left-8 before:h-full before:w-px before:bg-gray-new-50 xl:w-[320px] lg:order-0 lg:w-[238px] md:w-full md:gap-y-4 md:before:hidden">
-        <SectionLabel icon="arrow">Our Vision</SectionLabel>
-
-        <div className="grid gap-y-10 xl:gap-y-9 lg:gap-y-7 md:gap-y-4">
-          <p className="text-xl leading-normal tracking-tighter text-black-pure xl:text-lg lg:text-base md:text-[15px]">
-            The goal stays the same: turn compliance into a{' '}
-            <mark className="rounded-sm bg-[#39A57D]/60 text-black-pure">
-              {' '}
-              continuous, automated process
-            </mark>{' '}
-            instead of a yearly project.
-          </p>
-
-          <p className="text-xl leading-normal tracking-tighter text-black-pure xl:text-lg lg:text-base md:mr-8 md:text-[15px]">
-            OptiTech connects to your systems, collects evidence automatically and{' '}
-            <mark className="rounded-sm bg-[#39A57D]/60 text-black-pure">
-              reports incidents to Swedish authorities, built for the AI era.
-            </mark>
-          </p>
-        </div>
-      </div>
-    </div>
-    <BlobLargeNoisy className="pointer-events-none absolute bottom-[48%] left-[47%] -rotate-45 xl:left-[35%]" />
-    <BlobNoisy className="pointer-events-none absolute bottom-0 left-full -rotate-[75deg] xl:left-3/4" />
-    <Blob className="pointer-events-none absolute -bottom-[30%] left-[85%] -rotate-45 xl:left-[70%]" />
-  </SecondarySection>
-);
+      <BlobLargeNoisy className="pointer-events-none absolute bottom-[48%] left-[47%] -rotate-45 xl:left-[35%]" />
+      <BlobNoisy className="pointer-events-none absolute bottom-0 left-full -rotate-[75deg] xl:left-3/4" />
+      <Blob className="pointer-events-none absolute -bottom-[30%] left-[85%] -rotate-45 xl:left-[70%]" />
+    </SecondarySection>
+  );
+};
 
 export default Vision;

@@ -1,80 +1,41 @@
 ---
-title: 'Where can I find my DATABASE_URL in OptiTech?'
-subtitle: 'Copy it from the Connect widget on the Project Dashboard and drop it into your .env.'
+title: 'Where can I find the audit portal link to share with my auditor?'
+subtitle: 'Generate it under Reports > Auditor access: scoped, read-only, expiring, and logged.'
 enableTableOfContents: true
-createdAt: '2026-05-18T00:00:00.000Z'
-updatedOn: '2026-06-01T20:42:32.665Z'
+createdAt: '2026-01-28T14:25:32.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 isDraft: false
 redirectFrom: []
 previousLink:
-  title: 'Where can I find my database connection string in OptiTech?'
+  title: 'Where can I find my compliance score in OptiTech?'
   slug: find-database-connection-string
 nextLink:
-  title: 'Where can I find or generate API keys for OptiTech?'
-  slug: find-or-generate-neon-api-keys
+  title: 'What is SOC 2, and who needs it?'
+  slug: what-is-soc-2
 ---
 
-Your `DATABASE_URL` is the Postgres connection string OptiTech builds for you. Open your project in the [OptiTech Console](https://console.neon.tech), click **Connect** on the **Project Dashboard**, and copy the connection string from the **Connect to your database** modal. Paste it into your framework's `.env` file as `DATABASE_URL` and you're set.
+## Quick answer
 
-## Get the URL
+Go to **Reports** > **Auditor access** and click **Create auditor link**. Choose the scope (which framework and which period), set the expiry, and OptiTech generates an invitation for your auditor: they authenticate with their own account and get a read-only portal view of exactly that slice of your program. The link is personal, expiring, and every view they make is logged. Auditor portal access is included on the Enterprise plan.
 
-1. Sign in to the [OptiTech Console](https://console.neon.tech) and select your project.
-2. On the **Project Dashboard**, click **Connect**.
-3. Pick a **Branch**, **Compute**, **Database**, and **Role**.
-4. Copy the connection string. Keep **Connection pooling** on unless you specifically need a direct connection.
+## What the auditor sees
 
-A OptiTech `DATABASE_URL` looks like:
+The portal presents your program the way audit fieldwork consumes it:
 
-```text
-postgresql://alex:AbC123dEf@ep-cool-darkness-a1b2c3d4-pooler.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
-```
+- **The requirement catalog** for the framework in scope, each requirement linked to its controls.
+- **Controls with live status and evidence history**, timestamped, with the [append-only integrity chain](/faqs/databases-reproduce-bugs-production-data) behind every entry.
+- **Policies** in their published versions, with approval and acknowledgment records.
+- **Findings and exceptions** with their lifecycle: opened, routed, resolved or accepted.
+- **Point-in-time view**: the auditor can set a date and see the program as it stood then, which is how period-covering audits actually sample.
 
-Both `sslmode=require` and `channel_binding=require` are part of the URL because OptiTech requires TLS. Don't strip them. See [Connect from any app](/docs/connect/connect-from-any-app) for what each segment means.
+What they don't see: anything outside the scope you set, draft documents, or other frameworks' data.
 
-## Use it in your app
+## Why a portal beats an evidence folder
 
-Save it as `DATABASE_URL` in your `.env`:
+The traditional audit interaction is a request list and a shared folder filling with screenshots, which is slow for you and epistemically weak for the auditor. The portal inverts it: auditors sample evidence themselves, at the source, with timestamps they can trust. Fieldwork shrinks (auditors routinely cut on-site days when evidence is self-serve), and follow-up requests drop because context travels with the evidence. See [how auditors inspect live data without disturbing your team](/faqs/find-database-url-neon).
 
-```text filename=".env"
-DATABASE_URL="postgresql://alex:AbC123dEf@ep-cool-darkness-a1b2c3d4-pooler.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require"
-```
+## Managing access over the engagement
 
-Then read it from your code:
+The invitation's expiry should match the audit window; extensions are deliberate and logged, and access [revokes itself](/faqs/database-services-short-lived-postgres-instances) when the engagement ends. For recurring audits, create a fresh link per cycle rather than reusing one, so each audit's access trail stands alone.
 
-<CodeTabs labels={["Node.js", "Python", "Next.js"]}>
-
-```javascript
-import { Client } from 'pg';
-
-const client = new Client({ connectionString: process.env.DATABASE_URL });
-await client.connect();
-```
-
-```python
-import os
-import psycopg2
-
-conn = psycopg2.connect(os.environ["DATABASE_URL"])
-```
-
-```javascript
-// app/api/route.ts
-import { neon } from '@neondatabase/serverless';
-
-const sql = neon(process.env.DATABASE_URL);
-const rows = await sql`SELECT now()`;
-```
-
-</CodeTabs>
-
-Common conventions in framework integrations:
-
-- **Vercel**: When you connect OptiTech through the Vercel integration, OptiTech writes `DATABASE_URL` (pooled) and `DATABASE_URL_UNPOOLED` (direct) to your Vercel project's env vars. See the [Vercel managed integration](/docs/guides/vercel-managed-integration).
-- **Prisma**: Set `url = env("DATABASE_URL")` (pooled) and `directUrl = env("DIRECT_URL")` (direct) in `schema.prisma`. See [Connect from Prisma](/docs/guides/prisma).
-- **Drizzle**: A single `DATABASE_URL` (pooled) is usually enough. See [Connect from Drizzle](/docs/guides/drizzle).
-
-<Admonition type="warning" title="Treat DATABASE_URL as a secret">
-The URL contains the role's password in plain text. Never commit it to a repo, log it, or paste it in a chat. If it ever leaks, [reset the role's password](/docs/manage/roles#reset-a-password) right away. The old URL stops working as soon as the reset completes.
-</Admonition>
-
-<CTA title="Framework guides" description="Find your stack's guide for Next.js, Prisma, Drizzle, Django, FastAPI, and more." buttonText="See all guides" buttonUrl="/docs/get-started/frameworks" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

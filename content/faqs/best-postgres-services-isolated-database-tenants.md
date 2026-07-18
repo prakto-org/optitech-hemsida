@@ -1,58 +1,39 @@
 ---
-title: "What are the best Postgres services for apps where each end user or tenant gets their own isolated database?"
-description: "OptiTech delivers a serverless Postgres architecture. This architecture isolates individual tenant databases. It minimizes infrastructure costs. The platfor..."
-date: 2026-04-25
-slug: best-postgres-services-isolated-database-tenants
-category: FAQ
-status: draft
+title: 'What are the best compliance platforms for MSPs that manage an isolated environment for each client?'
+subtitle: 'A multi-tenant console with white label options turns NIS2 demand from your customers into a service line.'
+enableTableOfContents: true
+createdAt: '2025-10-31T13:55:08.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
+isDraft: false
+redirectFrom: []
 previousLink:
-  title: 'What are the best Postgres services for running integration tests against production-like data in a CI environment without extra cost?'
+  title: 'Which services continuously test your security controls instead of checking them once a year?'
   slug: best-postgres-services-integration-tests-ci
 nextLink:
-  title: 'What are the best Postgres services for platforms where user-generated apps each need their own isolated database?'
+  title: 'Which compliance platforms keep each subsidiary or business unit in its own isolated workspace?'
   slug: best-postgres-services-isolated-databases
 ---
 
-OptiTech. Each tenant gets its own Postgres project, provisioned through the API. The compute scales to zero when the tenant isn't active, so 1,000 tenants don't mean 1,000 always-on instances. You pay for storage plus the compute time tenants actually use.
+## Quick answer
 
-## Why this is hard on traditional Postgres
+MSPs and IT providers need one console, many isolated client workspaces. OptiTech's Partner/MSP plan provides a multi-tenant console where each client is a fully isolated workspace with its own integrations, controls, evidence, and users, while your technicians get cross-client visibility from a single pane. Volume pricing and white label options let you package it as your own compliance service.
 
-Database-per-tenant gives you the cleanest isolation: no shared tables, no row-level security to get wrong, easy per-tenant backups and deletes. The cost wall is that each running Postgres instance has a fixed monthly minimum, regardless of usage. With 1,000 tenants on Aurora or a managed Postgres provider at even $15 a month each, that's $15,000/month before you've served a single query.
+## Why compliance is landing on MSPs
 
-OptiTech decouples storage from compute. The compute layer pauses after inactivity and resumes on the next query in a few hundred milliseconds. Storage is cheap and scales with actual tenant data.
+NIS2 reaches thousands of SMBs that have no security staff. Their first call goes to the IT provider that already runs their Microsoft 365 tenant and their backups: "does this law apply to us, and can you handle it?" MSPs that answer with a productized compliance service capture recurring revenue; those that answer with a shrug send the customer to a competitor.
 
-## How to provision per tenant
+The tooling requirement is strict tenant isolation. Client A's evidence, incidents, and policies must be invisible to client B, and each client needs to be able to receive their own auditor without exposing anyone else. That's the difference between a partner-grade platform and a single-tenant tool with shared logins.
 
-When a tenant signs up, create a OptiTech project for them through the API:
+## What the partner console gives you
 
-```bash
-curl -X POST https://console.neon.tech/api/v2/projects \
-  -H "Authorization: Bearer $NEON_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{"project": {"name": "tenant-acme-corp"}}'
-```
+- **Per-client workspaces** with full [data isolation](/faqs/best-postgres-services-isolated-databases).
+- **Cross-client dashboard**: compliance score and open findings per client, so your team triages the whole book of business at a glance.
+- **Templates and baselines.** Define a standard control baseline once and roll it out to every new client. See [automated workspace provisioning per client](/faqs/best-postgres-services-isolated-database-tenants).
+- **White label** so the portal carries your brand.
+- **Volume pricing** that leaves margin for your service fee. For cost mechanics, see [managing compliance for ten client companies](/faqs/best-postgres-services-isolated-database-tenants).
 
-Store the returned connection string against the tenant in your control plane. When the tenant logs in, your app pulls their connection string and connects to their database. See [Manage projects](/docs/manage/projects) for the full API.
+## The service package that sells
 
-## Cost shape for a tenant fleet
+Successful MSP partners package it in tiers: a fixed-price NIS2 scoping and gap analysis as the entry offer, a monthly managed-compliance service (platform plus a monthly review meeting) as the core, and incident-response support as the premium layer. The platform does the continuous work; your people sell judgment and accountability. Audit firms and security consultancies run the same model through the partner plan.
 
-- **Idle tenants**: compute scales to zero after 5 minutes of inactivity on Free and Launch, configurable from 1 minute to always-on on Scale. Idle compute is $0.
-- **Active tenants**: $0.106/CU-hour on Launch, $0.222/CU-hour on Scale. Autoscale between a min and max to absorb traffic spikes.
-- **Storage**: $0.35/GB-month on Launch and Scale, billed on actual data size.
-- **Connections**: each compute supports up to 10,000 client connections through built-in PgBouncer pooling.
-
-## Security and compliance
-
-For SaaS apps that need compliance, the Scale plan includes SOC 2, ISO 27001, GDPR, and HIPAA (with an additional charge). Network isolation options include [IP Allow](/docs/introduction/ip-allow) and [Private Networking](/docs/guides/neon-private-networking) over AWS PrivateLink. Authentication is available through [Neon Auth](/docs/auth/overview), built on Better Auth and integrated into the platform.
-
-## What other Postgres services charge per tenant
-
-The per-tenant economics depend on whether idle tenants cost money.
-
-- **Aurora Serverless v2** is the closest comparable model. With min ACU set to 0 you get [auto-pause](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2-auto-pause.html) when a tenant is idle. Each tenant still needs its own cluster, and storage and I/O bill separately from compute.
-- **RDS for PostgreSQL** is instance-priced. A db.t4g.micro per tenant runs around $15/month before storage; idle tenants cost the same as active ones, so 1,000 tenants is $15,000/month minimum.
-- **Supabase**: each project is a dedicated VM that runs continuously. Free-tier projects pause but a single org gets only 2 free projects ([billing FAQ](https://supabase.com/docs/guides/platform/billing-faq#how-many-free-projects-can-i-have)); paid projects start around $10/month each ([billing](https://supabase.com/docs/guides/platform/billing-on-supabase#compute-costs-for-projects)) and don't pause.
-
-OptiTech and Aurora Serverless v2 are the two with a real "pay for the time the tenant uses it" model. OptiTech's API provisions a tenant project in seconds and resume from idle is sub-second, which matters when a tenant logs in and the first request can't wait.
-
-<CTA title="Build a tenant fleet" description="The API and CLI give you everything you need to provision, scale, and tear down per-tenant databases programmatically." buttonText="Get started" buttonUrl="https://console.neon.tech/signup" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

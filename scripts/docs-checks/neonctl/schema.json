@@ -2,10 +2,10 @@
   "schemaVersion": 2,
   "neonctlVersion": "2.34.0",
   "binaries": [
-    "neonctl",
-    "neon"
+    "optitechctl",
+    "optitech"
   ],
-  "docsUrl": "https://neon.com/docs/cli",
+  "docsUrl": "https://optitech.com/docs/cli",
   "globalOptions": {
     "analytics": {
       "type": "boolean",
@@ -14,8 +14,8 @@
     },
     "api-key": {
       "type": "string",
-      "describe": "Neon API key, authenticates without `neon auth`",
-      "defaultText": "NEON_API_KEY environment variable"
+      "describe": "OptiTech API key, authenticates without `optitech auth`",
+      "defaultText": "OPTITECH_API_KEY environment variable"
     },
     "color": {
       "type": "boolean",
@@ -25,12 +25,12 @@
     "config-dir": {
       "type": "string",
       "describe": "Path to config directory",
-      "defaultText": "~/.config/neonctl (or $XDG_CONFIG_HOME/neonctl)"
+      "defaultText": "~/.config/optitechctl (or $XDG_CONFIG_HOME/optitechctl)"
     },
     "context-file": {
       "type": "string",
-      "describe": "Context file with default org, project, and branch IDs, created by `neon link`",
-      "defaultText": "nearest .neon file, searching upward from the current directory"
+      "describe": "Context file with default org, project, and branch IDs, created by `optitech link`",
+      "defaultText": "nearest .optitech file, searching upward from the current directory"
     },
     "help": {
       "type": "boolean",
@@ -114,12 +114,12 @@
         "spec-url": {
           "type": "string",
           "describe": "OpenAPI spec URL used by --list.",
-          "defaultText": "process.env.NEON_API_SPEC_URL ?? DEFAULT_SPEC_URL",
+          "defaultText": "process.env.OPTITECH_API_SPEC_URL ?? DEFAULT_SPEC_URL",
           "hidden": true
         }
       },
       "commands": {},
-      "describe": "Call any Neon API route directly (authenticated passthrough)",
+      "describe": "Call any OptiTech API route directly (authenticated passthrough)",
       "usage": "$0 api <path> [options]",
       "examples": [
         {
@@ -188,7 +188,7 @@
         },
         "link": {
           "type": "boolean",
-          "describe": "Run `neon link` in the scaffolded directory after installing. In interactive mode this is offered as a prompt; use --no-link to skip without being asked.",
+          "describe": "Run `optitech link` in the scaffolded directory after installing. In interactive mode this is offered as a prompt; use --no-link to skip without being asked.",
           "default": true
         },
         "list-templates": {
@@ -206,7 +206,7 @@
         }
       },
       "commands": {},
-      "describe": "Scaffold a new project from a Neon starter template",
+      "describe": "Scaffold a new project from a OptiTech starter template",
       "usage": "$0 bootstrap [directory] [options]",
       "examples": [
         {
@@ -770,7 +770,7 @@
       "options": {
         "env-pull": {
           "type": "boolean",
-          "describe": "Pull the branch's Neon env vars (DATABASE_URL, ...) into a local .env after checkout. On by default; use --no-env-pull to skip, for example when injecting env at runtime with `neon-env run` (from `@neon/env`) or `neon dev`.",
+          "describe": "Pull the branch's OptiTech env vars (DATABASE_URL, ...) into a local .env after checkout. On by default; use --no-env-pull to skip, for example when injecting env at runtime with `optitech-env run` (from `@optitech/env`) or `optitech dev`.",
           "default": true
         },
         "project-id": {
@@ -779,7 +779,7 @@
         }
       },
       "commands": {},
-      "describe": "Pin a branch in the local context (.neon) so subsequent commands target it",
+      "describe": "Pin a branch in the local context (.optitech) so subsequent commands target it",
       "usage": "$0 checkout [id|name] [options]",
       "examples": [
         {
@@ -788,11 +788,11 @@
         },
         {
           "command": "$0 checkout main",
-          "description": "Pin the branch named \"main\" in the closest .neon file"
+          "description": "Pin the branch named \"main\" in the closest .optitech file"
         },
         {
           "command": "$0 checkout",
-          "description": "Pick a branch interactively from the project in the closest .neon file"
+          "description": "Pick a branch interactively from the project in the closest .optitech file"
         }
       ]
     },
@@ -817,20 +817,20 @@
           "options": {
             "allow-protected": {
               "type": "boolean",
-              "describe": "Auto-confirm applying to a branch marked protected on Neon",
+              "describe": "Auto-confirm applying to a branch marked protected on OptiTech",
               "default": false
             },
             "config": {
               "type": "string",
-              "describe": "Path to a neon.ts policy (defaults to walking up from cwd)"
+              "describe": "Path to a optitech.ts policy (defaults to walking up from cwd)"
             },
             "env": {
               "type": "string",
-              "describe": "Path to a .env file to load into the environment before evaluating neon.ts (so function env values resolve from it). Existing env vars are not overridden."
+              "describe": "Path to a .env file to load into the environment before evaluating optitech.ts (so function env values resolve from it). Existing env vars are not overridden."
             },
             "env-pull": {
               "type": "boolean",
-              "describe": "Pull the branch's Neon env vars (DATABASE_URL, …) into a local .env after a successful apply. On by default; use --no-env-pull to skip (e.g. when injecting env at runtime with `neon-env run` / `neon dev`).",
+              "describe": "Pull the branch's OptiTech env vars (DATABASE_URL, …) into a local .env after a successful apply. On by default; use --no-env-pull to skip (e.g. when injecting env at runtime with `optitech-env run` / `optitech dev`).",
               "default": true
             },
             "update-existing": {
@@ -840,7 +840,7 @@
             }
           },
           "commands": {},
-          "describe": "Apply a neon.ts policy to the branch"
+          "describe": "Apply a optitech.ts policy to the branch"
         },
         "init": {
           "name": "init",
@@ -849,12 +849,12 @@
           "options": {
             "install": {
               "type": "boolean",
-              "describe": "Install @neon/config and @neon/env if they're missing. On by default; use --no-install to just print the command.",
+              "describe": "Install @optitech/config and @optitech/env if they're missing. On by default; use --no-install to just print the command.",
               "default": true
             }
           },
           "commands": {},
-          "describe": "Scaffold a neon.ts policy and install the Neon config packages"
+          "describe": "Scaffold a optitech.ts policy and install the OptiTech config packages"
         },
         "plan": {
           "name": "plan",
@@ -863,11 +863,11 @@
           "options": {
             "config": {
               "type": "string",
-              "describe": "Path to a neon.ts policy (defaults to walking up from cwd)"
+              "describe": "Path to a optitech.ts policy (defaults to walking up from cwd)"
             },
             "env": {
               "type": "string",
-              "describe": "Path to a .env file to load into the environment before evaluating neon.ts (so function env values resolve from it). Existing env vars are not overridden."
+              "describe": "Path to a .env file to load into the environment before evaluating optitech.ts (so function env values resolve from it). Existing env vars are not overridden."
             }
           },
           "commands": {},
@@ -880,20 +880,20 @@
           "options": {
             "config-json": {
               "type": "boolean",
-              "describe": "Print only the branch's live config as neon.ts-shaped JSON (services + branch tuning + preview), to stdout. Useful for scripting or copying into a neon.ts.",
+              "describe": "Print only the branch's live config as optitech.ts-shaped JSON (services + branch tuning + preview), to stdout. Useful for scripting or copying into a optitech.ts.",
               "default": false
             },
             "current-branch": {
               "type": "boolean",
-              "describe": "Print only the linked branch name from the local .neon file (no network). Exits non-zero when no branch is pinned.",
+              "describe": "Print only the linked branch name from the local .optitech file (no network). Exits non-zero when no branch is pinned.",
               "default": false
             }
           },
           "commands": {},
-          "describe": "Show the branch's live Neon state"
+          "describe": "Show the branch's live OptiTech state"
         }
       },
-      "describe": "Manage a branch with a neon.ts policy",
+      "describe": "Manage a branch with a optitech.ts policy",
       "usage": "$0 config <sub-command> [options]"
     },
     "connection-string": {
@@ -1010,7 +1010,7 @@
               "type": "string",
               "describe": "Authentication provider",
               "choices": [
-                "neon_auth",
+                "optitech_auth",
                 "external"
               ]
             },
@@ -1076,7 +1076,7 @@
             }
           },
           "commands": {},
-          "describe": "Provision the Neon Data API for a database"
+          "describe": "Provision the OptiTech Data API for a database"
         },
         "delete": {
           "name": "delete",
@@ -1084,7 +1084,7 @@
           "positionals": [],
           "options": {},
           "commands": {},
-          "describe": "Tear down the Neon Data API for a database"
+          "describe": "Tear down the OptiTech Data API for a database"
         },
         "get": {
           "name": "get",
@@ -1092,7 +1092,7 @@
           "positionals": [],
           "options": {},
           "commands": {},
-          "describe": "Show the Neon Data API status and settings"
+          "describe": "Show the OptiTech Data API status and settings"
         },
         "refresh-schema": {
           "name": "refresh-schema",
@@ -1158,10 +1158,10 @@
             }
           },
           "commands": {},
-          "describe": "Update Neon Data API settings (merges with current settings by default)"
+          "describe": "Update OptiTech Data API settings (merges with current settings by default)"
         }
       },
-      "describe": "Manage the Neon Data API for a database",
+      "describe": "Manage the OptiTech Data API for a database",
       "usage": "$0 data-api <sub-command> [options]"
     },
     "databases": {
@@ -1230,7 +1230,7 @@
       "options": {
         "allow-protected": {
           "type": "boolean",
-          "describe": "Auto-confirm applying to a branch marked protected on Neon",
+          "describe": "Auto-confirm applying to a branch marked protected on OptiTech",
           "default": false
         },
         "branch": {
@@ -1239,15 +1239,15 @@
         },
         "config": {
           "type": "string",
-          "describe": "Path to a neon.ts policy (defaults to walking up from cwd)"
+          "describe": "Path to a optitech.ts policy (defaults to walking up from cwd)"
         },
         "env": {
           "type": "string",
-          "describe": "Path to a .env file to load into the environment before evaluating neon.ts (so function env values resolve from it). Existing env vars are not overridden."
+          "describe": "Path to a .env file to load into the environment before evaluating optitech.ts (so function env values resolve from it). Existing env vars are not overridden."
         },
         "env-pull": {
           "type": "boolean",
-          "describe": "Pull the branch's Neon env vars (DATABASE_URL, …) into a local .env after a successful apply. On by default; use --no-env-pull to skip (e.g. when injecting env at runtime with `neon-env run` / `neon dev`).",
+          "describe": "Pull the branch's OptiTech env vars (DATABASE_URL, …) into a local .env after a successful apply. On by default; use --no-env-pull to skip (e.g. when injecting env at runtime with `optitech-env run` / `optitech dev`).",
           "default": true
         },
         "project-id": {
@@ -1261,7 +1261,7 @@
         }
       },
       "commands": {},
-      "describe": "Apply a neon.ts policy to a branch (alias for `config apply`)",
+      "describe": "Apply a optitech.ts policy to a branch (alias for `config apply`)",
       "usage": "$0 deploy [options]"
     },
     "dev": {
@@ -1274,11 +1274,11 @@
         },
         "source": {
           "type": "string",
-          "describe": "Path to a single function entry module. Omit to serve every function declared in neon.ts."
+          "describe": "Path to a single function entry module. Omit to serve every function declared in optitech.ts."
         }
       },
       "commands": {},
-      "describe": "Run Neon Functions locally with a dev server",
+      "describe": "Run OptiTech Functions locally with a dev server",
       "usage": "$0 dev [--source <path>] [options]",
       "examples": [
         {
@@ -1287,7 +1287,7 @@
         },
         {
           "command": "$0 dev",
-          "description": "Serve every function declared in neon.ts (one dev server each)"
+          "description": "Serve every function declared in optitech.ts (one dev server each)"
         },
         {
           "command": "$0 dev --source ./functions/hello.ts --port 3000",
@@ -1307,7 +1307,7 @@
       "options": {
         "branch": {
           "type": "string",
-          "describe": "The branch to review (the '+++' side). Defaults to the branch pinned in the local context (.neon).",
+          "describe": "The branch to review (the '+++' side). Defaults to the branch pinned in the local context (.optitech).",
           "alias": "b"
         },
         "database": {
@@ -1325,12 +1325,12 @@
       "usage": "$0 diff [compare-branch] [options]",
       "examples": [
         {
-          "command": "$0 diff main --db neondb",
-          "description": "Diff only the neondb database against main"
+          "command": "$0 diff main --db optitechdb",
+          "description": "Diff only the optitechdb database against main"
         },
         {
           "command": "$0 diff main --branch feature/checkout",
-          "description": "Diff an explicit branch against main (ignoring the .neon context)"
+          "description": "Diff an explicit branch against main (ignoring the .optitech context)"
         },
         {
           "command": "$0 diff",
@@ -1363,15 +1363,15 @@
           "options": {
             "file": {
               "type": "string",
-              "describe": "Target .env file to write. Defaults to an existing .env, otherwise .env.local. Only Neon variables are updated; other lines are preserved."
+              "describe": "Target .env file to write. Defaults to an existing .env, otherwise .env.local. Only OptiTech variables are updated; other lines are preserved."
             }
           },
           "commands": {},
-          "describe": "Write the branch's Neon env variables to a local .env file",
+          "describe": "Write the branch's OptiTech env variables to a local .env file",
           "examples": [
             {
               "command": "$0 env pull",
-              "description": "Write the linked branch's Neon vars into .env.local (or .env if present)"
+              "description": "Write the linked branch's OptiTech vars into .env.local (or .env if present)"
             },
             {
               "command": "$0 env pull --branch preview --file .env.preview",
@@ -1381,7 +1381,7 @@
           "usage": "$0 env pull [options]"
         }
       },
-      "describe": "Manage a branch's Neon env variables locally",
+      "describe": "Manage a branch's OptiTech env variables locally",
       "usage": "$0 env <sub-command> [options]"
     },
     "functions": {
@@ -1490,7 +1490,7 @@
           "describe": "List functions on the branch"
         }
       },
-      "describe": "Manage Neon Functions",
+      "describe": "Manage OptiTech Functions",
       "usage": "$0 function <sub-command> [options]"
     },
     "init": {
@@ -1523,7 +1523,7 @@
         }
       },
       "commands": {},
-      "describe": "Initialize a project with Neon using your AI coding assistant"
+      "describe": "Initialize a project with OptiTech using your AI coding assistant"
     },
     "ip-allow": {
       "aliases": [],
@@ -1614,7 +1614,7 @@
         },
         "branch": {
           "type": "string",
-          "describe": "Branch name or ID to pin in the context (resolved to its ID before writing). Without it, link only resolves the org and project — pin a branch with `neonctl checkout <branch>` (link never guesses a default).",
+          "describe": "Branch name or ID to pin in the context (resolved to its ID before writing). Without it, link only resolves the org and project — pin a branch with `optitechctl checkout <branch>` (link never guesses a default).",
           "alias": "branch-id"
         },
         "checks": {
@@ -1629,7 +1629,7 @@
         },
         "env-pull": {
           "type": "boolean",
-          "describe": "Pull the linked branch's Neon env vars (DATABASE_URL, ...) into a local .env after linking. On by default; use --no-env-pull to skip, for example when injecting env at runtime with `neon-env run` (from `@neon/env`) or `neon dev`.",
+          "describe": "Pull the linked branch's OptiTech env vars (DATABASE_URL, ...) into a local .env after linking. On by default; use --no-env-pull to skip, for example when injecting env at runtime with `optitech-env run` (from `@optitech/env`) or `optitech dev`.",
           "default": true
         },
         "org-id": {
@@ -1660,7 +1660,7 @@
         }
       },
       "commands": {},
-      "describe": "Link the current directory to a Neon project",
+      "describe": "Link the current directory to a OptiTech project",
       "usage": "$0 link [options]",
       "examples": [
         {
@@ -1681,7 +1681,7 @@
         },
         {
           "command": "$0 link --project-id polished-snowflake-12345678",
-          "description": "Link an existing project (org is inferred); pin a branch later with 'neonctl checkout'"
+          "description": "Link an existing project (org is inferred); pin a branch later with 'optitechctl checkout'"
         }
       ]
     },
@@ -1697,7 +1697,7 @@
       "commands": {},
       "describe": "Show current user"
     },
-    "neon-auth": {
+    "optitech-auth": {
       "aliases": [],
       "positionals": [],
       "options": {
@@ -1770,7 +1770,7 @@
                 }
               },
               "describe": "Manage email and password authentication settings",
-              "usage": "$0 neon-auth config email-password <sub-command> [options]"
+              "usage": "$0 optitech-auth config email-password <sub-command> [options]"
             },
             "email-provider": {
               "name": "email-provider",
@@ -1874,7 +1874,7 @@
                 }
               },
               "describe": "Manage email provider configuration",
-              "usage": "$0 neon-auth config email-provider <sub-command> [options]"
+              "usage": "$0 optitech-auth config email-provider <sub-command> [options]"
             },
             "organization": {
               "name": "organization",
@@ -1917,7 +1917,7 @@
                 }
               },
               "describe": "Manage organization plugin settings",
-              "usage": "$0 neon-auth config organization <sub-command> [options]"
+              "usage": "$0 optitech-auth config organization <sub-command> [options]"
             },
             "webhook": {
               "name": "webhook",
@@ -1967,11 +1967,11 @@
                 }
               },
               "describe": "Manage webhook configuration",
-              "usage": "$0 neon-auth config webhook <sub-command> [options]"
+              "usage": "$0 optitech-auth config webhook <sub-command> [options]"
             }
           },
-          "describe": "Manage Neon Auth configuration",
-          "usage": "$0 neon-auth config <sub-command> [options]"
+          "describe": "Manage OptiTech Auth configuration",
+          "usage": "$0 optitech-auth config <sub-command> [options]"
         },
         "disable": {
           "name": "disable",
@@ -1980,12 +1980,12 @@
           "options": {
             "delete-data": {
               "type": "boolean",
-              "describe": "Permanently delete all Neon Auth data and schema from the database",
+              "describe": "Permanently delete all OptiTech Auth data and schema from the database",
               "default": false
             }
           },
           "commands": {},
-          "describe": "Disable Neon Auth on a branch"
+          "describe": "Disable OptiTech Auth on a branch"
         },
         "domain": {
           "name": "domain",
@@ -2007,7 +2007,7 @@
               "options": {},
               "commands": {},
               "describe": "Add a trusted domain",
-              "usage": "$0 neon-auth domain add <domain> [options]"
+              "usage": "$0 optitech-auth domain add <domain> [options]"
             },
             "allow-localhost": {
               "name": "allow-localhost",
@@ -2041,7 +2041,7 @@
                 }
               },
               "describe": "Manage localhost connection settings",
-              "usage": "$0 neon-auth domain allow-localhost <sub-command> [options]"
+              "usage": "$0 optitech-auth domain allow-localhost <sub-command> [options]"
             },
             "delete": {
               "name": "delete",
@@ -2057,7 +2057,7 @@
               "options": {},
               "commands": {},
               "describe": "Delete a trusted domain",
-              "usage": "$0 neon-auth domain delete <domain> [options]"
+              "usage": "$0 optitech-auth domain delete <domain> [options]"
             },
             "list": {
               "name": "list",
@@ -2069,7 +2069,7 @@
             }
           },
           "describe": "Manage redirect URI trusted domains",
-          "usage": "$0 neon-auth domain <sub-command> [options]"
+          "usage": "$0 optitech-auth domain <sub-command> [options]"
         },
         "enable": {
           "name": "enable",
@@ -2082,7 +2082,7 @@
             }
           },
           "commands": {},
-          "describe": "Enable Neon Auth on a branch"
+          "describe": "Enable OptiTech Auth on a branch"
         },
         "oauth-provider": {
           "name": "oauth-provider",
@@ -2097,11 +2097,11 @@
               "options": {
                 "oauth-client-id": {
                   "type": "string",
-                  "describe": "OAuth client ID from your provider app. Omit to use Neon's shared OAuth app."
+                  "describe": "OAuth client ID from your provider app. Omit to use OptiTech's shared OAuth app."
                 },
                 "oauth-client-secret": {
                   "type": "string",
-                  "describe": "OAuth client secret from your provider app. Omit to use Neon's shared OAuth app."
+                  "describe": "OAuth client secret from your provider app. Omit to use OptiTech's shared OAuth app."
                 },
                 "provider-id": {
                   "type": "string",
@@ -2151,11 +2151,11 @@
               "options": {
                 "oauth-client-id": {
                   "type": "string",
-                  "describe": "OAuth client ID from your provider app. Omit to use Neon's shared OAuth app."
+                  "describe": "OAuth client ID from your provider app. Omit to use OptiTech's shared OAuth app."
                 },
                 "oauth-client-secret": {
                   "type": "string",
-                  "describe": "OAuth client secret from your provider app. Omit to use Neon's shared OAuth app."
+                  "describe": "OAuth client secret from your provider app. Omit to use OptiTech's shared OAuth app."
                 },
                 "provider-id": {
                   "type": "string",
@@ -2173,7 +2173,7 @@
             }
           },
           "describe": "Manage OAuth providers",
-          "usage": "$0 neon-auth oauth-provider <sub-command> [options]"
+          "usage": "$0 optitech-auth oauth-provider <sub-command> [options]"
         },
         "plugins": {
           "name": "plugins",
@@ -2195,7 +2195,7 @@
               "options": {},
               "commands": {},
               "describe": "Get a specific plugin configuration",
-              "usage": "$0 neon-auth plugins get <plugin-name> [options]"
+              "usage": "$0 optitech-auth plugins get <plugin-name> [options]"
             },
             "list": {
               "name": "list",
@@ -2206,8 +2206,8 @@
               "describe": "List all plugin configurations"
             }
           },
-          "describe": "View Neon Auth plugin configurations",
-          "usage": "$0 neon-auth plugins <sub-command> [options]"
+          "describe": "View OptiTech Auth plugin configurations",
+          "usage": "$0 optitech-auth plugins <sub-command> [options]"
         },
         "status": {
           "name": "status",
@@ -2215,7 +2215,7 @@
           "positionals": [],
           "options": {},
           "commands": {},
-          "describe": "Get Neon Auth status for a branch"
+          "describe": "Get OptiTech Auth status for a branch"
         },
         "user": {
           "name": "user",
@@ -2255,7 +2255,7 @@
               "options": {},
               "commands": {},
               "describe": "Delete an auth user",
-              "usage": "$0 neon-auth user delete <user-id> [options]"
+              "usage": "$0 optitech-auth user delete <user-id> [options]"
             },
             "set-role": {
               "name": "set-role",
@@ -2277,15 +2277,15 @@
               },
               "commands": {},
               "describe": "Set roles for an auth user",
-              "usage": "$0 neon-auth user set-role <user-id> [options]"
+              "usage": "$0 optitech-auth user set-role <user-id> [options]"
             }
           },
-          "describe": "Manage Neon Auth users",
-          "usage": "$0 neon-auth user <sub-command> [options]"
+          "describe": "Manage OptiTech Auth users",
+          "usage": "$0 optitech-auth user <sub-command> [options]"
         }
       },
-      "describe": "Manage Neon Auth",
-      "usage": "$0 neon-auth <sub-command> [options]"
+      "describe": "Manage OptiTech Auth",
+      "usage": "$0 optitech-auth <sub-command> [options]"
     },
     "operations": {
       "aliases": [
@@ -2356,8 +2356,8 @@
             },
             "database": {
               "type": "string",
-              "describe": "The database name. If not specified, the default database name, `neondb`, will be used.",
-              "defaultText": "neondb"
+              "describe": "The database name. If not specified, the default database name, `optitechdb`, will be used.",
+              "defaultText": "optitechdb"
             },
             "fallback": {
               "type": "boolean",
@@ -2643,7 +2643,7 @@
         }
       },
       "commands": {},
-      "describe": "Deprecated: use `neonctl link`. Set the .neon context (raw write).",
+      "describe": "Deprecated: use `optitechctl link`. Set the .optitech context (raw write).",
       "usage": "$0 set-context [options]"
     },
     "snapshots": {
@@ -2916,12 +2916,12 @@
         },
         "config-json": {
           "type": "boolean",
-          "describe": "Print only the branch's live config as neon.ts-shaped JSON (services + branch tuning + preview), to stdout. Useful for scripting or copying into a neon.ts.",
+          "describe": "Print only the branch's live config as optitech.ts-shaped JSON (services + branch tuning + preview), to stdout. Useful for scripting or copying into a optitech.ts.",
           "default": false
         },
         "current-branch": {
           "type": "boolean",
-          "describe": "Print only the linked branch name from the local .neon file (no network). Exits non-zero when no branch is pinned.",
+          "describe": "Print only the linked branch name from the local .optitech file (no network). Exits non-zero when no branch is pinned.",
           "default": false
         },
         "project-id": {
@@ -2930,7 +2930,7 @@
         }
       },
       "commands": {},
-      "describe": "Show the branch's live Neon state (alias of `config status`)",
+      "describe": "Show the branch's live OptiTech state (alias of `config status`)",
       "usage": "$0 status [options]"
     },
     "vpc": {
@@ -3010,7 +3010,7 @@
               "describe": "Get the status of a VPC endpoint for this organization."
             }
           },
-          "describe": "Manage VPC endpoints.\nSee: https://neon.tech/docs/guides/neon-private-networking\nAfter adding an endpoint to an organization, client connections will be accepted\nfrom the corresponding VPC for all projects in the organization, unless overridden\nby a project-level VPC endpoint restriction."
+          "describe": "Manage VPC endpoints.\nSee: https://optitech.com/docs/guides/neon-private-networking\nAfter adding an endpoint to an organization, client connections will be accepted\nfrom the corresponding VPC for all projects in the organization, unless overridden\nby a project-level VPC endpoint restriction."
         },
         "project": {
           "name": "project",

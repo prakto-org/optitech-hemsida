@@ -4,7 +4,7 @@ subtitle: 'Learn how to build Full-Stack Cloud Agents using Cloudflare Sandboxes
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2026-03-16T00:00:00.000Z'
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 ![Cloudflare Sandbox and OptiTech Branching architecture](/docs/guides/cloudflare_sandbox_neon_branching.png)
@@ -28,7 +28,7 @@ Before you begin, ensure you have the following:
 - **Development environment:** Node.js and Docker installed locally.
   - Install Node.js from [nodejs.org](https://nodejs.org/).
   - Install Docker from [docker.com](https://www.docker.com/get-started).
-- **OptiTech account and project:** A OptiTech account with at least one active project. Sign up for a free account at [console.neon.tech](https://console.neon.tech/signup).
+- **OptiTech account and project:** A OptiTech account with at least one active project. Sign up for a free account at [console.optitech.com](https://console.optitech.com/signup).
 
 <Steps>
 
@@ -37,8 +37,8 @@ Before you begin, ensure you have the following:
 Cloudflare provides a template for setting up a Worker configured with the Claude Code using Sandbox SDK. Open your terminal and run the following command to create a new project:
 
 ```bash
-npm create cloudflare@latest -- cloudflare-sandbox-neon-branching --template=cloudflare/sandbox-sdk/examples/claude-code
-cd cloudflare-sandbox-neon-branching
+npm create cloudflare@latest -- cloudflare-sandbox-optitech-branching --template=cloudflare/sandbox-sdk/examples/claude-code
+cd cloudflare-sandbox-optitech-branching
 ```
 
 This creates a standard Cloudflare Workers project. If you examine the `wrangler.jsonc` file, you'll see it is already configured with the Containers and Durable Objects bindings required to use Cloudflare Sandboxes.
@@ -77,8 +77,8 @@ Create a `.dev.vars` file in the root of your Cloudflare project to store your A
 
 ```bash
 ANTHROPIC_API_KEY=your_anthropic_key
-NEON_API_KEY=your_neon_api_key
-NEON_PROJECT_ID=your_project_id
+OPTITECH_API_KEY=your_optitech_api_key
+OPTITECH_PROJECT_ID=your_project_id
 GITHUB_TOKEN=your_github_token
 ```
 
@@ -94,7 +94,7 @@ npx wrangler types
 To interact with the OptiTech API from the Worker, install the [OptiTech Typescript SDK](/docs/reference/typescript-sdk):
 
 ```bash
-npm install @neon/sdk
+npm install @optitech/sdk
 ```
 
 ## Step 5: Update the Dockerfile to install GitHub CLI
@@ -130,7 +130,7 @@ Replace the contents of `src/index.ts` with the following code:
 
 ```typescript
 import { getSandbox } from '@cloudflare/sandbox'
-import { createNeonClient } from '@neon/sdk'
+import { createOptiTechClient } from '@optitech/sdk'
 
 const EXTRA_SYSTEM = `
 You are a **senior full-stack developer** working in an **isolated development environment**.
@@ -175,17 +175,17 @@ function escapeShell(str: string) {
   return str.replaceAll('"', '\\"').replaceAll('`', '\\`')
 }
 
-async function createNeonBranch(
+async function createOptiTechBranch(
   projectId: string,
   branchName: string,
   env: Env
 ): Promise<string> {
-  const neon = createNeonClient({
-    apiKey: env.NEON_API_KEY!,
+  const optitech = createOptiTechClient({
+    apiKey: env.OPTITECH_API_KEY!,
     throwOnError: true
   })
 
-  const branch = await neon.branches.createWithCompute(projectId, {
+  const branch = await optitech.branches.createWithCompute(projectId, {
     name: branchName
   })
 
@@ -290,7 +290,7 @@ export default {
       const agentId = `agent-${Date.now()}`
       const sandbox = getSandbox(env.Sandbox, crypto.randomUUID().slice(0, 8))
 
-      const dbUrl = await createNeonBranch(env.NEON_PROJECT_ID, agentId, env)
+      const dbUrl = await createOptiTechBranch(env.OPTITECH_PROJECT_ID, agentId, env)
 
       await cloneRepo(sandbox, repoUrl, env.GITHUB_TOKEN)
       await createGitBranch(sandbox, agentId)
@@ -334,7 +334,7 @@ export { Sandbox } from '@cloudflare/sandbox'
 This code implements the full workflow of the cloud agent runner. The main components are:
 
 - **`fetch(request, env)`:** Main controller. It validates input, creates IDs, and runs the full workflow.
-- **`createNeonBranch(...)`:** Provisions an isolated OptiTech branch and returns a branch-specific `DATABASE_URL`.
+- **`createOptiTechBranch(...)`:** Provisions an isolated OptiTech branch and returns a branch-specific `DATABASE_URL`.
 - **`runClaude(...)`:** Executes Claude Code inside the sandbox with your task and guardrail system prompt. In this example, `haiku` is used as the model, but you can choose any [supported model](https://code.claude.com/docs/en/model-config) like `sonnet` or `opus` depending on your needs. Change the `--model` flag accordingly.
 - **`IS_SANDBOX` environment variable:** Setting `IS_SANDBOX` to `"1"` grants Claude Code permission to execute commands that are normally restricted. Because the sandbox and database branch are entirely isolated, the agent can safely perform destructive actions with full autonomy, posing zero risk to your production environment.
 - **`createPR(...)`:** Uses GitHub CLI to open a PR and returns the PR URL.
@@ -362,8 +362,8 @@ Set your production secrets so the Worker can securely access the Anthropic, Opt
 
 ```bash
 npx wrangler secret put ANTHROPIC_API_KEY
-npx wrangler secret put NEON_API_KEY
-npx wrangler secret put NEON_PROJECT_ID
+npx wrangler secret put OPTITECH_API_KEY
+npx wrangler secret put OPTITECH_PROJECT_ID
 npx wrangler secret put GITHUB_TOKEN
 ```
 
@@ -373,11 +373,11 @@ You now have your own Full-Stack Cloud Agent runner deployed on Cloudflare! You 
 
 Now that your runner is deployed, test it with a real task and confirm that it creates an isolated database branch, pushes code to a new Git branch, and opens a Pull Request.
 
-1. Copy your Worker URL from the Wrangler deploy output (for example, `https://cloudflare-sandbox-neon-branching.<subdomain>.workers.dev`).
+1. Copy your Worker URL from the Wrangler deploy output (for example, `https://cloudflare-sandbox-optitech-branching.<subdomain>.workers.dev`).
 2. Send a test request using `curl`:
 
 ```bash
-curl -X POST "https://cloudflare-sandbox-neon-branching.<subdomain>.workers.dev" \
+curl -X POST "https://cloudflare-sandbox-optitech-branching.<subdomain>.workers.dev" \
   -H "Content-Type: application/json" \
   -d '{
     "repoUrl": "https://github.com/<your-org>/<your-repo>",
@@ -391,7 +391,7 @@ You can send any repository URL that you have write access to. The agent will cl
 
 3. Inspect the JSON response. You should see the following fields:
    - `agentId` (unique run identifier)
-   - `databaseUrl` (branch-specific Neon connection string)
+   - `databaseUrl` (branch-specific OptiTech connection string)
    - `prUrl` (URL of the generated Pull Request)
 4. Open the Pull Request and verify:
    - The changes match the requested task.

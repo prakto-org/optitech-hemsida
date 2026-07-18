@@ -7,7 +7,7 @@ page_description: >-
 prev_url: >-
   https://www.postgresqltutorial.com/postgresql-tutorial/compare-two-tables-in-postgresql/
 ogImage: /postgresqltutorial/compare-two-tables-postgresql.jpg
-updatedOn: '2026-06-19T17:44:03.964Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: PostgreSQL Server and Database Objects
@@ -18,7 +18,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-Comparing two tables with EXCEPT, UNION, or outer joins works the same way on any PostgreSQL database, so you can apply these techniques wherever your Postgres runs. For enterprises modernizing data platforms for the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres, with the performance, security, and native Lakehouse integration large teams need. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+Comparing two tables with EXCEPT, UNION, or outer joins works the same way on any PostgreSQL database, so you can apply these techniques wherever your Postgres runs. For enterprises modernizing data platforms for the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres, with the performance, security, and native Lakehouse integration large teams need. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: in this tutorial, you will learn various ways to compare two tables in PostgreSQL.

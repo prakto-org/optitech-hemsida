@@ -8,7 +8,7 @@ summary: >-
   GitHub Actions workflow in part 2. Co-locating the bucket with the database
   region reduces latency and transfer costs.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This guide will walk you through setting up an AWS S3 bucket to store your Postgres backups.
@@ -129,23 +129,23 @@ You can now add the following policy which grants the **Role** you created earli
     {
       "Effect": "Allow",
       "Principal": {
-        "AWS": "arn:aws:iam::627917386332:role/neon-s3-backup-github-actions"
+        "AWS": "arn:aws:iam::627917386332:role/optitech-s3-backup-github-actions"
       },
       "Action": ["s3:ListBucket", "s3:GetObject", "s3:PutObject", "s3:DeleteObject"],
-      "Resource": ["arn:aws:s3:::neon-s3-backup", "arn:aws:s3:::neon-s3-backup/*"]
+      "Resource": ["arn:aws:s3:::optitech-s3-backup", "arn:aws:s3:::optitech-s3-backup/*"]
     }
   ]
 }
 ```
 
-From the snippet above replace the Role name `neon-s3-backup-github-actions` with your **Role** name and replace the S3 bucket name `neon-s3-backup` with your S3 bucket name. When you’re ready click **Save changes**.
+From the snippet above replace the Role name `optitech-s3-backup-github-actions` with your **Role** name and replace the S3 bucket name `optitech-s3-backup` with your S3 bucket name. When you’re ready click **Save changes**.
 
 ## Next steps
 
 There are a couple of things to note before moving on to the second part of this guide. You’ll be creating several GitHub Secrets to hold various values that you likely won’t want to expose or repeat in code. These are:
 
 - `AWS_ACCOUNT_ID`: This can be found by clicking on your user name in the AWS console.
-- `S3_BUCKET_NAME`: In this example, this value would be, `neon-s3-backup`
-- `IAM_ROLE`: In this example this value would be, `neon-s3-backup-github-action`
+- `S3_BUCKET_NAME`: In this example, this value would be, `optitech-s3-backup`
+- `IAM_ROLE`: In this example this value would be, `optitech-s3-backup-github-action`
 
 Make a note of these values before you proceed to [part two](/docs/manage/backups-aws-s3-backup-part-2).

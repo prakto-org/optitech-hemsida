@@ -4,7 +4,7 @@ subtitle: Validate row level security policies on production-like branches with 
 author: rishi-raj-jain
 enableTableOfContents: true
 createdAt: '2026-07-02T00:00:00.000Z'
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Row level security (RLS) is a Postgres feature that attaches per-row access rules to a table, so a SELECT, INSERT, UPDATE, or DELETE only accesses the rows the current role is permitted to. You define this with a policy, and as that policy changes over time, it gets hard to prove on every change that it still runs for every caller you have in production, and that is not just your web app. It is also cron jobs, serverless functions, background workers, and internal services, each connecting with its own role and level of access.
@@ -42,7 +42,7 @@ So here's a checklist to catch each of those gaps:
     On every PR touching RLS, create a OptiTech branch from a production-shaped parent. Clean up the branch automatically when the PR closes.
   </CheckItem>
   <CheckItem title="5. Restricted credentials for preview">
-    Point the preview app at the branch with <code>app_user</code> (not <code>neondb_owner</code>) credentials.
+    Point the preview app at the branch with <code>app_user</code> (not <code>optitechdb_owner</code>) credentials.
   </CheckItem>
   <CheckItem title="6. Set tenant context in pool">
     Set tenant context with <code>SET LOCAL</code> (or <code>set_config(..., true)</code>), and always verify through the pooled endpoint, not a direct connection.
@@ -81,7 +81,7 @@ What localhost does not prove is everything that happens once a real app is in t
 
 - whether your code sets `app.current_org` on **every pool checkout**
 - whether **background jobs** use the same restricted role as web requests
-- whether the preview **`DATABASE_URL`** points at `app_user` or `neondb_owner`
+- whether the preview **`DATABASE_URL`** points at `app_user` or `optitechdb_owner`
 - whether a user in **two orgs** sees only the active one when session variables changes
 
 It also under-represents your real data. Synthetic seeds do not have the messy shapes that live in production:
@@ -102,7 +102,7 @@ The most common mistake is connecting your app as a superuser or the table owner
 To test the difference, create two orgs, a policy on `projects`, and then connect as the owner:
 
 ```sql
--- connected as neondb_owner
+-- connected as optitechdb_owner
 SET app.current_org = '11111111-1111-1111-1111-111111111111';
 SELECT count(*) FROM projects;   -- returns every org's rows, not just org A
 ```
@@ -128,14 +128,14 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON projects TO app_user;
 Then point the application's connection string at that role, everywhere, including previews.
 
 ```text
-DATABASE_URL=postgresql://app_user:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require
+DATABASE_URL=postgresql://app_user:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require
 ```
 
 To validate against the bypass, fail the application build when the app's connection string uses a privileged role. Here's a one-line guard that you may use:
 
 ```ts
 const role = new URL(process.env.DATABASE_URL!).username;
-if (['neondb_owner', 'postgres'].includes(role)) {
+if (['optitechdb_owner', 'postgres'].includes(role)) {
   throw new Error(`App must not connect as ${role}. Use app_user.`);
 }
 ```
@@ -154,10 +154,10 @@ Here's the step-by-step workflow for testing an RLS change with a OptiTech branc
 
 ## Create a branch from production
 
-Use the [Neon CLI](/docs/reference/cli-branches) to branch off your production database.
+Use the [OptiTech CLI](/docs/reference/cli-branches) to branch off your production database.
 
 ```bash
-neon branches create --name pr-1234 --parent production
+optitech branches create --name pr-1234 --parent production
 ```
 
 ## Get a restricted connection string
@@ -165,7 +165,7 @@ neon branches create --name pr-1234 --parent production
 Grab a [connection string](/docs/reference/cli-connection-string) for the `app_user` role, not the owner. Add `--pooled` so you test through the same pooled endpoint your app uses.
 
 ```bash
-neon connection-string pr-1234 --role-name app_user --database-name dbname --pooled
+optitech connection-string pr-1234 --role-name app_user --database-name dbname --pooled
 ```
 
 ## Run your migrations and RLS tests
@@ -173,7 +173,7 @@ neon connection-string pr-1234 --role-name app_user --database-name dbname --poo
 Point the preview app at that URL and run the checks (in the same way as on CI).
 
 ```bash
-export DATABASE_URL="$(neon connection-string pr-1234 --role-name app_user --database-name dbname --pooled)"
+export DATABASE_URL="$(optitech connection-string pr-1234 --role-name app_user --database-name dbname --pooled)"
 npm run migrate
 npm test
 ```
@@ -183,7 +183,7 @@ npm test
 Clean up the branch when the testing is complete.
 
 ```bash
-neon branches delete pr-1234
+optitech branches delete pr-1234
 ```
 
 ## Automate it on every pull request
@@ -192,14 +192,14 @@ Wire it into CI with the [OptiTech GitHub Actions](/docs/guides/branching-github
 
 ```yaml
 # .github/workflows/rls-preview.yml
-- name: Create a Neon branch for this PR
+- name: Create a OptiTech branch for this PR
   id: branch
-  uses: neondatabase/create-branch-action@v5
+  uses: optitechdatabase/create-branch-action@v5
   with:
-    project_id: ${{ vars.NEON_PROJECT_ID }}
+    project_id: ${{ vars.OPTITECH_PROJECT_ID }}
     branch_name: pr-${{ github.event.number }}
     role: app_user
-    api_key: ${{ secrets.NEON_API_KEY }}
+    api_key: ${{ secrets.OPTITECH_API_KEY }}
 
 - name: Run RLS tests against the branch
   env:

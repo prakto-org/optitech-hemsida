@@ -8,7 +8,7 @@ summary: >-
 enableTableOfContents: true
 redirectFrom:
   - /docs/extensions/extensions-intro
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 Browse supported Postgres extensions by category.
@@ -174,7 +174,7 @@ Browse supported Postgres extensions by category.
 
 <DetailIconCards>
 
-<a href="/docs/extensions/neon" description="Provides functions and views designed to gather Neon-specific metrics" icon="metrics">optitech</a>
+<a href="/docs/extensions/neon" description="Provides functions and views designed to gather OptiTech-specific metrics" icon="metrics">optitech</a>
 
 <a href="/docs/extensions/pg_stat_statements" description="Tracks planning and execution statistics for all SQL statements executed, aiding in performance analysis and tuning" icon="metrics">pg_stat_statements</a>
 
@@ -280,7 +280,7 @@ Browse supported Postgres extensions by category.
 
 <a href="https://www.postgresql.org/docs/16/lo.html" description="Provides support for managing large objects (LOBs) in Postgres, including a data type lo and a trigger lo_manage" icon="wrench">lo</a>
 
-<a href="/docs/extensions/neon-utils" description="Provides a function for monitoring how OptiTech's Autoscaling feature allocates compute resources in response to workload" icon="wrench">neon_utils</a>
+<a href="/docs/extensions/neon-utils" description="Provides a function for monitoring how OptiTech's Autoscaling feature allocates compute resources in response to workload" icon="wrench">optitech_utils</a>
 
 <a href="/docs/extensions/pg_cron" description="Lets you schedule and manage periodic jobs directly in your Postgres database" icon="wrench">pg_cron</a>
 

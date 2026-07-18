@@ -1,25 +1,25 @@
 ---
-title: 'Neon CLI command: roles'
-subtitle: 'List, create, and delete database roles in a Neon project'
+title: 'OptiTech CLI command: roles'
+subtitle: 'List, create, and delete database roles in a OptiTech project'
 summary: >-
-  The `neon roles` CLI command lists, creates, and deletes database roles in
-  a Neon project, with subcommands scoped to a specific branch or the project
+  The `optitech roles` CLI command lists, creates, and deletes database roles in
+  a OptiTech project, with subcommands scoped to a specific branch or the project
   default. Use it when you need to add a login role, create a passwordless role
   with `--no-login`, or remove an existing role from the command line. Role
-  names are capped at 63 bytes; commands require the Neon CLI and either
+  names are capped at 63 bytes; commands require the OptiTech CLI and either
   browser-based auth or an API key.
 enableTableOfContents: true
-updatedOn: '2026-07-01T13:41:48.668Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 redirectFrom:
   - /docs/reference/cli-roles
   - /docs/cli/role
 ---
 
-The `roles` command lists, creates, and deletes roles in a Neon project from the terminal. For information about roles in Neon, see [Manage roles](/docs/manage/roles). If `--project-id` is omitted, the CLI resolves it from your [context file](/docs/cli/set-context), auto-selects when your account has only one project, and prompts otherwise.
+The `roles` command lists, creates, and deletes roles in a OptiTech project from the terminal. For information about roles in OptiTech, see [Manage roles](/docs/manage/roles). If `--project-id` is omitted, the CLI resolves it from your [context file](/docs/cli/set-context), auto-selects when your account has only one project, and prompts otherwise.
 
 <CliSubcommands command="roles" />
 
-## neon roles list (#list)
+## optitech roles list (#list)
 
 Lists roles. If you don't specify a branch ID or name with `--branch`, the command targets the project's default branch. This applies to all `roles` subcommands.
 
@@ -30,7 +30,7 @@ Lists roles. If you don't specify a branch ID or name with `--branch`, the comma
 List roles with the default `table` output format:
 
 ```bash
-neon roles list
+optitech roles list
 ```
 
 ```text filename="Output"
@@ -44,7 +44,7 @@ neon roles list
 List roles with the `--output` format set to `json`:
 
 ```bash
-neon roles list --output json
+optitech roles list --output json
 ```
 
 <details>
@@ -64,7 +64,7 @@ neon roles list --output json
 
 </details>
 
-## neon roles create (#create)
+## optitech roles create (#create)
 
 Creates a role. The role name cannot exceed 63 bytes.
 
@@ -73,7 +73,7 @@ Creates a role. The role name cannot exceed 63 bytes.
 <CliOptions command="roles create" />
 
 ```bash
-neon roles create --name sally
+optitech roles create --name sally
 ```
 
 ```text filename="Output"
@@ -84,7 +84,7 @@ neon roles create --name sally
 └───────┴──────────────────────┘
 ```
 
-## neon roles delete (#delete)
+## optitech roles delete (#delete)
 
 Deletes a role. The `<role>` is the role name.
 
@@ -93,7 +93,7 @@ Deletes a role. The `<role>` is the role name.
 <CliOptions command="roles delete" />
 
 ```bash
-neon roles delete sally
+optitech roles delete sally
 ```
 
 ```text filename="Output"

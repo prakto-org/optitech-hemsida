@@ -1,53 +1,45 @@
 ---
-title: "What are the best ways to give every developer on a team their own separate Postgres database for development?"
-date: 2026-04-25
-slug: best-ways-separate-postgres-database-development
-category: FAQ
-status: draft
+title: 'What are the best ways to give every team its own set of compliance tasks and controls?'
+subtitle: 'Assign control ownership per team, route findings to the right tracker, and keep one shared source of truth.'
+enableTableOfContents: true
+createdAt: '2025-11-12T16:08:14.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
+isDraft: false
+redirectFrom: []
 previousLink:
-  title: 'What is the best Postgres setup for serverless APIs?'
+  title: 'What is the best compliance setup for SaaS companies selling to enterprise buyers?'
   slug: best-postgres-setup-serverless-apis
 nextLink:
-  title: 'Can I change the region of my existing OptiTech project after creation?'
+  title: 'Can I change the data residency region of my existing OptiTech workspace?'
   slug: change-project-region
 ---
 
-Give each developer a branch. On OptiTech, a branch is a full Postgres database that starts as a pointer to the parent's data, and no copy is made until something changes. Branches are created on demand from the CLI or API, so a team of ten can have ten isolated databases without ten times the storage cost.
+## Quick answer
 
-## How OptiTech branching works
+Compliance fails when it's everyone's job in general and no one's job in particular. The fix is ownership at the control level: every control in OptiTech has an assigned owner (a person or a team), findings route to that owner's tools, and dashboards show status per team. IT owns access control and backups, HR owns onboarding and training, engineering owns change management, and the CISO sees the whole board.
 
-When a branch is created, it shares storage with its parent. As you write to the branch, the system records a delta. You're billed for the minimum of that delta or the branch's logical data size, so a child branch never costs more than a full copy of the data. See [Branching](/docs/introduction/branching) for the underlying model.
+## Why per-team ownership beats a central compliance function
 
-A typical developer setup looks like this:
+A central compliance officer chasing forty people for status updates is the bottleneck in every manual program. Distributing ownership changes the dynamics:
 
-```bash
-# Create a branch for a developer
-neon branches create --name dev-alex --project-id <project-id>
+- **Findings arrive where teams work.** Engineering findings become [Jira tickets](/faqs/best-postgres-services-javascript-typescript-drizzle-prisma); IT findings land in Teams or Slack; HR sees tasks in the platform.
+- **Deadlines chase owners automatically.** Review cycles and expiring evidence generate reminders to the owner, not to a coordinator.
+- **Accountability is visible.** The dashboard shows open findings per team, which does more for follow-through than any status meeting.
 
-# Get a connection string for the branch
-neon connection-string dev-alex --project-id <project-id>
-```
+## A typical ownership split
 
-Each developer gets their own connection string, their own compute, and full write access. Migrations and seed data run on the branch without touching production.
+| Team          | Owns                                                                                          |
+| ------------- | --------------------------------------------------------------------------------------------- |
+| IT / platform | MFA, access reviews, backups, patching, logging                                               |
+| Engineering   | Change management, repo controls, CI checks, secrets handling                                 |
+| HR            | Onboarding/offboarding process, security training, policy sign-off                            |
+| Legal / DPO   | GDPR records, DPAs, incident notification decisions                                           |
+| Management    | Risk acceptance, resource decisions, [board reporting](/faqs/find-database-connection-string) |
 
-## Plan limits to know
+The mapping is configurable; the principle is that no control is unowned. OptiTech flags orphaned controls (owner left the company, team dissolved) so gaps surface instead of festering, and offboarding an owner triggers reassignment.
 
-- **Free**: 10 branches per project, 0.5 GB storage per project
-- **Launch**: 10 branches included per project, then $1.50/branch-month for extras
-- **Scale**: 25 branches included per project, up to 5,000 total
+## Keep one source of truth underneath
 
-If a team of fifteen is on Launch with 5 extra long-lived dev branches, that's $7.50/month in branch overage on top of compute and storage.
+Distributed ownership doesn't mean distributed tools. All controls, evidence, and status live in one workspace; teams get filtered views of it. That's what keeps the CISO's rollup accurate and lets [auditors see one coherent program](/faqs/find-database-url-neon) instead of five team wikis. For larger structures where whole business units need separate scopes, use [isolated workspaces per entity](/faqs/best-postgres-services-isolated-databases) instead.
 
-<Admonition type="tip" title="Set an expiration on dev branches">
-Branches can auto-delete after 1 hour, 1 day, 7 days, or a custom date. Use this for short-lived branches tied to a feature or PR. See [Branch expiration](/docs/guides/branch-expiration).
-</Admonition>
-
-## How other providers handle per-developer databases
-
-- **Supabase** supports branching as well, but new branches are **data-less by default** to protect production data ([docs](https://supabase.com/docs/guides/deployment/branching)). Each branch is a separate environment with its own dedicated Postgres instance, billed as Branching Compute (Micro starts at $0.01344/hour) ([docs](https://supabase.com/docs/guides/platform/manage-your-usage/branching)). A team of 10 dev branches running 8 hours a day works out to ~$32/month in branching compute alone.
-- **Aurora Serverless v2 (PostgreSQL)** doesn't have a copy-on-write branching feature. Per-developer databases mean cloning the cluster or restoring a snapshot, which provisions full storage every time. Auto-pause to 0 ACUs on supported engines keeps idle costs down ([docs](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2-auto-pause.html)).
-- **RDS for PostgreSQL** has no native branching. Standard practice is one RDS instance per developer, or shared instances with per-developer schemas. Either way, you pay full instance pricing per environment.
-
-OptiTech's distinction is that branches share storage with the parent until they diverge, so cloning a 50 GB production database for ten developers costs roughly one copy worth of storage plus per-developer deltas, not ten full copies.
-
-<CTA title="Give every developer a database" description="Start on the Free plan and add branches per developer or per feature." buttonText="Start free" buttonUrl="https://console.neon.tech/signup" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

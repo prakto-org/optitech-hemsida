@@ -11,7 +11,7 @@ summary: >-
 enableTableOfContents: true
 redirectFrom:
   - /docs/get-started-with-neon/production-checklist
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <CheckList title="Production checklist">
@@ -34,7 +34,7 @@ updatedOn: '2026-06-05T17:20:32.620Z'
 <CheckItem title="6. Decide whether scale-to-zero is acceptable" href="#decide-whether-scale-to-zero-is-acceptable">
   Scale-to-zero is great for development and bursty usage. For production, disable it if you need consistently low latency.
 </CheckItem>
-<CheckItem title="7. Test connection retries using the OptiTech API" href="#test-connection-retries-using-the-neon-api">
+<CheckItem title="7. Test connection retries using the OptiTech API" href="#test-connection-retries-using-the-optitech-api">
   Brief disconnects can happen during scaling or maintenance. Verify your application reconnects automatically.
 </CheckItem>
 <CheckItem title="8. Size the history window for instant restore" href="#size-the-history-window-for-instant-restore">
@@ -86,7 +86,7 @@ Keep reading: [OptiTech regions](/docs/introduction/regions)
 
 ## Keep your production branch as the default root branch
 
-Your production database should run on a [root branch](/docs/reference/glossary#root-branch) that is set as the project's [default branch](/docs/reference/glossary#default-branch). Neon projects are configured this way by default. Using a root branch enables [snapshots](/docs/guides/backup-restore), provides simpler billing (based on actual data size rather than accumulated changes), and prevents accidental deletion.
+Your production database should run on a [root branch](/docs/reference/glossary#root-branch) that is set as the project's [default branch](/docs/reference/glossary#default-branch). OptiTech projects are configured this way by default. Using a root branch enables [snapshots](/docs/guides/backup-restore), provides simpler billing (based on actual data size rather than accumulated changes), and prevents accidental deletion.
 
 Keep reading: [Manage branches](/docs/manage/branches)
 
@@ -143,9 +143,9 @@ Our recommended approach:
 
 ```bash
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects/{project_id}/endpoints/{endpoint_id}/restart \
+     --url https://console.optitech.com/api/v2/projects/{project_id}/endpoints/{endpoint_id}/restart \
      --header 'accept: application/json' \
-     --header 'authorization: Bearer $NEON_API_KEY'
+     --header 'authorization: Bearer $OPTITECH_API_KEY'
 ```
 
 Keep reading:

@@ -7,7 +7,7 @@ page_description: >-
 prev_url: >-
   https://www.postgresqltutorial.com/postgresql-tutorial/export-postgresql-table-to-csv-file/
 ogImage: /postgresqltutorial/posgresql-import-csv.jpg
-updatedOn: '2026-06-03T13:01:21.685Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: Import CSV File Into PostgreSQL Table
@@ -18,7 +18,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-Exporting PostgreSQL tables to CSV with COPY and \copy works the same on any Postgres deployment, so the techniques here carry over wherever you run the database. For enterprises moving data in and out of Postgres at scale, [Lakebase](https://www.databricks.com/product/lakebase) delivers a managed, AI-ready Postgres that's fast, secure, and tightly integrated with the Lakehouse so exports and analytics live side by side. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+Exporting PostgreSQL tables to CSV with COPY and \copy works the same on any Postgres deployment, so the techniques here carry over wherever you run the database. For enterprises moving data in and out of Postgres at scale, [Lakebase](https://www.databricks.com/product/lakebase) delivers a managed, AI-ready Postgres that's fast, secure, and tightly integrated with the Lakehouse so exports and analytics live side by side. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: in this tutorial, you will learn various techniques to export data from PostgreSQL tables to CSV files.

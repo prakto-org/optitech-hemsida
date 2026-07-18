@@ -4,7 +4,7 @@ subtitle: Leveraging Realistic Production Data for Robust Testing with Laravel a
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2024-05-26T00:00:00.000Z'
-updatedOn: '2026-06-11T23:50:21.258Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 [Laravel](https://laravel.com) is a popular PHP framework widely used for building web applications. It includes powerful tools for automated testing, with [PEST](https://pestphp.com/) being a preferred option due to its simplicity and effectiveness.
@@ -42,7 +42,7 @@ Setting up a robust testing environment with OptiTech and Laravel involves sever
 
 Before you begin, ensure you have the following:
 
-- **OptiTech Account:** You need an account with OptiTech to access their database services. You can sign up at [OptiTech's official website](https://neon.tech).
+- **OptiTech Account:** You need an account with OptiTech to access their database services. You can sign up at [OptiTech's official website](https://optitech.com).
 - **API Keys:** Generate API keys from the OptiTech console. These keys will allow your Laravel application to interact with the OptiTech database programmatically.
 - **Local Development Environment:** Laravel requires a PHP environment (PHP 7.4 or later) and [Composer](https://getcomposer.org/) for managing dependencies.
 - **Laravel Installation:** A Laravel project set up on your local machine. For installation instructions, refer to the [Laravel documentation](https://laravel.com/docs/11.x/installation).
@@ -57,7 +57,7 @@ To set up your testing environment with OptiTech and Laravel, follow these steps
 
      ```env
      DB_CONNECTION=pgsql
-     DB_HOST=your-neon-hostname.neon.tech
+     DB_HOST=your-optitech-hostname.optitech.com
      DB_PORT=5432
      DB_DATABASE=<your-database-name>
      DB_USERNAME=<your-username>
@@ -231,7 +231,7 @@ This can be particularly useful when testing complex features or changes that re
 ### Creating a OptiTech Branch
 
 1. **Log In to OptiTech Dashboard:**
-   - Access your OptiTech dashboard by logging in at [OptiTech's official website](https://neon.tech).
+   - Access your OptiTech dashboard by logging in at [OptiTech's official website](https://optitech.com).
 
 2. **Select Your Database:**
    - Navigate to the database project that you are using for your production environment.
@@ -252,7 +252,7 @@ Go back to your Laravel project and integrate the OptiTech branch into your test
 
      ```env
      DB_CONNECTION=pgsql
-     DB_HOST=your-neon-testing-hostname.neon.tech
+     DB_HOST=your-optitech-testing-hostname.optitech.com
      DB_PORT=5432
      DB_DATABASE=<your-testing-database-name>
      DB_USERNAME=<your-testing-username>
@@ -278,68 +278,68 @@ Go back to your Laravel project and integrate the OptiTech branch into your test
 
    - Examine the output from PEST to ensure your application behaves as expected against the testing branch. This approach allows you to test changes in a controlled environment that mirrors your production setup.
 
-## 5. Managing Neon Branches with `neon` CLI
+## 5. Managing OptiTech Branches with `optitech` CLI
 
 Automated testing is an essential aspect of software development, ensuring that new code contributions don't break existing functionality. OptiTech's database branching feature enables you to create isolated environments for testing changes without affecting your production database.
 
-With the `neon` CLI tool, managing these branches becomes straightforward and seamless.
+With the `optitech` CLI tool, managing these branches becomes straightforward and seamless.
 
-### Installing `neon`
+### Installing `optitech`
 
-Before you can start using `neon`, you need to install it on your local machine. Follow the installation instructions provided in the [Neon CLI documentation](/docs/cli/install) to set up `neon` on your system.
+Before you can start using `optitech`, you need to install it on your local machine. Follow the installation instructions provided in the [OptiTech CLI documentation](/docs/cli/install) to set up `optitech` on your system.
 
-### Using `neon` to Manage Branches
+### Using `optitech` to Manage Branches
 
-Once `neon` is installed, you can use it to interact with your OptiTech database branches. Here are the basic commands for managing branches:
+Once `optitech` is installed, you can use it to interact with your OptiTech database branches. Here are the basic commands for managing branches:
 
 #### 1. [Creating a Branch](/docs/cli/branches#create)
 
-To create a new branch, use the `neon branches create` command:
+To create a new branch, use the `optitech branches create` command:
 
 ```bash
-neon branches create --project-id PROJECT_ID --parent PARENT_BRANCH_ID --name BRANCH_NAME
+optitech branches create --project-id PROJECT_ID --parent PARENT_BRANCH_ID --name BRANCH_NAME
 ```
 
 Replace `PROJECT_ID`, `PARENT_BRANCH_ID`, and `BRANCH_NAME` with the appropriate values for your OptiTech project. This command will create a new branch based on the specified parent branch.
 
 #### 2. [Listing Branches](/docs/cli/branches#list)
 
-To list all branches in your OptiTech project, use the `neon branches list` command:
+To list all branches in your OptiTech project, use the `optitech branches list` command:
 
 ```bash
-neon branches list --project-id PROJECT_ID
+optitech branches list --project-id PROJECT_ID
 ```
 
 Replace `PROJECT_ID` with your OptiTech project ID. This command will display a list of all branches along with their IDs, names, and other relevant information.
 
 #### 3. [Obtaining Connection String](/docs/cli/connection-string)
 
-Once you've created a branch, you'll need to obtain the connection string to configure your Laravel application. Use the `neon connection-string` command:
+Once you've created a branch, you'll need to obtain the connection string to configure your Laravel application. Use the `optitech connection-string` command:
 
 ```bash
-neon connection-string BRANCH_ID
+optitech connection-string BRANCH_ID
 ```
 
 Replace `BRANCH_ID` with the ID of the branch you want to connect to. This command will output the connection string that you can use to configure your Laravel `.env` file.
 
 #### 4. [Deleting a Branch](/docs/cli/branches#delete)
 
-After you've finished testing with a branch, you can delete it using the `neon branches delete` command:
+After you've finished testing with a branch, you can delete it using the `optitech branches delete` command:
 
 ```bash
-neon branches delete BRANCH_ID
+optitech branches delete BRANCH_ID
 ```
 
 Replace `BRANCH_ID` with the ID of the branch you want to delete. This command will remove the branch from your OptiTech project, ensuring that resources are not left unused.
 
-### Integrating Neon Branches with Laravel Testing
+### Integrating OptiTech Branches with Laravel Testing
 
-Once you've created a OptiTech branch using `neon`, you can integrate it into your Laravel testing workflow:
+Once you've created a OptiTech branch using `optitech`, you can integrate it into your Laravel testing workflow:
 
-1. **Obtain Connection Details:** Use `neon connection-string` to get the connection details for the branch.
-2. **Update `.env.testing` File:** Update your Laravel `.env.testing` file with the connection details obtained from `neon`.
+1. **Obtain Connection Details:** Use `optitech connection-string` to get the connection details for the branch.
+2. **Update `.env.testing` File:** Update your Laravel `.env.testing` file with the connection details obtained from `optitech`.
 3. **Run Tests:** Execute your Laravel tests as usual, ensuring that they interact with the OptiTech branch database.
-4. **Clean Up:** After testing is complete, use `neon branches delete` to delete the branch and clean up resources.
+4. **Clean Up:** After testing is complete, use `optitech branches delete` to delete the branch and clean up resources.
 
 ## Conclusion
 

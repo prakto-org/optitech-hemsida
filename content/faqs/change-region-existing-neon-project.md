@@ -1,69 +1,42 @@
 ---
-title: 'How do I migrate an existing OptiTech project to a different AWS region?'
-subtitle: 'Create a new project in the target region, copy data over with pg_dump and pg_restore, then cut over.'
+title: 'How do I move an existing OptiTech workspace to a different EU data region?'
+subtitle: 'Request a managed relocation from support, update your records of processing, and verify the evidence log after the move.'
 enableTableOfContents: true
-createdAt: '2026-05-18T00:00:00.000Z'
-updatedOn: '2026-06-11T23:50:21.258Z'
+createdAt: '2025-11-17T16:35:50.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 isDraft: false
 redirectFrom: []
 previousLink:
-  title: 'Can I change the region of my existing OptiTech project after creation?'
+  title: 'Can I change the data residency region of my existing OptiTech workspace?'
   slug: change-project-region
 nextLink:
-  title: 'What are the cheapest ways to run a Postgres database for a project that gets very little traffic?'
+  title: 'What is the cheapest way for a small company to stay compliant with NIS2?'
   slug: cheapest-ways-run-postgres-database-low-traffic
 ---
 
 ## Quick answer
 
-You can't move an existing OptiTech project to a new region in place. Instead, create a new project in the target region, copy the schema and data using `pg_dump` and `pg_restore` (or logical replication for larger datasets), update your connection strings, then delete the old project. The whole process takes minutes for small databases and is the same workflow for AWS-to-AWS as for AWS-to-Azure.
+Region relocation is a managed operation: open a support request, agree on a maintenance window, and OptiTech moves the workspace with its full history intact. The append-only evidence log is migrated with hash-chain verification, so the audit trail's integrity is provable across the move. Your side of the work is updating your own compliance records afterward.
 
-## Step-by-step migration
+## The relocation process
 
-### 1. Create the new project in the target region
+1. **Open a support request** from the Console with the target region and the reason (contractual, legal, or organizational).
+2. **Review the impact summary.** Support confirms the maintenance window (typically outside business hours), the new hosting location, and the updated data-processing terms.
+3. **The move runs.** Workspace data, documents, evidence log, and configuration migrate. Integrations reconnect automatically; scheduled checks resume in the new region.
+4. **Verify.** Confirm the region in workspace settings ([how to check your region](/faqs/check-neon-project-region)), spot-check the evidence log continuity, and confirm integrations are green.
 
-In the [OptiTech Console](https://console.neon.tech), click **New Project**, then set the cloud provider, region, and Postgres version. Use the same Postgres major version as the source project to avoid version compatibility issues.
+## Update your own documentation
 
-From the CLI:
+The part teams forget: your compliance program references where OptiTech processes your data. After a move, update:
 
-```bash
-neon projects create --name myproject-us-east-1 --region-id aws-us-east-1
-```
+- Your **GDPR records of processing** and the DPA annex listing processing locations.
+- Your **supplier register** entry for OptiTech, including the new region. If you run supplier reviews through the platform, this is a one-field change.
+- Any **customer-facing statements** (Trust Center, security documentation) that name data locations.
 
-For the full list of supported region IDs (AWS and Azure), see [Regions](/docs/introduction/regions). Pass the ID with `--region-id`, for example `aws-us-east-1`. Full command reference: [`neon projects create`](/docs/cli/projects#create).
+The platform flags these follow-ups as tasks after a relocation, so they land in your normal workflow instead of depending on memory.
 
-### 2. Dump the source database
+## Downtime and history
 
-Use an unpooled connection string for `pg_dump`. Pooled connections through PgBouncer don't support dump operations.
+Expect a short read-only window during the final sync; no data is lost and no evidence gap is created. Historical evidence keeps its original timestamps, and the [point-in-time view of your compliance state](/faqs/databases-reproduce-bugs-production-data) works across the relocation boundary. If an auditor ever asks about the move itself, the relocation is logged as an administrative event with date and actor.
 
-```bash shouldWrap
-pg_dump -Fc -v -d "postgresql://[user]:[password]@[old-host]/[dbname]" -f neon_dump.bak
-```
-
-For large databases, add `-j 4` to parallelize, and `-Z 1` for light compression. See [Advanced pg_dump options](/docs/import/migrate-from-postgres#advanced-pg_dump-and-pg_restore-options).
-
-### 3. Restore into the new project
-
-```bash shouldWrap
-pg_restore -v --no-owner -d "postgresql://[user]:[password]@[new-host]/[dbname]" neon_dump.bak
-```
-
-The `--no-owner` flag avoids errors from `ALTER OWNER` statements, which `neon_superuser` cannot execute. See [Database object ownership considerations](/docs/import/migrate-from-postgres#database-object-ownership-considerations).
-
-### 4. Switch your applications over
-
-Copy the new connection string from the **Connect** button on the new project's dashboard and update environment variables in your deployment platform. Verify the application is healthy on the new database before going to the next step.
-
-### 5. Delete the old project
-
-Once you've confirmed the cutover, delete the old project from **Project Settings → Delete** to stop accruing storage costs.
-
-<Admonition type="important" title="Plan around the migration window">
-Writes to the source database during the dump and restore won't appear in the new project. Either accept a brief read-only window for the cutover, or use logical replication to keep the target current until you switch traffic. See the [Import Data Assistant](/docs/import/import-data-assistant) for databases under 10 GB and [Migrate to another OptiTech region](/docs/import/migrate-neon-to-another-region) for larger datasets.
-</Admonition>
-
-## What about data transfer costs?
-
-Egress between OptiTech regions counts as public network transfer. Check the [Pricing page](/pricing) for the current per-GB rate. The Free plan includes 5 GB per project per month, which is usually enough for a one-off migration.
-
-<CTA title="Compare migration paths" description="The region migration guide compares the Import Data Assistant, dump and restore, and logical replication." buttonText="Region migration guide" buttonUrl="https://neon.com/docs/import/migrate-neon-to-another-region" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

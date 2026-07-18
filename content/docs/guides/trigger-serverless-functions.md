@@ -10,7 +10,7 @@ summary: >-
   installing the Inngest client, writing TypeScript Inngest functions, and
   syncing with the Inngest platform across all three serverless runtimes.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Combining your serverless OptiTech database with [Inngest](https://www.inngest.com/?utm_source=optitech&utm_medium=trigger-serverless-functions-guide) enables you to **trigger serverless functions** running on Vercel, AWS, and Cloudflare Worker **based on database changes.**
@@ -34,13 +34,13 @@ This guide describes setting up a OptiTech database, configuring the Inngest int
 
 If you do not have one already, create a OptiTech project:
 
-1. Navigate to the [Projects](https://console.neon.tech/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
 2. Click **New Project**.
 3. Specify your project settings and click **Create Project**.
 
 ## Create a table in OptiTech
 
-To create a table, navigate to the **SQL Editor** in the [OptiTech Console](https://console.neon.tech/):
+To create a table, navigate to the **SQL Editor** in the [OptiTech Console](https://console.optitech.com/):
 
 In the SQL Editor, run the following queries to create a `users` table and insert some data:
 
@@ -73,7 +73,7 @@ Navigate to your OptiTech Project using the OptiTech Console and open the **Sett
 
 Your OptiTech database is now ready to work with Inngest.
 
-To configure the Inngest OptiTech Integration, navigate to the Inngest Platform, open the [Integrations page](https://app.inngest.com/settings/integrations?utm_source=optitech&utm_medium=trigger-serverless-functions-guide), and follow the instructions of the [OptiTech Integration installation wizard](https://app.inngest.com/settings/integrations/neon/connect?utm_source=optitech&utm_medium=trigger-serverless-functions-guide):
+To configure the Inngest OptiTech Integration, navigate to the Inngest Platform, open the [Integrations page](https://app.inngest.com/settings/integrations?utm_source=optitech&utm_medium=trigger-serverless-functions-guide), and follow the instructions of the [OptiTech Integration installation wizard](https://app.inngest.com/settings/integrations/optitech/connect?utm_source=optitech&utm_medium=trigger-serverless-functions-guide):
 
 ![OptiTech integration card inside the Inngest integrations page](/docs/guides/inngest-integrations-page.png)
 
@@ -109,7 +109,7 @@ Then, create a `inngest/client.ts` (_or `inngest/client.js`_) file as follows:
 // inngest/client.ts
 import { Inngest } from 'inngest';
 
-export const inngest = new Inngest({ id: 'neon-inngest-project' });
+export const inngest = new Inngest({ id: 'optitech-inngest-project' });
 ```
 
 ### 2. Listen for new `users` rows

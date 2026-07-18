@@ -12,26 +12,26 @@ export default {
   about: {
     title: 'About Us - OptiTech',
     description:
-      'The OptiTech team consists of PostgreSQL contributors and technologists on a mission to build the backend for apps and agents, for every developer.',
+      'OptiTech is on a mission to make regulatory compliance a continuous, automated process for Nordic businesses, not a yearly project.',
     pathname: '',
   },
   ai: {
-    title: 'Postgres and backend platform for AI — OptiTech',
+    title: 'AI copilot for compliance — OptiTech',
     description:
-      'Build AI agents faster with OptiTech: serverless Postgres, Auth, Functions, Storage, and an AI Gateway, built for operation by agents.',
+      'Ask questions about NIS2, DORA, and GDPR in plain Swedish. OptiTech AI generates policies, answers security questionnaires, and cites the legal text.',
     imagePath: '/images/social-previews/ai.jpg',
     pathname: LINKS.ai,
   },
   aboutUs: {
     title: 'About Us — OptiTech',
     description:
-      'The OptiTech team consists of PostgreSQL contributors and technologists on a mission to build the backend for apps and agents, for every developer.',
+      'OptiTech is on a mission to make regulatory compliance a continuous, automated process for Nordic businesses, not a yearly project.',
     pathname: LINKS.aboutUs,
   },
   blog: {
     title: 'Our Blog — OptiTech',
     description:
-      'Learn about OptiTech and how it can help you build better backends for apps and agents by reading our blog posts.',
+      'Practical guidance on NIS2, DORA, the AI Act, GDPR, and ISO 27001 for Nordic businesses, from the team behind OptiTech.',
     imagePath: '/images/social-previews/blog.jpg',
     pathname: LINKS.blog,
   },
@@ -52,8 +52,9 @@ export default {
     imagePath: '/images/social-previews/case-studies.jpg',
   },
   cli: {
-    title: 'Your OptiTech workflow lives in the terminal',
-    description: 'The OptiTech CLI brings the OptiTech backend platform to your terminal.',
+    title: 'Compliance as code, from your terminal',
+    description:
+      'The OptiTech CLI and API bring compliance checks into your CI/CD pipeline. Block deploys that break your controls.',
     pathname: LINKS.cli,
     imagePath: '/images/social-previews/cli.jpg',
   },
@@ -65,38 +66,40 @@ export default {
   enterprise: {
     title: 'OptiTech for Enterprise - OptiTech',
     description:
-      'Switch to OptiTech for improved scalability, reliability, and engineering efficiency. For developers and AI Agents.',
+      'Unlimited frameworks, SSO and SCIM, auditor portals, and a dedicated CSM. Compliance automation for large organizations and regulated financial institutions.',
     pathname: LINKS.enterprise,
     imagePath: '/images/social-previews/enterprise.jpg',
   },
   migration: {
-    title: 'Postgres Migration — OptiTech',
-    description: 'Learn how to migrate your Postgres database to OptiTech.',
+    title: 'Migrate to OptiTech — OptiTech',
+    description:
+      'Move your compliance work out of spreadsheets, Word documents, and legacy GRC tools into OptiTech, without losing your history.',
     pathname: LINKS.migration,
     imagePath: '/images/social-previews/migration.jpg',
   },
   multiTB: {
-    title: 'OptiTech for Multi-TB Migrations - OptiTech',
-    description: 'Migrating a multi-TB workload? We can help.',
+    title: 'OptiTech for complex migrations - OptiTech',
+    description: 'Migrating a large compliance program? We can help.',
     pathname: LINKS.multiTB,
     imagePath: '/images/social-previews/multi-tb.jpg',
   },
   useCases: {
     title: 'Use Cases — OptiTech',
     description:
-      'Explore how teams use OptiTech to support branching databases, CI pipelines, preview environments, and production workloads.',
+      'Explore how teams use OptiTech for NIS2, DORA, GDPR, ISO 27001 certification, vendor risk management, and incident reporting.',
     pathname: LINKS.useCases,
   },
   serverlessApps: {
-    title: 'Postgres and backend platform for serverless apps — OptiTech',
+    title: 'Compliance for SaaS and tech companies — OptiTech',
     description:
-      'Scale your app effortlessly on OptiTech’s serverless backend: Postgres, Auth, Functions, Storage, and an AI Gateway, with automatic scaling and usage-based pricing.',
+      'Win enterprise deals faster with OptiTech: ISO 27001, continuous evidence collection, a public Trust Center, and automated questionnaire answers.',
     pathname: `${LINKS.useCases}/serverless-apps`,
     imagePath: '/images/social-previews/serverless-apps.jpg',
   },
   partners: {
     title: 'Accelerate your business with OptiTech partnership — OptiTech',
-    description: 'Bring familiar, reliable and scalable Postgres experience to your customers.',
+    description:
+      'MSPs, accounting firms, and advisors: manage compliance for all your clients from one console, with volume discounts and white-label options.',
     imagePath: '/images/social-previews/partners.jpg',
     pathname: LINKS.partners,
   },
@@ -106,7 +109,7 @@ export default {
   pricing: {
     title: 'Pricing — OptiTech',
     description:
-      'OptiTech brings serverless architecture to Postgres, which allows us to offer you flexible usage and volume-based plans.',
+      'Transparent, flat monthly pricing for compliance automation. From 2,995 kr per month, published openly, with no sales calls required.',
     imagePath: '/images/social-previews/pricing.jpg',
     pathname: LINKS.pricing,
   },
@@ -118,44 +121,44 @@ export default {
     imagePath: '/images/social-previews/report.jpg',
   },
   variable: {
-    title: 'Dynamically scale your Postgres database — OptiTech',
+    title: 'Compliance that keeps up with your business — OptiTech',
     description:
-      'Discover how OptiTech dynamically scales Postgres compute resources for optimal performance during peak traffic without overpaying.',
+      'OptiTech monitors your controls continuously and flags drift the moment it happens, so you stay compliant between audits, not just during them.',
     imagePath: '/images/social-previews/variable.jpg',
     pathname: LINKS.variable,
   },
   costFleets: {
-    title: 'OptiTech for platforms: Cost estimator',
+    title: 'OptiTech for partners: Cost estimator',
     description:
-      'Run thousands of Postgres databases for a fraction of the cost with OptiTech. Great for building your free tier.',
+      'Manage compliance for hundreds of clients for a fraction of the cost with OptiTech. Great for MSPs and advisory firms.',
     imagePath: '/images/social-previews/cost-fleets.jpg',
     pathname: LINKS.costFleets,
   },
   branching: {
-    title: 'Database Branching Workflows - OptiTech',
+    title: 'Compliance Workflows - OptiTech',
     description:
-      'A new paradigm for managing Postgres. Instantly create, test, preview, and roll back environments with OptiTech’s powerful database branching.',
+      'A new paradigm for managing compliance. Map controls once, collect evidence continuously, and prove compliance across every framework with OptiTech.',
     imagePath: '/images/social-previews/branching.jpg',
     pathname: LINKS.branching,
     type: 'article',
   },
   platforms: {
-    title: 'Embedded Postgres for Platforms - OptiTech',
-    description: 'Offer Postgres to your users',
+    title: 'Embedded Compliance for Platforms - OptiTech',
+    description: 'Offer compliance tooling to your users',
     pathname: LINKS.platforms,
     type: 'article',
   },
   security: {
     title: 'Security — OptiTech',
     description:
-      "Discover OptiTech's security & compliance standards, including SOC 2, GDPR, and HIPAA, with encryption and access controls to protect your data.",
+      "Discover OptiTech's security & compliance standards, including ISO 27001, SOC 2, and GDPR, with EU data residency, encryption, and access controls to protect your data.",
     imagePath: '/images/social-previews/security.jpg',
     pathname: LINKS.security,
   },
   startups: {
-    title: 'OptiTech Credits for Startups',
+    title: 'OptiTech for Startups',
     description:
-      'Apply to the Databricks Startup Program and get up to $200K in OptiTech and Databricks credits. For venture-backed companies and startup accelerator programs.',
+      'Get compliant early. Discounted onboarding and credits for early-stage startups facing NIS2, DORA, or ISO 27001 requirements for the first time.',
     pathname: LINKS.startups,
   },
   autoscalingReport: {
@@ -175,12 +178,12 @@ export default {
 export const getBlogCategoryDescription = (category) => {
   switch (category) {
     case 'company':
-      return 'Stay updated on the latest OptiTech company new and partnership announcements. Explore our blog posts for valuable insights and stay ahead in the world of serverless Postgres.';
+      return 'Stay updated on the latest OptiTech company news and partnership announcements. Explore our blog posts for valuable insights and stay ahead in Nordic compliance.';
     case 'engineering':
-      return 'Dive into the technical depths of OptiTech serverless Postgres. Optimize performance, scalability, and reliability. Explore our cutting-edge approach.';
+      return 'Dive into the technical depths of OptiTech compliance automation. Evidence collection, integrations, and AI. Explore our cutting-edge approach.';
     case 'community':
-      return 'Join the vibrant serverless Postgres community. Engage in discussions, tutorials, and success stories. Connect with developers and industry experts.';
+      return 'Join the Nordic compliance community. Engage in discussions, tutorials, and success stories. Connect with security leaders and industry experts.';
     default:
-      return 'Learn about OptiTech and how it can help you build better with Serverless Postgres by reading our blog posts.';
+      return 'Learn about OptiTech and how it can help you automate NIS2, DORA, GDPR, and ISO 27001 compliance by reading our blog posts.';
   }
 };

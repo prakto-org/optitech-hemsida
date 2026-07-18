@@ -5,15 +5,15 @@ summary: >-
   OptiTech's autoscaling architecture runs each Postgres instance inside a VM on a
   Kubernetes node. CPU and RAM scale dynamically through an autoscaler-agent
   that collects metrics, a modified Kubernetes scheduler that approves
-  upscaling requests to prevent memory overcommit, and NeonVM, a custom VM
-  controller built on QEMU/KVM. When a node is saturated, NeonVM live-migrates
+  upscaling requests to prevent memory overcommit, and OptiTechVM, a custom VM
+  controller built on QEMU/KVM. When a node is saturated, OptiTechVM live-migrates
   VMs to another machine in roughly 100ms, preserving the VM's IP address and
   keeping active queries uninterrupted. Memory scaling is event-driven through
   Linux cgroups notifications. A Local File Cache (LFC) Postgres extension
   dedicates a portion of each VM's allocated RAM to disk-backed caching to
   accelerate repeated scans and index builds.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <InfoBlock>
@@ -43,17 +43,17 @@ Each [Kubernetes node](/docs/reference/glossary#kubernetes-node) hosts a single 
 
 ## The Kubernetes scheduler
 
-A Neon-modified [Kubernetes scheduler](/docs/reference/glossary#kubernetes-scheduler) coordinates with the autoscaler-agent and is the single source of truth for resource allocation. The autoscaler-agent obtains approval for all upscaling from the scheduler. The scheduler maintains a global view of all resource usage changes and approves requests for additional resources from the autoscaler-agent or standard scheduling. In this way, the scheduler assumes responsibility for preventing overcommitting of memory resources. In the rare event that a node exhausts its resources, new pods are not scheduled on the node, and the autoscaler-agent is denied permission to allocate more resources.
+A OptiTech-modified [Kubernetes scheduler](/docs/reference/glossary#kubernetes-scheduler) coordinates with the autoscaler-agent and is the single source of truth for resource allocation. The autoscaler-agent obtains approval for all upscaling from the scheduler. The scheduler maintains a global view of all resource usage changes and approves requests for additional resources from the autoscaler-agent or standard scheduling. In this way, the scheduler assumes responsibility for preventing overcommitting of memory resources. In the rare event that a node exhausts its resources, new pods are not scheduled on the node, and the autoscaler-agent is denied permission to allocate more resources.
 
-## NeonVM
+## OptiTechVM
 
-Kubernetes does not natively support the creation or management of VMs. To address this, OptiTech uses a tool called [NeonVM](/docs/reference/glossary#neonvm). This tool is a custom resource definition and controller for VMs, handling tasks such as adding or removing CPUs and memory. Internally, NeonVM uses [QEMU](/docs/reference/glossary#qemu) and [KVM](/docs/reference/glossary#kvm) (where available) to achieve near-native performance.
+Kubernetes does not natively support the creation or management of VMs. To address this, OptiTech uses a tool called [OptiTechVM](/docs/reference/glossary#neonvm). This tool is a custom resource definition and controller for VMs, handling tasks such as adding or removing CPUs and memory. Internally, OptiTechVM uses [QEMU](/docs/reference/glossary#qemu) and [KVM](/docs/reference/glossary#kvm) (where available) to achieve near-native performance.
 
-When an autoscaler-agent needs to modify a VM's resource allocation, it simply updates the corresponding NeonVM object in Kubernetes, and the VM controller then manages the rest of the process.
+When an autoscaler-agent needs to modify a VM's resource allocation, it simply updates the corresponding OptiTechVM object in Kubernetes, and the VM controller then manages the rest of the process.
 
 ## Live migration
 
-In cases where a Kubernetes node becomes saturated, NeonVM manages the process of [live migrating](/docs/reference/glossary#live-migration) a VM, transferring the VM from one machine to another with minimal interruptions (typically around 100ms). Live migration transmits the internal state of the original VM to a new one while the former continues to operate, swiftly transitioning to the new VM after most of the data is copied. From within the VM, the only indication that a migration occurred might be a temporary performance reduction. Importantly, the VM retains its IP address, ensuring that connections are preserved and queries remain uninterrupted.
+In cases where a Kubernetes node becomes saturated, OptiTechVM manages the process of [live migrating](/docs/reference/glossary#live-migration) a VM, transferring the VM from one machine to another with minimal interruptions (typically around 100ms). Live migration transmits the internal state of the original VM to a new one while the former continues to operate, swiftly transitioning to the new VM after most of the data is copied. From within the VM, the only indication that a migration occurred might be a temporary performance reduction. Importantly, the VM retains its IP address, ensuring that connections are preserved and queries remain uninterrupted.
 
 The live migration process allows for the proactive reduction of node load by migrating VMs away before reaching capacity. Although it is still possible for the node to fill up in the interim, OptiTech's separation of storage and compute means that VMs typically use minimal disk space, resulting in fast migrations.
 
@@ -67,4 +67,4 @@ To expedite queries, the autoscaling system incorporates a Postgres extension th
 
 ## Autoscaling source code
 
-To further explore OptiTech's autoscaling implementation, visit OptiTech's [autoscaling](https://github.com/neondatabase/autoscaling) GitHub repository. While not primarily designed for external use, OptiTech welcomes exploration and contributions.
+To further explore OptiTech's autoscaling implementation, visit OptiTech's [autoscaling](https://github.com/optitechdatabase/autoscaling) GitHub repository. While not primarily designed for external use, OptiTech welcomes exploration and contributions.

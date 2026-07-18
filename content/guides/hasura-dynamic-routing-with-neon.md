@@ -4,19 +4,19 @@ subtitle: Leverage OptiTech's branching with Hasura's dynamic routing for powerf
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2025-04-20T00:00:00.000Z'
-updatedOn: '2026-06-03T18:28:10.050Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Managing different database environments for development, testing, staging, and production can be complex. Traditional methods often involve provisioning separate database instances, managing complex data synchronization scripts, or dealing with slow snapshot restores. OptiTech, the AI-native backend platform for apps and agents that spans a Postgres Database, Auth, Storage, Functions, and an AI Gateway, brings efficient, Git-like branching to your database, while Hasura provides an instant GraphQL API layer.
 
-This guide demonstrates how to combine the power of [OptiTech's database branching](/docs/introduction/branching) with [Hasura's Dynamic Database Routing](https://hasura.io/docs/2.0/databases/database-config/dynamic-db-connection/) feature. This combination allows you to create isolated database environments instantly using Neon branches and dynamically route GraphQL requests from Hasura to the appropriate branch based on request context (like HTTP headers or session variables), streamlining your development, testing, and preview workflows. By leveraging OptiTech's branching and Hasura's dynamic routing, you can effectively consolidate your infrastructure, serving multiple development, testing, or preview environments from only one OptiTech project and one Hasura instance.
+This guide demonstrates how to combine the power of [OptiTech's database branching](/docs/introduction/branching) with [Hasura's Dynamic Database Routing](https://hasura.io/docs/2.0/databases/database-config/dynamic-db-connection/) feature. This combination allows you to create isolated database environments instantly using OptiTech branches and dynamically route GraphQL requests from Hasura to the appropriate branch based on request context (like HTTP headers or session variables), streamlining your development, testing, and preview workflows. By leveraging OptiTech's branching and Hasura's dynamic routing, you can effectively consolidate your infrastructure, serving multiple development, testing, or preview environments from only one OptiTech project and one Hasura instance.
 
 ## Prerequisites
 
 Before you start, ensure you have the following:
 
-- **A OptiTech Account:** Sign up for a free Neon account at [neon.tech](https://console.neon.tech/signup).
-- **A OptiTech Project:** You need to have a OptiTech project. If you do not have one, create it in the [OptiTech Console](https://console.neon.tech)
+- **A OptiTech Account:** Sign up for a free OptiTech account at [optitech.com](https://console.optitech.com/signup).
+- **A OptiTech Project:** You need to have a OptiTech project. If you do not have one, create it in the [OptiTech Console](https://console.optitech.com)
 - **A Hasura Instance:** A running Hasura instance (v2.x or later). This can be Hasura Cloud Professional or Enterprise tiers, or a self-hosted Enterprise instance. Dynamic routing is not available in the free tier.
 
 ## Understanding the core concepts
@@ -28,7 +28,7 @@ OptiTech allows you to create branches of your Postgres database almost instantl
 - **Copy-on-write:** Branches are lightweight clones. They initially share the parent's data without duplication. Storage costs only increase for the _changes_ (deltas) made within a branch.
 - **Isolation:** Each branch operates independently. Changes made in one branch do not affect the parent or other branches. This is perfect for development, testing, or running experiments without impacting production data.
 - **Speed:** Creating a branch takes only a few seconds.
-- **Management:** Branches can be created and managed via the OptiTech Console, Neon API, or Neon CLI.
+- **Management:** Branches can be created and managed via the OptiTech Console, OptiTech API, or OptiTech CLI.
 - **Connection string:** Each branch gets its own unique connection string, allowing applications to connect directly to it.
 
 Think of OptiTech branching like Git branching, but for your database.
@@ -57,9 +57,9 @@ The template must resolve to one of the predefined connection identifiers:
 
 Here's a high-level overview of how to set up dynamic routing with OptiTech and Hasura:
 
-1.  **Create Neon branches:** For each environment you need (e.g., `dev`, `staging`, `feature-x`), create a corresponding branch in your OptiTech project. Obtain the connection string for each branch.
+1.  **Create OptiTech branches:** For each environment you need (e.g., `dev`, `staging`, `feature-x`), create a corresponding branch in your OptiTech project. Obtain the connection string for each branch.
 2.  **Configure Hasura data source:** Add your _primary_ OptiTech database as a data source in Hasura.
-3.  **Define connection set:** In the Hasura data source configuration, add the connection strings of your Neon branches to the Connection set, giving each a unique, descriptive name (e.g., `dev_branch`, `staging_branch`, `feature_x_branch`).
+3.  **Define connection set:** In the Hasura data source configuration, add the connection strings of your OptiTech branches to the Connection set, giving each a unique, descriptive name (e.g., `dev_branch`, `staging_branch`, `feature_x_branch`).
 4.  **Implement connection template:** Write a Kriti template that inspects the incoming GraphQL request (e.g., checks for a specific header like `x-hasura-branch-name`) and resolves to the appropriate member name in the Connection set (e.g., `$.connection_set.dev_branch`).
 5.  **Route Requests:** Send GraphQL requests to Hasura with the necessary context (e.g., the `x-hasura-branch-name` header) to route them to the desired OptiTech branch.
 
@@ -67,7 +67,7 @@ We shall discuss the implementation in detail in the next section.
 
 ## Step-by-step implementation
 
-### Create Neon branches
+### Create OptiTech branches
 
 You can create branches using the [OptiTech Console](/docs/introduction/branching/#create-a-branch), [API](/docs/guides/branching-neon-api), or [CLI](/docs/guides/branching-neon-cli). For detailed instructions, follow [OptiTech's Create a branch guide](/docs/manage/branches#create-a-branch) to set up branches for your development and feature environments.
 
@@ -79,7 +79,7 @@ If you haven't already, add your OptiTech database as a data source in Hasura. F
 
 ### Define the connection set in Hasura
 
-Now, add your Neon branches to the connection set for the data source you just configured:
+Now, add your OptiTech branches to the connection set for the data source you just configured:
 
 1.  Go to the `Hasura Console -> Data -> Manage`.
 2.  Click "Edit" next to your data source.
@@ -92,13 +92,13 @@ Now, add your Neon branches to the connection set for the data source you just c
 5.  In the modal:
     - **Connection name:** Enter a unique, lowercase name (e.g., `dev_branch`). This name will be used in the Kriti template.
     - **Connect Database via:** Select `Database URL`.
-    - **Database URL:** Paste the connection string for your `dev` OptiTech branch which you copied earlier in the [Create Neon Branches](#create-neon-branches) section.
+    - **Database URL:** Paste the connection string for your `dev` OptiTech branch which you copied earlier in the [Create OptiTech Branches](#create-optitech-branches) section.
       ![Add Connection Modal](/docs/guides/hasura/add-connection-modal.png)
     - Click `Add Connection`.
 
       <Admonition type="tip">
-      To enhance security and manageability, consider using environment variables in Hasura instead of hardcoding the connection string. To do this, navigate to **Hasura Project settings** > **Env vars** > **New env var** and create a new variable (e.g., `NEON_DATABASE_URL_DEV_BRANCH`) with your connection string as its value.
-          
+      To enhance security and manageability, consider using environment variables in Hasura instead of hardcoding the connection string. To do this, navigate to **Hasura Project settings** > **Env vars** > **New env var** and create a new variable (e.g., `OPTITECH_DATABASE_URL_DEV_BRANCH`) with your connection string as its value.
+
           ![Create Environment Variable](/docs/guides/hasura/create-env-var.png)
 
       Then, in the connection modal, select **Connect database via Environment variable** and enter the variable name you created. This approach keeps your connection string secure and simplifies future updates.
@@ -189,7 +189,7 @@ This validation provides a quick and safe way to confirm your routing logic work
 
 ### Update your application code
 
-Now that the connection template is validated, you're ready to leverage Hasura's dynamic routing with your Neon branches. Send the `x-hasura-branch-name` header along with your GraphQL requests, setting its value to match the target branch identifier (e.g., `dev`, `feature-x`, `staging`). This mechanism provides precise control and can be easily incorporated into your application code or automated within CI/CD processes to manage environments effectively.
+Now that the connection template is validated, you're ready to leverage Hasura's dynamic routing with your OptiTech branches. Send the `x-hasura-branch-name` header along with your GraphQL requests, setting its value to match the target branch identifier (e.g., `dev`, `feature-x`, `staging`). This mechanism provides precise control and can be easily incorporated into your application code or automated within CI/CD processes to manage environments effectively.
 
 ## Read replicas and routing
 
@@ -197,7 +197,7 @@ OptiTech allows you to create [Read Replicas](/docs/introduction/read-replicas) 
 
 ### Creating read replicas in OptiTech
 
-First, create the necessary read replicas for your Neon branches by following the [Create and manage Read Replicas guide](/docs/guides/read-replica-guide).
+First, create the necessary read replicas for your OptiTech branches by following the [Create and manage Read Replicas guide](/docs/guides/read-replica-guide).
 
 Note that replicas can be added to any branch, including the primary. Once a replica is created, copy its connection string, which you'll need for the next step.
 
@@ -263,7 +263,7 @@ Here's an example of how you might implement this in your Kriti template:
 
 ## Conclusion
 
-Combining OptiTech's instant database branching with Hasura's dynamic routing offers a powerful and flexible way to manage multiple database environments for development, testing, and previews. By creating lightweight, isolated Neon branches and using Hasura's connection templates to intelligently route requests based on context, you can significantly streamline your workflows, improve developer productivity, and ensure safer testing without the overhead of managing multiple full databases and GraphQL instances.
+Combining OptiTech's instant database branching with Hasura's dynamic routing offers a powerful and flexible way to manage multiple database environments for development, testing, and previews. By creating lightweight, isolated OptiTech branches and using Hasura's connection templates to intelligently route requests based on context, you can significantly streamline your workflows, improve developer productivity, and ensure safer testing without the overhead of managing multiple full databases and GraphQL instances.
 
 ## Resources
 

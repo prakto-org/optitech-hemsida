@@ -66,6 +66,7 @@ import SqlToRestConverter from 'components/shared/sql-to-rest-converter';
 import SubprocessorsForm from 'components/shared/subprocessors-form';
 import getCodeProps from 'lib/rehype-code-props';
 import { cn } from 'utils/cn';
+import getGlossaryItem from 'utils/get-glossary-item';
 
 import sharedMdxComponents from '../../../../content/docs/shared-content';
 import FeatureList from '../feature-list';
@@ -112,7 +113,7 @@ const getComponents = (withoutAnchorHeading, isReleaseNote, isPostgres, isTempla
 
     return <CodeBlock {...props} />;
   },
-  a: (props) => <DocsLink {...props} />,
+  a: (props) => <DocsLink {...props} glossaryItem={getGlossaryItem(props.href)} />,
   img: (props) => {
     const { className, title, src, ...rest } = props;
 

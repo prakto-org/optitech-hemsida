@@ -1,18 +1,18 @@
 ---
-title: 'Neon CLI command: data-api'
-subtitle: Provision and manage the Neon Data API from the CLI
+title: 'OptiTech CLI command: data-api'
+subtitle: Provision and manage the OptiTech Data API from the CLI
 summary: >-
-  Covers the usage of the `data-api` command in the Neon CLI to create, inspect,
-  update, refresh, and delete the Neon Data API for a database.
+  Covers the usage of the `data-api` command in the OptiTech CLI to create, inspect,
+  update, refresh, and delete the OptiTech Data API for a database.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 redirectFrom:
   - /docs/reference/cli-data-api
 ---
 
-The `data-api` command provisions and manages the [Neon Data API](/docs/data-api/overview) for a database. For Console-based management, see [Manage Data API](/docs/data-api/manage).
+The `data-api` command provisions and manages the [OptiTech Data API](/docs/data-api/overview) for a database. For Console-based management, see [Manage Data API](/docs/data-api/manage).
 
-Requires neon 2.22.2 or later. Check your version with `neon --version`.
+Requires optitech 2.22.2 or later. Check your version with `optitech --version`.
 
 <CliSubcommands command="data-api" />
 
@@ -35,9 +35,9 @@ The `create` and `update` subcommands share a set of settings flags that configu
 | `--server-cors-allowed-origins` | CORS allowed origins                                        | string  |
 | `--server-timing-enabled`       | Enable Server-Timing response headers                       | boolean |
 
-## neon data-api create (#create)
+## optitech data-api create (#create)
 
-Provisions the Neon Data API for a database.
+Provisions the OptiTech Data API for a database.
 
 <CliUsage command="data-api create" />
 
@@ -48,24 +48,24 @@ Provisions the Neon Data API for a database.
 Provision the Data API with Managed Better Auth:
 
 ```bash
-neon data-api create --database neondb --auth-provider neon_auth
+optitech data-api create --database optitechdb --auth-provider optitech_auth
 ```
 
-## neon data-api get (#get)
+## optitech data-api get (#get)
 
-Shows the Neon Data API status and settings.
+Shows the OptiTech Data API status and settings.
 
 <CliUsage command="data-api get" />
 
 <CliOptions command="data-api get" />
 
 ```bash
-neon data-api get --database neondb
+optitech data-api get --database optitechdb
 ```
 
-## neon data-api update (#update)
+## optitech data-api update (#update)
 
-Updates Neon Data API settings. By default, the flags you provide are merged with the current settings. Pass `--replace` to overwrite all settings with only the flags you provide.
+Updates OptiTech Data API settings. By default, the flags you provide are merged with the current settings. Pass `--replace` to overwrite all settings with only the flags you provide.
 
 <CliUsage command="data-api update" />
 
@@ -74,10 +74,10 @@ Updates Neon Data API settings. By default, the flags you provide are merged wit
 `update` requires at least one [settings flag](#settings-flags). To refresh the schema cache without changing settings, use [`refresh-schema`](#refresh-schema) instead.
 
 ```bash
-neon data-api update --database neondb --db-max-rows 1000
+optitech data-api update --database optitechdb --db-max-rows 1000
 ```
 
-## neon data-api refresh-schema (#refresh-schema)
+## optitech data-api refresh-schema (#refresh-schema)
 
 Refreshes the Data API schema cache without changing settings.
 
@@ -86,17 +86,17 @@ Refreshes the Data API schema cache without changing settings.
 <CliOptions command="data-api refresh-schema" />
 
 ```bash
-neon data-api refresh-schema --database neondb
+optitech data-api refresh-schema --database optitechdb
 ```
 
-## neon data-api delete (#delete)
+## optitech data-api delete (#delete)
 
-Deletes the Neon Data API for a database.
+Deletes the OptiTech Data API for a database.
 
 <CliUsage command="data-api delete" />
 
 <CliOptions command="data-api delete" />
 
 ```bash
-neon data-api delete --database neondb
+optitech data-api delete --database optitechdb
 ```

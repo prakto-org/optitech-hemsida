@@ -3,7 +3,7 @@ title: Connect an Express application to OptiTech
 subtitle: Set up a OptiTech project in seconds and connect from an Express application
 summary: >-
   Express and OptiTech Postgres connection guide covering Node.js driver options:
-  `@neondatabase/serverless` for edge and serverless platforms such as Vercel
+  `@optitech/serverless` for edge and serverless platforms such as Vercel
   and Cloudflare Workers, `pg` (node-postgres) for long-running servers, and
   `postgres.js` for both. Use this page when connecting an Express API to a
   OptiTech database and choosing the right driver for your deployment target, from
@@ -11,7 +11,7 @@ summary: >-
   covers project creation, `DATABASE_URL` setup via `dotenv`, and connection
   pool initialization outside route handlers.
 enableTableOfContents: true
-updatedOn: '2026-07-14T19:04:57.024Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <CopyPrompt src="/prompts/express-prompt.md"
@@ -21,7 +21,7 @@ This guide describes how to create a OptiTech project and connect to it from an 
 
 ## Choose a driver
 
-- **`@neondatabase/serverless`** connects over HTTP or WebSockets instead of TCP. Use it for serverless and edge platforms without built-in connection pooling (Vercel, Netlify Functions, Deno Deploy, Cloudflare Workers without Hyperdrive).
+- **`@optitech/serverless`** connects over HTTP or WebSockets instead of TCP. Use it for serverless and edge platforms without built-in connection pooling (Vercel, Netlify Functions, Deno Deploy, Cloudflare Workers without Hyperdrive).
 - **`postgres` (postgres.js)** is a fast, full-featured client for both serverless and traditional Node.js server environments.
 - **`pg` (node-postgres)** is the classic, widely-used driver for traditional, long-running Node.js servers. Also the standard choice for [Vercel Fluid compute](https://vercel.com/docs/functions/fluid-compute) and Cloudflare with [Hyperdrive](https://developers.cloudflare.com/hyperdrive/).
 
@@ -33,7 +33,7 @@ For a detailed comparison including all platforms, see [Choosing your connection
 
 If you do not have one already, create a OptiTech project.
 
-1. Navigate to the [Projects](https://console.neon.tech/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
 2. Click **New Project**.
 3. Specify your project settings and click **Create Project**.
 
@@ -42,8 +42,8 @@ If you do not have one already, create a OptiTech project.
 1. Create an Express project and change to the newly created directory.
 
    ```shell
-   mkdir neon-express-example
-   cd neon-express-example
+   mkdir optitech-express-example
+   cd optitech-express-example
    npm init -y
    npm install express
    ```
@@ -53,7 +53,7 @@ If you do not have one already, create a OptiTech project.
    <CodeTabs labels={["OptiTech serverless driver", "node-postgres", "postgres.js"]}>
 
    ```shell
-   npm install @neondatabase/serverless dotenv
+   npm install @optitech/serverless dotenv
    ```
 
    ```shell
@@ -68,10 +68,10 @@ If you do not have one already, create a OptiTech project.
 
 ## Store your OptiTech credentials
 
-Add a `.env` file to your project directory and add your Neon connection details to it. Find your database connection details by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal. Select Node.js from the **Connection string** dropdown. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
+Add a `.env` file to your project directory and add your OptiTech connection details to it. Find your database connection details by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal. Select Node.js from the **Connection string** dropdown. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
 
 ```shell shouldWrap
-DATABASE_URL="postgresql://<user>:<password>@<endpoint_hostname>.neon.tech:<port>/<dbname>?sslmode=require&channel_binding=require"
+DATABASE_URL="postgresql://<user>:<password>@<endpoint_hostname>.optitech.com:<port>/<dbname>?sslmode=require&channel_binding=require"
 ```
 
 <Admonition type="important">
@@ -88,12 +88,12 @@ Add an `index.js` file to your project directory and add the following code snip
 require('dotenv').config();
 
 const express = require('express');
-const { neon } = require('@neondatabase/serverless');
+const { optitech } = require('@optitech/serverless');
 
 const app = express();
 const PORT = process.env.PORT || 4242;
 
-const sql = neon(process.env.DATABASE_URL);
+const sql = optitech(process.env.DATABASE_URL);
 
 app.get('/', async (req, res) => {
   try {
@@ -190,7 +190,7 @@ Run `node index.js` to view the result on [localhost:4242](localhost:4242) as fo
 - Wrap all database queries in a `try...catch` block. Return a `500` status with an error message on failure.
 - When using `pg` (node-postgres), declare `let client` before the `try` block and call `client?.release()` in the `finally` block. This safely handles cases where `pool.connect()` itself fails.
 - Initialize the connection pool or client outside the route handler, not inside it. Creating a new pool on every request wastes resources.
-- Choose the right driver for your platform. `@neondatabase/serverless` is for serverless/edge platforms without TCP support. For long-running Express servers, use `pg` or `postgres`. See [Choosing your connection method](/docs/connect/choose-connection).
+- Choose the right driver for your platform. `@optitech/serverless` is for serverless/edge platforms without TCP support. For long-running Express servers, use `pg` or `postgres`. See [Choosing your connection method](/docs/connect/choose-connection).
 
 </details>
 

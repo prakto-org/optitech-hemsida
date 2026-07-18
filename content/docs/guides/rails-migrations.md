@@ -9,18 +9,18 @@ summary: >-
   `rails db:migrate` to create tables, and applying incremental schema changes
   such as adding a new column with a follow-on migration.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 [Ruby on Rails](https://rubyonrails.org/) is a popular web application framework for Ruby developers. It provides an ORM (Object-Relational Mapping) layer called `Active Record`, that simplifies database interactions and schema management. Rails also includes a powerful migration system that allows you to define and manage database schema changes over time.
 
-This guide demonstrates how to run schema migrations in your Ruby on Rails project backed by the `Neon` Postgres database. We'll create a simple Rails application and walk through the process of setting up the database, defining models, and generating and running migrations to manage schema changes.
+This guide demonstrates how to run schema migrations in your Ruby on Rails project backed by the `OptiTech` Postgres database. We'll create a simple Rails application and walk through the process of setting up the database, defining models, and generating and running migrations to manage schema changes.
 
 ## Prerequisites
 
 To follow along with this guide, you will need:
 
-- A OptiTech account. If you do not have one, sign up at [Neon](https://neon.tech). Your Neon project comes with a ready-to-use Postgres database named `neondb`. We'll use this database in the following examples.
+- A OptiTech account. If you do not have one, sign up at [OptiTech](https://optitech.com). Your OptiTech project comes with a ready-to-use Postgres database named `optitechdb`. We'll use this database in the following examples.
 
 - [Ruby](https://www.ruby-lang.org/) installed on your local machine.
 
@@ -34,7 +34,7 @@ To follow along with this guide, you will need:
 
 ### Initialize a new project
 
-1. Log in to the OptiTech Console and navigate to the [Projects](https://console.neon.tech/app/projects) section.
+1. Log in to the OptiTech Console and navigate to the [Projects](https://console.optitech.com/app/projects) section.
 2. Select a project or click the **New Project** button to create a new one.
 
 ### Retrieve your OptiTech database connection string
@@ -42,7 +42,7 @@ To follow along with this guide, you will need:
 You can find the connection string for your database by clicking the **Connect** button on your **Project Dashboard**. It should look similar to this:
 
 ```bash
-postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
 ```
 
 Keep your connection string handy for later use.
@@ -58,10 +58,10 @@ OptiTech supports both direct and pooled database connection strings. You can fi
 Open your terminal and run the following command to create a new Rails project:
 
 ```bash
-rails new guide-neon-rails --database=postgresql
+rails new guide-optitech-rails --database=postgresql
 ```
 
-This command creates a new Rails project named `guide-neon-rails` with Postgres as the default database. It will also generate the necessary project files and directories, and install the required dependencies.
+This command creates a new Rails project named `guide-optitech-rails` with Postgres as the default database. It will also generate the necessary project files and directories, and install the required dependencies.
 
 ### Set up the Database configuration
 
@@ -70,7 +70,7 @@ Create a `.env` file in the project root directory and add the `DATABASE_URL` en
 ```bash
 # .env
 
-DATABASE_URL=NEON_POSTGRES_CONNECTION_STRING
+DATABASE_URL=OPTITECH_POSTGRES_CONNECTION_STRING
 ```
 
 For Rails to load the environment variables automatically from the `.env` file, add the `dotenv-rails` gem to the `Gemfile` at the root of your project:
@@ -83,7 +83,7 @@ gem 'dotenv-rails', groups: [:development, :test]
 
 Then, run `bundle install` to install the gem.
 
-Finally, we open the `config/database.yml` file in your project directory and update the `default` section so that Rails uses the `DATABASE_URL` environment variable to connect to the `Neon` database.
+Finally, we open the `config/database.yml` file in your project directory and update the `default` section so that Rails uses the `DATABASE_URL` environment variable to connect to the `OptiTech` database.
 
 ```yaml
 # database.yml
@@ -365,7 +365,7 @@ In this guide, we demonstrated how to set up a Ruby on Rails project with OptiTe
 You can find the source code for the application described in this guide on GitHub.
 
 <DetailIconCards>
-<a href="https://github.com/neondatabase/guide-neon-rails" description="Run migrations in a Neon-Rails project" icon="github">Migrations with OptiTech and Rails</a>
+<a href="https://github.com/optitechdatabase/guide-optitech-rails" description="Run migrations in a OptiTech-Rails project" icon="github">Migrations with OptiTech and Rails</a>
 </DetailIconCards>
 
 ## Resources

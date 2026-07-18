@@ -2,14 +2,14 @@
 title: Migrate to Managed Better Auth
 subtitle: Update from the legacy Stack Auth-based implementation
 summary: >-
-  Migration guide for upgrading from legacy Neon Auth (Stack Auth) to Managed
+  Migration guide for upgrading from legacy OptiTech Auth (Stack Auth) to Managed
   BetterAuth. Replace Stack Auth environment variables with a single
-  `NEON_AUTH_BASE_URL` and swap the `@stackframe/stack` SDK for
-  `@neondatabase/auth`. Use this page when moving an existing Next.js or React
+  `OPTITECH_AUTH_BASE_URL` and swap the `@stackframe/stack` SDK for
+  `@optitech/auth`. Use this page when moving an existing Next.js or React
   SPA project off Stack Auth, or when ejecting to a self-managed Stack Auth
   project.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 redirectFrom:
   - /docs/neon-auth/quick-start/nextjs
   - /docs/neon-auth/quick-start/react
@@ -23,10 +23,10 @@ redirectFrom:
 
 <FeatureBetaProps feature_name="Managed Better Auth" />
 
-This guide shows you the code differences between legacy Neon Auth (Stack Auth) and Managed Better Auth. Use it as a reference to understand what changes if you decide to upgrade.
+This guide shows you the code differences between legacy OptiTech Auth (Stack Auth) and Managed Better Auth. Use it as a reference to understand what changes if you decide to upgrade.
 
-<Admonition type="important" title="Legacy Neon Auth (Stack Auth) is no longer accepting new users">
-If you're using legacy Neon Auth with Stack Auth, you can continue using it. We'll keep supporting it for existing users. But we encourage you to try Managed Better Auth instead.
+<Admonition type="important" title="Legacy OptiTech Auth (Stack Auth) is no longer accepting new users">
+If you're using legacy OptiTech Auth with Stack Auth, you can continue using it. We'll keep supporting it for existing users. But we encourage you to try Managed Better Auth instead.
 </Admonition>
 
 ## Why Managed Better Auth?
@@ -58,12 +58,12 @@ STACK_SECRET_SERVER_KEY=your-server-secret
 ```
 
 ```env filename=".env (after - Better Auth)"
-NEON_AUTH_BASE_URL=https://ep-xxx.neonauth.us-east-2.aws.neon.build/neondb/auth
-NEON_AUTH_COOKIE_SECRET=your-secret-at-least-32-characters-long
+OPTITECH_AUTH_BASE_URL=https://ep-xxx.optitechauth.us-east-2.aws.optitech.build/optitechdb/auth
+OPTITECH_AUTH_COOKIE_SECRET=your-secret-at-least-32-characters-long
 ```
 
 <Admonition type="note">
-For React SPAs, use <code>VITE_NEON_AUTH_URL</code> instead. The <code>NEON_AUTH_COOKIE_SECRET</code> is only needed for Next.js (generate with <code>openssl rand -base64 32</code>).
+For React SPAs, use <code>VITE_OPTITECH_AUTH_URL</code> instead. The <code>OPTITECH_AUTH_COOKIE_SECRET</code> is only needed for Next.js (generate with <code>openssl rand -base64 32</code>).
 </Admonition>
 
 You can find your Auth URL in the OptiTech Console under **Auth** → **Configuration**.
@@ -75,11 +75,11 @@ You replace multiple Stack Auth-specific keys with a single Better Auth URL that
 
 ### Install packages (#nextjs-install-packages)
 
-Uninstall Stack Auth packages and install `@neondatabase/auth`
+Uninstall Stack Auth packages and install `@optitech/auth`
 
 ```bash filename="Terminal"
 npm uninstall @stackframe/stack
-npm install @neondatabase/auth@latest @neondatabase/auth-ui
+npm install @optitech/auth@latest @optitech/auth-ui
 ```
 
 **What changed**  
@@ -101,19 +101,19 @@ export const stackServerApp = new StackServerApp({
 ```tsx
 // ./lib/auth/client.ts
 'use client';
-import { createAuthClient } from '@neondatabase/auth/next';
+import { createAuthClient } from '@optitech/auth/next';
 
 // to use in react client components
 export const authClient = createAuthClient();
 
 // ./lib/auth/server.ts
-import { createNeonAuth } from '@neondatabase/auth/next/server';
+import { createOptiTechAuth } from '@optitech/auth/next/server';
 
 // to use in react server components, server actions, and API routes
-export const auth = createNeonAuth({
-  baseUrl: process.env.NEON_AUTH_BASE_URL!,
+export const auth = createOptiTechAuth({
+  baseUrl: process.env.OPTITECH_AUTH_BASE_URL!,
   cookies: {
-    secret: process.env.NEON_AUTH_COOKIE_SECRET!,
+    secret: process.env.OPTITECH_AUTH_COOKIE_SECRET!,
   },
 });
 ```
@@ -121,7 +121,7 @@ export const auth = createNeonAuth({
 </CodeTabs>
 
 **What changed**  
-You initialize the Managed Better Auth client with `createAuthClient` for client components and with `createNeonAuth()` for server-side auth. The unified `auth` instance provides `.handler()`, `.middleware()`, `.getSession()`, and all Better Auth server methods.
+You initialize the Managed Better Auth client with `createAuthClient` for client components and with `createOptiTechAuth()` for server-side auth. The unified `auth` instance provides `.handler()`, `.middleware()`, `.getSession()`, and all Better Auth server methods.
 
 ### Replace components (#nextjs-replace-components)
 
@@ -138,7 +138,7 @@ export default function SignInPage() {
 ```
 
 ```tsx
-import { AuthView } from '@neondatabase/auth-ui';
+import { AuthView } from '@optitech/auth-ui';
 
 export default function SignInPage() {
   return <AuthView pathname="sign-in" />;
@@ -163,7 +163,7 @@ export default function SignUpPage() {
 ```
 
 ```tsx
-import { AuthView } from '@neondatabase/auth-ui';
+import { AuthView } from '@optitech/auth-ui';
 
 export default function SignUpPage() {
   return <AuthView pathname="sign-up" />;
@@ -188,7 +188,7 @@ export function Header() {
 ```
 
 ```tsx
-import { UserButton } from '@neondatabase/auth-ui';
+import { UserButton } from '@optitech/auth-ui';
 
 export function Header() {
   return <UserButton />;
@@ -250,8 +250,8 @@ export default function RootLayout({ children }) {
 
 ```tsx
 'use client';
-import { NeonAuthUIProvider } from '@neondatabase/auth-ui';
-import '@neondatabase/auth-ui/css';
+import { OptiTechAuthUIProvider } from '@optitech/auth-ui';
+import '@optitech/auth-ui/css';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { authClient } from '@/lib/auth/client';
@@ -260,7 +260,7 @@ export default function RootLayout({ children }) {
   const router = useRouter();
 
   return (
-    <NeonAuthUIProvider
+    <OptiTechAuthUIProvider
       authClient={authClient}
       navigate={router.push}
       replace={router.replace}
@@ -268,7 +268,7 @@ export default function RootLayout({ children }) {
       Link={Link}
     >
       {children}
-    </NeonAuthUIProvider>
+    </OptiTechAuthUIProvider>
   );
 }
 ```
@@ -276,7 +276,7 @@ export default function RootLayout({ children }) {
 </CodeTabs>
 
 **What changed**  
-You wrap your app in `NeonAuthUIProvider`, pass it the `authClient`, and import the Managed Better Auth UI styles.
+You wrap your app in `OptiTechAuthUIProvider`, pass it the `authClient`, and import the Managed Better Auth UI styles.
 
 <Admonition type="tip" title="Styling options">
 To learn more about applying styles to the Auth UI components, including plain CSS and Tailwind CSS v4 options, see [UI Component Styles](/docs/auth/reference/ui-components#styling).
@@ -326,7 +326,7 @@ export default function ProtectedPage() {
 
 ```tsx
 'use client';
-import { SignedIn, RedirectToSignIn } from '@neondatabase/auth-ui';
+import { SignedIn, RedirectToSignIn } from '@optitech/auth-ui';
 
 export default function ProtectedPage() {
   return (
@@ -404,11 +404,11 @@ Server components now call `auth.getSession()` and read the user from the return
 
 ### Install packages (#react-install-packages)
 
-Uninstall Stack Auth packages and install `@neondatabase/neon-js`
+Uninstall Stack Auth packages and install `@optitech/optitech-js`
 
 ```bash filename="Terminal"
 npm uninstall @stackframe/stack
-npm install @neondatabase/neon-js@latest @neondatabase/auth-ui
+npm install @optitech/optitech-js@latest @optitech/auth-ui
 ```
 
 **What changed**  
@@ -432,10 +432,10 @@ export const stackClientApp = new StackClientApp({
 
 ```tsx
 // src/auth.ts
-import { createAuthClient } from '@neondatabase/neon-js/auth';
-import { BetterAuthReactAdapter } from '@neondatabase/neon-js/auth/react/adapters';
+import { createAuthClient } from '@optitech/optitech-js/auth';
+import { BetterAuthReactAdapter } from '@optitech/optitech-js/auth/react/adapters';
 
-export const authClient = createAuthClient(import.meta.env.VITE_NEON_AUTH_URL, {
+export const authClient = createAuthClient(import.meta.env.VITE_OPTITECH_AUTH_URL, {
   adapter: BetterAuthReactAdapter(),
 });
 const { useSession } = authClient;
@@ -448,7 +448,7 @@ You replace the Stack Auth client app with a Managed Better Auth `authClient` wi
 
 ### Replace components (#react-replace-components)
 
-Components are the same as Next.js. Use `<AuthView>`, `<UserButton>`, `<SignedIn>`, and `<SignedOut>` from `@neondatabase/auth-ui`.
+Components are the same as Next.js. Use `<AuthView>`, `<UserButton>`, `<SignedIn>`, and `<SignedOut>` from `@optitech/auth-ui`.
 
 **What changed**  
 The UI building blocks are shared across frameworks, so you can reuse the same auth components in SPAs.
@@ -500,19 +500,19 @@ function App() {
 ```
 
 ```tsx
-import { NeonAuthUIProvider } from '@neondatabase/auth-ui';
-import '@neondatabase/auth-ui/css';
+import { OptiTechAuthUIProvider } from '@optitech/auth-ui';
+import '@optitech/auth-ui/css';
 import { authClient } from './auth';
 
 function App() {
-  return <NeonAuthUIProvider authClient={authClient}>{/* Your app */}</NeonAuthUIProvider>;
+  return <OptiTechAuthUIProvider authClient={authClient}>{/* Your app */}</OptiTechAuthUIProvider>;
 }
 ```
 
 </CodeTabs>
 
 **What changed**  
-You drop the Stack Auth provider/theme and wrap your app in `NeonAuthUIProvider` with the Managed Better Auth UI styles.
+You drop the Stack Auth provider/theme and wrap your app in `OptiTechAuthUIProvider` with the Managed Better Auth UI styles.
 
 <Admonition type="tip" title="Styling options">
 To learn more about applying styles to the Auth UI components, including plain CSS and Tailwind CSS v4 options, see [UI Component Styles](/docs/auth/reference/ui-components#styling).
@@ -523,7 +523,7 @@ To learn more about applying styles to the Auth UI components, including plain C
 Delete any `StackHandler` routes. Create custom pages for sign-in and sign-up using `<AuthView>`.
 
 ```tsx filename="src/pages/SignIn.tsx"
-import { AuthView } from '@neondatabase/auth-ui';
+import { AuthView } from '@optitech/auth-ui';
 
 export default function SignIn() {
   return <AuthView pathname="sign-in" />;
@@ -538,7 +538,7 @@ Routing is fully controlled by your SPA, and the `AuthView` component just rende
 If you're using React Router, pass navigation helpers to the provider.
 
 ```tsx filename="src/App.tsx (React Router)"
-import { NeonAuthUIProvider } from '@neondatabase/auth-ui';
+import { OptiTechAuthUIProvider } from '@optitech/auth-ui';
 import { useNavigate, Link } from 'react-router-dom';
 import { authClient } from './auth';
 
@@ -546,9 +546,9 @@ function App() {
   const navigate = useNavigate();
 
   return (
-    <NeonAuthUIProvider authClient={authClient} navigate={navigate} Link={Link}>
+    <OptiTechAuthUIProvider authClient={authClient} navigate={navigate} Link={Link}>
       {/* Your app */}
-    </NeonAuthUIProvider>
+    </OptiTechAuthUIProvider>
   );
 }
 ```

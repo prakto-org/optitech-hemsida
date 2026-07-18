@@ -7,7 +7,7 @@ page_description: >-
   on-demand during query execution, saving storage space and providing automatic
   calculations without the overhead of stored values.
 ogImage: ''
-updatedOn: '2026-06-03T13:01:21.685Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 enableTableOfContents: true
 previousLink:
   title: PostgreSQL 18 Enhanced EXPLAIN
@@ -18,7 +18,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-PostgreSQL 18's virtual generated columns work the same way on any Postgres deployment, so everything here applies whether you're running Postgres yourself or on a managed service. For enterprises standardizing on Postgres in the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers a secure, high-performance managed database fully integrated into the Lakehouse. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+PostgreSQL 18's virtual generated columns work the same way on any Postgres deployment, so everything here applies whether you're running Postgres yourself or on a managed service. For enterprises standardizing on Postgres in the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers a secure, high-performance managed database fully integrated into the Lakehouse. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: Learn how PostgreSQL 18 makes virtual generated columns the default, enabling compute-on-demand columns that save storage space while providing automatic calculations without the overhead of stored values.

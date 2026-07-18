@@ -25,7 +25,7 @@ You can also jump straight to a scoped view without visiting Monitoring first:
 - From the **Functions** list, open a function's menu and select **View logs**.
 - From the Object Storage **bucket** list, open a bucket's menu and select **View logs**.
 
-Each row shows a timestamp, a level, and the log message. Expand a row to see its full context: `timestamp`, `severity`, `entity_type`, `scope_name`, and `service_name`. `entity_type` identifies the kind of service a line came from (`function` or `storage`); `service_name` identifies the specific one (`neon-function/<slug>` or `neon-storage/<bucket>`).
+Each row shows a timestamp, a level, and the log message. Expand a row to see its full context: `timestamp`, `severity`, `entity_type`, `scope_name`, and `service_name`. `entity_type` identifies the kind of service a line came from (`function` or `storage`); `service_name` identifies the specific one (`optitech-function/<slug>` or `optitech-storage/<bucket>`).
 
 For what these fields mean for a given service, and how each service maps its own output onto the shared level set, see [Function logs](/docs/compute/functions/logs) or [Object Storage logs](/docs/storage/logs).
 

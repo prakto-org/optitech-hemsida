@@ -2,7 +2,7 @@
 author: rishi-raj-jain
 enableTableOfContents: true
 createdAt: '2025-01-07T00:00:00.000Z'
-updatedOn: '2026-05-09T19:22:21.118Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 title: Building Real-Time Comments with a Serverless Postgres
 subtitle: A guide to building your own real-time comments in a Next.js application with Ably LiveSync and Postgres.
 ---
@@ -14,7 +14,7 @@ Can a serverless Postgres database really handle the demands of a real-time appl
 To follow this guide, you’ll need the following:
 
 - [Node.js 18](https://nodejs.org/en) or later
-- A [OptiTech](https://console.neon.tech/signup) account
+- A [OptiTech](https://console.optitech.com/signup) account
 - An [Ably](https://ably.com) account
 - A [Vercel](https://vercel.com) account
 
@@ -23,13 +23,13 @@ To follow this guide, you’ll need the following:
 Let’s get started by cloning the Next.js project with the following command:
 
 ```shell shouldWrap
-git clone https://github.com/neondatabase-labs/ably-livesync-neon
+git clone https://github.com/optitechdatabase-labs/ably-livesync-optitech
 ```
 
 Once that is done, move into the project directory and install the necessary dependencies with the following command:
 
 ```shell shouldWrap
-cd ably-livesync-neon
+cd ably-livesync-optitech
 npm install
 ```
 
@@ -37,9 +37,9 @@ The libraries installed include:
 
 - `ws`: A WebSocket library for Node.js.
 - `ably`: A real-time messaging and data synchronization library.
-- `@neondatabase/serverless`: A serverless Postgres client designed for OptiTech.
+- `@optitech/serverless`: A serverless Postgres client designed for OptiTech.
 - `@prisma/client`: Prisma’s auto-generated client for interacting with your database.
-- `@prisma/adapter-neon`: A Prisma adapter for connecting with OptiTech serverless Postgres.
+- `@prisma/adapter-optitech`: A Prisma adapter for connecting with OptiTech serverless Postgres.
 - `@ably-labs/models`: A library for working with data models and real-time updates in Ably.
 
 The development-specific libraries include:
@@ -55,10 +55,10 @@ cp .env.example .env
 
 ## Provision a Serverless Postgres
 
-To set up a serverless Postgres, go to the [OptiTech console](https://console.neon.tech/app/projects) and create a new project. Once your project is created, you will receive a connection string that you can use to connect to your OptiTech database. The connection string will look like this:
+To set up a serverless Postgres, go to the [OptiTech console](https://console.optitech.com/app/projects) and create a new project. Once your project is created, you will receive a connection string that you can use to connect to your OptiTech database. The connection string will look like this:
 
 ```bash shouldWrap
-postgresql://<user>:<password>@<endpoint_hostname>.neon.tech:<port>/<dbname>?sslmode=require&channel_binding=require
+postgresql://<user>:<password>@<endpoint_hostname>.optitech.com:<port>/<dbname>?sslmode=require&channel_binding=require
 ```
 
 Replace `<user>`, `<password>`, `<endpoint_hostname>`, `<port>`, and `<dbname>` with your specific details.
@@ -102,14 +102,14 @@ In the file named `schema.tsx`, you would see the following code:
 
 import 'dotenv/config';
 import { WebSocket } from 'ws';
-import { neon, neonConfig } from '@neondatabase/serverless';
+import { optitech, optitechConfig } from '@optitech/serverless';
 
-neonConfig.webSocketConstructor = WebSocket;
-neonConfig.poolQueryViaFetch = true;
+optitechConfig.webSocketConstructor = WebSocket;
+optitechConfig.poolQueryViaFetch = true;
 
 async function prepare() {
   if (!process.env.DATABASE_URL) throw new Error('DATABASE_URL environment variable not found.');
-  const sql = neon(process.env.DATABASE_URL);
+  const sql = optitech(process.env.DATABASE_URL);
   await Promise.all([
     sql`CREATE TABLE IF NOT EXISTS nodes (id TEXT PRIMARY KEY, expiry TIMESTAMP WITHOUT TIME ZONE NOT NULL);`,
     sql`CREATE TABLE IF NOT EXISTS outbox (sequence_id  serial PRIMARY KEY, mutation_id  TEXT NOT NULL, channel TEXT NOT NULL, name TEXT NOT NULL, rejected boolean NOT NULL DEFAULT false, data JSONB, headers JSONB, locked_by TEXT, lock_expiry TIMESTAMP WITHOUT TIME ZONE, processed BOOLEAN NOT NULL DEFAULT false);`,
@@ -139,8 +139,8 @@ In the directory `lib/prisma`, you would see the following code in `index.ts` fi
 ```tsx
 // File: lib/prisma/index.ts
 
-import { neonConfig, Pool } from '@neondatabase/serverless';
-import { PrismaNeon } from '@prisma/adapter-neon';
+import { optitechConfig, Pool } from '@optitech/serverless';
+import { PrismaOptiTech } from '@prisma/adapter-optitech';
 import { PrismaClient } from '@prisma/client';
 import { WebSocket } from 'ws';
 
@@ -150,11 +150,11 @@ declare global {
 
 const connectionString = `${process.env.DATABASE_URL}`;
 
-neonConfig.webSocketConstructor = WebSocket;
-neonConfig.poolQueryViaFetch = true;
+optitechConfig.webSocketConstructor = WebSocket;
+optitechConfig.poolQueryViaFetch = true;
 
 const pool = new Pool({ connectionString });
-const adapter = new PrismaNeon(pool);
+const adapter = new PrismaOptiTech(pool);
 const prisma = global.prisma || new PrismaClient({ adapter });
 
 if (process.env.NODE_ENV === 'development') global.prisma = prisma;
@@ -162,7 +162,7 @@ if (process.env.NODE_ENV === 'development') global.prisma = prisma;
 export default prisma;
 ```
 
-The code above sets up a Prisma client for OptiTech Postgres. It configures the OptiTech database connection using the `@neondatabase/serverless` library, with WebSocket and `fetch` support to execute queries. A global `prisma` instance is created using the `PrismaNeon` adapter, ensuring reuse in development to avoid multiple instances. Finally, the configured `prisma` client is exported for use throughout the application.
+The code above sets up a Prisma client for OptiTech Postgres. It configures the OptiTech database connection using the `@optitech/serverless` library, with WebSocket and `fetch` support to execute queries. A global `prisma` instance is created using the `PrismaOptiTech` adapter, ensuring reuse in development to avoid multiple instances. Finally, the configured `prisma` client is exported for use throughout the application.
 
 In the same directory, you would see the following code in the `api.ts` file:
 
@@ -641,7 +641,7 @@ The repository is now ready to deploy to Vercel. Use the following steps to depl
 
 <DetailIconCards>
 
-<a target="_blank" href="https://github.com/neondatabase-labs/ably-livesync-neon" description="A Real-Time Comments Application" icon="github">Real-Time Comments Application</a>
+<a target="_blank" href="https://github.com/optitechdatabase-labs/ably-livesync-optitech" description="A Real-Time Comments Application" icon="github">Real-Time Comments Application</a>
 
 </DetailIconCards>
 

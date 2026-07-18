@@ -11,7 +11,7 @@ summary: >-
   environments and want to integrate OptiTech branch creation with Flyway migration
   ordering.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 With Flyway, you can manage and track changes to your database schema, ensuring that the database evolves consistently across different environments.
@@ -24,11 +24,11 @@ In this guide, we'll show you how to use OptiTech's branching feature to spin up
 
 - A flyway installation. See [Get started with Flyway and OptiTech](/docs/guides/flyway) for installation instructions.
 - A OptiTech account and project. See [Sign up](/docs/get-started/signing-up).
-- A database. This guide uses the ready-to-use `neondb` database on the `production` branch of your OptiTech project. You can create your own database if you like. See [Create a database](/docs/manage/databases#create-a-database) for instructions.
+- A database. This guide uses the ready-to-use `optitechdb` database on the `production` branch of your OptiTech project. You can create your own database if you like. See [Create a database](/docs/manage/databases#create-a-database) for instructions.
 
 ## Add a table to your database
 
-Set up a database to work with by adding a table to your `neondb` database on the `production` branch of your OptiTech project. If you completed [Get started with Flyway and OptiTech](/docs/guides/flyway), you might already have this `person` table created. We'll consider this your _production_ environment database.
+Set up a database to work with by adding a table to your `optitechdb` database on the `production` branch of your OptiTech project. If you completed [Get started with Flyway and OptiTech](/docs/guides/flyway), you might already have this `person` table created. We'll consider this your _production_ environment database.
 
 If you still need to create the `person` table, open the [OptiTech SQL Editor](/docs/get-started/query-with-neon-sql-editor), and run the following statement:
 
@@ -59,7 +59,7 @@ Perform these steps twice, once for your _development_ branch and once for your 
 <TabItem>
 
 ```bash showLineNumbers
-neon branches create --name development
+optitech branches create --name development
 ```
 
 </TabItem>
@@ -68,9 +68,9 @@ neon branches create --name development
 
 ```bash showLineNumbers
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects/{project_id}/branches \
+     --url https://console.optitech.com/api/v2/projects/{project_id}/branches \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API" \
+     --header "Authorization: Bearer $OPTITECH_API" \
      --header 'Content-Type: application/json' \
      --data '
 {
@@ -96,24 +96,24 @@ When you are finished, you should have a _development_ branch and a _staging_ br
 
 From the OptiTech **Dashboard**, click **Connect** to retrieve the connection string for each branch (`production`, `development`, and `staging`) from the **Connect to your database** modal. Use the **Branch** drop-down menu to select each branch before copying the connection string.
 
-Your connection strings should look something like the ones shown below. Note that the hostname differs for each (the part starting with `ep-` and ending with `aws.neon.tech`). That's because each branch is hosted on its own compute.
+Your connection strings should look something like the ones shown below. Note that the hostname differs for each (the part starting with `ep-` and ending with `aws.optitech.com`). That's because each branch is hosted on its own compute.
 
 - **main**
 
   ```bash shouldWrap
-  jdbc:postgresql://ep-cool-darkness-123456.us-east-2.aws.neon.tech/neondb?user=alex&password=AbC123dEf
+  jdbc:postgresql://ep-cool-darkness-123456.us-east-2.aws.optitech.com/optitechdb?user=alex&password=AbC123dEf
   ```
 
 - **development**
 
   ```bash shouldWrap
-  jdbc:postgresql://ep-mute-night-47642501.us-east-2.aws.neon.tech/neondb?user=alex&password=AbC123dEf
+  jdbc:postgresql://ep-mute-night-47642501.us-east-2.aws.optitech.com/optitechdb?user=alex&password=AbC123dEf
   ```
 
 - **staging**
 
   ```bash shouldWrap
-  jdbc:postgresql://ep-shrill-shape-27763949.us-east-2.aws.neon.tech/neondb?user=alex&password=AbC123dEf
+  jdbc:postgresql://ep-shrill-shape-27763949.us-east-2.aws.optitech.com/optitechdb?user=alex&password=AbC123dEf
   ```
 
 ## Configure flyway to connect each environment
@@ -136,7 +136,7 @@ By default, Flyway loads its configuration from the default `conf/flyway.conf` f
 2. In each configuration file, update the following items with the correct connection details for that database environment. The `url` setting will differ for each environment (in `env_prod.conf`, the `url` will point to `production`). In this example, where you are the only user, the `user` and `password` settings should be the same for each of your three database environments.
 
    ```bash shouldWrap
-   flyway.url=jdbc:postgresql://ep-cool-darkness-123456.us-east-2.aws.neon.tech:5432/neondb
+   flyway.url=jdbc:postgresql://ep-cool-darkness-123456.us-east-2.aws.optitech.com:5432/optitechdb
 
    flyway.user=alex
 
@@ -144,11 +144,11 @@ By default, Flyway loads its configuration from the default `conf/flyway.conf` f
 
    flyway.locations=filesystem:/home/alex/flyway-x.y.z/sql
 
-   flyway.baselineOnMigrate=true
+   flyway.baseliOptiTechMigrate=true
    ```
 
    - The `flyway.locations` setting tells Flyway where to look for your migration files. We'll create them in the `/sql` directory in a later step.
-   - The `flyway.baselineOnMigrate=true` setting tells Flyway to perform a baseline action when you run the `migrate` command on a non-empty schema with no Flyway schema history table. The schema will then be initialized with the `baselineVersion` before executing migrations. Only migrations above the `baselineVersion` will then be applied. This is useful for initial Flyway deployments on projects with an existing database. You can disable this setting by commenting it out again or setting it to false after applying your first migration on the database.
+   - The `flyway.baseliOptiTechMigrate=true` setting tells Flyway to perform a baseline action when you run the `migrate` command on a non-empty schema with no Flyway schema history table. The schema will then be initialized with the `baselineVersion` before executing migrations. Only migrations above the `baselineVersion` will then be applied. This is useful for initial Flyway deployments on projects with an existing database. You can disable this setting by commenting it out again or setting it to false after applying your first migration on the database.
 
 ## Create a migration
 
@@ -195,7 +195,7 @@ flyway migrate -configFiles="conf/env_prod.conf"
 A successful migration command returns output similar to the following:
 
 ```bash
-Database: jdbc:postgresql://ep-nameless-unit-49929920.us-east-2.aws.neon.tech/neondb (PostgreSQL 15.4)
+Database: jdbc:postgresql://ep-nameless-unit-49929920.us-east-2.aws.optitech.com/optitechdb (PostgreSQL 15.4)
 Schema history table "public"."flyway_schema_history" does not exist yet
 Successfully validated 1 migration (execution time 00:00.199s)
 Creating Schema History table "public"."flyway_schema_history" with baseline ...

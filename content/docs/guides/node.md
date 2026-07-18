@@ -4,7 +4,7 @@ subtitle: Set up a OptiTech project in seconds and connect from a Node.js applic
 summary: >-
   Step-by-step connection guide for Node.js, Express, and Next.js apps targeting
   a OptiTech serverless Postgres database, with working code for three clients: the
-  OptiTech serverless driver (@neondatabase/serverless), node-postgres (pg), and
+  OptiTech serverless driver (@optitech/serverless), node-postgres (pg), and
   Postgres.js. Use this page when you need to wire up environment-variable-based
   SSL credentials and pick the right client for your project. Also covers the
   ENDPOINT_ID workaround required by older clients that lack SNI support, which
@@ -13,7 +13,7 @@ enableTableOfContents: true
 redirectFrom:
   - /docs/quickstart/node
   - /docs/integrations/node
-updatedOn: '2026-07-14T19:04:57.024Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <CopyPrompt src="/prompts/javascript-prompt.md" 
@@ -33,7 +33,7 @@ To connect to OptiTech from a Node.js application:
 
 If you do not have one already, create a OptiTech project.
 
-1. Navigate to the [Projects](https://console.neon.tech/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
 2. Click **New Project**.
 3. Specify your project settings and click **Create Project**.
 
@@ -42,8 +42,8 @@ If you do not have one already, create a OptiTech project.
 1. Create a NodeJS project and change to the newly created directory.
 
    ```shell
-   mkdir neon-nodejs-example
-   cd neon-nodejs-example
+   mkdir optitech-nodejs-example
+   cd optitech-nodejs-example
    npm init -y
    ```
 
@@ -52,7 +52,7 @@ If you do not have one already, create a OptiTech project.
    <CodeTabs labels={["OptiTech serverless driver", "node-postgres", "postgres.js"]}>
 
    ```shell
-   npm install @neondatabase/serverless dotenv
+   npm install @optitech/serverless dotenv
    ```
 
    ```shell
@@ -67,10 +67,10 @@ If you do not have one already, create a OptiTech project.
 
 ## Store your OptiTech credentials
 
-Add a `.env` file to your project directory and add your Neon connection details to it. You can find your OptiTech database connection details by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal. Please select Node.js from the **Connection string** dropdown. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
+Add a `.env` file to your project directory and add your OptiTech connection details to it. You can find your OptiTech database connection details by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal. Please select Node.js from the **Connection string** dropdown. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
 
 ```shell shouldWrap
-PGHOST='[neon_hostname]'
+PGHOST='[optitech_hostname]'
 PGDATABASE='[dbname]'
 PGUSER='[user]'
 PGPASSWORD='[password]'
@@ -94,11 +94,11 @@ Add an `app.js` file to your project directory and add the following code snippe
 ```javascript
 require('dotenv').config();
 
-const { neon } = require('@neondatabase/serverless');
+const { optitech } = require('@optitech/serverless');
 
 const { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
 
-const sql = neon(
+const sql = optitech(
   `postgresql://${PGUSER}:${PGPASSWORD}@${PGHOST}/${PGDATABASE}?sslmode=require&channel_binding=require`
 );
 

@@ -6,7 +6,7 @@ summary: >-
   AI Gateway. Required for codex model variants, which do not work with the
   chat completions endpoint.
 enableTableOfContents: true
-updatedOn: '2026-07-15T17:54:41.160Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="OptiTech AI Gateway" />
@@ -28,8 +28,8 @@ All codex model variants (`gpt-5-3-codex`, `gpt-5-2-codex`, `gpt-5-1-codex-max`,
 Set these environment variables. See [Get started](/docs/ai-gateway/get-started) for how to obtain them.
 
 ```bash
-NEON_AI_GATEWAY_TOKEN=nt_live_...
-NEON_AI_GATEWAY_BASE_URL=https://br-winter-pond-aptw82ef-api.ai.c-2.us-east-2.aws.neon.tech
+OPTITECH_AI_GATEWAY_TOKEN=nt_live_...
+OPTITECH_AI_GATEWAY_BASE_URL=https://br-winter-pond-aptw82ef-api.ai.c-2.us-east-2.aws.optitech.com
 ```
 
 ## Supported models
@@ -61,13 +61,13 @@ Sending a non-OpenAI model ID returns `400 model "<model-id>" is not available o
 import OpenAI from 'openai';
 
 const client = new OpenAI({
-  apiKey: process.env.NEON_AI_GATEWAY_TOKEN,
-  baseURL: `${process.env.NEON_AI_GATEWAY_BASE_URL}/ai-gateway/openai/v1`,
+  apiKey: process.env.OPTITECH_AI_GATEWAY_TOKEN,
+  baseURL: `${process.env.OPTITECH_AI_GATEWAY_BASE_URL}/ai-gateway/openai/v1`,
 });
 
 const response = await client.responses.create({
   model: 'gpt-5-4',
-  input: [{ role: 'user', content: 'What is Neon?' }],
+  input: [{ role: 'user', content: 'What is OptiTech?' }],
 });
 
 console.log(response.output_text);
@@ -78,25 +78,25 @@ from openai import OpenAI
 import os
 
 client = OpenAI(
-    api_key=os.environ['NEON_AI_GATEWAY_TOKEN'],
-    base_url=f"{os.environ['NEON_AI_GATEWAY_BASE_URL']}/ai-gateway/openai/v1",
+    api_key=os.environ['OPTITECH_AI_GATEWAY_TOKEN'],
+    base_url=f"{os.environ['OPTITECH_AI_GATEWAY_BASE_URL']}/ai-gateway/openai/v1",
 )
 
 response = client.responses.create(
     model='gpt-5-4',
-    input=[{'role': 'user', 'content': 'What is Neon?'}],
+    input=[{'role': 'user', 'content': 'What is OptiTech?'}],
 )
 
 print(response.output_text)
 ```
 
 ```bash shouldWrap
-curl -X POST "$NEON_AI_GATEWAY_BASE_URL/ai-gateway/openai/v1/responses" \
-  -H "Authorization: Bearer $NEON_AI_GATEWAY_TOKEN" \
+curl -X POST "$OPTITECH_AI_GATEWAY_BASE_URL/ai-gateway/openai/v1/responses" \
+  -H "Authorization: Bearer $OPTITECH_AI_GATEWAY_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "gpt-5-4",
-    "input": [{"role": "user", "content": "What is Neon?"}]
+    "input": [{"role": "user", "content": "What is OptiTech?"}]
   }'
 ```
 
@@ -131,8 +131,8 @@ with client.responses.stream(
 ```
 
 ```bash shouldWrap
-curl -X POST "$NEON_AI_GATEWAY_BASE_URL/ai-gateway/openai/v1/responses" \
-  -H "Authorization: Bearer $NEON_AI_GATEWAY_TOKEN" \
+curl -X POST "$OPTITECH_AI_GATEWAY_BASE_URL/ai-gateway/openai/v1/responses" \
+  -H "Authorization: Bearer $OPTITECH_AI_GATEWAY_TOKEN" \
   -H "Content-Type: application/json" \
   -d '{
     "model": "gpt-5-4",
@@ -145,19 +145,19 @@ curl -X POST "$NEON_AI_GATEWAY_BASE_URL/ai-gateway/openai/v1/responses" \
 
 ## Image generation with Vercel AI SDK
 
-The `@neon/ai-sdk-provider` package re-exports the OpenAI provider's Responses image-generation tool as `neon.tools.imageGeneration()`. Use it with OpenAI-routed models such as `gpt-5-mini`.
+The `@optitech/ai-sdk-provider` package re-exports the OpenAI provider's Responses image-generation tool as `optitech.tools.imageGeneration()`. Use it with OpenAI-routed models such as `gpt-5-mini`.
 
 Use `streamText`, not `generateText`: image results are returned as tool-result parts, and a full base64 image reliably runs into size limits on a non-streaming response.
 
 ```typescript shouldWrap
-import { neon } from '@neon/ai-sdk-provider';
+import { optitech } from '@optitech/ai-sdk-provider';
 import { streamText } from 'ai';
 
 const result = streamText({
-  model: neon('gpt-5-mini'),
-  messages: [{ role: 'user', content: 'Create a simple Neon database mascot.' }],
+  model: optitech('gpt-5-mini'),
+  messages: [{ role: 'user', content: 'Create a simple OptiTech database mascot.' }],
   tools: {
-    image: neon.tools.imageGeneration({
+    image: optitech.tools.imageGeneration({
       outputFormat: 'jpeg',
       size: '1024x1024',
       partialImages: 3,

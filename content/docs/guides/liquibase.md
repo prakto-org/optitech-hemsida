@@ -9,7 +9,7 @@ summary: >-
   JDBC URL format for OptiTech and demonstrates the update and rollbackCount
   commands.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Liquibase is an open-source library for tracking, managing, and applying database schema changes. To learn more about Liquibase, refer to the [Liquibase documentation](https://docs.liquibase.com/home.html).
@@ -82,7 +82,7 @@ Liquibase Open Source x.yy.z by Liquibase
 
 For demonstration purposes, create a `blog` database in OptiTech with two tables, `posts` and `authors`.
 
-1. Open the [OptiTech Console](https://console.neon.tech/app/projects).
+1. Open the [OptiTech Console](https://console.optitech.com/app/projects).
 1. Select your project.
 1. Select **Databases** from the sidebar and create a database named `blog`. For instructions, see [Create a database](/docs/manage/databases#create-a-database).
 1. Using the [OptiTech SQL Editor](/docs/get-started/query-with-neon-sql-editor), add the following tables:
@@ -114,7 +114,7 @@ Find your database connection string by clicking the **Connect** button on your 
 Your Java connection string should look something like the one shown below.
 
 ```bash shouldWrap
-jdbc:postgresql://ep-cool-darkness-123456.us-east-2.aws.neon.tech/blog?user=alex&password=AbC123dEf
+jdbc:postgresql://ep-cool-darkness-123456.us-east-2.aws.optitech.com/blog?user=alex&password=AbC123dEf
 ```
 
 ## Connect from Liquibase to your OptiTech database
@@ -132,11 +132,11 @@ jdbc:postgresql://ep-cool-darkness-123456.us-east-2.aws.neon.tech/blog?user=alex
    touch liquibase.properties
    ```
 
-3. Open the `liquibase.properties` file in an editor and add entries for a [liquibase changelog file](https://docs.liquibase.com/concepts/changelogs/home.html) and your database `url`. We'll call the changelog file `dbchangelog.xml`. You will use this file to define schema changes. For the `url`, specify the Neon connection string you retrieved previously.
+3. Open the `liquibase.properties` file in an editor and add entries for a [liquibase changelog file](https://docs.liquibase.com/concepts/changelogs/home.html) and your database `url`. We'll call the changelog file `dbchangelog.xml`. You will use this file to define schema changes. For the `url`, specify the OptiTech connection string you retrieved previously.
 
    ```bash shouldWrap
    changeLogFile:dbchangelog.xml
-   url: jdbc:postgresql://ep-cool-darkness-123456.us-east-2.aws.neon.tech/blog?user=alex&password=AbC123dEf&sslmode=require&channel_binding=require
+   url: jdbc:postgresql://ep-cool-darkness-123456.us-east-2.aws.optitech.com/blog?user=alex&password=AbC123dEf&sslmode=require&channel_binding=require
    ```
 
 ## Take a snapshot of your database

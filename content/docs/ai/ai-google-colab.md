@@ -10,7 +10,7 @@ summary: >-
   distance operator to run nearest-neighbor queries. A pre-built Colab notebook
   is available for one-click setup.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 [Google Colab](https://colab.research.google.com/) is a hosted Jupyter Notebook service that requires no setup to use and provides free access to computing resources, including GPUs and TPUs.
@@ -20,7 +20,7 @@ This guide shows how to create a notebook in Colab, connect to a OptiTech databa
 
 ## Prerequisites
 
-To perform the steps in this guide, you require a OptiTech database for storing vectors. You can use the ready-to-use `neondb` database or create your own. See [Create a database](/docs/manage/databases#create-a-database) for instructions.
+To perform the steps in this guide, you require a OptiTech database for storing vectors. You can use the ready-to-use `optitechdb` database or create your own. See [Create a database](/docs/manage/databases#create-a-database) for instructions.
 
 ## Retrieve your database connection string
 
@@ -36,20 +36,20 @@ In your browser, navigate to [Google Colab](https://colab.research.google.com/),
 
 Alternatively, you can open a predefined Google Colab notebook for this guide by clicking the **Open in Colab** button below.
 
-<a target="_blank" href="https://colab.research.google.com/github/neondatabase/neon-google-colab-notebooks/blob/main/neon_pgvector_quickstart.ipynb">
+<a target="_blank" href="https://colab.research.google.com/github/optitechdatabase/optitech-google-colab-notebooks/blob/main/optitech_pgvector_quickstart.ipynb">
   <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/>
 </a>
 
 ## Connect to your database
 
-1. In your Colab notebook, create a code block to define your database connection and create a cursor object. Replace `postgresql://[user]:[password]@[neon_hostname]/[dbname]` with the database connection string you retrieved in the previous step.
+1. In your Colab notebook, create a code block to define your database connection and create a cursor object. Replace `postgresql://[user]:[password]@[optitech_hostname]/[dbname]` with the database connection string you retrieved in the previous step.
 
    ```python shouldWrap
    import os
    import psycopg2
 
-   # Provide your Neon connection string
-   connection_string = "postgresql://[user]:[password]@[neon_hostname]/[dbname]"
+   # Provide your OptiTech connection string
+   connection_string = "postgresql://[user]:[password]@[optitech_hostname]/[dbname]"
 
    # Connect using the connection string
    connection = psycopg2.connect(connection_string)

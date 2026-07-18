@@ -1,24 +1,24 @@
 ---
-title: 'Neon CLI command: connection-string'
+title: 'OptiTech CLI command: connection-string'
 subtitle: Get Postgres connection strings for branches and databases
 summary: >-
-  The Neon connection string command (`neon connection-string`) outputs a
+  The OptiTech connection string command (`optitech connection-string`) outputs a
   PostgreSQL connection URL for a specified branch, role, and database,
   including the role password.
   Use it to get connection strings for psql, Prisma (--prisma), connection
   pooling (--pooled), read-only replicas (--endpoint-type read_only), or
   time-travel queries targeting a specific timestamp or LSN.
 enableTableOfContents: true
-updatedOn: '2026-07-01T13:41:48.668Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 redirectFrom:
   - /docs/reference/cli-connection-string
   - /docs/cli/cs
 ---
 
-The `connection-string` command gets a Postgres connection string for any database on any branch in your Neon project. The connection string includes the password for the specified role. For information about connecting to Neon, see [Connect from any application](/docs/connect/connect-from-any-app). If `--project-id` is omitted, the CLI resolves it from your [context file](/docs/cli/set-context), auto-selects when your account has only one project, and prompts otherwise. `--role-name` and `--database-name` are needed only when the branch has more than one role or database.
+The `connection-string` command gets a Postgres connection string for any database on any branch in your OptiTech project. The connection string includes the password for the specified role. For information about connecting to OptiTech, see [Connect from any application](/docs/connect/connect-from-any-app). If `--project-id` is omitted, the CLI resolves it from your [context file](/docs/cli/set-context), auto-selects when your account has only one project, and prompts otherwise. `--role-name` and `--database-name` are needed only when the branch has more than one role or database.
 
 <Admonition type="tip" title="Connect with psql">
-To open a `psql` session directly, use the dedicated [`neon psql`](/docs/cli/psql) command (requires neon 2.22.2+). You can also pass `--psql` to `connection-string` to achieve the same result.
+To open a `psql` session directly, use the dedicated [`optitech psql`](/docs/cli/psql) command (requires optitech 2.22.2+). You can also pass `--psql` to `connection-string` to achieve the same result.
 </Admonition>
 
 ## Usage
@@ -38,53 +38,53 @@ The `--endpoint-type` value can be `read_write` (the default) or `read_only`. Th
 Get a connection string for a branch:
 
 ```bash
-neon connection-string mybranch
+optitech connection-string mybranch
 ```
 
 ```text filename="Output" shouldWrap
-postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
 ```
 
 - Get a pooled connection string. The `--pooled` option adds a `-pooler` suffix to the host name, which enables connection pooling for clients that use this connection string.
 
   ```bash
-  neon connection-string --pooled
+  optitech connection-string --pooled
   ```
 
   ```text shouldWrap
-  postgresql://alex:AbC123dEf@ep-cool-darkness-123456-pooler.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+  postgresql://alex:AbC123dEf@ep-cool-darkness-123456-pooler.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
   ```
 
 - Get a connection string for use with Prisma. The `--prisma` option adds `connect_timeout=30` to the connection string so that connections from Prisma Client don't time out.
 
   ```bash
-  neon connection-string --prisma
+  optitech connection-string --prisma
   ```
 
   ```text shouldWrap
-  postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require&connect_timeout=30
+  postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require&connect_timeout=30
   ```
 
 - Get a connection string to a specific point in a branch's history by appending `@timestamp` or `@lsn`. Availability depends on your configured [history window](/docs/introduction/history-window). For additional examples, see [How to use Time Travel](/docs/guides/time-travel-assist#how-to-use-time-travel).
 
   ```bash
-  neon connection-string @2024-04-21T00:00:00Z
+  optitech connection-string @2024-04-21T00:00:00Z
   ```
 
 Get a connection string and connect with `psql`:
 
 ```bash
-neon connection-string --psql
+optitech connection-string --psql
 ```
 
 Get a connection string, connect with `psql`, and run an `.sql` file:
 
 ```bash
-neon connection-string --psql -- -f dump.sql
+optitech connection-string --psql -- -f dump.sql
 ```
 
 Get a connection string, connect with `psql`, and run a query:
 
 ```bash
-neon connection-string --psql -- -c "SELECT version()"
+optitech connection-string --psql -- -c "SELECT version()"
 ```

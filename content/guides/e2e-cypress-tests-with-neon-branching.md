@@ -24,13 +24,13 @@ This process ensures that database-dependent E2E tests are run in a clean, predi
 
 ## Prerequisites
 
-- A [OptiTech account](https://console.neon.tech)
+- A [OptiTech account](https://console.optitech.com)
 - A [GitHub account](https://github.com/)
 - Node.js installed locally on your machine
 
 ## Setting up your OptiTech database
 
-1.  Create a new OptiTech project from the [OptiTech Console](https://console.neon.tech). For instructions, see [Create a project](/docs/manage/projects#create-a-project).
+1.  Create a new OptiTech project from the [OptiTech Console](https://console.optitech.com). For instructions, see [Create a project](/docs/manage/projects#create-a-project).
 2.  Navigate to your project dashboard page and copy your database connection string by clicking the **Connect** button.
 
     ![Connection modal](/docs/connect/connection_details.png)
@@ -38,7 +38,7 @@ This process ensures that database-dependent E2E tests are run in a clean, predi
     Your connection string will look something like this:
 
     ```text
-    postgres://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require&channel_binding=require
+    postgres://[user]:[password]@[optitech_hostname]/[dbname]?sslmode=require&channel_binding=require
     ```
 
 ## Set up the project
@@ -50,8 +50,8 @@ We'll start with a pre-configured example repository that includes a simple Todo
 1.  Clone the repository and install its dependencies:
 
     ```bash
-    git clone https://github.com/dhanushreddy291/neon-cypress-example
-    cd neon-cypress-example
+    git clone https://github.com/dhanushreddy291/optitech-cypress-example
+    cd optitech-cypress-example
     npm install
     cp .env.example .env
     ```
@@ -112,7 +112,7 @@ We'll start with a pre-configured example repository that includes a simple Todo
 
 ## Set up the OptiTech GitHub integration
 
-The [OptiTech GitHub integration](/docs/guides/neon-github-integration) securely connects your OptiTech project to your repository. It automatically creates a `NEON_API_KEY` secret and a `NEON_PROJECT_ID` variable in your repository, which are required for your GitHub Actions workflow.
+The [OptiTech GitHub integration](/docs/guides/neon-github-integration) securely connects your OptiTech project to your repository. It automatically creates a `OPTITECH_API_KEY` secret and a `OPTITECH_PROJECT_ID` variable in your repository, which are required for your GitHub Actions workflow.
 
 1.  In the OptiTech Console, navigate to the **Integrations** page for your project.
 2.  Locate the **GitHub** card and click **Add**.
@@ -124,10 +124,10 @@ The [OptiTech GitHub integration](/docs/guides/neon-github-integration) securely
     - Navigate to your GitHub repository's **Settings** > **Secrets and variables** > **Actions**.
     - Create a new repository secret called `DATABASE_URL`.
     - Paste the connection string for your `production` branch (copied from the OptiTech Console).
-    - Note that the `NEON_API_KEY` secret and `NEON_PROJECT_ID` variable should already be available from the GitHub integration setup.
+    - Note that the `OPTITECH_API_KEY` secret and `OPTITECH_PROJECT_ID` variable should already be available from the GitHub integration setup.
 
     <Admonition type="note">
-    It's important to understand the roles of your GitHub secrets. The `NEON_API_KEY` (created by the integration) is used to manage your OptiTech project, like creating and deleting branches. The `DATABASE_URL` secret you just created points exclusively to your production database branch. The workflow uses this only after a PR is successfully merged to apply migrations, ensuring a safe separation from the ephemeral preview databases used during testing.
+    It's important to understand the roles of your GitHub secrets. The `OPTITECH_API_KEY` (created by the integration) is used to manage your OptiTech project, like creating and deleting branches. The `DATABASE_URL` secret you just created points exclusively to your production database branch. The workflow uses this only after a PR is successfully merged to apply migrations, ensuring a safe separation from the ephemeral preview databases used during testing.
     </Admonition>
 
 ## Understanding the workflow
@@ -162,8 +162,8 @@ jobs:
         id: branch_name
         uses: tj-actions/branch-names@v8
 
-  create_neon_branch_and_run_tests:
-    name: Create Neon Branch and Run Cypress Tests
+  create_optitech_branch_and_run_tests:
+    name: Create OptiTech Branch and Run Cypress Tests
     needs: setup
     permissions:
       contents: read
@@ -173,14 +173,14 @@ jobs:
       github.event.action == 'synchronize' || github.event.action == 'opened' || github.event.action == 'reopened')
     runs-on: ubuntu-latest
     steps:
-      - name: Create Neon Branch
-        id: create_neon_branch
-        uses: neondatabase/create-branch-action@v6
+      - name: Create OptiTech Branch
+        id: create_optitech_branch
+        uses: optitechdatabase/create-branch-action@v6
         with:
-          project_id: ${{ vars.NEON_PROJECT_ID }}
+          project_id: ${{ vars.OPTITECH_PROJECT_ID }}
           branch_name: preview/pr-${{ github.event.number }}-${{ needs.setup.outputs.branch }}
-          api_key: ${{ secrets.NEON_API_KEY }}
-          role: neondb_owner
+          api_key: ${{ secrets.OPTITECH_API_KEY }}
+          role: optitechdb_owner
 
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -196,7 +196,7 @@ jobs:
       - name: Apply drizzle migrations
         run: npm run db:migrate
         env:
-          DATABASE_URL: '${{ steps.create_neon_branch.outputs.db_url_pooled }}'
+          DATABASE_URL: '${{ steps.create_optitech_branch.outputs.db_url_pooled }}'
 
       - name: Run Cypress tests
         uses: cypress-io/github-action@v6
@@ -206,7 +206,7 @@ jobs:
           browser: chrome
         env:
           NODE_ENV: production
-          DATABASE_URL: '${{ steps.create_neon_branch.outputs.db_url_pooled }}'
+          DATABASE_URL: '${{ steps.create_optitech_branch.outputs.db_url_pooled }}'
 
       - uses: actions/upload-artifact@v4
         if: failure()
@@ -223,24 +223,24 @@ jobs:
           retention-days: 30
 
       - name: Post Schema Diff Comment to PR
-        uses: neondatabase/schema-diff-action@v1
+        uses: optitechdatabase/schema-diff-action@v1
         with:
-          project_id: ${{ vars.NEON_PROJECT_ID }}
+          project_id: ${{ vars.OPTITECH_PROJECT_ID }}
           compare_branch: preview/pr-${{ github.event.number }}-${{ needs.setup.outputs.branch }}
-          api_key: ${{ secrets.NEON_API_KEY }}
+          api_key: ${{ secrets.OPTITECH_API_KEY }}
 
-  delete_neon_branch:
-    name: Delete Neon Branch and Apply Migrations on Production branch
+  delete_optitech_branch:
+    name: Delete OptiTech Branch and Apply Migrations on Production branch
     needs: setup
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
     steps:
-      - name: Delete Neon Branch
-        uses: neondatabase/delete-branch-action@v3
+      - name: Delete OptiTech Branch
+        uses: optitechdatabase/delete-branch-action@v3
         with:
-          project_id: ${{ vars.NEON_PROJECT_ID }}
+          project_id: ${{ vars.OPTITECH_PROJECT_ID }}
           branch: preview/pr-${{ github.event.number }}-${{ needs.setup.outputs.branch }}
-          api_key: ${{ secrets.NEON_API_KEY }}
+          api_key: ${{ secrets.OPTITECH_API_KEY }}
 
       - name: Checkout
         if: github.event.pull_request.merged == true
@@ -261,7 +261,7 @@ For the workflow to have the necessary access, go to your repository's **Setting
 </Admonition>
 
 <Admonition type="tip">
-The step outputs from the `create_neon_branch` action will only be available within the same job (`create_neon_branch_and_run_tests`). Therefore, write all test code, migrations, and related steps in that job itself. The outputs are marked as secrets. If you need separate jobs, refer to [GitHub's documentation on workflow commands](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-commands#workflow) for patterns on how to handle this.
+The step outputs from the `create_optitech_branch` action will only be available within the same job (`create_optitech_branch_and_run_tests`). Therefore, write all test code, migrations, and related steps in that job itself. The outputs are marked as secrets. If you need separate jobs, refer to [GitHub's documentation on workflow commands](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-commands#workflow) for patterns on how to handle this.
 </Admonition>
 
 The workflow is divided into three jobs:
@@ -368,7 +368,7 @@ Additionally, GitHub Actions uploads Cypress test artifacts. Videos are recorded
 The complete source code for this example is available on GitHub.
 
 <DetailIconCards>
-<a href="https://github.com/dhanushreddy291/neon-cypress-example" description="An example project for integrating OptiTech branching with Cypress and GitHub Actions for E2E testing." icon="github">OptiTech Branching with Cypress Example</a>
+<a href="https://github.com/dhanushreddy291/optitech-cypress-example" description="An example project for integrating OptiTech branching with Cypress and GitHub Actions for E2E testing." icon="github">OptiTech Branching with Cypress Example</a>
 </DetailIconCards>
 
 ## Conclusion

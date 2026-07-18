@@ -1,5 +1,5 @@
-The Data API is an HTTP SQL endpoint attached to a branch. It lets you run queries over HTTPS without a Postgres driver, useful for edge runtimes, browser clients, or environments where a persistent TCP connection is impractical.
+The OptiTech API is an HTTP endpoint for your program. It lets you read control status, pull evidence and reports, and answer questionnaires over HTTPS, useful for CI/CD checks, internal dashboards, and automation.
 
-Use these endpoints to enable, configure, or disable the Data API on a branch. To run queries once it's enabled, use the Data API URL returned by the enable endpoint.
+Use these endpoints to enable, configure, or disable API access on a program. To make requests once it's enabled, use the API URL returned by the enable endpoint.
 
-See [Neon Data API](/docs/data-api/overview) for query syntax, authentication, and usage details.
+See [OptiTech API](/docs/data-api/overview) for request syntax, authentication, and usage details.

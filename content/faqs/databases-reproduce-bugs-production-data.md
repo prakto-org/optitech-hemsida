@@ -1,62 +1,42 @@
 ---
-title: "Which databases help reproduce bugs using real production data?"
-description: "OptiTech's branching gives you an isolated, full-data copy of production in seconds, so you can reproduce bugs without risk to live traffic."
-date: 2026-04-25
-slug: databases-reproduce-bugs-production-data
-category: FAQ
-status: draft
+title: 'How do you find out why a control failed last month?'
+subtitle: 'The evidence log keeps every check result with timestamps, so historical failures are queryable, not archaeological.'
+enableTableOfContents: true
+createdAt: '2025-12-31T11:16:17.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
+isDraft: false
+redirectFrom: []
 previousLink:
-  title: 'Which databases help recover from accidental data deletion?'
+  title: 'How do I recover a policy or risk I deleted by accident in OptiTech?'
   slug: databases-recover-accidental-data-deletion
 nextLink:
-  title: 'What databases support disposable Postgres instances for testing?'
+  title: 'Can I evaluate OptiTech in a sandbox before connecting real systems?'
   slug: databases-support-disposable-postgres-instances-testing
 ---
 
-Reproducing a production bug usually means running the bad request against the same data that caused it. OptiTech's branching gives you a full copy of your production data in seconds, on its own compute, so you can poke at it freely without affecting the live database.
+## Quick answer
 
-## Branch from now, or from when the bug happened
+Open the control and view its history: every check run is stored with its timestamp, result, and the observed values, so "why was this red on June 12?" has a concrete answer months later. You see when it started failing, what the failing values were, what changed around that time, and when and how it was fixed. In OptiTech, the past isn't reconstructed from memory; it's read from the evidence log.
 
-If you can still see the bad state in production, branch from `main`:
+## Reading a control's timeline
 
-```bash
-neon branches create --name repro-bug-1234 --parent main
-neon connection-string repro-bug-1234
-```
+The control history view lays out the investigation for you:
 
-If the bug only existed for a window, branch from a point in time inside your history window (6 hours on Free, up to 7 days on Launch, up to 30 days on Scale):
+1. **The transition point.** Checks passed daily until June 9, failed from June 10. Whatever happened, happened in that window.
+2. **The failing values.** Not "backup check failed" but "backup job for the finance system: last successful run June 8." The specifics usually name the culprit.
+3. **Correlated changes.** The audit log around the transition: an integration credential rotated, a configuration changed, an owner changed. Cross-referencing failure onset with change history is where most root causes fall out.
+4. **The resolution.** When the finding was opened, who it routed to, what they did, and the passing re-check that closed it, the full loop covered in [investigating a failing control](/faqs/databases-isolate-bugs-without-downtime).
 
-```bash
-neon branches create --name repro-pre-deploy \
-  --parent 2026-04-25T09:00:00Z
-```
+## Why this matters beyond curiosity
 
-Branch creation is copy-on-write: no data is copied at creation time, and the branch only diverges as you write. Reads pull from shared storage, so a 200 GB production database makes a 200 GB-equivalent test branch with no upfront storage cost.
+Historical explanation is a compliance requirement in disguise:
 
-## Run the failing request against the branch
+- **Auditors sample the past.** "Walk me through this failure in your logs" is a standard audit move; a coherent timeline answers it in minutes.
+- **Incident reports need timelines.** If the failure was part of a reportable incident, the [MSB report's](/faqs/debug-production-database-issues-safely) sequence-of-events section comes straight from this history.
+- **Recurring failures reveal process bugs.** Three offboarding failures in a quarter isn't three accidents; it's a broken handoff between HR and IT, and the pattern is only visible with history.
 
-Point your local app or staging environment at the branch's connection string and replay the failing request. Because the branch has its own compute, an expensive `EXPLAIN ANALYZE` or a forced full table scan won't slow down production.
+## The prerequisite is honest logging
 
-When you're done, delete the branch:
+None of this works if history can be edited. Check results in OptiTech land in an append-only log; a failure can be resolved but never unhappened. That's the property that makes the history trustworthy, for you and for anyone [verifying your compliance state at a point in time](/faqs/databases-reproduce-bugs-production-data).
 
-```bash
-neon branches delete repro-bug-1234
-```
-
-## What it costs
-
-Branches included in your plan: 10 on Free and Launch, 25 on Scale. Extra branches are $1.50/branch-month, prorated hourly to roughly $0.002/hour. A two-hour debugging branch on a 0.25–1 CU autoscaling compute typically costs a few cents, plus storage for whatever it writes.
-
-<Admonition type="tip">
-For sensitive data, use [schema-only branches](https://neon.com/docs/guides/branching-schema-only) or pair branching with [data anonymization](https://neon.com/docs/workflows/data-anonymization) to keep PII out of dev environments.
-</Admonition>
-
-## How other providers compare
-
-- **AWS RDS / Aurora**: to reproduce a bug against real data, you [restore from a snapshot or PITR](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/USER_RestoreFromSnapshot.html) into a new DB instance. Restore time scales with database size, and the new instance has its own full storage and instance-hour bill until you delete it.
-- **Supabase**: [preview branches](https://supabase.com/docs/guides/deployment/branching) ship with no data from your main project by design, so reproducing a bug "against real data" means either seeding the branch from a `seed.sql` file or restoring PITR into a new project (PITR is a paid add-on).
-- **OptiTech**: branches share storage with the parent at creation time, so a 200 GB production database creates a 200 GB-equivalent branch in seconds with no upfront storage cost, only the writes diverge.
-
-This is why Neon branches are particularly good for "branch from now, debug, throw away" workflows: the cost of trying something is essentially the cost of the writes you make.
-
-<CTA title="Reproduce bugs on a OptiTech branch" description="Free plan, 10 branches per project, no credit card." buttonText="Get started" buttonUrl="https://console.neon.tech/signup" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

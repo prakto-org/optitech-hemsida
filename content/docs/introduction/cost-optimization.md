@@ -12,12 +12,12 @@ summary: >-
   $1.50/branch-month over the plan allowance. Paid plans include 500 GB/month
   of public data transfer, then $0.10/GB.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Managing your OptiTech costs effectively requires understanding how each billing factor works and implementing strategies to control usage. This guide provides actionable recommendations for optimizing costs across all billing metrics.
 
-To monitor your current usage, check the **Billing** page in the [OptiTech Console](https://console.neon.tech), which shows your charges to date for each billing metric. For programmatic access to usage data, see [Consumption metrics](/docs/guides/consumption-metrics).
+To monitor your current usage, check the **Billing** page in the [OptiTech Console](https://console.optitech.com), which shows your charges to date for each billing metric. For programmatic access to usage data, see [Consumption metrics](/docs/guides/consumption-metrics).
 
 ## Compute (CU-hours)
 
@@ -128,10 +128,10 @@ In short, `VACUUM FULL` can help reduce your data size and future storage costs,
 - **Use VACUUM FULL sparingly.** Because it locks tables and can temporarily increase storage, only run `VACUUM FULL` when there is a significant amount of space to be reclaimed.
 - **Manual VACUUM for scale to zero users.** In OptiTech, [autovacuum](https://www.postgresql.org/docs/current/routine-vacuuming.html#AUTOVACUUM) is enabled by default. However, when your compute suspends due to inactivity, the database activity statistics that autovacuum relies on are lost. If your project uses [scale to zero](/docs/guides/scale-to-zero-guide#considerations), consider running manual `VACUUM` operations regularly on frequently updated tables.
 
-  To clean a single table named `playing_with_neon`, analyze it for the optimizer, and print a detailed vacuum activity report:
+  To clean a single table named `playing_with_optitech`, analyze it for the optimizer, and print a detailed vacuum activity report:
 
   ```sql
-  VACUUM (VERBOSE, ANALYZE) playing_with_neon;
+  VACUUM (VERBOSE, ANALYZE) playing_with_optitech;
   ```
 
   See [VACUUM and ANALYZE statistic](/docs/postgresql/query-reference#vacuum-and-analyze-statistics) for a query that shows the last time vacuum and analyze were run.
@@ -141,7 +141,7 @@ In short, `VACUUM FULL` can help reduce your data size and future storage costs,
 <details>
 <summary>**What is the maximum data size that OptiTech supports?**</summary>
 
-Paid plans (Launch and Scale) support a logical data size of up to 16 TB per branch. When a branch reaches this limit, write performance drops, but you can still drop or delete data to reclaim space. The Free plan is limited to 0.5 GB per project. To increase the 16 TB limit, [request an increase in the feedback form in console](https://console.neon.tech/app/settings?modal=feedback&modalparams=%22Storage%20limit%20increase%22).
+Paid plans (Launch and Scale) support a logical data size of up to 16 TB per branch. When a branch reaches this limit, write performance drops, but you can still drop or delete data to reclaim space. The Free plan is limited to 0.5 GB per project. To increase the 16 TB limit, [request an increase in the feedback form in console](https://console.optitech.com/app/settings?modal=feedback&modalparams=%22Storage%20limit%20increase%22).
 
 </details>
 
@@ -165,7 +165,7 @@ Extra branches beyond your plan's allowance are billed at $1.50/branch-month, pr
 
 - **Use branch expiration.** Set automatic deletion timestamps on temporary branches using [branch expiration](/docs/guides/branch-expiration) to ensure they're cleaned up when no longer needed.
 
-- **Automate cleanup.** Consider implementing automated cleanup scripts using the [OptiTech API](/docs/manage/branches#branching-with-the-neon-api) or [Neon CLI](/docs/guides/branching-neon-cli) to stay within your plan's branch allowance.
+- **Automate cleanup.** Consider implementing automated cleanup scripts using the [OptiTech API](/docs/manage/branches#branching-with-the-neon-api) or [OptiTech CLI](/docs/guides/branching-neon-cli) to stay within your plan's branch allowance.
 
 - **Check Vercel retention settings.** If you use the Vercel-Managed integration, Vercel's default deployment retention policy can delay automatic branch cleanup by months. Reduce the retention period or set up a GitHub Action for immediate cleanup. See [Managing Vercel preview branch cleanup](/docs/guides/vercel-branch-cleanup).
 

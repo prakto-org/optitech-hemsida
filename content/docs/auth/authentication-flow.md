@@ -3,14 +3,14 @@ title: Authentication flow
 subtitle: Understanding the complete sign-in and sign-up process
 summary: >-
   Managed Better Auth authentication flow traces every step from SDK
-  call to HTTP-only session cookie, JWT issuance, and writes to the neon_auth
+  call to HTTP-only session cookie, JWT issuance, and writes to the optitech_auth
   schema, covering email sign-in, sign-up, and OAuth providers such as Google
   and GitHub. Use this page to understand what happens under the hood during
   login, debug session or token problems, or wire auth.uid() into Row-Level
   Security policies via the Data API. All auth state lands directly in your
   OptiTech database with no sync delay, and each branch holds isolated auth data.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="Managed Better Auth" />
@@ -30,10 +30,10 @@ Your App (SDK)
     ↓ HTTP requests
 Managed Better Auth Service (REST API)
     ↓ connects to database
-Your Neon Database (neon_auth schema)
+Your OptiTech Database (optitech_auth schema)
 ```
 
-All authentication data (users, sessions, OAuth configurations) lives in your database's `neon_auth` schema. You can query these tables directly with SQL for debugging, analytics, or custom logic.
+All authentication data (users, sessions, OAuth configurations) lives in your database's `optitech_auth` schema. You can query these tables directly with SQL for debugging, analytics, or custom logic.
 
 ## Complete sign-in flow
 
@@ -52,7 +52,7 @@ const { data, error } = await client.auth.signIn.email({
 });
 ```
 
-The SDK posts to `{NEON_AUTH_URL}/auth/sign-in/email`. The Auth service validates credentials against `neon_auth.account`, creates a session in `neon_auth.session`, and returns the session cookie with user data.
+The SDK posts to `{OPTITECH_AUTH_URL}/auth/sign-in/email`. The Auth service validates credentials against `optitech_auth.account`, creates a session in `optitech_auth.session`, and returns the session cookie with user data.
 
 **Response you receive:**
 
@@ -76,14 +76,14 @@ The SDK posts to `{NEON_AUTH_URL}/auth/sign-in/email`. The Auth service validate
 
 ## Session cookie is set
 
-The Auth service sets an HTTP-only cookie (`__Secure-neonauth.session_token`) in your browser. This cookie:
+The Auth service sets an HTTP-only cookie (`__Secure-optitechauth.session_token`) in your browser. This cookie:
 
 - Contains an opaque session token (not a JWT)
 - Is automatically sent with every request to the Auth API
 - Is secure (HTTPS only, HttpOnly, SameSite=None)
 - Is managed entirely by the SDK; you never touch it
 
-**Where to see it:** Open DevTools → Application → Cookies → look for `__Secure-neonauth.session_token`
+**Where to see it:** Open DevTools → Application → Cookies → look for `__Secure-optitechauth.session_token`
 
 ## JWT token is retrieved
 
@@ -101,7 +101,7 @@ The SDK automatically retrieves a JWT token and stores it in `session.access_tok
 }
 ```
 
-The `sub` claim contains the user ID from `neon_auth.user.id`. This is what Row Level Security policies use to identify the current user.
+The `sub` claim contains the user ID from `optitech_auth.user.id`. This is what Row Level Security policies use to identify the current user.
 
 ## JWT is used for database queries
 
@@ -134,7 +134,7 @@ const { data, error } = await client.auth.signUp.email({
 });
 ```
 
-The SDK posts to `{NEON_AUTH_URL}/auth/sign-up/email`. The Auth service creates a new row in `neon_auth.user`, stores hashed credentials in `neon_auth.account`, and returns user data. If email verification is required, it creates a verification token in `neon_auth.verification` and may delay session creation until verification.
+The SDK posts to `{OPTITECH_AUTH_URL}/auth/sign-up/email`. The Auth service creates a new row in `optitech_auth.user`, stores hashed credentials in `optitech_auth.account`, and returns user data. If email verification is required, it creates a verification token in `optitech_auth.verification` and may delay session creation until verification.
 
 <Admonition type="note">
 By default, anyone can sign up for your application. To add an additional verification layer, enable email verification (see [Email Verification](/docs/auth/guides/email-verification)). Built-in signup restrictions are coming soon.
@@ -151,11 +151,11 @@ await client.auth.signIn.social({
 });
 ```
 
-The SDK redirects to the OAuth provider. After the user authenticates, the provider redirects back with an authorization code. The SDK exchanges the code for an access token, then the Auth service creates or updates the user in `neon_auth.user`, stores OAuth tokens in `neon_auth.account`, and creates a session.
+The SDK redirects to the OAuth provider. After the user authenticates, the provider redirects back with an authorization code. The SDK exchanges the code for an access token, then the Auth service creates or updates the user in `optitech_auth.user`, stores OAuth tokens in `optitech_auth.account`, and creates a session.
 
 ## Database as source of truth
 
-Managed Better Auth stores all data in your database's `neon_auth` schema:
+Managed Better Auth stores all data in your database's `optitech_auth` schema:
 
 - Changes are immediate (no sync delays)
 - Query auth data directly with SQL
@@ -164,7 +164,7 @@ Managed Better Auth stores all data in your database's `neon_auth` schema:
 
 ```sql
 SELECT id, email, "emailVerified", "createdAt"
-FROM neon_auth.user
+FROM optitech_auth.user
 ORDER BY "createdAt" DESC;
 ```
 

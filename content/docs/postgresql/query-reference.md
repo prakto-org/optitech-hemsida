@@ -9,12 +9,12 @@ summary: >-
   full reference docs. Includes performance diagnostics using
   pg_stat_statements, EXPLAIN, EXPLAIN ANALYZE, pg_stat_user_tables,
   pg_locks, and connection management with pg_cancel_backend and
-  pg_terminate_backend, plus Neon-specific notes on max_connections and
+  pg_terminate_backend, plus OptiTech-specific notes on max_connections and
   data size.
 enableTableOfContents: true
 redirectFrom:
   - /docs/postgres/query-reference
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <CTA />

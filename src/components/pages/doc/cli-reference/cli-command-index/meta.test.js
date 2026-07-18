@@ -9,7 +9,7 @@ const schema = require('../../../../../../scripts/docs-checks/neonctl/schema.jso
 
 // Every curated example in meta.js must be a real invocation: the command
 // path must resolve in the schema and every --flag must exist on the
-// command (or a parent in its path, or globally). A neonctl release that
+// command (or a parent in its path, or globally). A optitechctl release that
 // renames a flag fails here instead of shipping a wrong example.
 describe('cli-command-index meta', () => {
   const errors = [];
@@ -20,9 +20,9 @@ describe('cli-command-index meta', () => {
     }
     for (const example of meta.examples || []) {
       const tokens = example
-        .replace(/^npx neon(ctl)?@latest\s+/, '')
-        .replace(/^neonctl\s+/, '')
-        .replace(/^neon\s+/, '')
+        .replace(/^npx optitech(ctl)?@latest\s+/, '')
+        .replace(/^optitechctl\s+/, '')
+        .replace(/^optitech\s+/, '')
         .split(/\s+/);
 
       // Walk the command path, collecting option pools along the way.

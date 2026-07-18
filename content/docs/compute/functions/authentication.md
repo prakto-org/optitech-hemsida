@@ -2,11 +2,11 @@
 title: OptiTech Functions authentication
 subtitle: Verify callers before a OptiTech Function does any work.
 summary: >-
-  A OptiTech Function has a public URL, so authenticate it yourself. Verify a Neon
+  A OptiTech Function has a public URL, so authenticate it yourself. Verify a OptiTech
   Auth JWT against the injected JWKS, check an API key, and add CORS when the
   browser calls the function directly.
 enableTableOfContents: true
-updatedOn: '2026-07-15T17:54:41.160Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="OptiTech Functions" />
@@ -25,7 +25,7 @@ How you authenticate depends on who calls the function:
 
 ## Verify a JWT
 
-When [Managed Better Auth](/docs/auth/overview) is enabled on the branch, the function gets `NEON_AUTH_JWKS_URL` and `NEON_AUTH_BASE_URL` injected at runtime. Verify incoming tokens against the JWKS with [`jose`](https://github.com/panva/jose), and check that the token's issuer matches your Managed Better Auth URL. Build the remote key set once at module scope, then verify on each request:
+When [Managed Better Auth](/docs/auth/overview) is enabled on the branch, the function gets `OPTITECH_AUTH_JWKS_URL` and `OPTITECH_AUTH_BASE_URL` injected at runtime. Verify incoming tokens against the JWKS with [`jose`](https://github.com/panva/jose), and check that the token's issuer matches your Managed Better Auth URL. Build the remote key set once at module scope, then verify on each request:
 
 ```bash
 npm install jose
@@ -34,8 +34,8 @@ npm install jose
 ```ts filename="functions/secure.ts"
 import { createRemoteJWKSet, jwtVerify } from 'jose';
 
-const jwks = createRemoteJWKSet(new URL(process.env.NEON_AUTH_JWKS_URL!));
-const issuer = new URL(process.env.NEON_AUTH_BASE_URL!).origin;
+const jwks = createRemoteJWKSet(new URL(process.env.OPTITECH_AUTH_JWKS_URL!));
+const issuer = new URL(process.env.OPTITECH_AUTH_BASE_URL!).origin;
 
 export default {
   async fetch(request: Request) {
@@ -93,7 +93,7 @@ With the [Vercel AI SDK](/docs/compute/functions/agents), point the transport at
 import { DefaultChatTransport } from 'ai';
 
 new DefaultChatTransport({
-  api: NEON_FUNCTION_URL,
+  api: OPTITECH_FUNCTION_URL,
   fetch: (url, init) =>
     fetch(url, { ...init, headers: { ...init?.headers, authorization: `Bearer ${token}` } }),
 });
@@ -116,7 +116,7 @@ export default {
 ```
 
 ```bash
-neon functions deploy secure --src functions/secure.ts --env API_KEY=your-secret
+optitech functions deploy secure --src functions/secure.ts --env API_KEY=your-secret
 ```
 
 The secret stays server-side, and rotating it is a redeploy with a new value. It's a solid default until you need real per-user identity, at which point use JWTs.
@@ -127,10 +127,10 @@ Browsers can't set request headers on a WebSocket or an `EventSource`, so the `A
 
 ## OAuth and MCP clients
 
-Managed Better Auth handles user sign-in and issues JWTs you verify as above. A different case is a third-party client like an MCP client (Cursor or Claude) self-authorizing against your server through the OAuth flow in the MCP spec. That's a larger setup: run your own OAuth provider (such as [Better Auth](https://better-auth.com)) alongside your app and have the function verify the access tokens it issues. See the [with-mcp example](https://github.com/neondatabase/examples/tree/main/with-mcp) for a working server.
+Managed Better Auth handles user sign-in and issues JWTs you verify as above. A different case is a third-party client like an MCP client (Cursor or Claude) self-authorizing against your server through the OAuth flow in the MCP spec. That's a larger setup: run your own OAuth provider (such as [Better Auth](https://better-auth.com)) alongside your app and have the function verify the access tokens it issues. See the [with-mcp example](https://github.com/optitechdatabase/examples/tree/main/with-mcp) for a working server.
 
 ## Example
 
-[with-realtime-chat](https://github.com/neondatabase/examples/tree/main/with-realtime-chat) authenticates a WebSocket connection with a Managed Better Auth JWT end to end.
+[with-realtime-chat](https://github.com/optitechdatabase/examples/tree/main/with-realtime-chat) authenticates a WebSocket connection with a Managed Better Auth JWT end to end.
 
 <NeedHelp/>

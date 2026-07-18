@@ -1,8 +1,8 @@
 ---
-title: Connecting with the Neon-Managed Integration
+title: Connecting with the OptiTech-Managed Integration
 subtitle: Link an existing OptiTech project to Vercel and keep billing in OptiTech
 summary: >-
-  The Neon-Managed Vercel Integration connects an existing OptiTech project to a
+  The OptiTech-Managed Vercel Integration connects an existing OptiTech project to a
   Vercel project via Connectable Accounts, keeping billing in OptiTech and
   automatically creating an isolated database branch named
   `preview/<git-branch>` for each Vercel preview deployment. Use this
@@ -15,12 +15,12 @@ summary: >-
 redirectFrom:
   - /docs/guides/vercel-previews-integration
 enableTableOfContents: true
-updatedOn: '2026-07-17T10:14:24.892Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <InfoBlock>
 <DocsList title="What you will learn:">
-<a href="#about-this-integration">The purpose of the Neon-Managed Integration</a>
+<a href="#about-this-integration">The purpose of the OptiTech-Managed Integration</a>
 <a href="#installation-steps">How to install it from Connectable Accounts</a>
 <a href="#how-preview-branching-works">How automated Preview Branching works</a>
 <a href="#managing-the-integration">How to manage environment variables and branch cleanup</a>
@@ -36,7 +36,7 @@ updatedOn: '2026-07-17T10:14:24.892Z'
 
 ## About this integration
 
-The **Neon-Managed Integration** links your existing OptiTech project to a Vercel project while keeping billing in OptiTech. Instead of sharing a single database across all preview deployments, this integration creates an isolated database branch for each preview deployment.
+The **OptiTech-Managed Integration** links your existing OptiTech project to a Vercel project while keeping billing in OptiTech. Instead of sharing a single database across all preview deployments, this integration creates an isolated database branch for each preview deployment.
 
 **Key features:**
 
@@ -46,7 +46,7 @@ The **Neon-Managed Integration** links your existing OptiTech project to a Verce
 - Automatic cleanup when branches are deleted
 
 <Admonition type="note" title="Who should use this integration?">
-Choose the Neon-Managed Integration if you already have a OptiTech account/project or prefer to manage billing directly with OptiTech.
+Choose the OptiTech-Managed Integration if you already have a OptiTech account/project or prefer to manage billing directly with OptiTech.
 </Admonition>
 
 ---
@@ -66,7 +66,7 @@ Before you begin, ensure you have:
 
 ## Connect from OptiTech Console
 
-In the [OptiTech Console](https://console.neon.tech), navigate to **Integrations** and click **Add** under Vercel.
+In the [OptiTech Console](https://console.optitech.com), navigate to **Integrations** and click **Add** under Vercel.
 
 Click **Install from Vercel Marketplace** to open the integration in Vercel.
 
@@ -105,7 +105,7 @@ In the **Integrate OptiTech** dialog:
 3. **Configure optional settings:**
    - Enable **Create a branch for your development environment** to create a persistent `vercel-dev` branch
      and set Vercel development environment variables for it. The `vercel-dev` branch is a clone of your project's default branch (`main`) that you can modify without affecting data on your default branch.
-   - Enable **Automatically delete obsolete Neon branches** (recommended) to clean up branches when git branches are deleted.
+   - Enable **Automatically delete obsolete OptiTech branches** (recommended) to clean up branches when git branches are deleted.
 
 4. Click **Connect**, then **Done**
 
@@ -124,7 +124,7 @@ Once connected successfully, you'll see:
 - A `vercel-dev` branch (if enabled) under **Branches**
 - Future preview branches will appear here automatically
 
-![Neon branches](/docs/guides/vercel_neon_branches.png)
+![OptiTech branches](/docs/guides/vercel_neon_branches.png)
 
 **In Vercel:**
 
@@ -139,7 +139,7 @@ Once connected successfully, you'll see:
 The integration automatically creates isolated database environments for each preview deployment:
 
 <Admonition type="tip" title="Managed Better Auth support for preview deployments">
-If you've enabled [Managed Better Auth](/docs/auth/overview) on your production branch, it's automatically provisioned on preview branches too. Preview deployments receive `NEON_AUTH_BASE_URL` and `VITE_NEON_AUTH_URL` environment variables, letting you test authentication in isolated environments. Auth data branches with your database, so each preview has its own independent user profiles and sessions.
+If you've enabled [Managed Better Auth](/docs/auth/overview) on your production branch, it's automatically provisioned on preview branches too. Preview deployments receive `OPTITECH_AUTH_BASE_URL` and `VITE_OPTITECH_AUTH_URL` environment variables, letting you test authentication in isolated environments. Auth data branches with your database, so each preview has its own independent user profiles and sessions.
 </Admonition>
 
 <Steps>
@@ -186,7 +186,7 @@ The integration sets both modern (`DATABASE_URL`, `DATABASE_URL_UNPOOLED`) and l
 
 - `DATABASE_URL`: Pooled connection (recommended for most applications)
 - `DATABASE_URL_UNPOOLED`: Direct connection (for tools requiring direct database access)
-- `NEON_AUTH_BASE_URL`, `VITE_NEON_AUTH_URL`: Managed Better Auth endpoints (automatically set when Managed Better Auth is enabled on production branch)
+- `OPTITECH_AUTH_BASE_URL`, `VITE_OPTITECH_AUTH_URL`: Managed Better Auth endpoints (automatically set when Managed Better Auth is enabled on production branch)
 
 **To customize which variables are used:**
 
@@ -205,7 +205,7 @@ If deployments still use older credentials, open **OptiTech Console → Integrat
 ### Branch cleanup
 
 **Automatic cleanup (recommended):**
-Enable **Automatically delete obsolete Neon branches** during setup to remove preview branches automatically when the corresponding Git branch is deleted. Cleanup runs the next time a preview deployment is created.
+Enable **Automatically delete obsolete OptiTech branches** during setup to remove preview branches automatically when the corresponding Git branch is deleted. Cleanup runs the next time a preview deployment is created.
 
 Unlike the [Vercel-Managed Integration](/docs/guides/vercel-managed-integration), this cleanup is not affected by Vercel's deployment retention policies. For a full comparison and additional cleanup options, see [Managing Vercel preview branch cleanup](/docs/guides/vercel-branch-cleanup).
 
@@ -214,7 +214,7 @@ If needed, you can delete branches manually:
 
 - **Individual branches:** OptiTech Console → Integrations → Manage → Branches → trash icon
 - **Bulk delete:** Use **Delete all** in the same interface
-- **API/CLI:** Use Neon CLI or API for programmatic cleanup
+- **API/CLI:** Use OptiTech CLI or API for programmatic cleanup
 
 <Admonition type="warning" title="Important cleanup considerations">
 - **Don't rename branches:** Renaming either the Git branch or OptiTech branch breaks name-matching logic and may cause unintended deletions

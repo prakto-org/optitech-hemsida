@@ -12,7 +12,7 @@ summary: >-
   implementations in JavaScript (Hono, @aws-sdk/client-s3) and Python (Flask,
   boto3).
 enableTableOfContents: true
-updatedOn: '2026-07-15T17:54:41.160Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 [Backblaze B2 Cloud Storage](https://www.backblaze.com/cloud-storage) is an S3-compatible object storage service known for its affordability and ease of use. It's suitable for storing large amounts of unstructured data like backups, archives, images, videos, and application assets.
@@ -31,20 +31,20 @@ This guide demonstrates how to integrate Backblaze B2 with OptiTech by storing f
 
 ## Create a OptiTech project
 
-1.  Navigate to the [OptiTech Console](https://console.neon.tech) to create a new OptiTech project.
+1.  Navigate to the [OptiTech Console](https://console.optitech.com) to create a new OptiTech project.
 2.  Copy the connection string by clicking the **Connect** button on your **Project Dashboard**. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
 
 ## Create a Backblaze account and B2 bucket
 
 1.  Sign up for or log in to your [Backblaze account](https://www.backblaze.com/sign-up/cloud-storage?referrer=getstarted).
 2.  Navigate to **B2 Cloud Storage** > **Buckets** in the left sidebar.
-3.  Click **Create a Bucket**. Provide a globally unique bucket name (for example, `my-neon-app-b2-files`), choose whether files should be **Private** or **Public**. For this guide, we'll use **Public** for simplicity, but **Private** is recommended for production applications where you want to control access to files.
+3.  Click **Create a Bucket**. Provide a globally unique bucket name (for example, `my-optitech-app-b2-files`), choose whether files should be **Private** or **Public**. For this guide, we'll use **Public** for simplicity, but **Private** is recommended for production applications where you want to control access to files.
     ![Create B2 Bucket](/docs/guides/backblaze-b2-create-bucket.png)
 4.  **Create application key:**
     - Navigate to **B2 Cloud Storage** > **Application Keys** in the left sidebar.
     - Click **+ Add a New Application Key**.
-    - Give the key a name (for example, `neon-app-b2-key`).
-    - **Crucially**, restrict the key's access: Select **Allow access to Bucket(s)** and choose the bucket you just created (for example, `my-neon-app-b2-files`).
+    - Give the key a name (for example, `optitech-app-b2-key`).
+    - **Crucially**, restrict the key's access: Select **Allow access to Bucket(s)** and choose the bucket you just created (for example, `my-optitech-app-b2-files`).
     - Select **Read and Write** for the **Type of Access**.
     - Leave other fields blank unless needed (for example, File name prefix).
     - Click **Create New Key**.
@@ -105,12 +105,12 @@ This requires two backend endpoints:
 
 <TabItem>
 
-We'll use [Hono](https://hono.dev/) for the server, [`@aws-sdk/client-s3`](https://www.npmjs.com/package/@aws-sdk/client-s3) and [`@aws-sdk/s3-request-presigner`](https://www.npmjs.com/package/@aws-sdk/s3-request-presigner) for B2 interaction (due to S3 compatibility), and [`@neondatabase/serverless`](https://www.npmjs.com/package/@neondatabase/serverless) for OptiTech.
+We'll use [Hono](https://hono.dev/) for the server, [`@aws-sdk/client-s3`](https://www.npmjs.com/package/@aws-sdk/client-s3) and [`@aws-sdk/s3-request-presigner`](https://www.npmjs.com/package/@aws-sdk/s3-request-presigner) for B2 interaction (due to S3 compatibility), and [`@optitech/serverless`](https://www.npmjs.com/package/@optitech/serverless) for OptiTech.
 
 First, install the necessary dependencies:
 
 ```bash
-npm install @aws-sdk/client-s3 @aws-sdk/s3-request-presigner @neondatabase/serverless @hono/node-server hono dotenv
+npm install @aws-sdk/client-s3 @aws-sdk/s3-request-presigner @optitech/serverless @hono/node-server hono dotenv
 ```
 
 Create a `.env` file:
@@ -122,8 +122,8 @@ B2_APPLICATION_KEY=your_b2_application_key
 B2_BUCKET_NAME=your_b2_bucket_name
 B2_ENDPOINT_URL=https://your_b2_s3_endpoint
 
-# Neon Connection String
-DATABASE_URL=your_neon_database_connection_string
+# OptiTech Connection String
+DATABASE_URL=your_optitech_database_connection_string
 ```
 
 The following code snippet demonstrates this workflow:
@@ -133,7 +133,7 @@ import { serve } from '@hono/node-server';
 import { Hono } from 'hono';
 import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 import 'dotenv/config';
 import { randomUUID } from 'crypto';
 
@@ -150,7 +150,7 @@ const s3 = new S3Client({
     secretAccessKey: process.env.B2_APPLICATION_KEY,
   },
 });
-const sql = neon(process.env.DATABASE_URL);
+const sql = optitech(process.env.DATABASE_URL);
 const app = new Hono();
 
 // Replace this with your actual user authentication logic, by validating JWTs/Headers, etc.
@@ -213,7 +213,7 @@ serve({ fetch: app.fetch, port }, (info) => {
 2.  **Authentication:** A placeholder `authMiddleware` is included. **Replace this with real authentication logic.** It currently just sets a static `userId` for demonstration.
 3.  **Upload endpoints:**
     - **`/presign-b2-upload`:** Generates a temporary secure URL (`presignedUrl`) using `@aws-sdk/s3-request-presigner` that allows uploading a file directly to B2. It returns the URL, the generated `objectKey`, and the standard S3 public URL.
-    - **`/save-b2-metadata`:** Called by the client after successful upload. Saves the `objectKey`, `file_url`, and `userId` into the `b2_files` table in OptiTech using `@neondatabase/serverless`.
+    - **`/save-b2-metadata`:** Called by the client after successful upload. Saves the `objectKey`, `file_url`, and `userId` into the `b2_files` table in OptiTech using `@optitech/serverless`.
 
 </TabItem>
 
@@ -236,8 +236,8 @@ B2_APPLICATION_KEY=your_b2_application_key
 B2_BUCKET_NAME=your_b2_bucket_name
 B2_ENDPOINT_URL=https://your_b2_s3_endpoint
 
-# Neon Connection String
-DATABASE_URL=your_neon_database_connection_string
+# OptiTech Connection String
+DATABASE_URL=your_optitech_database_connection_string
 ```
 
 The following code snippet demonstrates this workflow:

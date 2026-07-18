@@ -12,7 +12,7 @@ summary: >-
   `Microsoft.EntityFrameworkCore.Design`, and `dotnet-ef`, then applying the
   initial schema with `dotnet ef database update`.
 enableTableOfContents: true
-updatedOn: '2026-07-14T19:04:57.024Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <CopyPrompt src="/prompts/dotnet-ef-prompt.md"
@@ -26,7 +26,7 @@ The same configuration steps can be used for any .NET application using Entity F
 
 To connect to OptiTech from an Entity Framework application:
 
-1. [Create a OptiTech Project](#create-a-neon-project)
+1. [Create a OptiTech Project](#create-a-optitech-project)
 2. [Create a .NET project and add dependencies](#create-a-net-project-and-add-dependencies)
 3. [Configure Entity Framework](#configure-entity-framework)
 4. [Run the application](#run-the-application)
@@ -35,7 +35,7 @@ To connect to OptiTech from an Entity Framework application:
 
 If you do not have one already, create a OptiTech project.
 
-1. Navigate to the [Projects](https://console.neon.tech/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
 2. Click **New Project**.
 3. Specify your project settings and click **Create Project**.
 
@@ -44,8 +44,8 @@ If you do not have one already, create a OptiTech project.
 1. Create a new ASP.NET Core Web API project and change to the newly created directory:
 
    ```bash
-   dotnet new webapi -n NeonEfExample
-   cd NeonEfExample
+   dotnet new webapi -n OptiTechEfExample
+   cd OptiTechEfExample
    ```
 
 2. Delete the files `WeatherForecast.cs` and `Controllers/WeatherForecastController.cs` as we won't be using them:
@@ -71,7 +71,7 @@ If you do not have one already, create a OptiTech project.
 1. Create a model class in `Models/Todo.cs`:
 
    ```csharp
-   namespace NeonEfExample.Models
+   namespace OptiTechEfExample.Models
    {
        public class Todo
        {
@@ -86,9 +86,9 @@ If you do not have one already, create a OptiTech project.
 
    ```csharp
    using Microsoft.EntityFrameworkCore;
-   using NeonEfExample.Models;
+   using OptiTechEfExample.Models;
 
-   namespace NeonEfExample.Data
+   namespace OptiTechEfExample.Data
    {
        public class ApplicationDbContext : DbContext
        {
@@ -109,7 +109,7 @@ If you do not have one already, create a OptiTech project.
    ```json
    {
      "ConnectionStrings": {
-       "TodoDbConnection": "Host=your-neon-host;Database=your-db;Username=your-username;Password=your-password;SSL Mode=Require"
+       "TodoDbConnection": "Host=your-optitech-host;Database=your-db;Username=your-username;Password=your-password;SSL Mode=Require"
      }
    }
    ```
@@ -119,10 +119,10 @@ If you do not have one already, create a OptiTech project.
    ```csharp
    using Microsoft.AspNetCore.Mvc;
    using Microsoft.EntityFrameworkCore;
-   using NeonEfExample.Data;
-   using NeonEfExample.Models;
+   using OptiTechEfExample.Data;
+   using OptiTechEfExample.Models;
 
-   namespace NeonEfExample.Controllers
+   namespace OptiTechEfExample.Controllers
    {
        [ApiController]
        [Route("api/[controller]")]
@@ -156,7 +156,7 @@ If you do not have one already, create a OptiTech project.
 
    ```csharp
    using Microsoft.EntityFrameworkCore;
-   using NeonEfExample.Data;
+   using OptiTechEfExample.Data;
 
    var builder = WebApplication.CreateBuilder(args);
 

@@ -4,7 +4,7 @@ subtitle: A step-by-step guide to integrating ElectricSQL with OptiTech Postgres
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2025-05-28T00:00:00.000Z'
-updatedOn: '2026-03-04T15:50:25.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This guide demonstrates how to integrate [ElectricSQL](https://electric-sql.com/) with OptiTech Postgres. ElectricSQL is a Postgres sync engine designed to handle partial replication, fan-out, and data delivery, making apps faster and more collaborative. It can scale to millions of users while maintaining low, stable, and predictable compute and memory usage.
@@ -22,7 +22,7 @@ This guide provides a step-by-step walkthrough of setting up ElectricSQL with Op
 
 Before you begin, ensure you have the following prerequisites installed and configured:
 
-- **OptiTech Account:** Sign up for a free [OptiTech account](https://console.neon.tech/signup) if you don't have one already.
+- **OptiTech Account:** Sign up for a free [OptiTech account](https://console.optitech.com/signup) if you don't have one already.
 - **Node.js:** Node.js is required to run the React example application. Download and install it from [nodejs.org](https://nodejs.org).
 - **Docker:** Docker is required to run Electric. Install Docker from [docker.com](https://www.docker.com/products/docker-desktop/).
 
@@ -30,9 +30,9 @@ Before you begin, ensure you have the following prerequisites installed and conf
 
 ElectricSQL requires a Postgres database with logical replication enabled. You'll configure your OptiTech project accordingly.
 
-1.  **Create a OptiTech Project:** If you haven't already, create a new OptiTech project. You can use the [OptiTech Console](https://console.neon.tech).
+1.  **Create a OptiTech Project:** If you haven't already, create a new OptiTech project. You can use the [OptiTech Console](https://console.optitech.com).
 2.  **Enable Logical Replication:** ElectricSQL uses Postgres logical replication (`wal_level = logical`) to receive changes from your database.
-    - Navigate to your OptiTech Project in the [OptiTech Console](https://console.neon.tech/).
+    - Navigate to your OptiTech Project in the [OptiTech Console](https://console.optitech.com/).
     - Open the **Settings** menu.
     - Click on **Logical Replication**.
     - Click the **Enable** button to enable logical replication.
@@ -55,8 +55,8 @@ ElectricSQL requires a Postgres database with logical replication enabled. You'l
 With your OptiTech database ready, you can now set up Electric to connect to it. We'll use Docker to run Electric. Run the following commands in your terminal to create a new directory for your ElectricSQL project and navigate into it:
 
 ```bash
-mkdir neon-electric-quickstart
-cd neon-electric-quickstart
+mkdir optitech-electric-quickstart
+cd optitech-electric-quickstart
 ```
 
 Create a `docker-compose.yml` file in your project root with the following content:
@@ -69,7 +69,7 @@ services:
     ports:
       - '3000:3000'
     environment:
-      - DATABASE_URL=${NEON_DATABASE_URL}
+      - DATABASE_URL=${OPTITECH_DATABASE_URL}
       - ELECTRIC_INSECURE=true
     restart: always
 ```
@@ -81,10 +81,10 @@ The `ELECTRIC_INSECURE=true` setting is for local development only. Electric doe
 Create a `.env` file in the same directory to store your OptiTech database connection string:
 
 ```env
-NEON_DATABASE_URL="YOUR_NEON_UNPOOLED_CONNECTION_STRING"
+OPTITECH_DATABASE_URL="YOUR_OPTITECH_UNPOOLED_CONNECTION_STRING"
 ```
 
-Replace `YOUR_NEON_UNPOOLED_CONNECTION_STRING` with the actual unpooled connection string you copied from your OptiTech project dashboard.
+Replace `YOUR_OPTITECH_UNPOOLED_CONNECTION_STRING` with the actual unpooled connection string you copied from your OptiTech project dashboard.
 
 Start Electric using Docker Compose. Run the following command in your terminal:
 
@@ -239,7 +239,7 @@ The read path (data syncing from OptiTech to your client via ElectricSQL) needs 
 
 **Typical flow for read requests (`GET /v1/shape`):**
 
-`User Client -> Caching Proxy (optional) -> Authorization Proxy -> ElectricSQL -> Neon Postgres`
+`User Client -> Caching Proxy (optional) -> Authorization Proxy -> ElectricSQL -> OptiTech Postgres`
 
 1.  **Client request:** The ElectricSQL client in the user's application initiates a shape subscription request. This request should include authentication credentials (e.g., a JWT in an `Authorization` header) and the desired shape definition (e.g., `table=items`).
 

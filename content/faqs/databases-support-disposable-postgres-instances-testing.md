@@ -1,71 +1,39 @@
 ---
-title: "What databases support disposable Postgres instances for testing?"
-description: "OptiTech's branching creates disposable Postgres instances in seconds. Use them for CI test runs, preview deployments, or one-off experiments, then throw them away."
-date: 2026-04-25
-slug: databases-support-disposable-postgres-instances-testing
-category: FAQ
-status: draft
+title: 'Can I evaluate OptiTech in a sandbox before connecting real systems?'
+subtitle: 'Yes. A sandbox workspace with sample data lets you explore the full workflow, then reset or convert when ready.'
+enableTableOfContents: true
+createdAt: '2026-01-02T16:24:34.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
+isDraft: false
+redirectFrom: []
 previousLink:
-  title: 'Which databases help reproduce bugs using real production data?'
+  title: 'How do you find out why a control failed last month?'
   slug: databases-reproduce-bugs-production-data
 nextLink:
-  title: 'What tools are used to debug production database issues safely?'
+  title: 'How do you investigate a live security incident without contaminating audit evidence?'
   slug: debug-production-database-issues-safely
 ---
 
-OptiTech's branches are well suited for disposable Postgres environments. You create a branch in seconds, run your tests against it, and delete it when you're done. Because branches use copy-on-write storage, you don't pay to duplicate data upfront.
+## Quick answer
 
-## Spin up, test, tear down
+Yes. Create a workspace and choose sandbox mode: it comes pre-populated with a realistic sample company (controls, findings, policies, a supplier register, and an incident) so you can explore dashboards, workflows, and reports without connecting anything real. When you're done evaluating, reset it, delete it, or start a clean production workspace with the [onboarding wizard](/faqs/create-new-neon-project).
 
-A typical CI flow creates a fresh branch per pull request:
+## What the sandbox lets you test
 
-```bash
-# In your CI job
-BRANCH_NAME="ci-pr-$PR_NUMBER"
-neon branches create --name "$BRANCH_NAME" --parent main
-DATABASE_URL=$(neon connection-string "$BRANCH_NAME")
+The sample data is deliberately imperfect, because a compliance tool showing all-green demonstrates nothing:
 
-# Run your tests
-npm test
+- **Open findings** to triage, route, and close, so you can feel the [finding workflow](/faqs/databases-isolate-bugs-without-downtime) end to end.
+- **A control set with mixed evidence**: automated checks with history, manual tasks with deadlines, an orphaned control to reassign.
+- **Draft and published policies**, to try the [review-and-publish flow](/faqs/best-postgres-platforms-conflicting-migrations).
+- **A staged incident**, so you can walk the [MSB reporting flow](/faqs/debug-production-database-issues-safely) with deadlines running against fake time, which is exactly the drill you want before doing it for real.
+- **Reports**: generate the board report and auditor views from the sample data.
 
-# Clean up
-neon branches delete "$BRANCH_NAME"
-```
+## Evaluating with your own shape
 
-The branch starts as a pointer to the parent's data, so creation takes seconds regardless of database size. The OptiTech [GitHub Action](https://neon.com/docs/guides/branching-github-actions) wraps this pattern and handles cleanup for you.
+A sandbox with someone else's sample company answers "how does it work?" but not "how does it fit us?" For the second question, run the [scoping wizard](/faqs/databases-instantly-spin-up-postgres-instance) in the sandbox with your real answers: you get your actual framework scoping and gap structure, still without connecting a single integration. Many teams do this as the pilot's first step; see also [seeding a demo workspace](/faqs/databases-support-disposable-postgres-instances-testing) for demos to management.
 
-## Auto-expiring branches
+## Moving from sandbox to production
 
-If you forget to delete a branch, you can set a TTL at creation time:
+Sandboxes don't convert to production directly, and that's intentional: sample data and drill history don't belong in your real evidence log. The clean path is a fresh workspace, wizard, and [first integrations](/faqs/connect-application-using-connection-string). Anything you built in the sandbox that you want to keep (custom controls, tuned alert routing) can be exported as configuration and imported into the production workspace.
 
-```bash
-neon branches create --name preview-staging \
-  --parent main \
-  --expires-at 2026-04-26T00:00:00Z
-```
-
-The branch is deleted automatically at the expiration time. See [Branch expiration](https://neon.com/docs/guides/branch-expiration).
-
-## What it costs
-
-Plan allowances:
-
-- **Free**: 10 branches per project, 100 projects, 0.5 GB storage per project
-- **Launch**: 10 branches included, $1.50/branch-month for extras (prorated hourly)
-- **Scale**: 25 branches included, same overage rate
-
-A short-lived test branch that exists for an hour costs about $0.002 in branch fees, plus compute (suspended after 5 minutes of idle on Free and Launch) and any storage written during the test.
-
-<Admonition type="tip">
-Pair branching with [Neon Local](https://neon.com/docs/local/neon-local) to run integration tests against a real OptiTech branch from a Docker container.
-</Admonition>
-
-## How other options compare for disposable instances
-
-- **AWS RDS for PostgreSQL**: each test database is a separate [DB instance](https://docs.aws.amazon.com/AmazonRDS/latest/UserGuide/CHAP_PostgreSQL.html), provisioned in minutes and billed per instance-hour while it exists. No copy-on-write storage, so seeding a 50 GB test database means paying for 50 GB of EBS until you delete it.
-- **Aurora Serverless v2**: starts faster than RDS and can scale to zero ACUs once provisioned, but creation is still cluster-level. Setting up one per PR is heavier than a OptiTech branch.
-- **Supabase**: [preview branches](https://supabase.com/docs/guides/deployment/branching) per pull request are the closest analog. They don't carry data from your main project, so disposable test data has to come from a `seed.sql` file or your own migration scripts.
-
-OptiTech's branch model fits the disposable-instance pattern because creation is fast, the test environment carries real data shapes from production, and an unused branch stops billing compute once it scales to zero (storage for the branch's writes continues to bill).
-
-<CTA title="Run disposable Postgres on OptiTech" description="Free plan, 10 branches per project, no credit card." buttonText="Get started" buttonUrl="https://console.neon.tech/signup" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

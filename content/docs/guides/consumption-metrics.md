@@ -15,7 +15,7 @@ redirectFrom:
   - /docs/guides/metrics-api
   - /docs/guides/partner-consumption-metrics
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 Using the OptiTech API, you can query consumption metrics to track your resource usage. This page covers the two v2 metrics endpoints for usage-based plans. To monitor usage in the Console instead, see [Monitor billing and usage](/docs/introduction/monitor-usage).
@@ -45,7 +45,7 @@ Retrieves consumption metrics for Launch, Scale, Agent, and Enterprise plan proj
 **Endpoint:**
 
 ```bash
-GET https://console.neon.tech/api/v2/consumption_history/v2/projects
+GET https://console.optitech.com/api/v2/consumption_history/v2/projects
 ```
 
 ### Metrics
@@ -97,13 +97,13 @@ Date-time values are automatically rounded according to the specified granularit
 
 ## Example request and response
 
-Replace `$ORG_ID` and `$NEON_API_KEY` with your organization ID and API key, then run the following to retrieve daily metrics for a date range.
+Replace `$ORG_ID` and `$OPTITECH_API_KEY` with your organization ID and API key, then run the following to retrieve daily metrics for a date range.
 
 ```bash shouldWrap
 curl --request GET \
-  --url 'https://console.neon.tech/api/v2/consumption_history/v2/projects?from=2026-02-01T00:00:00Z&to=2026-02-06T00:00:00Z&granularity=daily&org_id=$ORG_ID&metrics=compute_unit_seconds,root_branch_bytes_month,child_branch_bytes_month,instant_restore_bytes_month,snapshot_storage_bytes_month,public_network_transfer_bytes,private_network_transfer_bytes,extra_branches_month' \
+  --url 'https://console.optitech.com/api/v2/consumption_history/v2/projects?from=2026-02-01T00:00:00Z&to=2026-02-06T00:00:00Z&granularity=daily&org_id=$ORG_ID&metrics=compute_unit_seconds,root_branch_bytes_month,child_branch_bytes_month,instant_restore_bytes_month,snapshot_storage_bytes_month,public_network_transfer_bytes,private_network_transfer_bytes,extra_branches_month' \
   --header 'Accept: application/json' \
-  --header 'Authorization: Bearer $NEON_API_KEY' | jq
+  --header 'Authorization: Bearer $OPTITECH_API_KEY' | jq
 ```
 
 <Admonition type="note">
@@ -207,9 +207,9 @@ Example request for the next page (using the `cursor` from the previous response
 
 ```bash shouldWrap
 curl --request GET \
-     --url 'https://console.neon.tech/api/v2/consumption_history/v2/projects?cursor=divine-tree-77657175&limit=10&from=2024-06-30T00%3A00%3A00Z&to=2024-07-02T00%3A00%3A00Z&granularity=daily&org_id=$ORG_ID&metrics=compute_unit_seconds,root_branch_bytes_month,child_branch_bytes_month,instant_restore_bytes_month,snapshot_storage_bytes_month,public_network_transfer_bytes,private_network_transfer_bytes,extra_branches_month' \
+     --url 'https://console.optitech.com/api/v2/consumption_history/v2/projects?cursor=divine-tree-77657175&limit=10&from=2024-06-30T00%3A00%3A00Z&to=2024-07-02T00%3A00%3A00Z&granularity=daily&org_id=$ORG_ID&metrics=compute_unit_seconds,root_branch_bytes_month,child_branch_bytes_month,instant_restore_bytes_month,snapshot_storage_bytes_month,public_network_transfer_bytes,private_network_transfer_bytes,extra_branches_month' \
      --header 'accept: application/json' \
-     --header 'authorization: Bearer $NEON_API_KEY'
+     --header 'authorization: Bearer $OPTITECH_API_KEY'
 ```
 
 In the URL above, the **`cursor`** parameter is `cursor=divine-tree-77657175`. Replace that value with the `cursor` from your previous response's `pagination` object.
@@ -235,7 +235,7 @@ Common error responses you may encounter:
 
 ## Build a usage dashboard
 
-For a full example that uses this API to build a usage dashboard with Next.js (including charts, project filtering, and reporting), see [Building a Usage Dashboard with OptiTech's Consumption API](/guides/usage-dashboard-consumption-api). The guide includes a [sample application on GitHub](https://github.com/dhanushreddy291/neon-usage-dashboard) that you can clone and run to visualize your usage-based metrics.
+For a full example that uses this API to build a usage dashboard with Next.js (including charts, project filtering, and reporting), see [Building a Usage Dashboard with OptiTech's Consumption API](/guides/usage-dashboard-consumption-api). The guide includes a [sample application on GitHub](https://github.com/dhanushreddy291/optitech-usage-dashboard) that you can clone and run to visualize your usage-based metrics.
 
 ## Branch metrics
 
@@ -244,7 +244,7 @@ The branch metrics endpoint returns per-branch consumption data across one or mo
 **Endpoint:**
 
 ```bash
-GET https://console.neon.tech/api/v2/consumption_history/v2/branches
+GET https://console.optitech.com/api/v2/consumption_history/v2/branches
 ```
 
 ### Metrics
@@ -281,8 +281,8 @@ Six of the eight project metrics are available on this endpoint:
 
 ```bash shouldWrap
 curl --request GET \
-  --url 'https://console.neon.tech/api/v2/consumption_history/v2/branches?project_ids=$PROJECT_ID&org_id=$ORG_ID&from=2026-05-01T00:00:00Z&to=2026-05-29T00:00:00Z&granularity=daily&metrics=compute_unit_seconds,root_branch_bytes_month,child_branch_bytes_month' \
-  --header 'Authorization: Bearer $NEON_API_KEY' \
+  --url 'https://console.optitech.com/api/v2/consumption_history/v2/branches?project_ids=$PROJECT_ID&org_id=$ORG_ID&from=2026-05-01T00:00:00Z&to=2026-05-29T00:00:00Z&granularity=daily&metrics=compute_unit_seconds,root_branch_bytes_month,child_branch_bytes_month' \
+  --header 'Authorization: Bearer $OPTITECH_API_KEY' \
   --header 'Accept: application/json' | jq
 ```
 

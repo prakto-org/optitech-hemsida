@@ -1,156 +1,155 @@
 ---
-title: Integrating with OptiTech
-subtitle: Choose the right integration path for your platform or application
+title: Building on OptiTech
+subtitle: Choose the right partnership path for your firm or platform
 summary: >-
-  OptiTech platform integration overview compares four embedding and partnership
-  paths: AI Agents, Claimable Database, Embedded Postgres, and OAuth. Use this
-  page to decide which approach fits your product before reading the individual
-  integration guides. Real-world implementations include TanStack Vite plugin,
-  Netlify DB, and Hasura Cloud.
+  OptiTech partnership overview compares four paths: the Partner plan for MSPs
+  and advisors, the vendor network for supply chains, white-label delivery, and
+  API integration. Use this page to decide which approach fits your business
+  before reading the individual guides.
 enableTableOfContents: true
 isDraft: false
 redirectFrom:
   - /docs/guides/partner-intro
   - /docs/guides/platform-integration-intro
   - /docs/guides/platform-integration-get-started
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
-OptiTech provides multiple options for integrating Postgres into your platform, application, or service. Choose the integration approach that best matches your use case.
+OptiTech provides multiple options for building compliance services on the platform, whether you advise clients, manage their IT, or run your own product. Choose the approach that best matches your business.
 
-## AI Agents integration
+## Partner plan for MSPs and advisors
 
-**Best for:** AI agent and codegen platforms that need database versioning and isolated environments
+**Best for:** IT service providers, accounting firms, and advisors who manage compliance for many clients
 
-Use this approach if you're building an AI agent platform or code generation service where agents create and manage databases programmatically. This integration includes everything from the embedded Postgres approach, plus specific features for agent workflows.
+Use this approach if you run compliance work for a portfolio of clients and want one console instead of one login per client. This includes everything in the standard plans, plus multi-tenant management built for service delivery.
 
 **Key features:**
 
-- Two-organization structure (free tier sponsored by OptiTech, paid tier for your paying users)
-- Database versioning with snapshots and point-in-time recovery
-- Isolated development environments per user
-- Project transfers between organizations when users upgrade
-- Agent-specific pricing and rate limits
-- Dedicated support channel
+- Multi-tenant console with one view across every client
+- Volume pricing that scales with your portfolio
+- Client-level roles, so your staff see only their assigned clients
+- Standardized playbooks you reuse across engagements
+- Revenue share for referred subscriptions
+- Dedicated partner support channel
 
 **Example use cases:**
 
-- AI agent platforms
-- Code generation platforms
-- LLM-powered development tools
-- Autonomous database management tools
+- MSPs whose SMB clients keep asking about NIS2
+- Accounting and audit firms adding compliance services
+- vCISO practices running client programs on one platform
+- Law firms operationalizing their advice
 
 <DetailIconCards>
 
-<a href="/docs/introduction/agent-plan" description="Learn about the OptiTech Agent plan and how to enroll" icon="database">Agent plan</a>
+<a href="/docs/introduction/plans" description="Learn about OptiTech's plans and how the Partner plan compares" icon="database">Plans</a>
 
-<a href="/docs/guides/ai-agent-integration" description="Learn about the agent-specific integration" icon="openai">AI Agent integration guide</a>
+<a href="/docs/import/migrate-from-consultants" description="Turn your existing deliverables into living client programs" icon="openai">From deliverables to programs</a>
 
-<a href="/docs/ai/ai-database-versioning" description="Learn about database versioning for AI agents" icon="branching">Database versioning</a>
+<a href="/contact-sales" description="Request Partner plan pricing and a multi-tenant demo" icon="branching">Partner pricing</a>
 
 </DetailIconCards>
 
 ---
 
-## Claimable database flow
+## Vendor network flow
 
-**Best for:** Plugins and platforms that want to offer instant database provisioning as part of their developer experience without requiring user signup
+**Best for:** Companies that want their suppliers compliant without forcing tools on them
 
-Use this approach when you want to create databases for your users without requiring them to create a OptiTech account first. Users receive a connection string immediately and can optionally claim ownership of the database later by creating a OptiTech account. This is ideal for CLI tools, framework plugins, and platforms that want to streamline onboarding.
+Use this approach when you need to assess your supply chain, as NIS2 and DORA require, without requiring your vendors to buy anything first. Vendors receive your questionnaire, answer in a free OptiTech account, and can optionally upgrade to run their own program later. This is ideal for supply-chain-heavy businesses that need coverage fast.
 
 **Key features:**
 
-- Instant database provisioning with no user signup required
-- 72-hour database lifespan if not claimed
-- Seamless ownership transfer when users are ready
-- Connection strings remain valid after claiming
-- Configurable transfer request expiration
+- Free vendor accounts, no purchase required to answer
+- Answers stay current instead of dying in PDFs
+- Vendors reuse their answers for the next customer who asks
+- Risk classification lands in your register automatically
+- Shareable compliance passes in both directions
 
 **Example use cases:**
 
-- Framework plugins and CLI tools (like TanStack's Vite plugin)
-- Demo environments and trial experiences
-- Educational platforms providing databases to students
-- Development tools that need instant database access
-- SaaS applications with deferred account creation
-- AI agents requiring database access without authentication overhead
+- NIS2-covered companies assessing their suppliers
+- Financial institutions building their DORA ICT register
+- Public sector suppliers forwarding requirements downstream
+- Large enterprises standardizing vendor assessments
+- Groups rolling out one assessment standard across subsidiaries
+- Procurement teams replacing questionnaire email chains
 
 **Example implementations:**
 
-- [TanStack](https://neon.com/blog/neon-joins-tanstack-instant-postgres-integration-for-faster-javascript-development): Official database partner offering instant Postgres through their Vite plugin and create-tanstack CLI
-- [Netlify DB](https://www.netlify.com/blog/netlify-db-database-for-ai-native-development/): One-click Postgres databases for Netlify projects, built on the claimable database flow
-- [Claimable Postgres by Neon](https://neon.new/): Try instant Postgres provisioning without signup using `npx neon-new` or at [neon.new](https://neon.new/)
+- A regional energy company assessed 40 suppliers in one quarter; each supplier answered once and reused the answers with other customers
+- An IT operations provider received a customer questionnaire, answered in the free account, and upgraded to run its own NIS2 program
+- A municipality's suppliers forward the same requirement set to their own subcontractors, extending coverage down the chain
 
 <DetailIconCards>
 
-<a href="/docs/workflows/claimable-database-integration" description="Learn how to implement claimable databases" icon="import">Claimable database guide</a>
+<a href="/docs/ai-gateway/overview" description="Learn how the vendor register and questionnaires work" icon="import">Vendors & Trust Center</a>
 
-<a href="/docs/reference/claimable-postgres" description="See Claimable Postgres implementation details" icon="transactions">Claimable Postgres documentation</a>
+<a href="/docs/frameworks/dora" description="See the ICT register requirements the network feeds" icon="transactions">DORA documentation</a>
 
 </DetailIconCards>
 
 ---
 
-## Embedded Postgres integration
+## White-label delivery
 
-**Best for:** SaaS platforms and services that offer Postgres databases to their users
+**Best for:** Partners who want to deliver compliance under their own brand
 
-Use the embedded Postgres approach when you want to provision and manage Postgres databases on behalf of your users as part of your platform's offering. This is the **project-per-user model** where you create isolated Neon projects for each of your users via the OptiTech API.
+Use the white-label approach when you want OptiTech to power your service while your clients see your name. This is the **program-per-client model** where you run isolated client organizations under your own branding through the Partner plan.
 
 **Key features:**
 
-- Instant database provisioning (< 1 second)
-- Complete data isolation per user
-- Scale-to-zero for cost efficiency
-- Configure consumption limits per user
-- Track usage for billing
-- Full API control over resources
+- Your logo and colors on the console and reports
+- Complete data isolation per client
+- Client-facing Trust Centers under their domains
+- Configure plan limits per client
+- Track engagement for your own billing
+- Full API control over client resources
 
 **Example use cases:**
 
-- SaaS platforms offering Postgres as a feature
-- Low-code/no-code platforms
-- Development platforms
-- Enterprise platforms requiring isolated databases per customer
+- MSPs selling a branded compliance service
+- Consultancies productizing their methodology
+- Industry associations offering member services
+- International firms packaging Nordic compliance for their clients
 
 <DetailIconCards>
 
-<a href="/docs/guides/embedded-postgres" description="Learn how to embed Postgres in your platform" icon="import">Embedded Postgres guide</a>
+<a href="/contact-sales" description="Talk to us about white-label terms and setup" icon="import">White-label inquiry</a>
 
-<a href="/docs/reference/api" description="Explore the OptiTech API" icon="transactions">OptiTech API Reference</a>
+<a href="/docs/data-api/overview" description="Explore the OptiTech API" icon="transactions">OptiTech API</a>
 
 </DetailIconCards>
 
 ---
 
-## OAuth integration
+## API integration
 
-**Best for:** Tools and applications that need to interact with existing OptiTech user accounts
+**Best for:** Tools and platforms that need to interact with existing OptiTech organizations
 
-Use OAuth when you're building a tool or service that connects to existing OptiTech accounts. Your application will interact with user accounts and perform authorized actions like creating, reading, and modifying OptiTech database projects on their behalf, without requiring direct access to user credentials.
+Use API integration when you're building a tool or service that connects to existing OptiTech accounts. Your application will interact with organizations and perform authorized actions like reading control status, creating tasks, and pulling reports on their behalf, without requiring direct access to user credentials.
 
 **Key features:**
 
-- Secure, user-authorized access to OptiTech accounts
-- Access control through OAuth scopes
-- Users maintain full ownership of their OptiTech accounts
+- Secure, user-authorized access to OptiTech organizations
+- Access control through scoped API keys
+- Customers maintain full ownership of their data
 
 **Example use cases:**
 
-- Database management tools
-- Monitoring and observability platforms
-- CI/CD integrations that connect to existing Neon projects
-- Tools that visualize or analyze OptiTech resources
+- SOC and monitoring platforms pushing findings into the risk register
+- Ticketing systems syncing remediation tasks
+- CI/CD integrations that gate deploys on control status
+- BI tools that visualize compliance posture
 
 **Example implementation:**
 
-- [Hasura Cloud](https://hasura.io/): Uses OAuth to seamlessly authenticate users and provision Neon databases from Hasura projects
+- An MSP's monitoring stack pushes endpoint findings into client risk registers automatically, so drift shows up in OptiTech minutes after detection
 
 <DetailIconCards>
 
-<a href="/docs/guides/oauth-integration" description="Learn how to integrate with OptiTech using OAuth" icon="check">OAuth integration guide</a>
+<a href="/docs/data-api/overview" description="Learn how to integrate with the OptiTech API" icon="check">API integration guide</a>
 
-<a href="https://github.com/neondatabase/neon-branches-visualizer" description="See a working OAuth integration example" icon="github">Example OAuth app</a>
+<a href="/docs/get-started/dev-experience" description="See how API-first workflows fit the platform" icon="github">Product principles</a>
 
 </DetailIconCards>
 
@@ -158,21 +157,21 @@ Use OAuth when you're building a tool or service that connects to existing OptiT
 
 If you're uncertain which path is right for you, here's a quick decision tree:
 
-1. **Are you building an AI agent or codegen platform?**  
-   → Use [OptiTech for AI Agents](/docs/guides/ai-agent-integration)
+1. **Do you manage compliance for multiple clients?**  
+   → Use the [Partner plan](/contact-sales)
 
-2. **Are you building a plugin, CLI tool, or platform that needs instant Postgres without requiring user signup?**  
-   → Use [Claimable database flow](/docs/workflows/claimable-database-integration)
+2. **Do you need your suppliers assessed without forcing tools on them?**  
+   → Use the [vendor network flow](/docs/ai-gateway/overview)
 
-3. **Are you offering Postgres databases as part of your SaaS platform?**  
-   → Use [Embedded Postgres](/docs/guides/embedded-postgres)
+3. **Do you want to deliver compliance under your own brand?**  
+   → Use [white-label delivery](/contact-sales)
 
-4. **Are you building an application or service that will manage/monitor/interact with existing OptiTech accounts?**  
-   → Use [OAuth integration](/docs/guides/oauth-integration)
+4. **Are you building a tool that connects to existing OptiTech organizations?**  
+   → Use [API integration](/docs/data-api/overview)
 
 ## Get help
 
-We're here to support you through every step of your integration.
+We're here to support you through every step of your partnership.
 
 <DetailIconCards>
 

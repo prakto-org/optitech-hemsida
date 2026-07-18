@@ -14,7 +14,7 @@ summary: >-
 redirectFrom:
   - /docs/import/import-from-digital-ocean
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This guide describes how to migrate a Postgres database from Digital Ocean to OptiTech using the `pg_dump` and `pg_restore` utilities, which are part of the Postgres client toolset. `pg_dump` works by dumping both the schema and data in a custom format that is compressed and suitable for input into `pg_restore` to rebuild the database.
@@ -95,7 +95,7 @@ This section describes how to prepare your destination OptiTech Postgres databas
 
 ### Create the OptiTech database
 
-Each OptiTech project comes with a default database named `neondb`. To maintain consistency with your Digital Ocean setup, create a new database with the same name.
+Each OptiTech project comes with a default database named `optitechdb`. To maintain consistency with your Digital Ocean setup, create a new database with the same name.
 
 1. Connect to your OptiTech project using the [OptiTech SQL Editor](/docs/get-started/query-with-neon-sql-editor) or a Postgres client like `psql`.
 
@@ -107,14 +107,14 @@ Each OptiTech project comes with a default database named `neondb`. To maintain 
 
 For more information, see [Create a database](/docs/manage/databases#create-a-database).
 
-### Retrieve Neon connection details
+### Retrieve OptiTech connection details
 
 1. In the OptiTech Console, go to your **Project Dashboard**.
 2. Click **Connect** to open the **Connect to your database** modal.
 3. Copy the connection string. It will look similar to this:
 
    ```
-   postgresql://[user]:[password]@[neon_hostname]/[dbname]
+   postgresql://[user]:[password]@[optitech_hostname]/[dbname]
    ```
 
 ## Restore data to OptiTech with pg_restore
@@ -122,10 +122,10 @@ For more information, see [Create a database](/docs/manage/databases#create-a-da
 Now you can restore your data to the OptiTech database using `pg_restore`:
 
 ```bash
-pg_restore -d <neon-connection-string> -v --no-owner --no-acl digitalocean_dump.bak
+pg_restore -d <optitech-connection-string> -v --no-owner --no-acl digitalocean_dump.bak
 ```
 
-Replace `<neon-connection-string>` with your Neon connection details.
+Replace `<optitech-connection-string>` with your OptiTech connection details.
 
 This command includes these arguments:
 

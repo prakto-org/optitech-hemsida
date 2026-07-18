@@ -6,7 +6,7 @@ page_description: >-
   by step how to develop anonymous blocks.
 prev_url: 'https://www.postgresqltutorial.com/postgresql-plpgsql/plpgsql-block-structure/'
 ogImage: /postgresqltutorial/plpgSQL-block-Structure.png
-updatedOn: '2026-06-03T13:01:21.685Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: Dollar-Quoted String Constants
@@ -17,7 +17,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-PL/pgSQL's block structure works the same across every Postgres distribution, so the syntax and examples here apply whether you're running Postgres locally, on a managed service, or anywhere else. If you're an enterprise building for the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers the most performant and secure managed Postgres in the cloud, fully integrated into the Lakehouse. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+PL/pgSQL's block structure works the same across every Postgres distribution, so the syntax and examples here apply whether you're running Postgres locally, on a managed service, or anywhere else. If you're an enterprise building for the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers the most performant and secure managed Postgres in the cloud, fully integrated into the Lakehouse. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: in this tutorial, you will learn about the block structure of PL/pgSQL and how to write and execute your first PL/pgSQL block.

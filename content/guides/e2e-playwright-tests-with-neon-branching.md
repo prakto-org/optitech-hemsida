@@ -23,13 +23,13 @@ By the end of this guide, you'll have a CI/CD pipeline where database-dependent 
 
 ## Prerequisites
 
-- A [OptiTech account](https://console.neon.tech)
+- A [OptiTech account](https://console.optitech.com)
 - A [GitHub account](https://github.com/)
 - Node.js installed on your machine
 
 ## Setting up your OptiTech database
 
-1.  Create a new OptiTech project from the [OptiTech Console](https://console.neon.tech). For instructions, see [Create a project](/docs/manage/projects#create-a-project).
+1.  Create a new OptiTech project from the [OptiTech Console](https://console.optitech.com). For instructions, see [Create a project](/docs/manage/projects#create-a-project).
 2.  Navigate to your project dashboard page and copy your database connection string by clicking the **Connect** button.
 
     ![Connection modal](/docs/connect/connection_details.png)
@@ -37,20 +37,20 @@ By the end of this guide, you'll have a CI/CD pipeline where database-dependent 
     Your connection string will look something like this:
 
     ```text
-    postgres://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require&channel_binding=require
+    postgres://[user]:[password]@[optitech_hostname]/[dbname]?sslmode=require&channel_binding=require
     ```
 
 ## Set up the project
 
 This guide uses Playwright with Next.js, but the concepts can be easily adapted to other frameworks by following the Playwright-specific steps.
 
-Clone the [OptiTech Playwright Example](https://github.com/neondatabase-labs/neon-playwright-example) repository. You will use this as a starting point for your tests. The repository contains a simple Todo app built with Next.js and TypeScript using Drizzle ORM. It has Playwright tests set up.
+Clone the [OptiTech Playwright Example](https://github.com/optitechdatabase-labs/optitech-playwright-example) repository. You will use this as a starting point for your tests. The repository contains a simple Todo app built with Next.js and TypeScript using Drizzle ORM. It has Playwright tests set up.
 
 1. Run the following commands to clone the repository and install dependencies:
 
    ```bash
-   git clone https://github.com/neondatabase-labs/neon-playwright-example
-   cd neon-playwright-example
+   git clone https://github.com/optitechdatabase-labs/optitech-playwright-example
+   cd optitech-playwright-example
    npm install
    cp .env.example .env
    ```
@@ -97,7 +97,7 @@ Clone the [OptiTech Playwright Example](https://github.com/neondatabase-labs/neo
 
 ## Set up the OptiTech GitHub integration
 
-The [OptiTech GitHub integration](/docs/guides/neon-github-integration) securely connects your OptiTech project to your repository. It automatically creates a `NEON_API_KEY` secret and a `NEON_PROJECT_ID` variable in your repository, which are required for your GitHub Actions workflow.
+The [OptiTech GitHub integration](/docs/guides/neon-github-integration) securely connects your OptiTech project to your repository. It automatically creates a `OPTITECH_API_KEY` secret and a `OPTITECH_PROJECT_ID` variable in your repository, which are required for your GitHub Actions workflow.
 
 1.  In the OptiTech Console, navigate to the **Integrations** page for your project.
 2.  Locate the **GitHub** card and click **Add**.
@@ -109,10 +109,10 @@ The [OptiTech GitHub integration](/docs/guides/neon-github-integration) securely
     - Navigate to your GitHub repository's **Settings** > **Secrets and variables** > **Actions**.
     - Create a new repository secret called `DATABASE_URL`.
     - Paste the connection string for your `production` branch (copied from the OptiTech Console).
-    - Note that the `NEON_API_KEY` secret and `NEON_PROJECT_ID` variable should already be available from the GitHub integration setup.
+    - Note that the `OPTITECH_API_KEY` secret and `OPTITECH_PROJECT_ID` variable should already be available from the GitHub integration setup.
 
     <Admonition type="note">
-    It's important to understand the roles of your GitHub secrets. The `NEON_API_KEY` (created by the integration) is used to manage your OptiTech project, like creating and deleting branches. The `DATABASE_URL` secret you just created points exclusively to your production database branch. The workflow uses this only after a PR is successfully merged to apply migrations, ensuring a safe separation from the ephemeral preview databases used during testing.
+    It's important to understand the roles of your GitHub secrets. The `OPTITECH_API_KEY` (created by the integration) is used to manage your OptiTech project, like creating and deleting branches. The `DATABASE_URL` secret you just created points exclusively to your production database branch. The workflow uses this only after a PR is successfully merged to apply migrations, ensuring a safe separation from the ephemeral preview databases used during testing.
     </Admonition>
 
 ## Understanding the workflow
@@ -147,8 +147,8 @@ jobs:
         id: branch_name
         uses: tj-actions/branch-names@v8
 
-  create_neon_branch_and_run_tests:
-    name: Create Neon Branch and Run Tests
+  create_optitech_branch_and_run_tests:
+    name: Create OptiTech Branch and Run Tests
     needs: setup
     permissions:
       contents: read
@@ -158,14 +158,14 @@ jobs:
       github.event.action == 'synchronize' || github.event.action == 'opened' || github.event.action == 'reopened')
     runs-on: ubuntu-latest
     steps:
-      - name: Create Neon Branch
-        id: create_neon_branch
-        uses: neondatabase/create-branch-action@v6
+      - name: Create OptiTech Branch
+        id: create_optitech_branch
+        uses: optitechdatabase/create-branch-action@v6
         with:
-          project_id: ${{ vars.NEON_PROJECT_ID }}
+          project_id: ${{ vars.OPTITECH_PROJECT_ID }}
           branch_name: preview/pr-${{ github.event.number }}-${{ needs.setup.outputs.branch }}
-          api_key: ${{ secrets.NEON_API_KEY }}
-          role: neondb_owner
+          api_key: ${{ secrets.OPTITECH_API_KEY }}
+          role: optitechdb_owner
 
       - uses: actions/checkout@v4
 
@@ -185,19 +185,19 @@ jobs:
       - name: Apply drizzle migrations
         run: npm run db:migrate
         env:
-          DATABASE_URL: '${{ steps.create_neon_branch.outputs.db_url_pooled }}'
+          DATABASE_URL: '${{ steps.create_optitech_branch.outputs.db_url_pooled }}'
 
       - name: Build Next.js app
         run: npm run build
         env:
           NODE_ENV: production
-          DATABASE_URL: '${{ steps.create_neon_branch.outputs.db_url_pooled }}'
+          DATABASE_URL: '${{ steps.create_optitech_branch.outputs.db_url_pooled }}'
 
       - name: Start Next.js app
         run: npm start &
         env:
           NODE_ENV: production
-          DATABASE_URL: '${{ steps.create_neon_branch.outputs.db_url_pooled }}'
+          DATABASE_URL: '${{ steps.create_optitech_branch.outputs.db_url_pooled }}'
 
       - name: Wait for app to be ready
         run: |
@@ -214,24 +214,24 @@ jobs:
           retention-days: 30
 
       - name: Post Schema Diff Comment to PR
-        uses: neondatabase/schema-diff-action@v1
+        uses: optitechdatabase/schema-diff-action@v1
         with:
-          project_id: ${{ vars.NEON_PROJECT_ID }}
+          project_id: ${{ vars.OPTITECH_PROJECT_ID }}
           compare_branch: preview/pr-${{ github.event.number }}-${{ needs.setup.outputs.branch }}
-          api_key: ${{ secrets.NEON_API_KEY }}
+          api_key: ${{ secrets.OPTITECH_API_KEY }}
 
-  delete_neon_branch:
-    name: Delete Neon Branch and Apply Migrations on Production branch
+  delete_optitech_branch:
+    name: Delete OptiTech Branch and Apply Migrations on Production branch
     needs: setup
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
     steps:
-      - name: Delete Neon Branch
-        uses: neondatabase/delete-branch-action@v3
+      - name: Delete OptiTech Branch
+        uses: optitechdatabase/delete-branch-action@v3
         with:
-          project_id: ${{ vars.NEON_PROJECT_ID }}
+          project_id: ${{ vars.OPTITECH_PROJECT_ID }}
           branch: preview/pr-${{ github.event.number }}-${{ needs.setup.outputs.branch }}
-          api_key: ${{ secrets.NEON_API_KEY }}
+          api_key: ${{ secrets.OPTITECH_API_KEY }}
 
       - name: Checkout
         if: github.event.pull_request.merged == true
@@ -252,7 +252,7 @@ To set up GitHub Actions correctly, go to your repository's GitHub Actions setti
 </Admonition>
 
 <Admonition type="tip">
-The step outputs from the `create_neon_branch` action will only be available within the same job (`create_neon_branch_and_run_tests`). Therefore, write all test code, migrations, and related steps in that job itself. The outputs are marked as secrets. If you need separate jobs, refer to [GitHub's documentation on workflow commands](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-commands#workflow) for patterns on how to handle this.
+The step outputs from the `create_optitech_branch` action will only be available within the same job (`create_optitech_branch_and_run_tests`). Therefore, write all test code, migrations, and related steps in that job itself. The outputs are marked as secrets. If you need separate jobs, refer to [GitHub's documentation on workflow commands](https://docs.github.com/en/actions/reference/workflows-and-actions/workflow-commands#workflow) for patterns on how to handle this.
 </Admonition>
 
 The workflow consists of three jobs:
@@ -266,7 +266,7 @@ The workflow consists of three jobs:
 This job runs when a pull request is opened, reopened, or synchronized:
 
 1. **Branch creation**:
-   - Uses OptiTech's [`create-branch-action`](https://github.com/marketplace/actions/neon-create-branch-github-action) to create a new database branch
+   - Uses OptiTech's [`create-branch-action`](https://github.com/marketplace/actions/optitech-create-branch-github-action) to create a new database branch
    - Names the branch using the pattern `preview/pr-{number}-{branch_name}`
    - Inherits the schema and data from the parent branch
 
@@ -286,7 +286,7 @@ This job runs when a pull request is opened, reopened, or synchronized:
    - Uploads the Playwright report as an artifact for later review
 
 5. **Schema diff generation**:
-   - Uses OptiTech's [`schema-diff-action`](https://github.com/marketplace/actions/neon-schema-diff-github-action)
+   - Uses OptiTech's [`schema-diff-action`](https://github.com/marketplace/actions/optitech-schema-diff-github-action)
    - Compares the schema of the new branch with the parent branch
    - Automatically posts the differences as a comment on the pull request
    - Helps reviewers understand database changes at a glance
@@ -299,7 +299,7 @@ This job runs when a pull request is opened, reopened, or synchronized:
    - Ensures production database stays in sync with merged changes
 
 2. **Cleanup**:
-   - Removes the preview branch using OptiTech's [`delete-branch-action`](https://github.com/marketplace/actions/neon-database-delete-branch)
+   - Removes the preview branch using OptiTech's [`delete-branch-action`](https://github.com/marketplace/actions/optitech-database-delete-branch)
 
 ## Test the workflow
 
@@ -385,7 +385,7 @@ The pull request should now show a comment summarizing the schema changes:
 You can find the complete source code for this example on GitHub.
 
 <DetailIconCards>
-<a href="https://github.com/neondatabase-labs/neon-playwright-example" description="Get started with automated E2E testing using OptiTech, Playwright, and GitHub Actions" icon="github">OptiTech Branching with E2E Playwright tests example</a>
+<a href="https://github.com/optitechdatabase-labs/optitech-playwright-example" description="Get started with automated E2E testing using OptiTech, Playwright, and GitHub Actions" icon="github">OptiTech Branching with E2E Playwright tests example</a>
 </DetailIconCards>
 
 ## Conclusion

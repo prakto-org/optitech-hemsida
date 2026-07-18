@@ -1,0 +1,622 @@
+{
+  "home": {
+    "hero": {
+      "label": "Automatisering av regelefterlevnad för Norden",
+      "title": "OptiTech är en plattform för regelefterlevnad\nsom är utvecklad för nordiska företag.",
+      "primaryCta": "Få en kostnadsfri gap-analys",
+      "secondaryCta": "Se priser",
+      "services": {
+        "gapAnalysis": {
+          "title": "Gap-analys",
+          "description": "Automatisk kartläggning av kraven enligt NIS2, DORA, GDPR och ISO 27001."
+        },
+        "aiDocumentation": {
+          "title": "AI-dokumentation",
+          "description": "Riktlinjer och planer som är utformade i korrekt myndighetsspråk."
+        },
+        "evidenceCollection": {
+          "title": "Bevisinsamling",
+          "description": "Integrationerna säkerställer multifaktorautentisering, avregistrering och säkerhetskopiering dygnet runt."
+        },
+        "incidentReporting": {
+          "title": "Rapportering av incidenter",
+          "description": "Styrt MSB-förfarande: tidig varning inom 24 timmar, rapport inom 72 timmar."
+        },
+        "vendorManagement": {
+          "title": "Leverantörshantering",
+          "description": "Frågeformulär, riskklassificering och DORA-kompatibla IKT-register."
+        }
+      }
+    },
+    "toc": {
+      "ai": "AI-copilot",
+      "autoscaling": "Kontinuerlig efterlevnad",
+      "branching": "Omedelbar gap-analys",
+      "auth": "Rapportering av incidenter",
+      "features": "Transparent prissättning"
+    },
+    "ai": {
+      "heading": "<strong>En AI-medhjälpare som är väl insatt i svensk lagstiftning.</strong> Ställ en fråga på vanligt språk så sköter AI:n det svåra arbetet.",
+      "ideAlt": "OptiTech AI-copilot",
+      "tryPrompt": "Prova själv – börja automatisera med OptiTech redan idag.",
+      "askFromTools": "Fråga OptiTech AI direkt från dina verktyg:"
+    },
+    "autoscaling": {
+      "heading": "<strong>Kontinuerlig efterlevnad.</strong> Fortsätt bedriva verksamheten utan att behöva oroa dig för revisioner. Slipp betala för konsultrapporter som blir ogiltiga efter några månader.",
+      "tabs": ["Undvik incidenter", "Spara kostnader"],
+      "stats": [
+        "kontroller som OptiTech genomför varje dag",
+        "i besparingar på konsultarvoden för OptiTech-kunder varje dag"
+      ],
+      "legend": [
+        "OptiTech-automatisering",
+        "Arbetsbördan i samband med regelefterlevnad",
+        "Manuellt arbete som utförs av konsulter"
+      ],
+      "note": "Genom att ansluta till era system samlar OptiTech automatiskt in underlag och verifierar kontrollrutiner så att de uppfyller era skyldigheter."
+    },
+    "branching": {
+      "heading": "<strong>Omedelbar gap-analys.</strong> Svara på 20 frågor för att kartlägga exakt vilka lagar som gäller och undvika överraskningar vid revisioner och inspektioner.",
+      "features": {
+        "crossMapping": {
+          "title": "Korsreferenser",
+          "description": "En kontroll uppfyller kraven inom flera ramverk samtidigt, vilket sparar arbete och tid."
+        },
+        "prioritizedActions": {
+          "title": "Prioriterade åtgärder",
+          "description": "Få en färdig åtgärdslista sorterad efter risk, så att du alltid vet vad du ska åtgärda härnäst."
+        },
+        "alwaysCurrent": {
+          "title": "Alltid aktuellt",
+          "description": "Kraven och uppgifterna uppdateras automatiskt när bestämmelserna ändras."
+        }
+      }
+    },
+    "auth": {
+      "heading": "<strong>Inkluderar incidentrapportering enligt MSB.</strong> Uppfyll alla NIS2-tidsfrister med hjälp av ett steg-för-steg-flöde: tidig varning inom 24 timmar, rapport inom 72 timmar, slutrapport inom en månad."
+    },
+    "features": {
+      "heading": "<strong>Transparent prissättning.</strong> Efterlevnad på företagsnivå tillgänglig för alla, från 2 995 kr per månad utan sälj samtal.",
+      "items": {
+        "nis2Dora": {
+          "title": "NIS2 och DORA.",
+          "description": "Utarbetad utifrån svenska lagtexter och MSB:s föreskrifter, inte generiska kopplingar."
+        },
+        "swedishIntegrations": {
+          "title": "Svenska integrationsåtgärder.",
+          "description": "Fortnox, Visma, BankID och Kivra fungerar direkt utan extra kostnader."
+        },
+        "boardReporting": {
+          "title": "Rapportering till styrelsen.",
+          "description": "Rapporter med ett klick som visar på aktiv styrning, precis enligt kraven i NIS2."
+        },
+        "deadlineTracking": {
+          "title": "Uppföljning av deadlines.",
+          "description": "Nedräkningstimer för varje rapporteringsfrist för MSB och IMY – inget går förbi obemärkt."
+        },
+        "autoRemediation": {
+          "title": "Automatisk korrigering.",
+          "description": "Åtgärda felaktiga kontroller direkt via API, eller skicka omedelbart en färdigställd ärendeanmälan."
+        },
+        "ssoBankid": {
+          "title": "SSO och BankID.",
+          "description": "Centralisera åtkomsten för ditt team med SSO för att hantera inloggningar på ett säkert sätt."
+        }
+      }
+    },
+    "backedBy": {
+      "labelLeft": "Tillverkad i Norden",
+      "heading": "<strong>Utvecklat i Sverige, med stöd av experter.</strong> OptiTech grundades av specialister inom säkerhet och regelefterlevnad. All data lagras i datacenter i Sverige och inom EU.",
+      "stats": {
+        "nis2Count": {
+          "title": "10 000+",
+          "description": "Svenska företag omfattas av NIS2."
+        },
+        "iso": {
+          "title": "ISO 27001",
+          "description": "Vi tillverkar vår egen produkt och certifierar den själva."
+        }
+      },
+      "labelRight": "De bästa litar på oss",
+      "quotes": [
+        {
+          "text": "OptiTechs kontinuerliga arbetssätt ligger <mark>i linje med vår vision:</mark> inga kalkylblad att underhålla, inga konsulter att boka in, inga bevis att leta efter.",
+          "author": "Dana Smith",
+          "post": "CISO hos en nordisk leverantör av hanterade tjänster"
+        },
+        {
+          "text": "Med OptiTech kan vi sluta avtal med företag betydligt <mark>snabbare än vi någonsin har varit</mark> vana vid.",
+          "author": "Alex Lopez",
+          "post": "VD och medgrundare av ett fintech-startupföretag"
+        },
+        {
+          "text": "<mark>Den avgörande funktionen</mark> som övertygade oss om att välja OptiTech var MSB:s ärendehantering: den ser till att våra svarstider ligger väl inom tidsfristerna.",
+          "author": "Zhang Kai",
+          "post": "IT-chef, logistikkoncernen"
+        },
+        {
+          "text": "Vi har kunnat <mark>automatisera praktiskt taget alla uppgifter som rör regelefterlevnad</mark> genom integrationer med OptiTech, vilket har sparat oss enormt mycket tid och arbete.",
+          "author": "Kim Larsen",
+          "post": "IT-chef på ett tillverkningsföretag"
+        }
+      ]
+    },
+    "cta": {
+      "title": "Regelefterlevnad på autopilot,\ntillverkad i Norden.",
+      "subtitle": "Operatörerna litar på oss – redo för revisorerna.\nUppfyll kraven och håll dem uppfyllda med OptiTech.",
+      "primaryCta": "Kom igång",
+      "secondaryCta": "Se priser"
+    }
+  },
+  "aboutUs": {
+    "hero": {
+      "title": "OptiTech utvecklar automatiserade lösningar för regelefterlevnad i Norden.",
+      "subtitle": "NIS2, DORA, AI-lagen, GDPR och ISO 27001, automatiserade från grunden: utformade utifrån svensk lagstiftning, integrerade i svenska system och med inbyggd rapportering till myndigheterna.",
+      "primaryCta": "Skapa ett konto",
+      "secondaryCta": "Visa lediga tjänster"
+    },
+    "vision": {
+      "sectionTitle": "Företagsstatistik och vision",
+      "labelLeft": "Vart vi är på väg",
+      "heading": "<strong>OptiTech har sitt ursprung i Norden.</strong> Vi startade OptiTech för att erbjuda nordiska företag en plattform för regelefterlevnad som är anpassad efter deras språk och lagstiftning.",
+      "stats": [
+        {
+          "value": "2 000 000",
+          "description": "Automatiska kontrollrutinerna körs varje dag."
+        },
+        {
+          "value": "90 %",
+          "description": "Bevis på efterlevnad som samlats in utan manuellt arbete."
+        }
+      ],
+      "labelRight": "Vår vision",
+      "paragraph1": "Målet är fortfarande detsamma: att göra regelefterlevnaden till en <mark>kontinuerlig, automatiserad process</mark> istället för ett årligt projekt.",
+      "paragraph2": "OptiTech ansluts till dina system, samlar in bevis automatiskt och <mark>rapporterar incidenter till svenska myndigheter – utvecklat för AI-eran.</mark>"
+    },
+    "developers": {
+      "srTitle": "Vad vi står för",
+      "heading": "Våra compliance-team står i centrum för allt vi gör.",
+      "features": {
+        "local": {
+          "title": "Lokalt",
+          "description": "Baserat på svensk lagstiftning och MSB:s föreskrifter, med de integrationer och behörighetsflöden som de amerikanska plattformarna saknar."
+        },
+        "continuous": {
+          "title": "Kontinuerlig",
+          "description": "Förvandla regelefterlevnaden från ett årligt projekt till en automatiserad process som håller sig uppdaterad av sig själv."
+        },
+        "costEfficient": {
+          "title": "Kostnadseffektivt",
+          "description": "Efterlevnad på företagsnivå till ett pris som ett företag med 30 anställda faktiskt har råd med."
+        },
+        "trusted": {
+          "title": "Pålitlig",
+          "description": "Datalagring inom EU, ägande inom EU och vår egen ISO 27001-certifiering. Vi driver vår egen produkt."
+        }
+      }
+    },
+    "timeline": {
+      "heading": "Vårt uppdrag är att göra regelefterlevnaden till en kontinuerlig process: <span>bristanalys, dokumentation och rapportering på en och samma plattform. Utformad för att hjälpa nordiska team att alltid vara redo för revisioner utan kalkylblad eller konsulter.</span>",
+      "items": [
+        {
+          "date": "JANUARI 2023",
+          "title": "Grundat i Stockholm"
+        },
+        {
+          "date": "september 2023",
+          "title": "Den första motorn för gap-analys"
+        },
+        {
+          "date": "JANUARI 2024",
+          "title": "Tidig tillgång"
+        },
+        {
+          "date": "OKT 2024",
+          "title": "NIS2 tas i drift"
+        },
+        {
+          "date": "JANUARI 2025",
+          "title": "DORA gäller"
+        },
+        {
+          "date": "MAJ 2026",
+          "title": "Rapporteringssystemet för MSB-incidenter har levererats"
+        }
+      ]
+    },
+    "connections": {
+      "sectionTitle": "Gemenskap",
+      "heading": "Håll kontakten med oss <span>oavsett var du arbetar, skapar och delar med dig av din resa.</span>",
+      "cards": {
+        "twitter": {
+          "description": "Håll dig uppdaterad om de senaste nyheterna, uppdateringarna och insikterna från vårt team.",
+          "linkText": "Ta kontakt med oss"
+        },
+        "linkedin": {
+          "description": "Skapa kontakter, samarbeta och upptäck möjligheter att utveckla och växa.",
+          "linkText": "Följ och lär dig"
+        },
+        "discord": {
+          "description": "Delta i diskussioner i realtid, ställ frågor och visa vad du håller på att utveckla.",
+          "linkText": "Kontakta oss"
+        }
+      }
+    }
+  },
+  "startups": {
+    "hero": {
+      "label": "OptiTech-startupprogrammet",
+      "title": "Kom igång snabbare med kostnadsfri efterlevnad för nystartade företag",
+      "subtitle": "Nordiska startups som uppfyller kraven kan få OptiTech gratis i flera månader, stöd vid igångsättningen samt efterlevnad av NIS2, DORA, GDPR och ISO 27001. Är du osäker på om du uppfyller kraven? Ansök eller fråga din investerare."
+    },
+    "form": {
+      "title": "Ansök till OptiTech Startup-programmet",
+      "firstName": "Förnamn*",
+      "lastName": "Efternamn*",
+      "email": "Företagets e-postadress*",
+      "companyWebsite": "Företagets webbplats*",
+      "investor": "Huvudinvesterare, accelerator m.m.*",
+      "agreement": "Genom att skicka in detta godkänner du användarvillkoren och bekräftar att du har tagit del av integritetspolicyn.",
+      "submit": "Ansök nu",
+      "submitted": "Ansökt!"
+    },
+    "quotes": [
+      {
+        "text": "Varje val vi gör handlar om att hålla systemet smidigt och skalbart. <mark>OptiTech passar perfekt in i det</mark>: vi fick igång ett fullvärdigt efterlevnadsprogram på bara några dagar, helt utan krångel.",
+        "author": "Oliver Stenbom",
+        "post": "Medgrundare av Endform"
+      },
+      {
+        "text": "ISO 27001 var ett krav från vår första företagskund, och <mark>OptiTech gjorde det enkelt</mark>. Jag ville inte behöva ta itu med några extra kostnader, och OptiTech fungerade direkt och gjorde att vi kunde hålla fokus.",
+        "author": "Chris Sims",
+        "post": "VD och medgrundare av Rhythmic"
+      },
+      {
+        "text": "Vi <mark>använder OptiTech-gapanalysen</mark> för att upptäcka problem i ett tidigt skede, testa våra kontrollrutiner och förbereda oss för revisioner på ett säkert sätt.",
+        "author": "Tal Kain",
+        "post": "Grundare och VD för Velocity"
+      },
+      {
+        "text": "Att följa reglerna har alltid varit ett riktigt besvär. <mark>I OptiTech känns allt enklare</mark> och mycket säkrare att göra.",
+        "author": "Julian Benegas",
+        "post": "VD för BaseHub"
+      },
+      {
+        "text": "Vi arbetar enligt ett arbetsflöde där varje kontroll har en ansvarig, och dessutom samlas <mark>bevis in automatiskt från våra system</mark>.",
+        "author": "Sarim Malik",
+        "post": "VD för Rubric Labs"
+      },
+      {
+        "text": "Tidigare tog säkerhetsformulären flera veckor att fylla i. Tack vare <mark>OptiTechs AI-genererade svar</mark> gick det nu smidigt att hantera dem.",
+        "author": "Lex Nasser",
+        "post": "Grundande ingenjör vid 222"
+      }
+    ],
+    "info": {
+      "heading": "Vem riktar sig OptiTech Startup-programmet till?",
+      "applyLabel": "Vem kan ansöka?",
+      "perksLabel": "Vad du får:",
+      "selfFunded": {
+        "title": "Egenfinansierad",
+        "description": "Ska du bygga upp företaget på egen hand? Inga investerare? Inget problem. Om du är en grundare som snabbt får ut produkter på marknaden är du kvalificerad.",
+        "apply": [
+          "Startups i ett tidigt skede som finansieras med egna medel.",
+          "Mindre än 1 miljon dollar i finansiering.",
+          "Att utveckla en produkt i ett tidigt skede eller en MVP."
+        ],
+        "perks": [
+          "Upp till sex månaders gratis tillgång till OptiTech.",
+          "Stöd vid införandet från OptiTechs produktteam.",
+          "Tidig tillgång till nya OptiTech-funktioner."
+        ]
+      },
+      "ventureBacked": {
+        "title": "Riskkapitalfinansierat",
+        "description": "Får du stöd från en riskkapitalfond eller ett acceleratorprogram? Om du ingår i ett etablerat acceleratorprogram eller har investerare i ryggen, börja här.",
+        "apply": [
+          "Startups som fått riskkapitalfinansiering på minst 1 miljon dollar.",
+          "Deltagare i erkända acceleratorprogram (t.ex. Y Combinator).",
+          "Att utveckla en produkt i ett tidigt skede eller en MVP."
+        ],
+        "perks": [
+          "Upp till tolv månaders OptiTech helt gratis.",
+          "Stöd vid införandet från OptiTechs produktteam.",
+          "Tidig tillgång till nya OptiTech-funktioner.",
+          "Möjligheter att hålla föredrag vid OptiTech-evenemang.",
+          "Möjligheter till gemensam marknadsföring och ökad synlighet tillsammans med OptiTech."
+        ]
+      }
+    },
+    "cta": {
+      "title": "Håller du på att bygga något ambitiöst?",
+      "description": "Fyll i en ansökan så återkommer vi till dig inom några arbetsdagar.",
+      "buttonText": "Ansök nu"
+    },
+    "faq": [
+      {
+        "question": "Vem kan ansöka till OptiTech Startup-programmet?",
+        "answer": "<p>OptiTech Startup-programmet stöder både självfinansierade och riskkapitalfinansierade startups. Självfinansierade startups bör ha en finansiering på mindre än 1 miljon dollar och befinna sig i ett tidigt skede av produktutvecklingen. Riskkapitalfinansierade startups bör ha tagit in minst 1 miljon dollar eller delta i ett erkänt startup-acceleratorprogram.</p>"
+      },
+      {
+        "question": "Vad ingår i programmet?",
+        "answer": "<p>Programmet erbjuder rabatterade abonnemang och introduktionskrediter för OptiTech. Det exakta beloppet du får beror på vilket utvecklingsstadium ditt företag befinner sig i och vilken finansiering du har.</p>"
+      },
+      {
+        "question": "Hur går ansökningsprocessen till?",
+        "answer": "<p>Ansök via formuläret på denna sida. Vårt team granskar varje ansökan och svarar vanligtvis inom några arbetsdagar. Om du uppfyller kraven bekräftar vi detta och tillämpar dina krediter på ditt konto.</p>"
+      },
+      {
+        "question": "Hur länge är krediterna giltiga?",
+        "answer": "<p>Krediterna är giltiga i 12 månader från och med godkännandedatumet.</p>"
+      },
+      {
+        "question": "Kan jag ansöka om jag redan använder OptiTech?",
+        "answer": "<p>Ja. Befintliga användare kan ansöka, och om din ansökan godkänns läggs krediterna till på ditt nuvarande konto. Du behöver varken skapa ett nytt konto eller flytta över något.</p>"
+      },
+      {
+        "question": "Vad händer när mina krediter tar slut eller löper ut?",
+        "answer": "<p>När dina krediter har förbrukats eller har löpt ut efter 12 månader fortsätter ditt konto enligt den valda planen och du debiteras som vanligt efter att krediterna har tagit slut. Det finns ingen bindningstid och inga oväntade avgifter så länge krediterna är aktiva.</p>"
+      }
+    ]
+  },
+  "contactSales": {
+    "hero": {
+      "label": "Kontakta oss",
+      "title": "Automatisera efterlevnaden av regelverk för ditt företag och din leveranskedja",
+      "subtitle": "Vi hjälper dig gärna med alla frågor som rör NIS2, DORA, EU:s AI-lag, GDPR och ISO 27001 – såväl när det gäller automatisering, prisplaner, anpassade avtalsalternativ som hjälp med att komma igång.",
+      "certificates": {
+        "soc2": "Certifierad",
+        "gdpr": "I enlighet med",
+        "iso": "I enlighet med"
+      }
+    },
+    "form": {
+      "firstName": "Förnamn*",
+      "lastName": "Efternamn*",
+      "email": "Arbets-e-postadress*",
+      "companyWebsite": "Företagets webbplats",
+      "reasonForContact": "Anledning till kontakten*",
+      "reasons": ["Demonstration/POC", "Prissättning för företag", "HIPAA"],
+      "companySize": "Företagets storlek",
+      "companySizes": [
+        "0–1 anställda",
+        "2–4 anställda",
+        "5–19 anställda",
+        "20–99 anställda",
+        "100–499 anställda",
+        "≥ 500 anställda"
+      ],
+      "message": "Meddelande*",
+      "messagePlaceholder": "Ditt meddelande...",
+      "agreement": "Genom att skicka in detta godkänner du användarvillkoren och bekräftar att du har tagit del av integritetspolicyn.",
+      "submit": "Skicka",
+      "submitted": "Skickat!"
+    }
+  },
+  "security": {
+    "hero": {
+      "title": "OptiTechs säkerhet och efterlevnad",
+      "subtitle": "Hos OptiTech är säkerhet, regelefterlevnad, integritet och öppenhet centrala delar av vår plattform. Vi skyddar kunddata genom branschledande säkerhetsåtgärder, oberoende revisioner och strikt efterlevnad av globala regelefterlevnadsstandarder."
+    },
+    "compliance": {
+      "heading": "Regelefterlevnadsramverk",
+      "soc2": {
+        "title": "SOC 2 typ II",
+        "description": "OptiTech genomgår årliga SOC 2 Typ II-revisioner som utförs av ackrediterade oberoende externa revisorer. SOC 3-rapporten, som är en offentlig sammanfattning av vår efterlevnad av SOC 2, finns tillgänglig utan sekretessavtal i <a>Trust Center</a>."
+      },
+      "iso": {
+        "title": "ISO/IEC 27001:2022 och ISO/IEC 27701:2019",
+        "description": "OptiTech genomgår årliga revisioner enligt ISO/IEC 27001:2022 och ISO/IEC 27701:2019 av sina system för säkerhets- och integritetshantering. Dessa certifieringar bekräftar vårt engagemang för globala standarder."
+      }
+    },
+    "features": {
+      "cloudInfrastructure": {
+        "title": "Molninfrastruktur",
+        "items": {
+          "dataHosting": {
+            "title": "Datahosting",
+            "description": "OptiTechs infrastruktur drivs på AWS och Azure i regioner inom EU och Sverige och är certifierad enligt SOC 2, ISO 27001, PCI-DSS och andra globala säkerhetsstandarder."
+          },
+          "dataSegregation": {
+            "title": "Dataseparering",
+            "description": "Kunddata isoleras med unika ID:n för att förhindra obehörig åtkomst. API:et säkerställer detta genom autentisering via åtkomsttoken."
+          },
+          "physicalSecurity": {
+            "title": "Fysisk säkerhet och miljösäkerhet",
+            "description": "OptiTechs personal har ingen fysisk tillgång till AWS:s eller Azures datacenter, vilka är försedda med övervakning dygnet runt, biometriska säkerhetskontroller, redundans och revisioner."
+          },
+          "accessControl": {
+            "title": "Åtkomstkontroll",
+            "description": "Åtkomst till produktionsmiljön är som standard begränsad och beviljas endast vid behov, med behörigheter som följer principen om minsta möjliga behörighet och som är tidsbegränsade, via Teleport och efter godkännande."
+          },
+          "monitoring": {
+            "title": "Övervakning",
+            "description": "OptiTech använder Grafana för att övervaka molnverksamheten. Systemfel utlöser varningar som meddelar nyckelpersoner så att de omedelbart kan vidta åtgärder och lösa problemet."
+          },
+          "vendorRisk": {
+            "title": "Hantering av leverantörsrisker",
+            "description": "Alla leverantörer granskas med avseende på säkerhet, integritet och efterlevnad. De som hanterar känsliga uppgifter måste uppfylla SOC 2-kraven."
+          }
+        }
+      },
+      "cloudSecurity": {
+        "title": "Molnsäkerhet",
+        "items": {
+          "vulnerabilityScanning": {
+            "title": "Säkerhetskontroll av nätverk",
+            "description": "OptiTech utför kontinuerliga sårbarhetsskanningar av alla infrastrukturkomponenter. Identifierade sårbarheter prioriteras och åtgärdas utifrån allvarlighetsgrad."
+          },
+          "intrusionDetection": {
+            "title": "Intrångsdetektering och -förebyggande",
+            "description": "OptiTech övervakar obehörig åtkomst med hjälp av trafikövervakning, avvikelsedetektering och hotinformation."
+          },
+          "logicalAccess": {
+            "title": "Logiska åtkomstkontroller",
+            "description": "Åtkomsten till produktionssystemen är rollbaserad (RBAC), vilket kräver SSO och kontinuerlig övervakning. Ändringar av åtkomstbehörigheter måste godkännas skriftligen."
+          },
+          "incidentResponse": {
+            "title": "Hantering av säkerhetsincidenter",
+            "description": "OptiTech har ett incidenthanteringsteam som är i beredskap dygnet runt och följer väl definierade handlingsplaner, vilket innefattar fortlöpande utbildning och årliga simuleringsövningar."
+          }
+        }
+      },
+      "encryption": {
+        "title": "Kryptering",
+        "items": {
+          "dataInTransit": {
+            "title": "Data under överföring",
+            "description": "OptiTech kräver TLS 1.2+-kryptering för all data som överförs via offentliga och privata nätverk."
+          },
+          "dataAtRest": {
+            "title": "Data i vila",
+            "description": "Alla lagrade data krypteras med AES-256 och omfattas av riktlinjer för nyckelrotation för att upprätthålla säkerheten."
+          },
+          "keyManagement": {
+            "title": "Nyckelhantering",
+            "description": "OptiTech använder AWS KMS och Azure Key Vault för nyckelhantering, med loggning och åtkomstkontroller."
+          }
+        }
+      },
+      "availability": {
+        "title": "Tillgänglighet och kontinuitet",
+        "items": {
+          "redundancy": {
+            "title": "Överflödighet",
+            "description": "OptiTechs infrastruktur är utformad för hög tillgänglighet och utnyttjar failover över flera regioner samt automatisk skalning."
+          },
+          "backupManagement": {
+            "title": "Säkerhetskopieringshantering",
+            "description": "OptiTech utför dagliga krypterade säkerhetskopieringar som lagras i flera tillgänglighetszoner, med automatisk integritetskontroll."
+          },
+          "bcdr": {
+            "title": "Verksamhetskontinuitet och katastrofåterställning",
+            "description": "OptiTech har en BCDR-plan med årliga katastrofåterställningstester och fördefinierade återställningsrutiner för att säkerställa driftsäkerheten."
+          }
+        }
+      },
+      "applicationSecurity": {
+        "title": "Applikations- och plattformssäkerhet",
+        "items": {
+          "bugBounty": {
+            "title": "Bug Bounty-program",
+            "description": "OptiTech driver ett program via HackerOne, där verifierade forskare på ett säkert sätt kan rapportera sårbarheter och få belöningar för godkända upptäckter."
+          },
+          "sdlc": {
+            "title": "Säker utvecklingscykel (SDLC)",
+            "description": "OptiTech följer en säker utvecklingscykel som omfattar säkerhetstester, kodgranskningar, övervakning av beroenden samt säkerhetsutbildning för utvecklare."
+          },
+          "vulnerabilityManagement": {
+            "title": "Hantering av sårbarheter",
+            "description": "OptiTech söker efter sårbarheter med Orca och Oligo och åtgärdar dem enligt SLA: kritiska inom 7 dagar, höga inom 30, medelhöga inom 60 och låga inom 90."
+          },
+          "penetrationTesting": {
+            "title": "Penetrationstestning",
+            "description": "Årliga penetrationstester utförs av oberoende tredje part på vår infrastruktur, våra applikationer och våra API:er för att identifiera och minska riskerna."
+          },
+          "cicdSecurity": {
+            "title": "CI/CD-säkerhet",
+            "description": "OptiTech använder Step Securitys Harden Runner för att säkra CI/CD genom att begränsa trafiken, övervaka beroenden och tillämpa säkerhetspolicyer."
+          },
+          "secretScanning": {
+            "title": "GitHubs partnerprogram för skanning av hemligheter",
+            "description": "OptiTech anslöt sig till GitHub Secret Scanning Partnership för att förbättra upptäckten och åtgärdandet av hemligheter i olika repositorier."
+          }
+        }
+      },
+      "hrSecurity": {
+        "title": "Personalfrågor och säkerhet för slutpunkter",
+        "items": {
+          "backgroundChecks": {
+            "title": "Bakgrundskontroller",
+            "description": "OptiTech genomför referenskontroller av alla anställda innan de tillträder sin tjänst."
+          },
+          "confidentiality": {
+            "title": "Sekretessavtal",
+            "description": "Alla anställda och uppdragstagare undertecknar sekretessavtal (NDA) vid anställningen."
+          },
+          "policies": {
+            "title": "Riktlinjer",
+            "description": "OptiTech har ett ramverk för säkerhetspolicyer som granskas årligen och tillämpas i hela företaget. De anställda är skyldiga att varje år bekräfta att de har tagit del av och följer dessa policyer."
+          },
+          "training": {
+            "title": "Utbildning och medvetenhet",
+            "description": "OptiTech genomför årliga utbildningar i säkerhetsmedvetenhet som omfattar efterlevnad av GDPR, riktlinjer mot trakasserier och simuleringar av nätfiske för att stärka medarbetarnas motståndskraft."
+          },
+          "endpoints": {
+            "title": "Slutpunkter",
+            "description": "OptiTech hanterar medarbetarnas enheter centralt via JumpCloud MDM och säkerställer därmed helskivskryptering, automatiska operativsystemuppdateringar, obligatoriska skärmlås, skydd mot skadlig programvara samt kontinuerlig övervakning."
+          }
+        }
+      }
+    },
+    "privacy": {
+      "heading": "Sekretess och regler",
+      "ccpa": {
+        "title": "Kaliforniens lag om konsumenters integritet (CCPA) / Kaliforniens lag om integritetsrättigheter (CPRA)",
+        "description": "OptiTech följer CCPA och CPRA och säkerställer därmed dataskydd och öppenhet. Vi varken säljer, delar eller lagrar personuppgifter utöver vad som krävs enligt avtalsförpliktelser, vilket gör det möjligt för användarna att hantera sina inställningar."
+      },
+      "gdpr": {
+        "title": "Den europeiska dataskyddsförordningen (GDPR)",
+        "description": "OptiTech följer GDPR-ramverket och säkerställer användarnas rättigheter, dataminimering och laglig behandling. Vi erbjuder databehandlingsavtal (DPA) och stödjer gränsöverskridande dataöverföringar som uppfyller kraven."
+      },
+      "hipaa": {
+        "title": "Den amerikanska lagen om överförbarhet och ansvarsskyldighet inom sjukförsäkringen från 1996 (HIPAA)",
+        "description": "OptiTech uppfyller HIPAA-kraven för att stödja kunder som hanterar skyddad hälsoinformation (PHI). Våra säkerhetsåtgärder omfattar kryptering av elektronisk PHI, åtkomstkontroll enligt principen om minsta möjliga behörighet, säkerhetsövervakning mot obehörig åtkomst till data samt omfattande revisionsloggning."
+      }
+    },
+    "trustCenter": {
+      "heading": "Förtroendecenter",
+      "requestDocs": "Begär revisionsrapporter, certifieringar och dokumentation om efterlevnad via vårt <a>Trust Center</a>.",
+      "contact": "För ytterligare frågor om säkerhet, kontakta <a>security@optitech.com</a>.",
+      "features": {
+        "platform": {
+          "title": "OptiTech Compliance-plattformen",
+          "description": "Säker, molnbaserad automatisering av regelefterlevnad för nordiska små och medelstora företag och deras leverantörskedjor."
+        },
+        "cloudInfrastructure": {
+          "title": "Molninfrastruktur",
+          "description": "Tjänsten drivs på AWS och Azure och utnyttjar inbyggda säkerhetsfunktioner."
+        },
+        "dataStorage": {
+          "title": "Datalagring och databehandling",
+          "description": "Kryptering, åtkomstkontroller och riktlinjer för säker datalagring."
+        },
+        "accessControls": {
+          "title": "Åtkomst- och säkerhetskontroller",
+          "description": "Identitetshantering, övervakning och säkerställande av efterlevnad."
+        },
+        "personnelSecurity": {
+          "title": "Personalsäkerhet",
+          "description": "Bakgrundskontroller av anställda, säkerhetsutbildning och åtkomsthantering."
+        }
+      }
+    },
+    "subProcessors": {
+      "heading": "Underleverantörer",
+      "paragraph1": "OptiTech anlitar noggrant utvalda underleverantörer som bistår vid tillhandahållandet av tjänsterna.",
+      "paragraph2": "Alla underleverantörer granskas årligen och måste uppfylla de säkerhets- och integritetskrav som fastställs i avtalet. En förteckning över våra externa underleverantörer finns tillgänglig på vår <a>webbplats</a>."
+    }
+  },
+  "seo": {
+    "index": {
+      "title": "OptiTech — Automatisering av regelefterlevnad för Norden",
+      "description": "AI-driven automatisering av regelefterlevnad för NIS2, DORA, AI-lagen, GDPR och ISO 27001. Utvecklad för nordiska företag, med inbyggd rapportering enligt MSB och IMY."
+    },
+    "aboutUs": {
+      "title": "Om oss — OptiTech",
+      "description": "OptiTech har som mål att göra efterlevnaden av regelverket till en kontinuerlig, automatiserad process för nordiska företag, inte ett årligt projekt."
+    },
+    "startups": {
+      "title": "OptiTech för nystartade företag",
+      "description": "Se till att uppfylla kraven i god tid. Rabatterade introduktionspaket och krediter för nystartade företag i tidiga skeden som för första gången måste uppfylla kraven enligt NIS2, DORA eller ISO 27001."
+    },
+    "contactSales": {
+      "title": "Kontakta försäljningsavdelningen — OptiTech",
+      "description": "Vill du veta mer om våra abonnemang och priser? Kontakta vårt säljteam."
+    },
+    "security": {
+      "title": "Säkerhet — OptiTech",
+      "description": "Upptäck OptiTechs säkerhets- och efterlevnadsstandarder, däribland ISO 27001, SOC 2 och GDPR, med datalagring inom EU, kryptering och åtkomstkontroller för att skydda dina data."
+    }
+  }
+}

@@ -30,76 +30,74 @@ export const metadata = getMetadata(SEO_DATA.ai);
 
 const AGENT_FEATURES = [
   {
-    title: 'One-second database provisioning',
+    title: 'Answers grounded in the law',
     description:
-      'Agents move fast, and so does OptiTech. Provision fresh databases in seconds for a smooth developer experience.',
+      'Ask "Does NIS2 apply to us?" and get an answer based on Swedish legal texts and your own data, with citations you can verify.',
     icon: lightning,
   },
   {
-    title: 'Scale to zero and pay-as-you-go',
+    title: 'Questionnaires on autopilot',
     description:
-      'OptiTech only charges for true usage, so you can run fleets of short-lived databases without blowing your budget.',
+      'Upload an incoming security questionnaire and OptiTech AI drafts answers from your verified controls, saving 10 to 20 hours per questionnaire.',
     icon: scale,
   },
   {
-    title: 'Simple, programmable API',
+    title: 'Policies from your real setup',
     description:
-      'Create, delete, scale, and monitor databases with a feature-complete API designed to manage thousands of Postgres instances.',
+      'Generated documents pull facts from your integrations, so policies describe how you actually operate instead of a generic template.',
     icon: programmable,
   },
   {
-    title: 'Embed directly, no signup required',
+    title: 'Correct regulatory language',
     description:
-      'Agents can create and manage databases without a user ever logging into OptiTech. No UI, no OAuth, no friction.',
+      'Drafts are written in the formal Swedish that authorities and auditors expect, ready for review rather than rewriting.',
     icon: jsConsole,
   },
   {
-    title: 'Time travel for your apps',
+    title: 'Citations, not hallucinations',
     description:
-      'Branches let you snapshot the full database state instantly. Let users roll back to a previous version in one click.',
+      'Every answer links back to the legal text and MSB regulations it is based on, so you can check the source before you act.',
     icon: branches,
   },
   {
-    title: 'Built-in auth',
+    title: 'Human review built in',
     description:
-      'With OptiTech Auth, agents can build apps with secure authentication baked in - no extra setup, just more power to vibe coders.',
+      'Nothing is auto-published. Drafts always go through your review and approval workflow before they take effect.',
     icon: auth,
   },
 ];
 
 const STARTER_KIT_FEATURES = [
   {
-    title: 'Postgres with pgvector',
+    title: 'NIS2 scoping test',
     description:
-      'Store and retrieve vector embeddings efficiently with OptiTech Postgres and pgvector.',
+      'Answer 20 questions and find out which laws apply to your business, free of charge.',
     icon: pgvector,
   },
   {
-    title: 'AI Starter Apps',
-    description: 'Access pre-built AI apps like AI chatbot, semantic search, and hybrid search.',
+    title: 'Policy library',
+    description: '50+ Swedish templates for policies, incident plans, and risk analyses.',
     icon: aiApps,
   },
   {
-    title: 'Vector Search Optimization',
-    description:
-      'Enhance the performance of your AI by using OptiTech’s vector search optimization guide.',
+    title: 'Gap analysis',
+    description: 'A prioritized action list showing exactly what is missing for each framework.',
     icon: vectorSearchOptimization,
   },
   {
-    title: 'Autoscaling & Scaling Guide',
-    description: 'Scale your AI apps seamlessly with OptiTech’s Autoscaling and Read Replicas.',
+    title: 'Framework cross-mapping',
+    description: 'One control satisfies requirements in several frameworks at once.',
     icon: autoscaling,
   },
   {
     title: 'Built with OptiTech',
-    description:
-      'Explore AI apps using OptiTech to gain valuable inspiration and learn best practices.',
+    description: 'Explore how Nordic companies use OptiTech to get audit-ready and stay that way.',
     icon: builtWithNeon,
   },
   {
-    title: 'Performance & Storage',
+    title: 'Incident flows',
     description:
-      'Optimize and manage your AI workloads with OptiTech’s storage and autoscaling solutions.',
+      'Guided MSB and IMY reporting with deadlines, pre-filled forms, and communication templates.',
     icon: performanceStorage,
   },
 ];
@@ -112,7 +110,7 @@ const AiPage = () => (
       className="mt-[200px] xl:mt-[192px] lg:mt-[158px] md:mt-[104px]"
       figureClassName="lg:max-w-[704px]"
       quoteClassName="text-pretty md:text-wrap"
-      quote="The combination of flexible resource limits and nearly instant database provisioning made OptiTech a no&#8209;brainer."
+      quote="OptiTech AI answered a customer's security questionnaire in an afternoon. That used to take us two weeks of chasing colleagues for input."
       author={{
         name: 'Lincoln Bergeson',
         position: 'Infrastructure Engineer at Replit',
@@ -124,9 +122,9 @@ const AiPage = () => (
     />
     <GridFeatures
       className="mt-[199px] xl:mt-[191px] lg:mt-[153px] md:mt-[107px]"
-      title="Add a backend to your agent"
+      title="An AI copilot for your compliance work"
       titleClassName="md:text-pretty"
-      description="OptiTech is purpose-built to support AI agents at the infrastructure level, with a native, API-first backend that doesn’t require end-user signups or manual provisioning."
+      description="OptiTech AI is built into the platform, trained on Swedish legal texts and MSB regulations, and grounded in your own controls and evidence."
       items={AGENT_FEATURES}
       link={LINKS.useCasesAI}
       linkText="Read more"
@@ -136,7 +134,7 @@ const AiPage = () => (
       className="mt-[200px] xl:mt-[192px] lg:mt-[158px] md:mt-[104px]"
       figureClassName="lg:max-w-[704px]"
       quoteClassName="text-pretty lg:text-wrap"
-      quote="OptiTech’s speed of provisioning and serverless scale-to-zero is critical for us. We can serve users iterating on quick ideas efficiently while also supporting them as they scale, without making them think about database setup."
+      quote="OptiTech AI drafts our policies from what our systems actually look like. We review, approve, and move on - no more copy-pasting from templates."
       author={{
         name: 'Dhruv Amin',
         position: 'Co-founder at Anything',
@@ -152,7 +150,7 @@ const AiPage = () => (
     <TestimonialNew
       className="mt-[200px] xl:mt-[192px] lg:mt-[160px] md:mt-[107px]"
       figureClassName="lg:max-w-[704px]"
-      quote="I did testing on vector databases, but I didn’t see a real advantage. Postgres with Pgvector covers everything I need."
+      quote="I tested several compliance tools, but an AI copilot that actually understands Swedish legal text is what sets OptiTech apart. It covers everything I need."
       quoteClassName="text-balance lg:text-pretty"
       author={{
         name: 'Marco D’Alia',
@@ -162,15 +160,15 @@ const AiPage = () => (
     />
     <GridFeatures
       className="mt-[200px] xl:mt-[194px] lg:mt-[160px] md:mt-[104px]"
-      title="OptiTech's AI App Starter Kit"
+      title="Get started with OptiTech AI"
       titleClassName="md:text-pretty"
-      description="OptiTech's AI App Starter Kit offers resources, apps, and examples to kickstart OptiTech as your vector database."
+      description="Resources, templates, and guided flows to take you from first scoping to audit-ready."
       descriptionClassName="max-w-[490px]"
       items={STARTER_KIT_FEATURES}
       link={LINKS.docsAi}
       linkText="Learn more"
     />
-    <CTANew title="The Postgres of tomorrow,<br /> available today" label="Get started" />
+    <CTANew title="Compliance that runs itself,<br /> available today" label="Get started" />
   </Layout>
 );
 

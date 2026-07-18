@@ -19,14 +19,14 @@ const operation = {
     },
   },
   examples: {
-    curl: 'curl "https://console.neon.tech/api/v2/projects"',
+    curl: 'curl "https://api.optitech.com/v1/projects"',
     representative: {
-      curl: 'curl "https://console.neon.tech/api/v2/projects" \\\n  -X POST \\\n  -H "Authorization: Bearer $NEON_API_KEY" \\\n  -H "Content-Type: application/json" \\\n  -d \'{"project":{"name":"my-production-db","region_id":"aws-us-east-2","pg_version":17}}\'',
+      curl: 'curl "https://api.optitech.com/v1/projects" \\\n  -X POST \\\n  -H "Authorization: Bearer $OPTITECH_API_KEY" \\\n  -H "Content-Type: application/json" \\\n  -d \'{"project":{"name":"my-production-db","region_id":"aws-us-east-2","pg_version":17}}\'',
       typescript:
-        "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.createProject({\n  client: neon.client,\n  body: {\n    project: {\n      name: 'my-production-db'\n    }\n  }\n});",
+        "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.OPTITECH_API_KEY });\nconst { data } = await raw.createProject({\n  client: neon.client,\n  body: {\n    project: {\n      name: 'my-production-db'\n    }\n  }\n});",
     },
     typescript:
-      "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.NEON_API_KEY });\nconst { data } = await raw.createProject({\n  client: neon.client\n});",
+      "import { createNeonClient, raw } from '@neon/sdk';\n\nconst neon = createNeonClient({ apiKey: process.env.OPTITECH_API_KEY });\nconst { data } = await raw.createProject({\n  client: neon.client\n});",
   },
   cli: {
     command: 'neon projects create',

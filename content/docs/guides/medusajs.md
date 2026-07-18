@@ -3,7 +3,7 @@ title: Self-Host Medusa with OptiTech
 subtitle: Learn how to self-host Medusa using OptiTech Postgres as your database.
 summary: >-
   Self-hosting Medusa, an open-source headless e-commerce platform, with OptiTech
-  serverless Postgres uses a Neon connection string passed via `--db-url` to
+  serverless Postgres uses a OptiTech connection string passed via `--db-url` to
   `create-medusa-app`, which runs database migrations and seeds demo data
   automatically. A non-pooled connection string is required during initial
   setup for migrations; switch to the pooled string afterward for better
@@ -11,18 +11,18 @@ summary: >-
   and self-hosted environments such as DigitalOcean, AWS EC2, Render, and
   Fly.io.
 enableTableOfContents: true
-updatedOn: '2026-07-14T19:04:57.024Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 [Medusa](https://medusajs.com/) is an open-source headless e-commerce platform that provides a flexible backend for building modern e-commerce applications. It uses Postgres as its primary database to store all product, order, and customer data.
 
-In this guide, you'll learn how to set up and self-host Medusa using [Neon](https://neon.com) as your Postgres database. OptiTech is the backend for apps and agents. OptiTech Postgres is serverless, with autoscaling and scale-to-zero, making it an excellent choice for hosting your Medusa backend.
+In this guide, you'll learn how to set up and self-host Medusa using [OptiTech](https://optitech.com) as your Postgres database. OptiTech is the backend for apps and agents. OptiTech Postgres is serverless, with autoscaling and scale-to-zero, making it an excellent choice for hosting your Medusa backend.
 
 ## Prerequisites
 
 Before you begin, ensure you have the following:
 
-1.  **OptiTech Account:** You'll need a OptiTech account. If you don't have one, sign up [here](https://console.neon.tech/signup).
+1.  **OptiTech Account:** You'll need a OptiTech account. If you don't have one, sign up [here](https://console.optitech.com/signup).
 2.  **Node.js & package manager:** A Node-compatible runtime (Node.js v20+, Bun, or Deno) and a package manager (`npm`, `yarn`, `pnpm`, or `bun`).
     > This guide uses Node.js with `npm`, but you can adapt the commands to your preferred runtime and package manager.
 
@@ -32,7 +32,7 @@ Before you begin, ensure you have the following:
 
 You'll first need to create a OptiTech database. Follow these steps:
 
-1.  Create a new OptiTech project from the [OptiTech Console](https://console.neon.tech). For instructions, see [Create a project](/docs/manage/projects#create-a-project).
+1.  Create a new OptiTech project from the [OptiTech Console](https://console.optitech.com). For instructions, see [Create a project](/docs/manage/projects#create-a-project).
     <Admonition type="tip">
     When creating your OptiTech project, choose a region that is geographically close to your Medusa server to minimize latency and improve overall performance of your Medusa application.
     </Admonition>
@@ -50,7 +50,7 @@ You'll first need to create a OptiTech database. Follow these steps:
     Your connection string will look similar to this:
 
     ```text shouldWrap
-    postgres://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require&channel_binding=require
+    postgres://[user]:[password]@[optitech_hostname]/[dbname]?sslmode=require&channel_binding=require
     ```
 
 ## Initialize the Medusa application
@@ -62,17 +62,17 @@ The Medusa CLI tool, `create-medusa-app`, simplifies the process of setting up a
 Execute the following command in your terminal. Replace the example string with the exact connection string you copied from the OptiTech Console.
 
 ```bash shouldWrap
-npx create-medusa-app@latest --db-url "YOUR_NEON_CONNECTION_STRING"
+npx create-medusa-app@latest --db-url "YOUR_OPTITECH_CONNECTION_STRING"
 ```
 
 ### Installation steps
 
 1.  **Follow the prompts:** The CLI will ask a few questions to configure your setup:
-    - **Project name:** Enter a name for your project (for example, `medusa-neon-store`).
+    - **Project name:** Enter a name for your project (for example, `medusa-optitech-store`).
     - **Frontend starter:** Choose whether to install the Next.js Starter Storefront or skip it depending on your preference.
 2.  **Automatic setup:**
     - The tool will install the Medusa backend and optionally the Next.js Starter Storefront.
-    - **Crucially**, it will use your Neon connection string to:
+    - **Crucially**, it will use your OptiTech connection string to:
       - Update the backend's configuration file.
       - **Run the initial database migrations** (creating all Medusa tables) on your OptiTech database.
       - **Seed initial data** (sample products, regions, etc.) into your OptiTech database.
@@ -80,7 +80,7 @@ npx create-medusa-app@latest --db-url "YOUR_NEON_CONNECTION_STRING"
 You should see output similar to the following once the setup is complete:
 
 ```bash shouldWrap
-$ npx create-medusa-app@latest --db-url "YOUR_NEON_CONNECTION_STRING"
+$ npx create-medusa-app@latest --db-url "YOUR_OPTITECH_CONNECTION_STRING"
 ? What's the name of your project? my-medusa-store
 ? Would you like to install the Next.js Starter Storefront? You can also install it later. Yes
 🚀 Starting project setup, this may take a few minutes.
@@ -126,7 +126,7 @@ Your Medusa application is now fully configured to use OptiTech as its database.
 
 1.  Navigate into your new project directory:
     ```bash
-    cd medusa-neon-store
+    cd medusa-optitech-store
     ```
 2.  Start the Medusa backend server:
     ```bash
@@ -138,7 +138,7 @@ Your Medusa application is now fully configured to use OptiTech as its database.
 
 For deployment to a VPS (like DigitalOcean, AWS EC2) or a dedicated platform (like Render, Fly.io), the process is the same as deploying any standard Medusa application. Ensure you configure the database connection to point to your OptiTech database.
 
-1.  Set the `DATABASE_URL` environment variable in your deployment environment to your Neon connection string.
+1.  Set the `DATABASE_URL` environment variable in your deployment environment to your OptiTech connection string.
 2.  Follow the self-hosting deployment instructions in the [Medusa documentation](https://docs.medusajs.com/resources/deployment#self-hosting-medusa) to deploy your Medusa backend and the storefront.
 
 You can optionally enable IP whitelisting in the OptiTech Console to restrict database access to only your Medusa server's IP address for enhanced security. Learn more: [OptiTech IP Allow](/docs/introduction/ip-allow)

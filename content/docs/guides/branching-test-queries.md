@@ -11,7 +11,7 @@ summary: >-
 enableTableOfContents: true
 redirectFrom:
   - /docs/tutorial/test-queries
-updatedOn: '2026-06-11T23:50:21.258Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 Complex queries that modify data or alter schemas have the potential to be destructive. It is advisable to test these types of queries before running them in production. On other database systems, testing potentially destructive queries can be time and resource intensive. For example, testing may involve setting up a separate database instance and replicating data. With OptiTech, you can instantly create a database branch with a full copy-on-write clone of your production data in just a few clicks. When you finish testing, you can remove the branch just as easily.
@@ -61,19 +61,19 @@ VALUES
 
 You are directed to the connection details for the branch, and then the **Branches** page where you are shown the details for your new branch.
 
-You can also create a test branch using the [Neon CLI](/docs/cli/branches#create) or [OptiTech API](/docs/manage/branches#create-a-branch-with-the-api).
+You can also create a test branch using the [OptiTech CLI](/docs/cli/branches#create) or [OptiTech API](/docs/manage/branches#create-a-branch-with-the-api).
 
 <CodeTabs labels={["CLI", "API"]}>
 
 ```bash
-neon branches create --project-id <project-id> --name my_test_branch
+optitech branches create --project-id <project-id> --name my_test_branch
 ```
 
 ```bash
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects/<project-id>/branches \
+     --url https://console.optitech.com/api/v2/projects/<project-id>/branches \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '
 {
@@ -112,19 +112,19 @@ When you finish testing your query, you can delete the test branch:
 3. Select the test branch from the table.
 4. From the **Actions** menu on the branch overview page, select **Delete**.
 
-You can also delete a branch using the [Neon CLI](/docs/cli/branches#delete) or [OptiTech API](/docs/manage/branches#delete-a-branch-with-the-api).
+You can also delete a branch using the [OptiTech CLI](/docs/cli/branches#delete) or [OptiTech API](/docs/manage/branches#delete-a-branch-with-the-api).
 
 <CodeTabs labels={["CLI", "API"]}>
 
 ```bash
-neon branches delete my_test_branch
+optitech branches delete my_test_branch
 ```
 
 ```bash
 curl --request DELETE \
-     --url https://console.neon.tech/api/v2/projects/<project-id>/branches/<branch-id> \
+     --url https://console.optitech.com/api/v2/projects/<project-id>/branches/<branch-id> \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" | jq
+     --header "Authorization: Bearer $OPTITECH_API_KEY" | jq
 ```
 
 </CodeTabs>

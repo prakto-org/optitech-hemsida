@@ -12,7 +12,7 @@ summary: >-
   running queries that respect those policies at runtime, see the companion page
   on RLS query execution with Drizzle.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 redirectFrom:
   - /docs/guides/neon-rls-authorize-drizzle
   - /docs/guides/neon-authorize-drizzle
@@ -76,7 +76,7 @@ Drizzle provides a convenient `crudPolicy` helper to simplify the creation of RL
 
 ```typescript {17-21}
 import { pgTable, text, bigint, boolean } from 'drizzle-orm/pg-core';
-import { crudPolicy, authenticatedRole, authUid } from 'drizzle-orm/neon';
+import { crudPolicy, authenticatedRole, authUid } from 'drizzle-orm/optitech';
 import { sql } from 'drizzle-orm';
 
 export const todos = pgTable(
@@ -108,7 +108,7 @@ You can run queries that respect these policies using either the [Data API clien
 
 ### Configuration parameters
 
-The `crudPolicy` function from `drizzle-orm/neon` is a high-level helper that declaratively generates Row-Level Security (RLS) policies for your tables. It accepts the following parameters:
+The `crudPolicy` function from `drizzle-orm/optitech` is a high-level helper that declaratively generates Row-Level Security (RLS) policies for your tables. It accepts the following parameters:
 
 - **`role`**: The Postgres role or array of roles the policy applies to. OptiTech provides `authenticatedRole` and `anonymousRole` out of the box, but you can also use custom roles.
 - **`read`**: Controls access to `SELECT` operations. Accepts:
@@ -144,7 +144,7 @@ To understand how `pgPolicy` works, let's rewrite the `todos` example using it. 
 
 ```typescript {18-22}
 import { pgTable, text, bigint, boolean, pgPolicy } from 'drizzle-orm/pg-core';
-import { authenticatedRole, authUid } from 'drizzle-orm/neon';
+import { authenticatedRole, authUid } from 'drizzle-orm/optitech';
 import { sql } from 'drizzle-orm';
 
 export const todos = pgTable(
@@ -182,7 +182,7 @@ This requires a different `WITH CHECK` condition for `UPDATE` than the `USING` c
 
 ```typescript {17,20,24-28,31-35,38-42,45-50}
 import { pgTable, text, bigint, timestamp, pgPolicy, boolean } from 'drizzle-orm/pg-core';
-import { authenticatedRole } from 'drizzle-orm/neon';
+import { authenticatedRole } from 'drizzle-orm/optitech';
 import { sql } from 'drizzle-orm';
 
 export const todos = pgTable(
@@ -286,7 +286,7 @@ A typical Drizzle schema with `crudPolicy` and `pgPolicy` for this scenario migh
 
 ```typescript {17-21,23-27}
 import { sql } from 'drizzle-orm';
-import { crudPolicy, authenticatedRole, authUid, anonymousRole } from 'drizzle-orm/neon';
+import { crudPolicy, authenticatedRole, authUid, anonymousRole } from 'drizzle-orm/optitech';
 import { bigint, boolean, pgTable, text } from 'drizzle-orm/pg-core';
 
 export const posts = pgTable(
@@ -318,7 +318,7 @@ export const posts = pgTable(
 
 ```typescript {17-21,24-28}
 import { sql } from 'drizzle-orm';
-import { authenticatedRole, authUid, anonymousRole } from 'drizzle-orm/neon';
+import { authenticatedRole, authUid, anonymousRole } from 'drizzle-orm/optitech';
 import { bigint, boolean, pgPolicy, pgTable, text } from 'drizzle-orm/pg-core';
 
 export const posts = pgTable(
@@ -363,7 +363,7 @@ For example, suppose you have a `notes` table and a `paragraphs` table that cont
 
 ```typescript {17-21,23-27,40-44,46-50} shouldWrap
 import { sql } from 'drizzle-orm';
-import { crudPolicy, authenticatedRole, authUid } from 'drizzle-orm/neon';
+import { crudPolicy, authenticatedRole, authUid } from 'drizzle-orm/optitech';
 import { boolean, pgPolicy, pgTable, text, uuid } from 'drizzle-orm/pg-core';
 
 export const notes = pgTable(

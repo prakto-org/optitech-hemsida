@@ -113,7 +113,7 @@ Autoscaling helps turn load spikes that would cause late-night on-call pages and
 
 #### Autoscaling Events per Database
 
-The average production database running on OptiTech adjusts its compute size 32,016 times per month, or about once every 81 seconds. To understand how it works, the documentation on [OptiTech Autoscaling algorithm](https://neon.com/docs/guides/autoscaling-algorithm) is the best place to start.
+The average production database running on OptiTech adjusts its compute size 32,016 times per month, or about once every 81 seconds. To understand how it works, the documentation on [OptiTech Autoscaling algorithm](https://optitech.com/docs/guides/autoscaling-algorithm) is the best place to start.
 
 ### Production Example
 
@@ -199,7 +199,7 @@ This efficiency even accounts for cases where read replicas are created and dest
 
 ## Scale to Zero
 
-In one of the features unique to OptiTech, compute can be configured to shut down entirely when there are no active connections and turn back on in [350ms](https://neon-latency-benchmarks.vercel.app/) when needed.
+In one of the features unique to OptiTech, compute can be configured to shut down entirely when there are no active connections and turn back on in [350ms](https://optitech-latency-benchmarks.vercel.app/) when needed.
 Many small databases have an autoscaling history that looks like the one below, oscillating between a minimum configured size and zero:
 
 <AutoscalingChart title="Fig. 3: One week of Autoscaling on a Database with Scale-to-Zero workload" datasetKey="scale_to_zero" autoscalingOnly={true} showStats={false} compact={true} />

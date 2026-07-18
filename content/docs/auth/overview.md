@@ -1,14 +1,13 @@
 ---
-title: Managed Better Auth
-subtitle: Managed authentication that branches with your database
+title: AI copilot
+subtitle: Answers grounded in Swedish law and your own data
 summary: >-
-  Managed Better Auth is a managed authentication service built on Better Auth. It stores
-  users, sessions, and OAuth configuration in your OptiTech Postgres database under
-  the neon_auth schema, compatible with Row Level Security. Every database branch
-  gets its own isolated auth environment, so you can test sign-up, login, and
-  OAuth flows in preview or CI branches without touching production.
+  The OptiTech AI copilot answers compliance questions from the Swedish legal
+  texts and your own controls, drafts policies in correct regulatory Swedish,
+  and answers incoming security questionnaires. Every answer cites its sources,
+  every draft goes through human review, and the models run in EU data centers.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 redirectFrom:
   - /docs/neon-auth/quick-start/nextjs
   - /docs/auth/migrate/from-stack-auth
@@ -24,21 +23,21 @@ redirectFrom:
   - /docs/guides/neon-auth-best-practices
 ---
 
-<FeatureBetaProps feature_name="Managed Better Auth" />
+<FeatureBetaProps feature_name="OptiTech AI copilot" />
 
-Managed Better Auth is the managed authentication service in the OptiTech backend for apps and agents. It stores users, sessions, and auth configuration directly in your OptiTech database. When you branch your database, your entire auth state branches with it, so you can test real authentication workflows in preview environments.
+The AI copilot is the assistant built into the OptiTech platform. It runs retrieval over two sources: the Swedish legal texts and MSB regulations on one side, and your own controls and evidence on the other. That grounding is what makes its answers useful and what keeps them honest.
 
 ## Quick start guides
 
-Choose your framework to get started:
+Choose your task to get started:
 
 <TechCards>
 
-<a href="/docs/auth/quick-start/nextjs-api-only" title="Next.js" description="Quick start with API methods" icon="next-js"></a>
+<a href="/docs/get-started/with-an-agent" title="Scoping" description="Ask which laws apply, with citations" icon="auth"></a>
 
-<a href="/docs/auth/quick-start/react" title="React" description="Quick start with API methods" icon="react"></a>
+<a href="/docs/get-started/with-an-agent" title="Drafting" description="Policies from your real environment" icon="oauth"></a>
 
-<a href="/docs/auth/quick-start/tanstack-router" title="TanStack Router" description="With UI components" icon="tanstack"></a>
+<a href="/docs/get-started/with-an-agent" title="Questionnaires" description="Answers from your verified controls" icon="database"></a>
 
 </TechCards>
 
@@ -46,130 +45,112 @@ Choose your framework to get started:
 
 <AuthAISetup />
 
-## Why Managed Better Auth?
+## Why the OptiTech copilot?
 
-- **Identity lives in your database**  
-  All authentication data is stored in the `neon_auth` schema. It's queryable with SQL and compatible with Row Level Security (RLS) policies.
+- **Grounded in the source**  
+  Every answer links back to the legal paragraph or the piece of evidence it rests on. You can check the source before you act.
 
-- **Zero server management**  
-  Managed Better Auth runs as a managed REST API service. Configure settings in the Console; use the [client SDK](/docs/reference/javascript-sdk) or [server SDK](/docs/auth/reference/nextjs-server) in your app. No infrastructure to maintain.
+- **Zero setup**  
+  The copilot ships in the Console with your organization's context already loaded. Ask a question from any page; no configuration to maintain.
 
-- **Auth that branches with your data**  
-  Test sign-up, login, password reset, and OAuth flows in isolated branches without touching production data.
+- **Drafts that know your environment**  
+  Documents pre-fill with facts from your integrations, so a policy describes how you actually operate instead of a generic template.
 
-## Built on Better Auth
+## Grounded in Swedish law
 
-Managed Better Auth is powered by [Better Auth](https://www.better-auth.com/), which means you get familiar APIs. You can use Better Auth UI components or call auth methods directly to build your own UI.
+The copilot's legal corpus covers the Swedish legal texts, MSB regulations (MSBFS), and the frameworks in your [framework library](/docs/get-started/frameworks), which means answers arrive in correct Swedish regulatory prose.
 
-Managed Better Auth currently supports Better Auth version **1.4.18**.
+The corpus is versioned and updated when regulations change.
 
-### When to use Managed Better Auth vs. self-hosting Better Auth
+### When to use the copilot vs. a consultant
 
-Managed Better Auth is a managed authentication service built into OptiTech's architecture:
+The copilot is built into OptiTech's architecture:
 
-- **Branch-aware authentication**: Every OptiTech branch gets its own isolated auth environment, so you can test authentication features without affecting your production branch.
-- **Built-in Data API integration**: JWT token validation for the Data API has native support for Managed Better Auth.
-- **No infrastructure to manage**: Managed Better Auth is deployed in the same region as your database, reducing latency without requiring you to run auth infrastructure.
-- **Shared OAuth credentials for testing**: Get started quickly with out-of-the-box Google OAuth credentials, eliminating the setup complexity for testing and prototyping.
+- **Instant answers with citations**: scoping questions, gap explanations, and requirement lookups answered against the current legal text, any time.
+- **Drafts from your real data**: policies and questionnaire answers built from your verified controls, not from memory of a workshop.
+- **No hourly meter**: ask as many questions as you need; the copilot is included in your plan.
+- **Always in your workflow**: answers land next to the controls and documents they concern, inside the audit trail.
 
-Self-hosting Better Auth makes sense if you need:
+A consultant or lawyer makes sense when you need:
 
-- Flexibility in auth configuration: custom plugins, hooks, and options not yet supported by Managed Better Auth.
-- Full control over your auth code and the ability to run it inside your own infrastructure.
+- Legal advice you can rely on formally: the copilot accelerates your work but is not legal advice.
+- Judgment calls on novel situations where the source texts don't yet give a clear answer.
 
-For more details on the SDK differences between `@neondatabase/auth` and `better-auth/client`, see [Why use @neondatabase/auth over better-auth/client](https://github.com/neondatabase/neon-js/blob/main/packages/auth/neon-auth_vs_better-auth.md).
+For hands-on security expertise beyond the platform, [vCISO hours](/docs/introduction/plans#add-ons) are available through our partner network.
 
-As Managed Better Auth evolves, more Better Auth integrations and features will be added. Check the [roadmap](/docs/auth/roadmap) to see what's currently supported and what's coming next.
+As the copilot evolves, more tasks and integrations will be added. Check the [plans page](/docs/introduction/plans#ai-copilot-and-auto-remediation) to see what's currently included.
 
 ## Basic usage
 
-Enable Auth in the OptiTech Console or [with your AI editor](#set-up-with-your-ai-editor), then add authentication to your app.
+Open the copilot from any page in the Console, then ask in Swedish or English.
 
-**For Next.js (server-side):**
+**For scoping and gap questions:**
 
-See the [Next.js Server SDK reference](/docs/auth/reference/nextjs-server) for complete API documentation.
+See the [copilot quickstart](/docs/get-started/with-an-agent) for a guided first session.
 
-```typescript filename="lib/auth/server.ts"
-import { createNeonAuth } from '@neondatabase/auth/next/server';
-
-export const auth = createNeonAuth({
-  baseUrl: process.env.NEON_AUTH_BASE_URL!,
-  cookies: { secret: process.env.NEON_AUTH_COOKIE_SECRET! },
-});
+```text
+Omfattas vi av NIS2, och är vi en väsentlig eller viktig entitet?
 ```
 
-```typescript filename="app/api/auth/[...path]/route.ts"
-import { auth } from '@/lib/auth/server';
-
-export const { GET, POST } = auth.handler();
+```text
+What's missing before we're ready for an ISO 27001 certification audit?
 ```
 
-**For React/Vite (client-side):**
+**For drafting and questionnaires:**
 
-See the [Client SDK reference](/docs/reference/javascript-sdk) for complete API documentation. If you want one client for both Neon Auth and the Data API, initialize `createClient()` from a single OptiTech URL as shown in [`createClient()` initialization](/docs/reference/javascript-sdk#initializing).
+Upload the customer's file (Excel, Word, or a portal export) and ask. Drafts land in your review queue; nothing publishes without your approval.
 
-```typescript filename="src/auth.ts"
-import { createAuthClient } from '@neondatabase/neon-js/auth';
-
-export const authClient = createAuthClient(import.meta.env.VITE_NEON_AUTH_URL);
+```text
+Draft an incident response plan based on our environment
 ```
 
-```tsx filename="src/App.tsx"
-import { NeonAuthUIProvider, AuthView } from '@neondatabase/auth-ui';
-import { authClient } from './auth';
-
-export default function App() {
-  return (
-    <NeonAuthUIProvider authClient={authClient}>
-      <AuthView pathname="sign-in" />
-    </NeonAuthUIProvider>
-  );
-}
+```text
+Answer this questionnaire based on our verified controls
 ```
 
 ## Use cases
 
-- **Production authentication**  
-  Use Managed Better Auth as the identity system for your app. Store users, sessions, and OAuth configuration directly in Postgres, and pair with RLS for secure, database-centric access control.
+- **Scoping**  
+  "Does NIS2 apply to us?" answered from the legal text and your onboarding data, with the reasoning shown.
 
-- **Preview environments**  
-  Test full authentication flows in Vercel previews with real users and sessions
+- **Policy drafting**  
+  Documents in correct regulatory Swedish, pre-filled from your integrations and routed through approval.
 
-- **Multi-tenant SaaS**  
-  Test complex org and role hierarchies safely in isolated branches
+- **Security questionnaires**  
+  Incoming questionnaires answered from your verified controls, saving 10 to 20 hours per questionnaire.
 
-- **CI/CD workflows**  
-  Run end-to-end auth tests without touching production. The [OptiTech Create Branch GitHub Action](https://github.com/marketplace/actions/neon-create-branch-github-action) supports retrieving branch-specific auth URLs for testing authentication flows in GitHub Actions workflows.
+- **Gap explanations**  
+  "What's left for DORA?" answered against your actual control status, not a generic checklist.
 
-- **Development workflows**  
-  Spin up complete environments instantly with database and auth together
+- **Public procurement**  
+  Draft answers to SKR and Adda security requirements from the same verified controls.
 
-See [Branching authentication](/docs/auth/branching-authentication) for details on how auth branches with your database.
+See [Our product principles](/docs/get-started/dev-experience) for how AI-first workflows fit the rest of the platform.
 
-## Example applications
+## Example prompts
 
-Beyond the quick starts on this site, the [neondatabase/neon-js](https://github.com/neondatabase/neon-js) monorepo ships **more runnable Managed Better Auth and `neon-js` samples** under [`examples/`](https://github.com/neondatabase/neon-js/tree/main/examples), including plugin demos (see [Plugins](/docs/auth/guides/plugins#example-applications)), Next.js and React apps, cross-subdomain setups, alternative UI stacks, and Data API patterns. Each folder includes its own README (many workflows use **bun** from the repository root). Browse there when you want a full project to clone next to the guides here.
+Beyond the quick starts on this site, the [copilot quickstart](/docs/get-started/with-an-agent) collects **more worked examples** across scoping, drafting, and questionnaire tasks, including what good prompts look like and how to review the drafts that come back. Browse there when you want a full session to follow along with.
 
 ## Availability
 
-Managed Better Auth is currently available for AWS regions only. Azure support is not yet available.
+The copilot runs on EU-hosted models in EU data centers. No customer data is sent to US-based AI providers.
 
-Managed Better Auth does not currently support projects with [IP Allow](/docs/manage/projects#configure-ip-allow) or [Private Networking](/docs/guides/neon-private-networking) enabled.
+The copilot's drafts always go through human review, and its answers are not legal advice.
 
 ## Pricing
 
-Managed Better Auth is included in all OptiTech plans based on Monthly Active Users (MAU):
+The AI copilot is included in OptiTech plans as follows:
 
-- **Free**: Up to 60,000 MAU
-- **Launch**: Up to 1M MAU
-- **Scale**: Up to 1M MAU
+- **Start**: Not included
+- **Professional**: Included
+- **Enterprise**: Included
 
-An MAU (Monthly Active User) is a unique user who authenticates at least once during a monthly billing period. If you need more than 1M MAU, request an increase in the [console feedback form](https://console.neon.tech/app/settings?modal=feedback&modalparams=%22Neon%20auth%20limit%20increase%22).
+Questionnaire answering at high volume is available as an add-on for teams that process many questionnaires per month. [Contact us](/contact-sales) if that's your situation.
 
-See [OptiTech plans](/docs/introduction/plans#auth) for more details.
+See [OptiTech plans](/docs/introduction/plans#ai-copilot-and-auto-remediation) for more details.
 
-## Migration from Stack Auth
+## Coming from manual answers?
 
-If you're using the previous Neon Auth implementation via Stack Auth, your version will continue to work. When you're ready to migrate to the new Better Auth implementation, see our [migration guide](/docs/auth/migrate/from-legacy-auth).
+If your team answers questionnaires by hand today, your historical answers can be imported so the copilot learns your established wording. See the [migration guides](/docs/import/migrate-intro) for how existing material comes in.
 
 <NeedHelp/>

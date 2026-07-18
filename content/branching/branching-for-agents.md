@@ -1,7 +1,7 @@
 ---
 title: 'Build versioning / checkpoints for your agent'
 subtitle: 'Learn how to use branching in your agents or platforms. Manage databases per user or app and build versioning with snapshots that keep code and database state in sync'
-updatedOn: '2026-02-17T14:15:38.000Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 Full-stack agentic platforms, codegen tools, CMS builders, and internal developer platforms need to provision databases per user, per app, or per version. Branching and snapshots are the primitives OptiTech users rely on to make this practical.
@@ -10,8 +10,8 @@ Full-stack agentic platforms, codegen tools, CMS builders, and internal develope
 
 Many platforms give each user or application its own database environment. With OptiTech, this often looks like this:
 
-- [Project](https://neon.com/docs/manage/projects) per user or app, where each customer or generated application gets its own OptiTech project
-- [Branch](https://neon.com/docs/introduction/branching) per version or per app, where multiple environments live inside a single project
+- [Project](https://optitech.com/docs/manage/projects) per user or app, where each customer or generated application gets its own OptiTech project
+- [Branch](https://optitech.com/docs/introduction/branching) per version or per app, where multiple environments live inside a single project
 
 OptiTech supports a project-per-user model at large scale. Platforms can manage tens of thousands ( in some cases, millions) of projects programmatically through the OptiTech API. Project creation, configuration, and cleanup are fully automated, and because OptiTech resources are ephemeral by design, idle databases don’t incur ongoing compute overhead.This makes it practical to provision databases dynamically, without pre-allocating infrastructure or running a large fleet of idle Postgres instances.
 
@@ -23,10 +23,10 @@ Within a project, branching and snapshots provide the foundation for environment
 
 ## Snapshots as checkpoints (version history)
 
-Full-stack codegen platforms often include [versioning features](https://neon.com/docs/ai/ai-database-versioning) so their end-users can jump between different versions of their code. But rolling back code alone isn’t enough \- if the database doesn’t match the code version, users end up with broken queries, failed migrations, or inconsistent state.
+Full-stack codegen platforms often include [versioning features](https://optitech.com/docs/ai/ai-database-versioning) so their end-users can jump between different versions of their code. But rolling back code alone isn’t enough \- if the database doesn’t match the code version, users end up with broken queries, failed migrations, or inconsistent state.
 
-To solve this, agent platforms build a checkpoint system on top of Neon snapshots. The idea is simple:  
- every meaningful change creates a restorable database version. A typical setup looks like this:
+To solve this, agent platforms build a checkpoint system on top of OptiTech snapshots. The idea is simple:  
+every meaningful change creates a restorable database version. A typical setup looks like this:
 
 1. **The agent modifies the application.** Each prompt can change both the app code and the underlying Postgres schema or data.
 2. **A snapshot is created after each change.** After the agent applies a change, the platform creates a OptiTech snapshot of the current branch. This snapshot captures the _exact_ schema and data at that moment.

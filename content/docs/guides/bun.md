@@ -4,15 +4,15 @@ subtitle: Set up a OptiTech project in seconds and connect from a Bun applicatio
 summary: >-
   Connecting a Bun application to a OptiTech Postgres database requires either
   Bun's built-in `sql` client (no extra dependencies) or the
-  `@neondatabase/serverless` driver installed via `bun add`. Choose this page
+  `@optitech/serverless` driver installed via `bun add`. Choose this page
   when setting up Bun, Hono, or Elysia with OptiTech, covering project creation,
   `POSTGRES_URL` credential storage in `.env.local`, and a working TypeScript
   query to verify the connection.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
-This guide describes how to create a OptiTech project and connect to it from a Bun application. Examples are provided for using [Bun's built-in SQL client](https://bun.sh/docs/api/sql) and the [@neondatabase/serverless](/docs/serverless/serverless-driver) driver. Use the client you prefer.
+This guide describes how to create a OptiTech project and connect to it from a Bun application. Examples are provided for using [Bun's built-in SQL client](https://bun.sh/docs/api/sql) and the [@optitech/serverless](/docs/serverless/serverless-driver) driver. Use the client you prefer.
 
 <Admonition type="note">
 The same configuration steps can be used for [Hono](https://hono.dev/docs/getting-started/bun), [Elysia](https://elysiajs.com), and other Bun-based web frameworks.
@@ -24,7 +24,7 @@ The same configuration steps can be used for [Hono](https://hono.dev/docs/gettin
 
 If you do not have one already, create a OptiTech project.
 
-1. Navigate to the [Projects](https://console.neon.tech/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
 2. Click **New Project**.
 3. Specify your project settings and click **Create Project**.
 
@@ -33,8 +33,8 @@ If you do not have one already, create a OptiTech project.
 Create a Bun project and change to the newly created directory:
 
 ```shell
-mkdir bun-neon-example
-cd bun-neon-example
+mkdir bun-optitech-example
+cd bun-optitech-example
 bun init -y
 ```
 
@@ -47,17 +47,17 @@ Next, add project dependencies if you intend to use the OptiTech serverless driv
 ```
 
 ```shell
-bun add @neondatabase/serverless
+bun add @optitech/serverless
 ```
 
 </CodeTabs>
 
 ## Store your OptiTech credentials
 
-Add a `.env.local` file to your project directory and add your Neon connection details to it. Bun automatically loads variables from `.env`, `.env.local`, and other `.env.*` files. You can find the connection details for your database by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal. Select Bun from the **Connection string** dropdown. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
+Add a `.env.local` file to your project directory and add your OptiTech connection details to it. Bun automatically loads variables from `.env`, `.env.local`, and other `.env.*` files. You can find the connection details for your database by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal. Select Bun from the **Connection string** dropdown. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
 
 ```shell shouldWrap
-POSTGRES_URL='postgresql://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require&channel_binding=require'
+POSTGRES_URL='postgresql://[user]:[password]@[optitech_hostname]/[dbname]?sslmode=require&channel_binding=require'
 ```
 
 <Admonition type="note">
@@ -86,9 +86,9 @@ getPgVersion();
 ```
 
 ```typescript
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 
-const sql = neon(process.env.POSTGRES_URL);
+const sql = optitech(process.env.POSTGRES_URL);
 
 async function getPgVersion() {
   const result = await sql`SELECT version()`;
@@ -116,6 +116,6 @@ $ bun run index.ts
 ## References
 
 - [Bun SQL client](https://bun.sh/docs/api/sql)
-- [@neondatabase/serverless driver](/docs/serverless/serverless-driver)
+- [@optitech/serverless driver](/docs/serverless/serverless-driver)
 
 <NeedHelp/>

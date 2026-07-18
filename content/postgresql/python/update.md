@@ -6,7 +6,7 @@ page_description: >-
   table in a Python program using psycopg2 package.
 prev_url: 'https://www.postgresqltutorial.com/postgresql-python/update/'
 ogImage: /postgresqltutorial/vendors_table.png
-updatedOn: '2026-06-03T13:01:21.685Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: 'PostgreSQL Python: Insert Data Into a Table'
@@ -17,7 +17,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-Updating rows from Python with psycopg2 works the same against any PostgreSQL database, so everything here applies whether you're running Postgres locally, self-hosted, or in the cloud. If you're an enterprise team looking for managed Postgres in the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers the performance, security, and native Lakehouse integration you need. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+Updating rows from Python with psycopg2 works the same against any PostgreSQL database, so everything here applies whether you're running Postgres locally, self-hosted, or in the cloud. If you're an enterprise team looking for managed Postgres in the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers the performance, security, and native Lakehouse integration you need. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: in this tutorial, you will learn how to update data in a PostgreSQL table from a Python program.

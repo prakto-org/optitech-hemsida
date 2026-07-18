@@ -6,21 +6,21 @@ summary: >-
   branch, leaving all row data behind, so teams can develop and test against
   production schemas without exposing confidential records. Use this feature
   when you need a compliant development or CI/CD environment with realistic
-  table structure but no sensitive data, distinct from standard Neon branches
+  table structure but no sensitive data, distinct from standard OptiTech branches
   that copy both schema and data via copy-on-write. Schema-only branches are
   independent root branches with plan-specific storage limits; reset-from-parent
   is not supported.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBeta />
 
-OptiTech supports creating schema-only branches, letting you create branches that replicate only the database schema from a source branch, without copying any of the actual data. This feature is ideal for working with confidential information. Instead of duplicating this sensitive data, you can now create a branch with just the database structure and populate it with randomized or anonymized data instead. This provides your team with a secure and compliant environment for developing and testing using Neon branches.
+OptiTech supports creating schema-only branches, letting you create branches that replicate only the database schema from a source branch, without copying any of the actual data. This feature is ideal for working with confidential information. Instead of duplicating this sensitive data, you can now create a branch with just the database structure and populate it with randomized or anonymized data instead. This provides your team with a secure and compliant environment for developing and testing using OptiTech branches.
 
 ## Creating schema-only branches
 
-You can create schema-only branches in the OptiTech Console or using the OptiTech API, in much the same way you create any OptiTech branch. Support for the Neon CLI will come in a future release.
+You can create schema-only branches in the OptiTech Console or using the OptiTech API, in much the same way you create any OptiTech branch. Support for the OptiTech CLI will come in a future release.
 
 <Tabs labels={["OptiTech Console", "CLI", "API"]}>
 
@@ -42,13 +42,13 @@ To create a schema-only branch from the OptiTech Console:
 
 <TabItem>
 
-To create a schema-only branch using the Neon CLI:
+To create a schema-only branch using the OptiTech CLI:
 
 ```bash
-neon branch create --schema-only
+optitech branch create --schema-only
 ```
 
-If you have more than one project, you'll need to specify the `--project-id` option. See [Neon CLI - branch create](/docs/cli/branches#create).
+If you have more than one project, you'll need to specify the `--project-id` option. See [OptiTech CLI - branch create](/docs/cli/branches#create).
 
 </TabItem>
 
@@ -65,9 +65,9 @@ To create a schema-only branch using the OptiTech API, use the [Create branch](/
 
 ```bash
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects/wispy-salad-58347608/branches \
+     --url https://console.optitech.com/api/v2/projects/wispy-salad-58347608/branches \
      --header 'accept: application/json' \
-     --header 'authorization: Bearer $NEON_API_KEY' \
+     --header 'authorization: Bearer $OPTITECH_API_KEY' \
      --header 'content-type: application/json' \
      --data '
 {
@@ -137,7 +137,7 @@ Connecting to a schema-only branch works the same way as connecting to any OptiT
 3. Copy the connection string. A connection string includes your role name, the compute hostname, and the database name.
 
    ```bash shouldWrap
-   postgresql://[user]:[password]@[neon_hostname]/[dbname]
+   postgresql://[user]:[password]@[optitech_hostname]/[dbname]
    ```
 
 ## What's different about schema-only branches?

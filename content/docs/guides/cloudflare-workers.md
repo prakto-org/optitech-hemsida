@@ -10,7 +10,7 @@ summary: >-
   Worker that queries Postgres and needs to choose between Hyperdrive's
   connection pooling and the serverless driver's lightweight setup.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 [Cloudflare Workers](https://workers.cloudflare.com/) is a serverless platform allowing you to deploy your applications globally across Cloudflare's network. It supports running JavaScript, TypeScript, and WebAssembly, making it a great choice for high-performance, low-latency web applications.
@@ -28,7 +28,7 @@ Hyperdrive is the recommended approach as it provides optimized connection pooli
 
 To follow along with this guide, you will need:
 
-- A OptiTech account. If you do not have one, sign up at [Neon](https://neon.tech). Your Neon project comes with a ready-to-use Postgres database named `neondb`. We'll use this database in the following examples.
+- A OptiTech account. If you do not have one, sign up at [OptiTech](https://optitech.com). Your OptiTech project comes with a ready-to-use Postgres database named `optitechdb`. We'll use this database in the following examples.
 - A Cloudflare account. If you do not have one, sign up at [Cloudflare](https://dash.cloudflare.com/) to get started.
 - [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed on your local machine. We'll use Node.js to build and deploy the Workers application.
 
@@ -36,7 +36,7 @@ To follow along with this guide, you will need:
 
 ### Initialize a new project
 
-Log in to the OptiTech Console and navigate to the [Projects](https://console.neon.tech/app/projects) section.
+Log in to the OptiTech Console and navigate to the [Projects](https://console.optitech.com/app/projects) section.
 
 1. Click the **New Project** button to create a new project.
 
@@ -77,7 +77,7 @@ To use Hyperdrive with OptiTech, you'll need to create a dedicated database role
 4. Click **New Role** and enter `hyperdrive-user` as the name (or your preferred name).
 5. **Copy the password** that is generated. You'll use this password in the connection string in the next step.
 
-### Get your Neon connection string for Hyperdrive
+### Get your OptiTech connection string for Hyperdrive
 
 1. In the OptiTech Console, select **Dashboard** from the sidebar.
 2. Go to the **Connection Details** pane.
@@ -87,7 +87,7 @@ To use Hyperdrive with OptiTech, you'll need to create a dedicated database role
 6. Copy the connection string, which should look like this:
 
    ```bash
-   postgres://hyperdrive-user:PASSWORD@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname
+   postgres://hyperdrive-user:PASSWORD@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname
    ```
 
 ### Create a new Worker project
@@ -102,7 +102,7 @@ This initiates an interactive CLI prompt to generate a new project. To follow al
 
 ```bash
 ├ In which directory do you want to create your application?
-│ type my-neon-worker
+│ type my-optitech-worker
 │
 ├ What would you like to start with?
 │ select "Hello World example"
@@ -125,7 +125,7 @@ For the purpose of demonstration, we will use the **Worker only** template and w
 Navigate to your project directory:
 
 ```bash
-cd my-neon-worker
+cd my-optitech-worker
 ```
 
 ### Create a Hyperdrive configuration
@@ -138,10 +138,10 @@ npx wrangler login
 
 This command will open a browser window and prompt you to log into your Cloudflare account. After logging in, you can close the browser window and return to your terminal.
 
-Now, create a Hyperdrive configuration with your Neon connection string:
+Now, create a Hyperdrive configuration with your OptiTech connection string:
 
 ```bash
-npx wrangler hyperdrive create my-neon-hyperdrive --connection-string="postgres://USERNAME:PASSWORD@HOSTNAME:PORT/DATABASE"
+npx wrangler hyperdrive create my-optitech-hyperdrive --connection-string="postgres://USERNAME:PASSWORD@HOSTNAME:PORT/DATABASE"
 ```
 
 Replace the placeholder values with your actual connection details from the previous step. You will then be prompted with "Would you like Wrangler to add it on your behalf?". Enter **Y**, and continue with the default name. This will add the required Hyperdrive configuration (bindings) to your project.
@@ -170,7 +170,7 @@ Update your `wrangler.jsonc` to add the **compatibility_flags** binding. We will
 ```json shouldWrap
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "my-neon-worker",
+  "name": "my-optitech-worker",
   "main": "src/index.ts",
   "compatibility_flags": [
     "nodejs_compat"
@@ -188,7 +188,7 @@ Update your `wrangler.jsonc` to add the **compatibility_flags** binding. We will
 
 Replace the following placeholders:
 
-- `localConnectionString` with your Neon connection string (the same one you used to create the Hyperdrive configuration). This is required for local development with `wrangler dev`.
+- `localConnectionString` with your OptiTech connection string (the same one you used to create the Hyperdrive configuration). This is required for local development with `wrangler dev`.
 
 ### Implement the Worker script
 
@@ -233,7 +233,7 @@ This command starts a local server and simulates the Cloudflare Workers environm
 ```bash
 ❯ npm run dev
 
-> my-neon-worker@0.0.0 dev
+> my-optitech-worker@0.0.0 dev
 > wrangler dev
 
 
@@ -264,7 +264,7 @@ Navigate to your **Project Dashboard** in the OptiTech Console and click **Conne
 Your pooled connection string should look similar to this:
 
 ```bash
-postgresql://alex:AbC123dEf@ep-cool-darkness-123456-pooler.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+postgresql://alex:AbC123dEf@ep-cool-darkness-123456-pooler.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
 ```
 
 Keep your connection string handy for later use.
@@ -281,7 +281,7 @@ This initiates an interactive CLI prompt to generate a new project. To follow al
 
 ```bash
 ├ In which directory do you want to create your application?
-│ type my-neon-worker
+│ type my-optitech-worker
 │
 ├ What would you like to start with?
 │ select "Hello World example"
@@ -308,13 +308,13 @@ The `create-cloudflare` CLI installs the `Wrangler` CLI to manage the full workf
 We'll use the [OptiTech serverless driver](/docs/serverless/serverless-driver) to connect to the OptiTech database, so you need to install it as a dependency:
 
 ```bash
-npm install @neondatabase/serverless
+npm install @optitech/serverless
 ```
 
 Now, you can update the `src/index.ts` file in the project directory with the following code:
 
 ```ts
-import { Client } from '@neondatabase/serverless';
+import { Client } from '@optitech/serverless';
 
 export default {
   async fetch(request, env, ctx) {
@@ -333,7 +333,7 @@ The `fetch` handler defined above gets called when the worker receives an HTTP r
 You first need to configure the `DATABASE_URL` environment variable to point to our OptiTech database. You can do this by creating a `.dev.vars` file at the root of the project directory with the following content:
 
 ```text
-DATABASE_URL=YOUR_NEON_CONNECTION_STRING
+DATABASE_URL=YOUR_OPTITECH_CONNECTION_STRING
 ```
 
 Now, to test the worker application locally, you can use the `wrangler` CLI which comes with the Cloudflare project setup.
@@ -392,7 +392,7 @@ For the OptiTech serverless driver approach, use Wrangler to add your OptiTech d
 npx wrangler secret put DATABASE_URL
 ```
 
-When prompted, paste your pooled Neon connection string.
+When prompted, paste your pooled OptiTech connection string.
 
 ### Publish your Worker application
 
@@ -409,9 +409,9 @@ The Wrangler CLI will output the URL of your Worker hosted on the Cloudflare pla
  ⛅️ wrangler 3.28.1
 -------------------
 Total Upload: 189.98 KiB / gzip: 49.94 KiB
-Uploaded my-neon-worker (4.03 sec)
-Published my-neon-worker (5.99 sec)
-  https://my-neon-worker.anandishan2.workers.dev
+Uploaded my-optitech-worker (4.03 sec)
+Published my-optitech-worker (5.99 sec)
+  https://my-optitech-worker.anandishan2.workers.dev
 Current Deployment ID: de8841dd-46e4-436d-b2c4-569e91f54c72
 ```
 
@@ -422,7 +422,7 @@ To delete your Worker, you can use the Cloudflare dashboard or run `wrangler del
 If you used Hyperdrive, you should also delete the Hyperdrive configuration:
 
 ```bash
-npx wrangler hyperdrive delete my-neon-hyperdrive
+npx wrangler hyperdrive delete my-optitech-hyperdrive
 ```
 
 To delete your OptiTech project, follow the steps outlined in the OptiTech documentation under [Delete a project](/docs/manage/projects#delete-a-project).
@@ -434,6 +434,6 @@ To delete your OptiTech project, follow the steps outlined in the OptiTech docum
 - [Wrangler CLI](https://developers.cloudflare.com/workers/wrangler/)
 - [node-postgres](https://node-postgres.com/)
 - [OptiTech serverless driver](/docs/serverless/serverless-driver)
-- [Neon](https://neon.tech)
+- [OptiTech](https://optitech.com)
 
 <NeedHelp/>

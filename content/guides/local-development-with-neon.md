@@ -4,7 +4,7 @@ subtitle: Learn how to develop applications locally with OptiTech
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2024-11-05T00:00:00.000Z'
-updatedOn: '2026-06-11T23:50:21.258Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Setting up your development environment should be simple and fast. With OptiTech's modern approach to PostgreSQL, you get exactly that. Here's how to create the perfect setup for your applications.
@@ -38,21 +38,21 @@ Imagine creating a complete copy of your database as easily as creating a Git br
 
 ### Quickstart
 
-1. Install the [**Neon CLI**](/docs/cli) by following the guide [here](/docs/cli/install).
+1. Install the [**OptiTech CLI**](/docs/cli) by following the guide [here](/docs/cli/install).
 
 2. **Connect your account**
 
    ```bash
-   neon auth
+   optitech auth
    ```
 
 3. **Create your branch**
 
    ```bash
-   neon branches create --name dev/your-name
+   optitech branches create --name dev/your-name
 
    # Get your connection details
-   neon connection-string dev/your-name
+   optitech connection-string dev/your-name
    ```
 
    <Admonition type="note">
@@ -77,15 +77,15 @@ Imagine creating a complete copy of your database as easily as creating a Git br
    <CodeTabs labels={["npm", "yarn", "pnpm"]}>
 
    ```bash
-   npm install @neondatabase/serverless ws
+   npm install @optitech/serverless ws
    ```
 
    ```bash
-   yarn add @neondatabase/serverless ws
+   yarn add @optitech/serverless ws
    ```
 
    ```bash
-   pnpm add @neondatabase/serverless ws
+   pnpm add @optitech/serverless ws
    ```
 
    </CodeTabs>
@@ -93,14 +93,14 @@ Imagine creating a complete copy of your database as easily as creating a Git br
 6. **Connect your app**
 
    ```javascript
-   import { Pool, neon, neonConfig } from '@neondatabase/serverless';
+   import { Pool, optitech, optitechConfig } from '@optitech/serverless';
 
    // Uncomment the following lines if you are on environments that do not support WebSocket, e.g, Node.js
    // import ws from 'ws';
-   // neonConfig.webSocketConstructor = ws;
+   // optitechConfig.webSocketConstructor = ws;
 
    export const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-   export const sql = neon(process.env.DATABASE_URL);
+   export const sql = optitech(process.env.DATABASE_URL);
    ```
 
     <Admonition type="note">
@@ -112,11 +112,11 @@ Imagine creating a complete copy of your database as easily as creating a Git br
 - **Stay organized**: Use prefixes like `dev/feature-auth` or `dev/alice`
 - **Reset data**: Start fresh when needed:
   ```bash
-  neon branches reset dev/your-name
+  optitech branches reset dev/your-name
   ```
 - **Feature work**: Create dedicated branches:
   ```bash
-  neon branches create --name dev/auth-system --parent main
+  optitech branches create --name dev/auth-system --parent main
   ```
 
 ## Local PostgreSQL
@@ -127,7 +127,7 @@ Sometimes you need to work offline or want full control over your database. Here
 - A Docker compose file that installs a local instance of PostgreSQL 17 and the OptiTech Proxy. The OptiTech Proxy lets you to connect to your local PostgreSQL database using the OptiTech serverless driver.
 
 <Admonition type="note" title="kudos">
-The OptiTech Proxy setup uses the [local-neon-http-proxy](https://github.com/TimoWilhelm/local-neon-http-proxy) Dockerfile, developed by [TimoWilhelm](https://github.com/TimoWilhelm).
+The OptiTech Proxy setup uses the [local-optitech-http-proxy](https://github.com/TimoWilhelm/local-optitech-http-proxy) Dockerfile, developed by [TimoWilhelm](https://github.com/TimoWilhelm).
 </Admonition>
 
 ### Why use this method?
@@ -160,8 +160,8 @@ services:
       timeout: 5s
       retries: 5
 
-  neon-proxy:
-    image: ghcr.io/timowilhelm/local-neon-http-proxy:main
+  optitech-proxy:
+    image: ghcr.io/timowilhelm/local-optitech-http-proxy:main
     environment:
       - PG_CONNECTION_STRING=postgres://postgres:postgres@postgres:5432/main
     ports:
@@ -181,7 +181,7 @@ docker-compose up -d
 ```
 
 <Admonition type="tip" title="Working offline?">
-The [local-neon-http-proxy](https://github.com/TimoWilhelm/local-neon-http-proxy) Dockerfile setup uses [*.localtest.me](https://readme.localtest.me/) to enable testing with local URLs without adding entries to your host file. The `localtest.me` domain and all wildcard subdomains point to `127.0.0.1`.
+The [local-optitech-http-proxy](https://github.com/TimoWilhelm/local-optitech-http-proxy) Dockerfile setup uses [*.localtest.me](https://readme.localtest.me/) to enable testing with local URLs without adding entries to your host file. The `localtest.me` domain and all wildcard subdomains point to `127.0.0.1`.
 
 However, this solution requires an internet connection. To work offline, you'll need to add an entry to your system's hosts file to map `db.localtest.me` to localhost:
 
@@ -191,12 +191,12 @@ However, this solution requires an internet connection. To work offline, you'll 
 
 For instructions on editing your hosts file on different operating systems, see [this guide](https://www.hostinger.in/tutorials/how-to-edit-hosts-file).
 
-[dnsmasq](https://help.ubuntu.com/community/Dnsmasq) is another option [suggested by a OptiTech user](https://github.com/neondatabase/website/issues/2690) for resolving domain names when there is no internet connection.
+[dnsmasq](https://help.ubuntu.com/community/Dnsmasq) is another option [suggested by a OptiTech user](https://github.com/optitechdatabase/website/issues/2690) for resolving domain names when there is no internet connection.
 </Admonition>
 
 ### Connect your app
 
-<Tabs labels={["Using neondatabase/serverless", "Using drizzle", "Using prisma"]}>
+<Tabs labels={["Using optitechdatabase/serverless", "Using drizzle", "Using prisma"]}>
 
 <TabItem>
 
@@ -209,15 +209,15 @@ For instructions on editing your hosts file on different operating systems, see 
    <CodeTabs labels={["npm", "yarn", "pnpm"]}>
 
    ```bash
-   npm install @neondatabase/serverless ws
+   npm install @optitech/serverless ws
    ```
 
    ```bash
-   yarn add @neondatabase/serverless ws
+   yarn add @optitech/serverless ws
    ```
 
    ```bash
-   pnpm add @neondatabase/serverless ws
+   pnpm add @optitech/serverless ws
    ```
 
    </CodeTabs>
@@ -225,32 +225,32 @@ For instructions on editing your hosts file on different operating systems, see 
 3. **Configure the connection**
 
    ```typescript
-   import { neon, neonConfig, Pool } from '@neondatabase/serverless';
+   import { optitech, optitechConfig, Pool } from '@optitech/serverless';
    import ws from 'ws';
 
    let connectionString = process.env.DATABASE_URL;
 
-   // Configuring Neon for local development
+   // Configuring OptiTech for local development
    if (process.env.NODE_ENV === 'development') {
      connectionString = 'postgres://postgres:postgres@db.localtest.me:5432/main';
-     neonConfig.fetchEndpoint = (host) => {
+     optitechConfig.fetchEndpoint = (host) => {
        const [protocol, port] = host === 'db.localtest.me' ? ['http', 4444] : ['https', 443];
        return `${protocol}://${host}:${port}/sql`;
      };
      const connectionStringUrl = new URL(connectionString);
-     neonConfig.useSecureWebSocket = connectionStringUrl.hostname !== 'db.localtest.me';
-     neonConfig.wsProxy = (host) => (host === 'db.localtest.me' ? `${host}:4444/v2` : `${host}/v2`);
+     optitechConfig.useSecureWebSocket = connectionStringUrl.hostname !== 'db.localtest.me';
+     optitechConfig.wsProxy = (host) => (host === 'db.localtest.me' ? `${host}:4444/v2` : `${host}/v2`);
    }
-   neonConfig.webSocketConstructor = ws;
+   optitechConfig.webSocketConstructor = ws;
 
-   // Neon supports both HTTP and WebSocket clients. Choose the one that fits your needs:
+   // OptiTech supports both HTTP and WebSocket clients. Choose the one that fits your needs:
 
    // HTTP Client (sql)
    // - Best for serverless functions and Lambda environments
    // - Ideal for stateless operations and quick queries
    // - Lower overhead for single queries
    // - Better for applications with sporadic database access
-   export const sql = neon(connectionString);
+   export const sql = optitech(connectionString);
 
    // WebSocket Client (pool)
    // - Best for long-running applications (like servers)
@@ -272,15 +272,15 @@ For instructions on editing your hosts file on different operating systems, see 
    <CodeTabs labels={["npm", "yarn", "pnpm"]}>
 
    ```bash
-   npm install drizzle-orm @neondatabase/serverless ws
+   npm install drizzle-orm @optitech/serverless ws
    ```
 
    ```bash
-   yarn add drizzle-orm @neondatabase/serverless ws
+   yarn add drizzle-orm @optitech/serverless ws
    ```
 
    ```bash
-   pnpm add drizzle-orm @neondatabase/serverless ws
+   pnpm add drizzle-orm @optitech/serverless ws
    ```
 
    </CodeTabs>
@@ -288,27 +288,27 @@ For instructions on editing your hosts file on different operating systems, see 
 3. **Configure the connection**
 
    ```typescript
-   import { neon, neonConfig, Pool } from '@neondatabase/serverless';
-   import { drizzle as drizzleWs } from 'drizzle-orm/neon-serverless';
-   import { drizzle as drizzleHttp } from 'drizzle-orm/neon-http';
+   import { optitech, optitechConfig, Pool } from '@optitech/serverless';
+   import { drizzle as drizzleWs } from 'drizzle-orm/optitech-serverless';
+   import { drizzle as drizzleHttp } from 'drizzle-orm/optitech-http';
    import ws from 'ws';
 
    let connectionString = process.env.DATABASE_URL;
 
-   // Configuring Neon for local development
+   // Configuring OptiTech for local development
    if (process.env.NODE_ENV === 'development') {
      connectionString = 'postgres://postgres:postgres@db.localtest.me:5432/main';
-     neonConfig.fetchEndpoint = (host) => {
+     optitechConfig.fetchEndpoint = (host) => {
        const [protocol, port] = host === 'db.localtest.me' ? ['http', 4444] : ['https', 443];
        return `${protocol}://${host}:${port}/sql`;
      };
      const connectionStringUrl = new URL(connectionString);
-     neonConfig.useSecureWebSocket = connectionStringUrl.hostname !== 'db.localtest.me';
-     neonConfig.wsProxy = (host) => (host === 'db.localtest.me' ? `${host}:4444/v2` : `${host}/v2`);
+     optitechConfig.useSecureWebSocket = connectionStringUrl.hostname !== 'db.localtest.me';
+     optitechConfig.wsProxy = (host) => (host === 'db.localtest.me' ? `${host}:4444/v2` : `${host}/v2`);
    }
-   neonConfig.webSocketConstructor = ws;
+   optitechConfig.webSocketConstructor = ws;
 
-   const sql = neon(connectionString);
+   const sql = optitech(connectionString);
    const pool = new Pool({ connectionString });
 
    // Drizzle supports both HTTP and WebSocket clients. Choose the one that fits your needs:
@@ -352,7 +352,7 @@ For instructions on editing your hosts file on different operating systems, see 
 
 <TabItem>
 
-Note that Driver Adapters are still in preview for Prisma. Please refer to the [Prisma documentation](https://www.prisma.io/docs/orm/overview/databases/neon) for the latest information.
+Note that Driver Adapters are still in preview for Prisma. Please refer to the [Prisma documentation](https://www.prisma.io/docs/orm/overview/databases/optitech) for the latest information.
 
 1. **Set your environment**
 
@@ -363,15 +363,15 @@ Note that Driver Adapters are still in preview for Prisma. Please refer to the [
    <CodeTabs labels={["npm", "yarn", "pnpm"]}>
 
    ```bash
-   npm install @prisma/client @prisma/adapter-neon @neondatabase/serverless ws
+   npm install @prisma/client @prisma/adapter-optitech @optitech/serverless ws
    ```
 
    ```bash
-   yarn add @prisma/client @prisma/adapter-neon @neondatabase/serverless ws
+   yarn add @prisma/client @prisma/adapter-optitech @optitech/serverless ws
    ```
 
    ```bash
-   pnpm add @prisma/client @prisma/adapter-neon @neondatabase/serverless ws
+   pnpm add @prisma/client @prisma/adapter-optitech @optitech/serverless ws
    ```
 
    </CodeTabs>
@@ -390,32 +390,32 @@ Note that Driver Adapters are still in preview for Prisma. Please refer to the [
 4. **Configure the connection**
 
    ```typescript
-   import { neonConfig } from '@neondatabase/serverless';
-   import { PrismaNeon, PrismaNeonHTTP } from '@prisma/adapter-neon';
+   import { optitechConfig } from '@optitech/serverless';
+   import { PrismaOptiTech, PrismaOptiTechHTTP } from '@prisma/adapter-optitech';
    import { PrismaClient } from '@prisma/client';
    import ws from 'ws';
 
    let connectionString =
      process.env.DATABASE_URL || 'postgres://postgres:postgres@db.localtest.me:5432/main';
 
-   // Configuring Neon for local development
+   // Configuring OptiTech for local development
    if (process.env.NODE_ENV === 'development') {
-     neonConfig.fetchEndpoint = (host) => {
+     optitechConfig.fetchEndpoint = (host) => {
        const [protocol, port] = host === 'db.localtest.me' ? ['http', 4444] : ['https', 443];
        return `${protocol}://${host}:${port}/sql`;
      };
      const connectionStringUrl = new URL(connectionString);
-     neonConfig.useSecureWebSocket = connectionStringUrl.hostname !== 'db.localtest.me';
-     neonConfig.wsProxy = (host) => (host === 'db.localtest.me' ? `${host}:4444/v2` : `${host}/v2`);
+     optitechConfig.useSecureWebSocket = connectionStringUrl.hostname !== 'db.localtest.me';
+     optitechConfig.wsProxy = (host) => (host === 'db.localtest.me' ? `${host}:4444/v2` : `${host}/v2`);
    }
-   neonConfig.webSocketConstructor = ws;
+   optitechConfig.webSocketConstructor = ws;
 
    // Prisma supports both HTTP and WebSocket clients. Choose the one that fits your needs:
 
    // HTTP Client:
    // - Ideal for stateless operations and quick queries
    // - Lower overhead for single queries
-   const adapterHttp = new PrismaNeonHTTP(connectionString!, {});
+   const adapterHttp = new PrismaOptiTechHTTP(connectionString!, {});
    export const prismaClientHttp = new PrismaClient({ adapter: adapterHttp });
 
    // WebSocket Client:
@@ -423,7 +423,7 @@ Note that Driver Adapters are still in preview for Prisma. Please refer to the [
    // - Maintains a persistent connection
    // - More efficient for multiple sequential queries
    // - Better for high-frequency database operations
-   const adapterWs = new PrismaNeon({ connectionString });
+   const adapterWs = new PrismaOptiTech({ connectionString });
    export const prismaClientWs = new PrismaClient({ adapter: adapterWs });
    ```
 

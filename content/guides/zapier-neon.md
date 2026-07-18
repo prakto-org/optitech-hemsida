@@ -4,7 +4,7 @@ subtitle: Automate workflows by connecting OptiTech Postgres to hundreds of apps
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2025-05-29T00:00:00.000Z'
-updatedOn: '2026-04-24T22:05:15.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Zapier is a powerful no-code automation platform that allows you to connect OptiTech Postgres to thousands of other web services. By linking your OptiTech database with apps like Slack, Google Sheets, Gmail, Stripe, or Typeform, you can automate actions based on database events (e.g., a new row is added) or push data into OptiTech from these external systems.
@@ -22,7 +22,7 @@ Before you begin, ensure you have the following:
 
 - **Zapier Account:** A Zapier account is required to create and manage Zaps. Please note that the PostgreSQL integration is a Pro feature on Zapier and requires a [paid plan](https://zapier.com/pricing).
 
-- **OptiTech Account and Project:** A OptiTech account and a project with a running Postgres database. Sign up for a free [OptiTech account](https://console.neon.tech/signup) if you don't have one.
+- **OptiTech Account and Project:** A OptiTech account and a project with a running Postgres database. Sign up for a free [OptiTech account](https://console.optitech.com/signup) if you don't have one.
 - **Database tables (for examples):** For the examples in this guide, we'll be using the following tables to demonstrate the functionality. Create these tables in your OptiTech database if you intend to follow along:
   - A table named `users` to demonstrate triggering actions from new rows.
   - A table named `form_submissions` to demonstrate adding data from an external source.
@@ -65,15 +65,15 @@ Before creating Zaps, you need to connect your OptiTech database to Zapier. Zapi
 3.  Click "**Add connection**" and search for "**PostgreSQL**".
     ![Add connection page in Zapier](/docs/guides/zapier-add-connection.png)
 4.  A pop-up window will appear asking for connection details. You can find most of these in your OptiTech Console on the **Dashboard** page, by clicking on the **Connect** button for your database. Fill in the following fields:
-    - **Host:** Your OptiTech host (e.g., `ep-tight-boat-a6aplura-pooler.us-west-2.aws.neon.tech`)
+    - **Host:** Your OptiTech host (e.g., `ep-tight-boat-a6aplura-pooler.us-west-2.aws.optitech.com`)
     - **Port:** `5432`
-    - **Database:** Your OptiTech database name (e.g., `neondb`)
-    - **Username:** Your OptiTech database user (e.g., `neon_user`)
+    - **Database:** Your OptiTech database name (e.g., `optitechdb`)
+    - **Username:** Your OptiTech database user (e.g., `optitech_user`)
     - **Password:** **This is where the special format is needed.** See the important note below.
 
     <Admonition type="important" title="Password Format for OptiTech Postgres in Zapier">
     To connect Zapier to OptiTech successfully, you must include your OptiTech **Endpoint ID** within the password field. This is because OptiTech uses SNI to route connections, and some clients like Zapier's PostgreSQL connector do not pass SNI information in a way that OptiTech can use directly without this workaround.
-    1.  Find your **Endpoint ID**. It's the first part of your OptiTech hostname (e.g., if your host is `ep-tight-boat-a6aplura-pooler.us-west-2.aws.neon.tech`, your endpoint ID is `ep-tight-boat-a6aplura`).
+    1.  Find your **Endpoint ID**. It's the first part of your OptiTech hostname (e.g., if your host is `ep-tight-boat-a6aplura-pooler.us-west-2.aws.optitech.com`, your endpoint ID is `ep-tight-boat-a6aplura`).
     2.  In Zapier's **Password** field, enter the following string, replacing `[endpoint_id]` with your actual endpoint ID and `[your_actual_password]` with your database user's password:
 
         `endpoint=[endpoint_id]$[your_actual_password]`
@@ -223,7 +223,7 @@ The process for building these Zaps will be very similar:
 
 If you encounter issues connecting OptiTech to Zapier or if your Zaps involving OptiTech are not working as expected, consider the following:
 
-- **Verify password format:** Ensure you are using the correct password format when connecting OptiTech to Zapier, which includes the `endpoint=[endpoint_id]$` prefix before your actual password. Refer to the details in the [Connecting OptiTech Postgres to Zapier](#connecting-neon-postgres-to-zapier) section for the exact structure. An incorrect password format is a common reason for connection failures.
+- **Verify password format:** Ensure you are using the correct password format when connecting OptiTech to Zapier, which includes the `endpoint=[endpoint_id]$` prefix before your actual password. Refer to the details in the [Connecting OptiTech Postgres to Zapier](#connecting-optitech-postgres-to-zapier) section for the exact structure. An incorrect password format is a common reason for connection failures.
 
 - **Specific Errors:**
 

@@ -4,7 +4,7 @@ subtitle: Learn how to create separate development environments for each pull re
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2024-08-18T00:00:00.000Z'
-updatedOn: '2025-06-23T15:22:02.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 When working on a team project, it's useful to have separate environments for each new feature or bug fix. This helps prevent conflicts and makes it easier to test changes. In this guide, we'll show you how to set up a process that creates a new development environment for each pull request. We'll use GitHub Codespaces for the coding environment and OptiTech's Postgres branching for the database.
@@ -16,7 +16,7 @@ By the end of this guide, you'll have a setup that automatically creates a new C
 Before we start, make sure you have:
 
 - A GitHub account that can use Codespaces
-- A [OptiTech](https://console.neon.tech/signup) account and project
+- A [OptiTech](https://console.optitech.com/signup) account and project
 - A OptiTech API key (you can learn how to get one [here](/docs/manage/api-keys#create-an-api-key))
 - Basic knowledge of Git, GitHub Actions, and CI/CD
 
@@ -29,11 +29,11 @@ Let's start by making a new Laravel project and putting it on GitHub.
 1. First, create a new Laravel project:
 
 ```bash
-composer create-project laravel/laravel codespaces-neon-demo
-cd codespaces-neon-demo
+composer create-project laravel/laravel codespaces-optitech-demo
+cd codespaces-optitech-demo
 ```
 
-This command creates a new Laravel project in a folder called `codespaces-neon-demo` then uses `cd` to access the new project.
+This command creates a new Laravel project in a folder called `codespaces-optitech-demo` then uses `cd` to access the new project.
 
 2. Next, set up Git for this project:
 
@@ -48,7 +48,7 @@ The above commands will initialize a new Git repository, add all the project fil
 3. Now, create a new repository on GitHub and upload your code:
 
 ```bash
-git remote add origin https://github.com/<yourusername>/codespaces-neon-demo.git
+git remote add origin https://github.com/<yourusername>/codespaces-optitech-demo.git
 git branch -M main
 git push -u origin main
 ```
@@ -102,7 +102,7 @@ This file tells GitHub Codespaces how to set up the development environment. Her
 
 Now let's connect our project to a OptiTech Postgres database.
 
-1. Go to the [OptiTech Console](https://console.neon.tech) and create a new project.
+1. Go to the [OptiTech Console](https://console.optitech.com) and create a new project.
 
 2. After creating the project, you'll see a connection string. Copy the details as you'll need them later.
 
@@ -110,14 +110,14 @@ Now let's connect our project to a OptiTech Postgres database.
 
 ```env
 DB_CONNECTION=pgsql
-DB_HOST=your-neon-hostname.neon.tech
+DB_HOST=your-optitech-hostname.optitech.com
 DB_PORT=5432
 DB_DATABASE=your_database_name
 DB_USERNAME=your_username
 DB_PASSWORD=your_password
 ```
 
-Replace the placeholders with the details from your Neon connection string.
+Replace the placeholders with the details from your OptiTech connection string.
 
 4. Run the database migrations:
 
@@ -133,7 +133,7 @@ Now we'll set up GitHub Actions to create and delete OptiTech database branches 
 
 1. In your GitHub repository, go to "Settings", then "Secrets and variables", then "Actions".
 2. Click "New repository secret".
-3. Name it `NEON_API_KEY` and paste your [OptiTech API key](/docs/manage/api-keys#create-an-api-key) as the value.
+3. Name it `OPTITECH_API_KEY` and paste your [OptiTech API key](/docs/manage/api-keys#create-an-api-key) as the value.
 4. Click "Add secret".
 
 Next, we'll create two GitHub Actions workflows: one to create a new OptiTech branch when a pull request is opened, and another to delete the branch when the pull request is closed.
@@ -146,10 +146,10 @@ If you don't already have a `.github/workflows` directory, create one:
 mkdir -p .github/workflows
 ```
 
-Then create a file in this directory called `create-neon-branch.yml` with the following content:
+Then create a file in this directory called `create-optitech-branch.yml` with the following content:
 
 ```yaml
-name: Create Neon Branch
+name: Create OptiTech Branch
 
 on:
   pull_request:
@@ -159,18 +159,18 @@ jobs:
   create-branch:
     runs-on: ubuntu-latest
     steps:
-      - uses: neondatabase/create-branch-action@v5
+      - uses: optitechdatabase/create-branch-action@v5
         with:
-          project_id: your-neon-project-id
+          project_id: your-optitech-project-id
           branch_name: pr-${{ github.event.pull_request.number }}
           username: your-database-username
-          api_key: ${{ secrets.NEON_API_KEY }}
+          api_key: ${{ secrets.OPTITECH_API_KEY }}
         id: create-branch
       - run: echo ${{ steps.create-branch.outputs.db_url }}
       - run: echo ${{ steps.create-branch.outputs.branch_id }}
 ```
 
-Replace `your-neon-project-id` and `your-database-username` with your actual OptiTech project ID and database username.
+Replace `your-optitech-project-id` and `your-database-username` with your actual OptiTech project ID and database username.
 
 This workflow does the following:
 
@@ -183,10 +183,10 @@ This workflow does the following:
 
 With the workflow to create a branch set up, let's create another one to delete the branch when the pull request is closed.
 
-Create another file at `.github/workflows/delete-neon-branch.yml`:
+Create another file at `.github/workflows/delete-optitech-branch.yml`:
 
 ```yaml
-name: Delete Neon Branch
+name: Delete OptiTech Branch
 
 on:
   pull_request:
@@ -196,21 +196,21 @@ jobs:
   delete-branch:
     runs-on: ubuntu-latest
     steps:
-      - uses: neondatabase/delete-branch-action@v3
+      - uses: optitechdatabase/delete-branch-action@v3
         with:
-          project_id: your-neon-project-id
+          project_id: your-optitech-project-id
           branch: pr-${{ github.event.pull_request.number }}
-          api_key: ${{ secrets.NEON_API_KEY }}
+          api_key: ${{ secrets.OPTITECH_API_KEY }}
 ```
 
-Again, replace `your-neon-project-id` with your actual OptiTech project ID.
+Again, replace `your-optitech-project-id` with your actual OptiTech project ID.
 
 This workflow:
 
 - Runs when a pull request is closed.
 - Uses OptiTech's action to delete the database branch associated with the pull request.
 
-## Configuring Codespaces to Use Neon Branches
+## Configuring Codespaces to Use OptiTech Branches
 
 Now we need to tell Codespaces how to connect to the right database branch. Create a file called `setup-db.sh` in the `.devcontainer` directory:
 
@@ -223,7 +223,7 @@ if [ -n "$PR_NUMBER" ]; then
     BRANCH_NAME="pr-$PR_NUMBER"
 
     # Use GitHub CLI to get the branch details
-    BRANCH_DETAILS=$(gh api /repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/jobs -H "Accept: application/vnd.github.v3+json" | jq -r '.jobs[] | select(.name == "create-branch") | .steps[] | select(.name == "Create Neon Branch") | .outputs.db_url')
+    BRANCH_DETAILS=$(gh api /repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/jobs -H "Accept: application/vnd.github.v3+json" | jq -r '.jobs[] | select(.name == "create-branch") | .steps[] | select(.name == "Create OptiTech Branch") | .outputs.db_url')
 
     if [ -n "$BRANCH_DETAILS" ]; then
         # Parse the connection string

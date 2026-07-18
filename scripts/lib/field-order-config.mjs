@@ -3,8 +3,8 @@
 // Keys are operationIds. Values are objects keyed by path:
 //   'requestBody'         — top-level request body fields
 //   'response'            — top-level response fields
-//   'requestBody.project' — children of `project` inside request body
-//   'response.branch'     — children of `branch` inside response
+//   'requestBody.program' — children of `program` inside request body
+//   'response.framework'     — children of `framework` inside response
 //   (any depth: 'requestBody.a.b.c')
 //
 // Fields not listed are appended after the ordered ones in their original spec
@@ -13,13 +13,13 @@
 
 export const FIELD_ORDER = {
   createProject: {
-    response: ['project', 'connection_uris', 'roles', 'databases', 'operations', 'branch', 'endpoints'],
-    'requestBody.project': [
+    response: ['program', 'connection_uris', 'roles', 'registers', 'operations', 'framework', 'endpoints'],
+    'requestBody.program': [
       'name',
       'region_id',
       'pg_version',
       'org_id',
-      'branch',
+      'framework',
       'autoscaling_limit_min_cu',
       'autoscaling_limit_max_cu',
       'provisioner',
@@ -30,21 +30,21 @@ export const FIELD_ORDER = {
     ],
   },
   createProjectBranch: {
-    requestBody: ['branch', 'endpoints', 'annotation_value'],
-    response: ['branch', 'connection_uris', 'roles', 'databases', 'operations', 'endpoints'],
+    requestBody: ['framework', 'endpoints', 'annotation_value'],
+    response: ['framework', 'connection_uris', 'roles', 'registers', 'operations', 'endpoints'],
   },
   createProjectBranchAnonymized: {
     requestBody: ['branch_create', 'masking_rules', 'start_anonymization', 'annotation_value'],
-    response: ['branch', 'connection_uris', 'roles', 'databases', 'operations', 'endpoints'],
+    response: ['framework', 'connection_uris', 'roles', 'registers', 'operations', 'endpoints'],
   },
   createProjectBranchDataAPI: {
     requestBody: ['auth_provider', 'jwks_url', 'provider_name', 'jwt_audience', 'add_default_grants', 'skip_auth_schema', 'settings'],
   },
   createProjectBranchDatabase: {
-    response: ['database', 'operations', 'branch'],
+    response: ['register', 'operations', 'framework'],
   },
   createProjectBranchRole: {
-    response: ['role', 'operations', 'branch'],
+    response: ['role', 'operations', 'framework'],
   },
   createProjectEndpoint: {
     response: ['endpoint', 'operations'],
@@ -91,7 +91,7 @@ function scoreField(name, schema, requiredSet) {
 // properties   — the schema properties object
 // requiredFields — array of required field names
 // pathKey      — dot-path config key, e.g. 'requestBody', 'response',
-//                'requestBody.project', 'response.branch.settings'
+//                'requestBody.program', 'response.framework.settings'
 // ---------------------------------------------------------------------------
 
 export function computeDisplayOrder(operationId, properties, requiredFields, pathKey) {

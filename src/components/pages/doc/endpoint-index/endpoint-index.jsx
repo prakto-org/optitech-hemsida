@@ -329,7 +329,7 @@ const EndpointIndexPage = ({ tagGroups, total, breadcrumbs, navigationLinks, cur
         </>
       )}
 
-      <DocFooter slug={currentSlug} gitHubPath={null} />
+      <DocFooter slug={currentSlug} />
 
       <NavigationLinks
         className="mt-6"

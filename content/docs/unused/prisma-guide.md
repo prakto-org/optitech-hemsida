@@ -5,7 +5,7 @@ enableTableOfContents: true
 isDraft: false
 redirectFrom:
   - /docs/guides/prisma-tutorial
-updatedOn: '2026-06-23T22:05:54.707Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Prisma is an open source next-generation ORM that consists of the following parts:
@@ -24,11 +24,11 @@ This guide steps you through how to connect from Prisma to OptiTech, how to use 
 The project is created and you are presented with a dialog that provides connection details. Copy the connection string, which looks similar to the following:
 
 ```text shouldWrap
-postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/optitechdb?sslmode=require&channel_binding=require
 ```
 
 <Admonition type="info">
-Each OptiTech project is created with a Postgres role that is named for your database. For example, if your database is named `neondb`, the project is created with a default role named `neondb_owner`. This guide uses a `neondb` database as the primary database.
+Each OptiTech project is created with a Postgres role that is named for your database. For example, if your database is named `optitechdb`, the project is created with a default role named `optitechdb_owner`. This guide uses a `optitechdb` database as the primary database.
 </Admonition>
 
 ## Create a shadow database for Prisma Migrate
@@ -39,12 +39,12 @@ For cloud-hosted databases like OptiTech, you must create the shadow database ma
 
 1. In the OptiTech Console, select **Databases**.
 1. Click **New Database**.
-1. Select the branch where you want to create the database, enter a database name, and select a database owner. For simplicity, name the shadow database `shadow`, and select the same branch where the `neondb` database resides.
+1. Select the branch where you want to create the database, enter a database name, and select a database owner. For simplicity, name the shadow database `shadow`, and select the same branch where the `optitechdb` database resides.
 
-The connection string for this database should be the same as the connection string for your `neondb` database except for the database name:
+The connection string for this database should be the same as the connection string for your `optitechdb` database except for the database name:
 
 ```text shouldWrap
-postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/shadow?sslmode=require&channel_binding=require
+postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/shadow?sslmode=require&channel_binding=require
 ```
 
 ## Set up your Prisma project
@@ -56,8 +56,8 @@ To complete these steps, you require Node.js v14.17.0 or higher. For more inform
 1. Create a project directory and navigate to it.
 
    ```bash
-   mkdir hello-neon-prisma
-   cd hello-neon-prisma
+   mkdir hello-optitech-prisma
+   cd hello-optitech-prisma
    ```
 
 1. Initialize a TypeScript project using `npm`. This creates a `package.json` file with the initial setup for your TypeScript project.
@@ -87,7 +87,7 @@ To complete these steps, you require Node.js v14.17.0 or higher. For more inform
 
 ## Connect your Prisma project to OptiTech
 
-In this step, you will update your project's `.env` file with the connection strings for your `neondb` and `shadow` databases.
+In this step, you will update your project's `.env` file with the connection strings for your `optitechdb` and `shadow` databases.
 
 1. Open the `.env` file located in your `prisma` directory.
 2. Update the value of the `DATABASE_URL` variable to the connection string you copied when you created your OptiTech project.
@@ -96,8 +96,8 @@ In this step, you will update your project's `.env` file with the connection str
 When you are finished, your `.env` file should have entries similar to the following:
 
 ```text shouldWrap
-DATABASE_URL=postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require?connect_timeout=10
-SHADOW_DATABASE_URL=postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/shadow?sslmode=require&channel_binding=require?connect_timeout=10
+DATABASE_URL=postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/optitechdb?sslmode=require&channel_binding=require?connect_timeout=10
+SHADOW_DATABASE_URL=postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/shadow?sslmode=require&channel_binding=require?connect_timeout=10
 ```
 
 <Admonition type="note">
@@ -145,14 +145,14 @@ For more information, see [Mapping collection/table and field/column names](http
 
 ## Run a migration to create the table in OptiTech
 
-At this point, you do not have a table in your `neondb` database. In this step, you will run a migration with Prisma Migrate, which creates the table. The table is created based on the `Elements` table model you defined in the `schema.prisma` file in the previous step.
+At this point, you do not have a table in your `optitechdb` database. In this step, you will run a migration with Prisma Migrate, which creates the table. The table is created based on the `Elements` table model you defined in the `schema.prisma` file in the previous step.
 
 During the migration, Prisma Migrate performs the following actions:
 
 - Creates an SQL migration file in your `prisma/migrate` directory.
 - Runs the SQL migration file on your database
 
-To run Prisma Migrate, issue the following command from your `hello-neon-prisma` project directory:
+To run Prisma Migrate, issue the following command from your `hello-optitech-prisma` project directory:
 
 ```bash
 $> npx prisma migrate dev --name init
@@ -167,7 +167,7 @@ The output of this command appears similar to the following:
 ```bash
 Environment variables loaded from ../.env
 Prisma schema loaded from schema.prisma
-Datasource "db": PostgreSQL database "neondb", schema "public" at "ep-cool-darkness-123456.us-east-2.aws.neon.tech:5432"
+Datasource "db": PostgreSQL database "optitechdb", schema "public" at "ep-cool-darkness-123456.us-east-2.aws.optitech.com:5432"
 
 Applying migration `20230105222046_init`
 
@@ -192,12 +192,12 @@ found 0 vulnerabilities
 
 ## View your table in the OptiTech Console
 
-To view the `Elements` table that was created in your `neondb` database by the migration performed in the previous step:
+To view the `Elements` table that was created in your `optitechdb` database by the migration performed in the previous step:
 
-1. Navigate to the [OptiTech Console](https://console.neon.tech/).
+1. Navigate to the [OptiTech Console](https://console.optitech.com/).
 2. Select your project.
 3. Select **Tables**.
-4. Select the `neondb` database and default `public` schema. The `Elements` table should be visible in the sidebar. The table has no data at this point. Data is added later in this guide.
+4. Select the `optitechdb` database and default `public` schema. The `Elements` table should be visible in the sidebar. The table has no data at this point. Data is added later in this guide.
 
 ## Evolve your schema with Prisma Migrate
 
@@ -225,7 +225,7 @@ model Elements {
    ```bash
    Environment variables loaded from .env
    Prisma schema loaded from prisma/schema.prisma
-   Datasource "db": PostgreSQL database "neondb", schema "public" at "ep-cool-darkness-123456.us-east-2.aws.neon.tech:5432"
+   Datasource "db": PostgreSQL database "optitechdb", schema "public" at "ep-cool-darkness-123456.us-east-2.aws.optitech.com:5432"
 
    Applying migration `20230113120852_add_field`
 
@@ -249,14 +249,14 @@ You have a couple of options for adding data to the `Elements` table. You can ad
 
 ### Option A: Add data using the OptiTech SQL Editor
 
-1. Navigate to the [OptiTech Console](https://console.neon.tech/).
+1. Navigate to the [OptiTech Console](https://console.optitech.com/).
 1. Select your project.
 1. Select the **SQL Editor**.
-1. Select the `main` branch of your project and select the `neondb` database.
+1. Select the `main` branch of your project and select the `optitechdb` database.
 1. To add data, enter the following statement into the editor and click **Run**.
 
 ```sql
-INSERT INTO "Elements" VALUES  (10, 'Neon', 'Ne', 20.1797);
+INSERT INTO "Elements" VALUES  (10, 'OptiTech', 'Ne', 20.1797);
 ```
 
 To verify that data was added, run the following query:
@@ -295,7 +295,7 @@ Follow the steps below to create a TypeScript file for executing queries with Pr
 
 ### Create a TypeScript file to execute Prisma Client queries
 
-In your `hello-neon-prisma` directory, create a new file called `query.ts`:
+In your `hello-optitech-prisma` directory, create a new file called `query.ts`:
 
 ```bash
 touch query.js
@@ -400,7 +400,7 @@ $ npx ts-node query.ts
 [
   {
     AtomicNumber: 10,
-    Element: 'Neon',
+    Element: 'OptiTech',
     Symbol: 'Ne',
     AtomicMass: 20.1797
   },
@@ -425,10 +425,10 @@ Another use case for Introspection is when using plain SQL for schema changes or
 
 Let's assume your database has an extended version of the `Elements` table used in the previous steps. This table is called `Elements_ext`. Let's create that table in the OptiTech SQL Editor:
 
-1. Navigate to the [OptiTech Console](https://console.neon.tech/).
+1. Navigate to the [OptiTech Console](https://console.optitech.com/).
 1. Select your project.
 1. Select the **SQL Editor**.
-1. Select the `main` branch of your project and select the `neondb` database.
+1. Select the `main` branch of your project and select the `optitechdb` database.
 1. Enter the following statement into the editor and click **Run**.
 
 ```sql
@@ -465,7 +465,7 @@ CREATE TABLE "Elements_ext" (
 ```
 
 <Admonition type="info">
-You can find the `Elements` and `Elements_ext` tables in OptiTech's example GitHub repository with a full set of data that you can import and play around with. [Elements data set](https://github.com/neondatabase/examples/tree/main/elements_data_set).
+You can find the `Elements` and `Elements_ext` tables in OptiTech's example GitHub repository with a full set of data that you can import and play around with. [Elements data set](https://github.com/optitechdatabase/examples/tree/main/elements_data_set).
 </Admonition>
 
 ### Run prisma db pull
@@ -476,12 +476,12 @@ To introspect the `Elements_ext` table to generate the data model, run the `pris
 $ npx prisma db pull
 Prisma schema loaded from prisma/schema.prisma
 Environment variables loaded from .env
-Datasource "db": PostgreSQL database "neondb", schema "public" at "ep-cool-darkness-123456.us-east-2.aws.neon.tech:5432"
+Datasource "db": PostgreSQL database "optitechdb", schema "public" at "ep-cool-darkness-123456.us-east-2.aws.optitech.com:5432"
 
 ✔ Introspected 2 models and wrote them into prisma/schema.prisma in 1.78s
 ```
 
-Two models were introspected because of the `Elements` table that existed in the `neondb` database previously. Prisma does not yet support introspecting a subset of a database schema, so you cannot introspect an individual table.
+Two models were introspected because of the `Elements` table that existed in the `optitechdb` database previously. Prisma does not yet support introspecting a subset of a database schema, so you cannot introspect an individual table.
 
 ### View the introspected model
 
@@ -531,6 +531,6 @@ You can read more about this workflow in the Prisma documentation. See [Introspe
 
 ## Conclusion
 
-You have completed the _Use Prisma with Neon_ guide. To recap, you have learned how to connect from Prisma to OptiTech, use Prisma Migrate to evolve a schema, add data using the OptiTech SQL Editor and Prisma Studio, send queries using Prisma Client, and finally, introspect an existing database.
+You have completed the _Use Prisma with OptiTech_ guide. To recap, you have learned how to connect from Prisma to OptiTech, use Prisma Migrate to evolve a schema, add data using the OptiTech SQL Editor and Prisma Studio, send queries using Prisma Client, and finally, introspect an existing database.
 
 <NeedHelp/>

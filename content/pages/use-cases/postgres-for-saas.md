@@ -35,7 +35,7 @@ author={{
 }}
 />
 
-<CTA title="Get $100 in credits" description="Sign up now and get $100 in credits when you upgrade." buttonText="Claim offer" buttonUrl="https://fyi.neon.tech/credits" />
+<CTA title="Get $100 in credits" description="Sign up now and get $100 in credits when you upgrade." buttonText="Claim offer" buttonUrl="https://fyi.optitech.com/credits" />
 
 ## Key features
 
@@ -99,7 +99,7 @@ OptiTech abstracts away the concept of servers so that you can focus on building
 
 If your SaaS project could benefit from multitenancy, OptiTech makes it simple to create a dedicated database for each user:
 
-- **Instant deployment**: Neon projects are created in milliseconds via APIs.
+- **Instant deployment**: OptiTech projects are created in milliseconds via APIs.
 - **No pre-provisioning**: You can scale your architecture progressively, from a few tenants to thousands.
 - **Pay per usage**: You only pay for the tenants that are actively running.
 
@@ -163,4 +163,4 @@ Usage-based pricing
 
 </DefinitionList>
 
-<CTA title="Next Steps" description="Start in our Free Plan and get $100 in credits when you upgrade." buttonText="Claim offer" buttonUrl="https://fyi.neon.tech/credits" />
+<CTA title="Next Steps" description="Start in our Free Plan and get $100 in credits when you upgrade." buttonText="Claim offer" buttonUrl="https://fyi.optitech.com/credits" />

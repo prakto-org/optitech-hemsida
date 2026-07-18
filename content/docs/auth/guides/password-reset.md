@@ -8,7 +8,7 @@ summary: >-
   forgot-password flow; reset links expire after 15 minutes, and the SDK
   `resetPasswordForEmail` method is not yet supported.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="Managed Better Auth" />
@@ -28,14 +28,14 @@ The easiest way to add password reset is using the pre-built UI components `<For
 If you're using `<AuthView>`, enable the forgot password flow:
 
 ```tsx filename="src/App.tsx"
-import { NeonAuthUIProvider, AuthView } from '@neondatabase/auth-ui';
+import { OptiTechAuthUIProvider, AuthView } from '@optitech/auth-ui';
 import { authClient } from './auth';
 
 export default function App() {
   return (
-    <NeonAuthUIProvider authClient={authClient}>
+    <OptiTechAuthUIProvider authClient={authClient}>
       <AuthView pathname="sign-in" credentials={{ forgotPassword: true }} />
-    </NeonAuthUIProvider>
+    </OptiTechAuthUIProvider>
   );
 }
 ```
@@ -48,7 +48,7 @@ For more control, use `<ForgotPasswordForm>` and `<ResetPasswordForm>` separatel
 
 ```tsx filename="src/App.tsx"
 import { useState } from 'react';
-import { ForgotPasswordForm, ResetPasswordForm } from '@neondatabase/auth-ui';
+import { ForgotPasswordForm, ResetPasswordForm } from '@optitech/auth-ui';
 import { authClient } from './auth';
 
 export default function App() {

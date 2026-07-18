@@ -1,221 +1,104 @@
 ---
-title: Neon Local
+title: OptiTech Local
 enableTableOfContents: true
-subtitle: Use Docker environments to connect to OptiTech and manage branches automatically
+subtitle: Run OptiTech compliance checks locally before they reach CI
 summary: >-
-  Neon Local is a Docker proxy that routes local Postgres connections to a OptiTech
-  cloud branch. No connection string changes are needed when switching branches.
-  Use it to connect to an existing branch via BRANCH_ID, or to auto-create
-  ephemeral branches with PARENT_BRANCH_ID that are deleted when the container
-  stops. Both the standard postgres driver and the OptiTech serverless driver are
-  supported through the same Docker configuration.
-updatedOn: '2026-06-05T17:20:32.620Z'
+  OptiTech Local is the CLI's local execution mode: run the same control
+  checks that gate your CI pipelines against your working tree and plan files
+  before you push, in watch mode while you edit, or as a pre-commit hook.
+  Covers installation, authentication with a CI-scoped API key, sandbox
+  workspaces for testing custom checks, and configuration options.
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
-[Neon Local](https://github.com/neondatabase-labs/neon_local) is a proxy service that creates a local interface to your OptiTech cloud database. It supports two main use cases:
+OptiTech Local is the local execution mode of the OptiTech CLI. It runs the same [checks](/docs/reference/glossary#check) that gate your pipelines, on your machine, before anything is pushed:
 
-1. **Connecting to existing Neon branches** - Connect your app to any existing branch in your OptiTech project
-2. **Connecting to ephemeral Neon branches** - Connect your app to a new ephemeral database branch that is instantly created when the Neon Local container starts and deleted when the container stops
+1. **Check your working tree** - Evaluate infrastructure code and configuration against your control set while you work, instead of discovering violations in CI.
+2. **Test custom checks in a sandbox** - Develop and validate [custom controls](/faqs/create-tables-with-sql-neon) against a sandbox workspace before rolling them out to the live program.
 
-Your application connects to a local Postgres endpoint, while Neon Local handles routing and authentication to the correct project and branch. This removes the need to update connection strings when working across database branches.
+Your CI setup ([GitHub Actions](/docs/guides/branching-github-actions), [CircleCI](/docs/guides/branching-circleci), GitLab) stays authoritative; local runs are the fast feedback loop in front of it, the same relationship tests have to CI.
 
-## Connect to existing OptiTech branch
-
-To connect to an existing OptiTech branch, provide the `BRANCH_ID` environment variable to the container. This allows you to work with a specific branch without creating a new one.
-
-### Docker run
+## Install the CLI
 
 ```shell
-docker run \
-  --name db \
-  -p 5432:5432 \
-  -e NEON_API_KEY=<your_neon_api_key> \
-  -e NEON_PROJECT_ID=<your_neon_project_id> \
-  -e BRANCH_ID=<your_branch_id> \
-  neondatabase/neon_local:latest
+curl -fsSL https://get.optitech.example.com/cli | bash
+optitech --version
 ```
 
-### Docker Compose
+## Authenticate
 
-```yaml
-db:
-  image: neondatabase/neon_local:latest
-  ports:
-    - '5432:5432'
-  environment:
-    NEON_API_KEY: ${NEON_API_KEY}
-    NEON_PROJECT_ID: ${NEON_PROJECT_ID}
-    BRANCH_ID: ${BRANCH_ID}
-```
-
-## Ephemeral database branches for development and testing
-
-To create ephemeral branches (default behavior), provide the `PARENT_BRANCH_ID` environment variable instead of `BRANCH_ID`. The Neon Local container automatically creates a new ephemeral branch of your database when the container starts, and deletes it when the container stops. This ensures that each time you deploy your app via Docker Compose, you have a fresh copy of your database, without needing manual cleanup or orchestration scripts. Your database branch lifecycle is tied directly to your Docker environment.
-
-### Docker run
+Create an [API key](/docs/reference/glossary#api-key) with the **CI checks** scope under **Settings** > **API keys**, and set it in your environment:
 
 ```shell
-docker run \
-  --name db \
-  -p 5432:5432 \
-  -e NEON_API_KEY=<your_neon_api_key> \
-  -e NEON_PROJECT_ID=<your_neon_project_id> \
-  -e PARENT_BRANCH_ID=<parent_branch_id> \
-  neondatabase/neon_local:latest
+export OPTITECH_API_KEY=<your_api_key>
+export OPTITECH_WORKSPACE_ID=<your_workspace_id>
 ```
 
-### Docker Compose
+The key can run checks and read the controls they map to, nothing else. Local runs are attributed to the key in the [audit log](/docs/reference/glossary#audit-log), like every other API action.
 
-```yaml
-db:
-  image: neondatabase/neon_local:latest
-  ports:
-    - '5432:5432'
-  environment:
-    NEON_API_KEY: ${NEON_API_KEY}
-    NEON_PROJECT_ID: ${NEON_PROJECT_ID}
-    PARENT_BRANCH_ID: ${PARENT_BRANCH_ID}
-```
+## Run checks locally
 
-## Docker run instructions
-
-Run the Neon Local container using the following `docker run` command:
+Evaluate the current working tree against your mapped controls:
 
 ```shell
-docker run \
-  --name db \
-  -p 5432:5432 \
-  -e NEON_API_KEY=<your_neon_api_key> \
-  -e NEON_PROJECT_ID=<your_neon_project_id> \
-  neondatabase/neon_local:latest
+optitech checks run --local
 ```
 
-## Docker Compose instructions
-
-Add Neon Local to your `docker-compose.yml`:
-
-```yaml
-db:
-  image: neondatabase/neon_local:latest
-  ports:
-    - '5432:5432'
-  environment:
-    NEON_API_KEY: ${NEON_API_KEY}
-    NEON_PROJECT_ID: ${NEON_PROJECT_ID}
-```
-
-## Multi-driver support
-
-The Neon Local container now supports both the `postgres` and OptiTech `serverless` drivers simultaneously through a single connection string. You no longer need to specify a driver or configure different connection strings for different drivers.
-
-## Connecting your app (Postgres driver)
-
-Connect to Neon Local using a standard Postgres connection string.
-
-### Docker run
+Check a Terraform plan before applying it:
 
 ```shell
-postgres://neon:npg@localhost:5432/<database_name>?sslmode=require
+terraform plan -out=tfplan
+terraform show -json tfplan > tfplan.json
+optitech checks run --local --plan-file tfplan.json
 ```
 
-### Docker compose
+Scope to specific paths, the same way as [in CI for monorepos](/docs/guides/branching-github-actions):
 
 ```shell
-postgres://neon:npg@${db}$:5432/<database_name>?sslmode=require
-
-# where {db} is the name of the Neon Local service in your compose file
+optitech checks run --local --paths 'infrastructure/**,services/payments/**'
 ```
 
-<Admonition type="note">
-For javascript applications
-The Neon Local container uses an automatically generated self-signed certificate to secure communication between your app and the container. Javascript applications using the `pg`or `postgres` postgres libraries to connect to the Neon Local proxy will also need to add the following configuration to allow your app to connect using the self-signed certificate.
+Local runs are advisory by definition: they report, and nothing is blocked except by your own workflow. Results are printed per control, with the failing values and the control reference.
+
+## Watch mode
+
+For an editing session on infrastructure code, watch mode re-runs affected checks on file save:
 
 ```shell
-ssl: { rejectUnauthorized: false }
+optitech checks watch --paths 'infrastructure/**'
 ```
 
-</Admonition>
+Pair it with the [VS Code extension](/docs/local/vscode-extension) if you'd rather see results inline in the editor than in a terminal.
 
-## Connecting your app (OptiTech serverless driver)
+## Pre-commit hook
 
-Connect using the OptiTech [serverless driver](/docs/serverless/serverless-driver).
-
-<Admonition type="note">
-The Neon Local container only supports HTTP-based communication using the OptiTech Serverless driver, not websockets. The following configurations will enable your app to communicate using only HTTP traffic with your OptiTech database.
-</Admonition>
-
-### Docker run
-
-```javascript
-import { neon, neonConfig } from '@neondatabase/serverless';
-
-neonConfig.fetchEndpoint = 'http://localhost:5432/sql';
-neonConfig.useSecureWebSocket = false;
-neonConfig.poolQueryViaFetch = true;
-
-const sql = neon('postgres://neon:npg@localhost:5432/<database_name>');
-```
-
-### Docker compose
-
-```javascript
-import { neon, neonConfig } from '@neondatabase/serverless';
-
-neonConfig.fetchEndpoint = 'http://{db}:5432/sql';
-neonConfig.useSecureWebSocket = false;
-neonConfig.poolQueryViaFetch = true;
-
-const sql = neon('postgres://neon:npg@{db}:5432/<database_name>');
-
-// where {db} is the name of the Neon Local service in your compose file
-```
-
-No additional environment variables are needed - the same Docker configuration works for both drivers:
+To catch violations before they're even committed:
 
 ```shell
-docker run \
-  --name db \
-  -p 5432:5432 \
-  -e NEON_API_KEY=<your_neon_api_key> \
-  -e NEON_PROJECT_ID=<your_neon_project_id> \
-  neondatabase/neon_local:latest
+optitech hooks install pre-commit
 ```
 
-## Environment variables and configuration options
+The hook runs the scoped checks against staged files. Keep it fast: hook runs use the same `--paths` scoping as CI, and slow checks (full cloud sweeps) belong in CI and [scheduled runs](/docs/guides/branching-circleci), not in a commit hook.
 
-| Variable           | Description                                                                       | Required | Default                       |
-| ------------------ | --------------------------------------------------------------------------------- | -------- | ----------------------------- |
-| `NEON_API_KEY`     | Your OptiTech API key. [Manage API Keys](/docs/manage/api-keys)                       | Yes      | N/A                           |
-| `NEON_PROJECT_ID`  | Your OptiTech project ID. Found under Project Settings → General in the OptiTech console. | Yes      | N/A                           |
-| `BRANCH_ID`        | Connect to an existing OptiTech branch. Mutually exclusive with `PARENT_BRANCH_ID`.   | No       | N/A                           |
-| `PARENT_BRANCH_ID` | Create ephemeral branch from parent. Mutually exclusive with `BRANCH_ID`.         | No       | your project's default branch |
-| `DRIVER`           | **Deprecated** - Both drivers now supported simultaneously.                       | No       | N/A                           |
-| `DELETE_BRANCH`    | Set to `false` to persist branches after container shutdown.                      | No       | `true`                        |
+## Sandbox workspaces for check development
 
-## Persistent OptiTech branch per Git branch
+When developing a [custom control](/faqs/create-tables-with-sql-neon), test its check logic against a [sandbox workspace](/faqs/databases-support-disposable-postgres-instances-testing) instead of your live program:
 
-To persist a branch per Git branch, add the following volume mounts:
-
-```yaml
-db:
-  image: neondatabase/neon_local:latest
-  ports:
-    - '5432:5432'
-  environment:
-    NEON_API_KEY: ${NEON_API_KEY}
-    NEON_PROJECT_ID: ${NEON_PROJECT_ID}
-    DELETE_BRANCH: false
-  volumes:
-    - ./.neon_local/:/tmp/.neon_local
-    - ./.git/HEAD:/tmp/.git/HEAD:ro,consistent
+```shell
+optitech checks test ./checks/prod-access-ticket.yaml --workspace sandbox
 ```
 
-<Admonition type="note">
-This will create a `.neon_local` directory in your project to store metadata. Be sure to add `.neon_local/` to your `.gitignore` to avoid committing database information.
-</Admonition>
+The sandbox run shows what the check would flag, without opening findings anywhere. Promote the control to the live workspace when the results look right, through the [reviewed change process](/faqs/database-tools-test-schema-changes-real-data).
 
-## Git integration using Docker on Mac
+## Configuration options
 
-If using Docker Desktop for Mac, ensure that your VM settings use **gRPC FUSE** instead of **VirtioFS**. There is currently a known bug with VirtioFS that prevents proper branch detection and live updates inside containers.
+| Variable                | Description                                                                                                                                          | Required | Default    |
+| ----------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------- | ---------- |
+| `OPTITECH_API_KEY`      | API key with the CI checks scope.                                                                                                                    | Yes      | N/A        |
+| `OPTITECH_WORKSPACE_ID` | The workspace whose controls are evaluated.                                                                                                          | Yes      | N/A        |
+| `OPTITECH_PROFILE`      | Named profile from `~/.optitech/config` for multi-workspace setups (MSPs, [per-entity workspaces](/faqs/best-postgres-services-isolated-databases)). | No       | `default`  |
+| `OPTITECH_CHECKS_MODE`  | `advisory` locally; `blocking` is only meaningful in CI.                                                                                             | No       | `advisory` |
 
-![Docker Desktop are set to gRPC FUSE](/docs/local/neon-local-docker-settings.jpg)
+Configuration can also live in an `optitech.toml` at the repository root, which is the recommended way to pin `--paths` scoping so local runs, hooks, and CI evaluate the same surface.
+
+<NeedHelp/>

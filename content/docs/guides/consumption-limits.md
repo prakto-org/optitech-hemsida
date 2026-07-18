@@ -15,7 +15,7 @@ redirectFrom:
   - /docs/guides/partner-billing
   - /docs/guides/partner-consumption-limits
 isDraft: false
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 When setting up your integration's billing solution with OptiTech, you may want to impose some hard limits on how much storage or compute resources a given project can consume. For example, you may want to cap how much usage your free plan users can consume versus pro or enterprise users. With the OptiTech API, you can use the `quota` key to set usage limits for a variety of consumption metrics. These limits act as thresholds after which all active computes for a project are [suspended](#suspending-active-computes).
@@ -121,9 +121,9 @@ Here is a sample `POST` in `curl` that creates a new project called `UserNew` an
 
 ```bash {11,12}
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects \
+     --url https://console.optitech.com/api/v2/projects \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '
 {
@@ -149,9 +149,9 @@ Here is a sample `PATCH` that updates both the `active_time_seconds` and `comput
 
 ```bash {11,12}
 curl --request PATCH \
-     --url https://console.neon.tech/api/v2/projects/[project_ID]\
+     --url https://console.optitech.com/api/v2/projects/[project_ID]\
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '
 {
@@ -203,9 +203,9 @@ These default values are set in the
 
 ```bash {9-12}
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects \
+     --url https://console.optitech.com/api/v2/projects \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '
 {
@@ -227,9 +227,9 @@ In this POST request, we are creating a new endpoint at the same time that we cr
 
 ```bash {14-16}
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects/noisy-pond-28482075/branches \
+     --url https://console.optitech.com/api/v2/projects/noisy-pond-28482075/branches \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '
 {
@@ -254,9 +254,9 @@ In this example, we are creating a new endpoint for an already existing branch w
 
 ```bash {10-13}
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects/noisy-pond-28482075/endpoints \
+     --url https://console.optitech.com/api/v2/projects/noisy-pond-28482075/endpoints \
      --header 'Accept: application/json' \
-     --header "Authorization: Bearer $NEON_API_KEY" \
+     --header "Authorization: Bearer $OPTITECH_API_KEY" \
      --header 'Content-Type: application/json' \
      --data '
 {

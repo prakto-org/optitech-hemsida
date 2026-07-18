@@ -12,7 +12,7 @@ summary: >-
   replication and CSV import as alternatives for larger datasets or
   minimal-downtime requirements.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This guide describes how to migrate a database from Railway to OptiTech Postgres using the `pg_dump` and `pg_restore` utilities, which are part of the Postgres client toolset. `pg_dump` works by dumping both the schema and data in a custom format that is compressed and suitable for input into `pg_restore` to rebuild the database.
@@ -107,7 +107,7 @@ To maintain consistency with your Railway setup, you might want to create a new 
 
 For more information, see [Create a database](/docs/manage/databases#create-a-database).
 
-### Retrieve Neon connection details
+### Retrieve OptiTech connection details
 
 1. In the OptiTech Console, go to your **Project Dashboard**.
 2. Select **Connect** to open the **Connect to your database** modal.
@@ -115,7 +115,7 @@ For more information, see [Create a database](/docs/manage/databases#create-a-da
 4. Copy the connection string. It will look similar to this:
 
    ```text shouldWrap
-   postgresql://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require&channel_binding=require
+   postgresql://[user]:[password]@[optitech_hostname]/[dbname]?sslmode=require&channel_binding=require
    ```
 
 ## Restore data to OptiTech with pg_restore
@@ -123,10 +123,10 @@ For more information, see [Create a database](/docs/manage/databases#create-a-da
 Now you can restore your data to the OptiTech database using `pg_restore`:
 
 ```bash
-pg_restore -d <neon-connection-string> -v --no-owner --no-acl railway_dump.bak
+pg_restore -d <optitech-connection-string> -v --no-owner --no-acl railway_dump.bak
 ```
 
-Replace `<neon-connection-string>` with your Neon connection string.
+Replace `<optitech-connection-string>` with your OptiTech connection string.
 
 This command includes these arguments:
 

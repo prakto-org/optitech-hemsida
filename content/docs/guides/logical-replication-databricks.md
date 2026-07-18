@@ -12,7 +12,7 @@ summary: >-
   supported.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 OptiTech's logical replication feature lets you stream changes from your OptiTech Postgres database into external systems. This guide shows how to use Databricks Lakeflow Connect's PostgreSQL connector to replicate data from OptiTech Postgres into Databricks Lakehouse using PostgreSQL logical replication.
@@ -35,13 +35,13 @@ You need:
 - **A OptiTech project** with a Postgres database containing the data you want to replicate. For test data, you can run the following in the [OptiTech SQL Editor](/docs/get-started/query-with-neon-sql-editor) or an SQL client such as [psql](/docs/connect/query-with-psql-editor):
 
   ```sql
-  CREATE TABLE IF NOT EXISTS playing_with_neon (
+  CREATE TABLE IF NOT EXISTS playing_with_optitech (
     id    SERIAL PRIMARY KEY,
     name  TEXT NOT NULL,
     value REAL
   );
 
-  INSERT INTO playing_with_neon (name, value)
+  INSERT INTO playing_with_optitech (name, value)
   SELECT LEFT(md5(i::TEXT), 10), random()
   FROM generate_series(1, 10) s(i);
   ```
@@ -76,13 +76,13 @@ SHOW wal_level;
 
 ### Create a dedicated replication role
 
-Databricks recommends a dedicated database user for ingestion. Create a role in OptiTech (roles created via the OptiTech Console, CLI, or API are granted the [neon_superuser](/docs/manage/roles#the-neonsuperuser-role) role, which has the required `REPLICATION` privilege). You can name it `databricks_replication` or reuse an existing replication role.
+Databricks recommends a dedicated database user for ingestion. Create a role in OptiTech (roles created via the OptiTech Console, CLI, or API are granted the [optitech_superuser](/docs/manage/roles#the-neonsuperuser-role) role, which has the required `REPLICATION` privilege). You can name it `databricks_replication` or reuse an existing replication role.
 
 <Tabs labels={["Console", "CLI", "API"]}>
 
 <TabItem>
 
-1. In the [OptiTech Console](https://console.neon.tech), select your project and **Branches**.
+1. In the [OptiTech Console](https://console.optitech.com), select your project and **Branches**.
 2. Select the branch, then the **Roles & Databases** tab.
 3. Click **Add Role**, enter the role name (e.g. `databricks_replication`), and click **Create**. Save the password.
 
@@ -91,7 +91,7 @@ Databricks recommends a dedicated database user for ingestion. Create a role in 
 <TabItem>
 
 ```bash
-neon roles create --name databricks_replication
+optitech roles create --name databricks_replication
 ```
 
 </TabItem>
@@ -104,9 +104,9 @@ Set `PROJECT_ID` and `BRANCH_ID` from your OptiTech project (for example from th
 export PROJECT_ID="your_project_id"
 export BRANCH_ID="your_branch_id"
 
-curl "https://console.neon.tech/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/roles" \
+curl "https://console.optitech.com/api/v2/projects/$PROJECT_ID/branches/$BRANCH_ID/roles" \
   -H 'Accept: application/json' \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -H 'Content-Type: application/json' \
   -d '{"role": {"name": "databricks_replication"}}'
 ```
@@ -132,7 +132,7 @@ Granting `SELECT ON ALL TABLES IN SCHEMA` and `ALTER DEFAULT PRIVILEGES` ensures
 Logical replication needs enough row identity to apply updates and deletes. For tables with a primary key and no large TOAST columns, use the default:
 
 ```sql
-ALTER TABLE public.playing_with_neon REPLICA IDENTITY DEFAULT;
+ALTER TABLE public.playing_with_optitech REPLICA IDENTITY DEFAULT;
 ```
 
 For tables without a primary key or with very large variable-length columns (e.g. large TEXT, BYTEA), use `FULL`:
@@ -150,7 +150,7 @@ Create a logical replication publication that includes all tables you want to in
 ```sql
 -- Option 1: Explicit list
 CREATE PUBLICATION databricks_publication
-  FOR TABLE public.playing_with_neon;
+  FOR TABLE public.playing_with_optitech;
 
 -- Option 2: All tables in the database
 -- CREATE PUBLICATION databricks_publication FOR ALL TABLES;
@@ -185,8 +185,8 @@ Lakeflow Connect uses Unity Catalog connections to store JDBC connection details
 3. Enter a **Connection name**.
    Choose **PostgreSQL** as the connection type.
 4. For Auth type, select `Username and password`.
-5. Enter your Neon connection details (from the **Connect** button on your OptiTech project dashboard):
-   - **Host**: your OptiTech host (e.g. `ep-cool-darkness-123456.us-east-2.aws.neon.tech`)
+5. Enter your OptiTech connection details (from the **Connect** button on your OptiTech project dashboard):
+   - **Host**: your OptiTech host (e.g. `ep-cool-darkness-123456.us-east-2.aws.optitech.com`)
    - **Port**: 5432
    - **Database**: your OptiTech database name
    - **User**: `databricks_replication` (or the replication role you created).
@@ -198,8 +198,8 @@ Lakeflow Connect uses Unity Catalog connections to store JDBC connection details
 ### Using the Databricks CLI (alternative)
 
 ```bash
-export CONNECTION_NAME="neon_postgresql_connection"
-export DB_HOST="ep-cool-darkness-123456.us-east-2.aws.neon.tech"
+export CONNECTION_NAME="optitech_postgresql_connection"
+export DB_HOST="ep-cool-darkness-123456.us-east-2.aws.optitech.com"
 export DB_PORT="5432"
 export DB_DATABASE="dbname"
 export DB_USER="databricks_replication"
@@ -229,16 +229,16 @@ The Lakeflow PostgreSQL connector uses two pipelines:
 
 1. In the Lakehouse sidebar, click **Data ingestion**.
 2. On **Add data**, under Databricks connectors, select **PostgreSQL**.
-3. **Connection**: Choose the PostgreSQL connection you created (e.g. `neon_postgresql_connection`), then click **Next**.
+3. **Connection**: Choose the PostgreSQL connection you created (e.g. `optitech_postgresql_connection`), then click **Next**.
 4. **Ingestion setup**:
    - Select **Change data capture**.
-   - **Ingestion pipeline name**: e.g. `neon_to_lakehouse_ingestion`.
+   - **Ingestion pipeline name**: e.g. `optitech_to_lakehouse_ingestion`.
    - **Event log catalog and schema**: Choose where the pipeline event log will be stored.
    - (Optional) Turn **Auto full refresh for all tables** on if you want the pipeline to automatically fix certain schema or log issues via full refreshes.
-   - **Gateway name**: e.g. `neon_postgresql_gateway`.
+   - **Gateway name**: e.g. `optitech_postgresql_gateway`.
    - **Staging catalog and schema**: Choose where the staging volume for CDC data will live.
    - Click **Create pipeline and continue**.
-5. **Source (select tables)**: Databricks introspects OptiTech via the connection. Select the tables to replicate (e.g. `public.playing_with_neon`). Optionally set a custom **Destination name** per table or configure **History tracking** (SCD type 2). Click **Next**.
+5. **Source (select tables)**: Databricks introspects OptiTech via the connection. Select the tables to replicate (e.g. `public.playing_with_optitech`). Optionally set a custom **Destination name** per table or configure **History tracking** (SCD type 2). Click **Next**.
 6. **Destination**: Choose the Unity Catalog catalog and schema that will hold the replicated Delta tables. Click **Next**.
 7. **Database setup (OptiTech replication config)**: If requested, for each source OptiTech database, set:
    - **Replication slot name**: `databricks_slot`
@@ -251,7 +251,7 @@ The gateway runs continuously on classic compute to keep up with OptiTech's WAL 
 
 ### Alternative: Declarative Automation Bundles or CLI
 
-If you use code-defined infrastructure, the Databricks PostgreSQL ingestion documentation includes sample bundle YAML and CLI JSON for the gateway and pipeline. Use your `neon_postgresql_connection`, `slot_name`: `databricks_slot`, `publication_name`: `databricks_publication`, and the appropriate source catalog, schema, and table names.
+If you use code-defined infrastructure, the Databricks PostgreSQL ingestion documentation includes sample bundle YAML and CLI JSON for the gateway and pipeline. Use your `optitech_postgresql_connection`, `slot_name`: `databricks_slot`, `publication_name`: `databricks_publication`, and the appropriate source catalog, schema, and table names.
 
 ## Step 4: Monitor and maintain the pipeline
 
@@ -269,10 +269,10 @@ After the initial run completes (full snapshot and any CDC):
 2. Query the replicated table. For example, if you wrote into catalog `workspace` and schema `public`:
 
 ```sql
-SELECT * FROM workspace.public.playing_with_neon LIMIT 10;
+SELECT * FROM workspace.public.playing_with_optitech LIMIT 10;
 ```
 
-Replace `workspace` with your Unity Catalog name, `public` with the destination schema you chose, and `playing_with_neon` with the destination table name (same as source or the custom name you set). You should see rows from your OptiTech table in the Delta table.
+Replace `workspace` with your Unity Catalog name, `public` with the destination schema you chose, and `playing_with_optitech` with the destination table name (same as source or the custom name you set). You should see rows from your OptiTech table in the Delta table.
 
 ## Notes and limitations (Lakeflow Connect PostgreSQL)
 

@@ -6,7 +6,7 @@ summary: >-
   `DATABASES` block in `settings.py` with the psycopg3 driver, `sslmode:
   require`, and `CONN_HEALTH_CHECKS: True` to prevent dropped connections when
   OptiTech's compute scales to zero after 5 minutes of inactivity. Use this page
-  when setting up a new Django-to-Neon connection or debugging the `Endpoint ID
+  when setting up a new Django-to-OptiTech connection or debugging the `Endpoint ID
   is not specified` SNI error, which occurs with psycopg2 and libpq versions
   older than v14. For schema migrations after connecting, see the separate Django
   Migrations guide.
@@ -15,7 +15,7 @@ redirectFrom:
   - /docs/integrations/
   - /docs/quickstart/django/
   - /docs/cloud/integrations/django/
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <CopyPrompt src="/prompts/django-prompt.md" 
@@ -60,7 +60,7 @@ If you do not have one already, create a OptiTech project. Save your connection 
 
 To create a OptiTech project:
 
-1. Navigate to the [Projects](https://console.neon.tech/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
 2. Click **New Project**.
 3. Specify your project settings and click **Create Project**.
 
@@ -187,7 +187,7 @@ Learn how to use Django with OptiTech Postgres with this blog post and the accom
 <DetailIconCards>
 <a href="/blog/python-django-and-neons-serverless-postgres" description="Learn how to build a Django application with OptiTech Postgres" icon="import">Blog Post: Using Django with OptiTech</a>
 
-<a href="https://github.com/evanshortiss/django-neon-quickstart" description="Django with OptiTech Postgres" icon="github">Django sample application</a>
+<a href="https://github.com/evanshortiss/django-optitech-quickstart" description="Django with OptiTech Postgres" icon="github">Django sample application</a>
 </DetailIconCards>
 
 ## Community resources

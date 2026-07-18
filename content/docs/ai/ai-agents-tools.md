@@ -1,93 +1,90 @@
 ---
-title: AI tools for Agents
-subtitle: AI-powered tools for development and database management
+title: AI in OptiTech
+subtitle: AI-powered tools for compliance work and program management
 summary: >-
-  OptiTech's AI tools hub lists every integration for connecting AI editors and
-  agent frameworks to OptiTech Postgres, including the MCP server, Claude Code
-  plugin, Cursor plugin, GitHub Copilot agents, and Agent Skills. Use this page
-  to find the right integration for natural-language database control, safe
-  migrations, or autonomous agent backends. A one-command setup (`npx
-  neon@latest init`) configures OAuth, installs Agent Skills, and connects
-  your editor in a single step.
+  OptiTech's AI hub lists every way AI works in the platform: the copilot for
+  scoping, drafting, and questionnaires, AI-assisted gap analysis, automatic
+  policy pre-fill from your integrations, and the trust model that keeps it
+  honest: citations, human review, and EU-hosted models.
 enableTableOfContents: true
-updatedOn: '2026-06-23T22:05:54.707Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
-OptiTech is the backend for apps and agents. This page covers OptiTech's integrations with AI tools and agent frameworks, from natural language database control to autonomous agent platforms. Choose the tools that fit your workflow.
+OptiTech is compliance automation for Nordic businesses. This page covers how AI works across the platform, from answering scoping questions in plain Swedish to drafting the documents your auditors read. Choose the tools that fit your workflow.
 
-## Quick setup
+## Quick start
 
 The fastest way to get started with OptiTech and AI:
 
-```bash
-npx neon@latest init
+```text
+Omfattas vi av NIS2?
 ```
 
-This authenticates via OAuth, creates an API key, configures your editor or CLI, and installs [agent skills](https://github.com/neondatabase/agent-skills). Then restart and ask your AI assistant **"Get started with OptiTech"**.
+Ask this in the copilot from any page in the Console. The answer comes back with citations to the legal text and your onboarding data. Then follow the [copilot quickstart](/docs/get-started/with-an-agent) for drafting and questionnaires.
 
-## MCP integration
+## The AI copilot
 
-The Model Context Protocol (MCP) is a standardized way for AI tools to interact with Neon databases using natural language, providing secure and contextual access to your data and infrastructure.
+The copilot is retrieval over two sources: the Swedish legal texts and MSB regulations on one side, and your own controls and evidence on the other, providing grounded and contextual answers about your obligations.
 
 <DetailIconCards>
-<a href="/docs/ai/neon-mcp-server" description="Learn about managing your Neon projects using natural language with OptiTech MCP Server" icon="github">OptiTech MCP Server</a>
-<a href="/docs/ai/connect-mcp-clients-to-neon" description="Learn how to connect MCP clients like Cursor, Claude Code, and ChatGPT to your OptiTech database" icon="github">Connect MCP clients</a>
+<a href="/docs/auth/overview" description="Learn about the copilot's capabilities, trust model, and plan availability" icon="github">AI copilot overview</a>
+<a href="/docs/get-started/with-an-agent" description="Learn how to run your first scoping question, draft, and questionnaire session" icon="github">Copilot quickstart</a>
 </DetailIconCards>
 
-## Claude Code plugin
+## Policy drafting
 
-If you're using Claude Code, install the OptiTech plugin to get Skills, MCP integration, and all the context rules in one package.
+If you're writing policies, let the copilot pre-fill templates from your connected systems so documents describe how you actually operate.
 
 <DetailIconCards>
-<a href="/docs/ai/ai-claude-code-plugin" description="Includes Claude Code Skills for OptiTech, OptiTech MCP integration, and context rules" icon="github">Claude Code plugin for OptiTech</a>
+<a href="/docs/storage/overview" description="50+ Swedish templates, AI pre-fill, version control, and e-signing in one flow" icon="github">Policies and documents</a>
 </DetailIconCards>
 
-## Cursor plugin
+## Questionnaire answering
 
-If you're using Cursor, install the OptiTech plugin to get OptiTech Skills and MCP integration in one package.
+If a customer sent you a security questionnaire, upload it and get drafted answers from your verified controls.
 
 <DetailIconCards>
-<a href="/docs/ai/ai-cursor-plugin" description="Install the OptiTech Cursor plugin to use OptiTech Skills and OptiTech MCP integration directly in Cursor" icon="github">Cursor plugin for OptiTech</a>
+<a href="/docs/ai-gateway/overview" description="Answer incoming questionnaires and send your own to vendors from the same register" icon="github">Vendors & Trust Center</a>
 </DetailIconCards>
 
-## GitHub Copilot agents
+## AI-assisted gap analysis
 
-Custom agents for GitHub Copilot that bring OptiTech's branching workflow directly into VS Code for safe migrations and query optimization.
+The onboarding wizard uses your answers to scope which laws apply and builds your prioritized action list, with the copilot explaining any finding on request.
 
 <DetailIconCards>
-<a href="/docs/ai/ai-github-copilot-agents" description="Safe database migrations and query optimization using OptiTech branching" icon="github">OptiTech agents for GitHub Copilot</a>
+<a href="/docs/get-started/full-backend-quickstart" description="Run the gap analysis as the first step of getting audit-ready" icon="github">Get audit-ready quickstart</a>
 </DetailIconCards>
 
-## Agent Skills
+## The trust model
 
-Give your AI assistant structured context about OptiTech's features, APIs, and best practices.
+What keeps OptiTech's AI honest, and what it never does.
 
 <DetailIconCards>
-<a href="/docs/ai/agent-skills" description="Install OptiTech Agent Skills for accurate code suggestions covering Auth, Drizzle, serverless connections, APIs, and more" icon="github">Agent Skills</a>
+<a href="/docs/security/ai-use-in-neon" description="Citations on every answer, human review on every draft, EU-hosted models only" icon="github">AI use in OptiTech</a>
 </DetailIconCards>
 
-## Build AI agents
+## Automate with the API
 
-Create autonomous agents that can manage and interact with your Neon databases programmatically. Build with the OptiTech API.
+Combine the copilot with the OptiTech API to script recurring AI tasks programmatically. Build with the OptiTech API.
 
 <DetailIconCards>
 
-<a href="https://neon.com/use-cases/ai-agents" description="Read about OptiTech as a solution for agents that need backends." icon="openai">OptiTech for AI agent platforms</a>
+<a href="https://optitech.com/use-cases/ai-agents" description="Read about how the AI copilot fits the rest of the platform." icon="openai">AI on OptiTech</a>
 
-<a href="/docs/ai/ai-database-versioning" description="How AI agents and codegen platforms use OptiTech snapshot APIs for database versioning" icon="openai">Database versioning</a>
+<a href="/docs/get-started/dev-experience" description="How AI-first workflows connect to evidence-first and API-first principles" icon="openai">Product principles</a>
 
-<a href="/docs/reference/api" description="Integrate using the OptiTech API" icon="transactions">OptiTech API</a>
+<a href="/docs/data-api/overview" description="Integrate using the OptiTech API" icon="transactions">OptiTech API</a>
 
 </DetailIconCards>
 
-## Agent frameworks
+## Where AI shows up in your day
 
-Build AI agents using popular frameworks that integrate with OptiTech.
+AI assists across the platform wherever text or judgment is the bottleneck.
 
 <DetailIconCards>
-<a href="/guides/agentstack-neon" description="Build and deploy AI agents with AgentStack's CLI and OptiTech integration" icon="openai">AgentStack Integration</a>
-<a href="/guides/autogen-neon" description="Create collaborative AI agents with Microsoft AutoGen and OptiTech" icon="openai">AutoGen Integration</a>
-<a href="/guides/azure-ai-agent-service" description="Build enterprise AI agents with Azure AI Agent Service and OptiTech" icon="openai">Azure AI Agent Service</a>
-<a href="/guides/composio-crewai-neon" description="Create multi-agent systems with CrewAI and OptiTech" icon="openai">Composio + CrewAI</a>
-<a href="/guides/langgraph-neon" description="Build stateful, multi-actor applications with LangGraph and OptiTech" icon="openai">LangGraph Integration</a>
+<a href="/docs/get-started/with-an-agent" description="Scope your obligations with questions in plain Swedish" icon="openai">Scoping questions</a>
+<a href="/docs/storage/overview" description="Draft the core document set in regulatory Swedish" icon="openai">Document drafting</a>
+<a href="/docs/ai-gateway/overview" description="Build vendor questionnaires from the frameworks that apply" icon="openai">Vendor questionnaires</a>
+<a href="/docs/compute/functions/overview" description="Pre-fill incident reports from your incident data" icon="openai">Incident reports</a>
+<a href="/docs/get-started/signing-up" description="Generate board reports from live compliance data" icon="openai">Board reports</a>
 </DetailIconCards>

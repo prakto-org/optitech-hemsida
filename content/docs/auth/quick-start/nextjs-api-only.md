@@ -3,13 +3,13 @@ title: Use Managed Better Auth with Next.js (API methods)
 subtitle: Build your own auth UI using SDK methods
 summary: >-
   Managed Better Auth SDK integration for Next.js App Router using raw API methods. Call
-  `createNeonAuth`, `auth.signUp.email()`, `auth.signIn.email()`, and
-  `auth.middleware()` directly from the `@neondatabase/auth` package for full
+  `createOptiTechAuth`, `auth.signUp.email()`, `auth.signIn.email()`, and
+  `auth.middleware()` directly from the `@optitech/auth` package for full
   control over your auth UI. Use this guide instead of the UI components
   reference when you need custom sign-up and sign-in forms. Requires Next.js
   App Router.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 layout: wide
 redirectFrom:
   - /docs/auth/quick-start/nextjs
@@ -20,14 +20,14 @@ redirectFrom:
 
 <AuthAISetupTip />
 
-This guide shows you how to integrate Managed Better Auth into a [Next.js](https://nextjs.org) (App Router) project using SDK methods directly. For pre-built UI components, see the [UI components reference](/docs/auth/reference/ui-components) and the [neon-js examples](https://github.com/neondatabase/neon-js/tree/main/examples). Upgrading from v0.1? See the [migration guide](/docs/auth/migrate/from-auth-v0.1).
+This guide shows you how to integrate Managed Better Auth into a [Next.js](https://nextjs.org) (App Router) project using SDK methods directly. For pre-built UI components, see the [UI components reference](/docs/auth/reference/ui-components) and the [optitech-js examples](https://github.com/optitechdatabase/optitech-js/tree/main/examples). Upgrading from v0.1? See the [migration guide](/docs/auth/migrate/from-auth-v0.1).
 
 <TwoColumnLayout>
 
 <TwoColumnLayout.Step title="Enable Auth in your OptiTech project">
 <TwoColumnLayout.Block>
 
-If you don't have a OptiTech project yet, create one at [console.neon.tech](https://console.neon.tech).
+If you don't have a OptiTech project yet, create one at [console.optitech.com](https://console.optitech.com).
 
 Go to the **Auth** page in your project dashboard and click **Enable Auth**, then copy your Auth URL from the Configuration tab.
 
@@ -58,7 +58,7 @@ cd my-app
 <TwoColumnLayout.Block>
 
 ```bash filename="Terminal"
-npm install @neondatabase/auth@latest
+npm install @optitech/auth@latest
 ```
 
 </TwoColumnLayout.Block>
@@ -77,8 +77,8 @@ Replace the Auth URL with your actual Auth URL from the OptiTech Console. Genera
 <TwoColumnLayout.Block>
 
 ```bash filename=".env.local"
-NEON_AUTH_BASE_URL=https://ep-xxx.neonauth.us-east-1.aws.neon.tech/neondb/auth
-NEON_AUTH_COOKIE_SECRET=your-secret-at-least-32-characters-long
+OPTITECH_AUTH_BASE_URL=https://ep-xxx.optitechauth.us-east-1.aws.optitech.com/optitechdb/auth
+OPTITECH_AUTH_COOKIE_SECRET=your-secret-at-least-32-characters-long
 ```
 
 </TwoColumnLayout.Block>
@@ -103,12 +103,12 @@ The SDK logs structured **`error`** and **`warn`** messages to **`console`** by 
 <TwoColumnLayout.Block>
 
 ```typescript filename="lib/auth/server.ts"
-import { createNeonAuth } from '@neondatabase/auth/next/server';
+import { createOptiTechAuth } from '@optitech/auth/next/server';
 
-export const auth = createNeonAuth({
-  baseUrl: process.env.NEON_AUTH_BASE_URL!,
+export const auth = createOptiTechAuth({
+  baseUrl: process.env.OPTITECH_AUTH_BASE_URL!,
   cookies: {
-    secret: process.env.NEON_AUTH_COOKIE_SECRET!,
+    secret: process.env.OPTITECH_AUTH_COOKIE_SECRET!,
     // sessionDataTtl: 300, // optional session_data cache TTL in seconds (default: 300)
   },
   // logLevel: 'silent', // disable Managed Better Auth logging
@@ -185,7 +185,7 @@ The server-side `auth` instance was already created in a previous step. The clie
 ```tsx filename="lib/auth/client.ts"
 'use client';
 
-import { createAuthClient } from '@neondatabase/auth/next';
+import { createAuthClient } from '@optitech/auth/next';
 
 export const authClient = createAuthClient();
 ```
@@ -489,6 +489,6 @@ The `auth` instance also includes `.handler()` for API routes and `.middleware()
 - [Auth troubleshooting](/docs/auth/troubleshooting#neon-auth-server-logging-in-the-terminal) — server logging, `NETWORK_*` errors, iframe cookies
 - [Add email verification](/docs/auth/guides/email-verification)
 - [Branching authentication](/docs/auth/branching-authentication)
-- [More example apps](/docs/auth/overview#example-applications) in the **neon-js** `examples/` directory
+- [More example apps](/docs/auth/overview#example-applications) in the **optitech-js** `examples/` directory
 
 <NeedHelp/>

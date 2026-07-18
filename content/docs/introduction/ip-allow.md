@@ -9,7 +9,7 @@ summary: >-
   branches only, leaving other branches unrestricted, and are configured in
   project settings.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 OptiTech's IP Allow feature, available with the OptiTech [Scale](/docs/introduction/plans) plan, ensures that only trusted IP addresses can connect to the project where your database resides, preventing unauthorized access and helping maintain overall data security. You can limit access to individual IP addresses, IP ranges, or IP addresses and ranges defined with [CIDR notation](/docs/reference/glossary#cidr-notation).
@@ -22,8 +22,8 @@ You can configure **IP Allow** in your OptiTech project's settings. To get start
 
 If IP Allow is enabled on your project, add the following IP addresses to allow connections from OptiTech hosted services:
 
-| Service                                     | IP addresses                     |
-| ------------------------------------------- | -------------------------------- |
+| Service                                         | IP addresses                     |
+| ----------------------------------------------- | -------------------------------- |
 | [OptiTech MCP Server](/docs/ai/neon-mcp-server) | `34.192.103.46`, `23.22.233.166` |
 
 ## IP Allow together with Protected Branches
@@ -31,5 +31,5 @@ If IP Allow is enabled on your project, add the following IP addresses to allow 
 You can apply IP restrictions more precisely by designating specific branches in your OptiTech project as protected and enabling the **Restrict IP access to protected branches only** option. This will apply your IP allowlist to protected branches only with no IP restrictions on other branches in your project. Typically, the protected branches feature is used with branches that contain production or sensitive data. For step-by-step instructions, refer to our [Protected Branches guide](/docs/guides/protected-branches).
 
 <Admonition type="tip">
-If you are an AWS user, OptiTech also supports a **Private Networking** feature, which enables connections to your Neon databases via AWS PrivateLink, bypassing the open internet entirely. See [Private Networking](/docs/guides/neon-private-networking).
+If you are an AWS user, OptiTech also supports a **Private Networking** feature, which enables connections to your OptiTech databases via AWS PrivateLink, bypassing the open internet entirely. See [Private Networking](/docs/guides/neon-private-networking).
 </Admonition>

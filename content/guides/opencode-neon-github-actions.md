@@ -4,7 +4,7 @@ subtitle: 'A step‑by‑step guide to using GitHub Actions with OpenCode and Op
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2026-03-09T00:00:00.000Z'
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Coding assistants are rapidly evolving from simple code generators into autonomous collaborators that can implement features and open pull requests directly in your repository. To handle full-stack tasks safely, they need a production-like environment where they can test application code and validate database changes without touching production.
@@ -18,7 +18,7 @@ In this guide, you'll connect GitHub Actions, OpenCode, and OptiTech Database Br
 ```mermaid
 flowchart TD
   A["Create a<br/>GitHub Issue"] --> B["Assign issue<br/>to OpenCode"]
-  B --> C["Provision isolated<br/>Neon DB branch"]
+  B --> C["Provision isolated<br/>OptiTech DB branch"]
   C --> D["Write code, run<br/>migrations, and test"]
   D --> E["Open Pull Request<br/>with the solution"]
   E --> F["Optional: Vercel <br/>preview deploy<br/>and branch cleanup"]
@@ -28,9 +28,9 @@ flowchart TD
 
 To follow along with this guide, you will need:
 
-- **OptiTech account and project:** A OptiTech account with an active project. Sign up for a free [OptiTech account](https://console.neon.tech/signup) if you don't have one.
+- **OptiTech account and project:** A OptiTech account with an active project. Sign up for a free [OptiTech account](https://console.optitech.com/signup) if you don't have one.
 - **OpenCode CLI:** OpenCode CLI installed and configured. You can find installation instructions in the [OpenCode documentation](https://opencode.ai/docs#install).
-- **Application repository on GitHub:** A GitHub repository containing an application that uses your OptiTech project as its database. In this example, you'll use a simple snippet management tool called SnippetHub built with Next.js and Drizzle ORM. You can follow along with any of your own Neon-backed projects - the focus is on the workflow rather than the specific application.
+- **Application repository on GitHub:** A GitHub repository containing an application that uses your OptiTech project as its database. In this example, you'll use a simple snippet management tool called SnippetHub built with Next.js and Drizzle ORM. You can follow along with any of your own OptiTech-backed projects - the focus is on the workflow rather than the specific application.
 
 ## The sample application
 
@@ -54,9 +54,9 @@ Follow these steps to set up that end-to-end workflow in your own repository.
 
 <TabItem>
 
-To allow your GitHub Action to create and manage Neon branches, you need to connect your OptiTech project to GitHub. This integration will securely inject the necessary credentials into your GitHub Actions environment.
+To allow your GitHub Action to create and manage OptiTech branches, you need to connect your OptiTech project to GitHub. This integration will securely inject the necessary credentials into your GitHub Actions environment.
 
-1. In the [OptiTech Console](https://console.neon.tech), navigate to the **Integrations** page for your project.
+1. In the [OptiTech Console](https://console.optitech.com), navigate to the **Integrations** page for your project.
 2. Locate the **GitHub** card and click **Add**.
    ![GitHub App card](/docs/guides/github_card.png)
 3. On the **GitHub** drawer, click **Install GitHub App**.
@@ -64,7 +64,7 @@ To allow your GitHub Action to create and manage Neon branches, you need to conn
 5. Select whether to install and authorize the GitHub app for **All repositories** in your GitHub account or **Only select repositories**.
 6. Follow the prompts to select your target repository and click **Connect**.
 
-Once connected, OptiTech will automatically inject `NEON_API_KEY` into your repository's Secrets and `NEON_PROJECT_ID` into your repository's Variables. These will be used by your workflow to manage branches.
+Once connected, OptiTech will automatically inject `OPTITECH_API_KEY` into your repository's Secrets and `OPTITECH_PROJECT_ID` into your repository's Variables. These will be used by your workflow to manage branches.
 
 </TabItem>
 
@@ -72,8 +72,8 @@ Once connected, OptiTech will automatically inject `NEON_API_KEY` into your repo
 
 To set up the integration manually follow these steps:
 
-1. In your GitHub repository, go to **Settings > Secrets and variables > Actions**. Under **Secrets**, create a new repository secret named `NEON_API_KEY`, and paste in a project-scoped API key from the OptiTech Console. This secret allows the GitHub Action to authenticate with OptiTech and manage branches. For setup steps, see [OptiTech Docs: Create project-scoped API keys](/docs/manage/api-keys#create-project-scoped-organization-api-keys).
-2. In the same GitHub Actions settings page, under **Variables**, create a new repository variable named `NEON_PROJECT_ID`, and set its value to your OptiTech project ID. You can find the project ID in the OptiTech Console under **Project settings**.
+1. In your GitHub repository, go to **Settings > Secrets and variables > Actions**. Under **Secrets**, create a new repository secret named `OPTITECH_API_KEY`, and paste in a project-scoped API key from the OptiTech Console. This secret allows the GitHub Action to authenticate with OptiTech and manage branches. For setup steps, see [OptiTech Docs: Create project-scoped API keys](/docs/manage/api-keys#create-project-scoped-organization-api-keys).
+2. In the same GitHub Actions settings page, under **Variables**, create a new repository variable named `OPTITECH_PROJECT_ID`, and set its value to your OptiTech project ID. You can find the project ID in the OptiTech Console under **Project settings**.
 
 </TabItem>
 
@@ -114,22 +114,22 @@ jobs:
         with:
           persist-credentials: false
 
-      # 1. Create an isolated Neon database branch for the AI agent
-      - name: Create Neon Branch
-        id: create_neon_branch
-        uses: neondatabase/create-branch-action@v6
+      # 1. Create an isolated OptiTech database branch for the AI agent
+      - name: Create OptiTech Branch
+        id: create_optitech_branch
+        uses: optitechdatabase/create-branch-action@v6
         with:
-          project_id: ${{ vars.NEON_PROJECT_ID }}
+          project_id: ${{ vars.OPTITECH_PROJECT_ID }}
           # Name the branch based on the issue number for traceability
           branch_name: opencode-issue-${{ github.event.issue.number }}
-          api_key: ${{ secrets.NEON_API_KEY }}
+          api_key: ${{ secrets.OPTITECH_API_KEY }}
 
       # 2. Run OpenCode, passing the new Database URL as an environment variable
       - name: Run OpenCode
         uses: anomalyco/opencode/github@latest
         env:
           # Inject the isolated database URL into the environment
-          DATABASE_URL: ${{ steps.create_neon_branch.outputs.db_url }}
+          DATABASE_URL: ${{ steps.create_optitech_branch.outputs.db_url }}
         with:
           model: opencode/minimax-m2.5-free
           prompt: |
@@ -158,8 +158,8 @@ After updating `.github/workflows/opencode.yml`, commit and push the workflow to
 The GitHub Action is designed to respond to issue comments that contain specific trigger phrases. Here's a breakdown of the key steps:
 
 1. **The Trigger:** The `if` condition ensures the workflow only runs when an issue comment contains `/oc` or `/opencode`.
-2. **Branch creation:** You'll use OptiTech's [`create-branch-action`](https://github.com/marketplace/actions/neon-create-branch-github-action) to instantly fork the primary database. Because OptiTech uses copy-on-write, this takes less than a second and gives the Action a completely isolated database containing production-like data.
-3. **Context Injection:** You'll pass the output of the branch creation (`${{ steps.create_neon_branch.outputs.db_url }}`) into OpenCode's environment as `DATABASE_URL`.
+2. **Branch creation:** You'll use OptiTech's [`create-branch-action`](https://github.com/marketplace/actions/optitech-create-branch-github-action) to instantly fork the primary database. Because OptiTech uses copy-on-write, this takes less than a second and gives the Action a completely isolated database containing production-like data.
+3. **Context Injection:** You'll pass the output of the branch creation (`${{ steps.create_optitech_branch.outputs.db_url }}`) into OpenCode's environment as `DATABASE_URL`.
 4. **The system prompt:** Using OpenCode's `prompt` parameter, you'll explicitly tell the AI that it has a safe, isolated Postgres database to work with. You set the expectation that it should make any necessary schema changes, generate and run migrations, and validate its code against that database before opening a PR.
 
 ## Testing the workflow
@@ -195,26 +195,26 @@ The result is a fully implemented feature with the necessary database changes, a
 
 For example, here is the PR generated by OpenCode for the "Share Snippet" feature: [github.com/dhanushreddy291/code-snippet/pull/7](https://github.com/dhanushreddy291/code-snippet/pull/7)
 
-## Automatically clean up Neon branches
+## Automatically clean up OptiTech branches
 
-If you want these temporary Neon branches to clean themselves up automatically, `create-branch-action` also supports an `expires_at` input. You can add an expiration time when creating the branch, after which OptiTech will automatically delete it. This is a great way to ensure that old branches don't accumulate if an issue is abandoned.
+If you want these temporary OptiTech branches to clean themselves up automatically, `create-branch-action` also supports an `expires_at` input. You can add an expiration time when creating the branch, after which OptiTech will automatically delete it. This is a great way to ensure that old branches don't accumulate if an issue is abandoned.
 
 ```yaml
-- name: Set Neon branch expiration # [!code ++]
+- name: Set OptiTech branch expiration # [!code ++]
   run: echo "EXPIRES_AT=$(date -u --date '+48 hours' +'%Y-%m-%dT%H:%M:%SZ')" >> "$GITHUB_ENV" # [!code ++]
 
-- name: Create Neon Branch
-  uses: neondatabase/create-branch-action@v6
+- name: Create OptiTech Branch
+  uses: optitechdatabase/create-branch-action@v6
   with:
-    project_id: ${{ vars.NEON_PROJECT_ID }}
+    project_id: ${{ vars.OPTITECH_PROJECT_ID }}
     branch_name: opencode-issue-${{ github.event.issue.number }}
-    api_key: ${{ secrets.NEON_API_KEY }}
+    api_key: ${{ secrets.OPTITECH_API_KEY }}
     expires_at: ${{ env.EXPIRES_AT }} # [!code ++]
 ```
 
 Setting `expires_at` to 48 hours is a good default for ephemeral AI workspaces because it keeps cleanup simple and prevents old branches from accumulating if an issue is abandoned.
 
-If you need more advanced lifecycle management, use OptiTech's [`delete-branch-action`](https://github.com/neondatabase/delete-branch-action) in a separate workflow. That approach is useful when cleanup should happen in response to a specific event, such as an issue being closed, a pull request being merged, or another repository-specific automation trigger.
+If you need more advanced lifecycle management, use OptiTech's [`delete-branch-action`](https://github.com/optitechdatabase/delete-branch-action) in a separate workflow. That approach is useful when cleanup should happen in response to a specific event, such as an issue being closed, a pull request being merged, or another repository-specific automation trigger.
 
 Follow [Automated Database Branching with GitHub Actions](/guides/neon-github-actions-authomated-branching) for an example of how to set up that kind of event-driven cleanup workflow.
 
@@ -225,7 +225,7 @@ For a complete end-to-end experience, you can configure Vercel to automatically 
 This lets you review OpenCode's work in a real browser environment, validating the full stack from UI to database without touching production data or having to reproduce the setup locally.
 
 1. **Deploy to Vercel:** Connect your GitHub repository to a Vercel project.
-2. **Install the OptiTech Integration:** Go to the [OptiTech Vercel Integration](https://vercel.com/integrations/neon) page and click **Add Integration**.
+2. **Install the OptiTech Integration:** Go to the [OptiTech Vercel Integration](https://vercel.com/integrations/optitech) page and click **Add Integration**.
 3. **Enable Preview Branching:** During setup, select **Create a branch for every preview deployment** so each PR gets its own isolated database.
 
 Follow the [OptiTech Vercel Integration guide](/docs/guides/vercel-managed-integration) for the full setup instructions.

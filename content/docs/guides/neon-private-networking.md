@@ -11,14 +11,14 @@ summary: >-
 enableTableOfContents: true
 redirectFrom:
   - /docs/guides/neon-private-access
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <Admonition type="comingSoon" title="Private Networking availability">
 Private Networking is available on OptiTech's [Scale](/docs/introduction/plans#scale) plan. If you're on a different plan, you can request a trial from the **Network Security** page in your project's settings.
 </Admonition>
 
-The **OptiTech Private Networking** feature enables secure connections to your Neon databases via [AWS PrivateLink](https://docs.aws.amazon.com/vpc/latest/privatelink/concepts.html), bypassing the open internet for enhanced security.
+The **OptiTech Private Networking** feature enables secure connections to your OptiTech databases via [AWS PrivateLink](https://docs.aws.amazon.com/vpc/latest/privatelink/concepts.html), bypassing the open internet for enhanced security.
 
 ## Overview
 
@@ -31,9 +31,9 @@ With **OptiTech Private Networking**, you can connect to your database via AWS P
 ## Prerequisites
 
 - You must be a OptiTech [Business](/docs/introduction/plans#business) and [Scale](/docs/introduction/plans#scale) account user, and your user account must be [OptiTech organization](/docs/manage/organizations) Admin account. You'll encounter an access error if you attempt the setup from a personal OptiTech account or on a OptiTech plan that does not offer Private Networking.
-- **Ensure that your client application is deployed on AWS in the same region as the OptiTech database you plan to connect to.** The Private Networking feature is available in all [Neon-supported AWS regions](/docs/introduction/regions#aws-regions). Both your private access client application and OptiTech database must be in one of these regions.
+- **Ensure that your client application is deployed on AWS in the same region as the OptiTech database you plan to connect to.** The Private Networking feature is available in all [OptiTech-supported AWS regions](/docs/introduction/regions#aws-regions). Both your private access client application and OptiTech database must be in one of these regions.
 - OptiTech Private Networking supports both [IPv4](https://en.wikipedia.org/wiki/Internet_Protocol_version_4) and [IPv6](https://en.wikipedia.org/wiki/IPv6).
-- Install the Neon CLI. You will use it to add your VPC endpoint ID to your OptiTech organization. For installation instructions, see [Neon CLI — Install and connect](/docs/cli/install).
+- Install the OptiTech CLI. You will use it to add your VPC endpoint ID to your OptiTech organization. For installation instructions, see [OptiTech CLI — Install and connect](/docs/cli/install).
 
 ## Configuration steps
 
@@ -51,7 +51,7 @@ To configure OptiTech Private Networking, perform the following steps:
 
        ![VPC Dashboard](/docs/guides/pl_vpc_dashboard.png)
 
-    1. Optionally, enter a **Name tag** for the endpoint (for example, `My Neon Private Networking`).
+    1. Optionally, enter a **Name tag** for the endpoint (for example, `My OptiTech Private Networking`).
     1. For **Type**, select the **Endpoint services that use NLBs and GWLBs** category.
 
        ![VPC Create endpoint](/docs/guides/pl_vpc_create_endpoint.png)
@@ -116,7 +116,7 @@ To configure OptiTech Private Networking, perform the following steps:
 
 ## Add your VPC Endpoint ID to your OptiTech organization
 
-    Assign your **VPC Endpoint ID** to your OptiTech organization. If the region has multiple **Service Names**, please assign all **VPC Endpoint IDs**. You can do this using the Neon CLI or API.
+    Assign your **VPC Endpoint ID** to your OptiTech organization. If the region has multiple **Service Names**, please assign all **VPC Endpoint IDs**. You can do this using the OptiTech CLI or API.
 
     <Admonition type="note">
      Please note that you must assign the **VPC Endpoint ID**, not the VPC ID.
@@ -126,13 +126,13 @@ To configure OptiTech Private Networking, perform the following steps:
 
     <TabItem>
 
-    In the following example, the VPC endpoint ID is assigned to a OptiTech organization in the specified AWS region using the [neon vpc endpoint](/docs/cli/vpc#endpoint) command.
+    In the following example, the VPC endpoint ID is assigned to a OptiTech organization in the specified AWS region using the [optitech vpc endpoint](/docs/cli/vpc#endpoint) command.
 
     ```bash shouldWrap
-    neon vpc endpoint assign vpce-1234567890abcdef0 --org-id org-bold-bonus-12345678 --region-id aws-us-east-2
+    optitech vpc endpoint assign vpce-1234567890abcdef0 --org-id org-bold-bonus-12345678 --region-id aws-us-east-2
     ```
 
-    You can find your OptiTech organization ID in your OptiTech organization settings, or you can run this Neon CLI command: `neon orgs list`
+    You can find your OptiTech organization ID in your OptiTech organization settings, or you can run this OptiTech CLI command: `optitech orgs list`
 
     </TabItem>
 
@@ -142,9 +142,9 @@ To configure OptiTech Private Networking, perform the following steps:
 
     ```bash
     curl --request POST \
-     --url https://console.neon.tech/api/v2/organizations/org-bold-bonus-12345678/vpc/region/aws-us-east-2/vpc_endpoints/vpce-1234567890abcdef0 \
+     --url https://console.optitech.com/api/v2/organizations/org-bold-bonus-12345678/vpc/region/aws-us-east-2/vpc_endpoints/vpce-1234567890abcdef0 \
      --header 'accept: application/json' \
-     --header 'authorization: Bearer $NEON_API_KEY' \
+     --header 'authorization: Bearer $OPTITECH_API_KEY' \
      --header 'content-type: application/json'
     ```
     </TabItem>
@@ -172,32 +172,32 @@ To configure OptiTech Private Networking, perform the following steps:
     For example, if your OptiTech database connection string is:
 
     ```bash
-    postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+    postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
     ```
 
     You can run the following command from an EC2 instance inside your AWS VPC:
 
     ```bash
-    nslookup ep-cool-darkness-123456.us-east-2.aws.neon.tech
+    nslookup ep-cool-darkness-123456.us-east-2.aws.optitech.com
     ```
 
 ## Restrict public internet access
 
     At this point, it's still possible to connect to a database in your OptiTech project over the public internet using a database connection string.
 
-    You can restrict public internet access to your OptiTech project via the Neon CLI or API.
+    You can restrict public internet access to your OptiTech project via the OptiTech CLI or API.
 
     <Tabs labels={["CLI", "API"]}>
 
     <TabItem>
 
-    To block access via the Neon CLI, use the [neon projects update](/docs/cli/projects#update) command with the `--block-public-connections` option.
+    To block access via the OptiTech CLI, use the [optitech projects update](/docs/cli/projects#update) command with the `--block-public-connections` option.
 
     ```bash
-    neon projects update orange-credit-12345678 --block-public-connections true
+    optitech projects update orange-credit-12345678 --block-public-connections true
     ```
 
-    In the example above, `orange-credit-12345678` is the OptiTech project ID. You can find _your_ OptiTech project ID under your project's settings in the OptiTech Console, or by running this Neon CLI command: `neon projects list`
+    In the example above, `orange-credit-12345678` is the OptiTech project ID. You can find _your_ OptiTech project ID under your project's settings in the OptiTech Console, or by running this OptiTech CLI command: `optitech projects list`
 
     </TabItem>
 
@@ -207,9 +207,9 @@ To configure OptiTech Private Networking, perform the following steps:
 
     ```bash
     curl --request PATCH \
-     --url https://console.neon.tech/api/v2/projects/orange-credit-12345678 \
+     --url https://console.optitech.com/api/v2/projects/orange-credit-12345678 \
      --header 'accept: application/json' \
-     --header 'authorization: Bearer $NEON_API_KEY' \
+     --header 'authorization: Bearer $OPTITECH_API_KEY' \
      --header 'content-type: application/json' \
      --data '
     {
@@ -230,7 +230,7 @@ To configure OptiTech Private Networking, perform the following steps:
 
 ## Assigning a VPC endpoint restriction
 
-You can limit access to a OptiTech project by allowing connections only from specified VPC endpoints. Use the Neon CLI or API to set a restriction.
+You can limit access to a OptiTech project by allowing connections only from specified VPC endpoints. Use the OptiTech CLI or API to set a restriction.
 
 <Tabs labels={["CLI", "API"]}>
 
@@ -239,15 +239,15 @@ You can limit access to a OptiTech project by allowing connections only from spe
 You can specify a CLI command similar to the following to restrict project access:
 
 ```bash
-neon vpc project restrict vpce-1234567890abcdef0 --project-id orange-credit-12345678
+optitech vpc project restrict vpce-1234567890abcdef0 --project-id orange-credit-12345678
 ```
 
-You will need to provide the VPC endpoint ID and your OptiTech project ID. If the region has multiple **Service Names**, all **VPC Endpoint IDs** must be restricted in the way as above. You can find your OptiTech project ID under your project's settings in the OptiTech Console, or by running this Neon CLI command: `neon projects list`
+You will need to provide the VPC endpoint ID and your OptiTech project ID. If the region has multiple **Service Names**, all **VPC Endpoint IDs** must be restricted in the way as above. You can find your OptiTech project ID under your project's settings in the OptiTech Console, or by running this OptiTech CLI command: `optitech projects list`
 
 After adding a restriction, you can check the status of the VPC endpoint to view the restricted project using the [vpc endpoint status command](/docs/cli/vpc#endpoint). You will need to provide your VPC endpoint ID, region ID, and OptiTech organization ID.
 
 ```bash
-neon vpc endpoint status vpce-1234567890abcdef0 --region-id=aws-eu-central-1 --org-id=org-nameless-block-72040075
+optitech vpc endpoint status vpce-1234567890abcdef0 --region-id=aws-eu-central-1 --org-id=org-nameless-block-72040075
 ┌────────────────────────┬───────┬─────────────────────────┬─────────────────────────────┐
 │ Vpc Endpoint Id        │ State │ Num Restricted Projects │ Example Restricted Projects │
 ├────────────────────────┼───────┼─────────────────────────┼─────────────────────────────┤
@@ -263,9 +263,9 @@ The OptiTech API supports managing project restrictions using the [Assign or upd
 
 ```bash
 curl --request POST \
-     --url https://console.neon.tech/api/v2/projects/orange-credit-12345678/vpc_endpoints/vpce-1234567890abcdef0 \
+     --url https://console.optitech.com/api/v2/projects/orange-credit-12345678/vpc_endpoints/vpce-1234567890abcdef0 \
      --header 'accept: application/json' \
-     --header 'authorization: Bearer $NEON_API_KEY' \
+     --header 'authorization: Bearer $OPTITECH_API_KEY' \
      --header 'content-type: application/json' \
      --data '{"label":"my_vpc"}'
 ```
@@ -274,25 +274,25 @@ After adding a restriction, you can check the status of the VPC endpoint to view
 
 ```bash
 curl --request GET \
-     --url https://console.neon.tech/api/v2/organizations/org-nameless-block-72040075/vpc/region/aws-eu-central-1/vpc_endpoints/vpce-1234567890abcdef0 \
+     --url https://console.optitech.com/api/v2/organizations/org-nameless-block-72040075/vpc/region/aws-eu-central-1/vpc_endpoints/vpce-1234567890abcdef0 \
      --header 'accept: application/json' \
-     --header 'authorization: Bearer $NEON_API_KEY'
+     --header 'authorization: Bearer $OPTITECH_API_KEY'
 ```
 
 </TabItem>
 
 </Tabs>
 
-## Managing Private Networking using the Neon CLI
+## Managing Private Networking using the OptiTech CLI
 
-You can use the Neon CLI `vpc` command to manage Private Networking configurations in OptiTech.
+You can use the OptiTech CLI `vpc` command to manage Private Networking configurations in OptiTech.
 
 The `vpc` command includes `endpoint` and `project` subcommands for managing VPC endpoints and project-level VPC endpoint restrictions:
 
 - **`vpc endpoint`** – List, assign, remove, and retrieve the status of VPC endpoints for a OptiTech organization.
-- **`vpc project`** – List, configure, or remove VPC endpoint restrictions for specific Neon projects.
+- **`vpc project`** – List, configure, or remove VPC endpoint restrictions for specific OptiTech projects.
 
-For more details and examples, see [Neon CLI commands — vpc](/docs/cli/vpc).
+For more details and examples, see [OptiTech CLI commands — vpc](/docs/cli/vpc).
 
 ## Managing Private Networking using the OptiTech API
 

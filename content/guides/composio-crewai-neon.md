@@ -4,7 +4,7 @@ subtitle: A step-by-step guide to building AI agents using CrewAI, Composio, and
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2025-01-31T00:00:00.000Z'
-updatedOn: '2026-07-15T00:58:07.525Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 In today's AI-driven world, the ability to connect intelligent agents with powerful tools is key to building sophisticated applications. Imagine AI agents that can not only think and plan but also seamlessly interact with your database to retrieve information, manage resources, and perform complex tasks. This guide explores exactly that, demonstrating how to harness the power of **CrewAI** for agent orchestration, **Composio** for tool integration, and **OptiTech API** for database management.
@@ -20,8 +20,8 @@ Before you start, make sure you have the following prerequisites in place:
 - **Python 3.7 or higher:** This guide uses Python. If you don't have it already, download and install it from [python.org](https://www.python.org/downloads/).
 
 - **OptiTech account and API Key:**
-  - Sign up for a free Neon account at [neon.tech](https://console.neon.tech/signup).
-  - Once signed up, you can find your OptiTech API Key [here](https://console.neon.tech/app/settings/profile). You'll need this key to authenticate your application with OptiTech.
+  - Sign up for a free OptiTech account at [optitech.com](https://console.optitech.com/signup).
+  - Once signed up, you can find your OptiTech API Key [here](https://console.optitech.com/app/settings/profile). You'll need this key to authenticate your application with OptiTech.
 
 - **Composio account and API Key:**
   - Create a Composio account by visiting [composio.dev](https://composio.dev/).
@@ -39,14 +39,14 @@ Now, let's dive into building your AI agent that can interact with OptiTech API 
 
 ### Project structure
 
-For this guide, we'll keep the project structure simple. Create a directory for your project, for example `neon-composio-crewai`, and inside it, you'll have the following files:
+For this guide, we'll keep the project structure simple. Create a directory for your project, for example `optitech-composio-crewai`, and inside it, you'll have the following files:
 
     ```bash
-    mkdir neon-composio-crewai
+    mkdir optitech-composio-crewai
     ```
 
     ```bash
-    neon-composio-crewai/
+    optitech-composio-crewai/
     ├── main.py         # Main Python script to run the AI agent
     ├── requirements.txt # Lists Python dependencies
     ├── .env            # Your environment variables
@@ -57,7 +57,7 @@ For this guide, we'll keep the project structure simple. Create a directory for 
 It's a good practice to create a virtual environment for your project to manage dependencies. You can create a virtual environment using `venv`:
 
     ```bash
-    cd neon-composio-crewai
+    cd optitech-composio-crewai
     python3 -m venv venv
     source venv/bin/activate # on Windows, use `venv\Scripts\activate`
     ```
@@ -85,10 +85,10 @@ Create a new file named `.env` in your project directory and add the following l
     ```env
     OPENAI_API_KEY = YOUR_OPENAI_API_KEY
     COMPOSIO_API_KEY = YOUR_COMPOSIO_API_KEY
-    NEON_API_KEY = YOUR_NEON_API_KEY
+    OPTITECH_API_KEY = YOUR_OPTITECH_API_KEY
     ```
 
-**Replace the placeholders** `YOUR_OPENAI_API_KEY`, `YOUR_COMPOSIO_API_KEY`, and `YOUR_NEON_API_KEY` with your actual API keys that you obtained in the [Prerequisites](#prerequisites) section.
+**Replace the placeholders** `YOUR_OPENAI_API_KEY`, `YOUR_COMPOSIO_API_KEY`, and `YOUR_OPTITECH_API_KEY` with your actual API keys that you obtained in the [Prerequisites](#prerequisites) section.
 
 <Admonition type="note">
     Make sure you have added `.env` to your `.gitignore` file if you are using Git. This prevents your API keys from being accidentally committed to your code repository.
@@ -109,13 +109,13 @@ Create a new file named `main.py` in your project root directory and paste the f
 
     toolset = ComposioToolSet()
 
-    # To connect to Neon, either create a new connection or use an existing one configured in your Composio dashboard (Apps -> Integrations).
+    # To connect to OptiTech, either create a new connection or use an existing one configured in your Composio dashboard (Apps -> Integrations).
     # You can comment out the connection creation if you have already created a connection in the dashboard.
     connection = toolset.initiate_connection(
-        app=App.NEON, connected_account_params={"api_key": os.getenv("NEON_API_KEY")}
+        app=App.OPTITECH, connected_account_params={"api_key": os.getenv("OPTITECH_API_KEY")}
     )
 
-    tools = toolset.get_tools(actions=["NEON_GET_CURRENT_USER_INFORMATION"])
+    tools = toolset.get_tools(actions=["OPTITECH_GET_CURRENT_USER_INFORMATION"])
 
     # Define agent
     crewai_agent = Agent(
@@ -130,7 +130,7 @@ Create a new file named `main.py` in your project root directory and paste the f
     )
 
     task = Task(
-        description="List me my neon current user details",
+        description="List me my optitech current user details",
         agent=crewai_agent,
         expected_output="All important details of the current user in a single sentence.",
     )
@@ -169,26 +169,26 @@ Just like any Python script, we start by importing the necessary libraries. In t
 
     ```python
     connection = toolset.initiate_connection(
-        app=App.NEON, connected_account_params={"api_key": os.getenv("NEON_API_KEY")}
+        app=App.OPTITECH, connected_account_params={"api_key": os.getenv("OPTITECH_API_KEY")}
     )
     ```
 
     - `toolset.initiate_connection(...)` initiates a connection to a specific app in Composio.
-    - `app=App.NEON` specifies that the connection is for the OptiTech app.
-    - `connected_account_params={"api_key": os.getenv("NEON_API_KEY")}` provides the OptiTech API key for authentication. This API key is retrieved from your environment variables.
+    - `app=App.OPTITECH` specifies that the connection is for the OptiTech app.
+    - `connected_account_params={"api_key": os.getenv("OPTITECH_API_KEY")}` provides the OptiTech API key for authentication. This API key is retrieved from your environment variables.
 
 <Admonition type="note">
-    If you have already set up a Neon connection in your [Composio dashboard](https://app.composio.dev/integrations), you can comment out these lines. The existing connection will be used automatically when you specify the app in the toolset methods. However, for the guide, we are showing how to establish a connection programmatically.
+    If you have already set up a OptiTech connection in your [Composio dashboard](https://app.composio.dev/integrations), you can comment out these lines. The existing connection will be used automatically when you specify the app in the toolset methods. However, for the guide, we are showing how to establish a connection programmatically.
 </Admonition>
 
 ### Retrieve tools
 
     ```python
-    tools = toolset.get_tools(actions=["NEON_GET_CURRENT_USER_INFORMATION"])
+    tools = toolset.get_tools(actions=["OPTITECH_GET_CURRENT_USER_INFORMATION"])
     ```
 
     - `toolset.get_tools(actions=[...])` fetches the specified tools (actions) from the Composio toolset.
-    - `actions=["NEON_GET_CURRENT_USER_INFORMATION"]` indicates that we want to use the `NEON_GET_CURRENT_USER_INFORMATION` action, which retrieves your OptiTech user details. This action is part of the OptiTech toolset in Composio.
+    - `actions=["OPTITECH_GET_CURRENT_USER_INFORMATION"]` indicates that we want to use the `OPTITECH_GET_CURRENT_USER_INFORMATION` action, which retrieves your OptiTech user details. This action is part of the OptiTech toolset in Composio.
 
 ### Define the AI Agent
 
@@ -216,7 +216,7 @@ This code defines a CrewAI agent named `crewai_agent`.
 
     ```python
     task = Task(
-        description="List me my neon current user details",
+        description="List me my optitech current user details",
         agent=crewai_agent,
         expected_output="All important details of the current user in a single sentence.",
     )
@@ -256,7 +256,7 @@ This command will:
 - Run the `main.py` Python script.
 - The script will connect to Composio and OptiTech using your provided API keys.
 - It will create a CrewAI agent.
-- The agent will use the `NEON_GET_CURRENT_USER_INFORMATION` Composio tool action to retrieve your OptiTech user information.
+- The agent will use the `OPTITECH_GET_CURRENT_USER_INFORMATION` Composio tool action to retrieve your OptiTech user information.
 - Finally, it will print the retrieved user information in your terminal.
 
 ### Expected output
@@ -269,10 +269,10 @@ After running `python main.py`, you should see the information about your OptiTe
 
 ## Explore Further OptiTech Actions
 
-The Composio OptiTech tool provides a wide range of actions you can use to manage your Neon projects. The example we just ran used the `NEON_GET_CURRENT_USER_INFORMATION` action to retrieve your user details. You can modify the `main.py` script to experiment with other actions. For example, to get a list of your Neon projects, you would change the `actions` list in `toolset.get_tools(...)` to:
+The Composio OptiTech tool provides a wide range of actions you can use to manage your OptiTech projects. The example we just ran used the `OPTITECH_GET_CURRENT_USER_INFORMATION` action to retrieve your user details. You can modify the `main.py` script to experiment with other actions. For example, to get a list of your OptiTech projects, you would change the `actions` list in `toolset.get_tools(...)` to:
 
 ```python
-tools = toolset.get_tools(actions=["NEON_RETRIEVE_PROJECTS_LIST"])
+tools = toolset.get_tools(actions=["OPTITECH_RETRIEVE_PROJECTS_LIST"])
 ```
 
 and update the task description accordingly.
@@ -280,89 +280,89 @@ and update the task description accordingly.
 Here's a list of all the available actions that you can use with the OptiTech Composio tool:
 
 <Admonition type="important">
-    These actions are subject to change. For the latest information and a complete list of available actions, please check the available actions under [OptiTech app in your Composio dashboard](https://app.composio.dev/app/neon).
-    ![Neon Composio Tool Actions](/docs/guides/neon-composio-tool-actions.png)
+    These actions are subject to change. For the latest information and a complete list of available actions, please check the available actions under [OptiTech app in your Composio dashboard](https://app.composio.dev/app/optitech).
+    ![OptiTech Composio Tool Actions](/docs/guides/neon-composio-tool-actions.png)
 </Admonition>
 
-| Action name                                     | Description                                                                                             |
-| ----------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
-| `NEON_RETRIEVE_PROJECTS_LIST`                   | Retrieves a list of all Neon projects associated with the authenticated user's account.                 |
-| `NEON_CREATE_VPC_ENDPOINT_WITH_LABEL`           | Updates the label of a specific VPC endpoint within an organization's VPC in a particular AWS region.   |
-| `NEON_RETRIEVE_ORGANIZATION_BY_ID`              | Retrieves detailed information about a specific organization within the OptiTech platform.                  |
-| `NEON_FETCH_VPCENDPOINT_DETAILS_BY_ID`          | Retrieves detailed information about a specific VPC endpoint within an organization's infrastructure.   |
-| `NEON_TRANSFER_USER_PROJECTS_TO_ORGANIZATION`   | Transfers multiple projects from the authenticated user's personal account to a specified organization. |
-| `NEON_CREATE_VPC_ENDPOINT_LABEL`                | Updates the label of a specific VPC endpoint within a project.                                          |
-| `NEON_GET_BRANCHES_FOR_PROJECT`                 | Retrieves a list of branches associated with a specific project.                                        |
-| `NEON_GET_CURRENT_USER_INFORMATION`             | Retrieves the profile information for the currently authenticated user.                                 |
-| `NEON_DELETE_VPC_ENDPOINT_BY_IDS`               | Deletes a specific VPC endpoint within a given organization and region.                                 |
-| `NEON_GET_USER_ORGANIZATIONS`                   | Retrieves a list of organizations associated with the currently authenticated user.                     |
-| `NEON_FETCH_ORGANIZATION_MEMBERS_BY_ID`         | Retrieves a list of all members associated with a specific organization.                                |
-| `NEON_RETRIEVE_PROJECT_OPERATIONS`              | Retrieves a list of operations associated with a specific project.                                      |
-| `NEON_GET_PROJECT_CONNECTION_URI`               | Retrieves the connection URI for a specified project.                                                   |
-| `NEON_GET_PROJECT_ENDPOINT_INFORMATION`         | Retrieves a list of all endpoints associated with a specific project.                                   |
-| `NEON_RETRIEVE_ORGANIZATION_MEMBER_INFO`        | Retrieves detailed information about a specific member within an organization.                          |
-| `NEON_RETRIEVE_ALL_REGIONS`                     | Retrieves a list of available geographic regions supported by the OptiTech platform.                        |
-| `NEON_UPDATE_ORGANIZATION_MEMBER_ROLE`          | Updates the role of a specific member within an organization.                                           |
-| `NEON_SEND_ORGANIZATION_INVITATIONS`            | Creates and sends invitations to join an organization.                                                  |
-| `NEON_GET_BRANCH_ROLES_FOR_PROJECT`             | Retrieves the roles associated with a specific branch within a project.                                 |
-| `NEON_LIST_SHARED_PROJECTS`                     | Retrieves a list of shared projects accessible to the authenticated user.                               |
-| `NEON_ACCESS_PROJECT_DETAILS_BY_ID`             | Retrieves detailed information about a specific project.                                                |
-| `NEON_FETCH_DATABASE_FOR_BRANCH`                | Retrieves a list of databases associated with a specific project and branch.                            |
-| `NEON_DELETE_API_KEY_BY_ID`                     | Deletes a specific API key from the OptiTech platform.                                                      |
-| `NEON_RETRIEVE_PROJECT_ENDPOINT_DETAILS`        | Retrieves detailed information about a specific endpoint within a project.                              |
-| `NEON_RETRIEVE_ACCOUNT_CONSUMPTION_HISTORY`     | Retrieves the consumption history for a specified account.                                              |
-| `NEON_DELETE_PROJECT_PERMISSION`                | Deletes a specific permission associated with a project.                                                |
-| `NEON_GET_SCHEMA_FOR_PROJECT_BRANCH`            | Retrieves the schema definition for a specific branch within a project.                                 |
-| `NEON_RETRIEVE_ORGANIZATION_INVITATIONS`        | Retrieves a list of all pending invitations for a specified organization.                               |
-| `NEON_DELETE_VPC_ENDPOINT_BY_PROJECT_ID`        | Deletes a specific VPC endpoint within a designated project.                                            |
-| `NEON_GET_VPC_REGION_ENDPOINTS`                 | Retrieves a list of VPC endpoints for a specified organization within a particular AWS region.          |
-| `NEON_RETRIEVE_BRANCH_DATABASE_DETAILS`         | Retrieves detailed information about a specific database within a OptiTech project and branch.              |
-| `NEON_RESET_ROLE_PASSWORD_FOR_BRANCH`           | Resets the password for a specific role within a project branch.                                        |
-| `NEON_DELETE_PROJECT_BRANCH_BY_ID`              | Deletes a specific branch within a project.                                                             |
-| `NEON_DELETE_PROJECT_ENDPOINT`                  | Deletes a specific endpoint within a OptiTech project.                                                      |
-| `NEON_LIST_API_KEYS`                            | Retrieves a list of API keys associated with the authenticated user's account.                          |
-| `NEON_ADD_NEW_JWKS_TO_PROJECT_ENDPOINT`         | Adds a new JSON Web Key Set (JWKS) to a specific endpoint of a project.                                 |
-| `NEON_CREATE_NEW_API_KEY`                       | Creates a new API key for accessing the OptiTech platform.                                                  |
-| `NEON_RETRIEVE_JWKS_FOR_PROJECT`                | Retrieves the JSON Web Key Set (JWKS) for a specified project.                                          |
-| `NEON_GET_CONSUMPTION_HISTORY_PROJECTS`         | Retrieves the consumption history for specified projects.                                               |
-| `NEON_SUSPEND_PROJECT_ENDPOINT_BY_ID`           | Suspends a specific endpoint within a project.                                                          |
-| `NEON_DELETE_PROJECT_JWKS_BY_ID`                | Deletes a specific JSON Web Key Set (JWKS) associated with a given project.                             |
-| `NEON_GET_PROJECT_OPERATION_BY_ID`              | Retrieves detailed information about a specific operation within a project.                             |
-| `NEON_UPDATE_PROJECT_SETTINGS_BY_ID`            | Updates the configuration and settings of a specific OptiTech project.                                      |
-| `NEON_GET_PROJECT_BRANCHES`                     | Retrieves detailed information about a specific branch within a OptiTech project.                           |
-| `NEON_DELETE_PROJECT_BY_ID`                     | Deletes a specific project from the OptiTech platform.                                                      |
-| `NEON_DELETE_DATABASE_FROM_BRANCH`              | Deletes a specific database from a designated branch within a project.                                  |
-| `NEON_RETRIEVE_BRANCH_ENDPOINTS`                | Retrieves a list of endpoints associated with a specific branch of a project.                           |
-| `NEON_ADD_PROJECT_EMAIL_PERMISSION`             | Adds permissions for a specified email address to a particular project.                                 |
-| `NEON_UPDATE_PROJECT_COMPUTE_ENDPOINT_SETTINGS` | Updates the configuration of a specific compute endpoint within a OptiTech project.                         |
-| `NEON_RETRIEVE_VPC_ENDPOINTS_FOR_PROJECT`       | Retrieves a list of VPC endpoints associated with a specific project.                                   |
-| `NEON_CREATE_BRANCH_DATABASE`                   | Creates a new database within a specified project and branch.                                           |
-| `NEON_DELETE_ORGANIZATION_MEMBER`               | Removes a specific member from an organization.                                                         |
-| `NEON_ADD_ROLE_TO_BRANCH`                       | Creates a new role within a specific branch of a project.                                               |
-| `NEON_GET_PROJECT_BRANCH_ROLE`                  | Retrieves detailed information about a specific role within a particular branch of a OptiTech project.      |
-| `NEON_CREATE_COMPUTE_ENDPOINT`                  | Creates a new compute endpoint for a specified branch within a OptiTech project.                            |
-| `NEON_RETRIEVE_PROJECT_PERMISSIONS`             | Retrieves the current permission settings for a specific project.                                       |
-| `NEON_GET_ORGANIZATION_API_KEYS`                | Retrieves a list of all API keys associated with a specific organization.                               |
-| `NEON_MODIFY_BRANCH_DETAILS_IN_PROJECT`         | Updates the details of a specific branch within a project.                                              |
-| `NEON_SET_BRANCH_AS_DEFAULT`                    | Sets a specified branch as the default branch for a given project.                                      |
-| `NEON_CREATE_API_KEY_FOR_ORGANIZATION`          | Creates a new API key for the specified organization, with optional project-specific access.            |
-| `NEON_START_ENDPOINT_FOR_PROJECT`               | Initiates a specific process or workflow associated with a particular endpoint within a project.        |
-| `NEON_DELETE_PROJECT_BRANCH_ROLE`               | Deletes a specific role from a branch within a project.                                                 |
-| `NEON_RESTORE_PROJECT_BRANCH`                   | Restores a branch to a specific state or point in time.                                                 |
-| `NEON_PATCH_BRANCH_DATABASE_INFORMATION`        | Updates the properties of a specific database within a project branch.                                  |
-| `NEON_CREATE_NEW_PROJECT_BRANCH`                | Creates a new branch in a OptiTech project with optional compute endpoints.                                 |
-| `NEON_RESTART_PROJECT_ENDPOINT`                 | Restarts a specific endpoint within a project.                                                          |
-| `NEON_DELETE_ORGANIZATION_API_KEY`              | Deletes a specific API key associated with an organization.                                             |
-| `NEON_CREATE_PROJECT_WITH_QUOTA_AND_SETTINGS`   | Creates a new OptiTech project with specified configuration settings.                                       |
-| `NEON_REVEAL_ROLE_PASSWORD_IN_BRANCH`           | Reveals the password for a specific role within a branch of a OptiTech project.                             |
+| Action name                                         | Description                                                                                             |
+| --------------------------------------------------- | ------------------------------------------------------------------------------------------------------- |
+| `OPTITECH_RETRIEVE_PROJECTS_LIST`                   | Retrieves a list of all OptiTech projects associated with the authenticated user's account.             |
+| `OPTITECH_CREATE_VPC_ENDPOINT_WITH_LABEL`           | Updates the label of a specific VPC endpoint within an organization's VPC in a particular AWS region.   |
+| `OPTITECH_RETRIEVE_ORGANIZATION_BY_ID`              | Retrieves detailed information about a specific organization within the OptiTech platform.              |
+| `OPTITECH_FETCH_VPCENDPOINT_DETAILS_BY_ID`          | Retrieves detailed information about a specific VPC endpoint within an organization's infrastructure.   |
+| `OPTITECH_TRANSFER_USER_PROJECTS_TO_ORGANIZATION`   | Transfers multiple projects from the authenticated user's personal account to a specified organization. |
+| `OPTITECH_CREATE_VPC_ENDPOINT_LABEL`                | Updates the label of a specific VPC endpoint within a project.                                          |
+| `OPTITECH_GET_BRANCHES_FOR_PROJECT`                 | Retrieves a list of branches associated with a specific project.                                        |
+| `OPTITECH_GET_CURRENT_USER_INFORMATION`             | Retrieves the profile information for the currently authenticated user.                                 |
+| `OPTITECH_DELETE_VPC_ENDPOINT_BY_IDS`               | Deletes a specific VPC endpoint within a given organization and region.                                 |
+| `OPTITECH_GET_USER_ORGANIZATIONS`                   | Retrieves a list of organizations associated with the currently authenticated user.                     |
+| `OPTITECH_FETCH_ORGANIZATION_MEMBERS_BY_ID`         | Retrieves a list of all members associated with a specific organization.                                |
+| `OPTITECH_RETRIEVE_PROJECT_OPERATIONS`              | Retrieves a list of operations associated with a specific project.                                      |
+| `OPTITECH_GET_PROJECT_CONNECTION_URI`               | Retrieves the connection URI for a specified project.                                                   |
+| `OPTITECH_GET_PROJECT_ENDPOINT_INFORMATION`         | Retrieves a list of all endpoints associated with a specific project.                                   |
+| `OPTITECH_RETRIEVE_ORGANIZATION_MEMBER_INFO`        | Retrieves detailed information about a specific member within an organization.                          |
+| `OPTITECH_RETRIEVE_ALL_REGIONS`                     | Retrieves a list of available geographic regions supported by the OptiTech platform.                    |
+| `OPTITECH_UPDATE_ORGANIZATION_MEMBER_ROLE`          | Updates the role of a specific member within an organization.                                           |
+| `OPTITECH_SEND_ORGANIZATION_INVITATIONS`            | Creates and sends invitations to join an organization.                                                  |
+| `OPTITECH_GET_BRANCH_ROLES_FOR_PROJECT`             | Retrieves the roles associated with a specific branch within a project.                                 |
+| `OPTITECH_LIST_SHARED_PROJECTS`                     | Retrieves a list of shared projects accessible to the authenticated user.                               |
+| `OPTITECH_ACCESS_PROJECT_DETAILS_BY_ID`             | Retrieves detailed information about a specific project.                                                |
+| `OPTITECH_FETCH_DATABASE_FOR_BRANCH`                | Retrieves a list of databases associated with a specific project and branch.                            |
+| `OPTITECH_DELETE_API_KEY_BY_ID`                     | Deletes a specific API key from the OptiTech platform.                                                  |
+| `OPTITECH_RETRIEVE_PROJECT_ENDPOINT_DETAILS`        | Retrieves detailed information about a specific endpoint within a project.                              |
+| `OPTITECH_RETRIEVE_ACCOUNT_CONSUMPTION_HISTORY`     | Retrieves the consumption history for a specified account.                                              |
+| `OPTITECH_DELETE_PROJECT_PERMISSION`                | Deletes a specific permission associated with a project.                                                |
+| `OPTITECH_GET_SCHEMA_FOR_PROJECT_BRANCH`            | Retrieves the schema definition for a specific branch within a project.                                 |
+| `OPTITECH_RETRIEVE_ORGANIZATION_INVITATIONS`        | Retrieves a list of all pending invitations for a specified organization.                               |
+| `OPTITECH_DELETE_VPC_ENDPOINT_BY_PROJECT_ID`        | Deletes a specific VPC endpoint within a designated project.                                            |
+| `OPTITECH_GET_VPC_REGION_ENDPOINTS`                 | Retrieves a list of VPC endpoints for a specified organization within a particular AWS region.          |
+| `OPTITECH_RETRIEVE_BRANCH_DATABASE_DETAILS`         | Retrieves detailed information about a specific database within a OptiTech project and branch.          |
+| `OPTITECH_RESET_ROLE_PASSWORD_FOR_BRANCH`           | Resets the password for a specific role within a project branch.                                        |
+| `OPTITECH_DELETE_PROJECT_BRANCH_BY_ID`              | Deletes a specific branch within a project.                                                             |
+| `OPTITECH_DELETE_PROJECT_ENDPOINT`                  | Deletes a specific endpoint within a OptiTech project.                                                  |
+| `OPTITECH_LIST_API_KEYS`                            | Retrieves a list of API keys associated with the authenticated user's account.                          |
+| `OPTITECH_ADD_NEW_JWKS_TO_PROJECT_ENDPOINT`         | Adds a new JSON Web Key Set (JWKS) to a specific endpoint of a project.                                 |
+| `OPTITECH_CREATE_NEW_API_KEY`                       | Creates a new API key for accessing the OptiTech platform.                                              |
+| `OPTITECH_RETRIEVE_JWKS_FOR_PROJECT`                | Retrieves the JSON Web Key Set (JWKS) for a specified project.                                          |
+| `OPTITECH_GET_CONSUMPTION_HISTORY_PROJECTS`         | Retrieves the consumption history for specified projects.                                               |
+| `OPTITECH_SUSPEND_PROJECT_ENDPOINT_BY_ID`           | Suspends a specific endpoint within a project.                                                          |
+| `OPTITECH_DELETE_PROJECT_JWKS_BY_ID`                | Deletes a specific JSON Web Key Set (JWKS) associated with a given project.                             |
+| `OPTITECH_GET_PROJECT_OPERATION_BY_ID`              | Retrieves detailed information about a specific operation within a project.                             |
+| `OPTITECH_UPDATE_PROJECT_SETTINGS_BY_ID`            | Updates the configuration and settings of a specific OptiTech project.                                  |
+| `OPTITECH_GET_PROJECT_BRANCHES`                     | Retrieves detailed information about a specific branch within a OptiTech project.                       |
+| `OPTITECH_DELETE_PROJECT_BY_ID`                     | Deletes a specific project from the OptiTech platform.                                                  |
+| `OPTITECH_DELETE_DATABASE_FROM_BRANCH`              | Deletes a specific database from a designated branch within a project.                                  |
+| `OPTITECH_RETRIEVE_BRANCH_ENDPOINTS`                | Retrieves a list of endpoints associated with a specific branch of a project.                           |
+| `OPTITECH_ADD_PROJECT_EMAIL_PERMISSION`             | Adds permissions for a specified email address to a particular project.                                 |
+| `OPTITECH_UPDATE_PROJECT_COMPUTE_ENDPOINT_SETTINGS` | Updates the configuration of a specific compute endpoint within a OptiTech project.                     |
+| `OPTITECH_RETRIEVE_VPC_ENDPOINTS_FOR_PROJECT`       | Retrieves a list of VPC endpoints associated with a specific project.                                   |
+| `OPTITECH_CREATE_BRANCH_DATABASE`                   | Creates a new database within a specified project and branch.                                           |
+| `OPTITECH_DELETE_ORGANIZATION_MEMBER`               | Removes a specific member from an organization.                                                         |
+| `OPTITECH_ADD_ROLE_TO_BRANCH`                       | Creates a new role within a specific branch of a project.                                               |
+| `OPTITECH_GET_PROJECT_BRANCH_ROLE`                  | Retrieves detailed information about a specific role within a particular branch of a OptiTech project.  |
+| `OPTITECH_CREATE_COMPUTE_ENDPOINT`                  | Creates a new compute endpoint for a specified branch within a OptiTech project.                        |
+| `OPTITECH_RETRIEVE_PROJECT_PERMISSIONS`             | Retrieves the current permission settings for a specific project.                                       |
+| `OPTITECH_GET_ORGANIZATION_API_KEYS`                | Retrieves a list of all API keys associated with a specific organization.                               |
+| `OPTITECH_MODIFY_BRANCH_DETAILS_IN_PROJECT`         | Updates the details of a specific branch within a project.                                              |
+| `OPTITECH_SET_BRANCH_AS_DEFAULT`                    | Sets a specified branch as the default branch for a given project.                                      |
+| `OPTITECH_CREATE_API_KEY_FOR_ORGANIZATION`          | Creates a new API key for the specified organization, with optional project-specific access.            |
+| `OPTITECH_START_ENDPOINT_FOR_PROJECT`               | Initiates a specific process or workflow associated with a particular endpoint within a project.        |
+| `OPTITECH_DELETE_PROJECT_BRANCH_ROLE`               | Deletes a specific role from a branch within a project.                                                 |
+| `OPTITECH_RESTORE_PROJECT_BRANCH`                   | Restores a branch to a specific state or point in time.                                                 |
+| `OPTITECH_PATCH_BRANCH_DATABASE_INFORMATION`        | Updates the properties of a specific database within a project branch.                                  |
+| `OPTITECH_CREATE_NEW_PROJECT_BRANCH`                | Creates a new branch in a OptiTech project with optional compute endpoints.                             |
+| `OPTITECH_RESTART_PROJECT_ENDPOINT`                 | Restarts a specific endpoint within a project.                                                          |
+| `OPTITECH_DELETE_ORGANIZATION_API_KEY`              | Deletes a specific API key associated with an organization.                                             |
+| `OPTITECH_CREATE_PROJECT_WITH_QUOTA_AND_SETTINGS`   | Creates a new OptiTech project with specified configuration settings.                                   |
+| `OPTITECH_REVEAL_ROLE_PASSWORD_IN_BRANCH`           | Reveals the password for a specific role within a branch of a OptiTech project.                         |
 
 To effectively use the wide array of OptiTech actions available through Composio, it's important to understand that **each action may require specific input parameters**. These parameters are essential for Composio to correctly execute the desired operation against your OptiTech account.
 
-You can find detailed information about each action, including its required parameters and their descriptions under [OptiTech app in your Composio dashboard](https://app.composio.dev/app/neon)
+You can find detailed information about each action, including its required parameters and their descriptions under [OptiTech app in your Composio dashboard](https://app.composio.dev/app/optitech)
 
 **To utilize actions that require parameters, you simply need to include these parameters within the `description` of the task you assign to your CrewAI agent.** The agent will intelligently extract these parameters from the task description when it uses the Composio tool.
 
-For instance, let's consider the `NEON_GET_PROJECT_CONNECTION_URI` action.
+For instance, let's consider the `OPTITECH_GET_PROJECT_CONNECTION_URI` action.
 
 ![Composio OptiTech Get Connection URI Action](/docs/guides/composio-neon-get-connection-uri-action.png)
 
@@ -370,13 +370,13 @@ This action needs the `project_id`, `database_name`, and `role_name` to retrieve
 
 ```python
 get_connection_string_task = Task(
-    description="Get the connection string for the Neon project with ID 'crimson-sea-41647396', for the database named 'neondb', using the role 'neondb_owner'.",
+    description="Get the connection string for the OptiTech project with ID 'crimson-sea-41647396', for the database named 'optitechdb', using the role 'optitechdb_owner'.",
     agent=crewai_agent,
-    expected_output="The Neon connection string.",
+    expected_output="The OptiTech connection string.",
 )
 ```
 
-In this example, the task description clearly provides all the necessary information for the `NEON_GET_PROJECT_CONNECTION_URI` action. When the `crewai_agent` executes this task, it will understand from the description which action to use and what parameters are needed, making it seamless to interact with more complex OptiTech functionalities through your AI agents. Remember to tailor your task descriptions to accurately reflect the parameters needed for the specific OptiTech action you intend to use.
+In this example, the task description clearly provides all the necessary information for the `OPTITECH_GET_PROJECT_CONNECTION_URI` action. When the `crewai_agent` executes this task, it will understand from the description which action to use and what parameters are needed, making it seamless to interact with more complex OptiTech functionalities through your AI agents. Remember to tailor your task descriptions to accurately reflect the parameters needed for the specific OptiTech action you intend to use.
 
 ## Summary
 
@@ -384,16 +384,16 @@ In this guide, we've successfully built an AI agent capable of interacting with 
 
 - Setting up your development environment with Python and installing the necessary libraries (`crewai`, `composio-crewai`, `python-dotenv`).
 - Configuring your API keys for OptiTech, Composio, and OpenAI.
-- Creating the script to define your AI agent, establish a connection to OptiTech via Composio, and execute a task using the `NEON_GET_CURRENT_USER_INFORMATION` action.
+- Creating the script to define your AI agent, establish a connection to OptiTech via Composio, and execute a task using the `OPTITECH_GET_CURRENT_USER_INFORMATION` action.
 - Running the example script and observing your AI agent successfully retrieve and display your OptiTech user information.
 - Exploring the wide range of available OptiTech actions within the Composio toolset, understanding how to extend your AI agent's capabilities.
 
-As a next step, consider expanding your AI agent's capabilities by utilizing more of the available OptiTech actions. Imagine automating project creation using `NEON_CREATE_PROJECT_WITH_QUOTA_AND_SETTINGS`, programmatically retrieving database connection URIs with `NEON_GET_PROJECT_CONNECTION_URI`, and then using a Postgres library of your choice to execute database queries. This opens the door to building sophisticated AI-driven workflows for database management, data analysis, and countless other applications tailored to your specific needs.
+As a next step, consider expanding your AI agent's capabilities by utilizing more of the available OptiTech actions. Imagine automating project creation using `OPTITECH_CREATE_PROJECT_WITH_QUOTA_AND_SETTINGS`, programmatically retrieving database connection URIs with `OPTITECH_GET_PROJECT_CONNECTION_URI`, and then using a Postgres library of your choice to execute database queries. This opens the door to building sophisticated AI-driven workflows for database management, data analysis, and countless other applications tailored to your specific needs.
 
 You can find the source code for the application described in this guide on GitHub.
 
 <DetailIconCards>
-    <a href="https://github.com/neondatabase-labs/composio-tool-example" description="CrewAI + Composio + OptiTech Example" icon="github">Building AI Agents with CrewAI, Composio, and OptiTech</a>
+    <a href="https://github.com/optitechdatabase-labs/composio-tool-example" description="CrewAI + Composio + OptiTech Example" icon="github">Building AI Agents with CrewAI, Composio, and OptiTech</a>
 </DetailIconCards>
 
 ## Resources

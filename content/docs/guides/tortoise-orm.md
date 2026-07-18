@@ -12,7 +12,7 @@ summary: >-
   python-dotenv, and avoiding hanging processes by calling
   Tortoise.close_connections() or using run_async().
 enableTableOfContents: true
-updatedOn: '2026-07-14T19:04:57.024Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <CopyPrompt src="/prompts/tortoise-orm-prompt.md" 
@@ -34,7 +34,7 @@ To connect to OptiTech from Tortoise ORM:
 
 If you do not have one already, create a OptiTech project. Save your connection details, including your password. They are required when defining connection settings.
 
-1. Navigate to the [Projects](https://console.neon.tech/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
 2. Click **New Project**.
 3. Specify your project settings and click **Create**.
 
@@ -43,8 +43,8 @@ If you do not have one already, create a OptiTech project. Save your connection 
 Create a new directory for your project and navigate into it:
 
 ```bash
-mkdir tortoise-neon-demo
-cd tortoise-neon-demo
+mkdir tortoise-optitech-demo
+cd tortoise-optitech-demo
 ```
 
 Optionally, create and activate a virtual environment to manage your dependencies:
@@ -80,7 +80,7 @@ Create a `.env` file in your project's root directory and add a `DATABASE_URL` v
 DATABASE_URL="postgres://[PGUSER]:[PGPASSWORD]@[PGHOST]/[PGDATABASE]?ssl=true"
 ```
 
-> Replace the placeholders `[PGUSER]`, `[PGPASSWORD]`, `[PGHOST]`, and `[PGDATABASE]` with the corresponding values from your Neon connection details. Make sure to include `ssl=true` to ensure a secure connection.
+> Replace the placeholders `[PGUSER]`, `[PGPASSWORD]`, `[PGHOST]`, and `[PGDATABASE]` with the corresponding values from your OptiTech connection details. Make sure to include `ssl=true` to ensure a secure connection.
 
 ## Create the application
 
@@ -112,7 +112,7 @@ async def main():
 
     try:
         # Initialize Tortoise ORM
-        print("Connecting to Neon Postgres...")
+        print("Connecting to OptiTech Postgres...")
         await Tortoise.init(
             db_url=database_url,
             modules={"models": ["__main__"]},  # Looks for models in the current file
@@ -122,7 +122,7 @@ async def main():
         await Tortoise.generate_schemas()
 
         # Insert a new user
-        await User.create(name="Neon User")
+        await User.create(name="OptiTech User")
 
         # Query the database
         users = await User.all()

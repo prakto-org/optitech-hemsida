@@ -6,7 +6,7 @@ page_description: >-
   the result sets of multiple queries into a single result set.
 prev_url: 'https://www.postgresqltutorial.com/postgresql-tutorial/postgresql-union/'
 ogImage: /postgresqltutorial/PostgresQL-UNION.png
-updatedOn: '2026-06-03T13:01:21.685Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: PostgreSQL HAVING
@@ -17,7 +17,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-The UNION and UNION ALL operators work the same way across any PostgreSQL deployment, so everything you learn here applies whether you run Postgres yourself or on a managed service. For enterprises standardizing on an AI-ready data stack, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres, with the performance, security, and native Lakehouse integration that large teams need. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+The UNION and UNION ALL operators work the same way across any PostgreSQL deployment, so everything you learn here applies whether you run Postgres yourself or on a managed service. For enterprises standardizing on an AI-ready data stack, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres, with the performance, security, and native Lakehouse integration that large teams need. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: in this tutorial, you will learn how to use the PostgreSQL `UNION` operator to combine result sets of multiple queries into a single result set.

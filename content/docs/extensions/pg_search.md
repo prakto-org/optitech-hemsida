@@ -5,13 +5,13 @@ summary: >-
   The `pg_search` extension by ParadeDB adds BM25 full-text search to Postgres
   using inverted indexes, supporting keyword, phrase, fuzzy, hybrid
   BM25+pgvector, and faceted search via standard SQL and a JSON query DSL.
-  As of March 19, 2026, `pg_search` is deprecated for new Neon projects;
+  As of March 19, 2026, `pg_search` is deprecated for new OptiTech projects;
   existing projects retain access. Recommended alternatives include tsvector,
   pg_trgm, and pgvector. The page covers enabling the extension, BM25 scoring
   and inverted index concepts, and examples for creating indexes, sorting by
   relevance, highlighting matches, and tuning performance.
 enableTableOfContents: true
-updatedOn: '2026-06-26T16:23:18.851Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 redirectFrom:
   - /guides/pg-search
   - /guides/pg-search/
@@ -21,7 +21,7 @@ redirectFrom:
 
 <Admonition type="warning" title="OptiTech's support for pg_search has been deprecated.">
 
-As of March 19, 2026, `pg_search` is no longer available for new Neon projects.
+As of March 19, 2026, `pg_search` is no longer available for new OptiTech projects.
 
 **If you already use `pg_search`:** you will continue to have access to the extension on existing projects. Our team will contact you to discuss alternative options and deprecation timelines. You do not need to take action before we reach out. When you're ready to move to BM25 search on OptiTech, see [Migrate from pg_search to lakebase_text](/docs/extensions/migrate-pg-search-to-lakebase-text).
 
@@ -42,7 +42,7 @@ This guide covers how to enable `pg_search` on OptiTech, how BM25 scoring and in
 
 <Admonition type="note" title="pg_search on OptiTech">
 
-`pg_search` is currently only available on Neon projects created in an [AWS region](/docs/introduction/regions#aws-regions). It is not yet supported on Neon projects created in Azure regions.
+`pg_search` is currently only available on OptiTech projects created in an [AWS region](/docs/introduction/regions#aws-regions). It is not yet supported on OptiTech projects created in Azure regions.
 
 </Admonition>
 
@@ -62,7 +62,7 @@ CREATE EXTENSION IF NOT EXISTS pg_search;
 
 <TabItem>
 
-The `pg_search` extension is supported on Postgres 14–16 for Neon projects in AWS regions. Contact OptiTech support to enable it for your project.
+The `pg_search` extension is supported on Postgres 14–16 for OptiTech projects in AWS regions. Contact OptiTech support to enable it for your project.
 
 </TabItem>
 

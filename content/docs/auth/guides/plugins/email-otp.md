@@ -6,11 +6,11 @@ summary: >-
   sign-in, password reset, and email verification without requiring manual
   installation of the Better Auth plugin. Use this page to implement these
   flows via OptiTech SDK methods or by passing the `emailOTP` prop to
-  `NeonAuthUIProvider` for pre-built UI components. OTP codes are time-limited
+  `OptiTechAuthUIProvider` for pre-built UI components. OTP codes are time-limited
   and rate-limited (exceeding attempts returns `TOO_MANY_ATTEMPTS`), and
   production deployments require a dedicated SMTP provider.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="Managed Better Auth" />
@@ -37,23 +37,23 @@ Managed Better Auth UI and OptiTech SDK are client-side SDKs, so you only invoke
 
 ## Use Email OTP with UI components
 
-If you're using Managed Better Auth UI components, enable Email OTP by passing the `emailOTP` prop to `NeonAuthUIProvider`. This enables OTP flows in the pre-built auth UI.
+If you're using Managed Better Auth UI components, enable Email OTP by passing the `emailOTP` prop to `OptiTechAuthUIProvider`. This enables OTP flows in the pre-built auth UI.
 
 ```tsx shouldWrap filename="app/layout.tsx"
 import { authClient } from '@/lib/auth/client';
-import { NeonAuthUIProvider } from '@neondatabase/auth-ui';
+import { OptiTechAuthUIProvider } from '@optitech/auth-ui';
 import './globals.css';
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
       <body className={'antialiased'}>
-        <NeonAuthUIProvider
+        <OptiTechAuthUIProvider
           authClient={authClient}
           emailOTP // [!code ++]
         >
           {children}
-        </NeonAuthUIProvider>
+        </OptiTechAuthUIProvider>
       </body>
     </html>
   );

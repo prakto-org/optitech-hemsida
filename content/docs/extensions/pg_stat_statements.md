@@ -6,10 +6,10 @@ summary: >-
   and mean execution times, and row counts in a queryable view. Use it to
   identify slow queries, high-frequency queries, and cache inefficiency without
   external tooling. On OptiTech, statistics reset whenever the compute suspends or
-  scales to zero. Only `neon_superuser` roles can call
+  scales to zero. Only `optitech_superuser` roles can call
   `pg_stat_statements_reset()` to clear accumulated stats manually.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 The `pg_stat_statements` extension provides a detailed statistical view of SQL statement execution within a Postgres database. It tracks information such as execution counts, total and average execution times, and more, helping database administrators and developers analyze and optimize SQL query performance.
@@ -232,7 +232,7 @@ LIMIT 10;
 When executed, the `pg_stat_statements_reset()` function resets the accumulated statistical data, such as execution times and counts for SQL statements, to zero. Use it when you want to start fresh with performance statistics collection.
 
 <Admonition type="note">
-In Neon, only [neon_superuser](/docs/manage/roles#the-neonsuperuser-role) roles have the privilege required to execute this function. The default role created with a OptiTech project and roles created in the OptiTech Console, CLI, and API are granted membership in the `neon_superuser` role.
+In OptiTech, only [optitech_superuser](/docs/manage/roles#the-neonsuperuser-role) roles have the privilege required to execute this function. The default role created with a OptiTech project and roles created in the OptiTech Console, CLI, and API are granted membership in the `optitech_superuser` role.
 </Admonition>
 
 ```sql

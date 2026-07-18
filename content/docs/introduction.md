@@ -1,152 +1,117 @@
 ---
 title: OptiTech documentation
-subtitle: OptiTech is the backend for apps and agents.
+subtitle: OptiTech is compliance automation for the Nordics.
 summary: >-
-  OptiTech documentation root covers the full OptiTech backend platform: serverless
-  Postgres with branching and autoscaling, Managed Better Auth, Data API, and upcoming
-  Object Storage and AI Gateway services. Use this page to reach quickstarts, framework
-  connection guides (Next.js, Django, Prisma, and more), and MCP-based AI
-  editor integrations for Cursor, Claude Code, Codex, and GitHub Copilot.
+  OptiTech documentation root covers the full OptiTech compliance platform:
+  automated gap analysis, AI-generated documentation, continuous evidence
+  collection through integrations, incident reporting to MSB and IMY, vendor
+  risk management, and audit export. Use this page to reach the Console tour,
+  framework coverage for NIS2, DORA, GDPR, ISO 27001, and the EU AI Act, and
+  plan details.
 redirectFrom:
   - /guides/neon-azure-integration
   - /guides/azure-service-connector
   - /guides/azure-todo-static-web-app
   - /guides/azure-functions-referral-system
-updatedOn: '2026-07-15T20:33:08.022Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 ## Getting started
 
-Start with a quick setup prompt, or follow a guided tutorial to build the full OptiTech stack step by step.
+OptiTech automates regulatory compliance for Nordic businesses. Run a gap analysis, generate your documentation, connect your systems for continuous evidence collection, and report incidents to Swedish authorities directly from the platform.
 
-<TwinPaths>
-  <QuickPath
-    title="One-command setup"
-    command="npx neon@latest init"
-    description="AI-guided setup. Creates a project, applies your schema, and writes a .env in one step. Copy the prompt below and get started."
-  />
-  <GuidedPath
-    title="Build a full backend"
-    description="Next.js on the full OptiTech backend: Postgres, Auth, Object Storage, and AI Gateway, from create-next-app to deployed."
-    href="/docs/get-started/full-backend-quickstart"
-  />
-</TwinPaths>
+<DetailIconCards>
 
-<TourCallout
-  title="Tour the OptiTech backend"
-  description="Learn how Postgres, Managed Better Auth, Object Storage, Functions, and the AI Gateway connect across a real project, and where each one lives in your codebase."
-  href="/docs/get-started/backend-overview"
-/>
+<a href="/docs/get-started/signing-up" description="Create your account and take a tour of the OptiTech Console." icon="database">Tour the OptiTech Console</a>
 
-## Products
+<a href="/docs/get-started/full-backend-quickstart" description="From sign-up to a running compliance program, one step at a time." icon="code">Get audit-ready quickstart</a>
 
-Build backends for web apps and agents with OptiTech Postgres, Auth, Object Storage, and AI Gateway. <br />
-Every service is agent-ready: instant, branchable, and serverless.
+<a href="/docs/get-started/why-neon" description="Our mission, and what makes OptiTech different from other compliance tools." icon="sparkle">Why OptiTech?</a>
 
-<DetailIconCards className="my-7!" cols={3} theme="green-flat">
-
-<a href="/docs/postgres/overview" description="Serverless Postgres with branching, autoscaling, scale to zero, and instant restore." icon="database">Postgres</a>
-
-<a href="/docs/auth/overview" description="Managed Better Auth with sign-up, OAuth, and sessions. Users live in your Postgres and branch with it." icon="lock-landscape">Auth</a>
-
-<a href="/docs/data-api/overview" description="HTTPS queries with no backend code. Drop-in compatible with Supabase." icon="network">Data API</a>
-
-<a href="/docs/storage/overview" description="S3-compatible object storage that branches with your database." icon="data" tag="Beta" tagTheme="orange-muted">Object Storage</a>
-
-<a href="/docs/compute/functions/overview" description="Long-running Node.js compute, deployed alongside your database." icon="code" tag="Beta" tagTheme="orange-muted">Functions</a>
-
-<a href="/docs/ai-gateway/overview" description="One API for frontier and open-source models, built into your OptiTech project." icon="sparkle" tag="Beta" tagTheme="orange-muted">AI Gateway</a>
+<a href="/docs/introduction/plans" description="Start, Professional, and Enterprise plans with transparent pricing." icon="data">Plans and billing</a>
 
 </DetailIconCards>
 
-New to Object Storage, Functions, or AI Gateway? Start with the [OptiTech backend beta guide](/docs/get-started/backend-beta).
+## Frameworks
 
-## Connect your framework
+OptiTech covers the regulations that matter for Nordic businesses. Controls are cross-mapped between frameworks, so evidence you collect once counts everywhere it applies. The Nordic core is built from the source texts; the rest cover what your customers and auditors most often ask for. For who each framework applies to and what it costs to ignore, see the [framework catalog](/docs/get-started/frameworks).
 
-Browse our [framework](/docs/get-started/frameworks), [language](/docs/get-started/languages), and [ORM](/docs/get-started/orms) guides for full connection details.
+<FeatureList>
 
-<CompactCards className="mt-8" cols={4} withToggler>
+### NIS2 and the Swedish Cybersecurity Act
 
-<a href="/docs/guides/nextjs" title="Next.js" icon="next-js"></a>
+Built from the Swedish legal text and MSB regulations (MSBFS), with automatic scoping, controls, and the full incident reporting flow.
 
-<a href="/docs/guides/django" title="Django" icon="django"></a>
+### DORA
 
-<a href="/docs/guides/drizzle" title="Drizzle" icon="drizzle"></a>
+For financial institutions and their ICT providers: controls, testing requirements, and an ICT contract register ready for supervisory review.
 
-<a href="/docs/guides/react-router" title="React Router" icon="react"></a>
+### GDPR
 
-<a href="/docs/guides/tanstack-start" title="TanStack Start" icon="tanstack"></a>
+Records of processing, breach reporting to IMY within 72 hours, and data protection controls mapped to your real systems.
 
-<a href="/docs/guides/express" title="Express" icon="express"></a>
+### ISO 27001:2022
 
-<a href="/docs/guides/nestjs" title="NestJS" icon="nest-js"></a>
+The full control catalog with policy templates, continuous evidence collection, and a read-only auditor portal for certification audits.
 
-<a href="/docs/guides/astro" title="Astro" icon="astro"></a>
+### EU AI Act
 
-<a href="/docs/guides/sveltekit" title="SvelteKit" icon="svelte"></a>
+Scoping for high-risk AI systems, plus the documentation and governance requirements that phase in through 2027.
 
-<a href="/docs/guides/nuxt" title="Nuxt" icon="nuxt"></a>
+### CRA
 
-<a href="/docs/guides/laravel" title="Laravel" icon="laravel"></a>
+Security requirements for products with digital elements sold in the EU, phasing in through 2027. The next wave after NIS2 for product companies.
 
-<a href="/docs/guides/ruby-on-rails" title="Rails" icon="rails"></a>
+### SOC 2
 
-<a href="/docs/guides/python" title="Python" icon="python"></a>
+Show customers you meet the leading standard for managing and protecting customer data, common in B2B deals with US buyers.
 
-<a href="/docs/guides/go" title="Go" icon="go"></a>
+### ISO 27701
 
-<a href="/docs/guides/java" title="Java" icon="java"></a>
+Extend your ISO 27001 program with privacy controls that align with GDPR and other privacy regulations.
 
-<a href="/docs/guides/rust" title="Rust" icon="rust"></a>
+### ISO 22301
 
-<a href="/docs/guides/dotnet-npgsql" title=".NET" icon="dotnet"></a>
+A structured, auditable business continuity management system, covering the continuity requirements NIS2 also demands.
 
-<a href="/docs/guides/elixir" title="Elixir" icon="elixir"></a>
+### TISAX
 
-<a href="/docs/guides/phoenix" title="Phoenix" icon="phoenix"></a>
+The automotive industry's information security standard, required by major European OEMs and their Nordic supply chains.
 
-<a href="/docs/guides/prisma" title="Prisma" icon="prisma"></a>
+</FeatureList>
 
-<a href="/docs/guides/kysely" title="Kysely" icon="kysely"></a>
+## Platform capabilities
 
-<a href="/docs/guides/tortoise-orm" title="Tortoise ORM" icon="tortoise-orm"></a>
+<FeatureList>
 
-<a href="/docs/guides/typeorm" title="TypeORM" icon="typeorm"></a>
+### Gap analysis
 
-<a href="/docs/guides/sqlalchemy" title="SQLAlchemy" icon="sqlalchemy"></a>
+Answer 20 questions about your industry, size, systems, and customers. OptiTech maps which laws apply, which NIS2 category you fall into, and builds a prioritized action list.
 
-<a href="/docs/guides/hono" title="Hono" icon="hono"></a>
+### Policies and documentation
 
-<a href="/docs/guides/solid-start" title="SolidStart" icon="solidstart"></a>
+50+ Swedish templates, AI-generated drafts based on your real environment, version control with review cycles, and employee e-signing with read receipts.
 
-<a href="/docs/guides/reflex" title="Reflex" icon="reflex"></a>
+### Continuous evidence collection
 
-<a href="/docs/guides/javascript" title="JavaScript" icon="javascript"></a>
+Integrations with Microsoft 365, Entra ID, Google Workspace, AWS, Azure, GitHub, and Swedish systems like Fortnox, Visma, BankID, and Kivra verify controls around the clock: MFA coverage, offboarding, backups, encryption, and patch levels.
 
-<a href="/docs/guides/symfony" title="Symfony" icon="symfony"></a>
+### Incident reporting
 
-<a href="/docs/guides/quarkus-jdbc" title="Quarkus" icon="quarkus"></a>
+A guided MSB flow with early warning in 24 hours, incident report in 72 hours, and final report within one month. Pre-filled forms, deadline countdowns, and communication templates. The matching IMY flow handles personal data breaches.
 
-<a href="/docs/guides/micronaut-kotlin" title="Micronaut" icon="micronaut"></a>
+### Vendor risk management
 
-<a href="/docs/guides/redwoodsdk" title="Redwood" icon="redwoodsdk"></a>
+Supplier register, automated security questionnaires, risk classification, and contract monitoring, including the DORA ICT register.
 
-</CompactCards>
+### AI copilot
 
-## AI tools and agents
+Ask questions in Swedish and get answers grounded in the legal text and your own data, with citations. Draft policies and answer incoming security questionnaires in a fraction of the time.
 
-OptiTech integrates with AI coding tools and agents through MCP. Pick your editor for setup and integration details.
+</FeatureList>
 
-<CompactCards cols={2}>
+## Plans and support
 
-<a href="/docs/ai/ai-cursor-plugin" title="Cursor" description="Connect OptiTech to Cursor" icon="cursor"></a>
+OptiTech publishes its prices openly: see [plans](/docs/introduction/plans) for what each tier includes, or [pricing](/pricing) for current rates. If you need help, [support](/docs/introduction/support) explains the options on each plan, and [our team](/contact-sales) can walk you through a free gap analysis.
 
-<a href="/docs/ai/ai-claude-code-plugin" title="Claude Code" description="Connect OptiTech to Claude Code" icon="claude-code"></a>
-
-<a href="/docs/ai/ai-codex-plugin" title="Codex" description="Connect OptiTech to OpenAI Codex" icon="codex"></a>
-
-<a href="/docs/ai/ai-github-copilot-agents" title="GitHub Copilot" description="Connect OptiTech to GitHub Copilot" icon="copilot"></a>
-
-</CompactCards>
-
-<CommunityBanner className="mt-14" buttonText="Join the server" buttonUrl="https://discord.gg/92vNTzKDGp">Questions about OptiTech or Postgres? Join our Discord</CommunityBanner>
+<NeedHelp/>

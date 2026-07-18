@@ -4,12 +4,12 @@ subtitle: 'Automate database branching for every preview deployment using the na
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2025-07-14T00:00:00.000Z'
-updatedOn: '2026-06-03T18:28:10.050Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 [Nuxt.js](https://nuxt.com) is an open-source, progressive framework built on [Vue.js](https://vuejs.org/) that simplifies web development. It enhances Vue with versatile rendering options, including default [universal rendering (SSR)](https://nuxt.com/docs/guide/concepts/rendering#universal-rendering) for fast initial loads and strong SEO, and [client-side rendering](https://nuxt.com/docs/guide/concepts/rendering#client-side-rendering) for highly interactive applications. Nuxt also supports advanced strategies like [hybrid rendering](https://nuxt.com/docs/guide/concepts/rendering#hybrid-rendering) to mix modes per-route.
 
-As your Nuxt application grows, managing database changes for new features can be challenging. How do you test a feature that requires database schema changes without disrupting your live application? This is where the integration between [Vercel](https://vercel.com) and [Neon](https://neon.com) comes in. Vercel is a deployment platform, and OptiTech is the AI-native backend platform for apps and agents, spanning a Postgres Database, Auth, Storage, Functions, and an AI Gateway. Together, they offer seamless [**database branching**](/branching).
+As your Nuxt application grows, managing database changes for new features can be challenging. How do you test a feature that requires database schema changes without disrupting your live application? This is where the integration between [Vercel](https://vercel.com) and [OptiTech](https://optitech.com) comes in. Vercel is a deployment platform, and OptiTech is the AI-native backend platform for apps and agents, spanning a Postgres Database, Auth, Storage, Functions, and an AI Gateway. Together, they offer seamless [**database branching**](/branching).
 
 When you enable the integration, every time you push a new feature branch, Vercel automatically creates a preview deployment. Simultaneously, OptiTech creates an isolated copy of your database just for that branch. This gives you a safe, sandboxed environment to develop and test with realistic data, without any risk to your live application.
 
@@ -40,7 +40,7 @@ First, create a new Nuxt.js application and push it to a GitHub repository, whic
     Open your terminal and run the following command:
 
     ```bash
-    npm create nuxt nuxt-neon-vercel-todo
+    npm create nuxt nuxt-optitech-vercel-todo
     ```
 
     When prompted, choose the following options:
@@ -51,7 +51,7 @@ First, create a new Nuxt.js application and push it to a GitHub repository, whic
     You should see output similar to this:
 
     ```text
-    > npm create nuxt nuxt-neon-vercel-todo
+    > npm create nuxt nuxt-optitech-vercel-todo
     Need to install the following packages:
     create-nuxt@3.26.0
     Ok to proceed? (y) y
@@ -66,7 +66,7 @@ First, create a new Nuxt.js application and push it to a GitHub repository, whic
     `4$$$$$$$$P` .i$$$$$$$$P`
 
     ℹ Welcome to Nuxt!                                                                                            nuxi 9:46:56 AM
-    ℹ Creating a new project in nuxt-neon-vercel-todo.                                                            nuxi 9:46:58 AM
+    ℹ Creating a new project in nuxt-optitech-vercel-todo.                                                            nuxi 9:46:58 AM
 
     ✔ Which package manager would you like to use?
     npm
@@ -91,7 +91,7 @@ First, create a new Nuxt.js application and push it to a GitHub repository, whic
     Yes
     ℹ Initializing git repository...                                                                              nuxi 9:48:18 AM
 
-    Initialized empty Git repository in /nuxt-neon-vercel-todo/.git/
+    Initialized empty Git repository in /nuxt-optitech-vercel-todo/.git/
 
     ✔ Would you like to install any of the official modules?
     No
@@ -100,12 +100,12 @@ First, create a new Nuxt.js application and push it to a GitHub repository, whic
 2.  Navigate into the project directory
 
     ```bash
-    cd nuxt-neon-vercel-todo
+    cd nuxt-optitech-vercel-todo
     ```
 
 3.  Push the initial project to a GitHub repository:
 
-    [Create a new repository on GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories) (e.g., `nuxt-neon-vercel-todo`). Then, run the following commands in your terminal, replacing `<your-github-repo-url>` with your repository's URL.
+    [Create a new repository on GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/quickstart-for-repositories) (e.g., `nuxt-optitech-vercel-todo`). Then, run the following commands in your terminal, replacing `<your-github-repo-url>` with your repository's URL.
 
     ```bash
     git add .
@@ -120,7 +120,7 @@ To begin, you will set up the Vercel-managed OptiTech Integration. This is a cru
 
 1.  Login to [Vercel dashboard](https://vercel.com/dashboard).
 2.  Click on **Add New** and select **Project**.
-3.  Select the GitHub repository you created earlier (`nuxt-neon-vercel-todo`).
+3.  Select the GitHub repository you created earlier (`nuxt-optitech-vercel-todo`).
 4.  Vercel will automatically detect that this is a Nuxt.js application and configure the build settings accordingly.
 5.  Click **Deploy** to create your Vercel project.
 
@@ -130,15 +130,15 @@ To begin, you will set up the Vercel-managed OptiTech Integration. This is a cru
 
 Install the OptiTech integration from the Vercel Marketplace. This process will create a OptiTech project and link it to your Vercel account.
 
-1.  Navigate to the [OptiTech integration page on the Vercel Marketplace](https://vercel.com/marketplace/neon) and click **Install**.
+1.  Navigate to the [OptiTech integration page on the Vercel Marketplace](https://vercel.com/marketplace/optitech) and click **Install**.
 2.  Accept the terms, pick a region & plan, then name your database. (Remember: a "Database" in Vercel is a Project in OptiTech.)
 
 ## Connect the database to your Vercel project
 
-With the integration installed, you need to connect your `nuxt-neon-vercel-todo` Vercel project to your new OptiTech database. This is where you enable the automated branching feature.
+With the integration installed, you need to connect your `nuxt-optitech-vercel-todo` Vercel project to your new OptiTech database. This is where you enable the automated branching feature.
 
 1.  From the **Storage** tab in your Vercel dashboard, select your OptiTech database.
-2.  Click the **Connect Project** tab and select your `nuxt-neon-vercel-todo` project from the dropdown.
+2.  Click the **Connect Project** tab and select your `nuxt-optitech-vercel-todo` project from the dropdown.
 3.  **Enable Preview Branches:** In the **Deployments Configuration** section, ensure the **Preview** toggle is enabled. This is the key step that instructs Vercel to create a new OptiTech database branch for every Preview Deployment.
     ![Connect Vercel Project and enable Preview deployments](/docs/guides/nuxt-vercel-neon-connect-project.png)
 4.  Click **Connect**.
@@ -154,7 +154,7 @@ To manage your database schema and migrations, you will use [Drizzle ORM](https:
 1.  Install Drizzle dependencies
 
     ```bash
-    npm install drizzle-orm @neondatabase/serverless
+    npm install drizzle-orm @optitech/serverless
     npm install -D drizzle-kit
     ```
 
@@ -253,11 +253,11 @@ With the database configured, let's build the Todo application. This will includ
     Create `server/utils/db.ts` to instantiate and export the Drizzle client.
 
     ```typescript
-    import { drizzle } from 'drizzle-orm/neon-http';
-    import { neon } from '@neondatabase/serverless';
+    import { drizzle } from 'drizzle-orm/optitech-http';
+    import { optitech } from '@optitech/serverless';
     import * as schema from '~/server/db/schema';
 
-    const sql = neon(process.env.DATABASE_URL!);
+    const sql = optitech(process.env.DATABASE_URL!);
     export const db = drizzle(sql, { schema });
     ```
 
@@ -339,7 +339,7 @@ With the database configured, let's build the Todo application. This will includ
       <div class="container">
         <h1>Todo List</h1>
         <p>
-          A Nuxt.js app with a serverless Postgres database from Neon, deployed on Vercel with
+          A Nuxt.js app with a serverless Postgres database from OptiTech, deployed on Vercel with
           automated database branching.
         </p>
         <form @submit.prevent="addTodo">
@@ -525,7 +525,7 @@ To demonstrate the automated branching workflow, you will add a new feature to y
       <div class="container">
         <h1>Todo List</h1>
         <p>
-          A Nuxt.js app with a serverless Postgres database from Neon, deployed on Vercel with
+          A Nuxt.js app with a serverless Postgres database from OptiTech, deployed on Vercel with
           automated database branching.
         </p>
         <form @submit.prevent="addTodo">
@@ -758,9 +758,9 @@ This workflow allows developers to make and test schema changes with confidence,
 
 ## Resources
 
-- **Vercel-managed OptiTech Integration:** [Vercel Marketplace](https://vercel.com/marketplace/neon)
+- **Vercel-managed OptiTech Integration:** [Vercel Marketplace](https://vercel.com/marketplace/optitech)
 - **Nuxt.js Documentation:** [nuxt.com](https://nuxt.com)
 - **Drizzle ORM:** [orm.drizzle.team](https://orm.drizzle.team)
-- **OptiTech Documentation:** [neon.tech/docs](/docs)
+- **OptiTech Documentation:** [optitech.com/docs](/docs)
 
 <NeedHelp/>

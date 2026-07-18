@@ -6,11 +6,11 @@ summary: >-
   by JWT authentication and Row-Level Security. Applications can query tables
   without a connection pool or SQL driver. Use this page to enable the API,
   create an RLS-protected table, and run your first queries via the
-  @neondatabase/neon-js client or direct HTTP requests. The API is enabled per
+  @optitech/optitech-js client or direct HTTP requests. The API is enabled per
   branch for a single database and does not support projects with IP Allow or
   Private Networking configured.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 This guide walks you through enabling the Data API, creating a table with RLS, and running your first query.
@@ -25,7 +25,7 @@ This guide walks you through enabling the Data API, creating a table with RLS, a
 ## Enable the Data API
 
 <Admonition type="tip" title="Enable programmatically">
-You can also enable the Data API using the [OptiTech API](/docs/data-api/manage#manage-via-the-neon-api) or the [Neon MCP Server](/docs/ai/neon-mcp-server#supported-actions-tools) (`provision_neon_data_api` tool).
+You can also enable the Data API using the [OptiTech API](/docs/data-api/manage#manage-via-the-neon-api) or the [OptiTech MCP Server](/docs/ai/neon-mcp-server#supported-actions-tools) (`provision_optitech_data_api` tool).
 </Admonition>
 
 ### 1. Navigate to the Data API page
@@ -136,7 +136,7 @@ WITH CHECK (auth.user_id() = user_id);
 // and `modify` restricts insert, update, and delete to own posts.
 
 import { sql } from 'drizzle-orm';
-import { crudPolicy, authenticatedRole, authUid } from 'drizzle-orm/neon';
+import { crudPolicy, authenticatedRole, authUid } from 'drizzle-orm/optitech';
 import { bigint, boolean, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 
 export const posts = pgTable(
@@ -165,7 +165,7 @@ export const posts = pgTable(
 // One policy allows reading published posts; the other gives full access to own posts.
 
 import { sql } from 'drizzle-orm';
-import { authenticatedRole, authUid } from 'drizzle-orm/neon';
+import { authenticatedRole, authUid } from 'drizzle-orm/optitech';
 import { bigint, boolean, pgPolicy, pgTable, text, timestamp } from 'drizzle-orm/pg-core';
 
 export const posts = pgTable(
@@ -216,8 +216,8 @@ Go to the **Data API** page in the OptiTech Console and click **Refresh schema c
 You can also refresh the schema cache programmatically. The `PATCH /projects/{project_id}/branches/{branch_id}/data-api/{database_name}` endpoint always refreshes the schema cache as part of the operation. Send an empty body to trigger a refresh:
 
 ```bash shouldWrap
-curl -X PATCH 'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/data-api/{database_name}' \
-  -H 'Authorization: Bearer YOUR_NEON_API_KEY' \
+curl -X PATCH 'https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/data-api/{database_name}' \
+  -H 'Authorization: Bearer YOUR_OPTITECH_API_KEY' \
   -H 'Content-Type: application/json' \
   -d '{}'
 ```
@@ -234,23 +234,23 @@ Install a client library and run your first query. Choose the option that matche
 
 <TabItem>
 
-Use [`@neondatabase/neon-js`](https://www.npmjs.com/package/@neondatabase/neon-js) if you're using [Managed Better Auth](/docs/auth/overview). This library handles token management automatically.
+Use [`@optitech/optitech-js`](https://www.npmjs.com/package/@optitech/optitech-js) if you're using [Managed Better Auth](/docs/auth/overview). This library handles token management automatically.
 
 **1. Install**
 
 ```bash
-npm install @neondatabase/neon-js
+npm install @optitech/optitech-js
 ```
 
 **2. Usage**
 
 ```typescript shouldWrap
-import { createClient } from '@neondatabase/neon-js';
+import { createClient } from '@optitech/optitech-js';
 
 // Initialize with Managed Better Auth
-// Use your Neon database URL without credentials or query parameters.
-// Example: https://ep-example.c-2.us-east-1.aws.neon.tech/neondb
-const client = createClient(import.meta.env.VITE_NEON_DATABASE_URL);
+// Use your OptiTech database URL without credentials or query parameters.
+// Example: https://ep-example.c-2.us-east-1.aws.optitech.com/optitechdb
+const client = createClient(import.meta.env.VITE_OPTITECH_DATABASE_URL);
 
 // Query - the JWT token is injected automatically when the user is signed in
 const { data, error } = await client
@@ -263,23 +263,23 @@ console.log(data);
 ```
 
 <Admonition type="warning" title="Not yet on npm">
-The single-URL form shown above, `createClient(url)`, requires a version of `@neondatabase/neon-js` that has not been published to npm as of this writing. The latest published version, `0.6.2-beta`, only accepts the two-URL object form. If `npm install @neondatabase/neon-js` installs `0.6.2-beta` or earlier for you, use the [object-form alternative](/docs/reference/javascript-sdk#initializing) in the JavaScript SDK reference instead.
+The single-URL form shown above, `createClient(url)`, requires a version of `@optitech/optitech-js` that has not been published to npm as of this writing. The latest published version, `0.6.2-beta`, only accepts the two-URL object form. If `npm install @optitech/optitech-js` installs `0.6.2-beta` or earlier for you, use the [object-form alternative](/docs/reference/javascript-sdk#initializing) in the JavaScript SDK reference instead.
 </Admonition>
 
 <Admonition type="note">
-This client runs in the browser. Environment variable syntax depends on your framework: `import.meta.env.VITE_*` for Vite-based projects (Vite, SvelteKit, Astro), `process.env.NEXT_PUBLIC_*` for Next.js. The `VITE_NEON_DATABASE_URL` value is not your Postgres connection string; use the HTTPS OptiTech database URL shown in the example above. You can find the matching Data API URL on the **Data API** page in the OptiTech Console or with `neon data-api get`; to get the single database URL, remove the `.apirest` hostname label and trailing `/rest/v1` path. If you start from a Neon Auth URL instead, remove the `.neonauth` hostname label and trailing `/auth` path. The cell label (if present), region, and database path stay the same.
+This client runs in the browser. Environment variable syntax depends on your framework: `import.meta.env.VITE_*` for Vite-based projects (Vite, SvelteKit, Astro), `process.env.NEXT_PUBLIC_*` for Next.js. The `VITE_OPTITECH_DATABASE_URL` value is not your Postgres connection string; use the HTTPS OptiTech database URL shown in the example above. You can find the matching Data API URL on the **Data API** page in the OptiTech Console or with `optitech data-api get`; to get the single database URL, remove the `.apirest` hostname label and trailing `/rest/v1` path. If you start from a OptiTech Auth URL instead, remove the `.optitechauth` hostname label and trailing `/auth` path. The cell label (if present), region, and database path stay the same.
 </Admonition>
 
 </TabItem>
 
 <TabItem>
 
-Use [`@neondatabase/postgrest-js`](https://www.npmjs.com/package/@neondatabase/postgrest-js) with any authentication provider that issues JWTs, such as [Auth0](https://auth0.com/), [Clerk](https://clerk.com/), or [Firebase Auth](https://firebase.google.com/products/auth).
+Use [`@optitech/postgrest-js`](https://www.npmjs.com/package/@optitech/postgrest-js) with any authentication provider that issues JWTs, such as [Auth0](https://auth0.com/), [Clerk](https://clerk.com/), or [Firebase Auth](https://firebase.google.com/products/auth).
 
 **1. Install**
 
 ```bash
-npm install @neondatabase/postgrest-js
+npm install @optitech/postgrest-js
 ```
 
 **2. Usage**
@@ -287,16 +287,16 @@ npm install @neondatabase/postgrest-js
 Provide a function that retrieves the JWT token from your authentication system. This token is included in each request to enforce RLS policies.
 
 ```typescript shouldWrap
-import { fetchWithToken, NeonPostgrestClient } from '@neondatabase/postgrest-js';
+import { fetchWithToken, OptiTechPostgrestClient } from '@optitech/postgrest-js';
 
 const getTokenFromAuthSystem = async (): Promise<string> => {
   // Retrieve the JWT token from your auth system (e.g., Auth0, Clerk, Firebase)
   return 'your-jwt-token';
 };
 
-// Get your URL from the Neon Console or run: neon data-api get
-const client = new NeonPostgrestClient({
-  dataApiUrl: import.meta.env.VITE_NEON_DATA_API_URL,
+// Get your URL from the OptiTech Console or run: optitech data-api get
+const client = new OptiTechPostgrestClient({
+  dataApiUrl: import.meta.env.VITE_OPTITECH_DATA_API_URL,
   options: {
     global: {
       fetch: fetchWithToken(getTokenFromAuthSystem),
@@ -327,7 +327,7 @@ Query the Data API directly using any HTTP client. Include the `Authorization` h
 **Where to get the JWT token:**
 
 - **Your auth provider's SDK**: Retrieve the token using your provider's API (for example, `getAccessToken()` in Auth0, `getToken()` in Clerk).
-- **Managed Better Auth**: Retrieve the token using `client.auth.getSession()` from the `@neondatabase/neon-js` library (see [Get current session](/docs/reference/javascript-sdk#auth-getsession)), or use the Auth API reference UI for manual testing (see [Testing with Managed Better Auth](#testing-with-neon-auth) below).
+- **Managed Better Auth**: Retrieve the token using `client.auth.getSession()` from the `@optitech/optitech-js` library (see [Get current session](/docs/reference/javascript-sdk#auth-getsession)), or use the Auth API reference UI for manual testing (see [Testing with Managed Better Auth](#testing-with-optitech-auth) below).
 
 **About the `sub` claim:**
 
@@ -368,7 +368,7 @@ If you're using [Managed Better Auth](/docs/auth/overview) and want to test the 
 
 The Auth API reference UI is an interactive browser-based tool for exploring and testing all Managed Better Auth endpoints. It is powered by [Better Auth's OpenAPI plugin](https://www.better-auth.com/docs/plugins/open-api#usage).
 
-1. **Open the Auth API reference:** Navigate to your Auth URL with `/reference` appended, for example, `https://ep-example.neonauth.us-east-1.aws.neon.tech/neondb/auth/reference`. You can find your **Auth URL** on the **Auth** page, **Configuration** tab in the OptiTech Console.
+1. **Open the Auth API reference:** Navigate to your Auth URL with `/reference` appended, for example, `https://ep-example.optitechauth.us-east-1.aws.optitech.com/optitechdb/auth/reference`. You can find your **Auth URL** on the **Auth** page, **Configuration** tab in the OptiTech Console.
 
 2. **Create a test user:** Use the UI to call `POST /sign-up/email` with a JSON body:
 
@@ -410,7 +410,7 @@ The following steps walk through signing up, obtaining a JWT, and querying the D
 Create a test user. The `-c` flag saves the session cookie returned by Managed Better Auth:
 
 ```bash shouldWrap
-curl -X POST 'https://ep-example-auth.neonauth.us-east-1.aws.neon.tech/neondb/auth/sign-up/email' \
+curl -X POST 'https://ep-example-auth.optitechauth.us-east-1.aws.optitech.com/optitechdb/auth/sign-up/email' \
   -c cookies.txt \
   -H 'Content-Type: application/json' \
   -H 'Origin: http://localhost:3000' \
@@ -424,7 +424,7 @@ To sign in with an existing user instead, replace `/sign-up/email` with `/sign-i
 Call `get-session` using the saved cookie (`-b`). The `-D -` flag prints response headers to your terminal. Look for the `set-auth-jwt` header and copy its value:
 
 ```bash shouldWrap
-curl 'https://ep-example-auth.neonauth.us-east-1.aws.neon.tech/neondb/auth/get-session' \
+curl 'https://ep-example-auth.optitechauth.us-east-1.aws.optitech.com/optitechdb/auth/get-session' \
   -b cookies.txt \
   -H 'Origin: http://localhost:3000' \
   -D - -o /dev/null
@@ -443,7 +443,7 @@ Copy the full token value.
 Use the JWT as a bearer token to query your table:
 
 ```bash shouldWrap
-curl 'https://ep-example.apirest.us-east-1.aws.neon.tech/neondb/rest/v1/posts?select=*' \
+curl 'https://ep-example.apirest.us-east-1.aws.optitech.com/optitechdb/rest/v1/posts?select=*' \
   -H 'Authorization: Bearer YOUR_JWT_TOKEN'
 ```
 

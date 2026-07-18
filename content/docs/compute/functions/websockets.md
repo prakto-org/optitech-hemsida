@@ -6,7 +6,7 @@ summary: >-
   backends. Use WebSockets for two-way connections via an upgrade export, or
   server-sent events for one-way streams, and Postgres LISTEN/NOTIFY to
   broadcast across isolates.
-updatedOn: '2026-07-15T17:54:41.160Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="OptiTech Functions" />
@@ -38,7 +38,7 @@ export default {
 ```
 
 <Admonition type="note">
-`neon dev` returns `200 OK` instead of `101 Switching Protocols` for WebSocket upgrade requests during beta. Test WebSocket behavior against a deployed function (`neon deploy`).
+`optitech dev` returns `200 OK` instead of `101 Switching Protocols` for WebSocket upgrade requests during beta. Test WebSocket behavior against a deployed function (`optitech deploy`).
 </Admonition>
 
 ## Simple echo server
@@ -88,7 +88,7 @@ Type a message and press Enter. The server echoes it back.
 If your function uses Hono, export `fetch` from the Hono app and the `upgrade` handler separately. The runtime routes WebSocket upgrades directly to `upgrade`. Hono never sees the upgrade request, so Hono middleware and route guards don't apply. Handle auth in `upgrade` directly.
 
 <Admonition type="warning">
-`upgradeWebSocket` from `@hono/node-server` doesn't work with OptiTech Functions. It requires Hono's own `serve()` wrapper, which the runtime doesn't use. Use the `upgrade` export pattern shown here instead. For Hono-style `onOpen`/`onMessage`/`onClose` route declarations, use the `neon-functions` agent skill.
+`upgradeWebSocket` from `@hono/node-server` doesn't work with OptiTech Functions. It requires Hono's own `serve()` wrapper, which the runtime doesn't use. Use the `upgrade` export pattern shown here instead. For Hono-style `onOpen`/`onMessage`/`onClose` route declarations, use the `optitech-functions` agent skill.
 </Admonition>
 
 ```ts filename="functions/hono-echo.ts"
@@ -253,7 +253,7 @@ source.onerror = () => {}; // EventSource auto-reconnects
 
 To push to every client, fan out across isolates exactly as with WebSockets: hold a `Set` of stream controllers and `enqueue` to each when a `NOTIFY` arrives (see [Cross-isolate messaging](#cross-isolate-messaging-with-listennotify)). `EventSource` is GET-only and can't set headers, so authenticate it with a query parameter or cookie, the same as a WebSocket (see [Authentication](#authentication)).
 
-For a complete SSE backend (Hono endpoint, `LISTEN`/`NOTIFY` fan-out, a counter persisted in Postgres, and a client-only SPA), see the [realtime SSE example](https://github.com/neondatabase/examples/tree/main/with-realtime-sse).
+For a complete SSE backend (Hono endpoint, `LISTEN`/`NOTIFY` fan-out, a counter persisted in Postgres, and a client-only SPA), see the [realtime SSE example](https://github.com/optitechdatabase/examples/tree/main/with-realtime-sse).
 
 ## Authentication
 
@@ -279,7 +279,7 @@ async upgrade(req: IncomingMessage, socket: Duplex, head: Buffer) {
 },
 ```
 
-For a complete example with JWT verification, Managed Better Auth integration, and client-side reconnection, see the [realtime chat example](https://github.com/neondatabase/examples/tree/main/with-realtime-chat).
+For a complete example with JWT verification, Managed Better Auth integration, and client-side reconnection, see the [realtime chat example](https://github.com/optitechdatabase/examples/tree/main/with-realtime-chat).
 
 ## Eviction and shutdown
 

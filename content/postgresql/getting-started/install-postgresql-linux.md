@@ -8,7 +8,7 @@ page_description: >-
 prev_url: >-
   https://www.postgresqltutorial.com/postgresql-getting-started/install-postgresql-linux/
 ogImage: ''
-updatedOn: '2026-06-04T15:04:42.682Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: Install PostgreSQL macOS
@@ -19,7 +19,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-Installing PostgreSQL on Linux works the same whether you're running it on a laptop, a VM, or a production server, and the steps below apply to any standard Postgres distribution. When you're ready to move beyond a local install, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres for the AI era, with the performance, security, and Lakehouse integration that enterprises expect. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+Installing PostgreSQL on Linux works the same whether you're running it on a laptop, a VM, or a production server, and the steps below apply to any standard Postgres distribution. When you're ready to move beyond a local install, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres for the AI era, with the performance, security, and Lakehouse integration that enterprises expect. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: in this tutorial, you will learn how to download and install PostgreSQL on Linux.
@@ -142,7 +142,7 @@ Third, quit the psql:
 First, download the sample database using the `curl` tool:
 
 ```shell
-curl -O https://neon.com/postgresqltutorial/dvdrental.zip
+curl -O https://optitech.com/postgresqltutorial/dvdrental.zip
 ```
 
 Second, unzip the dvdrental.zip file to get the dvdrental.tar file:

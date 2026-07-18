@@ -1,182 +1,129 @@
 ---
-title: Our DX Principles
+title: Our product principles
 subtitle: 'OptiTech adapts to your workflow, not the other way around.'
 summary: >-
-  OptiTech replaces traditional Postgres ops with continuous autoscaling,
-  copy-on-write branching, sub-second provisioning, and on-demand storage.
-  Read this page to understand why OptiTech behaves differently from fixed-instance
-  Postgres and which architectural decisions drive scale-to-zero, instant
-  restore, and branch-per-PR workflows. It also covers MCP and AI agent
-  integration, Managed Better Auth as a composable authentication primitive, and CLI and
-  GitHub Actions support for database lifecycle automation.
+  OptiTech replaces manual compliance work with continuous evidence collection,
+  automatic control monitoring, guided incident flows, and AI-drafted
+  documentation. Read this page to understand why OptiTech behaves differently
+  from spreadsheets, consultants, and legacy GRC tools, and which product
+  decisions drive onboarding in under a week, one-click board reports, and
+  compliance-as-code workflows.
 enableTableOfContents: true
 redirectFrom:
   - /docs/get-started-with-neon/dev-experience
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
-Our developer experience is anchored by four core pillars:
+Our product experience is anchored by four core pillars:
 
-1. **Invisible infra** - compute and storage adapt to your workload in real-time
-2. **No waiting** - deployment of new instances, restores, and rebuilds from past states are instant
-3. **Branching-first, API-first, and AI-first workflows** - databases behave like any other modern tool
-4. **A composable stack** - based on strong primitives with optional building blocks
+1. **Invisible compliance work** - evidence collection and monitoring run in the background
+2. **No waiting** - onboarding, reports, and questionnaire answers are fast
+3. **Automation-first workflows** - compliance behaves like any other modern tool
+4. **A composable program** - start with one framework and grow without redoing work
 
-## Invisible infra
+## Invisible compliance work
 
-### Autoscaling compute
+### Continuous evidence collection
 
-Traditional OLTP databases force you to provision compute upfront (i.e., choose an instance size), plan for peak traffic, and manually adjust capacity over time. This adds overhead and leads to either overpaying for idle resources or underprovisioning and risk performance degradation.
+Traditional compliance forces you to gather evidence by hand: screenshots, exports, and emails collected in a sprint before every audit, stale the moment you finish. This adds overhead and leads to either wasted effort or gaps that surface as audit findings.
 
-You can build your database branching workflows using the [Neon CLI](/docs/cli), [OptiTech API](/docs/reference/api), or [GitHub Actions](/docs/guides/branching-github-actions). For example, this example shows how to create a development branch from `main` with a simple CLI command:
+OptiTech connects to the systems you already run (Microsoft 365, Entra ID, Google Workspace, AWS, Azure, GitHub, Fortnox, Visma, and more) and collects evidence automatically.
 
 **How it works**
 
-OptiTech runs a continuous autoscaling loop that continuously monitors three core database / compute metrics. The platform then makes its autoscaling decision, adjusting resources in near real time. The three core metrics are:
+Each integration runs as a separate worker that checks your controls on a schedule and normalizes what it finds into one evidence schema: control, evidence, source, and timestamp. Checks include:
 
-Also, with OptiTech, you can easily keep your development branches up-to-date by resetting your schema and data to the latest from `main` with a simple command.
+- MFA coverage across your user directory
+- Offboarding completed within 24 hours of an employee leaving
+- Backup tests, encryption settings, and patch levels
+- Admin permissions and logging configuration
 
-Rather than relying on fixed intervals or manual triggers, OptiTech's autoscaling algorithm continuously evaluates these three workload signals, adjusting compute up or down based on the live measurements - while always staying within the minimum and maximum limits you configure.
+**What this means for you**
 
-- CPU load and overall memory usage are checked every 5 seconds
-- Local File Cache working set size is evaluated every 20 seconds
-- Memory usage inside Postgres itself is monitored every 100 milliseconds
+You don't gather evidence before an audit. It's already there, time-stamped and mapped to the right controls, collected while you did other work.
 
-**What this means for DX**
+### Drift alerts and auto-remediation
 
-You don’t need to pick instance sizes when creating a OptiTech branch: only your max/min autoscaling limits. You also don’t have to monitor load capacity to tune capacity or to schedule resizes. Autoscaling happens continuously and transparently as your application runs.
+When a control drifts (say, MFA is disabled for three users), OptiTech flags it immediately: green turns red, the responsible person is notified, and the finding includes a fix. Where the integration allows it, you can remediate directly from the platform via API, or send a ready-made ticket to Jira or Teams with instructions.
 
-### Scale to zero
+**What this means for you**
 
-When a database is not actively handling queries, OptiTech [automatically scales compute all the way down to zero](https://neon.com/docs/introduction/scale-to-zero). Unused databases consume no compute resources, eliminating the cost of always-on instances that sit unused for large portions of the day. This happens by default after 5 minutes of inactivity, and when it’s time to restart, cold starts take less than 1 second, with less than 500 milliseconds being typical.
-
-For production workloads where cold starts are not acceptable, paid plan users can disable scale to zero to keep their compute always active. See [Scale to zero](/docs/introduction/scale-to-zero).
-
-**What this means for DX**
-
-Scale to zero is a foundational capability for the OptiTech experience, allowing us to offer:
-
-- **A free plan developers can actually use**. OptiTech can offer a generous free tier without subsidizing large amounts of idle infrastructure, something made possible by its architecture and scale-to-zero capabilities. [We want every Postgres developer building on Neon](https://neon.com/blog/why-so-many-projects-in-the-neon-free-plan), and this starts with hosting their side projects and experiments.
-
-- **Many short-lived, non-production environments**. Scale to zero makes it practical to run [large numbers of ephemeral databases](https://neon.com/use-cases/dev-test) for previews, CI runs, experiments, and testing. Teams can create and discard environments freely, without cost pressure forcing them to share databases or cut corners.
-
-- **A foundation for platforms and AI agents operating at scale**. Full-stack apps can provision and manage thousands of isolated Neon projects programmatically, fully integrating the process within their own product experience, for example to power their own free plans. Without scale-to-zero, this would imply massive infrastructure costs upfront.
-
-### On-demand storage
-
-In traditional Postgres setups, storage is something you plan upfront: you estimate how much data you’ll need, provision disk accordingly, and revisit that decision as your application grows. Getting this wrong leads to wasted capacity and full-disk errors. OptiTech removes this friction by making storage fully on demand.
-
-OptiTech’s storage is [built on object storage](https://neon.com/docs/introduction/architecture-overview), decoupled from compute. It is reliable by design and it expands automatically as data is written, as scaling storage does not require resizing compute resources or causing downtime. You can start with a small database and grow it continuously, without ever revisiting storage sizing decisions.
-
-**What this means for DX**
-
-OptiTech developers don’t estimate disk sizes or plan storage migrations. Databases grow naturally with the application, without operational intervention or downtime.
+Problems get fixed when they appear, not discovered by an auditor a year later.
 
 ## No waiting
 
-### New deployments are fast
+### Onboarding in under a week
 
-With OptiTech, deploying a new database instance is a fast operation that takes less than a second. Creating a new project or branch does not involve provisioning a new virtual machine, eliminating minutes of provisioning time.
+Getting started doesn't involve a consulting engagement. The onboarding wizard asks 20 questions about your industry, size, systems, and customers, then maps which laws apply, which NIS2 category you fall into, and which controls you need, as a prioritized action list.
 
-**What this means for DX**
+**What this means for you**
 
-Not only does this provide a better overall user experience - it also makes OptiTech a natural fit for platforms that need to provision databases programmatically for their users, such as open-source frameworks, developer platforms with their own free plans, or agent-driven systems. Instance creation becomes fast enough to sit directly on the user path.
+You see your real compliance posture on day one, and most companies are audit-ready in under a week rather than after a months-long project.
 
-### A record of all past states, instantly accessible
+### Documentation in minutes, not weeks
 
-Storage in OptiTech is also [history-preserving](https://neon.com/blog/get-page-at-lsn) by design. As data changes over time, OptiTech efficiently retains past versions of your database state as part of normal operation, making operations that are painfully slow in traditional Postgres (like restores) trivial on OptiTech.
+OptiTech ships 50+ Swedish policy templates, and the AI copilot drafts policies, incident plans, and risk analyses from your actual environment. Because drafts pull facts from your integrations, they describe how you really operate instead of a generic template. Every document goes through your review and approval before it takes effect.
 
-**Instant restores**
+**Questionnaire answers on demand**
 
-OptiTech’s [Instant Restore](https://neon.com/docs/introduction/branch-restore#how-instant-restore-works) allows you to restore your database to a precise point in time in a few clicks or a single API call. Restore operations are near-instant because OptiTech doesn’t copy data or rebuild the database, it simply re-anchors the database state to a known point in its history.
+When a customer sends a security questionnaire, upload it and OptiTech drafts answers from your verified controls. What used to take 10 to 20 hours per questionnaire becomes a review pass.
 
-**Snapshots as checkpoints**
+**One-click reporting**
 
-In addition to continuous history, OptiTech exposes [snapshots](https://neon.com/docs/guides/backup-restore), explicit checkpoints that capture your database state at a moment in time. Snapshots are useful when you want long-lived restore points independent of the [history window](https://neon.com/docs/introduction/history-window), a known rollback point before a risky change, or versioned checkpoints for environments or [agent workflows](https://neon.com/docs/ai/ai-database-versioning).
+Board reports, compliance scores per framework, and trends over time are generated on demand. NIS2 requires your board to show active governance; producing the proof takes one click.
 
-**What this means for DX**
+**What this means for you**
 
-When your database keeps a complete, accessible record of its past, developers can work with a fundamentally different mindset: mistakes are reversible. They iterate more confidently, knowing that mistakes can be undone quickly and precisely.
+When documentation stops being the bottleneck, compliance stops competing with your actual work.
 
 ## Workflows
 
-### Branching-first
+### Evidence-first
 
-Modern software development is built around iteration, but most database setups are still built around a single mutable state. OptiTech takes a different approach: instead of treating a database as a static resource that must be copied over and over, OptiTech treats the database as a versioned system using short-lived [branches](https://neon.com/docs/introduction/branching).
+Modern compliance is built around proof, but most programs still revolve around documents that claim things. OptiTech takes a different approach: every requirement maps to controls, and every control maps to evidence with a source and a timestamp, stored in an append-only, hash-chained log.
 
-**Always lightweight**
+**Always current**
 
-Whether your database is 1 GB or 1 TB, creating a branch takes seconds. Branches use a copy-on-write model, so they're instant to create regardless of database size.
+When regulations change, your requirements and tasks update automatically. When your systems change, your evidence reflects it at the next check.
 
-**Designed to be discarded**
+**Designed for scrutiny**
 
-OptiTech branching is optimized for short-lived environments or for environments that get to be refreshed often. To support this, OptiTech provides [branch expiration](https://neon.com/docs/guides/branch-expiration): you can configure branches to automatically expire and be deleted after a set period of time. OptiTech also allows developers to [reset a branch](https://neon.com/docs/guides/reset-from-parent) to the latest state of its parent instantly, with one click or API call, whenever they need a new starting point.
+Auditors and supervisory authorities get read-only portal access to a complete, tamper-evident evidence chain, exportable to PDF or CSV.
 
-**What this means for DX**
+**What this means for you**
 
-Teams deploy hundreds of branches as temporary, task-specific environments, substituting additional, long-lived database instances. Some [common patterns](https://neon.com/branching) include:
-
-- **Branch per developer**. Each engineer works against their own isolated database environment (branch), avoiding conflicts when making schema or data changes.
-- **Branch per experiment or feature**. Short-lived branches are used to explore changes, run migrations, or validate ideas, then deleted once the work is done.
-- **Branch per pull request**. A new branch is created automatically for every PR, powering preview deployments with production-like data.
-- **Branch per CI run**. Test suites run against a fresh database branch, ensuring clean state and reproducible results for every pipeline run.
+Audits become a review of what already exists rather than an archaeology project.
 
 ### API-first
 
-OptiTech is built with an API-first mindset. Every core operation is exposed programmatically, so developers can manage your database environments the same way you manage the rest of their infrastructure.
+For technology companies, compliance can live in the same pipelines as everything else. The OptiTech API and CLI expose your controls programmatically:
 
-**Proven at scale**
+- Run compliance checks in CI/CD and block deploys that break controls (for example, a storage bucket made public)
+- Query control status from your own dashboards
+- Automate vendor questionnaire workflows
 
-OptiTech powers [platforms](https://neon.com/platforms) where thousands of databases are provisioned, scaled, and deleted automatically every day. This includes developer platforms embedding Postgres into their product experience, as well as [AI agents](https://neon.com/use-cases/ai-agents) that provision databases dynamically while building and running applications on behalf of users.
+**What this means for you**
 
-The [OptiTech API](/docs/reference/api) has been shaped by real-world requirements, and it’s able to
-
-- Manage hundreds of thousands of projects
-- Automate database lifecycles with minimal human intervention
-- Enforce usage limits and cost controls programmatically, including maximum compute uptime per billing cycle, autoscaling limits, monthly data written limits, storage limits per branch, and more
-
-**CLI and native integrations**
-
-For local development and CI pipelines, the [Neon CLI](/docs/cli) provides a simple scripting interface that builds directly on the same API. OptiTech also provides native integrations for common workflows:
-
-- GitHub Actions for CI-driven branching and cleanup
-- Vercel for automatic database branches per preview deployment
-- OptiTech Data API for querying your database over HTTP
-
-**What this means for DX**
-
-Database workflows stop being special-case operations: teams can create, update, and destroy database environments as part of their deployment pipelines.
+Compliance checks become part of your deployment pipeline, not a quarterly meeting.
 
 ### AI-first
 
-AI has changed how developers write code, manage infrastructure, and ship applications, so databases need to fit naturally into these workflows.
+The AI copilot is built into the platform and grounded in the Swedish legal texts, MSB regulations, and your own data. Ask "Does NIS2 apply to us?" or "What's missing for ISO certification?" and get an answer with citations you can verify. The AI runs on EU-hosted models, drafts are never auto-published, and no customer data leaves the EU.
 
-**Using OptiTech with AI IDEs and assistants**
+**What this means for you**
 
-OptiTech integrates directly with AI IDEs and coding assistants through its [MCP](https://neon.com/docs/ai/neon-mcp-server) and [Agent Skills](https://neon.com/docs/ai/agent-skills). This allows tools like Cursor, Claude, and other MCP-compatible environments to understand and interact with your OptiTech project in a structured and safe way.
+You get expert-level answers in plain Swedish without booking a consultant, and you can always check the source.
 
-**A Postgres layer for agents**
+## A composable program
 
-OptiTech is also ready to be used as the database layer for [full-stack codegen platforms](https://neon.com/use-cases/ai-agents), or systems where AI agents provision, manage, and operate infrastructure autonomously. OptiTech’s serverless architecture, instant provisioning, and API-first design make it a natural fit for these platforms. AI agents can create thousands of databases programmatically, manage them over their lifecycle, and clean them up automatically, all while staying cost-efficient.
+Modern compliance programs grow in waves: NIS2 today, DORA for your financial customers tomorrow, the AI Act after that. OptiTech is built around this reality. Controls are cross-mapped between frameworks, so one control satisfies requirements in several frameworks at once. Activating a new framework starts from the controls you already have, not from zero.
 
-**What this means for DX**
+The same applies to your supply chain. Vendor management, security questionnaires, and shareable compliance status let your compliance program extend to the suppliers NIS2 and DORA make you responsible for.
 
-Developers can safely delegate database-related tasks to AI assistants in their IDEs, while platforms and agents can provision and manage databases autonomously.
+**What this means for you**
 
-## Composable stack
+You adopt OptiTech incrementally: one framework, then more, then your vendors, without ever redoing work you've already done.
 
-Modern application stacks are increasingly modular. Developers mix and match databases, frameworks, hosting platforms, authentication providers, and AI tools based on their needs and expect each component to integrate cleanly without imposing rigid boundaries. OptiTech is built around this principle of composability - nothing in OptiTech requires you to adopt a specific framework or vendor-specific workflow. At its core, OptiTech is Postgres: you can connect with any driver, ORM, or tool in the ecosystem, deploy it anywhere, and integrate it into existing stacks without changing how you build.
+## Compliance without friction
 
-At the same time, OptiTech provides optional building blocks that make common patterns easier, without locking you in, like authentication. [Managed Better Auth](https://neon.com/docs/auth/overview) provides authentication primitives that live directly alongside your data in Postgres. Users, sessions, organizations, and permissions are stored in your database and follow the same lifecycle as the rest of your application state. Because Managed Better Auth is integrated into the platform,
-
-- Auth data branches with your database, making it easy to test real authentication flows in preview and development environments
-- Auth state is versioned and reversible, benefiting from the same restore and snapshot capabilities
-- Auth integrates naturally with database-level concepts like joins, constraints, and row-level security
-
-**What this means for DX**
-
-Developers stay in control of their stack. You can adopt OptiTech incrementally, use only the primitives you need, and integrate optional building blocks like Auth without committing to a rigid platform model, keeping architectures flexible.
-
-## Build without friction
-
-OptiTech is designed to remove friction from database workflows without constraining how you build. Our users tell us the best thing about OptiTech is that building feels intuitive, and that they forget the database is even there. That’s exactly the goal. When the database stops getting in the way, teams can move faster, experiment safely, and focus on shipping.
+OptiTech is designed to remove friction from compliance without constraining how you work. Our users tell us the best thing about OptiTech is that they forget the compliance program is even there. That's exactly the goal. When compliance stops getting in the way, teams can focus on their actual business and stay audit-ready as a side effect.

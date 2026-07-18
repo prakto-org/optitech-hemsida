@@ -1,73 +1,77 @@
 ---
-title: Get started with your AI agent
-subtitle: Connect your AI coding assistant to OptiTech
+title: Get started with the AI copilot
+subtitle: Let OptiTech AI scope, draft, and answer for you
 summary: >-
-  `npx neon@latest init` connects an AI coding assistant to OptiTech,
-  installing agent skills and configuring the MCP server in one command.
+  The OptiTech AI copilot answers compliance questions grounded in Swedish
+  legal texts and your own data, drafts policies from your real environment,
+  and answers incoming security questionnaires. Every answer cites its sources
+  and every draft goes through human review.
 enableTableOfContents: true
-updatedOn: '2026-07-15T17:55:02.301Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
-`npx neon@latest init` gives your agent two things: Neon-specific context from agent skills, and tools to act on your OptiTech account through the MCP server. The result is an agent that can connect your app to OptiTech and help you use OptiTech features as you build. For Cursor and VS Code, it also installs the Neon Local Connect extension for in-editor schema browsing.
+The AI copilot gives you two things: answers grounded in the Swedish legal texts and MSB regulations, and drafts built from your own controls and evidence. The result is a copilot that can scope your obligations, write your documentation, and answer your customers' security questionnaires, with citations you can verify.
 
-New to the platform? The [backend overview](/docs/get-started/backend-overview) shows how Postgres, Managed Better Auth, Object Storage, Functions, and the AI Gateway fit together. For a hands-on walkthrough, see [Build a full backend](/docs/get-started/full-backend-quickstart).
+New to the platform? [Why OptiTech?](/docs/get-started/why-neon) explains how frameworks, controls, and evidence fit together. For a hands-on walkthrough of the Console, see [Tour the OptiTech Console](/docs/get-started/signing-up).
 
 ## Before you start
 
 You'll need:
 
-- [Node.js 18+](https://nodejs.org/)
-- A supported AI coding assistant, such as Cursor, VS Code with GitHub Copilot, Claude Code, Codex, Zed, Gemini CLI, Cline, OpenCode, or another [client supported by add-mcp](/docs/ai/connect-mcp-clients-to-neon#supported-agents-add-mcp)
+- An OptiTech account with the onboarding wizard completed, so the copilot knows your industry, size, and systems
+- The AI copilot is included on the Professional and Enterprise plans; see [plans](/docs/introduction/plans#ai-copilot-and-auto-remediation)
 
 <Steps>
 
-## Run the init command
+## Ask a scoping question
 
-From your project root, run:
-
-```bash
-npx neon@latest init
-```
-
-The wizard asks which editor to configure, then:
-
-- Signs you in to OptiTech (or signs you up for free)
-- Creates a OptiTech API key
-- Installs [agent skills](/docs/ai/agent-skills)
-- Configures the [OptiTech MCP server](/docs/ai/neon-mcp-server)
-- For Cursor and VS Code, installs the [Neon Local Connect extension](https://marketplace.visualstudio.com/items?itemName=databricks.neon-local-connect)
-
-Run this from your project root so the skills are installed in the right place. For details and manual setup, see the [`neon init` reference](/docs/cli/init).
-
-## Restart your editor
-
-Reload your editor so it picks up the new MCP configuration and skills. For Cursor and VS Code, this also activates the Neon Local Connect extension.
-
-## Tell your agent
-
-In your editor's AI chat, send:
+Open the copilot from any page in the Console and ask in plain Swedish or English:
 
 ```text
-Get started with Neon
+Omfattas vi av NIS2?
 ```
 
-Your agent reads the installed skill and uses the MCP server to walk you through setup. It can:
+The copilot answers based on the legal text and your own onboarding data: which law applies, which entity category you fall into, and why. Every claim links back to the paragraph it's based on, so you can check the source before you act.
 
-- Create a OptiTech project
-- Configure your app
-- Write your `DATABASE_URL` to `.env`
-- Suggest a Postgres driver and starter query
+Good first questions:
 
-The exact flow depends on your project. Your agent can scaffold a new connection or help with a migration.
+- Does NIS2 apply to us, and are we an essential or important entity?
+- What's missing before we're ready for an ISO 27001 certification audit?
+- Which of our vendors fall under DORA's ICT requirements?
+
+## Draft a document
+
+Ask the copilot to draft a policy:
+
+```text
+Draft an incident response plan based on our environment
+```
+
+The draft pulls facts from your integrations: your real systems, your real MFA status, your real backup routine. It's written in the formal Swedish that authorities and auditors expect, and it lands in your review queue. Nothing publishes without your approval.
+
+## Answer a questionnaire
+
+When a customer sends a security questionnaire, upload the file (Excel, Word, or a portal export) and ask:
+
+```text
+Answer this questionnaire based on our verified controls
+```
+
+The copilot drafts answers from your control status and evidence, flags the questions it can't answer confidently, and leaves the final review to you. What used to take 10 to 20 hours per questionnaire becomes a review pass.
 
 </Steps>
 
+## How the copilot stays trustworthy
+
+- **Citations, not confidence.** Answers link to the legal text and to your own evidence.
+- **Human review built in.** Drafts always go through your approval workflow.
+- **EU-hosted models.** No customer data is sent to US-based AI providers.
+- **Not legal advice.** The copilot helps you work faster; your legal review process still applies.
+
 ## What's next
 
-- [About branching](/docs/introduction/branching)
-- [Managed Better Auth](/docs/auth/overview)
-- [Data API](/docs/data-api/overview)
-- [Browse your schema with Neon Local Connect](/docs/local/vscode-extension)
-- [`neon init` reference](/docs/cli/init)
+- [Tour the OptiTech Console](/docs/get-started/signing-up)
+- [Our product principles](/docs/get-started/dev-experience)
+- [OptiTech plans](/docs/introduction/plans)
 
 <NeedHelp/>

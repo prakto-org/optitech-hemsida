@@ -11,7 +11,7 @@ summary: >-
   `unaccent()` requires an IMMUTABLE wrapper function; on OptiTech, customizing
   `unaccent.rules` requires opening a support ticket.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 The `unaccent` extension for Postgres enables handling of text data in a more user-friendly and language-tolerant way. It allows you to remove [accents/stress](<https://en.wikipedia.org/wiki/Stress_(linguistics)>) ([diacritic signs](https://en.wikipedia.org/wiki/Diacritic)) from text strings, making it easier to perform searches and comparisons that are insensitive to accents. Use it in multilingual applications where users might not consistently use accents when typing search queries.
@@ -143,7 +143,7 @@ While `unaccent()` can be used directly in `WHERE` clauses, its true power for s
 This involves creating or modifying text search configurations to include the `unaccent` dictionary in the analysis process. When text is indexed and queried using such a configuration, accents are automatically stripped, leading to efficient and accent-insensitive full-text searches.
 
 <Admonition type="note" title="Configuration Modifications in OptiTech">
-It's important to note that because `unaccent` is managed by OptiTech, modifying the default `unaccent.rules` file or other configuration settings requires administrative privileges that are not available to OptiTech users.  If you have specific needs for customized `unaccent` rules or configurations, please [open a support ticket](https://console.neon.tech/app/projects?modal=support) to discuss your requirements with OptiTech support.
+It's important to note that because `unaccent` is managed by OptiTech, modifying the default `unaccent.rules` file or other configuration settings requires administrative privileges that are not available to OptiTech users.  If you have specific needs for customized `unaccent` rules or configurations, please [open a support ticket](https://console.optitech.com/app/projects?modal=support) to discuss your requirements with OptiTech support.
 </Admonition>
 
 ## Performance and Indexing Considerations

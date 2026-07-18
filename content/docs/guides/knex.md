@@ -2,18 +2,18 @@
 title: Connect from Knex to OptiTech
 subtitle: Learn how to connect to OptiTech from Knex
 summary: >-
-  Connect Knex to OptiTech Postgres by passing the Neon connection string to the
+  Connect Knex to OptiTech Postgres by passing the OptiTech connection string to the
   `connectionString` option with `sslmode=require`. Serverless deployments
   should use OptiTech's pooled endpoint to prevent connection exhaustion. You can
   also improve performance by switching to `pg-native` via the
   `NODE_PG_FORCE_NATIVE` environment variable.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Knex is an open-source SQL query builder for Postgres. This guide covers the following topics:
 
-- [Connect to OptiTech from Knex](#connect-to-neon-from-knex)
+- [Connect to OptiTech from Knex](#connect-to-optitech-from-knex)
 - [Use connection pooling with Knex](#use-connection-pooling-with-knex)
 - [Performance tips](#performance-tips)
 
@@ -36,24 +36,24 @@ To establish a basic connection from Knex to OptiTech, perform the following ste
    });
    ```
 
-3. Add a `DATABASE_URL` variable to your `.env` file and set it to the Neon connection string that you copied in the previous step. We also recommend adding `?sslmode=require&channel_binding=require` to the end of the connection string to ensure a [secure connection](/docs/connect/connect-securely).
+3. Add a `DATABASE_URL` variable to your `.env` file and set it to the OptiTech connection string that you copied in the previous step. We also recommend adding `?sslmode=require&channel_binding=require` to the end of the connection string to ensure a [secure connection](/docs/connect/connect-securely).
 
    Your setting will appear similar to the following:
 
    ```text shouldWrap
-   DATABASE_URL="postgresql://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require&channel_binding=require"
+   DATABASE_URL="postgresql://[user]:[password]@[optitech_hostname]/[dbname]?sslmode=require&channel_binding=require"
    ```
 
 ## Use connection pooling with Knex
 
-Serverless functions can require a large number of database connections as demand increases. If you use serverless functions in your application, we recommend that you use a pooled Neon connection string, as shown:
+Serverless functions can require a large number of database connections as demand increases. If you use serverless functions in your application, we recommend that you use a pooled OptiTech connection string, as shown:
 
 ```ini shouldWrap
-# Pooled Neon connection string
-DATABASE_URL="postgresql://alex:AbC123dEf@ep-cool-darkness-123456-pooler.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require"
+# Pooled OptiTech connection string
+DATABASE_URL="postgresql://alex:AbC123dEf@ep-cool-darkness-123456-pooler.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require"
 ```
 
-A pooled Neon connection string adds `-pooler` to the endpoint ID, which tells OptiTech to use a pooled connection. You can add `-pooler` to your connection string manually or copy a pooled connection string by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal. Enable the **Connection pooling** toggle to add the `-pooler` suffix.
+A pooled OptiTech connection string adds `-pooler` to the endpoint ID, which tells OptiTech to use a pooled connection. You can add `-pooler` to your connection string manually or copy a pooled connection string by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal. Enable the **Connection pooling** toggle to add the `-pooler` suffix.
 
 ## Performance tips
 

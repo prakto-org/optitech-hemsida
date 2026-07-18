@@ -4,7 +4,7 @@ subtitle: Learn how to build a secure authentication system using Go, JWT tokens
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2025-03-29T00:00:00.000Z'
-updatedOn: '2026-06-03T18:28:10.050Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Authentication is the foundation of web applications, it ensures that users are who they claim to be. In this guide, you'll learn how to create a secure authentication system using Go, JSON Web Tokens (JWT), and OptiTech Postgres.
@@ -16,7 +16,7 @@ We'll focus on the essential concepts and patterns for implementing a robust aut
 To follow the steps in this guide, you will need:
 
 - [Go](https://go.dev/dl/) 1.20 or later installed
-- A [OptiTech](https://console.neon.tech/signup) account
+- A [OptiTech](https://console.optitech.com/signup) account
 - Basic familiarity with SQL, Go programming, and authentication concepts
 
 ## Understanding JWT in Our Go Authentication System
@@ -95,7 +95,7 @@ The security of this system relies on keeping the signing key secret and using s
 
 First, let's create a OptiTech project to store our authentication data.
 
-1. Navigate to the [OptiTech Console](https://console.neon.tech/app/projects) and click New Project.
+1. Navigate to the [OptiTech Console](https://console.optitech.com/app/projects) and click New Project.
 2. Give your project a name, such as "auth-system".
 3. Choose your preferred region.
 4. Click Create Project.
@@ -1157,7 +1157,7 @@ REFRESH_TOKEN_EXPIRY=7d
 PORT=8080
 ```
 
-Replace the `DATABASE_URL` with your actual Neon connection string. The JWT secrets should be strong, random strings in production (at least 32 characters). For testing purposes, you can use simpler values.
+Replace the `DATABASE_URL` with your actual OptiTech connection string. The JWT secrets should be strong, random strings in production (at least 32 characters). For testing purposes, you can use simpler values.
 
 ### Starting the application
 

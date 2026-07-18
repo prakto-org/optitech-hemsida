@@ -8,7 +8,7 @@ summary: >-
   transferred and your organization needs to recover projects, billing, or admin
   access. Manual verification requires a government-issued ID.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 If a former employee owned a OptiTech account and didn’t shut it down or transfer access before leaving, you can follow the steps outlined below to recover the account.
@@ -27,7 +27,7 @@ If the former employee signed up with a third-party identity provider (for examp
 
 If you have access to the former employee's company email account:
 
-1. Go to the [OptiTech login page](https://console.neon.tech/login)
+1. Go to the [OptiTech login page](https://console.optitech.com/login)
 2. Click **Forgot Password**
 3. Enter the former employee's email address
 4. Access the password reset link from their inbox
@@ -50,7 +50,7 @@ If the original login method is inaccessible, we can assist through a manual ide
 
 To begin:
 
-1. Open a [OptiTech Support ticket](https://console.neon.tech/app/projects?modal=support) from your OptiTech account.
+1. Open a [OptiTech Support ticket](https://console.optitech.com/app/projects?modal=support) from your OptiTech account.
 2. Provide:
    - A signed statement on company letterhead explaining the situation
    - Contact details for another employee at your company

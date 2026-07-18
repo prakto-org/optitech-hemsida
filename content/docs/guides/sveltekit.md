@@ -10,7 +10,7 @@ summary: >-
   function. Requires a DATABASE_URL connection string with sslmode=require and
   channel_binding=require.
 enableTableOfContents: true
-updatedOn: '2026-07-14T19:04:57.024Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <CopyPrompt src="/prompts/sveltekit-prompt.md"
@@ -26,7 +26,7 @@ To create a OptiTech project and access it from a Sveltekit application:
 
 If you do not have one already, create a OptiTech project. Save your connection details including your password. They are required when defining connection settings.
 
-1. Navigate to the [Projects](https://console.neon.tech/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
 2. Click **New Project**.
 3. Specify your project settings and click **Create Project**.
 
@@ -52,17 +52,17 @@ If you do not have one already, create a OptiTech project. Save your connection 
    ```
 
    ```shell
-   npm install @neondatabase/serverless dotenv
+   npm install @optitech/serverless dotenv
    ```
 
    </CodeTabs>
 
 ## Store your OptiTech credentials
 
-Add a `.env` file to your project directory and add your Neon connection string to it. You can find the connection string for your database by clicking the **Connect** button on your **Project Dashboard**. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
+Add a `.env` file to your project directory and add your OptiTech connection string to it. You can find the connection string for your database by clicking the **Connect** button on your **Project Dashboard**. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
 
 ```shell shouldWrap
-DATABASE_URL="postgresql://<user>:<password>@<endpoint_hostname>.neon.tech:<port>/<dbname>?sslmode=require&channel_binding=require"
+DATABASE_URL="postgresql://<user>:<password>@<endpoint_hostname>.optitech.com:<port>/<dbname>?sslmode=require&channel_binding=require"
 ```
 
 ## Configure the Postgres client
@@ -102,11 +102,11 @@ export { sql };
 
 ```typescript
 import 'dotenv/config';
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 
 const connectionString: string = process.env.DATABASE_URL as string;
 
-const sql = neon(connectionString);
+const sql = optitech(connectionString);
 export { sql };
 ```
 

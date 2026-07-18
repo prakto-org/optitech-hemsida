@@ -3,16 +3,16 @@ title: Generate TypeScript types from your database schema
 subtitle: Automatically generate TypeScript types from your database schema for
   type-safe Data API interactions.
 summary: >-
-  The `npx @neondatabase/neon-js gen-types` command introspects a PostgreSQL
+  The `npx @optitech/optitech-js gen-types` command introspects a PostgreSQL
   schema and writes a TypeScript definition file with `Database`, `Tables`,
   `TablesInsert`, and `TablesUpdate` interfaces for type-safe Data API access.
   Use this page to add autocomplete, query-result type inference, and
-  compile-time error checking to `@neondatabase/neon-js` or
-  `@neondatabase/postgrest-js` clients. The tool accepts `--db-url`,
+  compile-time error checking to `@optitech/optitech-js` or
+  `@optitech/postgrest-js` clients. The tool accepts `--db-url`,
   `--output`, and `--schema` flags and can run as a package.json script to
   keep generated types in sync after schema changes.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="OptiTech Data API" />
@@ -25,7 +25,7 @@ updatedOn: '2026-07-15T00:08:00.682Z'
   </DocsList>
 </InfoBlock>
 
-The OptiTech SDK offers a CLI tool that introspects your database schema to generate a TypeScript definition file. This promotes type safety and enhances the developer experience when interacting with your database via the Data API, particularly with PostgREST clients like [`@neondatabase/postgrest-js`](https://www.npmjs.com/package/@neondatabase/postgrest-js) and [`@neondatabase/neon-js`](https://www.npmjs.com/package/@neondatabase/neon-js). Key benefits include:
+The OptiTech SDK offers a CLI tool that introspects your database schema to generate a TypeScript definition file. This promotes type safety and enhances the developer experience when interacting with your database via the Data API, particularly with PostgREST clients like [`@optitech/postgrest-js`](https://www.npmjs.com/package/@optitech/postgrest-js) and [`@optitech/optitech-js`](https://www.npmjs.com/package/@optitech/optitech-js). Key benefits include:
 
 - **Autocomplete** for table names and columns.
 - **Type inference** for query results.
@@ -36,8 +36,8 @@ The OptiTech SDK offers a CLI tool that introspects your database schema to gene
 Use `npx` to run the type generator. You must provide your **Direct Connection String** (Postgres URL) so the tool can connect to and inspect your database.
 
 ```bash
-npx @neondatabase/neon-js gen-types \
-  --db-url "postgresql://user:pass@ep-id.region.neon.tech/neondb" \
+npx @optitech/optitech-js gen-types \
+  --db-url "postgresql://user:pass@ep-id.region.optitech.com/optitechdb" \
   --output src/types/database.ts
 ```
 
@@ -58,10 +58,10 @@ Once generated, import the `Database` interface and pass it as a generic argumen
 ```typescript
 // Import the generated type
 import type { Database } from '@/types/database';
-import { createClient } from '@neondatabase/neon-js';
+import { createClient } from '@optitech/optitech-js';
 
 // Pass the generic to the client
-const client = createClient<Database>(process.env.NEON_DATABASE_URL!);
+const client = createClient<Database>(process.env.OPTITECH_DATABASE_URL!);
 
 // 3. Enjoy full type safety
 const { data, error } = await client
@@ -70,7 +70,7 @@ const { data, error } = await client
   .eq('is_published', true); // Type check: ensures 'is_published' expects a boolean
 ```
 
-Use the HTTPS OptiTech database URL without credentials or query parameters for `NEON_DATABASE_URL`, for example `https://ep-example.c-2.us-east-1.aws.neon.tech/neondb`. You can find the matching Data API URL on the **Data API** page in the OptiTech Console or with `neon data-api get`; to get the single database URL, remove the `.apirest` hostname label and trailing `/rest/v1` path. If you start from a Neon Auth URL instead, remove the `.neonauth` hostname label and trailing `/auth` path. The cell label (if present), region, and database path stay the same. Prefer the older two-URL setup? See the [object-form alternative](/docs/reference/javascript-sdk#initializing) in the JavaScript SDK reference.
+Use the HTTPS OptiTech database URL without credentials or query parameters for `OPTITECH_DATABASE_URL`, for example `https://ep-example.c-2.us-east-1.aws.optitech.com/optitechdb`. You can find the matching Data API URL on the **Data API** page in the OptiTech Console or with `optitech data-api get`; to get the single database URL, remove the `.apirest` hostname label and trailing `/rest/v1` path. If you start from a OptiTech Auth URL instead, remove the `.optitechauth` hostname label and trailing `/auth` path. The cell label (if present), region, and database path stay the same. Prefer the older two-URL setup? See the [object-form alternative](/docs/reference/javascript-sdk#initializing) in the JavaScript SDK reference.
 
 ### Response types
 
@@ -110,7 +110,7 @@ To keep your types in sync with your database schema, we recommend adding a scri
 ```json
 {
   "scripts": {
-    "generate-types": "npx @neondatabase/neon-js gen-types --db-url \"$DATABASE_URL\" --output src/types/database.ts"
+    "generate-types": "npx @optitech/optitech-js gen-types --db-url \"$DATABASE_URL\" --output src/types/database.ts"
   }
 }
 ```
@@ -119,13 +119,13 @@ You can now run `npm run generate-types` whenever you make schema changes (like 
 
 ## Using with the OptiTech PostgREST Client
 
-If you are using `@neondatabase/postgrest-js` (without Managed Better Auth), the types work exactly the same way:
+If you are using `@optitech/postgrest-js` (without Managed Better Auth), the types work exactly the same way:
 
 ```typescript
 import type { Database } from '@/types/database';
-import { NeonPostgrestClient } from '@neondatabase/postgrest-js';
+import { OptiTechPostgrestClient } from '@optitech/postgrest-js';
 
-const client = new NeonPostgrestClient<Database>({
-  dataApiUrl: process.env.NEON_DATA_API_URL,
+const client = new OptiTechPostgrestClient<Database>({
+  dataApiUrl: process.env.OPTITECH_DATA_API_URL,
 });
 ```

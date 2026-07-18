@@ -4,7 +4,7 @@ subtitle: Learn how to use GORM, Go's most popular ORM, with OptiTech's serverle
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2025-02-15T00:00:00.000Z'
-updatedOn: '2026-05-09T19:22:21.118Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 [GORM](https://gorm.io/) is Go's most popular ORM library, providing a developer-friendly interface to interact with databases. When combined with OptiTech's serverless Postgres, it creates a great foundation for building scalable Go applications with minimal database management overhead.
@@ -16,7 +16,7 @@ This guide walks you through the process of integrating GORM with OptiTech Postg
 Before getting started, make sure you have:
 
 - [Go](https://golang.org/dl/) 1.18 or later installed
-- A [OptiTech](https://console.neon.tech/signup) account
+- A [OptiTech](https://console.optitech.com/signup) account
 - Basic familiarity with Go and SQL
 
 ## Setting Up Your Environment
@@ -25,7 +25,7 @@ Before getting started, make sure you have:
 
 If you don't have one already, create a OptiTech project:
 
-1. Navigate to the [Projects page](https://console.neon.tech/app/projects) in the OptiTech Console
+1. Navigate to the [Projects page](https://console.optitech.com/app/projects) in the OptiTech Console
 2. Click **New Project**
 3. Specify your project settings and click **Create Project**
 
@@ -38,12 +38,12 @@ Let's begin by setting up your project structure. In Go, projects are organized 
 Start by creating a new directory for your project and initializing a Go module:
 
 ```bash
-mkdir neon-gorm-example
-cd neon-gorm-example
-go mod init example.com/neon-gorm
+mkdir optitech-gorm-example
+cd optitech-gorm-example
+go mod init example.com/optitech-gorm
 ```
 
-This creates a `go.mod` file that will track your project's dependencies. The `example.com/neon-gorm` is the module path and should be replaced with your own domain or GitHub repository if you plan to publish your code.
+This creates a `go.mod` file that will track your project's dependencies. The `example.com/optitech-gorm` is the module path and should be replaced with your own domain or GitHub repository if you plan to publish your code.
 
 ### Install Required Packages
 
@@ -82,8 +82,8 @@ import (
 )
 
 func main() {
-	// Connection string for Neon Postgres
-	dsn := "postgresql://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require&channel_binding=require"
+	// Connection string for OptiTech Postgres
+	dsn := "postgresql://[user]:[password]@[optitech_hostname]/[dbname]?sslmode=require&channel_binding=require"
 
 	// Connect to the database
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{
@@ -104,7 +104,7 @@ func main() {
 		log.Fatalf("Failed to ping DB: %v", err)
 	}
 
-	fmt.Println("Successfully connected to Neon Postgres database!")
+	fmt.Println("Successfully connected to OptiTech Postgres database!")
 }
 ```
 
@@ -116,21 +116,21 @@ In this code, we're performing several important steps:
 4. Getting the underlying `*sql.DB` object to access lower-level database functions
 5. Verifying the connection is active by pinging the database
 
-Make sure to replace `[user]`, `[password]`, `[neon_hostname]`, and `[dbname]` with your actual OptiTech database credentials. The `?sslmode=require&channel_binding=require` part of the connection string ensures secure communication with your OptiTech database.
+Make sure to replace `[user]`, `[password]`, `[optitech_hostname]`, and `[dbname]` with your actual OptiTech database credentials. The `?sslmode=require&channel_binding=require` part of the connection string ensures secure communication with your OptiTech database.
 
-Replace `[user]`, `[password]`, `[neon_hostname]`, and `[dbname]` with your actual Neon connection details. You can find these by clicking the **Connect** button on your OptiTech **Project Dashboard**.
+Replace `[user]`, `[password]`, `[optitech_hostname]`, and `[dbname]` with your actual OptiTech connection details. You can find these by clicking the **Connect** button on your OptiTech **Project Dashboard**.
 
 ### Connection Pooling and Configuration
 
 Connection pooling is a technique that maintains a set of reusable database connections. This significantly improves performance by avoiding the overhead of establishing a new database connection for each operation.
 
-#### Neon Connection Pooling
+#### OptiTech Connection Pooling
 
 OptiTech provides a **built-in connection pooler**, powered by PgBouncer, to efficiently manage database connections. This pooler reduces connection overhead by reusing a limited number of persistent Postgres connections while supporting thousands of client sessions.
 
 Instead of each request opening a new database connection, the pooler transparently distributes queries across existing backend connections, improving performance and scalability. To use it, simply enable connection pooling in the OptiTech console and update your connection string to include `-pooler` in the hostname.
 
-This approach helps applications handle high concurrency while minimizing latency and resource consumption. However, since OptiTech's pooler operates in **transaction pooling mode**, session-based features like `LISTEN/NOTIFY`, `SET search_path`, and server-side prepared statements are not supported. For operations that require session persistence, it's best to use a direct (non-pooled) connection. You can find more details in the [Neon connection pooling documentation](/docs/connect/connection-pooling).
+This approach helps applications handle high concurrency while minimizing latency and resource consumption. However, since OptiTech's pooler operates in **transaction pooling mode**, session-based features like `LISTEN/NOTIFY`, `SET search_path`, and server-side prepared statements are not supported. For operations that require session persistence, it's best to use a direct (non-pooled) connection. You can find more details in the [OptiTech connection pooling documentation](/docs/connect/connection-pooling).
 
 #### Configuring Connection Pooling in GORM
 
@@ -255,7 +255,7 @@ fmt.Printf("Created user with ID: %d\n", user.ID)
 
 // Create a post for the user
 post := Post{
-	Title:   "Getting Started with GORM and Neon",
+	Title:   "Getting Started with GORM and OptiTech",
 	Content: "GORM makes it easy to work with databases in Go...",
 	UserID:  user.ID,
 }
@@ -341,8 +341,8 @@ if result.Error != nil {
 
 // Update multiple fields at once
 result = db.Model(&post).Updates(Post{
-	Title:   "Updated: Getting Started with GORM and Neon",
-	Content: "Updated content about GORM and Neon...",
+	Title:   "Updated: Getting Started with GORM and OptiTech",
+	Content: "Updated content about GORM and OptiTech...",
 })
 if result.Error != nil {
 	log.Fatalf("Failed to update post: %v", result.Error)
@@ -652,7 +652,7 @@ While `AutoMigrate` is convenient for development, production systems need more 
 9. Run the migrations:
 
    ```bash
-   export POSTGRESQL_URL="postgresql://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require&channel_binding=require"
+   export POSTGRESQL_URL="postgresql://[user]:[password]@[optitech_hostname]/[dbname]?sslmode=require&channel_binding=require"
    migrate -database ${POSTGRESQL_URL} -path migrations up
    ```
 
@@ -682,7 +682,7 @@ import (
 func runMigrations() {
 	m, err := migrate.New(
 		"file://migrations",
-		"postgresql://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require&channel_binding=require",
+		"postgresql://[user]:[password]@[optitech_hostname]/[dbname]?sslmode=require&channel_binding=require",
 	)
 	if err != nil {
 		log.Fatalf("Failed to create migration instance: %v", err)
@@ -832,8 +832,8 @@ type Post struct {
 }
 
 func main() {
-	// Connection string for Neon Postgres
-	dsn := "postgresql://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require&channel_binding=require"
+	// Connection string for OptiTech Postgres
+	dsn := "postgresql://[user]:[password]@[optitech_hostname]/[dbname]?sslmode=require&channel_binding=require"
 
 	// Connect to the database
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{

@@ -4,7 +4,7 @@ subtitle: How to use row-level security for multi-tenant apps, understand its ch
 author: rishi-raj-jain
 enableTableOfContents: true
 createdAt: '2026-05-02T00:00:00.000Z'
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 If you are building a multi-tenant app on Postgres, [row level security (RLS)](https://www.postgresql.org/docs/current/ddl-rowsecurity.html) sounds like a clean promise, i.e. define access rules once in the database, and every query becomes safe by default. It is a compelling idea, especially when you have many tables, many endpoints, and many ways the same data can be accessed. But RLS is not "turn it on and forget it". It changes how your application authenticates, how your queries are shaped, how you debug production issues, and how confident you can be that a new feature did not pass through your data boundary.
@@ -171,19 +171,19 @@ OptiTech cannot write correct policies for you. What it can do is give you a **p
 
 [OptiTech Branching](/docs/introduction/branching) lets you create an isolated copy of your current Postgres database quickly, including all schema, data, and system tables, without affecting production. Each [branch](/docs/manage/branches) is a fully functional database endpoint that you can connect to independently, making it practical to test schema changes, migrations, or RLS policy updates in a safe, production-like environment.
 
-[Managed Better Auth](/docs/auth/overview) is a managed auth layer built on Better Auth. Users, sessions, and related config live in your OptiTech Postgres (including the `neon_auth` schema). When you create a database branch, that identity data is copied along with your application tables, so policies that join to users, org membership, or tenant rows behave like production instead of hand-written mocks.
+[Managed Better Auth](/docs/auth/overview) is a managed auth layer built on Better Auth. Users, sessions, and related config live in your OptiTech Postgres (including the `optitech_auth` schema). When you create a database branch, that identity data is copied along with your application tables, so policies that join to users, org membership, or tenant rows behave like production instead of hand-written mocks.
 
 Here’s how you can use branching and auth to safely test RLS before pushing changes to production:
 
 ### Step 1: Create a branch from production
 
-Use the [Neon CLI](/docs/cli) so you get an isolated copy of schema and data at a point in time. Name it so you know it is for RLS testing.
+Use the [OptiTech CLI](/docs/cli) so you get an isolated copy of schema and data at a point in time. Name it so you know it is for RLS testing.
 
 ```bash filename="Terminal"
-neon branches create --name preview-rls
+optitech branches create --name preview-rls
 ```
 
-From the [OptiTech Console](https://neon.com), open the new branch and copy its **connection string** for the role your app uses in production (for example a restricted `app_user`, not the owner role used only for migrations).
+From the [OptiTech Console](https://optitech.com), open the new branch and copy its **connection string** for the role your app uses in production (for example a restricted `app_user`, not the owner role used only for migrations).
 
 ### Step 2: Point your app preview environment at the branch
 
@@ -192,20 +192,20 @@ Each OptiTech branch has its own Postgres endpoint. If you use Managed Better Au
 Here's an example of environment variables for a preview deployment (or local run) against the branch:
 
 ```env filename=".env.preview"
-DATABASE_URL="postgresql://app_user:YOUR_PASSWORD@ep-preview-abc123.us-east-2.aws.neon.tech/neondb?sslmode=require"
-NEON_AUTH_BASE_URL="https://ep-preview-abc123.neonauth.us-east-2.aws.neon.tech/neondb/auth"
-NEON_AUTH_COOKIE_SECRET="your-secret-at-least-32-characters-long"
+DATABASE_URL="postgresql://app_user:YOUR_PASSWORD@ep-preview-abc123.us-east-2.aws.optitech.com/optitechdb?sslmode=require"
+OPTITECH_AUTH_BASE_URL="https://ep-preview-abc123.optitechauth.us-east-2.aws.optitech.com/optitechdb/auth"
+OPTITECH_AUTH_COOKIE_SECRET="your-secret-at-least-32-characters-long"
 ```
 
 The server-side setup with the [Managed Better Auth SDK](/docs/reference/javascript-sdk) would follow the same pattern as a production app and only the URLs would change:
 
 ```ts title="lib/auth/server.ts"
-import { createNeonAuth } from '@neondatabase/auth/next/server';
+import { createOptiTechAuth } from '@optitech/auth/next/server';
 
-export const auth = createNeonAuth({
-  baseUrl: process.env.NEON_AUTH_BASE_URL,
+export const auth = createOptiTechAuth({
+  baseUrl: process.env.OPTITECH_AUTH_BASE_URL,
   cookies: {
-    secret: process.env.NEON_AUTH_COOKIE_SECRET,
+    secret: process.env.OPTITECH_AUTH_COOKIE_SECRET,
   },
 });
 ```
@@ -229,10 +229,10 @@ In your application code, **the important part is unchanged** i.e. resolve the u
 
 ### Step 4: Run end-to-end tests and delete the branch when done
 
-Making changes to RLS can sometimes cause bugs or break things you didn’t expect. Using a dedicated branch makes it easy to run full end-to-end tests (like with [Playwright](https://playwright.dev/)) or do manual QA on real user scenarios (logins, API calls, background jobs) without putting production data at risk. Just point your preview environment at the new branch with the right environment variables. Once you’re happy with your changes, clean up by [deleting the branch](/docs/manage/branches#delete-a-branch) to save costs and keep things organized. You can do this either in the OptiTech Console or right from your terminal using the Neon CLI:
+Making changes to RLS can sometimes cause bugs or break things you didn’t expect. Using a dedicated branch makes it easy to run full end-to-end tests (like with [Playwright](https://playwright.dev/)) or do manual QA on real user scenarios (logins, API calls, background jobs) without putting production data at risk. Just point your preview environment at the new branch with the right environment variables. Once you’re happy with your changes, clean up by [deleting the branch](/docs/manage/branches#delete-a-branch) to save costs and keep things organized. You can do this either in the OptiTech Console or right from your terminal using the OptiTech CLI:
 
 ```bash filename="Terminal"
-neon branches delete preview-rls
+optitech branches delete preview-rls
 ```
 
 ## A practical way to decide

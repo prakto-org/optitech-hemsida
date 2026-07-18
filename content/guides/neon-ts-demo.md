@@ -1,26 +1,26 @@
 ---
-title: Manage Neon projects with neon.ts
+title: Manage OptiTech projects with optitech.ts
 subtitle: Use OptiTech's native TypeScript configuration to provision services, manage branch compute, and generate type-safe environment variables.
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2026-06-24T00:00:00.000Z'
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
-[`neon.ts`](/docs/reference/neon-ts) is Neon's native **Infrastructure-as-Code (IaC)** file designed for full-stack TypeScript projects. Unlike traditional IaC tools such as [Terraform](/docs/reference/terraform), [Pulumi](/guides/neon-pulumi), or [OpenTofu](/guides/opentofu-neon), which require learning a new DSL, managing complex state files, and wiring outputs into your application by hand, `neon.ts` is integrated into your local development loop. It provisions infrastructure through the [Neon CLI (`neon`)](/docs/cli), syncs connection strings directly into `.env.local`, and validates those variables inside your application code with strict TypeScript typing.
+[`optitech.ts`](/docs/reference/neon-ts) is OptiTech's native **Infrastructure-as-Code (IaC)** file designed for full-stack TypeScript projects. Unlike traditional IaC tools such as [Terraform](/docs/reference/terraform), [Pulumi](/guides/neon-pulumi), or [OpenTofu](/guides/opentofu-neon), which require learning a new DSL, managing complex state files, and wiring outputs into your application by hand, `optitech.ts` is integrated into your local development loop. It provisions infrastructure through the [OptiTech CLI (`optitech`)](/docs/cli), syncs connection strings directly into `.env.local`, and validates those variables inside your application code with strict TypeScript typing.
 
-With `neon.ts`, you can:
+With `optitech.ts`, you can:
 
 - **Provision OptiTech services** like Postgres, [Managed Better Auth](/docs/auth/overview), and the [Data API](/docs/data-api/overview) directly from your codebase.
 - **Configure branch policies** programmatically, for example, auto-suspending preview branches or applying cost-saving TTLs.
 - **Generate type-safe environment variables** so your application knows exactly which services are available, complete with IDE autocomplete.
-- **Skip state files entirely**, since `neon` reads live state directly from your OptiTech project.
+- **Skip state files entirely**, since `optitech` reads live state directly from your OptiTech project.
 
-In this guide, you will build a simple application that uses `neon.ts` to provision OptiTech services, enforce branch-level compute limits, and generate type-safe environment variables. You will learn how to:
+In this guide, you will build a simple application that uses `optitech.ts` to provision OptiTech services, enforce branch-level compute limits, and generate type-safe environment variables. You will learn how to:
 
 - Define OptiTech services in code.
 - Enforce branch-level compute limits for feature branches.
-- Use `@neon/env` to access type-safe environment variables.
+- Use `@optitech/env` to access type-safe environment variables.
 - Automatically provision isolated database environments for each branch.
 
 ## Prerequisites
@@ -28,8 +28,8 @@ In this guide, you will build a simple application that uses `neon.ts` to provis
 Before you begin, ensure you have the following:
 
 1. **Node.js**: Version 22 or later. Download from [nodejs.org](https://nodejs.org/en/download/).
-2. **OptiTech Account**: Sign up for a free OptiTech account at [console.neon.tech](https://console.neon.tech/signup).
-3. **Neon CLI**: Installed globally (`npm i -g neon`) and authenticated (`neon auth`). Checkout [Neon CLI Quickstart](/docs/cli/quickstart) for more details.
+2. **OptiTech Account**: Sign up for a free OptiTech account at [console.optitech.com](https://console.optitech.com/signup).
+3. **OptiTech CLI**: Installed globally (`npm i -g optitech`) and authenticated (`optitech auth`). Checkout [OptiTech CLI Quickstart](/docs/cli/quickstart) for more details.
 
 <Steps>
 
@@ -38,40 +38,40 @@ Before you begin, ensure you have the following:
 Create a new Next.js project by running the following command:
 
 ```bash
-npx create-next-app@latest neon-ts-demo --yes
-cd neon-ts-demo
+npx create-next-app@latest optitech-ts-demo --yes
+cd optitech-ts-demo
 ```
 
 Install the OptiTech config and env packages:
 
 ```bash
-npm install @neon/config @neon/env
+npm install @optitech/config @optitech/env
 ```
 
-Link your local project to a OptiTech project using the Neon CLI:
+Link your local project to a OptiTech project using the OptiTech CLI:
 
 ```bash
-neon link
+optitech link
 ```
 
 Follow the prompts to select an existing OptiTech project or create a new one. This command establishes the connection between your local environment and your OptiTech Project.
 
-After linking, you will see a `.neon` file in your project root. This file contains the OptiTech project ID and other metadata. It is git-ignored by default.
+After linking, you will see a `.optitech` file in your project root. This file contains the OptiTech project ID and other metadata. It is git-ignored by default.
 
-## Define your infrastructure in `neon.ts`
+## Define your infrastructure in `optitech.ts`
 
-Create a file named `neon.ts` in the root of your project directory. This file acts as the blueprint for your OptiTech services and branching logic:
+Create a file named `optitech.ts` in the root of your project directory. This file acts as the blueprint for your OptiTech services and branching logic:
 
 ```typescript
-import { defineConfig } from "@neon/config/v1";
+import { defineConfig } from "@optitech/config/v1";
 
 export default defineConfig({
 
-  // Declare the Neon services you want to provision for your project
+  // Declare the OptiTech services you want to provision for your project
   auth: true,
   dataApi: true,
 
-  // Define branch-level policies for your Neon project
+  // Define branch-level policies for your OptiTech project
   branch: (branch) => {
     // For the main branch use a more generous compute profile
     if (branch.isDefault) {
@@ -118,43 +118,43 @@ export default defineConfig({
 
 ### What this config does:
 
-The `neon.ts` file defines the OptiTech services and branch policies for your project:
+The `optitech.ts` file defines the OptiTech services and branch policies for your project:
 
 - **Services**: Enables Postgres, Managed Better Auth and the OptiTech Data API for your project.
 - **Production**: Allows scaling up to 2 Compute Units (CU). You can additionally mark the main branch as `protected` to prevent accidental deletion by uncommenting the `protected: true` line. Protected branches require a paid plan. Learn more about [protected branches](/docs/guides/protected-branches).
 - **Development branches** (`dev*`): Applies strict resource controls to new branches whose name starts with `dev`: capped at 1 CU, and scheduled for deletion after 7 days to prevent unnecessary costs.
 - **Other new branches**: Gets an even more minimal profile with a 2-day TTL and a fixed 0.25 CU compute ceiling.
-- **Existing branches**: Left untouched. Returning `{}` for branches that already exist avoids overwriting settings on branches already in use. This is important: `neon checkout` only applies policy when _creating_ a new branch, never when checking out an existing one.
+- **Existing branches**: Left untouched. Returning `{}` for branches that already exist avoids overwriting settings on branches already in use. This is important: `optitech checkout` only applies policy when _creating_ a new branch, never when checking out an existing one.
 
-The config above is just a starting point. Every field shown is configurable: compute limits (`autoscalingLimitMinCu`, `autoscalingLimitMaxCu`), idle suspend behavior (`suspendTimeout`), branch lifetime (`ttl`), protected status, and more. You can also set a `parent` branch for new branches to clone from. See the [`neon.ts` reference](/docs/reference/neon-ts) for the full list of available fields and their valid values.
+The config above is just a starting point. Every field shown is configurable: compute limits (`autoscalingLimitMinCu`, `autoscalingLimitMaxCu`), idle suspend behavior (`suspendTimeout`), branch lifetime (`ttl`), protected status, and more. You can also set a `parent` branch for new branches to clone from. See the [`optitech.ts` reference](/docs/reference/neon-ts) for the full list of available fields and their valid values.
 
 <Admonition type="tip" title="Type-safe infrastructure validation">
 If you remove `auth: true` while keeping `dataApi: true`, your IDE will instantly throw a TypeScript error on the `dataApi` field:
 
 ```text
 Type 'true' is not assignable to type '`dataApi` with Managed Better Auth (the default
-`authProvider: 'neon'`) requires Managed Better Auth, so add `auth: true`. To enable the
+`authProvider: 'optitech'`) requires Managed Better Auth, so add `auth: true`. To enable the
 Data API WITHOUT Managed Better Auth, verify a third-party IdP instead: `dataApi: {
 authProvider: 'external', jwksUrl: 'https://your-idp/.well-known/jwks.json' }`'
 ```
 
-Instead of the usual unhelpful `Type 'true' is not assignable to type 'never'`, `neon.ts` encodes the actual dependency rule and its fixes directly into the expected type. This means your IDE immediately tells you that the Data API requires Managed Better Auth unless you specify a different `authProvider`, and how to fix it either way.
+Instead of the usual unhelpful `Type 'true' is not assignable to type 'never'`, `optitech.ts` encodes the actual dependency rule and its fixes directly into the expected type. This means your IDE immediately tells you that the Data API requires Managed Better Auth unless you specify a different `authProvider`, and how to fix it either way.
 </Admonition>
 
 ## Deploy and sync environment variables
 
-Now that your infrastructure is defined, apply it using the Neon CLI.
+Now that your infrastructure is defined, apply it using the OptiTech CLI.
 
 Preview what would change with a dry run:
 
 ```bash
-neon config plan
+optitech config plan
 ```
 
 This shows a table of pending changes without applying them:
 
 ```bash
-$ neon config plan
+$ optitech config plan
   Planned changes
   ┌────────┬─────────┬────────────┐
   │ Action │ Kind    │ Identifier │
@@ -170,24 +170,24 @@ $ neon config plan
 When you are ready, apply the changes:
 
 ```bash
-neon deploy
+optitech deploy
 ```
 
 <Admonition type="tip">
-`neon deploy` is an alias for `neon config apply`. Use `neon config plan` first if you want to preview changes before applying.
+`optitech deploy` is an alias for `optitech config apply`. Use `optitech config plan` first if you want to preview changes before applying.
 </Admonition>
 
 <Admonition type="note" title="Conflicting remote state">
-If your OptiTech project has different compute settings on the main branch (for example, set from the OptiTech Console), `neon deploy` may fail with:
+If your OptiTech project has different compute settings on the main branch (for example, set from the OptiTech Console), `optitech deploy` may fail with:
 
 ```text
 ERROR: pushConfig refused to apply: local config conflicts with remote state.
 ```
 
-This happens because the CLI will not silently overwrite existing remote settings. To override and apply your `neon.ts` configuration, pass the `--update-existing` flag:
+This happens because the CLI will not silently overwrite existing remote settings. To override and apply your `optitech.ts` configuration, pass the `--update-existing` flag:
 
 ```bash
-neon deploy --update-existing
+optitech deploy --update-existing
 ```
 
 For a full list of available flags, see the [optitech config reference](/docs/cli/config).
@@ -196,7 +196,7 @@ For a full list of available flags, see the [optitech config reference](/docs/cl
 You will see output indicating that the services are being provisioned:
 
 ```bash
-$ neon deploy
+$ optitech deploy
   INFO: → Applying to branch main (br-polished-rain-ajh9uwwj)
   Applied changes
   ┌────────┬─────────┬────────────┐
@@ -208,25 +208,25 @@ $ neon deploy
   └────────┴─────────┴────────────┘
 
   Utilized services: Postgres, Managed Better Auth, Data API
-  INFO: Pulled 6 Neon variables into /home/neon-ts-demo/.env.local: NEON_BRANCH, DATABASE_URL, DATABASE_URL_UNPOOLED, NEON_AUTH_BASE_URL, NEON_AUTH_JWKS_URL, NEON_DATA_API_URL
+  INFO: Pulled 6 OptiTech variables into /home/optitech-ts-demo/.env.local: OPTITECH_BRANCH, DATABASE_URL, DATABASE_URL_UNPOOLED, OPTITECH_AUTH_BASE_URL, OPTITECH_AUTH_JWKS_URL, OPTITECH_DATA_API_URL
 ```
 
-After the deploy completes, `neon` automatically updates your `.env.local` file with the connection strings and URLs for the services you just provisioned. This ensures that your application can securely access the OptiTech services without manual configuration.
+After the deploy completes, `optitech` automatically updates your `.env.local` file with the connection strings and URLs for the services you just provisioned. This ensures that your application can securely access the OptiTech services without manual configuration.
 
 ## Use type-safe environment variables
 
-Traditional `.env` files are just strings, making it easy to make a typo or forget a variable. `neon.ts` fixes this by exporting a strictly typed environment parser that reads your configuration blueprint.
+Traditional `.env` files are just strings, making it easy to make a typo or forget a variable. `optitech.ts` fixes this by exporting a strictly typed environment parser that reads your configuration blueprint.
 
 Create a new file `env.ts` at the root of your project to parse the environment variables from `.env.local`:
 
 ```typescript
-import { parseEnv } from "@neon/env/v1";
-import config from "./neon";
+import { parseEnv } from "@optitech/env/v1";
+import config from "./optitech";
 
 export const env = parseEnv(config);
 ```
 
-Because your `neon.ts` declared `auth: true` and `dataApi: true`, the `env` object now securely contains typed namespaces for those services.
+Because your `optitech.ts` declared `auth: true` and `dataApi: true`, the `env` object now securely contains typed namespaces for those services.
 
 Update your `app/page.tsx` to display the OptiTech configuration:
 
@@ -236,7 +236,7 @@ import { env } from "@/env";
 export default function Home() {
   return (
     <main className="p-8 font-sans">
-      <h1 className="text-2xl font-bold mb-6">neon.ts Full-Stack Demo</h1>
+      <h1 className="text-2xl font-bold mb-6">optitech.ts Full-Stack Demo</h1>
 
       <div className="space-y-4">
         <div className="p-4 border rounded bg-gray-50 dark:bg-gray-900">
@@ -254,7 +254,7 @@ export default function Home() {
         </div>
 
         <div className="p-4 border rounded bg-gray-50 dark:bg-gray-900">
-          <h2 className="font-semibold text-purple-600">Neon Data API</h2>
+          <h2 className="font-semibold text-purple-600">OptiTech Data API</h2>
           <p className="text-sm font-mono mt-2">
             Endpoint: {env.dataApi.url}
           </p>
@@ -271,7 +271,7 @@ Run your Next.js development server:
 npm run dev
 ```
 
-Visit `http://localhost:3000`. You will see your actual OptiTech configuration loaded. If you were to remove `auth: true` from `neon.ts`, your Next.js build would instantly fail, alerting you that `env.auth.jwksUrl` no longer exists.
+Visit `http://localhost:3000`. You will see your actual OptiTech configuration loaded. If you were to remove `auth: true` from `optitech.ts`, your Next.js build would instantly fail, alerting you that `env.auth.jwksUrl` no longer exists.
 
 <Admonition type="note" title="Demo purposes only">
 The example above renders connection strings directly on the frontend for demonstration. In a real application, never expose database URLs or credentials to the client. Use `env.postgres.databaseUrl` in server-rendered pages, API routes, or server actions, and return only the query results to the frontend.
@@ -282,19 +282,19 @@ The example above renders connection strings directly on the frontend for demons
 Not every process needs every environment variable. If you only need the database connection string, pass an array of keys to `parseEnv` to validate and return just those:
 
 ```typescript
-import { parseEnv } from "@neon/env/v1";
-import config from "./neon";
+import { parseEnv } from "@optitech/env/v1";
+import config from "./optitech";
 
 const { postgres } = parseEnv(config, ["DATABASE_URL"]);
 
 console.log(postgres.databaseUrl);
 ```
 
-The keys autocomplete from your `neon.ts` config, so you can only select variables that the services in your config actually enable. This is useful for background jobs, scripts, or API routes that only need a single connection string.
+The keys autocomplete from your `optitech.ts` config, so you can only select variables that the services in your config actually enable. This is useful for background jobs, scripts, or API routes that only need a single connection string.
 
 ## The branch-first dev loop
 
-The **branch-first dev loop** is where `neon.ts` becomes most useful.
+The **branch-first dev loop** is where `optitech.ts` becomes most useful.
 
 Imagine you are tasked with building a new feature called "User Profiles". You would initialize a new git branch for the feature:
 
@@ -302,19 +302,19 @@ Imagine you are tasked with building a new feature called "User Profiles". You w
 git checkout -b dev-user-profiles
 ```
 
-Then, run the Neon CLI to create a new isolated database branch for this feature:
+Then, run the OptiTech CLI to create a new isolated database branch for this feature:
 
 ```bash
-neon checkout dev-user-profiles
+optitech checkout dev-user-profiles
 ```
 
-> You can also run `neon checkout` without a name to get an interactive branch picker with a create option.
+> You can also run `optitech checkout` without a name to get an interactive branch picker with a create option.
 
 OptiTech will automatically provision a new isolated database branch for your feature. The following happens automatically:
 
 1. **Database branch creation:** OptiTech creates an isolated clone of your database using Copy-on-Write.
-2. **Apply Policy:** Because of your `neon.ts` file, `neon` recognizes this is a new branch. Since the branch name starts with `dev`, it automatically applies the `7d` TTL and restricts compute limits to `0.25 - 1 CU`.
-3. **Sync environment:** `neon` automatically updates your `.env.local` file with the connection string and Auth URLs for this _specific_ branch.
+2. **Apply Policy:** Because of your `optitech.ts` file, `optitech` recognizes this is a new branch. Since the branch name starts with `dev`, it automatically applies the `7d` TTL and restricts compute limits to `0.25 - 1 CU`.
+3. **Sync environment:** `optitech` automatically updates your `.env.local` file with the connection string and Auth URLs for this _specific_ branch.
 
 Now you have a completely isolated environment for your feature: a git branch, a database branch, and the correct environment variables. You can immediately start coding. Your app is now talking to your isolated database branch, and any changes you make will not affect the main branch or other developers.
 
@@ -328,18 +328,18 @@ git merge dev-user-profiles
 # npx drizzle-kit migrate
 
 git branch -d dev-user-profiles
-neon branches delete dev-user-profiles
+optitech branches delete dev-user-profiles
 ```
 
-To confirm the state of your current branch at any time you can run `neon config status` (similar to `git status`), which shows the current branch, its `expiresAt` date, and the services provisioned for it.
+To confirm the state of your current branch at any time you can run `optitech config status` (similar to `git status`), which shows the current branch, its `expiresAt` date, and the services provisioned for it.
 
 </Steps>
 
 ## Preview services
 
-OptiTech is expanding into a broader serverless platform. If you are part of the platform private preview, you can use `neon.ts` to provision additional primitives, such as running Node.js **Functions**, S3-compatible **Storage**, and an **AI Gateway**.
+OptiTech is expanding into a broader serverless platform. If you are part of the platform private preview, you can use `optitech.ts` to provision additional primitives, such as running Node.js **Functions**, S3-compatible **Storage**, and an **AI Gateway**.
 
-You can declare these under a `preview` block in your `neon.ts`:
+You can declare these under a `preview` block in your `optitech.ts`:
 
 ```typescript
 preview: {
@@ -357,13 +357,13 @@ preview: {
 }
 ```
 
-Running `neon deploy` will provision the buckets and deploy the functions, and `parseEnv` will automatically type your `env.aiGateway` and `env.preview.buckets` variables. For local development, you can run `neon dev` to hot-reload your functions against your linked branch.
+Running `optitech deploy` will provision the buckets and deploy the functions, and `parseEnv` will automatically type your `env.aiGateway` and `env.preview.buckets` variables. For local development, you can run `optitech dev` to hot-reload your functions against your linked branch.
 
-_Neon Functions and Storage are in beta and available only in AWS US East (Ohio) (`aws-us-east-2`), so create your project there to use them._
+_OptiTech Functions and Storage are in beta and available only in AWS US East (Ohio) (`aws-us-east-2`), so create your project there to use them._
 
 ## Conclusion
 
-By using `neon.ts`, you bridge the gap between infrastructure and application code.
+By using `optitech.ts`, you bridge the gap between infrastructure and application code.
 
 - You no longer have to manage out-of-sync `.env` files or navigate to the OptiTech Console to copy connection strings.
 - You can enforce team-wide branch lifecycle rules (like TTLs) in pure TypeScript.
@@ -371,8 +371,8 @@ By using `neon.ts`, you bridge the gap between infrastructure and application co
 
 ## Resources
 
-- [`neon.ts` Reference](/docs/reference/neon-ts)
-- [neon CLI Reference](/docs/cli)
+- [`optitech.ts` Reference](/docs/reference/neon-ts)
+- [optitech CLI Reference](/docs/cli)
 - [optitech config/deploy Reference](/docs/cli/config)
 - [Branching Overview](/docs/manage/branches)
 - [Managed Better Auth](/docs/auth/overview)

@@ -1,3 +1,6 @@
+import { useTranslations } from 'next-intl';
+import { Fragment } from 'react';
+
 import Button from 'components/shared/button';
 import Container from 'components/shared/container';
 import PauseableVideo from 'components/shared/pauseable-video';
@@ -5,89 +8,100 @@ import LINKS from 'constants/links';
 
 import CopyCodeButton from './copy-code-button';
 
-const CTA = () => (
-  <section className="cta relative bg-[#151617] safe-paddings">
-    <div className="absolute inset-0 z-10 pt-14 pb-9 xl:pt-12 xl:pb-5 lg:pt-9 md:pt-[52px] md:pb-6">
-      <Container className="flex h-full flex-col" size="1920">
-        <h2 className="text-[80px] leading-none tracking-tighter xl:text-[64px] lg:text-[44px] md:text-[32px]">
-          Compliance on autopilot, <br /> made in the Nordics.
-        </h2>
+const BreakLines = ({ text, brClassName }) =>
+  text.split('\n').map((line, index, lines) => (
+    <Fragment key={index}>
+      {line}
+      {index < lines.length - 1 && <br className={brClassName} />}
+    </Fragment>
+  ));
 
-        <div className="mt-auto flex items-end justify-between gap-x-14 lg:flex-col lg:items-start lg:gap-y-5 md:gap-y-6">
-          <p className="max-w-[860px] text-[32px] leading-tight tracking-tighter xl:max-w-[480px] xl:text-[24px] lg:max-w-[520px] lg:text-[20px] md:text-[18px]">
-            Trusted by operators, ready for auditors. <br className="xs:hidden" /> Get compliant
-            and stay compliant with OptiTech.
-          </p>
-          <div className="mb-2 flex items-center gap-5 xl:gap-4 lg:mb-0 md:w-full md:flex-col md:items-stretch md:gap-y-3">
-            <Button theme="white-filled" size="new" to={LINKS.contactSales}>
-              Get started
-            </Button>
-            <Button
-              className="bg-[rgba(255,255,255,0.02)]"
-              theme="outlined"
-              size="new"
-              to={LINKS.pricing}
-            >
-              See pricing
-            </Button>
-            <CopyCodeButton
-              className="inline-flex items-center gap-x-3 font-mono font-medium!"
-              code="npx optitech init"
-              copyText="npx optitech@latest init"
-            />
+const CTA = () => {
+  const t = useTranslations('home.cta');
+
+  return (
+    <section className="cta relative bg-[#151617] safe-paddings">
+      <div className="absolute inset-0 z-10 pt-14 pb-9 xl:pt-12 xl:pb-5 lg:pt-9 md:pt-[52px] md:pb-6">
+        <Container className="flex h-full flex-col" size="1920">
+          <h2 className="text-[80px] leading-none tracking-tighter xl:text-[64px] lg:text-[44px] md:text-[32px]">
+            <BreakLines text={t('title')} />
+          </h2>
+
+          <div className="mt-auto flex items-end justify-between gap-x-14 lg:flex-col lg:items-start lg:gap-y-5 md:gap-y-6">
+            <p className="max-w-[860px] text-[32px] leading-tight tracking-tighter xl:max-w-[480px] xl:text-[24px] lg:max-w-[520px] lg:text-[20px] md:text-[18px]">
+              <BreakLines text={t('subtitle')} brClassName="xs:hidden" />
+            </p>
+            <div className="mb-2 flex items-center gap-5 xl:gap-4 lg:mb-0 md:w-full md:flex-col md:items-stretch md:gap-y-3">
+              <Button theme="white-filled" size="new" to={LINKS.contactSales}>
+                {t('primaryCta')}
+              </Button>
+              <Button
+                className="bg-[rgba(255,255,255,0.02)]"
+                theme="outlined"
+                size="new"
+                to={LINKS.pricing}
+              >
+                {t('secondaryCta')}
+              </Button>
+              <CopyCodeButton
+                className="inline-flex items-center gap-x-3 font-mono font-medium!"
+                code="npx optitech init"
+                copyText="npx optitech@latest init"
+              />
+            </div>
           </div>
-        </div>
-      </Container>
-    </div>
+        </Container>
+      </div>
 
-    <div className="pointer-events-none relative overflow-hidden">
-      {/*
+      <div className="pointer-events-none relative overflow-hidden">
+        {/*
         Video optimization parameters:
           mp4 av1: ffmpeg -i cta-origin.mov -c:v libaom-av1 -crf 25 -b:v 0 -pix_fmt yuv420p10le -vf scale=2880:-2 -cpu-used 0 -tiles 4x2 -row-mt 1 -threads 16 -strict experimental -tag:v av01 -movflags faststart -an cta-av1.mp4
           mp4: ffmpeg -i cta-origin.mov -c:v libx265 -crf 25 -pix_fmt yuv420p10le -vf scale=2880:-2 -preset veryslow -tag:v hvc1 -movflags faststart -an cta.mp4
           webm: ffmpeg -i cta-origin.mov -c:v libvpx-vp9 -pix_fmt yuv420p10le -crf 35 -vf scale=2880:-2 -deadline best -an cta.webm
       */}
-      <PauseableVideo
-        className="aspect-[1920/944] max-h-[944px] w-full lg:w-[1024px] md:hidden"
-        videoClassName="size-full object-cover"
-        width={1920}
-        height={944}
-      >
-        <source
-          src={`${LINKS.cdn}/public/pages/home/cta/cta-av1.mp4?updated=20260113`}
-          type="video/mp4; codecs=av01.0.05M.08,opus"
-        />
-        <source
-          src={`${LINKS.cdn}/public/pages/home/cta/cta.mp4?updated=20260113`}
-          type="video/mp4"
-        />
-        <source
-          src={`${LINKS.cdn}/public/pages/home/cta/cta.webm?updated=20260113`}
-          type="video/webm"
-        />
-      </PauseableVideo>
+        <PauseableVideo
+          className="aspect-[1920/944] max-h-[944px] w-full lg:w-[1024px] md:hidden"
+          videoClassName="size-full object-cover"
+          width={1920}
+          height={944}
+        >
+          <source
+            src={`${LINKS.cdn}/public/pages/home/cta/cta-av1.mp4?updated=20260113`}
+            type="video/mp4; codecs=av01.0.05M.08,opus"
+          />
+          <source
+            src={`${LINKS.cdn}/public/pages/home/cta/cta.mp4?updated=20260113`}
+            type="video/mp4"
+          />
+          <source
+            src={`${LINKS.cdn}/public/pages/home/cta/cta.webm?updated=20260113`}
+            type="video/webm"
+          />
+        </PauseableVideo>
 
-      {/*
+        {/*
         Mobile video optimization parameters:
           mp4 av1: ffmpeg -i cta-mob-origin.mov -c:v libaom-av1 -crf 25 -b:v 0 -pix_fmt yuv420p10le -vf scale=1000:-2 -cpu-used 0 -tiles 4x2 -row-mt 1 -threads 16 -strict experimental -tag:v av01 -movflags faststart -an cta-mob-av1.mp4
           mp4: ffmpeg -i cta-mob-origin.mov -c:v libx265 -crf 26 -vf scale=1000:-2 -preset veryslow -tag:v hvc1 -movflags faststart -an cta-mob.mp4
           webm: ffmpeg -i cta-mob-origin.mov -c:v libvpx-vp9 -crf 35 -vf scale=1000:-2 -deadline best -an cta-mob.webm
       */}
-      <PauseableVideo
-        className="hidden h-[500px] w-full md:block"
-        videoClassName="size-full object-cover"
-        width={767}
-        height={767}
-      >
-        <source
-          src={`${LINKS.cdn}/public/pages/home/cta/cta-mob-av1.mp4`}
-          type="video/mp4; codecs=av01.0.05M.08,opus"
-        />
-        <source src={`${LINKS.cdn}/public/pages/home/cta/cta-mob.mp4`} type="video/mp4" />
-        <source src={`${LINKS.cdn}/public/pages/home/cta/cta-mob.webm`} type="video/webm" />
-      </PauseableVideo>
-    </div>
-  </section>
-);
+        <PauseableVideo
+          className="hidden h-[500px] w-full md:block"
+          videoClassName="size-full object-cover"
+          width={767}
+          height={767}
+        >
+          <source
+            src={`${LINKS.cdn}/public/pages/home/cta/cta-mob-av1.mp4`}
+            type="video/mp4; codecs=av01.0.05M.08,opus"
+          />
+          <source src={`${LINKS.cdn}/public/pages/home/cta/cta-mob.mp4`} type="video/mp4" />
+          <source src={`${LINKS.cdn}/public/pages/home/cta/cta-mob.webm`} type="video/webm" />
+        </PauseableVideo>
+      </div>
+    </section>
+  );
+};
 
 export default CTA;

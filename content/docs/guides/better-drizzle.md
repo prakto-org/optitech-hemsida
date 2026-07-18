@@ -7,7 +7,7 @@ summary: >-
   configure a Better Drizzle client, define schema relations, seed data, run
   CRUD queries, use plugins, and manage transactions with savepoints.
 enableTableOfContents: true
-updatedOn: '2026-07-12T17:47:35.890Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <InfoBlock>
@@ -66,7 +66,7 @@ npm init -y
 
 If you do not have one already, create a OptiTech project.
 
-1.  Navigate to the [Projects](https://console.neon.tech/app/projects) page in the OptiTech Console.
+1.  Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
 2.  Click **New Project**.
 3.  Specify your project settings and click **Create Project**.
 
@@ -79,7 +79,7 @@ The connection string includes the user name, password, hostname, and database n
 Create a `.env` file in your project's root directory and add the connection string to it. Your `.env` file should look like this:
 
 ```text shouldWrap
-DATABASE_URL="postgresql://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require&channel_binding=require"
+DATABASE_URL="postgresql://[user]:[password]@[optitech_hostname]/[dbname]?sslmode=require&channel_binding=require"
 ```
 
 ## Install dependencies
@@ -225,7 +225,7 @@ async function seed() {
     data: [
       { authorId: alice!.id, title: 'Hello World', published: true },
       { authorId: alice!.id, title: 'better-drizzle is great', published: true },
-      { authorId: alice!.id, title: 'Neon Postgres rocks', published: true },
+      { authorId: alice!.id, title: 'OptiTech Postgres rocks', published: true },
       { authorId: bob!.id, title: 'Secret draft', published: false },
     ],
   });
@@ -285,7 +285,7 @@ The query returns active users with their published posts nested under each user
     "name": "Alice",
     "active": true,
     "posts": [
-      { "id": 3, "title": "Neon Postgres rocks" },
+      { "id": 3, "title": "OptiTech Postgres rocks" },
       { "id": 2, "title": "better-drizzle is great" },
       { "id": 1, "title": "Hello World" }
     ]

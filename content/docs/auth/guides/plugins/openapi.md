@@ -9,7 +9,7 @@ summary: >-
   your database, or to import the spec into Postman, Insomnia, or a Scalar SDK
   generator for type-safe clients in languages without a dedicated Managed Better Auth SDK.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="Managed Better Auth" />
@@ -32,11 +32,11 @@ You can view the interactive documentation for your specific project by appendin
 **URL Format:**
 
 ```
-<YOUR_NEON_AUTH_URL>/reference
+<YOUR_OPTITECH_AUTH_URL>/reference
 ```
 
 **Example:**
-`https://ep-xxx.aws.neon.tech/neondb/auth/reference`
+`https://ep-xxx.aws.optitech.com/optitechdb/auth/reference`
 
 This interface allows you to:
 
@@ -57,7 +57,7 @@ If you need the raw OpenAPI 3.x specification (for example, to import into Postm
 **URL format:**
 
 ```
-<YOUR_NEON_AUTH_URL>/open-api/generate-schema
+<YOUR_OPTITECH_AUTH_URL>/open-api/generate-schema
 ```
 
 This endpoint returns a standard JSON object describing your authentication API.

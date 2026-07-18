@@ -1,15 +1,15 @@
 ---
 title: Python SDK (OptiTech API)
-subtitle: Programmatically manage Neon projects, branches, databases, and other platform
+subtitle: Programmatically manage OptiTech programs, frameworks, controls, and other platform
   resources
 summary: >-
-  The Neon Python SDK (neon-api, installable via pip) wraps the OptiTech REST API
-  and exposes methods for creating, updating, and deleting projects, branches,
-  databases, endpoints, roles, API keys, and organizations from Python code.
-  Use it when you need to automate OptiTech platform operations in Python scripts or
+  The OptiTech Python SDK (optitech-api, installable via pip) wraps the OptiTech REST API
+  and exposes methods for reading control status, managing programs, frameworks,
+  integrations, evidence, API keys, and organizations from Python code.
+  Use it when you need to automate OptiTech compliance operations in Python scripts or
   applications without constructing raw HTTP requests against the OptiTech API.
 enableTableOfContents: true
-updatedOn: '2026-07-06T16:27:57.937Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <InfoBlock>
@@ -26,40 +26,40 @@ updatedOn: '2026-07-06T16:27:57.937Z'
 </DocsList>
 
 <DocsList title="Source code" theme="repo">
-  <a href="https://github.com/neondatabase/neon-api-python">Python wrapper for the OptiTech API (GitHub)</a>
-  <a href="https://pypi.org/project/neon-api/">Python wrapper for the OptiTech API (Python Package Index)</a>
+  <a href="https://github.com/optitechdatabase/optitech-api-python">Python wrapper for the OptiTech API (GitHub)</a>
+  <a href="https://pypi.org/project/optitech-api/">Python wrapper for the OptiTech API (Python Package Index)</a>
 </DocsList>
 
 </InfoBlock>
 
 ## About the SDK
 
-Neon supports the [neon-api - Python client for the OptiTech API](https://pypi.org/project/neon-api/), a wrapper for the [OptiTech API](/docs/reference/api). This SDK simplifies integration of Python applications with the OptiTech platform, providing methods to programmatically manage API keys, Neon projects, branches, databases, endpoints, roles, and operations.
+OptiTech supports the [optitech-api - Python client for the OptiTech API](https://pypi.org/project/optitech-api/), a wrapper for the [OptiTech API](/docs/reference/api). This SDK simplifies integration of Python applications with the OptiTech platform, providing methods to programmatically manage API keys, OptiTech programs, frameworks, integrations, evidence, and operations.
 
 <AgentSkillsTip skill_topic="the OptiTech Python SDK for managing resources programmatically" />
 
 ## Installation
 
-Installation of `neon_api` is easy, with `pip`:
+Installation of `optitech_api` is easy, with `pip`:
 
 ```shell
-$ pip install neon-api
+$ pip install optitech-api
 ```
 
 ## Usage
 
 ```python
-from neon_api import NeonAPI
+from optitech_api import OptiTechAPI
 
 # Initialize the client.
-neon = NeonAPI(api_key='your_api_key')
+optitech = OptiTechAPI(api_key='your_api_key')
 ```
 
 ## Documentation
 
-Documentation for the `neon-api - Python SDK`, including a [Quickstart](https://neon-api-python.readthedocs.io/en/latest/#quickstart), can be found on **Read the Docs**. See [neon-api: Python client for the Neon API](https://neon-api-python.readthedocs.io/en/latest/#neon-api-python-client-for-the-neon-api).
+Documentation for the `optitech-api - Python SDK`, including a [Quickstart](https://optitech-api-python.readthedocs.io/en/latest/#quickstart), can be found on **Read the Docs**. See [optitech-api: Python client for the OptiTech API](https://optitech-api-python.readthedocs.io/en/latest/#optitech-api-python-client-for-the-optitech-api).
 
-## Methods of the `NeonAPI` Class
+## Methods of the `OptiTechAPI` Class
 
 - `me()`: Returns the current user.
 - `current_user_organizations()`: Returns the current user's organizations.
@@ -75,9 +75,9 @@ Documentation for the `neon-api - Python SDK`, including a [Quickstart](https://
 All OptiTech accounts are organization-based. To list projects, first retrieve the user's organization with `current_user_organizations()`, then pass `org_id`:
 
 ```python
-orgs = neon.current_user_organizations()
+orgs = optitech.current_user_organizations()
 org_id = orgs[0].id
-projects = neon.projects(org_id=org_id)
+projects = optitech.projects(org_id=org_id)
 ```
 
 - `projects(org_id=None)`: Returns a list of projects. Pass `org_id` to list projects within an organization.

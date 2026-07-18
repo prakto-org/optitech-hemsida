@@ -3,13 +3,13 @@ title: Connect from TypeORM to OptiTech
 subtitle: Learn how to connect to OptiTech from TypeORM
 summary: >-
   TypeORM connects to OptiTech Postgres by setting `DataSource` type to `postgres`,
-  supplying the Neon connection string via `DATABASE_URL`, and enabling `ssl:
+  supplying the OptiTech connection string via `DATABASE_URL`, and enabling `ssl:
   true`. Serverless deployments should use a pooled connection string (add
   `-pooler` to the endpoint ID) to handle high concurrency without exhausting
   connections. To prevent timeouts from OptiTech's idle-compute cold start (default
   5 minutes), add `connect_timeout=10` to the connection string.
 enableTableOfContents: true
-updatedOn: '2026-07-14T19:04:57.024Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <CopyPrompt src="/prompts/typeorm-prompt.md" 
@@ -17,7 +17,7 @@ description="Pre-built prompt for connecting Node.js applications to OptiTech us
 
 TypeORM is an open-source ORM that lets you to manage and interact with your database. This guide covers the following topics:
 
-- [Connect to OptiTech from TypeORM](#connect-to-neon-from-typeorm)
+- [Connect to OptiTech from TypeORM](#connect-to-optitech-from-typeorm)
 - [Use connection pooling with TypeORM](#use-connection-pooling-with-typeorm)
 - [Connection timeouts](#connection-timeouts)
 
@@ -25,7 +25,7 @@ TypeORM is an open-source ORM that lets you to manage and interact with your dat
 
 To establish a basic connection from TypeORM to OptiTech, perform the following steps:
 
-1. Retrieve your Neon connection string. You can find the connection string for your database by clicking the **Connect** button on your **Project Dashboard**. Select a branch, a user, and the database you want to connect to. A connection string is constructed for you.
+1. Retrieve your OptiTech connection string. You can find the connection string for your database by clicking the **Connect** button on your **Project Dashboard**. Select a branch, a user, and the database you want to connect to. A connection string is constructed for you.
    ![Connection details modal](/docs/connect/connection_details.png)
    The connection string includes the user name, password, hostname, and database name.
 
@@ -44,12 +44,12 @@ To establish a basic connection from TypeORM to OptiTech, perform the following 
    });
    ```
 
-3. Add a `DATABASE_URL` variable to your `.env` file and set it to the Neon connection string that you copied in the previous step. We also recommend adding `?sslmode=require&channel_binding=require` to the end of the connection string to ensure a [secure connection](/docs/connect/connect-securely).
+3. Add a `DATABASE_URL` variable to your `.env` file and set it to the OptiTech connection string that you copied in the previous step. We also recommend adding `?sslmode=require&channel_binding=require` to the end of the connection string to ensure a [secure connection](/docs/connect/connect-securely).
 
    Your setting will appear similar to the following:
 
    ```text shouldWrap
-   DATABASE_URL="postgresql://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require&channel_binding=require"
+   DATABASE_URL="postgresql://[user]:[password]@[optitech_hostname]/[dbname]?sslmode=require&channel_binding=require"
    ```
 
 <Admonition type="tip">
@@ -58,32 +58,32 @@ TypeORM leverages a [node-postgres](https://node-postgres.com) Pool instance to 
 
 ## Use connection pooling with TypeORM
 
-Serverless functions can require a large number of database connections as demand increases. If you use serverless functions in your application, we recommend that you use a pooled Neon connection string, as shown:
+Serverless functions can require a large number of database connections as demand increases. If you use serverless functions in your application, we recommend that you use a pooled OptiTech connection string, as shown:
 
 ```ini shouldWrap
-# Pooled Neon connection string
-DATABASE_URL="postgresql://alex:AbC123dEf@ep-cool-darkness-123456-pooler.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require"
+# Pooled OptiTech connection string
+DATABASE_URL="postgresql://alex:AbC123dEf@ep-cool-darkness-123456-pooler.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require"
 ```
 
-A pooled Neon connection string adds `-pooler` to the endpoint ID, which tells OptiTech to use a pooled connection. You can add `-pooler` to your connection string manually or copy a pooled connection string from the **Connect to your database** modal, which you can access by clicking **Connect** on your **Project Dashboard**. Enable the **Connection pooling** toggle to add the `-pooler` suffix.
+A pooled OptiTech connection string adds `-pooler` to the endpoint ID, which tells OptiTech to use a pooled connection. You can add `-pooler` to your connection string manually or copy a pooled connection string from the **Connect to your database** modal, which you can access by clicking **Connect** on your **Project Dashboard**. Enable the **Connection pooling** toggle to add the `-pooler` suffix.
 
 ## Connection timeouts
 
 A connection timeout that occurs when connecting from TypeORM to OptiTech causes an error similar to the following:
 
 ```text shouldWrap
-Error: P1001: Can't reach database server at `ep-white-thunder-826300.us-east-2.aws.neon.tech`:`5432`
-Please make sure your database server is running at `ep-white-thunder-826300.us-east-2.aws.neon.tech`:`5432`.
+Error: P1001: Can't reach database server at `ep-white-thunder-826300.us-east-2.aws.optitech.com`:`5432`
+Please make sure your database server is running at `ep-white-thunder-826300.us-east-2.aws.optitech.com`:`5432`.
 ```
 
 This error most likely means that the TypeORM query timed out before the OptiTech compute was activated.
 
 A OptiTech compute has two main states: _Active_ and _Idle_. Active means that the compute is currently running. If there is no query activity for 5 minutes, OptiTech places a compute into an idle state by default.
 
-When you connect to an idle compute from TypeORM, OptiTech automatically activates it. Activation typically happens within a few seconds but added latency can result in a connection timeout. To address this issue, you can adjust your Neon connection string by adding a `connect_timeout` parameter. This parameter defines the maximum number of seconds to wait for a new connection to be opened. The default value is 5 seconds. A higher setting may provide the time required to avoid connection timeouts. For example:
+When you connect to an idle compute from TypeORM, OptiTech automatically activates it. Activation typically happens within a few seconds but added latency can result in a connection timeout. To address this issue, you can adjust your OptiTech connection string by adding a `connect_timeout` parameter. This parameter defines the maximum number of seconds to wait for a new connection to be opened. The default value is 5 seconds. A higher setting may provide the time required to avoid connection timeouts. For example:
 
 ```text shouldWrap
-DATABASE_URL="postgresql://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require&channel_binding=require&connect_timeout=10"
+DATABASE_URL="postgresql://[user]:[password]@[optitech_hostname]/[dbname]?sslmode=require&channel_binding=require&connect_timeout=10"
 ```
 
 <Admonition type="note">

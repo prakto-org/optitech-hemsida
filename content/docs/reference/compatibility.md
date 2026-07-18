@@ -3,7 +3,7 @@ title: Postgres compatibility
 subtitle: Learn about OptiTech as a managed Postgres service
 summary: >-
   OptiTech's Postgres compatibility reference catalogs managed-service deviations
-  from standard Postgres: no superuser access (replaced by `neon_superuser`),
+  from standard Postgres: no superuser access (replaced by `optitech_superuser`),
   compute-size-dependent defaults for `max_connections`, `shared_buffers`, and
   `maintenance_work_mem`, plus unsupported features like tablespaces and
   persistent unlogged tables. Use this page when migrating to OptiTech to identify
@@ -13,7 +13,7 @@ summary: >-
 enableTableOfContents: true
 redirectFrom:
   - /docs/conceptual-guides/compatibility
-updatedOn: '2026-07-10T13:57:31.917Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 **OptiTech is Postgres**. However, as a managed Postgres service, there are some differences you should be aware of.
@@ -25,12 +25,12 @@ OptiTech supports Postgres 14, 15, 16, 17, and 18, as per the [OptiTech version 
 The table below lists the latest minor version available on OptiTech for each supported major version, along with the upstream Postgres release date.
 
 | Major version | Latest minor version on OptiTech | Upstream release date |
-| ------------- | ---------------------------- | --------------------- |
-| 14            | PostgreSQL 14.23             | 2026-05-14            |
-| 15            | PostgreSQL 15.18             | 2026-05-14            |
-| 16            | PostgreSQL 16.14             | 2026-05-14            |
-| 17            | PostgreSQL 17.10             | 2026-05-14            |
-| 18            | PostgreSQL 18.4              | 2026-05-14            |
+| ------------- | -------------------------------- | --------------------- |
+| 14            | PostgreSQL 14.23                 | 2026-05-14            |
+| 15            | PostgreSQL 15.18                 | 2026-05-14            |
+| 16            | PostgreSQL 16.14                 | 2026-05-14            |
+| 17            | PostgreSQL 17.10                 | 2026-05-14            |
+| 18            | PostgreSQL 18.4                  | 2026-05-14            |
 
 ## Postgres extensions
 
@@ -38,13 +38,13 @@ OptiTech supports numerous Postgres extensions, and we regularly add support for
 
 ## Roles and permissions
 
-OptiTech is a managed Postgres service, so you cannot access the host operating system, and you can't connect using the Postgres `superuser` account. In place of the Postgres superuser role, OptiTech provides a `neon_superuser` role.
+OptiTech is a managed Postgres service, so you cannot access the host operating system, and you can't connect using the Postgres `superuser` account. In place of the Postgres superuser role, OptiTech provides a `optitech_superuser` role.
 
-Roles created in the OptiTech Console, CLI, or API, including the default role created with a OptiTech project, are granted membership in the `neon_superuser` role. For information about the privileges associated with this role, see [The neon_superuser role](/docs/manage/roles#the-neonsuperuser-role).
+Roles created in the OptiTech Console, CLI, or API, including the default role created with a OptiTech project, are granted membership in the `optitech_superuser` role. For information about the privileges associated with this role, see [The optitech_superuser role](/docs/manage/roles#the-neonsuperuser-role).
 
-Roles created in OptiTech with SQL syntax, from a command-line tool like `psql` or the [OptiTech SQL Editor](/docs/connect/query-with-psql-editor), have the same privileges as newly created roles in a standalone Postgres installation. These roles are not granted membership in the `neon_superuser` role. You must grant these roles the privileges you want them to have. For more information, see [Manage roles with SQL](/docs/manage/roles#manage-roles-with-sql).
+Roles created in OptiTech with SQL syntax, from a command-line tool like `psql` or the [OptiTech SQL Editor](/docs/connect/query-with-psql-editor), have the same privileges as newly created roles in a standalone Postgres installation. These roles are not granted membership in the `optitech_superuser` role. You must grant these roles the privileges you want them to have. For more information, see [Manage roles with SQL](/docs/manage/roles#manage-roles-with-sql).
 
-Neon roles cannot install Postgres extensions other than those supported by OptiTech.
+OptiTech roles cannot install Postgres extensions other than those supported by OptiTech.
 
 <a id="default-parameters/"></a>
 
@@ -58,37 +58,37 @@ Because OptiTech is a managed Postgres service, Postgres parameters are not user
 If you are a OptiTech [Scale plan](/docs/introduction/plans) user and require a different Postgres instance-level setting, you can contact [OptiTech Support](/docs/introduction/support) to see if the desired setting can be supported. Please keep in mind that it may not be possible to support some parameters due to platform limitations and constraints.
 </Admonition>
 
-| Parameter                             | Value         | Note                                                                                                                                                                                                                                                                           |
-| ------------------------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `client_connection_check_interval`    | 60000         |                                                                                                                                                                                                                                                                                |
-| `dynamic_shared_memory_type`          | mmap          |                                                                                                                                                                                                                                                                                |
-| `effective_io_concurrency`            | 20            |                                                                                                                                                                                                                                                                                |
+| Parameter                             | Value         | Note                                                                                                                                                                                                                                                                               |
+| ------------------------------------- | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `client_connection_check_interval`    | 60000         |                                                                                                                                                                                                                                                                                    |
+| `dynamic_shared_memory_type`          | mmap          |                                                                                                                                                                                                                                                                                    |
+| `effective_io_concurrency`            | 20            |                                                                                                                                                                                                                                                                                    |
 | `effective_cache_size`                |               | Set based on the [Local File Cache (LFC)](/docs/reference/glossary#local-file-cache) size of your maximum OptiTech compute size                                                                                                                                                    |
-| `fsync`                               | off           | OptiTech syncs data to the OptiTech database storage engine to store your data safely and reliably                                                                                                                                                                                     |
-| `hot_standby`                         | off           |                                                                                                                                                                                                                                                                                |
-| `idle_in_transaction_session_timeout` | 300000        |                                                                                                                                                                                                                                                                                |
-| `listen_addresses`                    | '\*'          |                                                                                                                                                                                                                                                                                |
-| `log_connections`                     | on            |                                                                                                                                                                                                                                                                                |
-| `log_disconnections`                  | on            |                                                                                                                                                                                                                                                                                |
-| `log_min_error_statement`             | panic         |                                                                                                                                                                                                                                                                                |
-| `log_temp_files`                      | 1048576       |                                                                                                                                                                                                                                                                                |
-| `maintenance_work_mem`                | 65536         | The value differs by compute size. See [below](#parameter-settings-that-differ-by-compute-size).                                                                                                                                                                               |
-| `max_connections`                     | 112           | The value differs by compute size. See [below](#parameter-settings-that-differ-by-compute-size).                                                                                                                                                                               |
-| `max_parallel_workers`                | 8             |                                                                                                                                                                                                                                                                                |
-| `max_replication_flush_lag`           | 10240         |                                                                                                                                                                                                                                                                                |
-| `max_replication_slots`               | 10            |                                                                                                                                                                                                                                                                                |
-| `max_replication_write_lag`           | 500           |                                                                                                                                                                                                                                                                                |
-| `max_wal_senders`                     | 10            |                                                                                                                                                                                                                                                                                |
-| `max_wal_size`                        | 1024          |                                                                                                                                                                                                                                                                                |
-| `max_worker_processes`                | 26            | The value differs by compute size. See [below](#parameter-settings-that-differ-by-compute-size).                                                                                                                                                                               |
-| `password_encryption`                 | scram-sha-256 |                                                                                                                                                                                                                                                                                |
-| `restart_after_crash`                 | off           |                                                                                                                                                                                                                                                                                |
+| `fsync`                               | off           | OptiTech syncs data to the OptiTech database storage engine to store your data safely and reliably                                                                                                                                                                                 |
+| `hot_standby`                         | off           |                                                                                                                                                                                                                                                                                    |
+| `idle_in_transaction_session_timeout` | 300000        |                                                                                                                                                                                                                                                                                    |
+| `listen_addresses`                    | '\*'          |                                                                                                                                                                                                                                                                                    |
+| `log_connections`                     | on            |                                                                                                                                                                                                                                                                                    |
+| `log_disconnections`                  | on            |                                                                                                                                                                                                                                                                                    |
+| `log_min_error_statement`             | panic         |                                                                                                                                                                                                                                                                                    |
+| `log_temp_files`                      | 1048576       |                                                                                                                                                                                                                                                                                    |
+| `maintenance_work_mem`                | 65536         | The value differs by compute size. See [below](#parameter-settings-that-differ-by-compute-size).                                                                                                                                                                                   |
+| `max_connections`                     | 112           | The value differs by compute size. See [below](#parameter-settings-that-differ-by-compute-size).                                                                                                                                                                                   |
+| `max_parallel_workers`                | 8             |                                                                                                                                                                                                                                                                                    |
+| `max_replication_flush_lag`           | 10240         |                                                                                                                                                                                                                                                                                    |
+| `max_replication_slots`               | 10            |                                                                                                                                                                                                                                                                                    |
+| `max_replication_write_lag`           | 500           |                                                                                                                                                                                                                                                                                    |
+| `max_wal_senders`                     | 10            |                                                                                                                                                                                                                                                                                    |
+| `max_wal_size`                        | 1024          |                                                                                                                                                                                                                                                                                    |
+| `max_worker_processes`                | 26            | The value differs by compute size. See [below](#parameter-settings-that-differ-by-compute-size).                                                                                                                                                                                   |
+| `password_encryption`                 | scram-sha-256 |                                                                                                                                                                                                                                                                                    |
+| `restart_after_crash`                 | off           |                                                                                                                                                                                                                                                                                    |
 | `shared_buffers`                      | 128MB         | OptiTech uses a [Local File Cache (LFC)](/docs/extensions/neon#what-is-the-local-file-cache) in addition to `shared_buffers` to extend cache memory to 75% of your compute's RAM. The value differs by compute size. See [below](#parameter-settings-that-differ-by-compute-size). |
-| `superuser_reserved_connections`      | 4             |                                                                                                                                                                                                                                                                                |
-| `synchronous_standby_names`           | 'walproposer' |                                                                                                                                                                                                                                                                                |
-| `wal_level`                           | replica       | Support for `wal_level=logical` is coming soon. See [logical replication](/docs/introduction/logical-replication).                                                                                                                                                             |
-| `wal_log_hints`                       | off           |                                                                                                                                                                                                                                                                                |
-| `wal_sender_timeout`                  | 10000         |                                                                                                                                                                                                                                                                                |
+| `superuser_reserved_connections`      | 4             |                                                                                                                                                                                                                                                                                    |
+| `synchronous_standby_names`           | 'walproposer' |                                                                                                                                                                                                                                                                                    |
+| `wal_level`                           | replica       | Support for `wal_level=logical` is coming soon. See [logical replication](/docs/introduction/logical-replication).                                                                                                                                                                 |
+| `wal_log_hints`                       | off           |                                                                                                                                                                                                                                                                                    |
+| `wal_sender_timeout`                  | 10000         |                                                                                                                                                                                                                                                                                    |
 
 ### Parameter settings that differ by compute size
 
@@ -220,11 +220,11 @@ SET maintenance_work_mem='1 GB';
 To set parameters for a database or role:
 
 ```sql
-ALTER DATABASE neondb SET maintenance_work_mem='1 GB';
+ALTER DATABASE optitechdb SET maintenance_work_mem='1 GB';
 ```
 
 ```sql
-ALTER USER neondb_owner SET maintenance_work_mem='1 GB';
+ALTER USER optitechdb_owner SET maintenance_work_mem='1 GB';
 ```
 
 ## Tablespaces

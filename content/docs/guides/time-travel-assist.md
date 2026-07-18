@@ -8,19 +8,19 @@ summary: >-
   querying. Use it to investigate data anomalies, verify a restore point before
   committing a branch restore, or retrieve historical row states without
   altering production data. Access Time Travel from the SQL Editor, the Backup
-  & Restore page, or the Neon CLI using RFC 3339 timestamps or Log Sequence
+  & Restore page, or the OptiTech CLI using RFC 3339 timestamps or Log Sequence
   Numbers (LSN).
 enableTableOfContents: true
-updatedOn: '2026-06-11T23:50:21.258Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 To help review your data's history, Time Travel lets you connect to any selected point in time still covered by your project's **history window** (the retention configured for **instant restore**) and then run queries against that connection. Time Travel is part of OptiTech's **instant restore** feature, which maintains a history of changes through Write-Ahead Log (WAL) records.
 
-You can use Time Travel from two places in the OptiTech Console, and from the Neon CLI:
+You can use Time Travel from two places in the OptiTech Console, and from the OptiTech CLI:
 
 - **SQL Editor** &#8212; Time Travel is built into the SQL editor letting you switch between queries of your current data and previous iterations of your data in the same view.
 - **Backup & Restore** &#8212; Time Travel Assist is built into **Restore from history** (part of **instant restore**) so you can verify the restore point before you restore a branch.
-- **Neon CLI** &#8212; Use the Neon CLI to quickly establish point-in-time connections for automated scripts or command-line-based data analysis.
+- **OptiTech CLI** &#8212; Use the OptiTech CLI to quickly establish point-in-time connections for automated scripts or command-line-based data analysis.
 
 ## How Time Travel works
 
@@ -117,10 +117,10 @@ Here is how to use Time Travel from the **SQL Editor**, from **Backup & Restore*
 
 <TabItem>
 
-Using the Neon CLI, you can establish a connection to a specific point in your branch's history. To get the connection string, use the following command:
+Using the OptiTech CLI, you can establish a connection to a specific point in your branch's history. To get the connection string, use the following command:
 
 ```bash
-neon connection-string <branch>@<timestamp|LSN>
+optitech connection-string <branch>@<timestamp|LSN>
 ```
 
 In the `branch` field, specify the name of the branch you want to connect to. Omit the `branch` field to connect to your default branch. Replace the `timestamp|LSN` field with the specific timestamp (in RFC 3339 format) or Log Sequence Number for the point in time you want to access.
@@ -128,8 +128,8 @@ In the `branch` field, specify the name of the branch you want to connect to. Om
 Example:
 
 ```bash
-neon connection-string main@2024-04-21T00:00:00Z
-postgresql://alex:AbC123dEf@br-broad-mouse-123456.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require&options=neon_timestamp%3A2024-04-21T00%3A00%3A00Z
+optitech connection-string main@2024-04-21T00:00:00Z
+postgresql://alex:AbC123dEf@br-broad-mouse-123456.us-east-2.aws.optitech.com/optitechdb?sslmode=require&channel_binding=require&options=optitech_timestamp%3A2024-04-21T00%3A00%3A00Z
 ```
 
 ### Connect directly with psql
@@ -137,13 +137,13 @@ postgresql://alex:AbC123dEf@br-broad-mouse-123456.us-east-2.aws.neon.tech/neondb
 Appending `--psql` to the command for a one-step psql connection. For example, to connect to `main` at its state on Jan 1st, 2024:
 
 ```bash
-neon connection-string main@2024-01-01T00:00:00Z --psql
+optitech connection-string main@2024-01-01T00:00:00Z --psql
 ```
 
 Here is the same command using aliases:
 
 ```bash
-neon cs main@2024-01-01T00:00:00Z --psql
+optitech cs main@2024-01-01T00:00:00Z --psql
 ```
 
 ### Query at Specific LSNs
@@ -153,32 +153,32 @@ For more granular control, you can also establish the connection using a specifi
 Example:
 
 ```bash
-neon cs main@0/234235
+optitech cs main@0/234235
 ```
 
 This retrieves the connection string for querying the 'main' branch at a specific Log Sequence Number, providing access to the exact state of the database at that point in the transaction log.
 
 ### Include project ID for multiple projects
 
-If you are working with multiple Neon projects, specify the project ID to target the correct project:
+If you are working with multiple OptiTech projects, specify the project ID to target the correct project:
 
 ```bash
-neon connection-string <branch>@<timestamp|LSN> --project-id <project id>
+optitech connection-string <branch>@<timestamp|LSN> --project-id <project id>
 ```
 
 Example:
 
 ```bash
-neon cs main@2024-01-01T00:00:00Z --project-id noisy-pond-12345678
+optitech cs main@2024-01-01T00:00:00Z --project-id noisy-pond-12345678
 ```
 
 Alternatively, you can set a durable project context that remains active until you remove or change the context:
 
 ```bash
-neon set-context --project-id <project id>
+optitech set-context --project-id <project id>
 ```
 
-Read more about getting connection strings from the CLI in [Neon CLI commands — connection-string](/docs/cli/connection-string), and more about setting contexts in [CLI - set-context](/docs/cli/set-context).
+Read more about getting connection strings from the CLI in [OptiTech CLI commands — connection-string](/docs/cli/connection-string), and more about setting contexts in [CLI - set-context](/docs/cli/set-context).
 
 </TabItem>
 

@@ -7,7 +7,7 @@ summary: >-
   curl examples and a full response field reference. Use this page when
   automating auth provisioning or teardown: the enable response is the only
   call that returns `pub_client_key` and `secret_server_key`, and the
-  `delete_data` flag on DELETE controls whether the `neon_auth` schema is
+  `delete_data` flag on DELETE controls whether the `optitech_auth` schema is
   permanently removed. Also covers related branch-scoped endpoints for OAuth
   providers, email configuration, domains, users, plugins, and webhooks, plus
   equivalent MCP tools for AI-editor workflows.
@@ -15,12 +15,12 @@ enableTableOfContents: true
 redirectFrom:
   - /docs/neon-auth/api
   - /docs/guides/neon-auth-api
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="Managed Better Auth" />
 
-You can manage Managed Better Auth programmatically using the [OptiTech API](/docs/reference/api). You can also enable and configure Managed Better Auth from an AI editor using the [OptiTech MCP server](/docs/ai/neon-mcp-server#supported-actions-tools) (`provision_neon_auth`, `configure_neon_auth`, `get_neon_auth_config`). See [Set up with your AI editor](/docs/auth/overview#set-up-with-your-ai-editor).
+You can manage Managed Better Auth programmatically using the [OptiTech API](/docs/reference/api). You can also enable and configure Managed Better Auth from an AI editor using the [OptiTech MCP server](/docs/ai/neon-mcp-server#supported-actions-tools) (`provision_optitech_auth`, `configure_optitech_auth`, `get_optitech_auth_config`). See [Set up with your AI editor](/docs/auth/overview#set-up-with-your-ai-editor).
 
 <Admonition type="note">
 Managed Better Auth operates at the **branch level**. Each branch can have its own independent auth configuration, which means preview and development branches can have separate auth state from your production branch.
@@ -31,15 +31,15 @@ Managed Better Auth operates at the **branch level**. Each branch can have its o
 - A [OptiTech API key](/docs/manage/api-keys)
 - A OptiTech project with at least one branch
 
-All requests use the base URL `https://console.neon.tech/api/v2` and require the `Authorization: Bearer $NEON_API_KEY` header. The `project_id` and `branch_id` values are returned when you [create a project](/docs/manage/projects#create-a-project-with-the-api) or [list branches](/docs/manage/branches#list-branches-with-the-api) via the API.
+All requests use the base URL `https://console.optitech.com/api/v2` and require the `Authorization: Bearer $OPTITECH_API_KEY` header. The `project_id` and `branch_id` values are returned when you [create a project](/docs/manage/projects#create-a-project-with-the-api) or [list branches](/docs/manage/branches#list-branches-with-the-api) via the API.
 
 ## Enable Managed Better Auth
 
 Send a `POST` request to enable Managed Better Auth on a branch:
 
 ```bash
-curl -X POST 'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/auth' \
-  -H 'Authorization: Bearer $NEON_API_KEY' \
+curl -X POST 'https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/auth' \
+  -H 'Authorization: Bearer $OPTITECH_API_KEY' \
   -H 'Content-Type: application/json' \
   -d '{"auth_provider": "better_auth"}'
 ```
@@ -52,10 +52,10 @@ Response (201 Created):
   "auth_provider_project_id": "cab6949a-10e3-4d25-a879-512beed281e3",
   "pub_client_key": "",
   "secret_server_key": "",
-  "jwks_url": "https://ep-example.neonauth.us-east-1.aws.neon.tech/neondb/auth/.well-known/jwks.json",
-  "schema_name": "neon_auth",
+  "jwks_url": "https://ep-example.optitechauth.us-east-1.aws.optitech.com/optitechdb/auth/.well-known/jwks.json",
+  "schema_name": "optitech_auth",
   "table_name": "users_sync",
-  "base_url": "https://ep-example.neonauth.us-east-1.aws.neon.tech/neondb/auth"
+  "base_url": "https://ep-example.optitechauth.us-east-1.aws.optitech.com/optitechdb/auth"
 }
 ```
 
@@ -68,12 +68,12 @@ The response includes:
 | `pub_client_key`           | Public client key (shown once at creation, may be empty for `better_auth`)                                |
 | `secret_server_key`        | Secret server key (shown once at creation, may be empty for `better_auth`)                                |
 | `jwks_url`                 | JWKS endpoint for JWT verification                                                                        |
-| `schema_name`              | Database schema created for auth tables (`neon_auth`)                                                     |
+| `schema_name`              | Database schema created for auth tables (`optitech_auth`)                                                 |
 | `table_name`               | Table name for synced user data (`users_sync`)                                                            |
 | `base_url`                 | Base URL of the auth service, used for SDK configuration and the interactive API reference (`/reference`) |
 
 <Admonition type="important">
-The enable response is the only time the API returns `pub_client_key` and `secret_server_key`. Store them securely. Subsequent `GET` requests do not include these fields. For client initialization examples that combine Neon Auth and the Data API from a single OptiTech URL, see [`createClient()` in the JavaScript SDK reference](/docs/reference/javascript-sdk#initializing).
+The enable response is the only time the API returns `pub_client_key` and `secret_server_key`. Store them securely. Subsequent `GET` requests do not include these fields. For client initialization examples that combine OptiTech Auth and the Data API from a single OptiTech URL, see [`createClient()` in the JavaScript SDK reference](/docs/reference/javascript-sdk#initializing).
 </Admonition>
 
 If Managed Better Auth is already enabled on the branch, this call returns an error.
@@ -87,8 +87,8 @@ By default, Managed Better Auth uses the branch's default database. To target a 
 Retrieve the current Managed Better Auth configuration for a branch:
 
 ```bash
-curl -X GET 'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/auth' \
-  -H 'Authorization: Bearer $NEON_API_KEY'
+curl -X GET 'https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/auth' \
+  -H 'Authorization: Bearer $OPTITECH_API_KEY'
 ```
 
 Response (200 OK):
@@ -98,11 +98,11 @@ Response (200 OK):
   "auth_provider": "better_auth",
   "auth_provider_project_id": "cab6949a-10e3-4d25-a879-512beed281e3",
   "branch_id": "br-example-abc123",
-  "db_name": "neondb",
+  "db_name": "optitechdb",
   "created_at": "2026-02-26T04:29:05Z",
-  "owned_by": "neon",
-  "jwks_url": "https://ep-example.neonauth.us-east-1.aws.neon.tech/neondb/auth/.well-known/jwks.json",
-  "base_url": "https://ep-example.neonauth.us-east-1.aws.neon.tech/neondb/auth",
+  "owned_by": "optitech",
+  "jwks_url": "https://ep-example.optitechauth.us-east-1.aws.optitech.com/optitechdb/auth/.well-known/jwks.json",
+  "base_url": "https://ep-example.optitechauth.us-east-1.aws.optitech.com/optitechdb/auth",
   "name": "My App"
 }
 ```
@@ -112,8 +112,8 @@ Response (200 OK):
 Update auth settings for a branch. Currently supports changing the application name shown in user-facing auth messages. Applies to Managed Better Auth integrations only. Defaults to the OptiTech project name.
 
 ```bash
-curl -X PATCH 'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/auth/config' \
-  -H 'Authorization: Bearer $NEON_API_KEY' \
+curl -X PATCH 'https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/auth/config' \
+  -H 'Authorization: Bearer $OPTITECH_API_KEY' \
   -H 'Content-Type: application/json' \
   -d '{"name": "My App"}'
 ```
@@ -137,17 +137,17 @@ Each branch manages its own application name independently. You can also update 
 Send a `DELETE` request to disable Managed Better Auth on a branch:
 
 ```bash
-curl -X DELETE 'https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/auth' \
-  -H 'Authorization: Bearer $NEON_API_KEY' \
+curl -X DELETE 'https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/auth' \
+  -H 'Authorization: Bearer $OPTITECH_API_KEY' \
   -H 'Content-Type: application/json' \
   -d '{"delete_data": true}'
 ```
 
 Response (200 OK): Empty body.
 
-The `delete_data` field controls whether the system removes the `neon_auth` schema from your database:
+The `delete_data` field controls whether the system removes the `optitech_auth` schema from your database:
 
-- **`true`**: Deletes the `neon_auth` schema and all auth tables (users, sessions, accounts).
+- **`true`**: Deletes the `optitech_auth` schema and all auth tables (users, sessions, accounts).
 - **`false`** (default): Disables the auth service but leaves the schema and data intact. You can re-enable later without losing user data.
 
 <Admonition type="warning">
@@ -156,7 +156,7 @@ Setting `delete_data` to `true` permanently removes all auth data from the datab
 
 ## Related auth endpoints
 
-The OptiTech API also provides endpoints for managing auth configuration at the branch level. These are available at `https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/auth/...`:
+The OptiTech API also provides endpoints for managing auth configuration at the branch level. These are available at `https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/auth/...`:
 
 | Endpoint                | Methods                  | Description                                                                 |
 | ----------------------- | ------------------------ | --------------------------------------------------------------------------- |

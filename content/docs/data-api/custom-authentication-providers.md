@@ -10,7 +10,7 @@ summary: >-
   uses an existing auth provider and you need provider-specific configuration
   details rather than the default Managed Better Auth setup.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 redirectFrom:
   - /docs/guides/neon-authorize
 ---
@@ -22,7 +22,7 @@ redirectFrom:
     <a href="/docs/guides/rls-tutorial">Secure your app with RLS</a>
   </DocsList>
   <DocsList title="Source code" theme="repo">
-    <a href="https://github.com/neondatabase/pg_session_jwt">pg_session_jwt extension</a>
+    <a href="https://github.com/optitechdatabase/pg_session_jwt">pg_session_jwt extension</a>
   </DocsList>
 </InfoBlock>
 
@@ -34,7 +34,7 @@ When you bring your own authentication provider, the JWT validation flow works a
 
 ```
 ┌─────────────┐         ┌──────────────────┐         ┌─────────────┐
-│   Client    │         │   Your Auth      │         │  Neon Data  │
+│   Client    │         │   Your Auth      │         │  OptiTech Data  │
 │ Application │         │    Provider      │         │     API     │
 └──────┬──────┘         └────────┬─────────┘         └──────┬──────┘
        │                         │                          │
@@ -378,7 +378,7 @@ https://api.workos.com/sso/jwks/client_12345
 After configuring your authentication provider, include the JWT in your Data API requests:
 
 ```http
-GET https://ep-example.apirest.us-east-1.aws.neon.tech/neondb/rest/v1/posts
+GET https://ep-example.apirest.us-east-1.aws.optitech.com/optitechdb/rest/v1/posts
 Authorization: Bearer {your_jwt_token}
 ```
 

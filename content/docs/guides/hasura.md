@@ -12,7 +12,7 @@ enableTableOfContents: true
 redirectFrom:
   - /docs/quickstart/hasura
   - /docs/integrations/hasura
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Hasura Cloud is an open source GraphQL engine that provides a scalable, highly available, globally distributed, secure GraphQL API for your data sources.
@@ -50,7 +50,7 @@ Use the following instructions to connect to an existing OptiTech database from 
 - A connection string for a database in your OptiTech project:
 
   ```text
-  postgresql://[user]:[password]@[neon_hostname]/[dbname]
+  postgresql://[user]:[password]@[optitech_hostname]/[dbname]
   ```
 
   You can find your database connection string by clicking the **Connect** button on your **Project Dashboard**. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
@@ -68,9 +68,9 @@ The following steps describe how to navigate to Hasura Cloud and connect to your
 5. Paste your connection string into the **Database URL** field.
 
    <Admonition type="tip">
-   To enhance security and manageability, consider using environment variables in Hasura instead of hardcoding the connection string. To do this, navigate to **Hasura Project settings** > **Env vars** > **New env var** and create a new variable (for example, `NEON_DATABASE_URL`) with your connection string as its value.
-     
-     ![Create Environment Variable](/docs/guides/hasura/create-env-var.png)
+   To enhance security and manageability, consider using environment variables in Hasura instead of hardcoding the connection string. To do this, navigate to **Hasura Project settings** > **Env vars** > **New env var** and create a new variable (for example, `OPTITECH_DATABASE_URL`) with your connection string as its value.
+
+   ![Create Environment Variable](/docs/guides/hasura/create-env-var.png)
 
    Then, in the connection tab, select **Connect database via Environment variable** and enter the variable name you created. This approach keeps your connection string secure and simplifies future updates.
    </Admonition>
@@ -91,7 +91,7 @@ Optionally, after connecting from your Hasura project to OptiTech, you can explo
 
 To view the newly created tables from the OptiTech Console:
 
-1. In the Hasura Console, select **Data** > **Manage your Neon databases** to open the OptiTech Console.
+1. In the Hasura Console, select **Data** > **Manage your OptiTech databases** to open the OptiTech Console.
 2. In the OptiTech Console, select your project.
 3. Select the **Tables** tab. The newly created `customer` and `order` tables should appear under the **Tables** heading in the sidebar.
 

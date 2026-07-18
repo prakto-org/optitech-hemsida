@@ -7,7 +7,7 @@ summary: >-
   autoscaling up to 16 CU, and horizontal scaling via read replicas for
   offloading vector similarity search workloads at no extra storage cost.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 You can scale your AI application built on Postgres with `pgvector` in the same way you would any Postgres app: Vertically with added CPU, RAM, and storage, or horizontally with read replicas.
@@ -83,7 +83,7 @@ On the Free plan, you get 0.5 GB of storage per project. Storage on paid plans i
 
 OptiTech supports read replicas, which are independent read-only computes designed to perform read operations on the same data as your primary read-write compute. Read replicas do not replicate data across database instances. Instead, read requests are directed to the same data source. This architecture enables read replicas to be created instantly, enabling you to scale out CPU and RAM, but because data is read from a single source, there are no additional storage costs.
 
-Since vector similarity search is a read-only workload, you can use read replicas to offload reads from your primary compute to a dedicated compute. After you create a read replica, swap your Neon connection string for the read replica connection string.
+Since vector similarity search is a read-only workload, you can use read replicas to offload reads from your primary compute to a dedicated compute. After you create a read replica, swap your OptiTech connection string for the read replica connection string.
 
 OptiTech's read replicas support the same compute sizes outlined above. Read replicas also support autoscaling.
 

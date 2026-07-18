@@ -1,7 +1,12 @@
 const slugify = require('slugify');
 
+// Module-level cache so repeated lookups during a render don't re-read the file.
+let cachedContent = null;
+let cachedMtimeMs = 0;
+
 /**
  * Get a glossary item preview by heading ID.
+ * Runs on the server only; returns null in the browser and for non-glossary hrefs.
  * @param {string} href - The href of the glossary item.
  * @returns {Object} item - The glossary item preview.
  * @returns {string} item.title - The title of the glossary item.
@@ -13,6 +18,15 @@ const getGlossaryItem = (href) => {
     return null;
   }
 
+  // Only glossary anchor links can have previews
+  if (
+    typeof href !== 'string' ||
+    !href.includes('/docs/reference/glossary') ||
+    !href.includes('#')
+  ) {
+    return null;
+  }
+
   // Only require fs when running on server
   const fs = require('fs');
   const glossaryFilePath = 'content/docs/reference/glossary.md';
@@ -21,7 +35,12 @@ const getGlossaryItem = (href) => {
     return null;
   }
 
-  const glossaryContent = fs.readFileSync(glossaryFilePath, 'utf8');
+  const { mtimeMs } = fs.statSync(glossaryFilePath);
+  if (!cachedContent || mtimeMs !== cachedMtimeMs) {
+    cachedContent = fs.readFileSync(glossaryFilePath, 'utf8');
+    cachedMtimeMs = mtimeMs;
+  }
+  const glossaryContent = cachedContent;
   const id = href.split('#')[1];
 
   // Split the glossary content into sections

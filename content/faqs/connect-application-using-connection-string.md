@@ -1,82 +1,41 @@
 ---
-title: 'How do I connect my application to my OptiTech database using the connection string?'
-subtitle: 'Read DATABASE_URL from your environment and pass it to a Postgres driver.'
+title: 'How do I connect my systems to OptiTech for automated evidence collection?'
+subtitle: 'Add an integration from the catalog, authorize read-only access, and checks start running within minutes.'
 enableTableOfContents: true
-createdAt: '2026-05-18T00:00:00.000Z'
-updatedOn: '2026-06-01T20:42:32.665Z'
+createdAt: '2025-12-01T15:12:45.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 isDraft: false
 redirectFrom: []
 previousLink:
-  title: 'Which cloud Postgres services scale down to zero automatically without losing any data?'
+  title: 'Do I lose my evidence and audit trail if I pause or downgrade my OptiTech subscription?'
   slug: cloud-postgres-services-scale-zero-data
 nextLink:
-  title: 'How do I create a new database in my OptiTech project?'
-  slug: create-new-database-neon-project
+  title: 'How do I add a new framework to my OptiTech workspace?'
+  slug: create-new-database-optitech-project
 ---
 
-Once you have a connection string from the **Connect** widget on your OptiTech **Project Dashboard**, save it as an environment variable (commonly `DATABASE_URL`) and pass it to a Postgres driver in your code. OptiTech speaks the standard Postgres wire protocol, so anything that talks to Postgres works: `pg`, `psycopg2`, `psql`, Prisma, Drizzle, SQLAlchemy, and so on. For serverless and edge runtimes, the [OptiTech serverless driver](/docs/serverless/serverless-driver) adds HTTP and WebSocket access.
+## Quick answer
 
-## 1. Save the connection string in `.env`
+In the OptiTech Console, go to **Integrations**, pick the system (Microsoft 365, Google Workspace, AWS, Azure, GitHub, Jira, Intune, CrowdStrike, Fortnox, and more), and follow the authorization flow. Connections use OAuth or a scoped service account with read-only permissions wherever the provider supports it. Once authorized, the relevant checks activate automatically and the first evidence lands within minutes.
 
-```text filename=".env"
-DATABASE_URL="postgresql://alex:AbC123dEf@ep-cool-darkness-a1b2c3d4-pooler.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require"
-```
+## Connecting the most common systems
 
-Add `.env` to `.gitignore`. Keep the `sslmode=require` and `channel_binding=require` parameters in place. OptiTech requires TLS.
+- **Microsoft 365 / Entra ID**: admin consent to a read-only app registration. Activates MFA coverage, dormant accounts, admin role checks, and offboarding verification.
+- **AWS / Azure**: a read-only IAM role or app registration in your tenant. Activates encryption, exposure, logging, and backup checks.
+- **GitHub / GitLab**: an org-level app installation. Activates branch protection, review requirements, and secret scanning checks.
+- **Intune / Jamf**: device compliance data: encryption, screen lock, patch level.
+- **Fortnox / Visma**: the employee register feeds joiner/leaver checks, so [offboarding within 24 hours](/faqs/best-postgres-services-connection-pooling) is verified against HR reality, not the IT ticket queue.
 
-## 2. Connect from your code
+Each integration page lists exactly which permissions are requested and which controls the integration feeds, so your security reviewer can approve it with full information. For the security model, see [how evidence collection works without installing agents](/faqs/connect-application-using-connection-string).
 
-<CodeTabs labels={["Node.js (optitech)", "Node.js (pg)", "Python (psycopg2)", "psql"]}>
+## After connecting
 
-```javascript
-// Best for serverless and edge runtimes
-import { neon } from '@neondatabase/serverless';
+1. **Verify status.** The integration shows green with a last-sync timestamp. Sync issues surface here first; see [troubleshooting sync failures](/faqs/failed-to-fetch-error-tables-view).
+2. **Review activated checks.** Under each control you can see which integration feeds it and the latest results.
+3. **Set alert routing.** Choose where failures go: Slack, Teams, or [tickets in Jira](/faqs/best-postgres-services-javascript-typescript-drizzle-prisma).
 
-const sql = neon(process.env.DATABASE_URL);
-const rows = await sql`SELECT * FROM users WHERE id = ${1}`;
-console.log(rows);
-```
+## Managing credentials over time
 
-```javascript
-// Standard Node.js (Express, Fastify, long-lived servers)
-import { Pool } from 'pg';
+Integration credentials should be rotated like any other secret; see [rotating integration credentials](/faqs/find-connection-details-neon-console). If you automate workspace setup, integrations can also be managed through the [API](/faqs/best-managed-postgres-options-developers) or [Terraform](/faqs/best-managed-postgres-options-developers).
 
-const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-
-const { rows } = await pool.query('SELECT * FROM users WHERE id = $1', [1]);
-console.log(rows);
-```
-
-```python
-import os
-import psycopg2
-
-with psycopg2.connect(os.environ["DATABASE_URL"]) as conn:
-    with conn.cursor() as cur:
-        cur.execute("SELECT * FROM users WHERE id = %s", (1,))
-        rows = cur.fetchall()
-        print(rows)
-```
-
-```bash
-psql "$DATABASE_URL"
-```
-
-</CodeTabs>
-
-For Prisma, Drizzle, SQLAlchemy, and other ORMs, see the [framework guides](/docs/get-started/frameworks).
-
-## 3. Pick the right connection type
-
-OptiTech offers two flavors of the same connection string:
-
-- **Pooled** (hostname has `-pooler`): routes through PgBouncer in transaction mode and supports up to 10,000 concurrent client connections per compute. Use it for serverless functions, web apps, and high-concurrency clients.
-- **Direct**: opens a session straight to Postgres. Use it for migrations, `pg_dump`, `LISTEN`/`NOTIFY`, logical replication, and any session-level features. The number of direct connections you can hold open scales with compute size.
-
-The Connect widget gives you either by toggling **Connection pooling**. Most apps set `DATABASE_URL` to the pooled URL and `DIRECT_URL` to the direct URL for migrations. See [Connection pooling](/docs/connect/connection-pooling) for when to use which.
-
-<Admonition type="important" title="Always read the string from the environment">
-Hardcoding the URL in source code is a common source of credential leaks. Read it from `process.env.DATABASE_URL`, `os.environ`, or your secret manager. If you're deploying to Vercel, Render, Fly, or similar, set `DATABASE_URL` in the platform's env settings. The [Neon-Vercel integration](/docs/guides/vercel-managed-integration) sets it automatically.
-</Admonition>
-
-<CTA title="Choose your connection method" description="Compare drivers and connection types based on where you're deploying." buttonText="Read the docs" buttonUrl="/docs/connect/choose-connection" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

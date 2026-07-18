@@ -6,13 +6,13 @@ summary: >-
   an application using `signIn.social()`, with Google enabled in development via
   shared credentials and GitHub and Vercel requiring custom OAuth app credentials.
   For production, register the provider's authorized redirect URI as
-  `{NEON_AUTH_BASE_URL}/callback/{provider}` in each provider's console (not the
+  `{OPTITECH_AUTH_BASE_URL}/callback/{provider}` in each provider's console (not the
   app's callbackURL), and add every callbackURL origin to Managed Better Auth's trusted
   domains allowlist. Because each OptiTech branch has its own Auth base URL, OAuth
   credentials and redirect URIs must be configured per branch; preview
   deployments can use wildcard trusted domain patterns to cover multiple hosts.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="Managed Better Auth" />
@@ -121,40 +121,40 @@ For production, configure your own OAuth app credentials. GitHub and Vercel OAut
 Managed Better Auth uses [Better Auth](https://www.better-auth.com/) callback routes. For each OAuth provider you enable, register a redirect URI with this shape:
 
 ```text
-{NEON_AUTH_BASE_URL}/callback/{provider}
+{OPTITECH_AUTH_BASE_URL}/callback/{provider}
 ```
 
-Use the **Auth base URL** from the OptiTech Console for that branch. In your app it is usually the `NEON_AUTH_BASE_URL` or `VITE_NEON_AUTH_URL` value, or the URL you pass to `createAuthClient`. Do not add a trailing slash before `/callback`.
+Use the **Auth base URL** from the OptiTech Console for that branch. In your app it is usually the `OPTITECH_AUTH_BASE_URL` or `VITE_OPTITECH_AUTH_URL` value, or the URL you pass to `createAuthClient`. Do not add a trailing slash before `/callback`.
 
 Replace `{provider}` with `google`, `github`, or `vercel`.
 
 Example authorized redirect URI for Google:
 
 ```text
-https://ep-example.neonauth.us-east-2.aws.neon.tech/neondb/auth/callback/google
+https://ep-example.optitechauth.us-east-2.aws.optitech.com/optitechdb/auth/callback/google
 ```
 
-Whether you use the [Next.js auth proxy](/docs/auth/reference/nextjs-server#auth-handler) (`app/api/auth/[...path]/route.ts`) or call Managed Better Auth from the browser, the provider redirects to **`{NEON_AUTH_BASE_URL}/callback/{provider}`** for that branch.
+Whether you use the [Next.js auth proxy](/docs/auth/reference/nextjs-server#auth-handler) (`app/api/auth/[...path]/route.ts`) or call Managed Better Auth from the browser, the provider redirects to **`{OPTITECH_AUTH_BASE_URL}/callback/{provider}`** for that branch.
 
 <Admonition type="important" title="Do not confuse two different URLs">
 The **`callbackURL`** argument in `signIn.social()` is where users land **after** Managed Better Auth finishes the flow. That URL must live on an origin you add under [trusted domains](/docs/auth/guides/configure-domains).
 
-The provider's **authorized redirect URI** is where Google (or GitHub, and so on) sends the browser **during** the OAuth handshake. It must be **`{NEON_AUTH_BASE_URL}/callback/{provider}`**, not your app's homepage or only the `callbackURL`.
+The provider's **authorized redirect URI** is where Google (or GitHub, and so on) sends the browser **during** the OAuth handshake. It must be **`{OPTITECH_AUTH_BASE_URL}/callback/{provider}`**, not your app's homepage or only the `callbackURL`.
 
 Using only your marketing site's URL in Google Cloud Console, or only the `callbackURL`, is a common cause of `redirect_uri_mismatch`.
 </Admonition>
 
 **Google Cloud Console**
 
-Create an OAuth client with application type **Web application**. Under **Authorized redirect URIs**, add **`{NEON_AUTH_BASE_URL}/callback/google`** for each branch or environment (production, local testing against a branch, previews). Under **Authorized JavaScript origins**, include origins where your UI runs (for example `http://localhost:5173`, `https://myapp.com`) when Google asks for them, and include your Managed Better Auth origin (the scheme and host of `NEON_AUTH_BASE_URL`) if required.
+Create an OAuth client with application type **Web application**. Under **Authorized redirect URIs**, add **`{OPTITECH_AUTH_BASE_URL}/callback/google`** for each branch or environment (production, local testing against a branch, previews). Under **Authorized JavaScript origins**, include origins where your UI runs (for example `http://localhost:5173`, `https://myapp.com`) when Google asks for them, and include your Managed Better Auth origin (the scheme and host of `OPTITECH_AUTH_BASE_URL`) if required.
 
 **GitHub**
 
-Set **Authorization callback URL** to **`{NEON_AUTH_BASE_URL}/callback/github`**.
+Set **Authorization callback URL** to **`{OPTITECH_AUTH_BASE_URL}/callback/github`**.
 
 **Vercel**
 
-Follow [Vercel's OAuth app docs](https://vercel.com/docs/sign-in-with-vercel/manage-from-dashboard#create-an-app) and register **`{NEON_AUTH_BASE_URL}/callback/vercel`**.
+Follow [Vercel's OAuth app docs](https://vercel.com/docs/sign-in-with-vercel/manage-from-dashboard#create-an-app) and register **`{OPTITECH_AUTH_BASE_URL}/callback/vercel`**.
 
 ### 2. Add trusted domains for your app
 
@@ -172,13 +172,13 @@ Managed Better Auth will use your configured credentials for that branch.
 
 ### Branches and preview deployments
 
-Each branch has its own **`NEON_AUTH_BASE_URL`**. Register **`{NEON_AUTH_BASE_URL}/callback/google`** (and other providers you use) for every branch you test against (for example preview databases).
+Each branch has its own **`OPTITECH_AUTH_BASE_URL`**. Register **`{OPTITECH_AUTH_BASE_URL}/callback/google`** (and other providers you use) for every branch you test against (for example preview databases).
 
 For preview deployments, trusted domains support **wildcard patterns** (for example `https://*.my-app-preview.vercel.app`), so you can cover many preview hosts without listing each one. See [Configure trusted domains](/docs/auth/guides/configure-domains), [Branching authentication](/docs/auth/branching-authentication), and the API for [trusted domains](/docs/reference/api/auth/add-branch-neon-auth-trusted-domain).
 
 ## Google OAuth branding
 
-When using your own Google OAuth credentials, users will see a consent screen before signing in. Google shows a **Continue to** label that uses the hostname from your OAuth redirect URI (see [Production setup](#production-setup)), typically the Neon-managed host from your **`NEON_AUTH_BASE_URL`**.
+When using your own Google OAuth credentials, users will see a consent screen before signing in. Google shows a **Continue to** label that uses the hostname from your OAuth redirect URI (see [Production setup](#production-setup)), typically the OptiTech-managed host from your **`OPTITECH_AUTH_BASE_URL`**.
 
 Without completing the OAuth consent screen branding (app name, support email, and authorized domains in Google Cloud Console), the consent UI can look generic or confusing even when your Client ID and Client Secret are correct.
 

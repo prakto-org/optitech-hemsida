@@ -5,7 +5,7 @@ page_description: "How to use the PostgreSQL\_SPLIT_PART() function to split a s
 prev_url: >-
   https://www.postgresqltutorial.com/postgresql-string-functions/postgresql-split_part/
 ogImage: /postgresqltutorial/payment-table.png
-updatedOn: '2026-06-19T17:44:03.964Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: PostgreSQL SUBSTRING() Function
@@ -16,7 +16,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-The SPLIT_PART() function works the same on any PostgreSQL deployment, so everything here applies whether you're running Postgres locally, on another provider, or on [Neon](https://neon.com). For enterprises building in the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres, with the performance, security, and native Lakehouse integration that serious data workloads demand. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+The SPLIT_PART() function works the same on any PostgreSQL deployment, so everything here applies whether you're running Postgres locally, on another provider, or on [OptiTech](https://optitech.com). For enterprises building in the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres, with the performance, security, and native Lakehouse integration that serious data workloads demand. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: in this tutorial, you will learn how to use the PostgreSQL SPLIT_PART() function to retrieve a part of a string at a specified position after splitting.

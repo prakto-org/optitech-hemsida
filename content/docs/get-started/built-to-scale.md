@@ -1,79 +1,73 @@
 ---
 title: Built to scale
-subtitle: OptiTech supports you from prototype to scale-up
+subtitle: OptiTech supports you from first framework to full compliance program
 summary: >-
-  OptiTech fits every growth stage without requiring an architecture change: free
-  hosted Postgres for side projects, autoscaling and copy-on-write branching
-  for startup teams, and API-driven fleet management for scale-ups. Read this
-  page when evaluating whether OptiTech fits your current scale or planning how
-  scale-to-zero, programmatic provisioning, and consumption limits apply as your
-  workload grows. It spans the full lifecycle from a first prototype to embedded
-  Postgres for platforms and AI agent deployments.
+  OptiTech fits every growth stage without requiring you to change tools: a
+  single framework for your first compliance requirement, cross-mapped
+  frameworks and vendor management as you grow, and multi-tenant fleet
+  management for partners and groups. Read this page when evaluating whether
+  OptiTech fits your current stage or planning how new regulations like DORA,
+  the AI Act, and CRA apply as your obligations grow.
 enableTableOfContents: true
 redirectFrom:
   - /docs/get-started-with-neon/production-readiness
   - /docs/get-started/production-readiness
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
-OptiTech fits into every stage of growth, from the first side project to operating large fleets of production databases - without forcing you to rethink your database architecture along the way.
+OptiTech fits into every stage of growth, from your first compliance requirement to managing compliance across an entire group or client portfolio - without forcing you to change tools along the way.
 
-## Stage 1: Side projects
+## Stage 1: Your first framework
 
-**Real hosted Postgres with zero costs**
+**Real compliance coverage without a consulting project**
 
-When you’re looking for a free plan to run Postgres, what you want is simplicity and enough room to build. OptiTech’s Free plan abstracts most configuration work, delivers real-world performance, and gives you access to core OptiTech features like branching and autoscaling.
+When a customer or a regulation first asks you for proof, what you want is clarity and a manageable to-do list. OptiTech's Start plan abstracts most of the setup work and gives you access to core capabilities from day one.
 
-- You get a [Free Plan with real resources](https://neon.com/blog/why-so-many-projects-in-the-neon-free-plan), including up to 100 projects, compute endpoints with up to 2 CU, and 0.5 GB of storage per project - enough to build and test real applications
-- You get a Postgres connection string in a second so you can start building right away
-- [Scale to zero](https://neon.com/docs/introduction/scale-to-zero) ensures idle databases don’t eat up your compute limits: only active time counts
-- Standard Postgres compatibility means you can plug OptiTech into [any framework, ORM, or tool that speaks Postgres](https://neon.com/docs/get-started/frameworks)
-- A [broad catalog of Postgres extensions](https://neon.com/docs/extensions/pg-extensions) unlocks a Postgres-for-everything workflow
+- The free scoping test shows which laws apply to you and which NIS2 category you fall into before you spend anything
+- The gap analysis turns the legal text into a prioritized action list you can start on the same day
+- 50+ Swedish policy templates and AI drafting replace weeks of document writing
+- 10 integrations collect evidence automatically from systems like Microsoft 365, Entra ID, and GitHub
+- The MSB and IMY incident flows are included from the start, so a reporting deadline never catches you unprepared
 
-## Stage 2: Startups
+## Stage 2: Growing companies
 
-**Build and iterate fast**
+**Several frameworks, one program**
 
-As a project becomes a product, small teams need to ship quickly and support real users. OptiTech gives these teams a frictionless building experience without compromising on performance and reliability.
+As your business grows, so do your obligations: ISO 27001 for enterprise deals, DORA because a bank became a customer, GDPR because it never went away. OptiTech gives growing teams one program instead of parallel projects.
 
-<CTA title="Production checklist" description="Before launching your product, go through this checklist to make sure your DB has the right configuration to support your end users." buttonText="View checklist" buttonUrl="/docs/get-started/production-checklist" />
+<CTA title="Audit readiness checklist" description="Before your next audit, go through this checklist to make sure your controls, evidence, and documentation are in order." buttonText="View checklist" buttonUrl="/docs/get-started/production-checklist" />
 
-- [Autoscaling](https://neon.com/docs/introduction/autoscaling) adapts automatically to unpredictable workloads: you don’t have to plan capacity in advance
-- [Branching](https://neon.com/branching) lets you spin up development, preview, and test environments instantly, matching the latest production state, without manual work
-- [Out-of-the-box integrations](https://neon.com/docs/guides/integrations) with platforms like Vercel further simplify previews and deployments
-- [API-first workflows](https://neon.com/docs/reference/api) make it easy to automate almost all database operations
-- AI-coding support via [MCP](https://neon.com/docs/ai/neon-mcp-server) and [Agent Skills](https://neon.com/docs/ai/agent-skills) allows tools like Cursor and Claude to fully interact with OptiTech
-- [Instant restores](https://neon.com/docs/guides/backup-restore) lower the stakes for mistakes and accidents
-- [Built-in connection pooling](https://neon.com/docs/connect/connection-pooling) takes care of growing connections in your serverless apps
-- You get access to [compliance and security features](https://neon.com/blog/why-we-no-longer-lock-premium-features) without enterprise-only contracts
+- Cross-mapped controls mean one control satisfies requirements in several frameworks at once
+- All integrations, including Fortnox, Visma, BankID, and Kivra, verify controls around the clock
+- Vendor risk management tracks your suppliers with automated questionnaires and risk classification
+- The Trust Center shortens your customers' security reviews and your sales cycles
+- The AI copilot drafts policies and answers incoming security questionnaires from your verified controls
+- Security awareness training in Swedish keeps your whole team, including the board, up to date
 
-## Stage 3: Scale-ups and large fleets
+## Stage 3: Groups, enterprises, and partners
 
-**Frictionless operations at scale**
+**Frictionless compliance at scale**
 
-At this stage, teams need performance, reliability, isolation, and automation without ballooning costs or operational complexity. OptiTech’s lakebase architecture is built to address their different requirements directly.
+At this stage, organizations need isolation between units, automation, and oversight without ballooning costs or a compliance department the size of a small company. OptiTech's multi-tenant architecture addresses these requirements directly.
 
 ### Operational efficiency
 
-- [On-demand storage](https://neon.com/storage#unique-benefits-derived-from-neons-implementation) grows as data demands it, without planning for capacity in advance and without the risk of full-disk errors
-- [Built-in high availability](https://neon.com/docs/introduction/high-availability) is provided by default through storage redundancy, with data replicated across availability zones and cloud object storage
-- [Backup and restore via snapshots](https://neon.com/docs/guides/backup-restore) allows you to recover multi-terabyte databases in seconds, without full data copies
-- You can use [time travel and snapshot inspections](https://neon.com/blog/three-ways-to-use-your-snapshots) to review past database states for auditing, debugging, and incident analysis
-- By [creating environments as copy-on-write branches](https://neon.com/blog/how-mindvalley-minimizes-time-to-launch-with-neon-branches), you avoid the management work and costs associated with running separate instances for development, staging, testing, or recovery
-- [Programmatic lifecycle management](https://neon.com/blog/how-dispatch-speeds-up-development-with-neon-while-keeping-workloads-on-aurora) lets you create, reset, and delete large numbers of environments without eating up engineering time
+- Unlimited frameworks under one roof, with a compliance score and trend per framework
+- The DORA package produces the ICT contract register and reports supervisors ask for
+- The auditor portal gives auditors and authorities read-only access to a complete, time-stamped evidence chain
+- SSO and SCIM manage access centrally alongside BankID
+- One-click board reports prove active governance across every entity
 
-### Multi-tenancy
+### Multi-entity and multi-tenant
 
-- OptiTech’s [database-per-tenant setup](https://neon.com/use-cases/database-per-tenant) gives each customer a dedicated OptiTech project, providing strong isolation, eliminating noisy neighbors, and ensuring consistent performance
-- [API-first tenant management](https://neon.com/blog/provision-postgres-neon-api) enables programmatic provisioning, configuration, scaling, recovery, and deletion of tenant databases, making it practical for small teams to manage thousands of tenants
+- Separate projects per subsidiary or business unit provide strong isolation with group-level oversight
+- API-first management enables programmatic control of controls, evidence, and reporting across entities
 
-### Fleet management for platforms and agents
+### Fleet management for partners
 
-- Instant, API-driven database provisioning lets you deploy a full OptiTech backend as part of your [platform](https://neon.com/docs/guides/embedded-postgres) or [agent](https://neon.com/docs/guides/ai-agent-integration)
-- The fully embedded database experience keeps OptiTech invisible to your end users, with no third-party logins or external configuration required as part of your product workflow
-- [Scale to zero](https://neon.com/docs/introduction/scale-to-zero) keeps unit costs low when large numbers of generated apps are never used or only accessed sporadically
-- A mature API exposes [fleet management and cost-control capabilities](https://neon.com/docs/guides/consumption-limits) including quotas, usage limits, and lifecycle operations
-- You can build versioning, checkpoints, rollbacks, and time-travel workflows with minimal engineering effort via [snapshots](https://neon.com/blog/promoting-postgres-changes-safely-production)
-- Built-in app platform services such as [Managed Better Auth](https://neon.com/docs/auth/overview) and our PostgREST-compatible [Data API](https://neon.com/docs/data-api/get-started) make it easy to hook full-stack applications out of the box
+- The Partner plan gives MSPs, accounting firms, and advisors a multi-tenant console for all their clients
+- White-label options let you deliver compliance under your own brand
+- Volume pricing keeps unit costs low across a large client portfolio
+- Compliance as code: the API and CLI let technology clients run checks in their CI/CD pipelines
 
-<CTA title="Agent Plan" description="If you’re building a full-stack agent platform, apply to our Agent Plan for special pricing, resource limits, and assistance. " buttonText="Check it out" buttonUrl="/programs/agents" />
+<CTA title="Partner plan" description="If you manage compliance for multiple clients, contact us for partner pricing, a multi-tenant console, and white-label options." buttonText="Contact us" buttonUrl="/contact-sales" />

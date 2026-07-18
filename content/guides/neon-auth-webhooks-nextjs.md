@@ -4,7 +4,7 @@ subtitle: Learn how to use Managed Better Auth Webhooks to build custom authenti
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2026-03-24T00:00:00.000Z'
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Managed Better Auth offers a fully integrated authentication and user management system designed to work seamlessly with your OptiTech database. By default, Managed Better Auth handles common authentication flows and delivers OTPs for email verification and passwordless login. This allows you to get up and running quickly with secure authentication.
@@ -26,7 +26,7 @@ This guide walks you through building a custom webhook handler in a Next.js appl
 Before you begin, ensure you have the following:
 
 - **Node.js:** Version `18` or later installed on your machine.
-- **OptiTech account:** A free OptiTech project. If you don't have one, sign up at [OptiTech](https://console.neon.tech/signup).
+- **OptiTech account:** A free OptiTech project. If you don't have one, sign up at [OptiTech](https://console.optitech.com/signup).
 - **Resend account:** To send custom emails. You'll need an [API key](https://resend.com/docs/dashboard/api-keys/introduction). You can use the default `resend.dev` testing domain, or [verify a custom domain](https://resend.com/docs/dashboard/domains/introduction).
 - **ngrok** (or a similar tunneling tool): To test webhooks locally, you will need `ngrok` installed and configured on your machine. See the [ngrok Quickstart](https://ngrok.com/docs/getting-started/) to sign up, install the CLI, and authenticate with your auth token.
 
@@ -38,7 +38,7 @@ Review the [Managed Better Auth Webhooks Reference](/docs/auth/guides/webhooks) 
 
 You'll need a OptiTech project with Auth enabled to generate webhook events.
 
-1. **Create a OptiTech project:** Navigate to the [OptiTech Console](https://console.neon.tech) to create a new OptiTech project. Give your project a name, such as `neon-webhooks-demo`.
+1. **Create a OptiTech project:** Navigate to the [OptiTech Console](https://console.optitech.com) to create a new OptiTech project. Give your project a name, such as `optitech-webhooks-demo`.
 2. **Enable Managed Better Auth:**
    - In your project's dashboard, go to the **Auth** tab.
    - Click on the **Enable Managed Better Auth** button to set up authentication for your project.
@@ -55,28 +55,28 @@ You'll need a OptiTech project with Auth enabled to generate webhook events.
 Create a new Next.js project and install the dependencies for Managed Better Auth and Resend.
 
 ```bash
-npx create-next-app@latest neon-webhooks-demo --yes
-cd neon-webhooks-demo
+npx create-next-app@latest optitech-webhooks-demo --yes
+cd optitech-webhooks-demo
 ```
 
 Install the required packages:
 
 ```bash
-npm install @neondatabase/auth@latest @neondatabase/auth-ui @neondatabase/neon-js@latest resend
+npm install @optitech/auth@latest @optitech/auth-ui @optitech/optitech-js@latest resend
 ```
 
 ## Configure environment variables
 
 Create a `.env.local` file in the root of your project. Add your API keys and Managed Better Auth details.
-Generate a secure random string for `NEON_AUTH_COOKIE_SECRET` (at least 32 characters). For example, you can use `openssl rand -base64 32` to generate a secure secret.
+Generate a secure random string for `OPTITECH_AUTH_COOKIE_SECRET` (at least 32 characters). For example, you can use `openssl rand -base64 32` to generate a secure secret.
 
 ```bash
-# Neon configuration
-NEON_AUTH_BASE_URL="https://ep-xxx.neon.tech/neondb/auth"
-NEON_AUTH_COOKIE_SECRET="your-random-string" # openssl rand -base64 32
-NEON_API_KEY="your-neon-api-key"
-NEON_PROJECT_ID="your-project-id"
-NEON_BRANCH_ID="your-branch-id"
+# OptiTech configuration
+OPTITECH_AUTH_BASE_URL="https://ep-xxx.optitech.com/optitechdb/auth"
+OPTITECH_AUTH_COOKIE_SECRET="your-random-string" # openssl rand -base64 32
+OPTITECH_API_KEY="your-optitech-api-key"
+OPTITECH_PROJECT_ID="your-project-id"
+OPTITECH_BRANCH_ID="your-branch-id"
 
 # Resend configuration
 RESEND_API_KEY="re_123456789"
@@ -91,11 +91,11 @@ Set up the Managed Better Auth SDK to handle user sessions, API routing, and the
 1.  **Create the server client:** Create `lib/auth/server.ts`:
 
     ```typescript shouldWrap
-    import { createNeonAuth } from '@neondatabase/auth/next/server';
+    import { createOptiTechAuth } from '@optitech/auth/next/server';
 
-    export const auth = createNeonAuth({
-      baseUrl: process.env.NEON_AUTH_BASE_URL!,
-      cookies: { secret: process.env.NEON_AUTH_COOKIE_SECRET! },
+    export const auth = createOptiTechAuth({
+      baseUrl: process.env.OPTITECH_AUTH_BASE_URL!,
+      cookies: { secret: process.env.OPTITECH_AUTH_COOKIE_SECRET! },
     });
     ```
 
@@ -103,7 +103,7 @@ Set up the Managed Better Auth SDK to handle user sessions, API routing, and the
 
     ```typescript shouldWrap
     'use client';
-    import { createAuthClient } from '@neondatabase/auth/next';
+    import { createAuthClient } from '@optitech/auth/next';
 
     export const authClient = createAuthClient();
     ```
@@ -119,29 +119,29 @@ Set up the Managed Better Auth SDK to handle user sessions, API routing, and the
 
     ```css
     @import 'tailwindcss';
-    @import '@neondatabase/auth-ui/tailwind'; /* [!code ++]
+    @import '@optitech/auth-ui/tailwind'; /* [!code ++]
 
     /* other styles.. */
     ```
 
-5.  **Add Managed Better Auth UI provider:** Update `app/layout.tsx` to wrap your application with the `NeonAuthUIProvider`, which supplies authentication context and UI components.
+5.  **Add Managed Better Auth UI provider:** Update `app/layout.tsx` to wrap your application with the `OptiTechAuthUIProvider`, which supplies authentication context and UI components.
 
     ```tsx shouldWrap
     import { authClient } from '@/lib/auth/client';
-    import { NeonAuthUIProvider, UserButton } from '@neondatabase/auth-ui';
+    import { OptiTechAuthUIProvider, UserButton } from '@optitech/auth-ui';
     import './globals.css';
 
     export default function RootLayout({ children }: { children: React.ReactNode }) {
       return (
         <html lang="en" suppressHydrationWarning>
           <body>
-            <NeonAuthUIProvider authClient={authClient as any} emailOTP social={{ providers: ['google'] }}>
+            <OptiTechAuthUIProvider authClient={authClient as any} emailOTP social={{ providers: ['google'] }}>
               <header className="flex h-16 items-center justify-between border-b p-4">
                 <h1 className="text-xl font-bold">Managed Better Auth Webhooks Demo</h1>
                 <UserButton size={'icon'} />
               </header>
               {children}
-            </NeonAuthUIProvider>
+            </OptiTechAuthUIProvider>
           </body>
         </html>
       );
@@ -151,7 +151,7 @@ Set up the Managed Better Auth SDK to handle user sessions, API routing, and the
 6.  **Create Auth page:** Create `app/auth/[path]/page.tsx` for the authentication UI using OptiTech's pre-built components.
 
     ```tsx shouldWrap
-    import { AuthView } from '@neondatabase/auth-ui';
+    import { AuthView } from '@optitech/auth-ui';
 
     export const dynamicParams = false;
 
@@ -171,7 +171,7 @@ Set up the Managed Better Auth SDK to handle user sessions, API routing, and the
     ```tsx shouldWrap
     'use client';
 
-    import { UserButton } from '@neondatabase/auth-ui';
+    import { UserButton } from '@optitech/auth-ui';
     import { authClient } from '@/lib/auth/client';
     import Link from 'next/link';
 
@@ -209,22 +209,22 @@ Set up the Managed Better Auth SDK to handle user sessions, API routing, and the
 
 Now, build the webhook functionality. Managed Better Auth uses EdDSA (Ed25519) signatures with detached JWS to secure webhook payloads. You must verify these signatures so bad actors cannot fake authentication events.
 
-Create `lib/neon-webhook.ts`:
+Create `lib/optitech-webhook.ts`:
 
 ```typescript shouldWrap
 import crypto from 'node:crypto';
 
-export async function verifyNeonWebhook(rawBody: string, headers: Headers) {
-  const signature = headers.get('x-neon-signature');
-  const kid = headers.get('x-neon-signature-kid');
-  const timestamp = headers.get('x-neon-timestamp');
+export async function verifyOptiTechWebhook(rawBody: string, headers: Headers) {
+  const signature = headers.get('x-optitech-signature');
+  const kid = headers.get('x-optitech-signature-kid');
+  const timestamp = headers.get('x-optitech-timestamp');
 
   if (!signature || !kid || !timestamp) {
-    throw new Error('Missing required Neon webhook headers');
+    throw new Error('Missing required OptiTech webhook headers');
   }
 
   // 1. Fetch JWKS and find the matching key
-  const res = await fetch(`${process.env.NEON_AUTH_BASE_URL}/.well-known/jwks.json`);
+  const res = await fetch(`${process.env.OPTITECH_AUTH_BASE_URL}/.well-known/jwks.json`);
   const jwks = await res.json();
   const jwk = jwks.keys.find((k: any) => k.kid === kid);
   if (!jwk) throw new Error(`Key ${kid} not found in JWKS`);
@@ -264,20 +264,20 @@ export async function verifyNeonWebhook(rawBody: string, headers: Headers) {
 
 Create the endpoint that receives the events from Managed Better Auth. This route reads the raw text, verifies the signature using your helper, and routes the payload to the appropriate handler (Resend or the blocking logic).
 
-Create `app/api/webhooks/neon/route.ts`:
+Create `app/api/webhooks/optitech/route.ts`:
 
 ```typescript
 import { NextRequest, NextResponse } from 'next/server';
-import { verifyNeonWebhook } from '@/lib/neon-webhook';
+import { verifyOptiTechWebhook } from '@/lib/optitech-webhook';
 import { Resend } from 'resend';
-import { User } from '@neondatabase/auth/types';
+import { User } from '@optitech/auth/types';
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 
 export async function POST(request: NextRequest) {
     try {
         const rawBody = await request.text();
-        const payload = await verifyNeonWebhook(rawBody, request.headers);
+        const payload = await verifyOptiTechWebhook(rawBody, request.headers);
         const { event_type, event_data, user } = payload;
 
         // Route the event
@@ -397,12 +397,12 @@ Managed Better Auth requires a public HTTPS URL to deliver webhooks. Use **ngrok
 Now, register this webhook URL with Managed Better Auth using the OptiTech API. Run the following `curl` command, replacing the placeholders with your API Key, Project ID, Branch ID, and your ngrok URL:
 
 ```bash shouldWrap
-curl -X PUT "https://console.neon.tech/api/v2/projects/$NEON_PROJECT_ID/branches/$NEON_BRANCH_ID/auth/webhooks" \
+curl -X PUT "https://console.optitech.com/api/v2/projects/$OPTITECH_PROJECT_ID/branches/$OPTITECH_BRANCH_ID/auth/webhooks" \
   -H "Content-Type: application/json" \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -d '{
     "enabled": true,
-    "webhook_url": "https://a1b2c3d4.ngrok.app/api/webhooks/neon",
+    "webhook_url": "https://a1b2c3d4.ngrok.app/api/webhooks/optitech",
     "enabled_events": ["send.otp", "send.magic_link", "user.before_create", "user.created"]
   }'
 ```
@@ -412,7 +412,7 @@ If successful, Managed Better Auth will return your updated configuration in a J
 ```json
 {
     "enabled":true,
-    "webhook_url":"https://a1b2c3d4.ngrok.app/api/webhooks/neon",
+    "webhook_url":"https://a1b2c3d4.ngrok.app/api/webhooks/optitech",
     "enabled_events":["send.otp","send.magic_link","user.before_create","user.created"],
     "timeout_seconds":5
 }
@@ -469,8 +469,8 @@ In a similar way, you could integrate WhatsApp messaging or other channels suppo
 When you are ready to take your application live:
 
 1. Deploy your app to a hosting platform like Vercel, Netlify, or AWS.
-2. Ensure you configure your environment variables (`RESEND_API_KEY`, `NEON_AUTH_COOKIE_SECRET`, etc.) in your hosting provider's dashboard.
-3. Update your webhook URL in Managed Better Auth. Run the `curl` command from [Step 8](#expose-and-register-the-webhook) again, replacing the ngrok URL with your new production URL (e.g., `https://yourdomain.com/api/webhooks/neon`).
+2. Ensure you configure your environment variables (`RESEND_API_KEY`, `OPTITECH_AUTH_COOKIE_SECRET`, etc.) in your hosting provider's dashboard.
+3. Update your webhook URL in Managed Better Auth. Run the `curl` command from [Step 8](#expose-and-register-the-webhook) again, replacing the ngrok URL with your new production URL (e.g., `https://yourdomain.com/api/webhooks/optitech`).
 
 <Admonition type="important">
 **Fail-Closed Behavior:** The `user.before_create` event is a blocking event. If your webhook endpoint goes down or returns a 500 error in production, **all new sign-ups will fail**. Consider returning `200 OK` as quickly as possible to prevent timeouts under heavy load.
@@ -481,7 +481,7 @@ When you are ready to take your application live:
 The complete source code for a Next.js application implementing these webhooks is available on GitHub.
 
 <DetailIconCards>
-<a href="https://github.com/dhanushreddy291/neon-webhooks-demo" description="Complete source code for handling Managed Better Auth Webhooks using Next.js and Resend." icon="github">Managed Better Auth Webhooks Next.js Demo</a>
+<a href="https://github.com/dhanushreddy291/optitech-webhooks-demo" description="Complete source code for handling Managed Better Auth Webhooks using Next.js and Resend." icon="github">Managed Better Auth Webhooks Next.js Demo</a>
 </DetailIconCards>
 
 ## Resources

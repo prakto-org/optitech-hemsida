@@ -4,7 +4,7 @@ subtitle: Learn how to set up Amazon Q Business to query your OptiTech Postgres 
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2024-11-23T00:00:00.000Z'
-updatedOn: '2026-06-04T15:33:28.271Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Amazon Q Business enables you to build an interactive chat application that combines your OptiTech Postgres data with large language model capabilities.
@@ -18,7 +18,7 @@ In this guide, you'll learn how to set up Amazon Q Business to query your OptiTe
 Before starting, you'll need:
 
 - An [AWS Account](https://aws.amazon.com/q/) with Amazon Q Business subscription (Pro or Lite plan)
-- A [OptiTech](https://console.neon.tech/signup) account and project
+- A [OptiTech](https://console.optitech.com/signup) account and project
 - [AWS IAM Identity Center](https://docs.aws.amazon.com/amazonq/latest/qbusiness-ug/idc-setup.html) configured (recommended) or Identity Federation through IAM
 - Basic understanding of databases and SQL
 
@@ -93,15 +93,15 @@ Head to the [Amazon Q Business Console](https://us-east-1.console.aws.amazon.com
 
    Under '**Source**' add the following details:
    - Data source name: OptiTech Database
-   - Host: your-neon-hostname.neon.tech
+   - Host: your-optitech-hostname.optitech.com
    - Port: 5432
-   - Instance: `your_neon_database`
+   - Instance: `your_optitech_database`
    - Check the '**Enable SSL Certificate Location**' box but leave the '**SSL Certificate Location**' field empty
 
    Under '**Authentication**', click on the '**Create and add a secret**' button and add the following details:
    - Secret name: OptiTech Database Secret
-   - Username: `your_neon_database_username`
-   - Password: `your_neon_database_password`
+   - Username: `your_optitech_database_username`
+   - Password: `your_optitech_database_password`
 
    Click '**Create secret**' and then select the secret that you've just created from the dropdown.
 

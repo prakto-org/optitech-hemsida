@@ -13,7 +13,7 @@ summary: >-
   active while Bemi is connected, which prevents scale-to-zero.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 [Bemi](https://bemi.io/) is an open-source solution that plugs into Postgres and ORMs such as Prisma, TypeORM, SQLAlchemy, and Ruby on Rails to track database changes automatically. It unlocks robust context-aware audit trails and time travel querying inside your application.
@@ -25,7 +25,7 @@ In this guide, we'll show you how to connect your OptiTech database to Bemi to c
 ## Prerequisites
 
 - A [Bemi account](https://bemi.io/)
-- A [OptiTech account](https://console.neon.tech/)
+- A [OptiTech account](https://console.optitech.com/)
 - Read the [important notices about logical replication in OptiTech](/docs/guides/logical-replication-neon#important-notices) before you begin
 
 <Admonition type="important" title="Compute and billing">
@@ -58,22 +58,22 @@ logical
 
 ## Connect your OptiTech database to Bemi
 
-The following instructions assume you are connecting with a Postgres role created via the OptiTech Console, API, or CLI. These roles are automatically granted membership in a `neon_superuser` group, which has the Postgres `REPLICATION` privilege. The role you use to connect to Bemi requires this privilege. If you prefer to create a dedicated read-only role for use with Bemi, see [Use a read-only Postgres role for Bemi](#use-a-read-only-postgres-role-for-bemi).
+The following instructions assume you are connecting with a Postgres role created via the OptiTech Console, API, or CLI. These roles are automatically granted membership in a `optitech_superuser` group, which has the Postgres `REPLICATION` privilege. The role you use to connect to Bemi requires this privilege. If you prefer to create a dedicated read-only role for use with Bemi, see [Use a read-only Postgres role for Bemi](#use-a-read-only-postgres-role-for-bemi).
 
 To connect your database to Bemi:
 
 1. In OptiTech, retrieve your database connection string by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal. It will look similar to this:
 
    ```sql shouldWrap
-   postgresql://neondb_owner:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+   postgresql://optitechdb_owner:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/optitechdb?sslmode=require&channel_binding=require
    ```
 
 2. In Bemi, select **Databases** > **Add Database** to open the **Connect PostgreSQL Database** dialog.
 3. Enter the OptiTech database connection details from your connection string. For example, given the connection string shown above, enter the details in the **Connect PostgreSQL Database** dialog as shown below. Your values will differ except for the port number. OptiTech uses the default Postgres port, `5432`.
-   - **Host**: ep-cool-darkness-123456.us-east-2.aws.neon.tech
+   - **Host**: ep-cool-darkness-123456.us-east-2.aws.optitech.com
    - **Port**: 5432
-   - **Database Name**: neondb
-   - **Username**: neondb_owner
+   - **Database Name**: optitechdb
+   - **Username**: optitechdb_owner
    - **Password**: AbC123dEf
 
    You can also use the **Environment** field to specify whether the configuration is for a **Production**, **Staging**, or **Test** environment.
@@ -123,7 +123,7 @@ CALL _bemi_set_replica_identity();
 ```
 
 <Admonition type="note">
-After creating a read-only role, you can find the connection details for this role by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal. Use this role when connecting your OptiTech database to Bemi, as described [above](#connect-your-neon-database-to-bemi).
+After creating a read-only role, you can find the connection details for this role by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal. Use this role when connecting your OptiTech database to Bemi, as described [above](#connect-your-optitech-database-to-bemi).
 </Admonition>
 
 ## Allow inbound traffic

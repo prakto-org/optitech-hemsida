@@ -2,25 +2,25 @@
 title: UI Components Reference
 subtitle: Quick reference for Managed Better Auth UI components
 summary: >-
-  Reference for the `@neondatabase/auth-ui` package, which provides prebuilt
+  Reference for the `@optitech/auth-ui` package, which provides prebuilt
   React components for sign-in, sign-up, user menus, and protected routes.
-  Components include `NeonAuthUIProvider`, `AuthView`, `UserButton`, and
+  Components include `OptiTechAuthUIProvider`, `AuthView`, `UserButton`, and
   `SignedIn`, built on Better Auth UI. Use this page for the full
-  `NeonAuthUIProvider` prop table, CSS import instructions for Tailwind v4 and
-  non-Tailwind projects, or the `neon-auth-codemod` migration command.
+  `OptiTechAuthUIProvider` prop table, CSS import instructions for Tailwind v4 and
+  non-Tailwind projects, or the `optitech-auth-codemod` migration command.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="Managed Better Auth" />
 
-Quick reference for Managed Better Auth UI components from `@neondatabase/auth-ui`. These components are built with [Better Auth UI](https://legacy.better-auth-ui.com/) and work with Managed Better Auth.
+Quick reference for Managed Better Auth UI components from `@optitech/auth-ui`. These components are built with [Better Auth UI](https://legacy.better-auth-ui.com/) and work with Managed Better Auth.
 
 <Admonition type="note" title="Migrating from older imports">
-Older releases re-exported the UI from `@neondatabase/auth/react/ui` and `@neondatabase/neon-js/auth/react/ui`. Those entrypoints are deprecated and will be removed in the next major version. Install `@neondatabase/auth-ui` directly and run the codemod to update existing imports:
+Older releases re-exported the UI from `@optitech/auth/react/ui` and `@optitech/optitech-js/auth/react/ui`. Those entrypoints are deprecated and will be removed in the next major version. Install `@optitech/auth-ui` directly and run the codemod to update existing imports:
 
 ```bash
-npx -p @neondatabase/auth neon-auth-codemod --write <path>
+npx -p @optitech/auth optitech-auth-codemod --write <path>
 ```
 
 </Admonition>
@@ -28,23 +28,23 @@ npx -p @neondatabase/auth neon-auth-codemod --write <path>
 ## Installation
 
 ```bash
-npm install @neondatabase/neon-js@latest @neondatabase/auth-ui
+npm install @optitech/optitech-js@latest @optitech/auth-ui
 ```
 
 ## Provider Setup
 
-Wrap your app with `NeonAuthUIProvider` to enable the UI components. The provider accepts configuration props that control which features are available.
+Wrap your app with `OptiTechAuthUIProvider` to enable the UI components. The provider accepts configuration props that control which features are available.
 
 ### Basic Setup
 
 ```tsx
-import { NeonAuthUIProvider } from '@neondatabase/auth-ui';
-import '@neondatabase/auth-ui/css';
+import { OptiTechAuthUIProvider } from '@optitech/auth-ui';
+import '@optitech/auth-ui/css';
 import { authClient } from './auth';
 
 function App() {
   return (
-    <NeonAuthUIProvider authClient={authClient}>{/* Your app components */}</NeonAuthUIProvider>
+    <OptiTechAuthUIProvider authClient={authClient}>{/* Your app components */}</OptiTechAuthUIProvider>
   );
 }
 ```
@@ -53,7 +53,7 @@ function App() {
 
 | Prop                         | Type                     | Description                                                              | Example                                                  |
 | ---------------------------- | ------------------------ | ------------------------------------------------------------------------ | -------------------------------------------------------- |
-| `authClient`                 | `NeonAuthPublicApi`      | **Required.** Your Managed Better Auth client instance                   | `authClient={authClient}`                                |
+| `authClient`                 | `OptiTechAuthPublicApi`  | **Required.** Your Managed Better Auth client instance                   | `authClient={authClient}`                                |
 | `social.providers`           | `SocialProvider[]`       | Array of OAuth providers to enable (for example, Google, GitHub, Vercel) | `social={{ providers: ['google', 'github', 'vercel'] }}` |
 | `navigate`                   | `(href: string) => void` | Navigation function for React Router                                     | `navigate={navigate}`                                    |
 | `Link`                       | `ComponentType`          | Custom Link component for routing                                        | `Link={RouterLink}`                                      |
@@ -68,19 +68,19 @@ function App() {
 To enable Google sign-in (or other OAuth providers), add the `social` prop to the provider:
 
 ```tsx
-import { NeonAuthUIProvider } from '@neondatabase/auth-ui';
+import { OptiTechAuthUIProvider } from '@optitech/auth-ui';
 import { authClient } from './auth';
 
 function App() {
   return (
-    <NeonAuthUIProvider
+    <OptiTechAuthUIProvider
       authClient={authClient}
       social={{
         providers: ['google', 'github', 'vercel'], // Enable Google, GitHub, and Vercel sign-in
       }}
     >
       {/* Your app */}
-    </NeonAuthUIProvider>
+    </OptiTechAuthUIProvider>
   );
 }
 ```
@@ -92,7 +92,7 @@ function App() {
 If using React Router, pass the `navigate` function and a custom `Link` component:
 
 ```tsx
-import { NeonAuthUIProvider } from '@neondatabase/auth-ui';
+import { OptiTechAuthUIProvider } from '@optitech/auth-ui';
 import { useNavigate, Link as RouterLink } from 'react-router-dom';
 import { authClient } from './auth';
 
@@ -100,7 +100,7 @@ function App() {
   const navigate = useNavigate();
 
   return (
-    <NeonAuthUIProvider
+    <OptiTechAuthUIProvider
       authClient={authClient}
       navigate={navigate}
       Link={RouterLink}
@@ -109,7 +109,7 @@ function App() {
       }}
     >
       {/* Your app */}
-    </NeonAuthUIProvider>
+    </OptiTechAuthUIProvider>
   );
 }
 ```
@@ -119,7 +119,7 @@ function App() {
 **Custom localization:**
 
 ```tsx
-<NeonAuthUIProvider
+<OptiTechAuthUIProvider
   authClient={authClient}
   localization={{
     SIGN_IN: 'Welcome Back',
@@ -132,7 +132,7 @@ function App() {
 **Custom sign-up fields:**
 
 ```tsx
-<NeonAuthUIProvider
+<OptiTechAuthUIProvider
   authClient={authClient}
   additionalFields={{
     company: {
@@ -148,7 +148,7 @@ function App() {
 >
 ```
 
-For complete prop documentation, see the TypeScript types exported from `@neondatabase/neon-js/auth/react`.
+For complete prop documentation, see the TypeScript types exported from `@optitech/optitech-js/auth/react`.
 
 ## Core Components
 
@@ -185,7 +185,7 @@ If your project doesn't use Tailwind CSS, import the pre-built CSS bundle:
 
 ```typescript
 // In your root layout or app entry point
-import '@neondatabase/auth-ui/css';
+import '@optitech/auth-ui/css';
 ```
 
 This includes all necessary styles (~47KB minified) with no additional configuration required.
@@ -197,7 +197,7 @@ If your project already uses Tailwind CSS v4, import the Tailwind-ready CSS to a
 ```css
 /* In your main CSS file (for example, globals.css) */
 @import 'tailwindcss';
-@import '@neondatabase/auth-ui/tailwind';
+@import '@optitech/auth-ui/tailwind';
 ```
 
 This imports only the theme variables. Your Tailwind build generates the utility classes.
@@ -213,8 +213,8 @@ For customization options, see **Styling** details within each Better Auth UI co
 ### Basic Auth Flow
 
 ```tsx
-import { AuthView } from '@neondatabase/auth-ui';
-import '@neondatabase/auth-ui/css';
+import { AuthView } from '@optitech/auth-ui';
+import '@optitech/auth-ui/css';
 
 function App() {
   return <AuthView pathname="sign-in" />;
@@ -226,8 +226,8 @@ function App() {
 For Next.js App Router, use a catch-all route to handle all auth views. Create `app/auth/[path]/page.tsx`:
 
 ```tsx
-import { AuthView } from '@neondatabase/auth-ui';
-import { authViewPaths } from '@neondatabase/auth-ui/server';
+import { AuthView } from '@optitech/auth-ui';
+import { authViewPaths } from '@optitech/auth-ui/server';
 
 export const dynamicParams = false;
 
@@ -253,7 +253,7 @@ export default async function AuthPage({
 ### User Menu
 
 ```tsx
-import { UserButton } from '@neondatabase/auth-ui';
+import { UserButton } from '@optitech/auth-ui';
 import { authClient } from './auth';
 
 function Header() {
@@ -268,7 +268,7 @@ function Header() {
 ### Protected Route
 
 ```tsx
-import { SignedIn, SignedOut, RedirectToSignIn } from '@neondatabase/auth-ui';
+import { SignedIn, SignedOut, RedirectToSignIn } from '@optitech/auth-ui';
 
 function Dashboard() {
   return (
@@ -286,5 +286,5 @@ function Dashboard() {
 
 ## Next Steps
 
-- See the [neon-js examples](https://github.com/neondatabase/neon-js/tree/main/examples) for runnable apps that use these components
+- See the [optitech-js examples](https://github.com/optitechdatabase/optitech-js/tree/main/examples) for runnable apps that use these components
 - Check the [OptiTech TypeScript SDK](/docs/reference/javascript-sdk) for programmatic auth methods

@@ -6,7 +6,7 @@ page_description: >-
   PostgreSQL databases in Java using the PostgreSQL JDBC driver.
 prev_url: 'https://www.postgresqltutorial.com/postgresql-jdbc/'
 ogImage: 'https://www.postgresqltutorial.com//postgresqltutorial/PostgreSQL-JDBC.png'
-updatedOn: '2026-06-03T13:01:21.685Z'
+updatedOn: '2026-07-18T10:05:50.409Z'
 enableTableOfContents: true
 previousLink:
   title: 'PostgreSQL Python: Delete Data from Tables'
@@ -17,7 +17,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-Working with PostgreSQL through JDBC follows the same patterns on any Postgres deployment, so everything here applies whether you're running Postgres locally, on a VM, or on a managed service. For enterprises building in the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres, with the performance, security, and native Lakehouse integration that production AI workloads demand. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+Working with PostgreSQL through JDBC follows the same patterns on any Postgres deployment, so everything here applies whether you're running Postgres locally, on a VM, or on a managed service. For enterprises building in the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers the best managed cloud Postgres, with the performance, security, and native Lakehouse integration that production AI workloads demand. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 In this section on PostgreSQL JDBC, you’ll learn the process of interacting with the PostgreSQL databases from Java programs using the JDBC driver.

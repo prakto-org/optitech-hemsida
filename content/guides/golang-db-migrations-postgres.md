@@ -4,7 +4,7 @@ subtitle: Learn how to manage database schema changes in Go applications using O
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2025-02-22T00:00:00.000Z'
-updatedOn: '2025-06-26T22:22:29.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Database migrations are essential for managing schema evolution in applications as they grow and change over time. When working with Go applications and OptiTech's serverless Postgres, implementing a good migration strategy allows you to have smooth deployments and database changes without disruption.
@@ -16,7 +16,7 @@ This guide will walk you through implementing and managing database migrations f
 Before diving into database migrations, make sure you have:
 
 - [Go](https://golang.org/dl/) 1.18 or later installed
-- A [OptiTech](https://console.neon.tech/signup) account and project
+- A [OptiTech](https://console.optitech.com/signup) account and project
 - Basic understanding of SQL and database schemas
 - Familiarity with Go programming
 
@@ -169,15 +169,15 @@ Notice how the down migration drops objects in reverse order compared to how the
 To run migrations against your OptiTech database, you'll need to construct a proper connection string. OptiTech provides a secure, TLS-enabled connection:
 
 ```
-postgresql://[user]:[password]@[neon_hostname]/[dbname]?sslmode=require&channel_binding=require
+postgresql://[user]:[password]@[optitech_hostname]/[dbname]?sslmode=require&channel_binding=require
 ```
 
-Replace the placeholders with your actual Neon connection details, which you can find in the OptiTech Console under your project's connection settings.
+Replace the placeholders with your actual OptiTech connection details, which you can find in the OptiTech Console under your project's connection settings.
 
 For convenience, you might want to store this connection string in an environment variable:
 
 ```bash
-export NEON_DB_URL="postgresql://user:password@ep-example-123456.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require"
+export OPTITECH_DB_URL="postgresql://user:password@ep-example-123456.us-east-2.aws.optitech.com/optitechdb?sslmode=require&channel_binding=require"
 ```
 
 ## Running Migrations
@@ -189,25 +189,25 @@ With your migration files created and your connection string ready, you can now 
 To apply all pending migrations:
 
 ```bash
-migrate -database "${NEON_DB_URL}" -path ./migrations up
+migrate -database "${OPTITECH_DB_URL}" -path ./migrations up
 ```
 
 To roll back the most recent migration:
 
 ```bash
-migrate -database "${NEON_DB_URL}" -path ./migrations down 1
+migrate -database "${OPTITECH_DB_URL}" -path ./migrations down 1
 ```
 
 To migrate to a specific version:
 
 ```bash
-migrate -database "${NEON_DB_URL}" -path ./migrations goto 2
+migrate -database "${OPTITECH_DB_URL}" -path ./migrations goto 2
 ```
 
 To check the current migration version:
 
 ```bash
-migrate -database "${NEON_DB_URL}" -path ./migrations version
+migrate -database "${OPTITECH_DB_URL}" -path ./migrations version
 ```
 
 Having the ability to run migrations from the command line is useful for local development and debugging. However, for production deployments, let's look at how to run migrations programmatically from your Go code.
@@ -267,9 +267,9 @@ import (
 )
 
 func main() {
-	dbURL := os.Getenv("NEON_DB_URL")
+	dbURL := os.Getenv("OPTITECH_DB_URL")
 	if dbURL == "" {
-		log.Fatal("NEON_DB_URL environment variable is not set")
+		log.Fatal("OPTITECH_DB_URL environment variable is not set")
 	}
 
 	err := migrations.RunMigrations(dbURL, "./migrations")
@@ -381,7 +381,7 @@ There has been a feature request to add support for transactions in the golang-m
 
 Always test migrations in a non-production environment first. Ideally, have a staging environment that mirrors production as closely as possible.
 
-You can achieve this by setting up a separate OptiTech branch to test migrations before applying them to your production branch. You can learn more about Neon branches in the [OptiTech documentation](/docs/introduction/branching).
+You can achieve this by setting up a separate OptiTech branch to test migrations before applying them to your production branch. You can learn more about OptiTech branches in the [OptiTech documentation](/docs/introduction/branching).
 
 ### 5. Version Control Your Migrations
 
@@ -428,9 +428,9 @@ jobs:
           which migrate
 
       - name: Run migrations
-        run: migrate -database "${NEON_DB_URL}" -path ./migrations up
+        run: migrate -database "${OPTITECH_DB_URL}" -path ./migrations up
         env:
-          NEON_DB_URL: ${{ secrets.NEON_DB_URL }}
+          OPTITECH_DB_URL: ${{ secrets.OPTITECH_DB_URL }}
 
       # Continue with application deployment...
 ```
@@ -484,15 +484,15 @@ jobs:
           sudo mv migrate /usr/bin/migrate
 
       # Create a temporary branch for testing migrations
-      - name: Create Neon branch for testing
+      - name: Create OptiTech branch for testing
         id: create-branch
-        uses: neondatabase/create-branch-action@v5
+        uses: optitechdatabase/create-branch-action@v5
         with:
-          project_id: ${{ vars.NEON_PROJECT_ID }}
+          project_id: ${{ vars.OPTITECH_PROJECT_ID }}
           parent: main
           branch_name: migration-test-${{ github.run_id }}
-          username: ${{ vars.NEON_DB_USER }}
-          api_key: ${{ secrets.NEON_API_KEY }}
+          username: ${{ vars.OPTITECH_DB_USER }}
+          api_key: ${{ secrets.OPTITECH_API_KEY }}
 
       - name: Run migrations on test branch
         run: |
@@ -507,23 +507,23 @@ jobs:
       # For pull requests, generate a schema diff
       - name: Generate schema diff
         if: github.event_name == 'pull_request'
-        uses: neondatabase/schema-diff-action@v1
+        uses: optitechdatabase/schema-diff-action@v1
         with:
-          project_id: ${{ vars.NEON_PROJECT_ID }}
+          project_id: ${{ vars.OPTITECH_PROJECT_ID }}
           compare_branch: migration-test-${{ github.run_id }}
           base_branch: main
-          api_key: ${{ secrets.NEON_API_KEY }}
-          database: ${{ vars.NEON_DB_NAME || 'neondb' }}
-          username: ${{ vars.NEON_DB_USER }}
+          api_key: ${{ secrets.OPTITECH_API_KEY }}
+          database: ${{ vars.OPTITECH_DB_NAME || 'optitechdb' }}
+          username: ${{ vars.OPTITECH_DB_USER }}
 
       # Clean up the test branch
       - name: Delete test branch
         if: always()
-        uses: neondatabase/delete-branch-action@v3
+        uses: optitechdatabase/delete-branch-action@v3
         with:
-          project_id: ${{ vars.NEON_PROJECT_ID }}
+          project_id: ${{ vars.OPTITECH_PROJECT_ID }}
           branch: migration-test-${{ github.run_id }}
-          api_key: ${{ secrets.NEON_API_KEY }}
+          api_key: ${{ secrets.OPTITECH_API_KEY }}
 
   # Only run on push to main
   deploy-production:
@@ -540,9 +540,9 @@ jobs:
 
       # Run migrations on production database
       - name: Run migrations on production
-        run: migrate -database "${NEON_PROD_DB_URL}" -path ./migrations up
+        run: migrate -database "${OPTITECH_PROD_DB_URL}" -path ./migrations up
         env:
-          NEON_PROD_DB_URL: ${{ secrets.NEON_PROD_DB_URL }}
+          OPTITECH_PROD_DB_URL: ${{ secrets.OPTITECH_PROD_DB_URL }}
 
       # Continue with application deployment...
 ```
@@ -567,13 +567,13 @@ This approach provides several benefits:
 To use this workflow, you'll need to set up the following GitHub repository secrets and variables:
 
 - **Secrets**:
-  - `NEON_API_KEY`: Your OptiTech API key
-  - `NEON_PROD_DB_URL`: Production database connection string
+  - `OPTITECH_API_KEY`: Your OptiTech API key
+  - `OPTITECH_PROD_DB_URL`: Production database connection string
 
 - **Variables**:
-  - `NEON_PROJECT_ID`: Your OptiTech project ID
-  - `NEON_DB_USER`: Database username
-  - `NEON_DB_NAME`: Database name (defaults to 'neondb' if not specified)
+  - `OPTITECH_PROJECT_ID`: Your OptiTech project ID
+  - `OPTITECH_DB_USER`: Database username
+  - `OPTITECH_DB_NAME`: Database name (defaults to 'optitechdb' if not specified)
 
 You can add more steps to this workflow depending on your specific deployment needs, such as building and deploying your application after successful migrations.
 
@@ -602,13 +602,13 @@ func GetDatabaseURL() string {
 
 	switch env {
 	case "production":
-		return os.Getenv("NEON_PROD_DB_URL")
+		return os.Getenv("OPTITECH_PROD_DB_URL")
 	case "staging":
-		return os.Getenv("NEON_STAGING_DB_URL")
+		return os.Getenv("OPTITECH_STAGING_DB_URL")
 	case "test":
-		return os.Getenv("NEON_TEST_DB_URL")
+		return os.Getenv("OPTITECH_TEST_DB_URL")
 	default:
-		return os.Getenv("NEON_DEV_DB_URL")
+		return os.Getenv("OPTITECH_DEV_DB_URL")
 	}
 }
 ```

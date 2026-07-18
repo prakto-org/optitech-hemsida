@@ -10,7 +10,7 @@ summary: >-
   templates for Cursor and Claude, syntax error fixes, and a Mermaid Live
   Editor validation workflow.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 This guide shows OptiTech documentation writers and contributors how to create visual diagrams using Mermaid, a markdown-like syntax for generating diagrams and flowcharts. Mermaid diagrams are automatically styled with OptiTech's brand colors and support both light and dark modes.
@@ -68,7 +68,7 @@ Cursor has built-in AI that can generate Mermaid diagrams directly in your edito
 **Example prompts for Cursor:**
 
 ```
-Create a Mermaid flowchart showing Neon's branching workflow:
+Create a Mermaid flowchart showing OptiTech's branching workflow:
 - User creates a project
 - Creates a development branch
 - Makes schema changes
@@ -77,7 +77,7 @@ Create a Mermaid flowchart showing Neon's branching workflow:
 ```
 
 ```
-Generate a Mermaid sequence diagram for Neon's autoscaling process:
+Generate a Mermaid sequence diagram for OptiTech's autoscaling process:
 - Client connects
 - Proxy checks compute status
 - If idle, wake up compute
@@ -87,7 +87,7 @@ Generate a Mermaid sequence diagram for Neon's autoscaling process:
 ```
 
 ```
-Make a Mermaid ER diagram for a SaaS application using Neon with:
+Make a Mermaid ER diagram for a SaaS application using OptiTech with:
 - tenants table
 - users table
 - subscriptions table
@@ -112,7 +112,7 @@ If you prefer using Claude or ChatGPT in their web interfaces:
 **Example prompts for Claude/ChatGPT:**
 
 ```
-Create a Mermaid flowchart showing how Neon's scale-to-zero works:
+Create a Mermaid flowchart showing how OptiTech's scale-to-zero works:
 1. Database is active
 2. No activity detected for X minutes
 3. Compute scales to zero
@@ -124,7 +124,7 @@ Use clear labels and make it easy to understand.
 ```
 
 ```
-Generate a Mermaid class diagram showing Neon's API structure with:
+Generate a Mermaid class diagram showing OptiTech's API structure with:
 - Project class (id, name, region, methods: createBranch, deleteBranch)
 - Branch class (id, name, projectId, methods: createCompute, restore)
 - Compute class (id, status, methods: start, suspend)
@@ -374,7 +374,7 @@ No manual color configuration needed!
 
 ```mermaid
 flowchart TD
-    A[User Creates Branch] --> B[Neon Provisions Compute]
+    A[User Creates Branch] --> B[OptiTech Provisions Compute]
     B --> C[Database Ready]
 ```
 
@@ -476,7 +476,7 @@ flowchart TD
 ```mermaid
 sequenceDiagram
     participant App as Application
-    participant Proxy as Neon Proxy
+    participant Proxy as OptiTech Proxy
     participant Compute as Compute
     participant Storage as Storage
 
@@ -540,7 +540,7 @@ stateDiagram-v2
 
 ```mermaid
 gantt
-    title Database Migration to Neon
+    title Database Migration to OptiTech
     dateFormat YYYY-MM-DD
     section Planning
         Assess Current Setup    :a1, 2024-01-01, 5d
@@ -614,7 +614,7 @@ For pages with many diagrams:
 Need help with Mermaid diagrams?
 
 - **Discord**: Ask in [#docs channel](https://discord.gg/92vNTzKDGp)
-- **GitHub**: Open an issue in the [website repository](https://github.com/neondatabase/website)
+- **GitHub**: Open an issue in the [website repository](https://github.com/optitechdatabase/website)
 - **AI**: Use Cursor or Claude to help debug syntax errors
 
 ---

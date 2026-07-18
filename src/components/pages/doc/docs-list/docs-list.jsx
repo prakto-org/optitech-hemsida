@@ -3,6 +3,7 @@ import React from 'react';
 
 import DocsLink from 'components/pages/doc/docs-link';
 import { cn } from 'utils/cn';
+import getGlossaryItem from 'utils/get-glossary-item';
 
 import CheckIcon from './images/check.inline.svg';
 import GitHubIcon from './images/github.inline.svg';
@@ -22,7 +23,13 @@ Icon.propTypes = {
 const parsedChildren = (children) =>
   React.Children.toArray(children).map((child) => {
     if (React.isValidElement(child) && child.type === 'a') {
-      return <DocsLink key={child.key} {...child.props} />;
+      return (
+        <DocsLink
+          key={child.key}
+          {...child.props}
+          glossaryItem={getGlossaryItem(child.props.href)}
+        />
+      );
     }
     return child;
   });

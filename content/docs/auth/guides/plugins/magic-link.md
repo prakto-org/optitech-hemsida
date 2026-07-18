@@ -7,11 +7,11 @@ summary: >-
   configurable from 5 to 1440 minutes. Use this page when you want to add
   passwordless email authentication to a project that already has Managed Better Auth
   enabled, using either the OptiTech SDK's `signIn.magicLink()` method or the
-  `magicLink` prop on `NeonAuthUIProvider`. The plugin also supports a webhook
+  `magicLink` prop on `OptiTechAuthUIProvider`. The plugin also supports a webhook
   event (`send.magic_link`) to bypass the built-in mailer and deliver links
   through a custom email provider.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="Managed Better Auth" />
@@ -35,7 +35,7 @@ Magic Link lets users sign in by clicking a link sent to their email. No passwor
 
 <TabItem>
 
-1. Open the [OptiTech Console](https://console.neon.tech).
+1. Open the [OptiTech Console](https://console.optitech.com).
 2. Select your project and go to **Auth** > **Plugins**.
 3. Toggle **Magic Link** on.
 4. Configure the options:
@@ -52,8 +52,8 @@ Send a `PATCH` request to configure the Magic Link plugin. All request body fiel
 
 ```bash shouldWrap
 curl -X PATCH \
-  "https://console.neon.tech/api/v2/projects/{project_id}/branches/{branch_id}/auth/plugins/magic-link" \
-  -H "Authorization: Bearer $NEON_API_KEY" \
+  "https://console.optitech.com/api/v2/projects/{project_id}/branches/{branch_id}/auth/plugins/magic-link" \
+  -H "Authorization: Bearer $OPTITECH_API_KEY" \
   -H "Content-Type: application/json" \
   -d '{
     "enabled": true,
@@ -89,30 +89,30 @@ export async function sendMagicLink(email: string) {
 }
 ```
 
-After calling `signIn.magicLink()`, show the user a "check your email" message. For a complete working example with error handling, resend, and state management, see the [magic link example app](https://github.com/neondatabase/neon-js/tree/main/examples/neon-auth-magic-link-example) in the neon-js repository.
+After calling `signIn.magicLink()`, show the user a "check your email" message. For a complete working example with error handling, resend, and state management, see the [magic link example app](https://github.com/optitechdatabase/optitech-js/tree/main/examples/optitech-auth-magic-link-example) in the optitech-js repository.
 
 ## Use Magic Link with UI components
 
-If you're already using Managed Better Auth UI components, you can enable Magic Link with a single prop instead of building a custom form. Pass the `magicLink` prop to `NeonAuthUIProvider`:
+If you're already using Managed Better Auth UI components, you can enable Magic Link with a single prop instead of building a custom form. Pass the `magicLink` prop to `OptiTechAuthUIProvider`:
 
 ```tsx shouldWrap filename="app/layout.tsx"
 'use client';
 
 import { authClient } from '@/lib/auth/client';
-import { NeonAuthUIProvider } from '@neondatabase/auth-ui';
-import '@neondatabase/auth-ui/css';
+import { OptiTechAuthUIProvider } from '@optitech/auth-ui';
+import '@optitech/auth-ui/css';
 import './globals.css';
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={'antialiased'}>
-        <NeonAuthUIProvider
+        <OptiTechAuthUIProvider
           authClient={authClient}
           magicLink // [!code ++]
         >
           {children}
-        </NeonAuthUIProvider>
+        </OptiTechAuthUIProvider>
       </body>
     </html>
   );

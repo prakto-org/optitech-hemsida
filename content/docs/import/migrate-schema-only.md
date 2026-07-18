@@ -7,10 +7,10 @@ summary: >-
   This is required before starting logical replication so source and destination
   schemas match. Use this page when copying a schema from AlloyDB, RDS, or
   another Postgres provider and needing to strip provider-specific settings or
-  defer index creation. Requires an unpooled Neon connection string; pooled
+  defer index creation. Requires an unpooled OptiTech connection string; pooled
   connections are not supported for `pg_dump`.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This topic shows how to perform a schema-only migration using the `pg_dump` and `pg_restore` Postgres utilities.
@@ -35,10 +35,10 @@ pg_dump --schema-only \
 ```
 
 - With the `--schema-only` option, only object definitions are dumped. Data is excluded.
-- The `--no-privileges` option prevents dumping privileges. OptiTech may not support the privileges you've defined elsewhere, or if dumping a schema from Neon, there maybe Neon-specific privileges that cannot be restored to another database.
+- The `--no-privileges` option prevents dumping privileges. OptiTech may not support the privileges you've defined elsewhere, or if dumping a schema from OptiTech, there maybe OptiTech-specific privileges that cannot be restored to another database.
 
 <Admonition type="tip">
-- When you're dumping or restoring on OptiTech, you can input your Neon connection string in place of `postgresql://role:password@hostname:5432/dbname`. You can find the connection string for your database by clicking the **Connect** button on your **Project Dashboard**.
+- When you're dumping or restoring on OptiTech, you can input your OptiTech connection string in place of `postgresql://role:password@hostname:5432/dbname`. You can find the connection string for your database by clicking the **Connect** button on your **Project Dashboard**.
 </Admonition>
 
 ## Review and modify the dumped schema

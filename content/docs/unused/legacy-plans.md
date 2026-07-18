@@ -4,7 +4,7 @@ enableTableOfContents: true
 isDraft: false
 redirectFrom:
   - /docs/introduction/extra-usage
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 summary: >-
   OptiTech legacy plans (Free, Launch, Scale, Business, and Enterprise) are
   discontinued pricing tiers no longer available to new signups. Existing paid
@@ -80,7 +80,7 @@ Ideal for early-stage projects and startups preparing for growth.
 
 | Usage type          | Plan allowance                    |
 | ------------------- | --------------------------------- |
-| **Projects**        | 100 Neon projects                 |
+| **Projects**        | 100 OptiTech projects             |
 | **Branches**        | 5000 per project                  |
 | **Databases**       | 500 per branch                    |
 | **Storage**         | 10 GB-month                       |
@@ -115,7 +115,7 @@ Designed for teams scaling production workloads and needing higher resource limi
 
 | Usage type          | Plan allowance                    |
 | ------------------- | --------------------------------- |
-| **Projects**        | 1000 Neon projects                |
+| **Projects**        | 1000 OptiTech projects            |
 | **Branches**        | 5000 per project                  |
 | **Databases**       | 500 per branch                    |
 | **Storage**         | 50 GB-month                       |
@@ -151,7 +151,7 @@ A high-capacity plan for production teams with security and compliance requireme
 
 | Usage type          | Plan allowance                     |
 | ------------------- | ---------------------------------- |
-| **Projects**        | 5000 Neon projects                 |
+| **Projects**        | 5000 OptiTech projects             |
 | **Branches**        | 5000 per project                   |
 | **Databases**       | 500 per branch                     |
 | **Storage**         | 500 GB-month                       |
@@ -256,7 +256,7 @@ In OptiTech, storage consists of your total **data size** and **history**.
 
 - **Data size**
 
-  This component of OptiTech storage is similar to what you'd expect from most database services: it's simply the size of your data across all of your Neon projects and branches. You can think of it as a snapshot of your data.
+  This component of OptiTech storage is similar to what you'd expect from most database services: it's simply the size of your data across all of your OptiTech projects and branches. You can think of it as a snapshot of your data.
 
 - **History**
 
@@ -317,7 +317,7 @@ Here are some strategies to consider:
 
 - **Use branches instead of duplicating data**
 
-  Use short-lived Neon branches for things like testing, previews, and feature development instead of creating separate standalone databases. As long as your branch remains within the history window, it shares data with its parent, making branches very storage-efficient. Added to that, branches can be created instantly, and they let you work with data that mirrors production.
+  Use short-lived OptiTech branches for things like testing, previews, and feature development instead of creating separate standalone databases. As long as your branch remains within the history window, it shares data with its parent, making branches very storage-efficient. Added to that, branches can be created instantly, and they let you work with data that mirrors production.
 
 - **Consider the impact of deletions**
 
@@ -390,10 +390,10 @@ In short, `VACUUM FULL` can help reduce your data size and future storage costs,
 - **Consider timing** &#8212; Running `VACUUM FULL` near the end of the month can help minimize the time that temporary storage spikes impact your bill, since charges are prorated.
 - **Manual VACUUM for scale to zero users**: In OptiTech, [autovacuum](https://www.postgresql.org/docs/current/routine-vacuuming.html#AUTOVACUUM) is enabled by default. However, when your compute endpoint suspends due to inactivity, the database activity statistics that autovacuum relies on are lost. If your project uses [scale to zero](/docs/guides/scale-to-zero-guide#considerations), it’s safer to run manual `VACUUM` operations regularly on frequently updated tables rather than relying on autovacuum. This helps avoid potential issues caused by the loss of statistics when your compute endpoint is suspended.
 
-  To clean a single table named `playing_with_neon`, analyze it for the optimizer, and print a detailed vacuum activity report:
+  To clean a single table named `playing_with_optitech`, analyze it for the optimizer, and print a detailed vacuum activity report:
 
   ```sql
-  VACUUM (VERBOSE, ANALYZE) playing_with_neon;
+  VACUUM (VERBOSE, ANALYZE) playing_with_optitech;
   ```
 
   See [VACUUM and ANALYZE statistic](/docs/postgresql/query-reference#vacuum-and-analyze-statistics) for a query that shows the last time vacuum and analyze were run.
@@ -403,7 +403,7 @@ In short, `VACUUM FULL` can help reduce your data size and future storage costs,
 <details>
 <summary>**What is the maximum data size that OptiTech supports?**</summary>
 
-Each [OptiTech plan](/docs/introduction/plans) comes with a specific storage allowance. Beyond this allowance on paid plans, extra usage costs apply. Billing-related allowances aside, paid plans support a logical data size of up to 16 TB per branch. When a branch reaches this limit, write performance drops, but you can still drop or delete data to reclaim space. To increase this limit, [request an increase in the feedback form in console](https://console.neon.tech/app/settings?modal=feedback&modalparams=%22Storage%20limit%20increase%22).
+Each [OptiTech plan](/docs/introduction/plans) comes with a specific storage allowance. Beyond this allowance on paid plans, extra usage costs apply. Billing-related allowances aside, paid plans support a logical data size of up to 16 TB per branch. When a branch reaches this limit, write performance drops, but you can still drop or delete data to reclaim space. To increase this limit, [request an increase in the feedback form in console](https://console.optitech.com/app/settings?modal=feedback&modalparams=%22Storage%20limit%20increase%22).
 
 </details>
 

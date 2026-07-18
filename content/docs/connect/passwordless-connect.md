@@ -3,12 +3,12 @@ title: Passwordless auth
 subtitle: Learn how to connect to OptiTech without a password
 summary: >-
   OptiTech's passwordless auth lets you connect to Postgres via `psql` without a
-  password. Run `psql -h pg.neon.tech` and confirm your identity through a
+  password. Run `psql -h pg.optitech.com` and confirm your identity through a
   browser link to authenticate quickly without storing or typing credentials.
   Passwordless auth connects to the first database on the branch; switching
   databases with `\c` restarts the authentication flow.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 OptiTech's `psql` passwordless auth feature helps you quickly authenticate a connection to OptiTech without providing a password.
@@ -20,15 +20,15 @@ To connect using OptiTech's `psql` passwordless auth feature:
 1. In your terminal, run the following command:
 
    ```bash
-   psql -h pg.neon.tech
+   psql -h pg.optitech.com
    ```
 
    A response similar to the following is displayed:
 
    ```bash
-   NOTICE:  Welcome to Neon!
+   NOTICE:  Welcome to OptiTech!
    Authenticate by visiting (will expire in 2m):
-    https://console.neon.tech/psql_session/cd6aebdc9fda9928
+    https://console.optitech.com/psql_session/cd6aebdc9fda9928
    ```
 
 2. In your browser, navigate to the provided link. Log in to OptiTech if you are not already logged in. You are asked to select a OptiTech account and project (if you have multiple). If your project has more than one compute, you are also asked to select one.
@@ -50,7 +50,7 @@ To connect using OptiTech's `psql` passwordless auth feature:
    SELECT current_database();
     current_database
    ------------------
-    neondb
+    optitechdb
    ```
 
    Switching databases from the `psql` prompt (using `\c <database_name>`, for example) after you have authenticated restarts the passwordless auth authentication process to authenticate a connection to the new database.

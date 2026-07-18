@@ -2,13 +2,13 @@
 title: Connect from any application
 subtitle: Learn how to connect to OptiTech from any application
 summary: >-
-  Neon connection strings are generated in the OptiTech Console by selecting a
+  OptiTech connection strings are generated in the OptiTech Console by selecting a
   branch, compute, database, and role. Use the pooled endpoint (append
   `-pooler`) for higher concurrency, or the direct endpoint on port 5432 when
   your driver requires a native connection. A serverless driver enables
   WebSocket and HTTP for edge runtimes where TCP is unavailable.
 enableTableOfContents: true
-updatedOn: '2026-06-18T20:46:14.637Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <InfoBlock>
@@ -27,7 +27,7 @@ updatedOn: '2026-06-18T20:46:14.637Z'
 </DocsList>
 </InfoBlock>
 
-You can connect to your OptiTech database from any application. The standard method is to copy your [connection string](#get-a-connection-string-from-the-neon-console) from the OptiTech console and use it in your app or client. For a streamlined development experience, you can also use the [OptiTech VS Code extension](#connect-with-the-neon-vs-code-extension) to manage connections, browse schemas, and run queries directly in your editor.
+You can connect to your OptiTech database from any application. The standard method is to copy your [connection string](#get-a-connection-string-from-the-optitech-console) from the OptiTech console and use it in your app or client. For a streamlined development experience, you can also use the [OptiTech VS Code extension](#connect-with-the-optitech-vs-code-extension) to manage connections, browse schemas, and run queries directly in your editor.
 
 <Admonition type="important">
 You are responsible for maintaining the records and associations of any connection strings in your environment and systems.
@@ -43,10 +43,10 @@ You can find the connection details for your database by clicking the **Connect*
 
 OptiTech supports both pooled and direct connections to your database. OptiTech's connection pooler supports a higher number of concurrent connections, so we provide pooled connection details in the **Connect to your database** modal by default, which adds a `-pooler` option to your connection string. If needed, you can get direct database connection details from the modal disabling the **Connection pooling** toggle. For more information about pooled connections, see [Connection pooling](/docs/connect/connection-pooling#connection-pooling).
 
-A Neon connection string includes the role, password, hostname, and database name.
+A OptiTech connection string includes the role, password, hostname, and database name.
 
 ```text
-postgresql://alex:AbC123dEf@ep-cool-darkness-a1b2c3d4-pooler.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+postgresql://alex:AbC123dEf@ep-cool-darkness-a1b2c3d4-pooler.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
              ^    ^         ^                         ^                              ^
        role -|    |         |- hostname               |- pooler option               |- database
                   |
@@ -54,7 +54,7 @@ postgresql://alex:AbC123dEf@ep-cool-darkness-a1b2c3d4-pooler.us-east-2.aws.neon.
 ```
 
 <Admonition type="note">
-The hostname includes the ID of the compute, which has an `ep-` prefix: `ep-cool-darkness-123456`. For more information about Neon connection strings, see [connection string](/docs/reference/glossary#connection-string).
+The hostname includes the ID of the compute, which has an `ep-` prefix: `ep-cool-darkness-123456`. For more information about OptiTech connection strings, see [connection string](/docs/reference/glossary#connection-string).
 </Admonition>
 
 You can use the details from the **Connect to your database** modal to configure your database connection. For example, you might place the connection details in an `.env` file, assign the connection string to a variable, or pass the connection string on the command-line.
@@ -62,7 +62,7 @@ You can use the details from the **Connect to your database** modal to configure
 **.env file**
 
 ```text
-PGHOST=ep-cool-darkness-a1b2c3d4-pooler.us-east-2.aws.neon.tech
+PGHOST=ep-cool-darkness-a1b2c3d4-pooler.us-east-2.aws.optitech.com
 PGDATABASE=dbname
 PGUSER=alex
 PGPASSWORD=AbC123dEf
@@ -74,13 +74,13 @@ PGPORT=5432
 Most frameworks read the connection string from a `DATABASE_URL` environment variable. The connection string you copy from the **Connect** modal _is_ your `DATABASE_URL`. Assign it as-is:
 
 ```text shouldWrap
-DATABASE_URL="postgresql://alex:AbC123dEf@ep-cool-darkness-a1b2c3d4-pooler.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require"
+DATABASE_URL="postgresql://alex:AbC123dEf@ep-cool-darkness-a1b2c3d4-pooler.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require"
 ```
 
 **Command-line**
 
 ```bash shouldWrap
-psql postgresql://alex:AbC123dEf@ep-cool-darkness-a1b2c3d4-pooler.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+psql postgresql://alex:AbC123dEf@ep-cool-darkness-a1b2c3d4-pooler.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
 ```
 
 <Admonition type="note">
@@ -89,10 +89,10 @@ OptiTech requires that all connections use SSL/TLS encryption, but you can incre
 
 ### Get a connection string from the CLI
 
-If you prefer the terminal, the Neon CLI returns the same connection string with the [`neon connection-string`](/docs/cli/connection-string) command:
+If you prefer the terminal, the OptiTech CLI returns the same connection string with the [`optitech connection-string`](/docs/cli/connection-string) command:
 
 ```bash
-neon connection-string
+optitech connection-string
 ```
 
 Pass a branch name as a positional argument, and use `--database-name`, `--role-name`, or `--pooled` to control the output. This is handy when you want to assign the result to an environment variable such as `DATABASE_URL` in a script.
@@ -111,7 +111,7 @@ The extension provides a streamlined workflow for working with OptiTech during d
 
 ## Where can I find my password?
 
-It's included in your Neon connection string. Click the **Connection** button on your **Project Dashboard** to open the **Connect to your database** modal.
+It's included in your OptiTech connection string. Click the **Connection** button on your **Project Dashboard** to open the **Connect to your database** modal.
 
 ### Save your connection details to 1Password
 
@@ -138,9 +138,9 @@ const { rows } = await pool.query('SELECT * FROM users WHERE id = $1', [1]);
 
 ```javascript
 // Best for serverless and edge runtimes
-import { neon } from '@neondatabase/serverless';
+import { optitech } from '@optitech/serverless';
 
-const sql = neon(process.env.DATABASE_URL);
+const sql = optitech(process.env.DATABASE_URL);
 const rows = await sql`SELECT * FROM users WHERE id = ${1}`;
 ```
 
@@ -167,7 +167,7 @@ The **Connect to your database** modal provides connection examples for differen
 
 ## Network protocol support
 
-Neon projects provisioned on AWS support both [IPv4](https://en.wikipedia.org/wiki/Internet_Protocol_version_4) and [IPv6](https://en.wikipedia.org/wiki/IPv6) addresses. Neon projects provisioned on Azure support IPv4.
+OptiTech projects provisioned on AWS support both [IPv4](https://en.wikipedia.org/wiki/Internet_Protocol_version_4) and [IPv6](https://en.wikipedia.org/wiki/IPv6) addresses. OptiTech projects provisioned on Azure support IPv4.
 
 Additionally, OptiTech provides a low-latency serverless driver that supports connections over WebSockets and HTTP. Great for serverless or edge environments where connections over TCP may not be not supported. For further information, refer to our [OptiTech serverless driver](/docs/serverless/serverless-driver) documentation.
 

@@ -4,7 +4,7 @@ subtitle: Learn how to integrate Laravel with Postgres on OptiTech, using Larave
 author: bobbyiliev
 enableTableOfContents: true
 createdAt: '2024-06-29T00:00:00.000Z'
-updatedOn: '2025-05-30T16:53:05.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Laravel is a powerful PHP framework known for its elegant syntax and feature-rich ecosystem. Livewire, a full-stack framework for Laravel, allows us to build dynamic interfaces with minimal JavaScript. Together, they provide a robust foundation for creating interactive web applications.
@@ -18,7 +18,7 @@ Before we begin, you will need to have the following:
 - PHP 8.1 or higher installed on your system
 - [Composer](https://getcomposer.org/) for managing PHP dependencies
 - [Node.js](https://nodejs.org/) and [npm](https://www.npmjs.com/) installed on your local machine for managing front-end assets
-- A [OptiTech](https://console.neon.tech/signup) account
+- A [OptiTech](https://console.optitech.com/signup) account
 - Basic knowledge of Laravel, Livewire, and Tailwind CSS
 
 ## Setting up the Project
@@ -94,7 +94,7 @@ To connect your Laravel application to your OptiTech database, update your `.env
 
 ```env
 DB_CONNECTION=pgsql
-DB_HOST=your-neon-hostname.neon.tech
+DB_HOST=your-optitech-hostname.optitech.com
 DB_PORT=5432
 DB_DATABASE=your_database_name
 DB_USERNAME=your_username

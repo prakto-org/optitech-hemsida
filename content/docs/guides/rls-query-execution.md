@@ -10,7 +10,7 @@ summary: >-
   schema to wire up the runtime connection layer, whether from a frontend using
   the Data API or a backend using the OptiTech serverless driver.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 <InfoBlock>
@@ -34,12 +34,12 @@ Depending on your application architecture, you might connect from a frontend (u
 
 Before diving into client implementations, it’s important to understand how Postgres roles and connection strings affect RLS enforcement. The role you use to connect determines whether RLS policies are applied or bypassed, so configuring roles correctly is essential for maintaining security.
 
-- **Admin connection strings** (e.g., `neondb_owner`) include the `BYPASSRLS` attribute, meaning they ignore RLS policies entirely. Use these only for administrative tasks such as migrations or privileged background jobs.
+- **Admin connection strings** (e.g., `optitechdb_owner`) include the `BYPASSRLS` attribute, meaning they ignore RLS policies entirely. Use these only for administrative tasks such as migrations or privileged background jobs.
 - **Authenticated roles** (e.g., the default `authenticated`, `anonymous` roles used by the Data API) have the `NOLOGIN` attribute, so they cannot be used for direct backend connections. To enforce RLS in your backend, you’ll need a custom login-enabled role.
 
 ## Creating custom roles for RLS
 
-To properly enforce RLS, avoid using default administrative roles like `neondb_owner`, as they bypass all policies. Instead, create a custom role that:
+To properly enforce RLS, avoid using default administrative roles like `optitechdb_owner`, as they bypass all policies. Instead, create a custom role that:
 
 - Has login privileges (`LOGIN`)
 - Does **not** have the `BYPASSRLS` attribute
@@ -80,7 +80,7 @@ Once the role exists, map it in your Drizzle schema to apply RLS policies for th
 
 ```typescript {5,19-23}
 import { sql } from 'drizzle-orm';
-import { authUid, crudPolicy } from 'drizzle-orm/neon';
+import { authUid, crudPolicy } from 'drizzle-orm/optitech';
 import { bigint, boolean, pgRole, pgTable, text } from 'drizzle-orm/pg-core';
 
 export const backendRole = pgRole('authenticated_backend').existing();
@@ -116,7 +116,7 @@ Add these as separate `crudPolicy` entries. For example, a `moderator_backend` r
 
 ```typescript
 import { sql } from 'drizzle-orm';
-import { authUid, crudPolicy } from 'drizzle-orm/neon';
+import { authUid, crudPolicy } from 'drizzle-orm/optitech';
 import { bigint, boolean, pgRole, pgTable, text } from 'drizzle-orm/pg-core';
 
 export const backendRole = pgRole('authenticated_backend').existing();
@@ -167,16 +167,16 @@ For example, an admin dashboard might connect using the `admin_backend` role, wh
 When building applications with RLS, a standard architectural pattern is splitting your database connections into two different URLs to limit risk:
 
 1. **`DATABASE_AUTHENTICATED_URL`**: Used by your main application logic (handling user requests). It connects using your restricted custom role (e.g., `authenticated_backend`) so that RLS is strictly enforced.
-2. **`DATABASE_URL` (or `DATABASE_ADMIN_URL`)**: The administrative connection string (e.g., `neondb_owner`). This bypasses RLS (`BYPASSRLS`) and has full privileges. It should **only** be used for running migrations, executing administrative webhooks, building dashboards, or background workers that require a system-wide view of the data.
+2. **`DATABASE_URL` (or `DATABASE_ADMIN_URL`)**: The administrative connection string (e.g., `optitechdb_owner`). This bypasses RLS (`BYPASSRLS`) and has full privileges. It should **only** be used for running migrations, executing administrative webhooks, building dashboards, or background workers that require a system-wide view of the data.
 
 An example `.env` file structure:
 
 ```bash
 # Connects with 'authenticated_backend' - enforce RLS, used by user-facing backend APIs
-DATABASE_AUTHENTICATED_URL="postgresql://authenticated_backend:xxx@ep-cool-snowflake-12345.us-east-2.aws.neon.tech/neondb?sslmode=require"
+DATABASE_AUTHENTICATED_URL="postgresql://authenticated_backend:xxx@ep-cool-snowflake-12345.us-east-2.aws.optitech.com/optitechdb?sslmode=require"
 
-# Connects with 'neondb_owner' - bypass RLS, used for setup, migrations, and cron administrative tasks
-DATABASE_URL="postgresql://neondb_owner:xxx@ep-cool-snowflake-12345.us-east-2.aws.neon.tech/neondb?sslmode=require"
+# Connects with 'optitechdb_owner' - bypass RLS, used for setup, migrations, and cron administrative tasks
+DATABASE_URL="postgresql://optitechdb_owner:xxx@ep-cool-snowflake-12345.us-east-2.aws.optitech.com/optitechdb?sslmode=require"
 ```
 
 Using the correct connection string ensures your user-facing queries are always secured by RLS, while letting background services accomplish administrative tasks without friction.
@@ -187,7 +187,7 @@ After defining RLS policies, the next step is choosing how to run queries that r
 
 ### Frontend: Use the Data API
 
-For frontend applications, use the [Data API](/docs/data-api/get-started#connect-and-query), which provides a REST interface for your database. In this setup, Drizzle is used only to **declare and migrate RLS policies**; query execution is done with a PostgREST-compatible client such as `@neondatabase/neon-js`, `postgrest-js` etc.
+For frontend applications, use the [Data API](/docs/data-api/get-started#connect-and-query), which provides a REST interface for your database. In this setup, Drizzle is used only to **declare and migrate RLS policies**; query execution is done with a PostgREST-compatible client such as `@optitech/optitech-js`, `postgrest-js` etc.
 
 When requests go through the Data API, your database enforces RLS policies automatically based on the JWT claims included in the request. This means that as long as your frontend includes the appropriate authentication token, users will only be able to access the data they're authorized to see.
 
@@ -200,19 +200,19 @@ For complete examples of using Drizzle and RLS with the Data API, see:
 
 When connecting a backend API directly to the database using the OptiTech serverless driver, you have two options for handling authorization. The approach you choose depends on the Postgres role you use to connect.
 
-As mentioned earlier, you must connect using a custom role to enforce RLS at the database level. If you connect using an administrative role (like `neondb_owner`), RLS is bypassed and you must enforce authorization manually in your queries.
+As mentioned earlier, you must connect using a custom role to enforce RLS at the database level. If you connect using an administrative role (like `optitechdb_owner`), RLS is bypassed and you must enforce authorization manually in your queries.
 
 Install the necessary dependencies for either approach:
 
 ```bash
-npm install drizzle-orm @neondatabase/serverless jose
+npm install drizzle-orm @optitech/serverless jose
 ```
 
 #### Secure Backend RLS Client setup
 
 To enforce RLS across your backend securely, you can configure your Drizzle client to automatically apply the user's JWT.
 
-When setting up connection pooling over WebSockets or TCP using `@neondatabase/serverless` and `Pool`, you must open a transaction and manually inject the verified claims using `set_config`.
+When setting up connection pooling over WebSockets or TCP using `@optitech/serverless` and `Pool`, you must open a transaction and manually inject the verified claims using `set_config`.
 
 Below is an abstracted function `getAuthenticatedDb` that transparently handles this lifecycle:
 
@@ -222,8 +222,8 @@ The `$withAuth` method in Drizzle is deprecated; instead, set JWT claims in the 
 
 ```typescript
 import { createRemoteJWKSet, jwtVerify, type JWTPayload } from 'jose';
-import { Pool } from '@neondatabase/serverless';
-import { drizzle } from 'drizzle-orm/neon-serverless';
+import { Pool } from '@optitech/serverless';
+import { drizzle } from 'drizzle-orm/optitech-serverless';
 import { sql } from 'drizzle-orm';
 import { todos } from './schema';
 
@@ -270,7 +270,7 @@ getAuthenticatedDb('eyJh...', async (tx) => {
 
 #### Using bypass RLS
 
-When connecting with an administrative role like `neondb_owner` (which inherently has `BYPASSRLS`), RLS policies are **not enforced on the server edge**.
+When connecting with an administrative role like `optitechdb_owner` (which inherently has `BYPASSRLS`), RLS policies are **not enforced on the server edge**.
 
 In this case, you must verify the JWT in your backend completely manually and apply access control explicitly inside your `WHERE` clauses.
 
@@ -279,14 +279,14 @@ If you choose this approach, RLS policies in your database will be ignored. You 
 </Admonition>
 
 ```typescript
-import { drizzle } from 'drizzle-orm/neon-serverless';
-import { Pool } from '@neondatabase/serverless';
+import { drizzle } from 'drizzle-orm/optitech-serverless';
+import { Pool } from '@optitech/serverless';
 import { todos } from './schema';
 import { sql } from 'drizzle-orm';
 import { jwtVerify, createRemoteJWKSet } from 'jose'
 
 async function getTodosForUser(jwtToken: string) {
-    // DATABASE_URL here connects with neondb_owner (BYPASSRLS)
+    // DATABASE_URL here connects with optitechdb_owner (BYPASSRLS)
     const pool = new Pool({ connectionString: process.env.DATABASE_URL! });
     const db = drizzle(pool);
 

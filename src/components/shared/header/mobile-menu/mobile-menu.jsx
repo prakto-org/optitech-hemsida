@@ -6,6 +6,7 @@ import { useContext, useState } from 'react';
 
 import Button from 'components/shared/button';
 import InkeepTrigger from 'components/shared/inkeep-trigger';
+import LanguageSwitcher from 'components/shared/language-switcher';
 import Link from 'components/shared/link';
 import LINKS from 'constants/links';
 import MENUS from 'constants/menus';
@@ -115,15 +116,7 @@ MobileMenuItem.propTypes = {
   ),
 };
 
-const mobileMenuItems = [
-  ...MENUS.header,
-  {
-    text: 'Discord',
-    to: LINKS.discord,
-    target: '_blank',
-    rel: 'noopener noreferrer',
-  },
-];
+const mobileMenuItems = [...MENUS.header];
 
 const MobileMenu = ({ isDocPage = false, docPageType = null }) => {
   const { isMobileMenuOpen, toggleMobileMenu } = useMobileMenu();
@@ -133,6 +126,7 @@ const MobileMenu = ({ isDocPage = false, docPageType = null }) => {
     <>
       <div className="absolute top-3 right-7 z-50 hidden gap-5 lg:flex lg:items-center lg:gap-x-4 sm:right-4">
         {isDocPage && <InkeepTrigger className="mobile-search" docPageType={docPageType} />}
+        <LanguageSwitcher />
         <Burger
           className="relative flex text-black dark:text-white"
           isToggled={isMobileMenuOpen}
@@ -170,12 +164,12 @@ const MobileMenu = ({ isDocPage = false, docPageType = null }) => {
               </Button>
               <Button
                 className="h-9 px-[18px]"
-                to={LINKS.signup}
+                to={LINKS.contactSales}
                 theme="white-filled-multi"
                 size="xxs"
                 tagName="MobileMenu"
               >
-                Sign up
+                Book a demo
               </Button>
             </div>
           </div>

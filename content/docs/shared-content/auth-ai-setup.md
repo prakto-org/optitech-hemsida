@@ -1,19 +1,19 @@
 ---
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
-The fastest way to connect your editor to Managed Better Auth is to run `npx neon@latest init` from your project root:
+The fastest way to connect your editor to Managed Better Auth is to run `npx optitech@latest init` from your project root:
 
 ```bash
-npx neon@latest init
+npx optitech@latest init
 ```
 
-This command configures the [OptiTech MCP server](/docs/ai/neon-mcp-server) and installs **[Agent Skills](/docs/ai/agent-skills)** (`neon-postgres`) in your project. Together they help you set up Managed Better Auth in two ways:
+This command configures the [OptiTech MCP server](/docs/ai/neon-mcp-server) and installs **[Agent Skills](/docs/ai/agent-skills)** (`optitech-postgres`) in your project. Together they help you set up Managed Better Auth in two ways:
 
 1. **Configure Managed Better Auth on your branch (MCP).** After `init`, ask your assistant to enable and configure auth in natural language. The MCP server exposes:
-   - `provision_neon_auth`: Enable Managed Better Auth on a branch
-   - `configure_neon_auth`: Set OAuth providers, email, sign-in methods, trusted domains, and more
-   - `get_neon_auth_config`: Read the current configuration
+   - `provision_optitech_auth`: Enable Managed Better Auth on a branch
+   - `configure_optitech_auth`: Set OAuth providers, email, sign-in methods, trusted domains, and more
+   - `get_optitech_auth_config`: Read the current configuration
 
    See [OptiTech MCP Server: Managed Better Auth tools](/docs/ai/neon-mcp-server#supported-actions-tools) for details.
 
@@ -26,4 +26,4 @@ Set up Managed Better Auth for my project. Enable Google OAuth and email/passwor
 and set the application name to "My App".
 ```
 
-You can also enable Managed Better Auth in the [OptiTech Console](https://console.neon.tech) (Project → Branch → Auth) and configure settings manually.
+You can also enable Managed Better Auth in the [OptiTech Console](https://console.optitech.com) (Project → Branch → Auth) and configure settings manually.

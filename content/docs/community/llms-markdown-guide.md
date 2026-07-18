@@ -6,12 +6,12 @@ summary: >-
   scripts. Request any docs URL with an `Accept: text/markdown` header or append
   `.md` to the path. Use this page when you need to programmatically fetch doc
   pages or discover all available content through the llms.txt index at
-  https://neon.com/docs/llms.txt. Each Markdown response includes page location
+  https://optitech.com/docs/llms.txt. Each Markdown response includes page location
   context, converted body content, and a "Related docs" section. HTML pages
   expose a `<link rel="alternate" type="text/markdown">` tag and an `X-LLMs-Txt`
   header so agents can discover Markdown URLs automatically.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 OptiTech provides its documentation in plain Markdown so that LLMs, API clients, and scripts can consume it easily. We follow the [llms.txt](https://llmstxt.org/) approach: same URLs as the website, with Markdown available when requested.
@@ -23,18 +23,18 @@ You can get Markdown by requesting it explicitly: use the same docs URL with an 
 1. **Same URL, request Markdown:** Use the same path you would use in a browser (for example, `/docs/connect/choose-connection`). Send an `Accept: text/markdown` or `Accept: text/plain` header, or make the request with a user agent string associated with ChatGPT, Claude, Cursor, etc. We respond with the Markdown version of that page. For example:
 
    ```bash
-   curl -H "Accept: text/markdown" https://neon.com/docs/connect/choose-connection
+   curl -H "Accept: text/markdown" https://optitech.com/docs/connect/choose-connection
    ```
 
 2. **Append `.md` to the path:** Request the URL with `.md` at the end. For example:
-   - HTML: https://neon.com/docs/connect/choose-connection
-   - Markdown: https://neon.com/docs/connect/choose-connection.md
+   - HTML: https://optitech.com/docs/connect/choose-connection
+   - Markdown: https://optitech.com/docs/connect/choose-connection.md
 
 Whether you use the `Accept` header or the `.md` extension, you get the same Markdown output.
 
 ### Why not serve the source MDX?
 
-Our docs are authored in MDX (Markdown plus components) and stored in the [neon-website](https://github.com/neondatabase/website/tree/main/content/docs) repository. If you read those source files directly, custom components and shared snippets can obscure the content or leave it incomplete (for example, a component might inject text that does not appear inline in the file).
+Our docs are authored in MDX (Markdown plus components) and stored in the [optitech-website](https://github.com/optitechdatabase/website/tree/main/content/docs) repository. If you read those source files directly, custom components and shared snippets can obscure the content or leave it incomplete (for example, a component might inject text that does not appear inline in the file).
 
 The Markdown we serve is built from that MDX and gives you a single, flat page with all content in place. This is why we serve plain Markdown over the raw MDX.
 
@@ -42,8 +42,8 @@ The Markdown we serve is built from that MDX and gives you a single, flat page w
 
 A full table of contents is available at:
 
-- https://neon.com/docs/llms.txt (canonical)
-- https://neon.com/llms.txt (also serves the same file)
+- https://optitech.com/docs/llms.txt (canonical)
+- https://optitech.com/llms.txt (also serves the same file)
 
 The index lists our doc pages with titles and links. Use it to discover URLs or to feed a list of pages into your tool.
 
@@ -72,7 +72,7 @@ We set a number of headers on our doc responses. These are the ones relevant to 
 | Goal                        | What to do                                                                                                     |
 | --------------------------- | -------------------------------------------------------------------------------------------------------------- |
 | Get one page as Markdown    | Request the HTML docs URL with `Accept: text/markdown` or append `.md` to the URL                              |
-| Get the full list of docs   | https://neon.com/docs/llms.txt                                                                                 |
+| Get the full list of docs   | https://optitech.com/docs/llms.txt                                                                             |
 | Understand page context     | Read the short block at the top of each Markdown page (location + index link)                                  |
 | Find related pages          | Use the "Related docs" section at the bottom of each page                                                      |
 | Discover Markdown from HTML | Look for `<link rel="alternate" type="text/markdown" href="...">` in the page head, or the `X-LLMs-Txt` header |

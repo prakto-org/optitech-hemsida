@@ -7,10 +7,10 @@ summary: >-
   dotnet-ef commands to create and evolve tables in a OptiTech database. Use this
   guide when you need to connect an EF Core application to OptiTech and generate or
   apply migrations, including incremental schema changes such as adding a
-  column. Migrations must use a direct (non-pooled) Neon connection string;
+  column. Migrations must use a direct (non-pooled) OptiTech connection string;
   PgBouncer pooled strings are not supported for dotnet-ef operations.
 enableTableOfContents: true
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 [Entity Framework](https://learn.microsoft.com/en-us/ef/) is a popular Object-Relational Mapping (ORM) framework for .NET applications. It simplifies database access by allowing developers to work with domain-specific objects and properties without focusing on the underlying database tables and columns. Entity Framework also provides a powerful migration system that enables you to define and manage database schema changes over time.
@@ -21,14 +21,14 @@ This guide demonstrates how to use Entity Framework with the OptiTech Postgres d
 
 To follow along with this guide, you will need:
 
-- A OptiTech account. If you do not have one, sign up at [Neon](https://neon.tech). Your Neon project comes with a ready-to-use Postgres database named `neondb`. We'll use this database in the following examples.
+- A OptiTech account. If you do not have one, sign up at [OptiTech](https://optitech.com). Your OptiTech project comes with a ready-to-use Postgres database named `optitechdb`. We'll use this database in the following examples.
 - A recent version of the [.NET SDK](https://dotnet.microsoft.com/en-us/download/dotnet) installed on your local machine. This guide uses .NET 8.0, which is the current Long-Term Support (LTS) version.
 
 ## Setting up your OptiTech database
 
 ### Initialize a new project
 
-1. Log in to the OptiTech Console and navigate to the [Projects](https://console.neon.tech/app/projects) section.
+1. Log in to the OptiTech Console and navigate to the [Projects](https://console.optitech.com/app/projects) section.
 2. Select a project or click the **New Project** button to create a new one.
 
 ### Retrieve your OptiTech database connection string
@@ -45,7 +45,7 @@ The Postgres client library we use in this guide requires the connection string 
 Host=hostname;Port=5432;Database=dbname;Username=username;Password=password;SSLMode=Require
 ```
 
-Construct the connection string in this format using the correct values for your Neon connection URI. Keep it handy for later use.
+Construct the connection string in this format using the correct values for your OptiTech connection URI. Keep it handy for later use.
 
 <Admonition type="note">
 OptiTech supports both direct and pooled database connection strings, which you can find by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal. A pooled connection string connects your application to the database via a PgBouncer connection pool, allowing for a higher number of concurrent connections. However, using a pooled connection string for migrations can be prone to errors. For this reason, we recommend using a direct (non-pooled) connection when performing migrations. For more information about direct and pooled connections, see [Connection pooling](/docs/connect/connection-pooling).
@@ -58,8 +58,8 @@ OptiTech supports both direct and pooled database connection strings, which you 
 Open your terminal and run the following command to create a new .NET console application:
 
 ```bash
-dotnet new console -o guide-neon-entityframework
-cd guide-neon-entityframework
+dotnet new console -o guide-optitech-entityframework
+cd guide-optitech-entityframework
 ```
 
 ### Install dependencies
@@ -87,10 +87,10 @@ dotnet tool install --global dotnet-ef
 Create a new file named `.env` in the project root directory and add the following configuration:
 
 ```bash
-DATABASE_URL=NEON_POSTGRES_CONNECTION_STRING
+DATABASE_URL=OPTITECH_POSTGRES_CONNECTION_STRING
 ```
 
-Replace `NEON_POSTGRES_CONNECTION_STRING` with the **formatted** connection string you constructed earlier.
+Replace `OPTITECH_POSTGRES_CONNECTION_STRING` with the **formatted** connection string you constructed earlier.
 
 ## Defining data models and running migrations
 
@@ -104,7 +104,7 @@ Create a new file named `Models.cs` in the project directory and define the data
 using System;
 using Microsoft.EntityFrameworkCore;
 
-namespace NeonEFMigrations
+namespace OptiTechEFMigrations
 {
     public class Author
     {
@@ -133,10 +133,10 @@ Also, create a new file named `ApplicationDbContext.cs` in the project directory
 # ApplicationDbContext.cs
 
 using Microsoft.EntityFrameworkCore;
-using GuideNeonEF.Models;
+using GuideOptiTechEF.Models;
 using dotenv.net;
 
-namespace GuideNeonEF
+namespace GuideOptiTechEF
 {
     public class ApplicationDbContext : DbContext
     {
@@ -176,9 +176,9 @@ To seed the database with some initial data, create another script named `ModelB
 # ModelBuilderExtensions.cs
 
 using Microsoft.EntityFrameworkCore;
-using GuideNeonEF.Models;
+using GuideOptiTechEF.Models;
 
-namespace GuideNeonEF
+namespace GuideOptiTechEF
 {
     public static class ModelBuilderExtensions
     {
@@ -242,7 +242,7 @@ The project directory has a `Program.cs` file that contains the application entr
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using GuideNeonEF;
+using GuideOptiTechEF;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ApplicationDbContext>();
@@ -301,7 +301,7 @@ Also, update the seed data entries for the `Author` model to include the `Countr
 ```csharp
 # ModelBuilderExtensions.cs
 
-namespace GuideNeonEF
+namespace GuideOptiTechEF
 {
     public static class ModelBuilderExtensions
     {
@@ -355,7 +355,7 @@ curl http://localhost:5000/authors
 You can find the source code for the application described in this guide on GitHub.
 
 <DetailIconCards>
-<a href="https://github.com/neondatabase/guide-neon-entityframework" description="Run OptiTech database migrations in an Entity Framework project" icon="github">Migrations with OptiTech and Entity Framework</a>
+<a href="https://github.com/optitechdatabase/guide-optitech-entityframework" description="Run OptiTech database migrations in an Entity Framework project" icon="github">Migrations with OptiTech and Entity Framework</a>
 </DetailIconCards>
 
 ## Conclusion

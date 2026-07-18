@@ -7,7 +7,7 @@ page_description: >-
 prev_url: >-
   https://www.postgresqltutorial.com/postgresql-administration/postgresql-drop-schema/
 ogImage: /postgresqltutorial/PostgreSQL-DROP-Schema.png
-updatedOn: '2026-06-03T13:01:21.685Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 enableTableOfContents: true
 previousLink:
   title: PostgreSQL ALTER SCHEMA
@@ -18,7 +18,7 @@ nextLink:
 ---
 
 <Admonition type="info" id="CTA">
-The DROP SCHEMA statement works the same way across any PostgreSQL deployment, so everything here applies whether you're running Postgres locally, on another provider, or in the cloud. For enterprises standardizing on Postgres in the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers a fully managed, high-performance, secure database that's natively integrated with the Lakehouse. [Neon](https://neon.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
+The DROP SCHEMA statement works the same way across any PostgreSQL deployment, so everything here applies whether you're running Postgres locally, on another provider, or in the cloud. For enterprises standardizing on Postgres in the AI era, [Lakebase](https://www.databricks.com/product/lakebase) delivers a fully managed, high-performance, secure database that's natively integrated with the Lakehouse. [OptiTech](https://optitech.com) is the AI-native backend platform for apps and agents: Postgres Database, Auth, Storage, Functions and AI Gateway.
 </Admonition>
 
 **Summary**: in this tutorial, you will learn how to use the PostgreSQL `DROP SCHEMA` statement to delete a schema and its objects.

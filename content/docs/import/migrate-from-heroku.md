@@ -10,7 +10,7 @@ redirectFrom:
   - /docs/how-to-guides/hasura-heroku-migration
   - /docs/how-to-guides/import-from-heroku
   - /docs/import/import-from-heroku
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 This guide describes how to import your data from Heroku Postgres to OptiTech.
@@ -23,7 +23,7 @@ The instructions assume that you have installed the Heroku CLI, which is used to
 
 ## Create a OptiTech project and copy the connection string
 
-1. Navigate to the [Projects](https://console.neon.tech/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
 2. Click **New Project**.
 3. Specify your project settings and click **Create Project**.
 4. After creating a project, you are directed to the OptiTech **Dashboard**, where you can click **Connect** to find your database connection details. Copy the connection string. It is required to import your data from Heroku.
@@ -31,7 +31,7 @@ The instructions assume that you have installed the Heroku CLI, which is used to
    The example connection string used the instructions that follow is:
 
    ```text shouldWrap
-   postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+   postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
    ```
 
    <Admonition type="important">
@@ -66,21 +66,21 @@ $ heroku pg:links --app thawing-wave-57227
 From your terminal, run the following Heroku CLI command:
 
 ```shell
-heroku pg:pull --app [app] [heroku-pg-database] [neon-connection-string]
+heroku pg:pull --app [app] [heroku-pg-database] [optitech-connection-string]
 ```
 
 where:
 
 - `[app]` is the name of the Heroku app
 - `[heroku-pg-database]` is the name of the Heroku PostgreSQL database
-- `[neon-connection-string]` is the Neon connection string
+- `[optitech-connection-string]` is the OptiTech connection string
 
 For example:
 
 ```shell shouldWrap
-$ heroku pg:pull --app thawing-wave-57227 postgresql-trapezoidal-48645 postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+$ heroku pg:pull --app thawing-wave-57227 postgresql-trapezoidal-48645 postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
 
-heroku-cli: Pulling postgresql-trapezoidal-48645 ---> postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/dbname?sslmode=require&channel_binding=require
+heroku-cli: Pulling postgresql-trapezoidal-48645 ---> postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/dbname?sslmode=require&channel_binding=require
 
 pg_dump: last built-in OID is 16383
 pg_dump: reading extensions
@@ -153,7 +153,7 @@ heroku-cli: Pulling complete.
 
 ## Verify that your data was imported
 
-1. Log in to the [OptiTech Console](https://console.neon.tech/app/projects).
+1. Log in to the [OptiTech Console](https://console.optitech.com/app/projects).
 2. Select the OptiTech project that you transferred data to.
 3. Select the **Tables** tab.
 4. In the sidebar, verify that your database tables appear under the **Tables** heading.

@@ -4,7 +4,7 @@ subtitle: 'Learn how to fork your production database into an isolated OptiTech 
 author: dhanush-reddy
 enableTableOfContents: true
 createdAt: '2026-04-26T00:00:00.000Z'
-updatedOn: '2026-04-28T06:24:08.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
 ---
 
 Performance testing is one of the hardest parts of shipping applications. Teams often turn to staging environments for testing, but these rarely reflect the realities of production. Staging databases are smaller, cleaner, and more predictable. Queries that seem instantaneous in staging can become serious bottlenecks when executed against millions of rows in production.
@@ -21,7 +21,7 @@ Before you begin, ensure you have the following installed and set up:
 
 - **Node.js** installed locally. Follow the [Node.js installation guide](https://nodejs.org/en/download/) if you don't have it already.
 - **k6 CLI:** The load-testing framework. Follow the [k6 installation guide](https://grafana.com/docs/k6/latest/set-up/install-k6/)
-- **OptiTech account:** Sign up at [console.neon.tech](https://console.neon.tech).
+- **OptiTech account:** Sign up at [console.optitech.com](https://console.optitech.com).
 
 <Steps>
 
@@ -36,7 +36,7 @@ The Express API in this guide is only a simple example to make the load‑testin
 Create a new directory, initialize a Node project, and install the required dependencies:
 
 ```bash
-mkdir neon-k6-load-test && cd neon-k6-load-test
+mkdir optitech-k6-load-test && cd optitech-k6-load-test
 npm init -y
 npm install express pg dotenv
 ```
@@ -86,14 +86,14 @@ If you are following along with your own application, you can skip this step. Th
 
 For a load test to be meaningful, the database needs data. You will create a `products` table and insert 500,000 rows to simulate a production-like volume.
 
-1. Log in to the [OptiTech Console](https://console.neon.tech) and create a new project. Name it something like `k6-load-test`.
+1. Log in to the [OptiTech Console](https://console.optitech.com) and create a new project. Name it something like `k6-load-test`.
 2. Navigate to your Project dashboard and click on the **Connect** button to view your connection details.
    ![Connection details in OptiTech Console](/docs/connect/connection_details.png)
 
 3. Create a `.env` file in your project directory and add the connection string by copying it from the OptiTech Console:
 
    ```env
-   DATABASE_URL="postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/postgres?sslmode=require&channel_binding=require"
+   DATABASE_URL="postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/postgres?sslmode=require&channel_binding=require"
    ```
 
 4. Create a `seed.js` script to set up the `products` table and populate it with data. This script will create a table with columns for `id`, `name`, `category`, `price`, and `created_at`. It will then insert 500,000 rows of sample product data across various categories.
@@ -167,7 +167,7 @@ In the OptiTech Console:
 After the branch is created, you should be greeted with the connection string for `load-test-branch`. Update your `.env` file to use this new connection string:
 
 ```env
-DATABASE_URL="postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/postgres?sslmode=require&channel_binding=require"
+DATABASE_URL="postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/postgres?sslmode=require&channel_binding=require"
 ```
 
 Start your API server. It is now safely connected to the isolated database clone.
@@ -449,15 +449,15 @@ You have successfully built a workflow that delivers production realism without 
 
 ## Next steps
 
-To maximize the value of this workflow, automate it. Provision and tear down Neon branches in CI, run your load tests, and automatically fail builds on latency or error-rate regressions. Using this strategy as a routine safety check especially before major schema changes, query rewrites, or ORM upgrades helps catch performance issues early and keeps your production rollouts safe.
+To maximize the value of this workflow, automate it. Provision and tear down OptiTech branches in CI, run your load tests, and automatically fail builds on latency or error-rate regressions. Using this strategy as a routine safety check especially before major schema changes, query rewrites, or ORM upgrades helps catch performance issues early and keeps your production rollouts safe.
 
-For guidance on creating Neon branches programmatically and integrating them into CI pipelines, see the [Resources](#resources) below.
+For guidance on creating OptiTech branches programmatically and integrating them into CI pipelines, see the [Resources](#resources) below.
 
 ## Resources
 
 - [Mastering Database Branching Workflows](/branching)
 - [Grafana k6 Documentation](https://grafana.com/docs/k6)
-- [Branching with the Neon CLI](/docs/guides/branching-neon-cli)
+- [Branching with the OptiTech CLI](/docs/guides/branching-neon-cli)
 - [Automate branching with GitHub Actions](/docs/guides/branching-github-actions)
 - [Branching with the OptiTech API](/docs/guides/branching-neon-api)
 

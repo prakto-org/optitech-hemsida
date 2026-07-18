@@ -1,5 +1,6 @@
 import { Fit } from '@rive-app/react-canvas';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 
 import Container from 'components/shared/container';
 import RiveAnimation from 'components/shared/rive-animation';
@@ -10,77 +11,69 @@ import { cn } from 'utils/cn';
 
 import Heading from '../heading';
 
-const FEATURES = [
-  {
-    icon: copyIcon,
-    title: 'Cross-mapping',
-    description:
-      'One control satisfies requirements across several frameworks at once, saving work and time.',
-  },
-  {
-    icon: anonymIcon,
-    title: 'Prioritized actions',
-    description:
-      'Get a ready-made action list ranked by risk, so you always know what to fix next.',
-  },
-  {
-    icon: ephemeralityIcon,
-    title: 'Always current',
-    description: 'Requirements and tasks update themselves automatically when regulations change.',
-  },
-];
+const FEATURE_ICONS = {
+  crossMapping: copyIcon,
+  prioritizedActions: anonymIcon,
+  alwaysCurrent: ephemeralityIcon,
+};
 
-const Branching = () => (
-  <section
-    className="branching relative scroll-mt-[60px] overflow-hidden pt-40 safe-paddings pb-60 xl:py-[136px] lg:scroll-mt-0 lg:pt-20 lg:pb-[104px] md:pt-16 md:pb-20"
-    id="branching"
-  >
-    <Container
-      className="relative grid grid-cols-[224px_1fr] gap-x-32 before:block xl:grid-cols-1 xl:px-16 xl:before:hidden lg:px-16! md:px-5!"
-      size="1600"
+const Branching = () => {
+  const t = useTranslations('home.branching');
+  const FEATURES = Object.entries(FEATURE_ICONS).map(([key, icon]) => ({
+    icon,
+    title: t(`features.${key}.title`),
+    description: t(`features.${key}.description`),
+  }));
+
+  return (
+    <section
+      className="branching relative scroll-mt-[60px] overflow-hidden pt-40 safe-paddings pb-60 xl:py-[136px] lg:scroll-mt-0 lg:pt-20 lg:pb-[104px] md:pt-16 md:pb-20"
+      id="branching"
     >
-      <div className="min-w-0">
-        <Heading
-          icon="branching"
-          title="<strong>Instant gap analysis.</strong> Answer 20 questions to map exactly which laws apply and eliminate surprises in audits and inspections."
-        />
-        <RiveAnimation
-          className="pointer-events-none aspect-[1184/500] w-full"
-          wrapperClassName={cn(
-            'relative mt-14 w-full',
-            'xl:-mr-16 xl:-ml-7 xl:mt-12 xl:w-[calc(100%+92px)] xl:max-w-none',
-            'lg:-ml-5 xl:w-[calc(100%+84px)]',
-            'sm:-mr-5 sm:-ml-2.5 sm:w-[calc(100%+30px)]'
-          )}
-          src="/animations/pages/home/branching.riv?20260114"
-          autoBind={false}
-          fit={Fit.Contain}
-        />
-        <ul className="mt-11 grid grid-cols-3 gap-x-16 xl:mt-9 lg:mt-12 lg:gap-x-8 lg:px-8 md:mt-10 md:grid-cols-1 md:gap-y-7 md:px-0">
-          {FEATURES.map(({ icon, title, description }, index) => (
-            <li key={index}>
-              <div className="flex items-center gap-x-2.5">
-                <Image
-                  className="lg:size-[14px]"
-                  src={icon}
-                  width={16}
-                  height={16}
-                  loading="lazy"
-                  alt=""
-                />
-                <h3 className="text-base font-medium tracking-tight text-white lg:text-[14px]">
-                  {title}
-                </h3>
-              </div>
-              <p className="mt-2.5 text-base tracking-tight text-gray-new-50 lg:text-[14px] md:mt-1.5 md:pr-8">
-                {description}
-              </p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </Container>
-  </section>
-);
+      <Container
+        className="relative grid grid-cols-[224px_1fr] gap-x-32 before:block xl:grid-cols-1 xl:px-16 xl:before:hidden lg:px-16! md:px-5!"
+        size="1600"
+      >
+        <div className="min-w-0">
+          <Heading icon="branching" title={t.raw('heading')} />
+          <RiveAnimation
+            className="pointer-events-none aspect-[1184/500] w-full"
+            wrapperClassName={cn(
+              'relative mt-14 w-full',
+              'xl:-mr-16 xl:-ml-7 xl:mt-12 xl:w-[calc(100%+92px)] xl:max-w-none',
+              'lg:-ml-5 xl:w-[calc(100%+84px)]',
+              'sm:-mr-5 sm:-ml-2.5 sm:w-[calc(100%+30px)]'
+            )}
+            src="/animations/pages/home/branching.riv?20260114"
+            autoBind={false}
+            fit={Fit.Contain}
+          />
+          <ul className="mt-11 grid grid-cols-3 gap-x-16 xl:mt-9 lg:mt-12 lg:gap-x-8 lg:px-8 md:mt-10 md:grid-cols-1 md:gap-y-7 md:px-0">
+            {FEATURES.map(({ icon, title, description }, index) => (
+              <li key={index}>
+                <div className="flex items-center gap-x-2.5">
+                  <Image
+                    className="lg:size-[14px]"
+                    src={icon}
+                    width={16}
+                    height={16}
+                    loading="lazy"
+                    alt=""
+                  />
+                  <h3 className="text-base font-medium tracking-tight text-white lg:text-[14px]">
+                    {title}
+                  </h3>
+                </div>
+                <p className="mt-2.5 text-base tracking-tight text-gray-new-50 lg:text-[14px] md:mt-1.5 md:pr-8">
+                  {description}
+                </p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </Container>
+    </section>
+  );
+};
 
 export default Branching;

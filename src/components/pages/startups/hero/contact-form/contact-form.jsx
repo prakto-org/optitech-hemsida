@@ -2,6 +2,7 @@
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -70,6 +71,7 @@ const inputClassName =
   '!mt-0 !h-11 !rounded-none border-gray-new-20 !bg-black-pure !px-4 !text-base !leading-snug !tracking-tight text-white placeholder:!text-gray-new-50 focus:!border-white';
 
 const ContactForm = () => {
+  const t = useTranslations('startups.form');
   const [formState, setFormState] = useState(FORM_STATES.DEFAULT);
   const [isBroken, setIsBroken] = useState(false);
   const [ajsAnonymousId] = useCookie('ajs_anonymous_id');
@@ -141,15 +143,13 @@ const ContactForm = () => {
       id="startups-form"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <h2 className="text-xl leading-snug font-medium tracking-tighter text-white">
-        Apply to the OptiTech Startup Program
-      </h2>
+      <h2 className="text-xl leading-snug font-medium tracking-tighter text-white">{t('title')}</h2>
       <div className="grid grid-cols-2 gap-6 lg:gap-5 md:contents md:flex-col md:gap-6">
         <Field
           className="gap-y-2"
           errorTheme="tooltip"
           name="firstname"
-          label="First Name*"
+          label={t('firstName')}
           autoComplete="given-name"
           theme="transparent"
           labelClassName={labelClassName}
@@ -162,7 +162,7 @@ const ContactForm = () => {
           className="gap-y-2"
           errorTheme="tooltip"
           name="lastname"
-          label="Last Name*"
+          label={t('lastName')}
           autoComplete="family-name"
           theme="transparent"
           labelClassName={labelClassName}
@@ -176,7 +176,7 @@ const ContactForm = () => {
         className="gap-y-2"
         errorTheme="tooltip"
         name="email"
-        label="Company Email Address*"
+        label={t('email')}
         type="email"
         autoComplete="email"
         theme="transparent"
@@ -190,7 +190,7 @@ const ContactForm = () => {
         className="gap-y-2"
         errorTheme="tooltip"
         name="companyWebsite"
-        label="Company Website*"
+        label={t('companyWebsite')}
         theme="transparent"
         labelClassName={labelClassName}
         inputClassName={inputClassName}
@@ -202,7 +202,7 @@ const ContactForm = () => {
         className="gap-y-2"
         errorTheme="tooltip"
         name="investor"
-        label="Primary Investor, Accelerator, etc.*"
+        label={t('investor')}
         theme="transparent"
         labelClassName={labelClassName}
         inputClassName={inputClassName}
@@ -216,15 +216,26 @@ const ContactForm = () => {
 
       <div className="relative z-0 col-span-full mt-1 flex items-end justify-between gap-6 sm:flex-col sm:items-start sm:gap-4">
         <p className="max-w-[300px] text-sm leading-[1.5] tracking-tight text-gray-new-60 sm:max-w-full">
-          By submitting you agree to the{' '}
-          <Link className="decoration-dashed" to={LINKS.websiteTerms} theme="grey-85-underlined">
-            Terms of Use
-          </Link>{' '}
-          and acknowledge the{' '}
-          <Link className="decoration-dashed" to={LINKS.privacyPolicy} theme="grey-85-underlined">
-            Privacy Notice
-          </Link>
-          .
+          {t.rich('agreement', {
+            a1: (chunks) => (
+              <Link
+                className="decoration-dashed"
+                to={LINKS.websiteTerms}
+                theme="grey-85-underlined"
+              >
+                {chunks}
+              </Link>
+            ),
+            a2: (chunks) => (
+              <Link
+                className="decoration-dashed"
+                to={LINKS.privacyPolicy}
+                theme="grey-85-underlined"
+              >
+                {chunks}
+              </Link>
+            ),
+          })}
         </p>
         <Button
           className="min-w-[152px] px-10 sm:w-full sm:min-w-0"
@@ -237,7 +248,7 @@ const ContactForm = () => {
             formState === FORM_STATES.ERROR
           }
         >
-          {formState === FORM_STATES.SUCCESS ? 'Applied!' : 'Apply Now'}
+          {formState === FORM_STATES.SUCCESS ? t('submitted') : t('submit')}
         </Button>
       </div>
       <Image

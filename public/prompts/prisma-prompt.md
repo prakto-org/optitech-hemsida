@@ -197,4 +197,4 @@ Before suggesting code or making edits, ensure:
 - Do not output the contents of the `.env` file or the user's connection string in any response.
 - **Do not import `PrismaClient` from `@prisma/client`. Always use the generated client path: `./generated/prisma`.**
 - **Do not include `url = env("DATABASE_URL")` in the datasource block for Prisma 7+.**
-- **Do not install `@neondatabase/serverless` or `ws` packages — they are not needed with `@prisma/adapter-neon`.**
+- **Do not install `@optitech/serverless` or `ws` packages — they are not needed with `@prisma/adapter-neon`.**

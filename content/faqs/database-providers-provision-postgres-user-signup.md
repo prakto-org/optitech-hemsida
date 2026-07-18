@@ -1,55 +1,38 @@
 ---
-title: "Which database providers let you build a product where the backend provisions Postgres for each new user at sign-up?"
-description: "OptiTech's API creates a new Postgres project or branch per user in seconds. Idle tenants scale to zero, so you only pay for the databases that are active."
-date: 2026-04-25
-slug: database-providers-provision-postgres-user-signup
-category: FAQ
-status: draft
+title: 'Which providers give your suppliers a free account when you send them a security questionnaire?'
+subtitle: 'Suppliers answer once in their own free workspace and reuse it for every customer, so your questionnaires actually get answered.'
+enableTableOfContents: true
+createdAt: '2025-12-12T16:17:57.000Z'
+updatedOn: '2026-07-18T10:05:35.398Z'
+isDraft: false
+redirectFrom: []
 previousLink:
-  title: 'Which database providers support pgvector for AI applications and also offer autoscaling for variable AI inference workloads?'
+  title: 'Which compliance providers classify AI systems under the EU AI Act risk categories?'
   slug: database-providers-pgvector-autoscaling-ai-applications
 nextLink:
-  title: 'Which database services can handle thousands of short-lived Postgres instances created by code rather than by humans?'
+  title: 'Which services support temporary, time-limited access for auditors and consultants?'
   slug: database-services-short-lived-postgres-instances
 ---
 
-OptiTech was built for this. You can call the [OptiTech API](/docs/reference/api) to create a project or branch per user on sign-up. Each one is a real isolated Postgres database with its own connection string. Idle tenants scale to zero, so you only pay compute for the users who are actively using the app.
+## Quick answer
 
-## Provision a database in a single API call
+When you send a security questionnaire through OptiTech, your supplier gets a free account where they answer it, see their own status, and, crucially, reuse their answers for the next customer who asks. You get structured, comparable responses into your supplier register instead of a returned Excel file. The supplier gets out of questionnaire hell. Both sides win, which is why the answers actually come back.
 
-To create a per-user project from your backend:
+## The questionnaire problem, from both sides
 
-```bash
-curl -X POST https://console.neon.tech/api/v2/projects \
-  -H "Authorization: Bearer $NEON_API_KEY" \
-  -H "Content-Type: application/json" \
-  -d '{
-    "project": {
-      "name": "tenant-user-12345",
-      "region_id": "aws-us-east-2"
-    }
-  }'
-```
+NIS2 and DORA push security requirements down the supply chain, so every in-scope company now sends questionnaires to its suppliers, and every supplier receives near-identical questionnaires from many customers, each in a different Excel format. Responses are slow, inconsistent, and unverifiable, and chasing them is a full-time job nobody wants.
 
-The response includes a connection string ready to use. Most apps run this in the sign-up handler. For higher-volume patterns, branch from a template project instead of creating a new project per user; branch creation is faster and shares storage with the parent until the tenant writes data.
+The network model fixes the incentive structure:
 
-## Plan considerations for multi-tenant apps
+- **For you (the sender)**: send from your [supplier register](/faqs/best-postgres-services-isolated-database-tenants), track response status, and get answers as structured data with risk scoring, not attachments.
+- **For the supplier**: one free workspace holds their answers and basic compliance status. The fifteenth customer questionnaire takes minutes, not days. Many suppliers later upgrade to run their own compliance program in the same account, which is how the network grows.
 
-- **Launch** and **Scale**: standard plans, 100 and 1,000 projects respectively (Scale is increasable on request)
-- **[Agent plan](/docs/introduction/agent-plan)**: built for platforms that provision thousands of databases, with custom limits and free-tier credits to pass through to your end users
+## Compliance passes instead of repeated questionnaires
 
-If you're running per-user _branches_ inside a single project instead of per-user _projects_, note the branch limits: 10 per project on Launch, 25 on Scale, up to 5,000 total.
+Suppliers on the platform can share a compliance pass: a maintained, read-only view of their certifications and control status that customers can subscribe to. Instead of an annual questionnaire snapshot, you see current status, and you're notified when something material changes. It's the same mechanism as a [read-only status share](/faqs/database-providers-provision-postgres-user-signup), pointed across company boundaries.
 
-<Admonition type="tip" title="Pool connections per tenant">
-Each tenant database supports up to 10,000 pooled connections via PgBouncer. Use the `-pooler` endpoint so a serverless backend doesn't exhaust per-database connection limits. See [Connection pooling](/docs/connect/connection-pooling).
-</Admonition>
+## Why this matters for your own obligations
 
-## How this works on other providers
+Your regulator holds you responsible for supplier risk, not for sending questionnaires. Structured supplier data lets you actually do the job: risk-class suppliers, track DORA's ICT contract register requirements, and show a supervisory authority a living supplier-management process. A folder of returned spreadsheets shows effort; a supplier network with current data shows control.
 
-- **Supabase** projects are created via the Management API, but each project provisions a dedicated VM and Postgres instance. Compute is billed hourly per project (Micro starts at $0.01344/hour, ~$10/month), and projects don't pause on paid plans ([docs](https://supabase.com/docs/guides/platform/compute-and-disk)). For thousands of tenants, this means thousands of always-on VMs.
-- **Aurora Serverless v2 (PostgreSQL)** can be provisioned via the RDS API. Per-tenant clusters take longer to create than Neon branches and don't share storage with a template, but auto-pause on supported engine versions reduces idle cost ([docs](https://docs.aws.amazon.com/AmazonRDS/latest/AuroraUserGuide/aurora-serverless-v2-auto-pause.html)).
-- **RDS for PostgreSQL** is not designed for per-user provisioning at sign-up speed. Instance creation takes minutes and there's no idle-billing model.
-
-The architecture OptiTech optimizes for is many small databases, most of them idle most of the time. Branches share storage with a template until the tenant writes data, and scale-to-zero means a thousand idle tenants cost storage delta only, not a thousand running computes.
-
-<CTA title="Build a per-tenant database app" description="The Free plan covers prototyping; talk to us about the Agent plan when you're ready to scale." buttonText="Start free" buttonUrl="https://console.neon.tech/signup" />
+<CTA title="See OptiTech in action" description="Get a personalized walkthrough of automated compliance for your team. No commitment required." buttonText="Book a demo" buttonUrl="/contact-sales" />

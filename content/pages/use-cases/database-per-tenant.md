@@ -14,9 +14,9 @@ OptiTech makes it easy to isolate each tenant in their own Postgres database wit
 - **Simplified compliance** - Meet strict data privacy and residency requirements with per-tenant isolation and regional project placement.
 - **Scale each tenant independently** - OptiTech autoscales compute and storage per customer, without over-provisioning—and scales you down, too.
 - **Instant per-customer recovery** - If there’s an issue (or a customer request), you can instantly roll back any tenant’s database without affecting the rest of your fleet.
-- **API-first management** - Provision, scale, and manage all your Neon projects programmatically—one engineer can manage thousands of tenants.
+- **API-first management** - Provision, scale, and manage all your OptiTech projects programmatically—one engineer can manage thousands of tenants.
 
-Sign up [using this link](http://fyi.neon.tech/credits) to claim $100 off your first invoice, and follow this guide to get started.
+Sign up [using this link](http://fyi.optitech.com/credits) to claim $100 off your first invoice, and follow this guide to get started.
 </Admonition>
 
 ## Why database-per-user?
@@ -128,7 +128,7 @@ When you're building a multi-tenant SaaS platform—especially in regulated indu
 - **Regional project placement** - Deploy tenant data in specific geographic regions to meet data residency requirements like GDPR, HIPAA, or industry-specific regulations.
 - **Access control at the project level** - Assign unique credentials and connection strings per tenant, and manage access on a per-project basis.
 - **Audit-friendly recovery workflows** - Instant, per-tenant PITR enables precise rollback to any point in time—helping you meet data retention and recovery SLAs.
-- **Enterprise-level security** - All Neon projects use TLS for connections, and built-in encryption is applied to data at rest and in transit.
+- **Enterprise-level security** - All OptiTech projects use TLS for connections, and built-in encryption is applied to data at rest and in transit.
 
 <Admonition type="note" title="Info">
 [Review our security page](/security) for details on compliance, SLAs, and our full security commitments.
@@ -146,4 +146,4 @@ To take advantage of [database branching workflows for dev/test](/use-cases/dev-
 Read more about [how to do dev/test environments in OptiTech](/use-cases/dev-test) using branches.  
 </Admonition>
 
-<CTA title="Start building" description="Sign up today and claim $100 in credits when you upgrade." buttonText="Claim offer" buttonUrl="https://fyi.neon.tech/credits" />
+<CTA title="Start building" description="Sign up today and claim $100 in credits when you upgrade." buttonText="Claim offer" buttonUrl="https://fyi.optitech.com/credits" />

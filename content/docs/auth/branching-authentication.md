@@ -3,21 +3,21 @@ title: Branching authentication
 subtitle: How authentication works with OptiTech database branches
 summary: >-
   Managed Better Auth stores users, sessions, and configuration in the database's
-  neon_auth schema, so authentication data is automatically cloned when you
+  optitech_auth schema, so authentication data is automatically cloned when you
   create a branch, giving each branch its own fully isolated auth environment.
   Use this page when you need to safely test OAuth providers, RBAC policy
   changes, password reset flows, or full application refactors without touching
   production users. Each branch gets a unique Auth API URL, and sessions and
   tokens do not cross between branches.
 enableTableOfContents: true
-updatedOn: '2026-07-15T00:08:00.682Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 <FeatureBetaProps feature_name="Managed Better Auth" />
 
 Authentication is often one of the hardest parts of the application stack to test. In traditional architectures, identity data lives in a separate third-party service, while your business data lives in your database. This separation makes it difficult to create realistic staging environments or test changes to permissions without affecting production users.
 
-One of Managed Better Auth's unique features is native support for [database branching](/docs/introduction/branching). Because authentication data (users, sessions, and configuration) lives directly in your database's `neon_auth` schema, it is cloned along with your business data when you create a branch.
+One of Managed Better Auth's unique features is native support for [database branching](/docs/introduction/branching). Because authentication data (users, sessions, and configuration) lives directly in your database's `optitech_auth` schema, it is cloned along with your business data when you create a branch.
 
 This gives each branch its own isolated authentication environment, enabling safe testing of permission changes, new OAuth providers, or full application refactors.
 
@@ -50,12 +50,12 @@ Production Branch              Preview Branch
 ├── New user: alice@co.com     ├── New user: test@co.com
 ├── Alice's sessions           ├── Test user's sessions
 ├── Config: email with links   ├── Config: testing email codes
-└── ep-abc123.neonauth...      └── ep-xyz789.neonauth...
+└── ep-abc123.optitechauth...      └── ep-xyz789.optitechauth...
     (production endpoint)          (preview endpoint)
 ```
 
 <Admonition type="note">
-Managed Better Auth works with your branch's **default** database (typically `neondb`) and read-write endpoint only. You cannot use Managed Better Auth with other databases in the same branch. This aligns with our recommended pattern of one database per branch.
+Managed Better Auth works with your branch's **default** database (typically `optitechdb`) and read-write endpoint only. You cannot use Managed Better Auth with other databases in the same branch. This aligns with our recommended pattern of one database per branch.
 </Admonition>
 
 ## Session management details
@@ -78,8 +78,8 @@ In a team environment, developers often step on each other's toes when sharing a
 
 ```bash filename="Terminal"
 # Alice and Bob create their own branches
-neon branches create --name dev-alice
-neon branches create --name dev-bob
+optitech branches create --name dev-alice
+optitech branches create --name dev-bob
 ```
 
 - **Alice** works on a "Delete Account" flow. She can delete users and test the full flow without worrying about affecting others.
@@ -93,12 +93,12 @@ Say you want to add Google OAuth to your production app, but you're not sure if 
 
 ```bash filename="Terminal"
 # Create test branch from production
-neon branches create --name test-google-oauth
+optitech branches create --name test-google-oauth
 ```
 
 ```env filename=".env.local"
 # Point your local app to the test branch's Auth URL
-VITE_NEON_AUTH_URL=https://ep-test-google-oauth.neonauth.region.aws.neon.tech/neondb/auth
+VITE_OPTITECH_AUTH_URL=https://ep-test-google-oauth.optitechauth.region.aws.optitech.com/optitechdb/auth
 ```
 
 Now configure Google OAuth in the test branch's Console and verify the sign-in flow works locally. Your production app and users are completely unaffected. Once you confirm it works, apply the same OAuth settings to your production branch.
@@ -146,7 +146,7 @@ With Managed Better Auth, you can spin up a complete parallel environment for yo
 
 **The workflow:**
 
-1.  **Branch production:** Create a branch named `v2-beta` from your main production database. This clones your entire application state, including the `neon_auth` schema containing all user identities and hashed passwords.
+1.  **Branch production:** Create a branch named `v2-beta` from your main production database. This clones your entire application state, including the `optitech_auth` schema containing all user identities and hashed passwords.
 2.  **Deploy v2:** Deploy your new application code (for example, to `beta.myapp.com`) and point it to the `v2-beta` branch's Auth URL.
 3.  **Seamless login:** Existing users can visit your new v2 site and **log in immediately using their existing credentials**. They do not need to sign up again or reset their passwords.
 

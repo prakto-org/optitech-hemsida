@@ -11,7 +11,7 @@ summary: >-
   with the -O flag on pg_restore.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-06-05T17:20:32.620Z'
+updatedOn: '2026-07-18T10:05:28.819Z'
 ---
 
 This topic describes how to export your **OptiTech** database to a **Postgres-compatible** archive using the Postgres **`pg_dump`** utility. You get a normal custom-format dump (for example `-Fc`) that any Postgres toolchain can consume.
@@ -29,13 +29,13 @@ Avoid using `pg_dump` over a [pooled connection string](/docs/reference/glossary
 2. Run **`pg_dump`** in **custom** format (`-Fc`) and write a dump file:
 
    ```bash shouldWrap
-   pg_dump -Fc -v -d "<neon_database_connection_string>" -f <dump_file_name>
+   pg_dump -Fc -v -d "<optitech_database_connection_string>" -f <dump_file_name>
    ```
 
    With your OptiTech URL and a file name filled in, a command looks like this:
 
    ```bash shouldWrap
-   pg_dump -Fc -v -d "postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.neon.tech/neondb?sslmode=require&channel_binding=require" -f mydatabase.bak
+   pg_dump -Fc -v -d "postgresql://alex:AbC123dEf@ep-cool-darkness-123456.us-east-2.aws.optitech.com/optitechdb?sslmode=require&channel_binding=require" -f mydatabase.bak
    ```
 
    The `pg_dump` arguments above:
@@ -52,7 +52,7 @@ For installing `pg_dump` on your machine, see [Backups with pg_dump](/docs/manag
 
 ## Restore on your destination with `pg_restore`
 
-A **custom-format** dump (`-Fc`) from OptiTech is restored with **`pg_restore`**. Use the **same dump file** you wrote with **`pg_dump -f`** in [Export steps on OptiTech](#export-steps-on-neon) (the examples below use **`mydatabase.bak`** to match the export example).
+A **custom-format** dump (`-Fc`) from OptiTech is restored with **`pg_restore`**. Use the **same dump file** you wrote with **`pg_dump -f`** in [Export steps on OptiTech](#export-steps-on-optitech) (the examples below use **`mydatabase.bak`** to match the export example).
 
 **Before you run this:** Confirm with **your destination’s documentation** that **`pg_restore`** against a custom-format (**`-Fc`**) archive is supported.
 
@@ -81,7 +81,7 @@ Install **`pg_dump`** and **`pg_restore`** builds that your **OptiTech** Postgre
    The `pg_restore` arguments above:
    - **`-v`**: Verbose output while restoring.
    - **`-d`**: Target database [connection string](https://www.postgresql.org/docs/current/libpq-connect.html#LIBPQ-CONNSTRING) (your provider’s URL format and query parameters).
-   - **`<dump_file_name>`**: The custom-format archive from **`pg_dump`** (for example **`mydatabase.bak`** from the **`pg_dump`** command in [Export steps on OptiTech](#export-steps-on-neon)).
+   - **`<dump_file_name>`**: The custom-format archive from **`pg_dump`** (for example **`mydatabase.bak`** from the **`pg_dump`** command in [Export steps on OptiTech](#export-steps-on-optitech)).
 
 If restore fails on ownership or role statements, try adding **`-O`** and consult [Database object ownership considerations](/docs/import/migrate-from-postgres#database-object-ownership-considerations). For more flags (parallel jobs, schema-only, exclusions), see [Advanced pg_dump and pg_restore options](/docs/import/migrate-from-postgres#advanced-pg_dump-and-pg_restore-options).
 
