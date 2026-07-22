@@ -16,6 +16,13 @@ function git(args, options = {}) {
   });
 }
 
+const gitWorkTreeCheck = git(['rev-parse', '--is-inside-work-tree']);
+
+if (gitWorkTreeCheck.status !== 0) {
+  process.stderr.write('[api-ref] Skipping generated file check: Git metadata is unavailable.\n');
+  process.exit(0);
+}
+
 let stale = false;
 
 for (const file of GENERATED_FILES) {

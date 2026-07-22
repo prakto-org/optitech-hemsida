@@ -29,7 +29,7 @@ const ContactSales = async () => {
   const faqItems = t.raw('faq').map((item, index) => ({ ...FAQ_META[index], ...item }));
 
   return (
-    <Layout className="overflow-hidden" headerClassName="bg-transparent!">
+    <Layout className="overflow-hidden">
       <Hero logos={logos} quotes={quotes} />
       <Info />
       <CTANew

@@ -1,4 +1,5 @@
-text: 'OptiTech is expanding into a backend: Object Storage, Functions, and AI Gateway now in beta'
-link:
-  url: 'https://neon.com/blog/neon-backend-is-beta'
-  target: '_blank'
+# Topbar disabled. To re-enable, add:
+# text: 'Announcement text'
+# link:
+#   url: '/some-path'
+#   target: '_blank'

@@ -1,6 +1,7 @@
 'use client';
 
 import { AnimatePresence, LazyMotion, domAnimation, m } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 import PropTypes from 'prop-types';
 import { useContext, useState } from 'react';
 
@@ -119,12 +120,13 @@ MobileMenuItem.propTypes = {
 const mobileMenuItems = [...MENUS.header];
 
 const MobileMenu = ({ isDocPage = false, docPageType = null }) => {
+  const t = useTranslations('header');
   const { isMobileMenuOpen, toggleMobileMenu } = useMobileMenu();
   const { hasTopbar } = useContext(TopbarContext);
 
   return (
     <>
-      <div className="absolute top-3 right-7 z-50 hidden gap-5 lg:flex lg:items-center lg:gap-x-4 sm:right-4">
+      <div className="dark absolute top-3 right-7 z-50 hidden gap-5 lg:flex lg:items-center lg:gap-x-4 sm:right-4">
         {isDocPage && <InkeepTrigger className="mobile-search" docPageType={docPageType} />}
         <LanguageSwitcher />
         <Burger
@@ -135,7 +137,7 @@ const MobileMenu = ({ isDocPage = false, docPageType = null }) => {
         />
       </div>
       {isMobileMenuOpen && (
-        <nav className="fixed inset-0 z-40 hidden flex-col justify-between bg-white safe-paddings dark:bg-black-pure lg:flex">
+        <nav className="dark fixed inset-0 z-40 hidden flex-col justify-between bg-[#394532] safe-paddings lg:flex">
           <div
             className={cn('relative h-full pt-14 pb-[101px] sm:pb-[125px]', {
               'pt-[96px]': hasTopbar,
@@ -149,7 +151,7 @@ const MobileMenu = ({ isDocPage = false, docPageType = null }) => {
             </ul>
             <div
               className={cn(
-                'absolute inset-x-0 bottom-0 grid grid-cols-2 gap-x-6 gap-y-3 border-t border-gray-new-94 bg-white p-8 dark:border-gray-new-20 dark:bg-black-pure sm:grid-cols-1 sm:p-5',
+                'absolute inset-x-0 bottom-0 grid grid-cols-2 gap-x-6 gap-y-3 border-t border-white/10 bg-[#394532] p-8 sm:grid-cols-1 sm:p-5',
                 { 'pb-20 sm:pb-[68px]': isDocPage }
               )}
             >
@@ -160,7 +162,7 @@ const MobileMenu = ({ isDocPage = false, docPageType = null }) => {
                 size="xxs"
                 tagName="MobileMenu"
               >
-                Log in
+                {t('login')}
               </Button>
               <Button
                 className="h-9 px-[18px]"
@@ -169,7 +171,7 @@ const MobileMenu = ({ isDocPage = false, docPageType = null }) => {
                 size="xxs"
                 tagName="MobileMenu"
               >
-                Book a demo
+                {t('bookDemo')}
               </Button>
             </div>
           </div>

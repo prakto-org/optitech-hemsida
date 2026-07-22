@@ -48,6 +48,16 @@
     @apply mask-styles footer-icon-size;
   }
 
+  .facebook-icon {
+    -webkit-mask-image: url('/images/footer/facebook.svg');
+    @apply mask-styles footer-icon-size;
+  }
+
+  .microsoft-icon {
+    -webkit-mask-image: url('/images/footer/microsoft.svg');
+    @apply mask-styles footer-icon-size;
+  }
+
   .x-icon {
     -webkit-mask-image: url('/images/footer/x.svg');
     @apply mask-styles footer-icon-size;

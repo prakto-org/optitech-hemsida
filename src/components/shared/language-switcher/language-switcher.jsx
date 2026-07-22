@@ -74,7 +74,7 @@ const LanguageSwitcher = ({ className = null }) => {
         <ul
           className={cn(
             'absolute top-full right-0 z-50 mt-3 min-w-[132px] border p-1',
-            'border-gray-new-80 bg-white dark:border-gray-new-20 dark:bg-black-pure'
+            'border-[#E9DCC9] bg-[#FCF2E6]'
           )}
           role="menu"
         >
@@ -84,8 +84,8 @@ const LanguageSwitcher = ({ className = null }) => {
                 className={cn(
                   'flex w-full items-center justify-between gap-x-4 px-3 py-2 text-sm leading-none tracking-extra-tight transition-colors duration-200',
                   code === locale
-                    ? 'font-medium text-black-pure dark:text-white'
-                    : 'text-gray-new-40 hover:bg-gray-new-94 hover:text-black-pure dark:text-gray-new-60 dark:hover:bg-gray-new-8 dark:hover:text-white'
+                    ? 'font-medium text-black-pure'
+                    : 'text-gray-new-30 hover:bg-[#F3E6D3] hover:text-black-pure'
                 )}
                 type="button"
                 role="menuitem"
@@ -93,7 +93,7 @@ const LanguageSwitcher = ({ className = null }) => {
                 onClick={() => handleSelect(code)}
               >
                 {label}
-                <span className="text-xs text-gray-new-50">{shortLabel}</span>
+                <span className="text-xs text-[#8A7D66]">{shortLabel}</span>
               </button>
             </li>
           ))}

@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl';
+
 import Container from 'components/shared/container';
 import LINKS from 'constants/links';
 import accessIcon from 'icons/security/access.svg';
@@ -30,212 +32,90 @@ import warningIcon from 'icons/security/warning.svg';
 
 import Slider from './slider';
 
-const DATA = [
+const GROUPS = [
   {
-    title: 'Cloud Infrastructure',
+    key: 'cloudInfrastructure',
     items: [
-      {
-        title: 'Data Hosting',
-        description:
-          'OptiTech’s infrastructure runs on AWS and Azure in EU and Sweden regions, certified for SOC 2, ISO 27001, PCI-DSS, and other global security standards.',
-        icon: serverIcon,
-      },
-      {
-        title: 'Data Segregation',
-        description:
-          'Customer data is isolated with unique IDs to prevent unauthorized access. The API enforces this through authentication in access tokens.',
-        icon: segregationIcon,
-      },
-      {
-        title: 'Physical & Environmental Security',
-        description:
-          'OptiTech personnel have no physical access to AWS or Azure data centers, which have 24/7 surveillance, biometric controls, redundancy, and audits.',
-        icon: lockIcon,
-      },
-      {
-        title: 'Access Control',
-        description:
-          'Production access is restricted by default, granted only when needed with least-privilege, time-limited permissions via Teleport and approval.',
-        icon: accessIcon,
-      },
-      {
-        title: 'Monitoring',
-        description:
-          'OptiTech uses Grafana to monitor cloud operations. System failures trigger alerts, notifying key personnel for immediate response and resolution.',
-        icon: chartsIcon,
-      },
-      {
-        title: 'Vendor Risk Management',
-        description:
-          'All vendors are assessed for security, privacy, and compliance. Those handling sensitive data must meet SOC 2.',
-        icon: checkIcon,
-      },
+      ['dataHosting', serverIcon],
+      ['dataSegregation', segregationIcon],
+      ['physicalSecurity', lockIcon],
+      ['accessControl', accessIcon],
+      ['monitoring', chartsIcon],
+      ['vendorRisk', checkIcon],
     ],
   },
   {
-    title: 'Cloud Security',
+    key: 'cloudSecurity',
     items: [
-      {
-        title: 'Network Vulnerability Scanning',
-        description:
-          'OptiTech performs continuous vulnerability scans on all infrastructure components. Identified vulnerabilities are triaged and remediated based on severity.',
-        icon: warningIcon,
-      },
-      {
-        title: 'Intrusion Detection & Prevention',
-        description:
-          'OptiTech monitors for unauthorized access using traffic monitoring, anomaly detection, and threat intelligence.',
-        icon: crosshairIcon,
-      },
-      {
-        title: 'Logical Access Controls',
-        description:
-          'Access to production systems is role-based (RBAC), requiring SSO and continuous monitoring. Access modifications require documented approval.',
-        icon: userLockIcon,
-      },
-      {
-        title: 'Security Incident Response',
-        description:
-          'OptiTech has a 24/7 incident response team following well-defined playbooks, including continuous training and annual tabletop exercises.',
-        icon: userPrivacyIcon,
-      },
+      ['vulnerabilityScanning', warningIcon],
+      ['intrusionDetection', crosshairIcon],
+      ['logicalAccess', userLockIcon],
+      ['incidentResponse', userPrivacyIcon],
     ],
   },
   {
-    title: 'Encryption',
+    key: 'encryption',
     items: [
-      {
-        title: 'Data in Transit',
-        description:
-          'OptiTech enforces TLS 1.2+ encryption for all data transmitted over public and private networks.',
-        icon: dataTransitIcon,
-      },
-      {
-        title: 'Data at Rest',
-        description:
-          'All stored data is encrypted using AES-256 and follows key rotation policies to maintain security.',
-        icon: dataLockIcon,
-      },
-      {
-        title: 'Key Management',
-        description:
-          'OptiTech uses AWS KMS and Azure Key Vault for key management, with logging and access controls.',
-        icon: keyIcon,
-      },
+      ['dataInTransit', dataTransitIcon],
+      ['dataAtRest', dataLockIcon],
+      ['keyManagement', keyIcon],
     ],
   },
   {
-    title: 'Availability & Continuity',
+    key: 'availability',
     items: [
-      {
-        title: 'Redundancy',
-        description:
-          'OptiTech’s infrastructure is designed for high availability, leveraging multi-region failover and automated scaling.',
-        icon: dataReplaceIcon,
-      },
-      {
-        title: 'Backup Management',
-        description:
-          'OptiTech performs daily encrypted backups stored across multiple availability zones, with automated integrity validation.',
-        icon: restoreIcon,
-      },
-      {
-        title: 'Business Continuity and Disaster Recovery',
-        description:
-          'OptiTech has a BCDR plan with annual disaster recovery tests and predefined restoration protocols to ensure resilience.',
-        icon: gearIcon,
-      },
+      ['redundancy', dataReplaceIcon],
+      ['backupManagement', restoreIcon],
+      ['bcdr', gearIcon],
     ],
   },
   {
-    title: 'Application & Platform Security',
+    key: 'applicationSecurity',
     items: [
-      {
-        title: 'Bug Bounty Program',
-        description:
-          'OptiTech runs a program via HackerOne, where verified researchers can securely report vulnerabilities and earn rewards for eligible findings.',
-        link: LINKS.bugBounty,
-        icon: bugIcon,
-      },
-      {
-        title: 'Secure Development Lifecycle (SDLC)',
-        description:
-          'OptiTech follows a secure development lifecycle with security testing, code reviews, dependency monitoring, and developer security training.',
-        icon: privacyCycleIcon,
-      },
-      {
-        title: 'Vulnerability Management',
-        description:
-          'OptiTech scans for vulnerabilities with Orca and Oligo, patching per SLA: critical 7 days, high 30, medium 60, low 90.',
-        icon: checkPrivacyIcon,
-      },
-      {
-        title: 'Penetration Testing',
-        description:
-          'Annual third-party penetration tests are conducted on our infrastructure, applications, and APIs to identify and mitigate risks.',
-        icon: mugIcon,
-      },
-      {
-        title: 'CI/CD Security',
-        description:
-          'OptiTech uses Step Security’s Harden Runner to secure CI/CD by restricting traffic, monitoring dependencies, and enforcing security policies.',
-        icon: circuitIcon,
-      },
-      {
-        title: 'GitHub Secret Scanning Partner Program',
-        description:
-          'OptiTech joined the GitHub Secret Scanning Partnership in to improve secret detection and remediation across repositories.',
-        icon: radarIcon,
-      },
+      ['bugBounty', bugIcon, LINKS.bugBounty],
+      ['sdlc', privacyCycleIcon],
+      ['vulnerabilityManagement', checkPrivacyIcon],
+      ['penetrationTesting', mugIcon],
+      ['cicdSecurity', circuitIcon],
+      ['secretScanning', radarIcon],
     ],
   },
   {
-    title: 'Human Resources & Endpoint Security',
+    key: 'hrSecurity',
     items: [
-      {
-        title: 'Background Checks',
-        description: 'OptiTech conducts reference checks for all employees before onboarding.',
-        icon: searchIcon,
-      },
-      {
-        title: 'Confidentiality Agreements',
-        description:
-          'All employees and contractors sign non-disclosure agreements (NDA) upon hire.',
-        icon: todoIcon,
-      },
-      {
-        title: 'Policies',
-        description:
-          'OptiTech maintains a security policy framework, reviewed annually and enforced company-wide. Employees are required to acknowledge and comply with these policies each year.',
-        icon: policyIcon,
-      },
-      {
-        title: 'Training and Awareness',
-        description:
-          'OptiTech conducts annual security awareness training, covering GDPR compliance, anti-harassment policies, and phishing simulations to strengthen employee resilience.',
-        icon: graduationIcon,
-      },
-      {
-        title: 'Endpoints',
-        description:
-          'OptiTech centrally manages employee devices via JumpCloud MDM, enforcing full-disk encryption, automatic OS updates, enforced screen locks, anti-malware protection, and continuous monitoring.',
-        icon: pcIcon,
-      },
+      ['backgroundChecks', searchIcon],
+      ['confidentiality', todoIcon],
+      ['policies', policyIcon],
+      ['training', graduationIcon],
+      ['endpoints', pcIcon],
     ],
   },
 ];
 
-const Features = () => (
-  <section className="features relative overflow-hidden pt-[168px] safe-paddings xl:pt-[136px] lg:pt-[120px] md:pt-[104px]">
-    <Container className="relative z-10" size="960">
-      <h2 className="sr-only">Features</h2>
-      <div className="flex flex-col gap-[136px] xl:gap-[104px] lg:gap-16">
-        {DATA.map((item, index) => (
-          <Slider key={index} {...item} />
-        ))}
-      </div>
-    </Container>
-  </section>
-);
+const Features = () => {
+  const t = useTranslations('security.features');
+  const DATA = GROUPS.map(({ key, items }) => ({
+    title: t(`${key}.title`),
+    items: items.map(([itemKey, icon, link]) => ({
+      icon,
+      title: t(`${key}.items.${itemKey}.title`),
+      description: t(`${key}.items.${itemKey}.description`),
+      ...(link ? { link } : {}),
+    })),
+  }));
+
+  return (
+    <section className="features relative overflow-hidden pt-[168px] safe-paddings xl:pt-[136px] lg:pt-[120px] md:pt-[104px]">
+      <Container className="relative z-10" size="960">
+        <h2 className="sr-only">Features</h2>
+        <div className="flex flex-col gap-[136px] xl:gap-[104px] lg:gap-16">
+          {DATA.map((item, index) => (
+            <Slider key={index} {...item} />
+          ))}
+        </div>
+      </Container>
+    </section>
+  );
+};
 
 export default Features;

@@ -2116,11 +2116,6 @@ const defaultConfig = {
         permanent: true,
       },
       {
-        source: '/team',
-        destination: '/about-us',
-        permanent: true,
-      },
-      {
         source: '/jobs',
         destination: 'https://www.databricks.com/company/careers',
         permanent: true,

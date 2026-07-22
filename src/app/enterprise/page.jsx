@@ -178,13 +178,15 @@ const howNeonHelpsTabs = [
   },
   {
     title: 'Always-current documentation',
-    challenge: 'Policies and risk assessments drift out of date and rarely reflect how you actually operate.',
+    challenge:
+      'Policies and risk assessments drift out of date and rarely reflect how you actually operate.',
     description:
       'OptiTech generates and updates your documentation from your real setup, keeping policies aligned with your systems and the latest rules.',
   },
   {
     title: 'One source of truth',
-    challenge: 'Compliance data scattered across spreadsheets and tools makes it hard to see where you stand.',
+    challenge:
+      'Compliance data scattered across spreadsheets and tools makes it hard to see where you stand.',
     description:
       'OptiTech brings every framework, control, and piece of evidence into one place, so you always know your real compliance posture.',
   },
@@ -208,7 +210,8 @@ const bentoCards = [
   },
   {
     title: 'Built for the Nordics.',
-    description: 'Grounded in Swedish law, with Swedish integrations and MSB and IMY reporting built in.',
+    description:
+      'Grounded in Swedish law, with Swedish integrations and MSB and IMY reporting built in.',
     image: provenSuccess,
     imageMd: provenSuccessMd,
     className: 'col-span-2 lg:col-span-3 sm:col-span-1',
@@ -223,7 +226,8 @@ const bentoCards = [
   },
   {
     title: 'AI documentation.',
-    description: 'Let the OptiTech AI copilot draft your policies and risk assessments from your real setup.',
+    description:
+      'Let the OptiTech AI copilot draft your policies and risk assessments from your real setup.',
     image: api,
     imageLg: apiMd,
     imageMd: apiMd,
@@ -283,7 +287,7 @@ const faqItems = [
 ];
 
 const EnterprisePage = () => (
-  <Layout headerClassName="absolute! bg-transparent!">
+  <Layout headerClassName="absolute!">
     <Hero />
     <Logos className="mt-[102px] xl:mt-[86px] lg:mt-[76px] md:mt-[68px]" logos={logos} />
     <TestimonialNew
@@ -296,7 +300,10 @@ const EnterprisePage = () => (
       }}
       isPriority
     />
-    <Features title="Hundreds of Nordic companies are switching to OptiTech. Here’s why" items={features} />
+    <Features
+      title="Hundreds of Nordic companies are switching to OptiTech. Here’s why"
+      items={features}
+    />
     <Usage />
     <CaseStudies items={caseStudies} />
     <HowNeonHelps tabs={howNeonHelpsTabs} />

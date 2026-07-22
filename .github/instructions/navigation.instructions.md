@@ -19,3 +19,4 @@ applyTo: "content/docs/navigation.yaml"
 - Frontmatter tags (`new`, `beta`, `coming soon`, `deprecated`) must be duplicated on the nav entry for the badge to appear.
 - Check for duplicate slugs before adding an entry.
 - Removing a page from the nav requires handling redirects (for example, `redirectFrom` on the destination page).
+- When converting or retitling content (Neon-to-OptiTech work), never remove entries: keep every entry and its slug, change only titles. Structure and item counts stay identical.

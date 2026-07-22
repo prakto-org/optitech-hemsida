@@ -2,6 +2,7 @@
 
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
+import { useTranslations } from 'next-intl';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -71,6 +72,7 @@ const textareaClassName = `${inputClassName} !min-h-[132px] !items-start !py-[11
 const AZURE_MIGRATION_MESSAGE = "I'd like to migrate my Azure managed account.";
 
 const ContactForm = () => {
+  const t = useTranslations('contactSales.form');
   const [formState, setFormState] = useState(FORM_STATES.DEFAULT);
   const [isBroken, setIsBroken] = useState(false);
 
@@ -157,7 +159,7 @@ const ContactForm = () => {
         className="gap-y-2"
         errorTheme="tooltip"
         name="firstname"
-        label="First Name*"
+        label={t('firstName')}
         autoComplete="given-name"
         placeholder="Marques"
         theme="transparent"
@@ -171,7 +173,7 @@ const ContactForm = () => {
         className="gap-y-2"
         errorTheme="tooltip"
         name="lastname"
-        label="Last Name*"
+        label={t('lastName')}
         autoComplete="family-name"
         placeholder="Hansen"
         theme="transparent"
@@ -185,7 +187,7 @@ const ContactForm = () => {
         className="gap-y-2"
         errorTheme="tooltip"
         name="email"
-        label="Work Email*"
+        label={t('email')}
         type="email"
         autoComplete="email"
         placeholder="info@acme.com"
@@ -200,7 +202,7 @@ const ContactForm = () => {
         className="gap-y-2"
         errorTheme="tooltip"
         name="companyWebsite"
-        label="Company Website"
+        label={t('companyWebsite')}
         placeholder="acme.com"
         theme="transparent"
         labelClassName={labelClassName}
@@ -212,7 +214,7 @@ const ContactForm = () => {
         className="gap-y-2"
         errorTheme="tooltip"
         name="reasonForContact"
-        label="Reason for Contact*"
+        label={t('reasonForContact')}
         tag="select"
         theme="transparent"
         labelClassName={labelClassName}
@@ -222,15 +224,15 @@ const ContactForm = () => {
         {...register('reasonForContact')}
       >
         <option value="hidden" disabled hidden />
-        <option value="Demo/POC">Demo/POC</option>
-        <option value="Enterprise Pricing">Enterprise Pricing</option>
-        <option value="HIPAA">HIPAA</option>
+        <option value="Demo/POC">{t('reasons.0')}</option>
+        <option value="Enterprise Pricing">{t('reasons.1')}</option>
+        <option value="HIPAA">{t('reasons.2')}</option>
       </Field>
       <Field
         className="gap-y-2"
         errorTheme="tooltip"
         name="companySize"
-        label="Company Size"
+        label={t('companySize')}
         tag="select"
         theme="transparent"
         labelClassName={labelClassName}
@@ -240,39 +242,50 @@ const ContactForm = () => {
         {...register('companySize')}
       >
         <option value="hidden" disabled hidden />
-        <option value="0_1">0-1 Employees</option>
-        <option value="2_4">2-4 Employees</option>
-        <option value="5_19">5-19 Employees</option>
-        <option value="20_99">20-99 Employees</option>
-        <option value="100_499">100-499 Employees</option>
-        <option value="500">&ge; 500 Employees</option>
+        <option value="0_1">{t('companySizes.0')}</option>
+        <option value="2_4">{t('companySizes.1')}</option>
+        <option value="5_19">{t('companySizes.2')}</option>
+        <option value="20_99">{t('companySizes.3')}</option>
+        <option value="100_499">{t('companySizes.4')}</option>
+        <option value="500">{t('companySizes.5')}</option>
       </Field>
       <Field
         className="relative z-10 col-span-full gap-y-2"
         errorTheme="tooltip"
         name="message"
-        label="Message*"
+        label={t('message')}
         tag="textarea"
         theme="transparent"
         labelClassName={labelClassName}
         inputClassName={textareaClassName}
         isDisabled={isDisabled}
         error={errors.message?.message}
-        placeholder="Your message..."
+        placeholder={t('messagePlaceholder')}
         {...register('message')}
       />
 
       <div className="relative z-0 col-span-full mt-1 flex items-end justify-between gap-6 sm:flex-col sm:items-start sm:gap-4">
         <p className="max-w-[300px] text-sm leading-[1.5] tracking-tight text-gray-new-60 sm:max-w-full">
-          By submitting you agree to the{' '}
-          <Link className="decoration-dashed" to={LINKS.websiteTerms} theme="grey-85-underlined">
-            Terms of Use
-          </Link>{' '}
-          and acknowledge the{' '}
-          <Link className="decoration-dashed" to={LINKS.privacyPolicy} theme="grey-85-underlined">
-            Privacy Notice
-          </Link>
-          .
+          {t.rich('agreement', {
+            a1: (chunks) => (
+              <Link
+                className="decoration-dashed"
+                to={LINKS.websiteTerms}
+                theme="grey-85-underlined"
+              >
+                {chunks}
+              </Link>
+            ),
+            a2: (chunks) => (
+              <Link
+                className="decoration-dashed"
+                to={LINKS.privacyPolicy}
+                theme="grey-85-underlined"
+              >
+                {chunks}
+              </Link>
+            ),
+          })}
         </p>
         <Button
           className="min-w-[152px] px-10 sm:w-full sm:min-w-0"
@@ -285,7 +298,7 @@ const ContactForm = () => {
             formState === FORM_STATES.ERROR
           }
         >
-          {formState === FORM_STATES.SUCCESS ? 'Sent!' : 'Submit'}
+          {formState === FORM_STATES.SUCCESS ? t('submitted') : t('submit')}
         </Button>
       </div>
       <Image

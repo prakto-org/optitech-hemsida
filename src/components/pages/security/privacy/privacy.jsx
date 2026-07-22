@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl';
+
 import Container from 'components/shared/container/container';
 import CCPALogo from 'images/pages/security/ccpa-logo.png';
 import GDPRLogo from 'images/pages/security/gdpr-logo.png';
@@ -5,11 +7,9 @@ import HIPAALogo from 'images/pages/security/hipaa-logo.png';
 
 import Cards from '../cards';
 
-const CARDS = [
+const CARD_META = [
   {
-    title: 'California Consumer Privacy Act (CCPA) / California Privacy Rights Act (CPRA)',
-    description:
-      'OptiTech complies with CCPA and CPRA, ensuring data privacy and transparency. We don’t sell, share, or retain personal data beyond contractual obligations, allowing users to manage their preferences.',
+    key: 'ccpa',
     logo: {
       src: CCPALogo,
       width: 98,
@@ -21,9 +21,7 @@ const CARDS = [
     highlightClassName: 'bg-[#4CECB7]/20',
   },
   {
-    title: 'European General Data Protection Regulation (GDPR)',
-    description:
-      'OptiTech follows the GDPR framework, ensuring user rights, data minimization, and lawful processing. We offer Data Processing Agreements (DPA) and support compliant cross-border data transfers.',
+    key: 'gdpr',
     logo: {
       src: GDPRLogo,
       width: 108,
@@ -34,10 +32,7 @@ const CARDS = [
     highlightClassName: 'bg-[#4C72EC]/40',
   },
   {
-    title:
-      'United States Health Insurance Portability and Accountability&nbsp;Act of&nbsp;1996 (HIPAA)',
-    description:
-      'OptiTech has achieved HIPAA compliance to support customers handling protected health information (PHI). Our security measures include encryption of electronic PHI, least-privilege access control, security monitoring for unauthorized data access, and comprehensive audit logging.',
+    key: 'hipaa',
     banner: {
       src: HIPAALogo,
       width: 399,
@@ -48,15 +43,24 @@ const CARDS = [
   },
 ];
 
-const Privacy = () => (
-  <section className="compliance relative pt-40 safe-paddings xl:pt-[136px] lg:pt-[120px] md:pt-[104px]">
-    <Container className="relative z-10" size="960">
-      <h2 className="text-center font-title text-[44px] leading-[0.9] font-medium tracking-extra-tight xl:text-4xl lg:text-[36px] md:text-[28px]">
-        Privacy & Regulations
-      </h2>
-      <Cards data={CARDS} />
-    </Container>
-  </section>
-);
+const Privacy = () => {
+  const t = useTranslations('security.privacy');
+  const CARDS = CARD_META.map(({ key, ...meta }) => ({
+    ...meta,
+    title: t(`${key}.title`),
+    description: t(`${key}.description`),
+  }));
+
+  return (
+    <section className="compliance relative pt-40 safe-paddings xl:pt-[136px] lg:pt-[120px] md:pt-[104px]">
+      <Container className="relative z-10" size="960">
+        <h2 className="text-center font-title text-[44px] leading-[0.9] font-medium tracking-extra-tight xl:text-4xl lg:text-[36px] md:text-[28px]">
+          {t('heading')}
+        </h2>
+        <Cards data={CARDS} />
+      </Container>
+    </section>
+  );
+};
 
 export default Privacy;

@@ -12,7 +12,7 @@ import { cn } from 'utils/cn';
 import StatusBadge from './status-badge';
 
 const Footer = ({ hasThemesSupport = false }) => (
-  <footer className="relative z-30 mt-auto border-t border-gray-new-90 bg-white safe-paddings dark:border-gray-new-20 dark:bg-black-pure">
+  <footer className="dark relative z-30 mt-auto border-t border-white/10 bg-[#394532] safe-paddings">
     <Container className="flex justify-between gap-x-10 py-12 3xl:py-8 sm:py-5" size="1920">
       <div className="flex flex-col items-start lg:w-full">
         <div className="mb-auto lg:mb-11">
@@ -39,8 +39,8 @@ const Footer = ({ hasThemesSupport = false }) => (
             )}
           >
             <p>
-              © OptiTech 2026. All rights reserved. OptiTech and the OptiTech logo are trademarks
-              of OptiTech AB.
+              © OptiTech 2026. All rights reserved. OptiTech and the OptiTech logo are trademarks of
+              OptiTech AB.
             </p>
             <p className="flex flex-wrap gap-x-3 gap-y-1">
               <Link

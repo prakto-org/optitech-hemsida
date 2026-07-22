@@ -19,13 +19,17 @@ export default {
   partners: '/docs/guides/platform-integration-overview',
   postgresqltutorial: '/postgresql/tutorial',
   pricing: '/pricing',
+  productTrustCenter: '/products/trust-center',
   programs: '/programs',
   programsAgents: '/programs/agents',
   scaleTrial: '/scale-trial',
   security: '/security',
+  serviceIncidentReporting: '/services/incident-reporting',
   startups: '/startups',
   storage: '/storage',
   subprocessorsSubscribe: '/subscribe-to-subprocessors',
+  team: '/team',
+  teamYazanGhayad: '/team/yazan-ghayad',
   platforms: '/platforms',
   useCases: '/use-cases',
   useCasesAI: '/use-cases/ai-agents',
@@ -85,7 +89,7 @@ export default {
 
   // Console
   console: 'https://console.neon.tech',
-  login: 'https://console.neon.tech/login',
+  login: '/login',
   signup: 'https://console.neon.tech/signup',
   signupCredits: 'https://fyi.neon.tech/credits',
   consoleSupport: 'https://console.neon.tech/app/projects?modal=support',
@@ -93,7 +97,10 @@ export default {
   // Socials
   discord: 'https://discord.gg/92vNTzKDGp',
   github: 'https://github.com/neondatabase/neon',
-  linkedin: 'https://www.linkedin.com/company/neon-inc/',
+  linkedin: 'https://www.linkedin.com/company/optitechsverige/',
+  facebook: 'https://www.facebook.com/OptiTechsverige',
+  microsoftPartner:
+    'https://marketplace.microsoft.com/en-us/partners/fc6e153d-5cbd-4b88-bdfc-a6b243787cb8/overview',
   twitter: 'https://twitter.com/neondatabase/',
   youtube: 'https://www.youtube.com/channel/UCoMzQTJSIr7-RU1QbomQI2w',
 

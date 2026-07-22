@@ -12,9 +12,9 @@ const HeaderWrapper = ({
   <>
     <header
       className={cn(
-        'header top-0 right-0 left-0 z-50 flex h-16 w-full items-center bg-white dark:bg-black-pure lg:relative lg:h-14',
+        'dark header top-0 right-0 left-0 z-50 flex h-16 w-full items-center bg-[#394532] lg:relative lg:h-14',
         !isDocPage &&
-          'after:absolute after:right-0 after:bottom-0 after:left-0 after:h-px after:bg-gray-new-90 dark:after:bg-gray-new-20',
+          'after:absolute after:right-0 after:bottom-0 after:left-0 after:h-px after:bg-white/10',
         isSticky ? 'sticky' : 'absolute',
         isStickyOverlay && '-mb-16',
         className

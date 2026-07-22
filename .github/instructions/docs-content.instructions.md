@@ -1,5 +1,5 @@
 ---
-description: "Use when creating or editing Neon docs pages in content/docs/: frontmatter fields, navigation.yaml entries, image paths, MDX components, and internal links."
+description: "Use when creating or editing OptiTech docs pages in content/docs/: frontmatter fields, navigation.yaml entries, image paths, MDX components, and internal links."
 applyTo: "content/docs/**/*.md"
 ---
 

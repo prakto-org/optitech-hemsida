@@ -47,6 +47,18 @@ export function collectLeaves(node, pool = [], setters = []) {
   return { pool, setters };
 }
 
+/** Deep-merge hand-tuned overrides on top of machine translations. */
+export function applyOverrides(target, overrides) {
+  for (const [key, val] of Object.entries(overrides)) {
+    if (val && typeof val === 'object' && !Array.isArray(val) && typeof target[key] === 'object') {
+      applyOverrides(target[key], val);
+    } else {
+      target[key] = val;
+    }
+  }
+  return target;
+}
+
 async function main() {
   const args = process.argv.slice(2);
   const write = args.includes('--write');
@@ -64,6 +76,14 @@ async function main() {
   const key = readEnvKey();
   const results = await translatePool(key, pool, lang);
   results.forEach((translated, i) => setters[i](translated));
+
+  // hand-tuned wording in <lang>.overrides.json always wins over DeepL
+  const overridesPath = path.join(LOCALES_DIR, `${lang}.overrides.json`);
+  if (fs.existsSync(overridesPath)) {
+    applyOverrides(source, JSON.parse(fs.readFileSync(overridesPath, 'utf8')));
+    console.log(`Overrides från ${overridesPath} applicerade`);
+  }
+
   const outPath = path.join(LOCALES_DIR, `${lang}.json`);
   fs.writeFileSync(outPath, `${JSON.stringify(source, null, 2)}\n`);
 

@@ -1,0 +1,14 @@
+<svg width="180" height="180" viewBox="0 0 180 180" fill="none" xmlns="http://www.w3.org/2000/svg">
+<style>
+  :root {
+    fill: #57797A;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      fill: #7FA6A7;
+    }
+  }
+</style>
+<path fill-rule="evenodd" clip-rule="evenodd" d="M90 128c27.614 0 50-22.386 50-50S117.614 28 90 28 40 50.386 40 78s22.386 50 50 50Zm0-26c13.255 0 24-10.745 24-24S103.255 54 90 54 66 64.745 66 78s10.745 24 24 24Z"/>
+<circle cx="90" cy="158" r="12"/>
+</svg>

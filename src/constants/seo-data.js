@@ -28,6 +28,30 @@ export default {
       'OptiTech is on a mission to make regulatory compliance a continuous, automated process for Nordic businesses, not a yearly project.',
     pathname: LINKS.aboutUs,
   },
+  serviceIncidentReporting: {
+    title: 'Incident reporting for NIS2, GDPR, and DORA — OptiTech',
+    description:
+      'Guided statutory incident reporting: early warning to CERT-SE/MSB within 24 hours, full notification in 72, final report within a month, and the parallel IMY track. OptiTech keeps track of the clock.',
+    pathname: LINKS.serviceIncidentReporting,
+  },
+  productTrustCenter: {
+    title: 'Trust Center: Show your compliance before anyone asks — OptiTech',
+    description:
+      'Publish a live trust center backed by your OptiTech compliance program. Share audit reports under NDA, answer security reviews with AI, and turn compliance into a sales asset.',
+    pathname: LINKS.productTrustCenter,
+  },
+  team: {
+    title: 'The team — OptiTech',
+    description:
+      'Meet the people behind OptiTech: a team in Stockholm and Malmö working on compliance automation for NIS2, DORA, GDPR, and ISO 27001.',
+    pathname: LINKS.team,
+  },
+  teamYazanGhayad: {
+    title: 'Yazan Ghayad, Founder & CEO — OptiTech',
+    description:
+      'Yazan Ghayad founded OptiTech in 2024. An economist from Lund University working at the intersection of economics, AI, and compliance automation.',
+    pathname: LINKS.teamYazanGhayad,
+  },
   blog: {
     title: 'Our Blog — OptiTech',
     description:

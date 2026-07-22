@@ -1,3 +1,5 @@
+import { useTranslations } from 'next-intl';
+
 import Container from 'components/shared/container/container';
 import LINKS from 'constants/links';
 import ISOLogo from 'images/pages/security/iso-logo.png';
@@ -5,10 +7,9 @@ import SOC2Logo from 'images/pages/security/soc2-logo.png';
 
 import Cards from '../cards';
 
-const CARDS = [
+const CARD_META = [
   {
-    title: 'SOC 2 Type II',
-    description: `OptiTech undergoes annual SOC 2 Type II audits performed by accredited independent third party auditors. The SOC 3 report, a public summary of our SOC 2 compliance, is available without an NDA in the <a href=${LINKS.trust} target="_blank">Trust Center</a>.`,
+    key: 'soc2',
     logo: {
       src: SOC2Logo,
       width: 108,
@@ -20,9 +21,7 @@ const CARDS = [
     highlightClassName: 'bg-[#4C72EC]/40',
   },
   {
-    title: 'ISO/IEC 27001:2022 & ISO/IEC&nbsp;27701:2019',
-    description:
-      'OptiTech undergoes annual ISO/IEC 27001:2022 and ISO/IEC 27701:2019 audits for its security and privacy management systems. These certifications validate our commitment to global standards.',
+    key: 'iso',
     logo: {
       src: ISOLogo,
       width: 96,
@@ -35,15 +34,26 @@ const CARDS = [
   },
 ];
 
-const Compliance = () => (
-  <section className="compliance relative pt-28 safe-paddings xl:pt-[104px] lg:pt-20 md:pt-16">
-    <Container className="relative z-10" size="960">
-      <h2 className="text-center font-title text-[44px] leading-[0.9] font-medium tracking-extra-tight xl:text-4xl lg:text-[36px] md:text-[28px]">
-        Compliance Frameworks
-      </h2>
-      <Cards data={CARDS} isPriority />
-    </Container>
-  </section>
-);
+const Compliance = () => {
+  const t = useTranslations('security.compliance');
+  const CARDS = CARD_META.map(({ key, ...meta }) => ({
+    ...meta,
+    title: t(`${key}.title`),
+    description: t
+      .raw(`${key}.description`)
+      .replace('<a>', `<a href=${LINKS.trust} target="_blank">`),
+  }));
+
+  return (
+    <section className="compliance relative pt-28 safe-paddings xl:pt-[104px] lg:pt-20 md:pt-16">
+      <Container className="relative z-10" size="960">
+        <h2 className="text-center font-title text-[44px] leading-[0.9] font-medium tracking-extra-tight xl:text-4xl lg:text-[36px] md:text-[28px]">
+          {t('heading')}
+        </h2>
+        <Cards data={CARDS} isPriority />
+      </Container>
+    </section>
+  );
+};
 
 export default Compliance;

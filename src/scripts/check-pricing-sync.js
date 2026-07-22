@@ -143,20 +143,25 @@ function loadComponentData() {
     };
   }
 
+  const planAliases = { start: 'free', professional: 'launch', enterprise: 'scale' };
   const heroPlanMap = {};
   for (const p of heroPlans) {
-    const allFeatures = [
-      ...(p.features?.database?.features || []),
-      ...(p.features?.other?.features || []),
-    ].map((f) => f.title);
-    heroPlanMap[p.planId] = {
-      computeRate: p.computeRate,
-      storageRate: p.storageRate,
+    const allFeatures = Object.values(p.features || {})
+      .flatMap((group) => group.features || [])
+      .map((feature) => feature.title);
+    heroPlanMap[planAliases[p.planId] || p.planId] = {
+      price: p.title,
       featureTitles: allFeatures,
     };
   }
 
-  return { heroPlans: heroPlanMap, tableRows };
+  const tablePrices = {
+    free: extractCellValue(tableData.headings.free.price),
+    launch: extractCellValue(tableData.headings.launch.price),
+    scale: extractCellValue(tableData.headings.scale.price),
+  };
+
+  return { heroPlans: heroPlanMap, tablePrices, tableRows };
 }
 
 // ---------------------------------------------------------------------------
@@ -184,7 +189,11 @@ function parseMarkdownTable(content, headerPrefix) {
     .split('|')
     .map((c) => c.trim())
     .filter(Boolean);
-  const planColumns = headers.slice(1);
+  const planAliases = { start: 'free', professional: 'launch', enterprise: 'scale' };
+  const planColumns = headers.slice(1).map((header) => {
+    const normalized = stripMarkdown(header).toLowerCase();
+    return planAliases[normalized] || normalized;
+  });
 
   const rows = {};
   for (let i = 2; i < tableLines.length; i++) {
@@ -196,7 +205,7 @@ function parseMarkdownTable(content, headerPrefix) {
     const feature = stripMarkdown(cells[0]);
     const values = {};
     for (let j = 1; j < cells.length && j <= planColumns.length; j++) {
-      values[stripMarkdown(planColumns[j - 1]).toLowerCase()] = stripMarkdown(cells[j]);
+      values[planColumns[j - 1]] = stripMarkdown(cells[j]);
     }
     rows[feature] = values;
   }
@@ -237,7 +246,7 @@ function loadPricingMdTable(content) {
 //                normalized docs value is used as the canonical source of truth
 //   prefer     – 'docs' | 'component', which raw value wins in generation (unused)
 
-const CROSS_SOURCE_CHECKS = [
+const _LEGACY_CROSS_SOURCE_CHECKS = [
   // --- Organization & Projects ---
   {
     id: 'team-members-free',
@@ -739,7 +748,7 @@ const CROSS_SOURCE_CHECKS = [
 ];
 
 // Hero numeric rates vs component table string rates
-const HERO_RATE_CHECKS = [
+const _LEGACY_HERO_RATE_CHECKS = [
   [
     'hero-compute-launch',
     'Hero vs Table: Compute rate (Launch)',
@@ -769,6 +778,106 @@ const HERO_RATE_CHECKS = [
     'Database storage',
   ],
 ];
+
+const normalizeAvailability = (value) =>
+  value === undefined || value === null
+    ? undefined
+    : value === false || value === '--'
+      ? 'no'
+      : 'yes';
+
+const normalizeAllOrNumber = (value) => {
+  const normalized = normalizeValue(value)?.toLowerCase();
+  if (normalized?.startsWith('all')) return 'all';
+  return extractNumber(normalized);
+};
+
+const normalizePrice = (value) =>
+  normalizeValue(stripHtml(value))?.toLowerCase().replace(/\/mo$/, '/month');
+
+const normalizeSupport = (value) =>
+  normalizeValue(value)
+    ?.toLowerCase()
+    .replace('dedicated csm', 'dedicated customer success manager');
+
+const OPTITECH_CROSS_SOURCE_CHECKS = [
+  ['frameworks', 'Frameworks', 'Frameworks included', 'Frameworks', extractNumber],
+  ['integrations', 'Integrations', 'Integrations', 'Integrations', normalizeAllOrNumber],
+  ['gap-analysis', 'Gap analysis', 'Automated gap analysis', 'Gap analysis', normalizeAvailability],
+  [
+    'policies',
+    'Policies and documentation',
+    'Swedish policy templates',
+    'Policies and documentation',
+    extractNumber,
+  ],
+  [
+    'incidents',
+    'Incident reporting',
+    'MSB incident reporting',
+    'Incident reporting',
+    normalizeAvailability,
+  ],
+  ['risk-register', 'Risk register', 'Risk register', 'Risk register', normalizeAvailability],
+  [
+    'vendor-risk',
+    'Vendor risk management',
+    'Vendor risk management',
+    'Vendor risk management',
+    normalizeAvailability,
+  ],
+  [
+    'dora-register',
+    'DORA ICT register',
+    'DORA ICT contract register',
+    'DORA ICT register',
+    normalizeAvailability,
+  ],
+  ['trust-center', 'Trust Center', 'Trust Center', 'Trust Center', normalizeAvailability],
+  [
+    'training',
+    'Security awareness training',
+    'Security awareness training',
+    'Security awareness training',
+    normalizeAvailability,
+  ],
+  ['ai-copilot', 'AI copilot', 'AI copilot', 'AI copilot', normalizeAvailability],
+  [
+    'auto-remediation',
+    'Auto-remediation',
+    'Auto-remediation',
+    'Auto-remediation',
+    normalizeAvailability,
+  ],
+  ['auditor-portal', 'Auditor portal', 'Auditor portal', 'Auditor portal', normalizeAvailability],
+  [
+    'sso-scim',
+    'SSO and SCIM',
+    'SSO and SCIM',
+    'SSO and SCIM',
+    (value) =>
+      value === undefined ? undefined : /sso|scim|yes/i.test(String(value)) ? 'yes' : 'no',
+  ],
+  ['api-cli', 'API and CLI', 'Compliance as code', 'API and CLI', normalizeAvailability],
+  [
+    'data-residency',
+    'Data residency',
+    'EU data residency',
+    'Data residency',
+    normalizeAvailability,
+  ],
+  ['support', 'Support', 'Support', 'Support', normalizeSupport],
+].flatMap(([id, label, comp, docs, norm]) =>
+  ['free', 'launch', 'scale'].map((plan) => ({
+    id: `${id}-${plan}`,
+    label: `${label} (${plan})`,
+    comp,
+    docs,
+    plan,
+    norm,
+    agentLabel: docs,
+  }))
+);
 
 // ---------------------------------------------------------------------------
 // Run comparisons
@@ -810,7 +919,7 @@ function runChecks(componentData, docsTable) {
   const coveredComponentKeys = new Set();
   const coveredDocsKeys = new Set();
 
-  for (const check of CROSS_SOURCE_CHECKS) {
+  for (const check of OPTITECH_CROSS_SOURCE_CHECKS) {
     if (check.comp) coveredComponentKeys.add(check.comp);
     if (check.docs) coveredDocsKeys.add(check.docs);
     if (!check.comp) continue;
@@ -846,19 +955,19 @@ function runChecks(componentData, docsTable) {
     });
   }
 
-  for (const [id, label, plan, field, tableKey] of HERO_RATE_CHECKS) {
-    const heroVal = componentData.heroPlans[plan]?.[field];
-    const tableStr = componentData.tableRows[tableKey]?.[plan];
-    const tableVal = parseFloat(tableStr?.match(/\$([\d.]+)/)?.[1]);
-    const match = heroVal !== undefined && heroVal === tableVal;
+  for (const plan of ['free', 'launch', 'scale']) {
+    const heroPrice = componentData.heroPlans[plan]?.price;
+    const tablePrice = componentData.tablePrices[plan];
+    const normalizedHeroPrice = normalizePrice(heroPrice);
+    const normalizedTablePrice = normalizePrice(tablePrice);
 
     results.push({
-      id,
-      label,
-      status: match ? 'ok' : 'mismatch',
+      id: `hero-price-${plan}`,
+      label: `Hero vs Table: Price (${plan})`,
+      status: normalizedHeroPrice === normalizedTablePrice ? 'ok' : 'mismatch',
       isInternal: true,
-      component: { raw: `$${heroVal}`, normalized: `$${heroVal}` },
-      docs: { raw: tableStr, normalized: tableStr },
+      component: { raw: heroPrice, normalized: normalizedHeroPrice },
+      docs: { raw: tablePrice, normalized: normalizedTablePrice },
     });
   }
 
@@ -1217,7 +1326,7 @@ function main() {
   }
   if (pricingMdContent !== undefined) {
     pricingMd = runPricingMdChecks(docsContent, pricingMdContent);
-    agentChecks = runAgentChecks(CROSS_SOURCE_CHECKS, pricingMdContent, docsTable);
+    agentChecks = runAgentChecks(OPTITECH_CROSS_SOURCE_CHECKS, pricingMdContent, docsTable);
   }
 
   if (jsonMode) {

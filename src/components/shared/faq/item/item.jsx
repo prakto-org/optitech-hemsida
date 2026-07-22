@@ -36,11 +36,7 @@ const Item = ({ question, answer, id = null, initialState = 'closed', index }) =
     const newState = !isOpen;
 
     if (!newState && hash === `#${id}`) {
-      window.history.replaceState(
-        null,
-        '',
-        `${window.location.pathname}${window.location.search}`
-      );
+      window.history.replaceState(null, '', `${window.location.pathname}${window.location.search}`);
       setHash('');
     }
 
@@ -61,7 +57,7 @@ const Item = ({ question, answer, id = null, initialState = 'closed', index }) =
 
   return (
     <li
-      className="-mx-1 overflow-hidden border-b border-gray-new-15 px-1 py-[19px] last:border-0 xl:py-[18px] md:py-[14px]"
+      className="-mx-1 overflow-hidden border-b border-gray-new-90 px-1 py-[19px] last:border-0 dark:border-gray-new-15 xl:py-[18px] md:py-[14px]"
       id={id}
     >
       <button
@@ -76,7 +72,7 @@ const Item = ({ question, answer, id = null, initialState = 'closed', index }) =
         </h3>
         <span
           className={cn(
-            'mt-2.5 mr-2.5 h-2 w-2 shrink-0 transform border-t border-l border-gray-new-80 transition duration-300',
+            'mt-2.5 mr-2.5 h-2 w-2 shrink-0 transform border-t border-l border-gray-new-40 transition duration-300 dark:border-gray-new-80',
             isOpen ? 'rotate-[405deg]' : 'rotate-[225deg]'
           )}
         />
@@ -102,8 +98,8 @@ const Item = ({ question, answer, id = null, initialState = 'closed', index }) =
               '[&_ul]:ml-0 [&_ul]:list-none [&_ul]:pl-4',
               '[&_li]:relative [&_li]:list-inside [&_li]:pl-4!',
               '[&_li]:before:absolute [&_li]:before:top-0 [&_li]:before:left-0 [&_li]:before:content-["-"]',
-              '[&_code]:my-4 [&_code]:inline-block [&_code]:rounded-lg [&_code]:bg-gray-new-10 [&_code]:px-[10px] [&_code]:py-1',
-              '[&_a]:rounded-sm [&_a]:text-white [&_a]:transition-colors [&_a]:duration-200 [&_a:hover]:text-gray-new-80'
+              '[&_code]:my-4 [&_code]:inline-block [&_code]:rounded-lg [&_code]:bg-gray-new-94 [&_code]:px-[10px] [&_code]:py-1 dark:[&_code]:bg-gray-new-10',
+              '[&_a]:rounded-sm [&_a]:text-black-new [&_a]:transition-colors [&_a]:duration-200 dark:[&_a]:text-white [&_a:hover]:text-gray-new-40 dark:[&_a:hover]:text-gray-new-80'
             )}
             dangerouslySetInnerHTML={{ __html: answer }}
           />

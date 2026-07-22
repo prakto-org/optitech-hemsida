@@ -43,12 +43,19 @@
     },
     "autoscaling": {
       "heading": "<strong>Continuous compliance.</strong> Keep operating without worrying about audits. Never pay for consultant reports that expire in months.",
-      "tabs": ["Avoid incidents", "Save costs"],
+      "tabs": [
+        "Avoid incidents",
+        "Save costs"
+      ],
       "stats": [
         "control checks run by OptiTech every day",
         "in consultant fees saved by OptiTech customers every day"
       ],
-      "legend": ["OptiTech automation", "Compliance workload", "Manual consultant-driven work"],
+      "legend": [
+        "OptiTech automation",
+        "Compliance workload",
+        "Manual consultant-driven work"
+      ],
       "note": "By connecting to your systems, OptiTech automatically collects evidence and verifies controls to fit your obligations."
     },
     "branching": {
@@ -156,8 +163,14 @@
       "labelLeft": "Where we're headed",
       "heading": "<strong>OptiTech is built in the Nordics.</strong> We started OptiTech to give Nordic businesses a compliance platform that speaks their language and their law.",
       "stats": [
-        { "value": "2,000,000", "description": "Automated control checks run every day." },
-        { "value": "90%", "description": "Of compliance evidence collected without manual work." }
+        {
+          "value": "2,000,000",
+          "description": "Automated control checks run every day."
+        },
+        {
+          "value": "90%",
+          "description": "Of compliance evidence collected without manual work."
+        }
       ],
       "labelRight": "Our Vision",
       "paragraph1": "The goal stays the same: turn compliance into a <mark>continuous, automated process</mark> instead of a yearly project.",
@@ -188,12 +201,30 @@
     "timeline": {
       "heading": "Our mission is to make compliance continuous: <span>gap analysis, evidence, and reporting in one platform. Designed to help Nordic teams stay audit-ready without spreadsheets or consultants.</span>",
       "items": [
-        { "date": "JAN, 2023", "title": "Founded in Stockholm" },
-        { "date": "SEP, 2023", "title": "First gap analysis engine" },
-        { "date": "JAN, 2024", "title": "Early access" },
-        { "date": "OCT, 2024", "title": "NIS2 goes live" },
-        { "date": "JAN, 2025", "title": "DORA in force" },
-        { "date": "MAY, 2026", "title": "MSB incident reporting shipped" }
+        {
+          "date": "JAN, 2023",
+          "title": "Founded in Stockholm"
+        },
+        {
+          "date": "SEP, 2023",
+          "title": "First gap analysis engine"
+        },
+        {
+          "date": "JAN, 2024",
+          "title": "Early access"
+        },
+        {
+          "date": "OCT, 2024",
+          "title": "NIS2 goes live"
+        },
+        {
+          "date": "JAN, 2025",
+          "title": "DORA in force"
+        },
+        {
+          "date": "MAY, 2026",
+          "title": "MSB incident reporting shipped"
+        }
       ]
     },
     "connections": {
@@ -348,7 +379,11 @@
       "email": "Work Email*",
       "companyWebsite": "Company Website",
       "reasonForContact": "Reason for Contact*",
-      "reasons": ["Demo/POC", "Enterprise Pricing", "HIPAA"],
+      "reasons": [
+        "Demo/POC",
+        "Enterprise Pricing",
+        "HIPAA"
+      ],
       "companySize": "Company Size",
       "companySizes": [
         "0-1 Employees",
@@ -568,6 +603,652 @@
       "paragraph1": "OptiTech engages with carefully selected third-party sub-processors that assist in service delivery.",
       "paragraph2": "All sub-processors are reviewed annually and must comply with contractual security and privacy requirements. A list of our third-party sub-processors is available on our <a>website</a>."
     }
+  },
+  "services": {
+    "incidentReporting": {
+      "hero": {
+        "label": "NIS2 · GDPR/IMY · DORA · Incident reporting",
+        "title": "24 hours. 72 hours. One month. Three statutory windows. One system.",
+        "description": "NIS2 requires an early warning to CERT-SE/MSB within 24 hours and a full notification within 72. Personal data breaches must be reported to IMY within 72 hours. We keep track of the clock for you.",
+        "primaryCta": "Book a technical walkthrough",
+        "secondaryCta": "See an example of a completed notification",
+        "mockup": {
+          "appName": "OptiTech · Incidents",
+          "nav": [
+            "Overview",
+            "Incidents",
+            "Evidence",
+            "Vendors",
+            "Reports"
+          ],
+          "caseId": "INC-2026-042",
+          "caseTitle": "Ransomware, production environment",
+          "caseStatus": "Active",
+          "countdownLabel": "Early warning · CERT-SE/MSB",
+          "countdownWindow": "24-hour window",
+          "countdown": "T−09:27:52",
+          "stepsHeading": "Statutory steps",
+          "steps": [
+            {
+              "name": "Early warning",
+              "recipient": "CERT-SE/MSB",
+              "deadline": "< 24h",
+              "status": "Submitted"
+            },
+            {
+              "name": "Incident notification",
+              "recipient": "CERT-SE/MSB",
+              "deadline": "< 72h",
+              "status": "Draft"
+            },
+            {
+              "name": "Final report",
+              "recipient": "Sector authority",
+              "deadline": "1 month",
+              "status": "Not started"
+            },
+            {
+              "name": "IMY notification",
+              "recipient": "IMY",
+              "deadline": "< 72h",
+              "status": "In parallel"
+            }
+          ]
+        }
+      },
+      "steps": {
+        "cta": "Book a demo",
+        "items": [
+          {
+            "title": "Every framework you're covered by",
+            "description": "OptiTech maps NIS2, DORA, GDPR, ISO 27001, and the EU AI Act in depth, built from Swedish legal texts and MSB regulations. Cross-mapping means one control satisfies requirements in several frameworks at once, so you do the work once and prove it everywhere.",
+            "stats": [
+              {
+                "value": "10,000+",
+                "label": "Swedish companies are covered by NIS2"
+              },
+              {
+                "value": "5 frameworks",
+                "label": "in depth, built from Swedish legal texts"
+              }
+            ]
+          },
+          {
+            "title": "From yearly project to real time",
+            "description": "OptiTech takes you from point-in-time consultant reports to automated, continuous control monitoring. Evidence is collected around the clock from your systems, and your live status is always ready to show: to the board, to auditors, and to customers on your Trust Center."
+          },
+          {
+            "title": "Alerts you can act on",
+            "description": "Controls are verified hourly through integrations with Microsoft 365, Entra ID, AWS, Fortnox, and BankID. When something drifts, you get a concrete action: fix it directly via API, or send a ready-made ticket to the right person, with instructions written by AI.",
+            "stats": [
+              {
+                "value": "Hourly",
+                "label": "your controls are verified automatically"
+              },
+              {
+                "value": "1 click",
+                "label": "from alert to remediation via API"
+              }
+            ]
+          },
+          {
+            "title": "Everything in one platform",
+            "description": "From the first gap analysis to a completed audit: a built-in roadmap guides every step. Policies, risk register, training, vendor assessments, and MSB and IMY reporting flows are included, with partners for penetration tests and audits when you need them."
+          }
+        ]
+      },
+      "regulatoryMap": {
+        "title": "Three authorities, three mandates",
+        "items": [
+          {
+            "name": "MSB / CERT-SE",
+            "law": "NIS2 / the Swedish Cybersecurity Act",
+            "description": "National contact point and CSIRT function for NIS2."
+          },
+          {
+            "name": "PTS, Ei, and others",
+            "law": "NIS2, sector supervision",
+            "description": "Sector supervision for NIS2, assigned by industry."
+          },
+          {
+            "name": "IMY",
+            "law": "GDPR, Article 33",
+            "description": "Supervisory authority for personal data breaches under the GDPR."
+          }
+        ]
+      },
+      "timeline": {
+        "title": "How the statutory steps work",
+        "steps": [
+          {
+            "window": "0–24h",
+            "title": "Early warning to CERT-SE/MSB",
+            "description": "The system proposes classification and recipient automatically.",
+            "status": "Draft"
+          },
+          {
+            "window": "24–72h",
+            "title": "Full incident notification",
+            "description": "Assessed severity and pre-filled fields, built from the incident record.",
+            "status": "Submitted"
+          },
+          {
+            "window": "Within 1 month",
+            "title": "Final report",
+            "description": "Root-cause analysis and an action plan, compiled from the case log.",
+            "status": "Acknowledged"
+          }
+        ],
+        "parallel": {
+          "tag": "In parallel",
+          "window": "72h",
+          "title": "Personal data? Notify IMY",
+          "description": "When the incident involves personal data with risk to individuals, a parallel IMY track starts: notification within 72 hours of discovery."
+        },
+        "dora": {
+          "tag": "Separate branch",
+          "title": "DORA, for the financial sector",
+          "description": "DORA has its own, stricter windows: 4 hours initial, 72 hours intermediate, 30 days final. It runs as a separate branch and is never mixed into the NIS2 timeline."
+        }
+      },
+      "facts": {
+        "title": "The facts, in numbers",
+        "items": [
+          {
+            "value": "10 M€ / 2%",
+            "description": "Maximum sanction for essential entities under NIS2, Article 34."
+          },
+          {
+            "value": "7 M€ / 1.4%",
+            "description": "Maximum sanction for important entities."
+          },
+          {
+            "value": "24 / 72 / 30",
+            "description": "Hours, hours, days: the three statutory NIS2 windows."
+          },
+          {
+            "value": "Article 20",
+            "description": "Management's duty to approve and oversee risk-management measures."
+          }
+        ]
+      },
+      "scenarios": {
+        "title": "When the clock is already running",
+        "pathLabel": "Escalation path",
+        "items": [
+          {
+            "title": "Outside office hours",
+            "question": "An incident is detected outside office hours. Who starts the clock, and when?",
+            "answer": "The clock starts at awareness, not at the next working day. The system alerts the on-call contact, opens a timestamped case, and counts down toward the 24-hour window.",
+            "path": [
+              "Detected 02:14",
+              "On-call alert",
+              "Draft: early warning",
+              "CERT-SE/MSB < 24h"
+            ]
+          },
+          {
+            "title": "Reporting order",
+            "question": "You know you must report, but not in which order: CERT-SE, the sector authority, IMY?",
+            "answer": "The system determines recipients and order from entity type, sector, and whether personal data is affected. One incident can open several parallel tracks, each with its own deadline.",
+            "path": [
+              "Classification",
+              "CERT-SE/MSB",
+              "Sector authority",
+              "IMY, if personal data"
+            ]
+          },
+          {
+            "title": "Personal data breach",
+            "question": "A personal data breach occurs. Must it be reported, and within what time?",
+            "answer": "Only breaches that pose a risk to individuals' rights and freedoms are reported to IMY, within 72 hours of discovery. When you decide not to report, the system documents that assessment too.",
+            "path": [
+              "Discovery",
+              "Risk assessment",
+              "IMY < 72h, or documented decision"
+            ]
+          },
+          {
+            "title": "Board evidence",
+            "question": "The board asks for status. Is there auditable evidence, as Article 20 requires?",
+            "answer": "Every step is logged with a timestamp, an owner, and a decision. Management gets an auditable record that demonstrates active governance, exactly what Article 20 asks for.",
+            "path": [
+              "Case log",
+              "Timestamps",
+              "Board report, Art. 20"
+            ]
+          }
+        ]
+      },
+      "quote": {
+        "text": "We cut the time from discovery to first notification from 14 hours to 25 minutes.",
+        "name": "Dana Smith",
+        "position": "Head of Information Security, Nordic energy group"
+      },
+      "frameworks": {
+        "title": "One obligation, three frameworks",
+        "root": "Your organization's reporting obligations",
+        "items": [
+          {
+            "name": "NIS2",
+            "windows": "24h / 72h / 1 mo",
+            "recipient": "CERT-SE/MSB and your sector authority"
+          },
+          {
+            "name": "GDPR / IMY",
+            "windows": "72h",
+            "recipient": "IMY, when individuals' rights are at risk"
+          },
+          {
+            "name": "DORA",
+            "windows": "4h / 72h / 30 days",
+            "recipient": "National competent authority, financial sector"
+          }
+        ]
+      },
+      "faq": {
+        "title": "Your questions, answered",
+        "items": [
+          {
+            "question": "Who must report under NIS2?",
+            "answer": "The duty follows from entity type, essential or important under the Swedish Cybersecurity Act, not from company size in general. The scoping in the platform shows which category you belong to and which windows apply to you."
+          },
+          {
+            "question": "Must every personal data breach be reported to IMY?",
+            "answer": "No. Only breaches that pose a risk to data subjects' rights and freedoms must be reported, within 72 hours of discovery. The decision not to report must be documented too, and the system does that automatically."
+          },
+          {
+            "question": "What counts as an 'early warning' within 24 hours?",
+            "answer": "A first message to CERT-SE/MSB that a significant incident is under way, not a complete investigation. Among other things, it states whether the incident is suspected to be caused by unlawful acts and whether it may have cross-border effects."
+          },
+          {
+            "question": "Who is Sweden's contact point for NIS2?",
+            "answer": "MSB, with CERT-SE as the CSIRT function. Supervision is distributed by sector to authorities such as PTS and the Swedish Energy Markets Inspectorate, depending on your industry."
+          }
+        ]
+      },
+      "cta": {
+        "title": "See your current process through the system's eyes",
+        "button": "Request a review of your reporting process"
+      }
+    }
+  },
+  "products": {
+    "trustCenter": {
+      "hero": {
+        "title": "Show your compliance before anyone asks",
+        "description": "Publish a live trust center backed by your OptiTech compliance program. Security reviews answer themselves, and your buyers get what they need to say yes.",
+        "cta": "Book a demo",
+        "mockup": {
+          "url": "trust.nordkraft.se",
+          "pageTitle": "Security and trust at Nordkraft",
+          "badges": [
+            "ISO 27001",
+            "NIS2",
+            "GDPR"
+          ],
+          "documentsHeading": "Documents",
+          "documents": [
+            {
+              "name": "Information security policy",
+              "access": "Public"
+            },
+            {
+              "name": "ISO 27001 certificate",
+              "access": "Public"
+            },
+            {
+              "name": "Penetration test summary",
+              "access": "NDA"
+            },
+            {
+              "name": "Business continuity plan",
+              "access": "NDA"
+            }
+          ],
+          "controlsHeading": "Controls",
+          "controls": [
+            {
+              "name": "Encryption at rest",
+              "status": "Monitored"
+            },
+            {
+              "name": "Access reviews",
+              "status": "Monitored"
+            },
+            {
+              "name": "Backup and recovery",
+              "status": "Monitored"
+            },
+            {
+              "name": "Incident response",
+              "status": "Monitored"
+            }
+          ],
+          "syncNote": "Updated automatically from your OptiTech compliance program.",
+          "chat": {
+            "label": "OptiTech AI",
+            "question": "Do you encrypt customer data at rest?",
+            "answer": "Yes. All customer data is encrypted at rest with AES-256. The control is monitored continuously.",
+            "source": "Source: control CTRL-041, verified today"
+          }
+        }
+      },
+      "proof": {
+        "logosHeading": "The trust center for leading Nordic businesses",
+        "logos": [
+          "Nordkraft",
+          "Fjordbank",
+          "Helsia",
+          "Kustdata",
+          "Polaris Health",
+          "Baltic Freight",
+          "Grönlund & Co"
+        ],
+        "statTitle": "82% faster completion of customer security reviews",
+        "statDescription": "Teams that share evidence through a trust center spend hours instead of weeks on security questionnaires, and sales cycles for regulated buyers get measurably shorter.",
+        "statSource": "Source: aggregated review turnaround times across OptiTech customers with an active trust center, 2025."
+      },
+      "features": {
+        "label": "Trust Center",
+        "cta": "Book a demo",
+        "items": [
+          {
+            "title": "Your buyers' security questions, answered by OptiTech AI",
+            "description": "Buyers ask questions directly on your trust center and get instant answers grounded in your actual controls and documents, with the source cited. No more week-long email threads with your security team in copy.",
+            "mockup": {
+              "label": "OptiTech AI",
+              "question": "Where is your data hosted, and does it leave the EU?",
+              "answer": "All production data is hosted in the EU (Stockholm and Frankfurt). No customer data is transferred outside the EU/EES.",
+              "chips": [
+                "Source: Data processing agreement",
+                "Verified this week"
+              ]
+            }
+          },
+          {
+            "title": "Automated access to documentation",
+            "description": "Public documents are one click away. Sensitive reports sit behind a self-serve NDA flow with e-signing, so a prospect can request, sign, and download without anyone on your side lifting a finger.",
+            "mockup": {
+              "label": "Document access",
+              "rows": [
+                {
+                  "name": "ISO 27001 certificate",
+                  "status": "Public",
+                  "open": true
+                },
+                {
+                  "name": "Penetration test report",
+                  "status": "NDA",
+                  "open": false
+                },
+                {
+                  "name": "SOC 2 report",
+                  "status": "NDA",
+                  "open": false
+                }
+              ],
+              "requestTitle": "Pen test report requested",
+              "requestMeta": "anna@example.com, NDA signed",
+              "requestButton": "Approve"
+            }
+          },
+          {
+            "title": "Tailored to your brand, on your domain",
+            "description": "Your logo, your colors, your tone, on trust.yourcompany.se. The trust center reads as a natural part of your website, not a third-party widget bolted on at the end of the deal.",
+            "mockup": {
+              "label": "Appearance",
+              "colorsLabel": "Brand colors",
+              "domainLabel": "Custom domain",
+              "domain": "trust.nordkraft.se",
+              "previewTitle": "Security at Nordkraft",
+              "previewText": "How we protect your data, verified continuously and published for our customers."
+            }
+          },
+          {
+            "title": "Seamlessly synced with your compliance program",
+            "description": "The trust center is not another thing to maintain. Controls, documents, and framework status flow straight from your OptiTech program, so what your buyers see is always what your auditors see.",
+            "mockup": {
+              "label": "Controls",
+              "synced": "Synced 2 min ago",
+              "rows": [
+                {
+                  "name": "Multi-factor authentication",
+                  "framework": "ISO 27001 · A.5.17",
+                  "status": "Passing"
+                },
+                {
+                  "name": "Vendor risk reviews",
+                  "framework": "NIS2 · Art. 21",
+                  "status": "Passing"
+                },
+                {
+                  "name": "Data retention limits",
+                  "framework": "GDPR · Art. 5",
+                  "status": "Passing"
+                }
+              ]
+            }
+          }
+        ]
+      },
+      "network": {
+        "title": "Join the largest network of trust centers in the Nordics",
+        "description": "500+ trust center pages hosted by OptiTech",
+        "companies": [
+          "Nordkraft",
+          "Fjordbank",
+          "Helsia",
+          "Kustdata",
+          "Polaris Health",
+          "Baltic Freight",
+          "Grönlund & Co"
+        ],
+        "footnote": "Fictional example companies shown. Customer references are available on request."
+      },
+      "featureGrid": {
+        "title": "Trust center features",
+        "items": [
+          {
+            "title": "CRM and e-sign integrations",
+            "description": "Connect your CRM and e-signing provider so NDA requests, approvals, and account activity land where your sales team already works."
+          },
+          {
+            "title": "Visitor insights",
+            "description": "See which prospects visited, what they read, and which documents they requested, so sales knows who is in a security review right now."
+          },
+          {
+            "title": "ROI reporting",
+            "description": "Track hours saved on questionnaires and review turnaround time, and show security's contribution to revenue in numbers."
+          },
+          {
+            "title": "Custom tags and filters",
+            "description": "Organize controls and documents by framework, audience, or product line so every buyer finds what applies to them."
+          },
+          {
+            "title": "Subscriber updates",
+            "description": "Customers subscribe to your trust center and get notified automatically when certificates renew or subprocessors change."
+          },
+          {
+            "title": "Granular access levels",
+            "description": "Public, gated, and NDA-only tiers per document, with expiring links and a full audit trail of who accessed what."
+          }
+        ]
+      },
+      "testimonial": {
+        "text": "Security reviews used to be the slowest part of every deal. Now we send a link. Most buyers never send the questionnaire at all, and the ones who do get answers the same day.",
+        "initials": "SL",
+        "name": "Sara Lindqvist",
+        "position": "CISO, Nordkraft",
+        "cta": "Read the case study"
+      },
+      "plans": {
+        "title": "Get started with Trust Center",
+        "description": "Included with your OptiTech plan, or step up for the full buyer experience. Everything stays in sync with your compliance program either way.",
+        "cards": [
+          {
+            "plan": "Included in Growth",
+            "name": "Trust Center",
+            "description": "A public trust center backed by your live compliance program.",
+            "features": [
+              "Hosted trust center page",
+              "Live control and framework status",
+              "Public document sharing",
+              "Subscriber updates"
+            ],
+            "cta": "See pricing"
+          },
+          {
+            "plan": "Enterprise",
+            "name": "Advanced Trust Center",
+            "description": "The full buyer experience for teams with heavy security review volume.",
+            "features": [
+              "OptiTech AI answers for buyers",
+              "Self-serve NDA flow with e-signing",
+              "Custom domain and full branding",
+              "CRM integration and visitor insights"
+            ],
+            "cta": "Talk to sales"
+          }
+        ]
+      },
+      "resources": {
+        "title": "See what Trust Center can do for your team",
+        "readMore": "Read more",
+        "items": [
+          {
+            "type": "Guide",
+            "title": "Building a trust center your buyers actually use",
+            "description": "What to publish openly, what to gate behind an NDA, and how to keep it all current without manual work."
+          },
+          {
+            "type": "Report",
+            "title": "The real cost of security questionnaires",
+            "description": "What review cycles cost Nordic vendors in hours and stalled deals, and what changes when evidence is self-serve."
+          },
+          {
+            "type": "Blog",
+            "title": "From cost center to sales asset",
+            "description": "How security teams turn their compliance program into something the sales team links to in every deal."
+          }
+        ]
+      },
+      "cta": {
+        "title": "Get compliant and build trust, fast",
+        "description": "Start with your compliance program, publish your trust center, and let the next security review answer itself.",
+        "primaryCta": "Book a demo",
+        "secondaryCta": "See pricing",
+        "badges": [
+          {
+            "name": "SOC 2 Type II",
+            "meta": "Report available"
+          },
+          {
+            "name": "ISO 27001",
+            "meta": "Certified"
+          },
+          {
+            "name": "GDPR",
+            "meta": "Compliant"
+          },
+          {
+            "name": "NIS2",
+            "meta": "Ready"
+          }
+        ]
+      }
+    }
+  },
+  "team": {
+    "hero": {
+      "label": "The team",
+      "title": "The people behind OptiTech",
+      "description": "OptiTech is built by a small team in Stockholm and Malmö. Some of us come from security and audit work, others from software, and we build the product close to our customers."
+    },
+    "people": {
+      "items": [
+        {
+          "name": "Yazan Ghayad",
+          "role": "Founder & CEO"
+        },
+        {
+          "name": "Cornelia Jakobsson",
+          "role": "Chief Financial Officer"
+        },
+        {
+          "name": "Adam Hill",
+          "role": "Chief Technical Officer"
+        },
+        {
+          "name": "Linnea Sjöholm",
+          "role": "Head of Strategy & Business"
+        },
+        {
+          "name": "Khaked Darwish",
+          "role": "IT Security Specialist"
+        },
+        {
+          "name": "Oscar Hedqvist",
+          "role": "Marketing Manager"
+        },
+        {
+          "name": "Malin Von Engman",
+          "role": "AI Specialist"
+        },
+        {
+          "name": "Marwan Atme",
+          "role": "Office & Sales Manager, Malmö"
+        }
+      ]
+    },
+    "join": {
+      "title": "Want to work with us?",
+      "description": "We are growing and always happy to talk to people who care about security and compliance.",
+      "cta": "Get in touch"
+    },
+    "yazan": {
+      "back": "Back to the team",
+      "label": "Founder & CEO",
+      "name": "Yazan Ghayad",
+      "bio": [
+        "Yazan founded OptiTech in 2024 and leads the company from Stockholm. He works hands-on across the product: IT services, cloud, infrastructure, and the AI and data analytics the platform is built on.",
+        "He is an economist by training, with a degree from Lund University, and OptiTech is not his first company. He previously built Prakto, a digital internship platform that connects students, schools, and companies across Sweden for LIA, APL, VFU, and prao placements, and Sweo. Alongside OptiTech, he works with business development at the Department of Economics at Södertörn University.",
+        "His main interests are public finance and public economics: how automation affects productivity, income distribution, and the ability of states to fund welfare systems over time. Moving between theory and practice shapes how he builds OptiTech."
+      ],
+      "focusTitle": "Focus areas",
+      "focus": [
+        "Public finance and public economics",
+        "Economic policy analysis",
+        "Econometric modeling",
+        "Applied economics",
+        "AI and data analytics",
+        "Cloud and IT infrastructure"
+      ],
+      "meta": [
+        {
+          "label": "Role",
+          "value": "Founder & CEO"
+        },
+        {
+          "label": "Location",
+          "value": "Stockholm"
+        },
+        {
+          "label": "At OptiTech since",
+          "value": "2024"
+        },
+        {
+          "label": "Education",
+          "value": "Lund University"
+        }
+      ],
+      "linkedinLabel": "LinkedIn",
+      "linkedinValue": "yazan-ghayad"
+    }
+  },
+  "header": {
+    "login": "Log in",
+    "bookDemo": "Book a demo"
   },
   "seo": {
     "index": {

@@ -1,5 +1,5 @@
 ---
-description: "Use when writing or editing markdown content anywhere in content/: Neon voice, capitalization rules, linking, and fake example data conventions."
+description: "Use when writing or editing markdown content anywhere in content/: OptiTech voice, capitalization rules, linking, and fake example data conventions."
 applyTo: "content/**/*.md"
 ---
 
@@ -20,9 +20,9 @@ applyTo: "content/**/*.md"
 ## Capitalization
 
 - Use lowercase wherever possible.
-- Page titles use sentence case: "Create your first project".
+- Page titles use sentence case: "Create your first program".
 - Feature names are lowercase by default; methodologies are capitalized (Continuous Integration, Continuous Deployment).
-- Product names follow official capitalization: PostgreSQL, GitHub, npm, Vercel.
+- Product names follow official capitalization: GitHub, npm, BankID, Fortnox, Microsoft 365.
 - UI text matches the interface exactly.
 
 ## Fake example data (never real user data)
@@ -30,5 +30,6 @@ applyTo: "content/**/*.md"
 - Emails: `@example.com` or `@domain.com`.
 - Usernames: `example_username`, Zhang Kai, Alex Lopez, or Dana Smith.
 - Passwords: `AbC123dEf`.
-- Database names: `dbname`.
-- Connection string format: `postgresql://[user]:[password]@[neon_hostname]/[dbname]`.
+- API keys: always the `$OPTITECH_API_KEY` placeholder, never realistic-looking key values.
+- API examples call `https://api.optitech.com/v1`.
+- Legacy database examples (unconverted pages): database name `dbname`, connection string format `postgresql://[user]:[password]@[hostname]/[dbname]`.

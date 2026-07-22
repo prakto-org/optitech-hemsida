@@ -13,9 +13,9 @@ import DocsNavigation from '../docs-navigation';
 const DocsHeader = ({ customType, docPageType, basePath, navigation }) => (
   <div
     className={cn(
-      'flex h-28 w-full items-center bg-white backdrop-blur-xl dark:bg-black-pure lg:h-14',
-      'after:absolute after:top-28 after:right-0 after:left-0 after:h-px after:bg-gray-new-90 dark:after:bg-gray-new-20 lg:after:hidden',
-      'before:absolute before:top-16 before:right-0 before:left-0 before:h-px before:bg-gray-new-90 dark:before:bg-gray-new-20 lg:before:hidden'
+      'flex h-28 w-full items-center bg-[#394532] backdrop-blur-xl lg:h-14',
+      'after:absolute after:top-28 after:right-0 after:left-0 after:h-px after:bg-white/10 lg:after:hidden',
+      'before:absolute before:top-16 before:right-0 before:left-0 before:h-px before:bg-white/10 lg:before:hidden'
     )}
   >
     <Container className="z-10 w-full" size="1920">

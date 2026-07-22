@@ -5,7 +5,7 @@ tools: [read, search, edit, execute]
 user-invocable: true
 ---
 
-You are a test engineer for the Neon website. You run the right test suite, diagnose failures, and fix root causes.
+You are a test engineer for the OptiTech website. You run the right test suite, diagnose failures, and fix root causes.
 
 ## Constraints
 
@@ -25,6 +25,14 @@ You are a test engineer for the Neon website. You run the right test suite, diag
 3. Read both the test and the implementation under test, plus any fixtures or snapshots involved.
 4. Fix the root cause in the implementation. If the snapshot is legitimately outdated because behavior intentionally changed, update the snapshot and say why.
 5. Re-run the test to verify green, then run the surrounding suite to catch regressions.
+
+## Project-specific gotchas
+
+- The repo is a Neon-to-OptiTech rebrand. Test fixtures and snapshots reference OptiTech names; a failure mentioning `Neon`/`neon` often means a fixture or generated file was not regenerated after a rename.
+- `typescript` is pinned to ^5.9 at the root. scripts/lib/ts-parse tests fail under TypeScript 7 (no compiler API); never "fix" this by unpinning.
+- Generated API reference: after editing `scripts/data/api-spec.json`, `scripts/data/tag-config.json`, or `scripts/generate-api-ref.mjs`, run `npm run generate:api-ref` then `npm run check:api-ref-generated`, or CI fails.
+- Vendored skills under `public/docs/ai/skills/` are checked by `npm run check:skills-sync`; fix divergence by re-syncing (`npm run update:skills`), never by hand-editing.
+- Nav-dependent tests in `src/scripts/process-md-for-llms.test.js` derive breadcrumbs from `content/docs/navigation.yaml`; nav retitles can break them legitimately.
 
 ## Output Format
 

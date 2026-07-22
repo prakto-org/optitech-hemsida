@@ -9,6 +9,16 @@ export default {
           title: 'Core Primitives',
           items: [
             {
+              title: 'Trust Center',
+              to: LINKS.productTrustCenter,
+              description: 'Show your compliance before anyone asks',
+            },
+            {
+              title: 'Incident Reporting',
+              to: LINKS.serviceIncidentReporting,
+              description: 'MSB and IMY deadlines, handled',
+            },
+            {
               title: 'Database',
               to: LINKS.postgresOverview,
               description: 'Serverless Postgres',
@@ -244,29 +254,19 @@ export default {
       heading: 'Community',
       items: [
         {
-          text: 'Discord',
-          to: LINKS.discord,
-          icon: 'discord-icon',
-        },
-        {
-          text: 'GitHub',
-          to: LINKS.github,
-          icon: 'github-icon',
-        },
-        {
-          text: 'X.com',
-          to: LINKS.twitter,
-          icon: 'x-icon',
-        },
-        {
           text: 'LinkedIn',
           to: LINKS.linkedin,
           icon: 'linkedin-icon',
         },
         {
-          text: 'YouTube',
-          to: LINKS.youtube,
-          icon: 'youtube-icon',
+          text: 'Microsoft',
+          to: LINKS.microsoftPartner,
+          icon: 'microsoft-icon',
+        },
+        {
+          text: 'Facebook',
+          to: LINKS.facebook,
+          icon: 'facebook-icon',
         },
       ],
     },

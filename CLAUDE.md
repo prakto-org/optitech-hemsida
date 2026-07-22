@@ -594,7 +594,7 @@ The `.claude/` agents and commands above have VS Code-native counterparts. Both 
 
 ### Custom agents (`.github/agents/*.agent.md`)
 
-Fourteen agents. The docs pipeline agents are ported from `.claude/agents/`; the specialists are new.
+Sixteen agents. The docs pipeline agents are ported from `.claude/agents/`; the specialists are new.
 
 | Agent                                                                                                     | Role                                                                                              |
 | --------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
@@ -606,6 +606,8 @@ Fourteen agents. The docs pipeline agents are ported from `.claude/agents/`; the
 | `api-docs-writer`                                                                                           | Hand-written API reference in `content/api-docs/`                                                 |
 | `seo-reviewer`, `consistency-checker`, `humanizer`                                                          | Review specialists: SEO metadata, duplicated content, AI-sounding prose                           |
 | `test-runner`                                                                                               | Runs and fixes vitest, Cypress, and docs checks                                                   |
+| `rebrand-auditor`                                                                                           | Audits Neon-to-OptiTech conversion: finds name-swapped pages, verifies converted ones             |
+| `translation-manager`                                                                                       | Swedish translation pipelines: DeepL content to `content/sv/`, next-intl messages and overrides   |
 
 ### Skills (`.agents/skills/<name>/SKILL.md`)
 
