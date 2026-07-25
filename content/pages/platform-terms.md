@@ -1,60 +1,153 @@
 ---
-title: "OptiTech Platform Services Product Specific Schedule"
+title: 'OptiTech platform terms'
 template: Static
+lastUpdated: 'July 24, 2026'
 seo:
-  title: "OptiTech Platform Services Product Specific Schedule - OptiTech"
-  metaDesc: ""
-  metaKeywords: ""
-  metaRobotsNoindex: true
-  opengraphTitle: "OptiTech Platform Services Product Specific Schedule - OptiTech"
-  opengraphDescription: "This OptiTech Platform Services Product Specific Schedule (“Product Specific Schedule”) is entered into as of the Effective Date between OptiTech, LLC (“OptiTech” or “we”), an affiliate of Databricks, Inc. (“Databricks”), and Customer (as defined below) (“Customer”, “you,” or “your”) and governs Customer’s use of the OptiTech proprietary cloud computing platform […]"
-  twitterImage: ""
+  title: 'OptiTech platform terms - OptiTech'
+  metaDesc: 'The terms that govern use of the OptiTech compliance automation platform.'
+  metaKeywords: ''
+  metaRobotsNoindex: false
+  opengraphTitle: 'OptiTech platform terms - OptiTech'
+  opengraphDescription: 'The terms that govern use of the OptiTech compliance automation platform.'
+  twitterImage: ''
 ---
 
-This OptiTech Platform Services Product Specific Schedule ("Product Specific Schedule") is entered into as of the Effective Date between OptiTech, LLC ("OptiTech" or "we"), an affiliate of Databricks, Inc. ("Databricks"), and Customer (as defined below) ("Customer", "you," or "your") and governs Customer's use of the OptiTech proprietary cloud computing platform services (the "OptiTech Platform Services"). By accessing the OptiTech Platform Services, Customer agrees to the terms of this Product Specific Schedule. If you are entering into this Product Specific Schedule on behalf of a company (such as your employer) or other legal entity, you represent and warrant that you are authorized to bind that entity to this Product Specific Schedule, in which case "Customer," "you," or "your" will refer to that entity (otherwise, such terms refer to you as an individual).
+## About these terms
 
-This Product Specific Schedule is subject to the terms of the current Databricks Master Cloud Services Agreement located at [https://www.databricks.com/legal/mcsa](https://www.databricks.com/legal/mcsa) (the "Agreement"), as supplemented and amended by this Product Specific Schedule, solely with respect to a Customer's use of the OptiTech Platform Services. Customer acknowledges that we may make changes to the Agreement, this Product Specific Schedule or pricing from time to time and Customer's continued use of the OptiTech Platform Services will constitute consent to such changes.
+These platform terms govern access to and use of the OptiTech platform, provided by OptiTech Sverige AB ("OptiTech", "we", "us"), registration number 559489-8917, Karlslundsvägen 8, 177 44 Stockholm, Sweden.
 
-For clarity, this Product Specific Schedule does not affect the terms of the Agreement as they relate to any non-OptiTech Platform Services, including the Databricks data processing platform services. Capitalized terms not defined here will have the meanings specified in the Agreement. For purposes of this Product Specific Schedule, all references under the Agreement to the "Platform Services" and the "Databricks Services" will be deemed references to the "OptiTech Platform Services", and all references to "Databricks" under the Agreement will be deemed references to "Databricks, together with its Affiliates". In the event of any conflict or inconsistency between this Product Specific Schedule and the Agreement, solely with respect to Customer's use of OptiTech Platform Services, this Product Specific Schedule will control.
+By creating an account or using the platform, you accept these terms on behalf of your organization ("Customer", "you"). If you accept on behalf of a company, you confirm that you are authorized to bind it. Use of our public website is governed separately by the [Terms of use](/terms-of-use).
 
-1.  Self-Service Plans. The OptiTech Platform Services will be provided according to the usage-based pricing plan selected by Customer, as described in the Documentation at [https://optitech.com/docs/introduction/plans](https://optitech.com/docs/introduction/plans) (such plans, together with any legacy plans, a "Self Service Plan"). Customer's subscription to any Self Service Plan will automatically renew on a month-to-month basis (each, a "Subscription Month"), unless Customer cancels its subscription to such Self Service Plan within fourteen (14) business days prior to the expiration of the then-current Subscription Month.
-2.  Fees. Except as otherwise specified in an Order Form, (a) Fees will be determined based on the Self Service Plan selected by Customer and calculated based on Customer's usage of the OptiTech Platform Services during each Subscription Month, and (b) all Fees will be invoiced monthly in arrears with payment invoiced and due on or around the first day of the calendar month following each Subscription Month. Fees will be automatically charged to Customer's payment card on record.
-3.  Amendments to the Agreement:
-    1.  Documentation. All references in the Agreement to the "Documentation" shall be deemed references to the documentation related to the OptiTech Platform Services located at [https://optitech.com/docs](https://optitech.com/docs).
-    2.  Subprocessor List. All references in the Agreement (including, for clarity, Section 4 of the [DPA](https://www.databricks.com/sites/default/files/legal/dpa-20230721.pdf)) to the "Subprocessor List" shall be deemed references to the subprocessor list specific to the OptiTech Platform Services located at [https://optitech.com/subprocessors](https://optitech.com/subprocessors).
-    3.  Security Addendum. All references in the Agreement to the "Security Addendum" or "Security Measures" shall be deemed references to the security addendum and security measures attached hereto as Exhibit A.
-    4.  Audit. Section 7 (Audits and Records) of the DPA is hereby deleted in its entirety and replaced with the following: "Databricks, together with its Affiliates, will make information reasonably necessary to demonstrate compliance with this DPA available to Customer and allow for and contribute to audits, including inspections conducted by Customer or Customer's auditor in order to assess compliance with [this DPA](https://www.databricks.com/sites/default/files/legal/dpa-20230721.pdf), where required by applicable law. Customer acknowledges and agrees that Customer will exercise Customer's audit rights under this DPA by instructing us to comply with the audit measures described in this provision. Upon request, Databricks, together with its Affiliates, will supply (on a confidential basis) the SOC 2 report for the OptiTech Platform Services and summary copies of the penetration testing report(s) to Customer so that Customer can verify compliance with this DPA."
-    5.  Service Specific Terms. All references in the Agreement to the Service Specific Terms are hereby deleted.
-    6.  Projects. All references in the Agreement to "Workspaces" shall be deemed to include any projects created by Customer within the OptiTech Platform Services.
-    7.  Cardholder Data. Customer acknowledges and agrees it shall not include in Customer Content any cardholder data as defined under PCI-DSS ("Cardholder Data"). All references to Cardholder Data in Section 4.5(b) shall be hereby deleted.
-4.  SLA. Notwithstanding anything to the contrary, the Service Level Agreement located at [https://optitech.com/optitech-business-sla](https://optitech.com/optitech-business-sla) shall be incorporated into this Product Specific Schedule by reference and apply exclusively to Customers who have subscribed to the Scale self-service plan.
+## The service
 
-Exhibit A -- Security Measures
+OptiTech is a compliance automation platform built for Nordic organizations. It turns regulatory compliance into a continuous, automated process instead of a yearly project. Depending on your plan, the platform includes:
 
-OptiTech, together with its Affiliate Databricks, shall implement reasonable administrative, physical, and technical safeguards to protect the security of the OptiTech Platform Services and the Customer Content as set forth in this Exhibit A ("Security Measures"). While OptiTech may update the Security Measures, it shall not materially diminish the effectiveness of the Security Measures during the Term of an Order. All capitalized terms not otherwise defined herein will have the meanings as set forth in the Agreement.
+- **Gap analysis.** Automated assessment of your current state against the requirements of frameworks such as NIS2 (the Swedish Cybersecurity Act), DORA, the EU AI Act, GDPR, and ISO 27001, with a prioritized action plan
+- **AI-generated documentation.** Policies, procedures, and other governance documents drafted by the platform in Swedish or English, based on your organization's profile and the applicable legal texts
+- **Continuous evidence collection.** Integrations with your cloud, identity, HR, and finance systems that collect evidence automatically and map it to controls, so your compliance posture is always current
+- **Incident reporting.** Structured workflows for preparing and tracking incident notifications to Swedish and EU authorities, including MSB and IMY deadlines
+- **Vendor management.** Assessment and monitoring of your suppliers and their subcontractors, supporting the supply chain requirements of NIS2 and DORA
+- **Audit export and trust center.** Auditor-ready exports of controls and evidence, and a public trust center page where you share your security posture with customers
 
-1.  Access Control.
-    1.  Preventing Unauthorized Product Access
-        1.  Outsourced processing. We host the OptiTech Platform Services on an outsourced cloud infrastructure provider, according to a shared responsibility model.
-        2.  Physical and environmental security. We host our product infrastructure with multi-tenant, outsourced infrastructure providers. We do not own or maintain hardware located at the outsourced infrastructure providers' data centers. Production servers and client-facing applications are logically and physically secured from our internal corporate information systems.
-        3.  Authentication. We implement a uniform authentication policy for our customer products. Customers who interact with the products via the user interface must authenticate before accessing Customer Content.
-        4.  Authorization. Customer Content is stored in multi-tenant storage systems accessible to Customers via only application user interfaces and application programming interfaces. Customers are not allowed direct access to the underlying application infrastructure. The authorization model in each of our products is designed to ensure that only the appropriately assigned individuals can access relevant features, views, and customization options. Authorization to data sets is performed through validating the user's permissions against the attributes associated with each data set.
-        5.  Application Programming Interface (API) access: Public product APIs can be accessed using an API key or through Oauth authorization.
-    2.  Preventing Unauthorized Use. We implement industry standard access controls and detection capabilities for the internal networks that support its products.
-        1.  Access controls. Network access control mechanisms are designed to prevent network traffic using unauthorized protocols from reaching the product infrastructure. The technical measures implemented differ between infrastructure providers and include Virtual Private Cloud (VPC) implementations, security group assignment, and traditional firewall rules.
-        2.  Intrusion detection and prevention. We implement a Web Application Firewall (WAF) solution to protect hosted customer websites and other internet-accessible applications. The WAF is designed to identify and prevent attacks against publicly available network services.
-        3.  Static code analysis. Code stored in our source code repositories is checked for best practices and identifiable software flaws using automated tooling.
-        4.  Penetration testing. We maintain relationships with industry-recognized penetration testing service providers for penetration testing of the OptiTech web application, API, and proximity and authentications flows at least annually. The intent of these penetration tests is to identify security vulnerabilities and mitigate the risk and business impact they pose to the in-scope systems.
-    3.  Limitations of Privilege & Authorization Requirements.
-        1.  Product access. A subset of our employees have access to the products and to customer data via controlled interfaces. The intent of providing access to a subset of employees is to provide effective customer support, product development and research, to troubleshoot potential problems, to detect and respond to security incidents and implement data security. Access is enabled through "just in time" (JITA) requests for access; all such requests are logged. Employees are granted access by role, and reviews of high risk privilege grants are initiated as needed. Administrative or high risk access permissions are reviewed at least annually.
-        2.  Reference checks. Where permitted by applicable law, Databricks and OptiTech employees undergo reference checks. All Databricks and OptiTech employees are required to conduct themselves in a manner consistent with company guidelines, non-disclosure requirements, and ethical standards.
-2.  Transmission Control
-    1.  In-transit. We require HTTPS encryption (also referred to as SSL or TLS) on all login interfaces. Our HTTPS implementation uses industry standard algorithms and certificates.
-    2.  At-rest. We store user passwords following policies that follow industry standard practices for security. We have implemented technologies to ensure that stored data is encrypted at rest.
-3.  Input Control.
-    1.  Detection. We designed our infrastructure to log extensive information about the system behavior, traffic received, system authentication, and other application requests. Internal systems aggregate log data and alert appropriate employees of malicious, unintended, or anomalous activities. Our personnel, including security, operations, and support personnel, are responsive to known incidents.
-    2.  Response and tracking. We maintain a record of known security incidents that includes description, dates and times of relevant activities, and incident disposition. Suspected and confirmed security incidents are investigated by security, operations, or support personnel; and appropriate resolution steps are identified and documented. For any confirmed incidents, we will take appropriate steps to minimize product and Customer damage or unauthorized disclosure. Notification to you will be in accordance with the terms of the Agreement.
-4.  Availability Control.
-    1.  Online replicas and backups. Where feasible, production databases are designed to replicate data between no less than 1 primary and 1 secondary database. All databases are backed up and maintained using at least industry standard methods.
-    2.  Disaster Recovery Plans. We maintain and regularly test disaster recovery plans to help ensure availability of information following interruption to, or failure of, critical business processes.
-    3.  Our products are designed to ensure redundancy and seamless failover. The server instances that support the products are also architected with a goal to prevent single points of failure. This design assists our operations in maintaining and updating the product applications and backend while limiting downtime.
+We improve the platform continuously and may add, change, or retire features. Material changes that reduce the core functionality of your plan are announced in advance.
+
+## AI-generated content
+
+Parts of the platform use AI to generate drafts, such as policies, gap analysis summaries, questionnaire answers, and suggested control mappings. AI output is a starting point, not legal advice. You are responsible for reviewing, adapting, and approving AI-generated content before relying on it. OptiTech does not guarantee that AI-generated documents meet the requirements of any specific regulation or auditor.
+
+We do not use your customer data to train models made available to other customers.
+
+## Regulatory responsibility
+
+The platform helps you prepare, structure, and track regulatory obligations, including incident notifications with statutory deadlines such as the 24-hour early warning under NIS2. The legal responsibility for meeting those obligations, including the content, accuracy, and timeliness of reports submitted to authorities such as MSB or IMY, always remains with you. OptiTech is a tool provider and does not act as your representative before any authority unless separately agreed in writing.
+
+## Accounts and access
+
+You are responsible for the accuracy of your account information, for keeping credentials confidential, and for all activity under your accounts. Notify us without undue delay at [info@optitech-sverige.se](mailto:info@optitech-sverige.se) if you suspect unauthorized access.
+
+You assign roles and permissions to your users and are responsible for keeping them appropriate, including removing access for people who leave your organization. Seats are personal and may not be shared.
+
+## Plans, fees, and payment
+
+Plans and prices are described on the [pricing page](/pricing) or in your order form. Prices are stated in Swedish kronor (SEK) unless otherwise agreed. Unless otherwise agreed in writing:
+
+- Subscriptions renew automatically for the same period unless canceled before the end of the current term
+- Fees are invoiced in advance and due within 30 days
+- Plan limits, such as the number of frameworks, users, or monitored vendors, follow the plan you have selected. If your usage grows beyond your plan, we contact you about an upgrade
+- Prices can change at renewal, with at least 30 days notice
+- Fees are exclusive of VAT and other applicable taxes
+
+## Trials and beta features
+
+We may offer free trials, pilots, or features marked as beta or early access. These are provided as is, may change or end at any time, and are excluded from any service level commitments. Data created during a trial is deleted 30 days after the trial ends unless you convert to a paid plan.
+
+## Customer data
+
+You own the data you and your users submit to the platform, including evidence, documents, policies, incident records, vendor assessments, and integration data ("customer data"). You grant us the rights needed to host, process, and display that data in order to provide the service. We do not sell customer data or use it for advertising.
+
+You are responsible for having the necessary rights to the data you submit and for its legality. You can export your customer data at any time in standard formats, including auditor-ready exports.
+
+## Integrations and third-party services
+
+The platform connects to third-party systems you choose to integrate, such as cloud providers, Microsoft 365, identity providers, HR systems, and Swedish services such as Fortnox. When you enable an integration:
+
+- You confirm that you are authorized to connect the system and grant us the access needed to collect evidence from it
+- Access is read-only wherever the third-party service allows it, and credentials and tokens are stored encrypted
+- You can revoke an integration at any time in the platform or from the third-party system
+
+Third-party services are governed by their own terms. We are not responsible for their availability or for changes to their APIs, but we work to restore affected integrations promptly.
+
+## Data processing and subprocessors
+
+Where we process personal data on your behalf, we do so as a processor under the GDPR and our data processing agreement. Our own processing as a controller is described in the [Privacy policy](/privacy-policy). We use vetted subprocessors under data processing agreements; the current list is available on the [subprocessors page](/subprocessors).
+
+Data is processed within the EU/EEA. Where you select a specific data region for your workspace, customer data is stored in that region. Where a transfer outside the EU/EEA occurs, we use safeguards such as the European Commission's standard contractual clauses.
+
+## Security
+
+We implement appropriate technical and organizational measures to protect the platform and customer data, including:
+
+- Encryption of data in transit and at rest
+- Role-based access controls and authentication requirements
+- Logging, monitoring, and alerting on anomalous activity
+- Regular penetration testing by independent providers
+- A documented incident response process. We notify you without undue delay of incidents affecting your data
+
+## Acceptable use
+
+You may not use the platform to break the law, infringe third-party rights, distribute malicious code, attempt to gain unauthorized access to systems or data, or resell the service without our written consent. You may not use the platform to fabricate evidence or misrepresent your compliance posture to auditors, authorities, or customers.
+
+We may suspend access that threatens the security or integrity of the service, and will notify you as soon as reasonably possible. Suspension is a last resort and access is restored when the issue is resolved.
+
+## Confidentiality
+
+Each party protects the other party's confidential information with at least the same care as its own, and uses it only to fulfill this agreement. This applies to your compliance data, incident records, and vendor assessments, and to our non-public product information and pricing. Confidentiality survives termination for five years. Disclosures required by law or a competent authority are permitted, with notice to the other party where legally possible.
+
+## Intellectual property
+
+OptiTech retains all rights to the platform, including software, design, and documentation. You receive a limited, non-exclusive, non-transferable right to use the platform during the subscription term. Feedback you provide may be used to improve the service without obligation.
+
+## Availability and support
+
+We aim to keep the platform available around the clock, with planned maintenance announced in advance and scheduled outside Swedish business hours where possible. Service level commitments, where applicable to your plan, are described in the [service level agreement](/sla).
+
+Support is provided in Swedish and English via [info@optitech-sverige.se](mailto:info@optitech-sverige.se) during Swedish business days. Response targets depend on your plan and on the severity of the issue; issues that block statutory reporting deadlines are treated with the highest priority.
+
+## Term and termination
+
+These terms apply for as long as you have an active subscription. Either party may terminate for material breach that is not cured within 30 days of written notice. Upon termination, you can export your customer data for 30 days, after which we delete it from production systems, except where retention is required by law.
+
+## Warranties and disclaimers
+
+We provide the platform with reasonable skill and care. Except as expressly stated in these terms, the platform is provided "as is" without warranties of any kind.
+
+OptiTech supports your compliance work but does not guarantee that you meet the requirements of any framework, law, or certification, that an audit will succeed, or that an authority will accept a report. Passing a gap analysis or having green controls in the platform is not proof of legal compliance. That responsibility remains yours.
+
+## Limitation of liability
+
+To the extent permitted by law, neither party is liable for indirect or consequential damages, including regulatory sanctions, lost profits, or loss of goodwill, and each party's total liability under these terms is limited to the fees paid by Customer during the 12 months preceding the claim. This limitation does not apply to breaches of confidentiality, infringement of the other party's intellectual property, or liability that cannot be limited under applicable law.
+
+## Force majeure
+
+Neither party is liable for failure to perform caused by circumstances beyond its reasonable control, such as widespread internet or infrastructure outages, acts of authorities, war, or natural disasters. Each party works to limit the effects and resumes performance as soon as possible.
+
+## Changes to these terms
+
+We may update these terms from time to time. Material changes are announced at least 30 days in advance. Continued use of the platform after changes take effect means you accept the updated terms.
+
+## Governing law and disputes
+
+These terms are governed by Swedish law. Disputes are subject to the exclusive jurisdiction of the Swedish courts, with the Stockholm District Court as the court of first instance.
+
+## Miscellaneous
+
+- **Order of precedence.** If a signed order form conflicts with these terms, the order form controls
+- **Assignment.** Neither party may assign this agreement without the other party's consent, except to an affiliate or in connection with a merger or acquisition
+- **Notices.** Formal notices are sent in writing to the contact persons registered on the account, or to [info@optitech-sverige.se](mailto:info@optitech-sverige.se)
+- **References.** With your prior consent, we may use your name and logo as a customer reference
+
+## Contact
+
+Questions about these terms? Contact us at [info@optitech-sverige.se](mailto:info@optitech-sverige.se) or by mail at OptiTech Sverige AB, Karlslundsvägen 8, 177 44 Stockholm, Sweden.
+
+

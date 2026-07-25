@@ -1,60 +1,60 @@
 ---
-title: 'Database storage: Bottomless, Branchable'
-subtitle: The foundation for scalable, copy-on-write Postgres with usage-based pricing and zero storage management.
+title: 'Evidence storage: Complete, Audit-proof'
+subtitle: The foundation for continuous compliance with a tamper-evident evidence log, full history, and zero document management.
 updatedOn: '2025-06-04T09:00:00.000Z'
 ---
 
-OptiTech implements a unique storage layer for Postgres that eliminates capacity planning and enables new workflows. Built on a copy-on-write engine backed by bottomless cloud storage, OptiTech’s architecture removes the constraints of traditional serverful setups, which require pre-provisioned storage volumes and limit scalability. At the same time, it lays the foundation for core OptiTech features like [instant branching](/blog/instantly-copy-tb-size-datasets-the-magic-of-copy-on-write) and [point-in-time restores](/blog/recover-large-postgres-databases#neons-instant-point-in-time-recovery).
+OptiTech implements a unique storage layer for compliance evidence that eliminates document management and enables new workflows. Built on an append-only, hash-chained evidence log, OptiTech's architecture removes the constraints of traditional spreadsheet-and-folder setups, which depend on manual uploads and fall out of date within weeks. At the same time, it lays the foundation for core OptiTech features like continuous control monitoring and point-in-time audit exports.
 
-## Storage constraints in serverful Postgres architectures
+## Evidence constraints in manual compliance setups
 
-Most managed Postgres databases follow a version of the architectural pattern laid out by Amazon RDS: under the hood, Postgres runs in a VM that includes a storage volume like EBS. This experience is very rigid, and makes it so even when using a “managed” cloud Postgres, teams still encounter significant storage babysitting events and other inefficiencies.
+Most organizations manage compliance the way it has always been done: policies in Word, controls in Excel, evidence in a shared folder. This experience is very rigid, and makes it so even with dedicated staff, teams still encounter significant evidence babysitting events and other inefficiencies.
 
 The most common examples:
 
-- **Manual provisioning & rigid scaling.** Classic setups require teams to pre-allocate disk storage and expand it manually. Scaling capacity is inflexible, at most one expansion every few hours, and often you can't reduce volume size. This guesswork often leads to over-provisioning and emergency resizes to avoid full disks.
-- **Slow cloning and recovery.** This architecture also implies that making a copy of a large database or restoring from backup is a time-consuming ordeal. Snapshot-based backups in most cloud databases involve copying the entire dataset from cloud storage and replaying logs, meaning that restoring a multi-terabyte instance can take hours. This delays testing and recovery, impacting development agility and uptime.
-- **Low resource efficiency.** In traditional plans you pay for capacity whether you use it or not. An RDS instance’s storage and compute are allocated up-front (and billed 24/7), so idle resources and empty disk space burn a hole in your budget. Maintaining standby replicas or separate dev/test instances compounds the cost, even if they’re mostly idle.
+- **Manual collection & rigid updates.** Classic setups require teams to gather screenshots, exports, and attestations by hand. Updating evidence is inflexible, at most once per quarter, and often nobody knows which version is current. This guesswork leads to stale documentation and emergency scrambles before every audit.
+- **Slow retrieval and reconstruction.** This approach also implies that answering an auditor's question or reconstructing what a control looked like six months ago is a time-consuming ordeal. Folder-based archives involve digging through email threads and file versions, meaning that preparing for a single audit can take weeks. This delays certification and renewals, impacting sales cycles and regulator relationships.
+- **Low resource efficiency.** In consultant-driven setups you pay for documentation whether it is used or not. A gap-analysis report is produced once (and billed in full), so static documents and expired reports burn a hole in your budget. Maintaining separate evidence sets for each framework compounds the cost, even though the underlying controls are mostly identical.
 
-## How OptiTech reimagines Postgres storage
+## How OptiTech reimagines compliance evidence
 
-OptiTech’s architecture separates storage from compute, implementing a multi-tenant cloud service where each layer can scale independently. The Pageserver (running on SSDs) and Safekeepers (which replicate Postgres’ write-ahead log) form a distributed storage system, with durable object storage (e.g., S3) as the ultimate source of truth. This design decouples performance-critical caching and log replication from long-term storage, enabling both dynamic scaling and built-in fault tolerance.
+OptiTech's architecture separates evidence from documents, implementing a multi-tenant cloud service where each layer can scale independently. Integration workers (connected to your systems) and the status engine (which verifies controls continuously) form a distributed evidence system, with a durable append-only log as the ultimate source of truth. This design decouples day-to-day monitoring from long-term recordkeeping, enabling both real-time status and a complete audit history.
 
-![Database storage architecture](/pages/storage/schema.jpg)
+![Evidence storage architecture](/pages/storage/schema.jpg)
 
-Unlike traditional serverful setups, where compute and storage are tightly coupled inside a VM, OptiTech keeps storage completely independent. A Postgres instance can be paused, scaled, or replicated without moving data. Stateless compute nodes simply reconnect to the storage layer on demand.
+Unlike traditional manual setups, where documents and reality drift apart within weeks, OptiTech keeps evidence completely independent of documents. A policy can be updated, re-approved, or re-signed without touching the evidence trail. The status engine simply links every control to its latest verified proof on demand.
 
-Because the storage engine ingests and tracks all changes via PostgreSQL’s WAL, it maintains a complete, append-only history of the database. This log-structured design lays the groundwork for advanced features like branching, time travel, and instant recovery, without relying on bulky snapshots or manual intervention.
+Because the evidence engine ingests and tracks all changes from your connected systems, it maintains a complete, append-only history of your compliance posture. This log-structured design lays the groundwork for advanced features like point-in-time audit exports, trend reporting, and instant incident timelines, without relying on bulky binders or manual intervention.
 
-## Unique benefits derived from OptiTech’s implementation
+## Unique benefits derived from OptiTech's implementation
 
-### Copy-on-write design.
+### Write once, prove everywhere.
 
-[OptiTech’s storage engine never overwrites data in place](/blog/get-page-at-lsn) – it writes new copies of pages when changes occur. When you create a new branch (a copy of the database), OptiTech doesn’t duplicate the whole dataset. Instead, it references the existing data pages and only writes new pages for data that is modified.This copy-on-write approach avoids expensive full-copy operations. As a result, features like branching, snapshots, and backups no longer require bulk data dumps or lengthy restores.
+[OptiTech's evidence engine never duplicates work](/pricing) – it maps each control to every framework requirement it satisfies. When you add a new framework (such as DORA next to NIS2), OptiTech doesn't restart the whole project. Instead, it references the existing controls and evidence and only asks for what is genuinely new. This cross-mapping approach avoids expensive re-certification projects. As a result, adding frameworks, answering questionnaires, and renewing certificates no longer require starting from scratch.
 
-### Bottomless capacity, no provisioning.
+### Complete history, no housekeeping.
 
-OptiTech’s bottomless storage design means you never worry about disk size. The system automatically grows and shrinks with your data, leveraging cloud object storage in the background. There’s no need to predict or allocate storage up front – OptiTech will seamlessly offload cold data to object storage (e.g. S3) and pull it back when needed using its engine. You won’t run out of space and you won’t spend time managing volumes.
+OptiTech's bottomless evidence design means you never worry about document hygiene. The system automatically collects and versions evidence from your integrations in the background. There's no need to chase colleagues for screenshots – OptiTech will seamlessly archive historical evidence and pull it back when an auditor asks, using its append-only log. You won't lose the trail and you won't spend time managing folders.
 
-### Built-in caching for performance.
+### Built-in status engine for real-time posture.
 
-A concern with decoupling storage is performance, so [OptiTech’s architecture includes intelligent caching](/blog/architecture-decisions-in-neon). The Pageserver acts as a high-speed cache on SSDs for recently used data, serving pages to the Postgres compute with minimal latency. In essence, OptiTech keeps hot data in a cache tier (and in memory) close to the compute, while cold data resides in S3. This means you enjoy the performance of local SSD on your active working set, even as your total data size scales far beyond what SSDs alone could hold.
+A concern with automating evidence is trust, so OptiTech's architecture includes continuous verification. The status engine acts as a live check on every control, verifying proof against requirements with minimal delay. In essence, OptiTech keeps your current posture green or red in real time, while the full history resides in the log. This means you enjoy the confidence of an always-current dashboard, even as your total evidence base grows far beyond what any team could review manually.
 
 ### Pay only for actual usage.
 
-OptiTech charges based on the data you actually store, not on a pre-set capacity. This usage-based pricing model means you’re billed for GB-months of storage consumed (and compute time used), rather than for idle headroom. You don’t pay for 500 GB “just in case” when you’re only using 100 GB, a stark contrast to allocation-based plans. This on-demand efficiency can translate into substantially lower costs as you scale, when disks become larger (and more empty) as data gets purged regularly.
+OptiTech charges a transparent monthly price published openly on our [pricing page](/pricing), not consultant hours. This subscription model means you're billed for the platform you use, rather than for report pages produced. You don't pay 100,000 kr for a gap analysis that expires "just in case", a stark contrast to engagement-based billing. This on-demand efficiency can translate into substantially lower costs as you scale, when frameworks multiply and questionnaires arrive weekly.
 
-### Branching and instant restores.
+### Point-in-time audit trails.
 
-With a complete WAL history at its core, OptiTech enables powerful workflows like branching databases and point-in-time recovery with minimal effort. You can spin up a new logical copy of your database in seconds, without copying data, even for datasets with many TBs. Under the hood, OptiTech simply forks the page history via copy-on-write. Similarly, you can instantly rewind or **restore** a database to an earlier snapshot in time. The ability to clone or rollback a TB-sized Postgres in moments opens up development and disaster recovery capabilities [previously not feasible on managed Postgres](/blog/postgres-snapshots-neon-vs-rds).
+With a complete evidence history at its core, OptiTech enables powerful workflows like point-in-time exports and retroactive incident timelines with minimal effort. You can produce a complete, timestamped picture of your compliance posture as of any date in seconds, without reconstructing anything, even for years-old questions. Under the hood, OptiTech simply reads the log as it existed at that moment. Similarly, you can instantly show a supervisor or auditor exactly **what you knew and when** during an incident. The ability to reconstruct any moment of your program in moments opens up audit and supervision capabilities previously not feasible with manual archives.
 
-### Always durable and multi-AZ resilient.
+### Always durable and EU-resident by default.
 
-OptiTech’s storage layer was [built for high availability](/blog/our-approach-to-high-availability). Every piece of data is redundantly stored across availability zones and in cloud storage. Incoming WAL records are replicated to multiple Safekeepers (each in a different AZ) for durability, then routinely uploaded to the object store (which offers 11 nines of durability). Your data is safe from single-AZ outages or disk failures by default.
+OptiTech's storage layer was built for Swedish and European requirements. Every piece of evidence is redundantly stored in EU data centers with Swedish data residency available on all plans. Incoming evidence records are hash-chained for tamper detection, then routinely verified for integrity. Your audit trail is safe from tampering, loss, or US jurisdiction concerns by default.
 
 ## Operational simplicity through architectural change
 
-OptiTech’s storage engine fundamentally changes what you can expect from Postgres in the cloud. You no longer have to over-provision or constantly manage your database storage. Instead, it expands as needed, stays highly available, and only charges you for actual utilization.
-This architecture also delivers a better developer experience. Need a fresh database branch for a feature test? It’s a click away. Hit a new growth milestone? OptiTech transparently handles it with no performance hit, no emergency migrations. Our goal with this design is to offer a truly cloud-native infrastructure layer for Postgres, finally abstracting the storage details and letting you scale with confidence.
+OptiTech's evidence engine fundamentally changes what you can expect from compliance work. You no longer have to over-document or constantly manage your files. Instead, the record grows as needed, stays audit-ready, and only costs you a fixed monthly price.
+This architecture also delivers a better team experience. Need a complete evidence package for an ISO 27001 audit? It's a click away. Hit a new regulatory milestone? OptiTech transparently handles it with no panic, no emergency consultants. Our goal with this design is to offer a truly automated evidence layer for compliance, finally abstracting the document details and letting you operate with confidence.
 
-<CTA title="Try OptiTech" description="Get started in seconds with our Free Plan" buttonText="Get started" buttonUrl="https://console.optitech.com/signup" />
+<CTA title="Try OptiTech" description="Get started in minutes with our Free Plan" buttonText="Get started" buttonUrl="https://console.optitech.com/signup" />

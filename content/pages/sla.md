@@ -15,7 +15,7 @@ seo:
 
 The Service Level Agreement (“**SLA”**) outlined below applies exclusively to customers who have subscribed to the OptiTech Business or Scale plan. This SLA is incorporated into and forms an integral part of the applicable Agreement between OptiTech, LLC. and the customer. Unless otherwise provided herein, capitalized terms will have the meaning specified in the Agreement. We reserve the right to change the terms of this SLA.
 
-OptiTech will use commercially reasonable efforts to maximize the availability of Compute Endpoints and agrees to provide the performance standards as detailed below. This SLA applies only to the availability of Compute Endpoints, and does not apply to any other part of the Platform, APIs, product, or Services offered by OptiTech.
+OptiTech will use commercially reasonable efforts to maximize the availability of Service Endpoints and agrees to provide the performance standards as detailed below. This SLA applies only to the availability of Service Endpoints, and does not apply to any other part of the Platform, APIs, product, or Services offered by OptiTech.
 
 1.  **SERVICE AVAILABILITY** 
 
@@ -72,11 +72,11 @@ If OptiTech does not achieve and maintain the Monthly Uptime Percentages set for
 
 4.1.2 services, hardware, or software provided by a third party, such as cloud platform services on which OptiTech runs;
 
-4.1.3 any voluntary actions or inactions from you or any third party not in accordance with the Documentation or guidance e.g., deleting a database, not configuring sufficient compute resources, exceeding available storage, unsharing a Project (if the project owner drops the privilege of a user to access the project), revoking API keys, or incorrectly modifying database connection parameters; overloading a database instance to the point it is inoperable, unsharing of Project, creating excessively large number of tables that significantly increase the recovery time etc.or failing to maintain indexes); 
+4.1.3 any voluntary actions or inactions from you or any third party not in accordance with the Documentation or guidance e.g., deleting a workspace or program, disconnecting required integrations, exceeding available plan limits, unsharing a Project (if the project owner drops the privilege of a user to access the project), revoking API keys, or incorrectly modifying integration credentials; disabling the connections the platform depends on, unsharing of Project, uploading excessively large volumes of documents that significantly increase processing time etc. or failing to maintain integration access);
 
-4.1.4 underlying database engine software that leads to repeated database crashes or an inoperable database instance;
+4.1.4 third-party source systems or their APIs that lead to repeated integration failures or an inoperable data connection;
 
-4.1.5 long recovery time due to insufficient IO capacity for your database workload;
+4.1.5 long processing time due to unusually large document or evidence volumes in your workspace;
 
 4.1.6 that result from your equipment, software or other technology and/or third party equipment, software or other technology (other than third party equipment within our direct control); 
 
@@ -96,9 +96,9 @@ As used herein, “month” refers to a calendar month.
 
 “**Business Hours”** means 06:00am to 14:00pm Pacific Standard Time (UTC -8), Monday through Friday, excluding public holidays in the United States.
 
-**“Compute Endpoints”** means compute instances that provide virtualized computing resources (CPU and memory) for running PostgreSQL. Clients and applications connect to a OptiTech database via a Compute Endpoint hostname.
+**“Service Endpoints”** means the hosted application services that provide access to the OptiTech platform (the OptiTech Console and API). Clients and users connect to an OptiTech workspace via a Service Endpoint hostname.
 
-“**Downtime**” is calculated on a monthly basis and is the total number of minutes during the month that a Compute Endpoint was unavailable. For the purposes of calculating the Monthly Uptime Percentage, Downtime does not include partial minutes of unavailability, inaccessibility or unavailability due to Unscheduled Downtime. A minute is considered unavailable if all of your continuous attempts to establish a connection to a Compute Endpoint within the minute fail. 
+“**Downtime**” is calculated on a monthly basis and is the total number of minutes during the month that a Service Endpoint was unavailable. For the purposes of calculating the Monthly Uptime Percentage, Downtime does not include partial minutes of unavailability, inaccessibility or unavailability due to Unscheduled Downtime. A minute is considered unavailable if all of your continuous attempts to establish a connection to a Service Endpoint within the minute fail. 
 
 “**Fees”** means the total fees paid by you for the Platform during the month in which Downtime occurred.
 
@@ -106,7 +106,7 @@ As used herein, “month” refers to a calendar month.
 
 _\[(`total minutes in month` – `downtime`) / `total minutes in month`\] x 100_
 
-**“Project”** refers to the top-level object in the OptiTech object hierarchy, serving as a container for all associated objects, except for API keys, which have a OptiTech account scope. The project framework encompasses objects including branches, compute endpoints, databases, and roles. A project also defines the region where resources are hosted.
+**“Project”** refers to the top-level object in the OptiTech object hierarchy, serving as a container for all associated objects, except for API keys, which have an OptiTech account scope. The project framework encompasses objects including compliance programs, frameworks, controls, evidence, and roles. A project also defines the region where data is hosted.
 
 “**Service Credit**” means the percentage of the Fees to be credited to you if OptiTech approves your claim, as set forth in the table above.
 
