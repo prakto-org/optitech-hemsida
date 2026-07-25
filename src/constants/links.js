@@ -73,14 +73,11 @@ export default {
   whyNeon: '/docs/get-started/why-neon',
 
   // Legal
-  dpa: '/platform-terms#3.4',
-  websiteTerms: 'https://www.databricks.com/legal/terms-of-use',
+  dpa: '/platform-terms#data-processing-and-subprocessors',
+  websiteTerms: '/terms-of-use',
   platformTerms: '/platform-terms',
-  privacy: 'https://www.databricks.com/legal/privacynotice',
-  privacyPolicy: 'https://www.databricks.com/legal/privacynotice',
-  modernSlaveryStatement: 'https://www.databricks.com/legal/modern-slavery-policy-statement',
-  californiaPolicy:
-    'https://www.databricks.com/legal/supplemental-privacy-notice-california-residents',
+  privacy: '/privacy-policy',
+  privacyPolicy: '/privacy-policy',
   cookiePolicy: '/cookie-policy',
   subprocessors: '/subprocessors',
   businessInformation: '/business-info',

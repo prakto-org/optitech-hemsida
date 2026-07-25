@@ -12,7 +12,18 @@ import suppressScriptTagWarning from 'utils/suppress-script-tag-warning';
 suppressScriptTagWarning();
 
 const themesSupportPages = ['/docs', '/guides', '/postgresql', '/faqs'];
-const lightThemePages = ['/services', '/team', '/login'];
+const lightThemePages = [
+  '/services',
+  '/team',
+  '/login',
+  '/privacy-policy',
+  '/terms-of-use',
+  '/cookie-policy',
+  '/platform-terms',
+  '/sla',
+  '/subprocessors',
+  '/hipaa-contractors',
+];
 
 const ThemeColorUpdater = () => {
   const { theme, resolvedTheme } = useTheme();
@@ -48,7 +59,7 @@ const ThemeProvider = ({ children }) => {
     <PreferredProvider
       attribute="class"
       forcedTheme={forcedTheme}
-      storageKey="neon-theme"
+      storageKey="ot-theme"
       disableTransitionOnChange
     >
       <ThemeColorUpdater />

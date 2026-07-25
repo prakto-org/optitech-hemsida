@@ -35,7 +35,7 @@ const SubItem = ({ icon, title, slug, basePath }) => {
     <Link
       className={cn(
         'flex items-center gap-2 rounded-sm leading-none tracking-tight transition-colors duration-200',
-        'text-gray-new-30 hover:text-black-new dark:text-gray-new-70 dark:hover:text-white'
+        'text-gray-new-30 hover:text-black-pure dark:text-gray-new-30 dark:hover:text-black-pure'
       )}
       to={externalSlug || websiteSlug || docSlug}
       size="2xs"
@@ -134,15 +134,14 @@ const Item = ({ nav: title, slug, icon, subnav, items, basePath, activeItems, se
           <ul
             className={cn(
               'relative flex w-max min-w-40 flex-col gap-4 border p-4',
-              'border-gray-new-94 bg-white shadow-[0px_14px_20px_0px_rgba(0,0,0,.1)]',
-              'dark:border-gray-new-15 dark:bg-black-new dark:shadow-[0px_14px_20px_0px_rgba(0,0,0,.5)]'
+              'border-[#E9DCC9] bg-[#FCF2E6] shadow-[0px_14px_20px_0px_rgba(0,0,0,.1)]'
             )}
           >
             {subnav.map((item, index) => (
               <li className={cn(item.section && 'mt-2 first:mt-0')} key={index}>
                 {item.section ? (
                   <>
-                    <span className="mb-3.5 block text-xs leading-none tracking-tight text-gray-new-50 uppercase">
+                    <span className="mb-3.5 block text-xs leading-none tracking-tight text-[#7A6E5A] uppercase">
                       {item.title || item.section}
                     </span>
                     <ul className="flex flex-col gap-4">

@@ -211,11 +211,6 @@ const defaultConfig = {
         permanent: false,
       },
       {
-        source: '/cookie-policy',
-        destination: 'https://www.databricks.com/legal/cookienotice',
-        permanent: true,
-      },
-      {
         source: '/docs/use-cases/:path*',
         destination: '/use-cases',
         permanent: true,
@@ -2086,13 +2081,8 @@ const defaultConfig = {
         permanent: true,
       },
       {
-        source: '/privacy-policy',
-        destination: 'https://www.databricks.com/legal/privacynotice',
-        permanent: true,
-      },
-      {
         source: '/privacy-guide',
-        destination: 'https://www.databricks.com/legal/privacynotice',
+        destination: '/privacy-policy',
         permanent: true,
       },
       {
@@ -2107,7 +2097,7 @@ const defaultConfig = {
       },
       {
         source: '/sensitive-data-terms',
-        destination: 'https://www.databricks.com/legal/terms-of-use',
+        destination: '/terms-of-use',
         permanent: true,
       },
       {

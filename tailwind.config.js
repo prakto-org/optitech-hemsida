@@ -1,6 +1,8 @@
 const defaultTheme = require('tailwindcss/defaultTheme');
 const plugin = require('tailwindcss/plugin');
 
+const trustCenterPalette = require('./src/config/trust-center-palette');
+
 module.exports = {
   darkMode: 'class',
   content: ['./src/**/*.{js,jsx,ts,tsx}'],
@@ -95,6 +97,7 @@ module.exports = {
         'brown-1': '#A86624',
         'brown-2': '#BA8C5E',
       },
+      tc: trustCenterPalette,
     },
     extend: {
       fontFamily: {

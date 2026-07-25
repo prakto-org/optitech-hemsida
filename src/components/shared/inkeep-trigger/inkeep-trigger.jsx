@@ -1,11 +1,12 @@
 'use client';
 
+import { show as showIntercom } from '@intercom/messenger-js-sdk';
 import dynamic from 'next/dynamic';
 import { useTheme } from 'next-themes';
 import PropTypes from 'prop-types';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 
-import { aiChatSettings, getInkeepBaseSettings } from 'lib/inkeep-settings';
+import { getInkeepBaseSettings } from 'lib/inkeep-settings';
 import sendGtagEvent from 'utils/send-gtag-event';
 import suppressScriptTagWarning from 'utils/suppress-script-tag-warning';
 
@@ -21,28 +22,11 @@ const InkeepModalSearch = dynamic(
   { ssr: false }
 );
 
-const InkeepModalChat = dynamic(
-  () => import('@inkeep/cxkit-react').then((mod) => mod.InkeepModalChat),
-  { ssr: false }
-);
+const INTERCOM_APP_ID = process.env.NEXT_PUBLIC_INTERCOM_APP_ID;
 
 const InkeepTrigger = ({ className = null, isNotFoundPage = false }) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [isChatOpen, setIsChatOpen] = useState(false);
   const { theme, systemTheme } = useTheme();
-  const [sharedChatId, setSharedChatId] = useState(null);
-  const latestInputMessageRef = useRef('');
-
-  // Check if URL contains chatId parameter and open AI chat modal automatically on doc pages
-  useEffect(() => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const chatId = urlParams.get('chatId');
-
-    if (chatId) {
-      setSharedChatId(chatId);
-      setIsChatOpen(true);
-    }
-  }, []);
 
   let themeMode;
   switch (true) {
@@ -70,12 +54,6 @@ const InkeepTrigger = ({ className = null, isNotFoundPage = false }) => {
   const handleInkeepEvent = (event) => {
     const { eventName, properties = {} } = event;
 
-    if (eventName === 'user_message_submitted') {
-      const payload = latestInputMessageRef.current ? { text: latestInputMessageRef.current } : {};
-      sendGtagEvent('AI Chat Message Submitted', payload);
-      latestInputMessageRef.current = '';
-    }
-
     if (eventName === 'search_query_submitted') {
       sendGtagEvent('Search Query Submitted', { text: properties.searchQuery });
     }
@@ -94,21 +72,6 @@ const InkeepTrigger = ({ className = null, isNotFoundPage = false }) => {
     },
   };
 
-  const chatModalProps = {
-    baseSettings,
-    modalSettings: {
-      isOpen: isChatOpen,
-      onOpenChange: setIsChatOpen,
-    },
-    aiChatSettings: {
-      ...aiChatSettings,
-      onInputMessageChange: (message) => {
-        latestInputMessageRef.current = message;
-      },
-      ...(sharedChatId && { chatId: sharedChatId }),
-    },
-  };
-
   return (
     <div className="flex items-center gap-x-2">
       <InkeepSearch
@@ -116,11 +79,10 @@ const InkeepTrigger = ({ className = null, isNotFoundPage = false }) => {
         handleClick={() => setIsSearchOpen(true)}
         isNotFoundPage={isNotFoundPage}
       />
-      {!isNotFoundPage && (
-        <InkeepAIButton className="shrink-0" handleClick={() => setIsChatOpen(true)} />
+      {!isNotFoundPage && INTERCOM_APP_ID && (
+        <InkeepAIButton className="shrink-0" handleClick={() => showIntercom()} />
       )}
       <InkeepModalSearch {...searchModalProps} />
-      <InkeepModalChat {...chatModalProps} />
     </div>
   );
 };

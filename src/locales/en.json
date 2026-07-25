@@ -43,19 +43,13 @@
     },
     "autoscaling": {
       "heading": "<strong>Continuous compliance.</strong> Keep operating without worrying about audits. Never pay for consultant reports that expire in months.",
-      "tabs": [
-        "Avoid incidents",
-        "Save costs"
-      ],
+      "tabs": ["Avoid incidents", "Save costs"],
       "stats": [
         "control checks run by OptiTech every day",
         "in consultant fees saved by OptiTech customers every day"
       ],
-      "legend": [
-        "OptiTech automation",
-        "Compliance workload",
-        "Manual consultant-driven work"
-      ],
+      "legend": ["OptiTech automation", "Compliance workload", "Manual consultant-driven work"],
+      "chartLabels": ["Without OptiTech", "With OptiTech"],
       "note": "By connecting to your systems, OptiTech automatically collects evidence and verifies controls to fit your obligations."
     },
     "branching": {
@@ -379,11 +373,7 @@
       "email": "Work Email*",
       "companyWebsite": "Company Website",
       "reasonForContact": "Reason for Contact*",
-      "reasons": [
-        "Demo/POC",
-        "Enterprise Pricing",
-        "HIPAA"
-      ],
+      "reasons": ["Demo/POC", "Enterprise Pricing", "HIPAA"],
       "companySize": "Company Size",
       "companySizes": [
         "0-1 Employees",
@@ -614,13 +604,7 @@
         "secondaryCta": "See an example of a completed notification",
         "mockup": {
           "appName": "OptiTech · Incidents",
-          "nav": [
-            "Overview",
-            "Incidents",
-            "Evidence",
-            "Vendors",
-            "Reports"
-          ],
+          "nav": ["Overview", "Incidents", "Evidence", "Vendors", "Reports"],
           "caseId": "INC-2026-042",
           "caseTitle": "Ransomware, production environment",
           "caseStatus": "Active",
@@ -780,43 +764,25 @@
             "title": "Outside office hours",
             "question": "An incident is detected outside office hours. Who starts the clock, and when?",
             "answer": "The clock starts at awareness, not at the next working day. The system alerts the on-call contact, opens a timestamped case, and counts down toward the 24-hour window.",
-            "path": [
-              "Detected 02:14",
-              "On-call alert",
-              "Draft: early warning",
-              "CERT-SE/MSB < 24h"
-            ]
+            "path": ["Detected 02:14", "On-call alert", "Draft: early warning", "CERT-SE/MSB < 24h"]
           },
           {
             "title": "Reporting order",
             "question": "You know you must report, but not in which order: CERT-SE, the sector authority, IMY?",
             "answer": "The system determines recipients and order from entity type, sector, and whether personal data is affected. One incident can open several parallel tracks, each with its own deadline.",
-            "path": [
-              "Classification",
-              "CERT-SE/MSB",
-              "Sector authority",
-              "IMY, if personal data"
-            ]
+            "path": ["Classification", "CERT-SE/MSB", "Sector authority", "IMY, if personal data"]
           },
           {
             "title": "Personal data breach",
             "question": "A personal data breach occurs. Must it be reported, and within what time?",
             "answer": "Only breaches that pose a risk to individuals' rights and freedoms are reported to IMY, within 72 hours of discovery. When you decide not to report, the system documents that assessment too.",
-            "path": [
-              "Discovery",
-              "Risk assessment",
-              "IMY < 72h, or documented decision"
-            ]
+            "path": ["Discovery", "Risk assessment", "IMY < 72h, or documented decision"]
           },
           {
             "title": "Board evidence",
             "question": "The board asks for status. Is there auditable evidence, as Article 20 requires?",
             "answer": "Every step is logged with a timestamp, an owner, and a decision. Management gets an auditable record that demonstrates active governance, exactly what Article 20 asks for.",
-            "path": [
-              "Case log",
-              "Timestamps",
-              "Board report, Art. 20"
-            ]
+            "path": ["Case log", "Timestamps", "Board report, Art. 20"]
           }
         ]
       },
@@ -882,11 +848,7 @@
         "mockup": {
           "url": "trust.nordkraft.se",
           "pageTitle": "Security and trust at Nordkraft",
-          "badges": [
-            "ISO 27001",
-            "NIS2",
-            "GDPR"
-          ],
+          "badges": ["ISO 27001", "NIS2", "GDPR"],
           "documentsHeading": "Documents",
           "documents": [
             {
@@ -960,10 +922,7 @@
               "label": "OptiTech AI",
               "question": "Where is your data hosted, and does it leave the EU?",
               "answer": "All production data is hosted in the EU (Stockholm and Frankfurt). No customer data is transferred outside the EU/EES.",
-              "chips": [
-                "Source: Data processing agreement",
-                "Verified this week"
-              ]
+              "chips": ["Source: Data processing agreement", "Verified this week"]
             }
           },
           {

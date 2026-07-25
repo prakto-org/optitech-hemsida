@@ -10,19 +10,6 @@ import { cn } from 'utils/cn';
 
 import ctaBackground from './images/cta-bg.jpg';
 
-const CONTACT_SALES_AI_SETTINGS = {
-  aiAssistantName: 'OptiTech Sales AI',
-  placeholder: 'How do I get started?',
-  introMessage:
-    "Hi!\nI'm an AI assistant here to help you learn about OptiTech and answer any questions you have.\n\nFeel free to ask about pricing, features, enterprise solutions, or anything else!",
-  exampleQuestions: [
-    'How to get a Demo request?',
-    'What are the Enterprise Pricing?',
-    'HIPAA Compliance',
-    'Security Overview',
-  ],
-};
-
 const CTANew = ({
   className = 'mt-[183px] xl:mt-[168px] lg:mt-[145px] md:mt-[90px]',
   copyWrapperClassName = null,
@@ -57,9 +44,7 @@ const CTANew = ({
           )}
         </div>
         {buttonType === 'aiHelper' ? (
-          <ButtonAiHelper className="mt-10 lg:mt-8" {...CONTACT_SALES_AI_SETTINGS}>
-            {buttonText}
-          </ButtonAiHelper>
+          <ButtonAiHelper className="mt-10 lg:mt-8">{buttonText}</ButtonAiHelper>
         ) : (
           <Button className="mt-10 lg:mt-8" theme="white-filled" size="new" to={buttonUrl}>
             {buttonText}

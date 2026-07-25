@@ -2,6 +2,11 @@
   "header": {
     "bookDemo": "Boka demo"
   },
+  "home": {
+    "autoscaling": {
+      "chartLabels": ["Utan OptiTech", "Med OptiTech"]
+    }
+  },
   "services": {
     "incidentReporting": {
       "hero": {
@@ -12,13 +17,7 @@
         "secondaryCta": "Se ett exempel på ifylld anmälan",
         "mockup": {
           "appName": "OptiTech · Incidenter",
-          "nav": [
-            "Översikt",
-            "Incidenter",
-            "Bevis",
-            "Leverantörer",
-            "Rapporter"
-          ],
+          "nav": ["Översikt", "Incidenter", "Bevis", "Leverantörer", "Rapporter"],
           "caseId": "INC-2026-042",
           "caseTitle": "Ransomware i produktionsmiljön",
           "caseStatus": "Pågående",
@@ -178,12 +177,7 @@
             "title": "Utanför kontorstid",
             "question": "En incident upptäcks utanför kontorstid — vem startar klockan, och när?",
             "answer": "Klockan startar vid kännedom, inte vid nästa arbetsdag. Systemet larmar jourkontakten, öppnar ett tidsstämplat ärende och räknar ner mot 24-timmarsfönstret.",
-            "path": [
-              "Upptäckt 02:14",
-              "Jourlarm",
-              "Utkast: tidig varning",
-              "CERT-SE/MSB < 24h"
-            ]
+            "path": ["Upptäckt 02:14", "Jourlarm", "Utkast: tidig varning", "CERT-SE/MSB < 24h"]
           },
           {
             "title": "Rapporteringsordning",
@@ -200,21 +194,13 @@
             "title": "Personuppgiftsincident",
             "question": "En personuppgiftsincident inträffar — måste den anmälas, och inom vilken tid?",
             "answer": "Endast incidenter med risk för registrerades rättigheter och friheter ska anmälas till IMY, inom 72 timmar från upptäckt. När ni beslutar att inte anmäla dokumenterar systemet även den bedömningen.",
-            "path": [
-              "Upptäckt",
-              "Riskbedömning",
-              "IMY < 72h, eller dokumenterat beslut"
-            ]
+            "path": ["Upptäckt", "Riskbedömning", "IMY < 72h, eller dokumenterat beslut"]
           },
           {
             "title": "Styrelsens underlag",
             "question": "Styrelsen frågar om status — finns ett granskningsbart underlag enligt artikel 20?",
             "answer": "Varje steg loggas med tidsstämpel, ansvarig och beslut. Ledningen får ett granskningsbart underlag som visar aktiv styrning, exakt det artikel 20 kräver.",
-            "path": [
-              "Ärendelogg",
-              "Tidsstämplar",
-              "Styrelserapport, art. 20"
-            ]
+            "path": ["Ärendelogg", "Tidsstämplar", "Styrelserapport, art. 20"]
           }
         ]
       },
@@ -280,11 +266,7 @@
         "mockup": {
           "url": "trust.nordkraft.se",
           "pageTitle": "Säkerhet och förtroende hos Nordkraft",
-          "badges": [
-            "ISO 27001",
-            "NIS2",
-            "GDPR"
-          ],
+          "badges": ["ISO 27001", "NIS2", "GDPR"],
           "documentsHeading": "Dokument",
           "documents": [
             {
@@ -358,10 +340,7 @@
               "label": "OptiTech AI",
               "question": "Var lagras er data, och lämnar den EU?",
               "answer": "All produktionsdata lagras inom EU (Stockholm och Frankfurt). Ingen kunddata överförs utanför EU/EES.",
-              "chips": [
-                "Källa: Personuppgiftsbiträdesavtal",
-                "Verifierad denna vecka"
-              ]
+              "chips": ["Källa: Personuppgiftsbiträdesavtal", "Verifierad denna vecka"]
             }
           },
           {

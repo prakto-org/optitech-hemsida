@@ -40,14 +40,14 @@ const Footer = ({ hasThemesSupport = false }) => (
           >
             <p>
               © OptiTech 2026. All rights reserved. OptiTech and the OptiTech logo are trademarks of
-              OptiTech AB.
+              OptiTech Sverige AB.
             </p>
             <p className="flex flex-wrap gap-x-3 gap-y-1">
               <Link
                 className="hover:text-gray-new-20 dark:hover:text-gray-new-80"
                 to={LINKS.privacy}
               >
-                Privacy Notice
+                Privacy Policy
               </Link>
               <Link
                 className="hover:text-gray-new-20 dark:hover:text-gray-new-80"
@@ -63,15 +63,9 @@ const Footer = ({ hasThemesSupport = false }) => (
               </Link>
               <Link
                 className="hover:text-gray-new-20 dark:hover:text-gray-new-80"
-                to={LINKS.modernSlaveryStatement}
+                to={LINKS.cookiePolicy}
               >
-                Modern Slavery Statement
-              </Link>
-              <Link
-                className="hover:text-gray-new-20 dark:hover:text-gray-new-80"
-                to={LINKS.californiaPolicy}
-              >
-                California Privacy
+                Cookie Policy
               </Link>
             </p>
           </div>

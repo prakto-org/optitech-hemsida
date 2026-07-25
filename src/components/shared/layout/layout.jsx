@@ -47,7 +47,7 @@ const Layout = ({
         {children}
       </main>
       <Footer hasThemesSupport={hasThemesSupport} />
-      <CookieConsent isDocPage={isDocPage} />
+      <CookieConsent />
     </div>
   </>
 );
