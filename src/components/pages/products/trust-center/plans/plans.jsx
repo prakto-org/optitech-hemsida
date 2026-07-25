@@ -35,36 +35,36 @@ const Plans = () => {
   const cards = t.raw('cards');
 
   return (
-    <section className="plans bg-[#241A4D] py-28 safe-paddings lg:py-20 md:py-14">
+    <section className="plans bg-tc-plum py-28 safe-paddings lg:py-20 md:py-14">
       <Container size="1152">
         <div className="grid grid-cols-12 gap-x-8 lg:gap-x-6 md:block">
           <div className="col-span-4 md:mb-9">
             <h2 className="font-serif text-[52px] leading-[1.08] font-normal tracking-extra-tight text-white xl:text-[44px] lg:text-[38px] md:text-[32px]">
               {t('title')}
             </h2>
-            <p className="mt-5 text-base leading-normal tracking-extra-tight text-[#B9AEE3]">
+            <p className="mt-5 text-base leading-normal tracking-extra-tight text-tc-plum-text">
               {t('description')}
             </p>
           </div>
           <div className="col-span-7 col-start-6 grid grid-cols-2 gap-x-6 md:col-span-full md:col-start-auto md:grid-cols-1 md:gap-y-6">
             {cards.map((card, index) => (
-              <div className="flex flex-col rounded-2xl bg-[#F1EEFA] p-8 lg:p-6" key={card.name}>
-                <span className="text-sm font-medium tracking-wide text-[#6C4BD4] uppercase">
+              <div className="flex flex-col rounded-2xl bg-tc-lavender p-8 lg:p-6" key={card.name}>
+                <span className="text-sm font-medium tracking-wide text-tc-purple uppercase">
                   {card.plan}
                 </span>
-                <h3 className="mt-3 font-serif text-[28px] leading-tight font-normal tracking-extra-tight text-[#17112E] lg:text-2xl">
+                <h3 className="mt-3 font-serif text-[28px] leading-tight font-normal tracking-extra-tight text-tc-ink lg:text-2xl">
                   {card.name}
                 </h3>
-                <p className="mt-3 text-sm leading-normal tracking-extra-tight text-[#4E4763]">
+                <p className="mt-3 text-sm leading-normal tracking-extra-tight text-tc-body">
                   {card.description}
                 </p>
                 <ul className="mt-6 space-y-3">
                   {card.features.map((feature) => (
                     <li
-                      className="flex items-start gap-x-2.5 text-sm tracking-extra-tight text-[#2A2344]"
+                      className="flex items-start gap-x-2.5 text-sm tracking-extra-tight text-tc-ink-light"
                       key={feature}
                     >
-                      <span className="mt-0.5 text-[#6C4BD4]">
+                      <span className="mt-0.5 text-tc-purple">
                         <CheckIcon />
                       </span>
                       {feature}
@@ -72,7 +72,7 @@ const Plans = () => {
                   ))}
                 </ul>
                 <Link
-                  className="mt-8 inline-flex items-center gap-x-2 pt-2 text-sm font-semibold text-[#00E599] transition-colors duration-200 hover:text-[#00cc88]"
+                  className="mt-8 inline-flex items-center gap-x-2 pt-2 text-sm font-semibold text-primary-1 transition-colors duration-200 hover:text-primary-2"
                   to={CARD_LINKS[index]}
                 >
                   {card.cta}

@@ -21,15 +21,15 @@ const Illustration = ({ variant }) => {
   if (variant === 0) {
     return (
       <div
-        className="relative flex h-44 items-center justify-center overflow-hidden rounded-2xl bg-[#1C4634]"
+        className="relative flex h-44 items-center justify-center overflow-hidden rounded-2xl bg-tc-forest"
         aria-hidden
       >
         <span
-          className="absolute -bottom-10 -left-8 h-32 w-48 bg-[#2FBE71]"
+          className="absolute -bottom-10 -left-8 h-32 w-48 bg-tc-green"
           style={{ borderRadius: '55% 45% 60% 40% / 60% 50% 50% 40%' }}
         />
         <span
-          className="absolute -top-12 -right-6 h-28 w-40 bg-[#27AA63] opacity-70"
+          className="absolute -top-12 -right-6 h-28 w-40 bg-tc-green-dark opacity-70"
           style={{ borderRadius: '45% 55% 40% 60% / 50% 60% 40% 50%' }}
         />
         <span className="relative h-16 w-24 rounded-lg bg-white shadow-lg" />
@@ -39,34 +39,34 @@ const Illustration = ({ variant }) => {
   if (variant === 1) {
     return (
       <div
-        className="relative flex h-44 items-center justify-center overflow-hidden rounded-2xl bg-[#241A4D]"
+        className="relative flex h-44 items-center justify-center overflow-hidden rounded-2xl bg-tc-plum"
         aria-hidden
       >
         <span
-          className="absolute -bottom-8 left-1/4 h-28 w-44 bg-[#6C4BD4]"
+          className="absolute -bottom-8 left-1/4 h-28 w-44 bg-tc-purple"
           style={{ borderRadius: '50% 50% 45% 55% / 65% 55% 45% 35%' }}
         />
         <span
-          className="absolute -top-10 -left-8 h-24 w-36 bg-[#8B75D6] opacity-60"
+          className="absolute -top-10 -left-8 h-24 w-36 bg-tc-violet-light opacity-60"
           style={{ borderRadius: '60% 40% 55% 45% / 45% 60% 40% 55%' }}
         />
         <span className="relative flex h-16 w-24 items-center justify-center rounded-lg bg-white shadow-lg">
-          <span className="font-serif text-2xl text-[#241A4D]">98%</span>
+          <span className="font-serif text-2xl text-tc-plum">98%</span>
         </span>
       </div>
     );
   }
   return (
     <div
-      className="relative flex h-44 items-center justify-center overflow-hidden rounded-2xl bg-[#F6F0E6]"
+      className="relative flex h-44 items-center justify-center overflow-hidden rounded-2xl bg-tc-sand"
       aria-hidden
     >
       <span
-        className="absolute -right-10 -bottom-12 h-32 w-48 bg-[#E8DFC9]"
+        className="absolute -right-10 -bottom-12 h-32 w-48 bg-tc-sand-dark"
         style={{ borderRadius: '50% 50% 60% 40% / 55% 45% 55% 45%' }}
       />
-      <span className="relative h-16 w-24 rounded-t-lg border-2 border-[#17112E] bg-[#2FBE71]" />
-      <span className="absolute mt-16 h-2 w-32 rounded-full bg-[#17112E]" />
+      <span className="relative h-16 w-24 rounded-t-lg border-2 border-tc-ink bg-tc-green" />
+      <span className="absolute mt-16 h-2 w-32 rounded-full bg-tc-ink" />
     </div>
   );
 };
@@ -82,24 +82,24 @@ const Resources = () => {
   return (
     <section className="resources bg-white py-28 safe-paddings lg:py-20 md:py-14">
       <Container size="1152">
-        <h2 className="mx-auto max-w-[560px] text-center font-serif text-[52px] leading-[1.08] font-normal tracking-extra-tight text-[#17112E] xl:text-[44px] lg:text-[38px] md:text-[32px]">
+        <h2 className="mx-auto max-w-[560px] text-center font-serif text-[52px] leading-[1.08] font-normal tracking-extra-tight text-tc-ink xl:text-[44px] lg:text-[38px] md:text-[32px]">
           {t('title')}
         </h2>
         <ul className="mt-16 grid grid-cols-3 gap-x-8 lg:mt-12 lg:gap-x-6 md:mt-9 md:grid-cols-1 md:gap-y-9">
           {items.map((item, index) => (
             <li key={item.title}>
               <Illustration variant={index} />
-              <span className="mt-5 block text-xs font-semibold tracking-wide text-[#8C87A1] uppercase md:mt-4">
+              <span className="mt-5 block text-xs font-semibold tracking-wide text-tc-faint uppercase md:mt-4">
                 {item.type}
               </span>
-              <h3 className="mt-2 text-lg leading-snug font-semibold tracking-extra-tight text-[#17112E]">
+              <h3 className="mt-2 text-lg leading-snug font-semibold tracking-extra-tight text-tc-ink">
                 {item.title}
               </h3>
-              <p className="mt-2 text-[15px] leading-normal tracking-extra-tight text-[#4E4763]">
+              <p className="mt-2 text-[15px] leading-normal tracking-extra-tight text-tc-body">
                 {item.description}
               </p>
               <Link
-                className="mt-4 inline-flex items-center gap-x-2 text-sm font-semibold text-[#00994D] transition-colors duration-200 hover:text-[#00cc88]"
+                className="mt-4 inline-flex items-center gap-x-2 text-sm font-semibold text-tc-green-deep transition-colors duration-200 hover:text-primary-2"
                 to={LINKS.blog}
               >
                 {t('readMore')}

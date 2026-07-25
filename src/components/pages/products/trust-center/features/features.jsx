@@ -32,21 +32,21 @@ DotIcon.propTypes = {
 const ChatPanel = ({ mockup }) => (
   <div className="w-full max-w-[420px] rounded-2xl bg-white p-6 shadow-[0_24px_48px_-16px_rgba(23,17,46,0.25)] ring-1 ring-black-pure/5">
     <div className="flex items-center gap-x-2">
-      <DotIcon className="bg-[#2FBE71]" />
-      <span className="text-xs font-semibold tracking-wide text-[#8C87A1] uppercase">
+      <DotIcon className="bg-tc-green" />
+      <span className="text-xs font-semibold tracking-wide text-tc-faint uppercase">
         {mockup.label}
       </span>
     </div>
-    <p className="mt-4 w-fit max-w-[85%] rounded-xl rounded-bl-sm bg-[#F4F3F8] px-4 py-3 text-sm tracking-extra-tight text-[#2A2344]">
+    <p className="mt-4 w-fit max-w-[85%] rounded-xl rounded-bl-sm bg-tc-cloud px-4 py-3 text-sm tracking-extra-tight text-tc-ink-light">
       {mockup.question}
     </p>
-    <p className="mt-2.5 ml-auto w-fit max-w-[90%] rounded-xl rounded-br-sm bg-[#F1EEFA] px-4 py-3 text-sm leading-relaxed tracking-extra-tight text-[#2A2344]">
+    <p className="mt-2.5 ml-auto w-fit max-w-[90%] rounded-xl rounded-br-sm bg-tc-lavender px-4 py-3 text-sm leading-relaxed tracking-extra-tight text-tc-ink-light">
       {mockup.answer}
     </p>
     <div className="mt-4 flex flex-wrap gap-2">
       {mockup.chips.map((chip) => (
         <span
-          className="rounded-full bg-[#FAF9FC] px-3 py-1 text-[11px] font-medium text-[#6A6483] ring-1 ring-[#EDEBF3]"
+          className="rounded-full bg-tc-cloud-light px-3 py-1 text-[11px] font-medium text-tc-muted ring-1 ring-tc-border"
           key={chip}
         >
           {chip}
@@ -67,17 +67,17 @@ ChatPanel.propTypes = {
 
 const DocsPanel = ({ mockup }) => (
   <div className="w-full max-w-[420px] rounded-2xl bg-white p-6 shadow-[0_24px_48px_-16px_rgba(23,17,46,0.25)] ring-1 ring-black-pure/5">
-    <span className="text-xs font-semibold tracking-wide text-[#8C87A1] uppercase">
+    <span className="text-xs font-semibold tracking-wide text-tc-faint uppercase">
       {mockup.label}
     </span>
-    <ul className="mt-3 divide-y divide-[#F2F0F7]">
+    <ul className="mt-3 divide-y divide-tc-divide">
       {mockup.rows.map((row) => (
         <li className="flex items-center justify-between py-3" key={row.name}>
-          <span className="text-sm tracking-extra-tight text-[#2A2344]">{row.name}</span>
+          <span className="text-sm tracking-extra-tight text-tc-ink-light">{row.name}</span>
           <span
             className={cn(
               'rounded-full px-2.5 py-0.5 text-xs font-medium',
-              row.open ? 'bg-[#E9F8F0] text-[#177E4C]' : 'bg-[#F1EEFA] text-[#4B3A8C]'
+              row.open ? 'bg-tc-mint text-tc-green-text' : 'bg-tc-lavender text-tc-purple-text'
             )}
           >
             {row.status}
@@ -85,14 +85,14 @@ const DocsPanel = ({ mockup }) => (
         </li>
       ))}
     </ul>
-    <div className="mt-4 flex items-center justify-between rounded-xl bg-[#FAF9FC] p-4 ring-1 ring-[#EDEBF3]">
+    <div className="mt-4 flex items-center justify-between rounded-xl bg-tc-cloud-light p-4 ring-1 ring-tc-border">
       <div>
-        <p className="text-sm font-medium tracking-extra-tight text-[#2A2344]">
+        <p className="text-sm font-medium tracking-extra-tight text-tc-ink-light">
           {mockup.requestTitle}
         </p>
-        <p className="mt-0.5 text-xs text-[#8C87A1]">{mockup.requestMeta}</p>
+        <p className="mt-0.5 text-xs text-tc-faint">{mockup.requestMeta}</p>
       </div>
-      <span className="bg-[#00E599] px-4 py-1.5 text-xs font-medium text-black">
+      <span className="bg-primary-1 px-4 py-1.5 text-xs font-medium text-black">
         {mockup.requestButton}
       </span>
     </div>
@@ -117,28 +117,28 @@ DocsPanel.propTypes = {
 
 const BrandPanel = ({ mockup }) => (
   <div className="w-full max-w-[420px] rounded-2xl bg-white p-6 shadow-[0_24px_48px_-16px_rgba(23,17,46,0.25)] ring-1 ring-black-pure/5">
-    <span className="text-xs font-semibold tracking-wide text-[#8C87A1] uppercase">
+    <span className="text-xs font-semibold tracking-wide text-tc-faint uppercase">
       {mockup.label}
     </span>
     <div className="mt-4 flex items-center gap-x-3">
-      <span className="text-xs text-[#6A6483]">{mockup.colorsLabel}</span>
+      <span className="text-xs text-tc-muted">{mockup.colorsLabel}</span>
       <span className="flex gap-x-2" aria-hidden>
-        <span className="size-6 rounded-full bg-[#17112E] ring-2 ring-[#EDEBF3]" />
-        <span className="size-6 rounded-full bg-[#6C4BD4] ring-2 ring-[#EDEBF3]" />
-        <span className="size-6 rounded-full bg-[#2FBE71] ring-2 ring-[#EDEBF3]" />
-        <span className="size-6 rounded-full bg-[#F6F0E6] ring-2 ring-[#EDEBF3]" />
+        <span className="size-6 rounded-full bg-tc-ink ring-2 ring-tc-border" />
+        <span className="size-6 rounded-full bg-tc-purple ring-2 ring-tc-border" />
+        <span className="size-6 rounded-full bg-tc-green ring-2 ring-tc-border" />
+        <span className="size-6 rounded-full bg-tc-sand ring-2 ring-tc-border" />
       </span>
     </div>
     <div className="mt-4">
-      <span className="text-xs text-[#6A6483]">{mockup.domainLabel}</span>
-      <span className="mt-1.5 flex h-9 items-center rounded-lg bg-[#FAF9FC] px-3 font-mono text-xs text-[#2A2344] ring-1 ring-[#EDEBF3]">
+      <span className="text-xs text-tc-muted">{mockup.domainLabel}</span>
+      <span className="mt-1.5 flex h-9 items-center rounded-lg bg-tc-cloud-light px-3 font-mono text-xs text-tc-ink-light ring-1 ring-tc-border">
         {mockup.domain}
       </span>
     </div>
-    <div className="mt-5 rounded-xl bg-[#17112E] p-4">
+    <div className="mt-5 rounded-xl bg-tc-ink p-4">
       <div className="flex items-center gap-x-2.5">
         <span
-          className="flex size-7 items-center justify-center rounded-md bg-[#2FBE71] font-title text-xs text-[#17112E]"
+          className="flex size-7 items-center justify-center rounded-md bg-tc-green font-title text-xs text-tc-ink"
           aria-hidden
         >
           N
@@ -166,22 +166,22 @@ BrandPanel.propTypes = {
 const SyncPanel = ({ mockup }) => (
   <div className="w-full max-w-[420px] rounded-2xl bg-white p-6 shadow-[0_24px_48px_-16px_rgba(23,17,46,0.25)] ring-1 ring-black-pure/5">
     <div className="flex items-center justify-between">
-      <span className="text-xs font-semibold tracking-wide text-[#8C87A1] uppercase">
+      <span className="text-xs font-semibold tracking-wide text-tc-faint uppercase">
         {mockup.label}
       </span>
-      <span className="flex items-center gap-x-1.5 text-[11px] font-medium text-[#177E4C]">
-        <DotIcon className="animate-pulse bg-[#2FBE71]" />
+      <span className="flex items-center gap-x-1.5 text-[11px] font-medium text-tc-green-text">
+        <DotIcon className="animate-pulse bg-tc-green" />
         {mockup.synced}
       </span>
     </div>
-    <ul className="mt-3 divide-y divide-[#F2F0F7]">
+    <ul className="mt-3 divide-y divide-tc-divide">
       {mockup.rows.map((row) => (
         <li className="flex items-center justify-between py-3" key={row.name}>
           <div>
-            <p className="text-sm tracking-extra-tight text-[#2A2344]">{row.name}</p>
-            <p className="mt-0.5 text-[11px] text-[#8C87A1]">{row.framework}</p>
+            <p className="text-sm tracking-extra-tight text-tc-ink-light">{row.name}</p>
+            <p className="mt-0.5 text-[11px] text-tc-faint">{row.framework}</p>
           </div>
-          <span className="flex items-center gap-x-1.5 rounded-full bg-[#E9F8F0] px-2.5 py-0.5 text-xs font-medium text-[#177E4C]">
+          <span className="flex items-center gap-x-1.5 rounded-full bg-tc-mint px-2.5 py-0.5 text-xs font-medium text-tc-green-text">
             {row.status}
           </span>
         </li>
@@ -205,7 +205,7 @@ SyncPanel.propTypes = {
 };
 
 const PANELS = [ChatPanel, DocsPanel, BrandPanel, SyncPanel];
-const PANEL_BACKGROUNDS = ['bg-[#F1EEFA]', 'bg-[#E9F8F0]', 'bg-[#F6F0E6]', 'bg-[#F4F3F8]'];
+const PANEL_BACKGROUNDS = ['bg-tc-lavender', 'bg-tc-mint', 'bg-tc-sand', 'bg-tc-cloud'];
 
 const Features = () => {
   const t = useTranslations('products.trustCenter.features');
@@ -247,17 +247,17 @@ const Features = () => {
                     blockRefs.current[index] = element;
                   }}
                 >
-                  <span className="text-sm font-medium tracking-wide text-[#6C4BD4] uppercase">
+                  <span className="text-sm font-medium tracking-wide text-tc-purple uppercase">
                     {t('label')}
                   </span>
-                  <h2 className="mt-4 font-serif text-[40px] leading-[1.1] font-normal tracking-extra-tight text-[#17112E] xl:text-[36px] lg:text-[32px] md:text-[28px]">
+                  <h2 className="mt-4 font-serif text-[40px] leading-[1.1] font-normal tracking-extra-tight text-tc-ink xl:text-[36px] lg:text-[32px] md:text-[28px]">
                     {item.title}
                   </h2>
-                  <p className="mt-5 max-w-[440px] text-base leading-normal tracking-extra-tight text-[#4E4763]">
+                  <p className="mt-5 max-w-[440px] text-base leading-normal tracking-extra-tight text-tc-body">
                     {item.description}
                   </p>
                   <Link
-                    className="mt-8 inline-flex h-11 w-fit items-center gap-x-2.5 border border-[#D9D4E8] px-6 text-sm font-medium text-[#17112E] transition-colors duration-200 hover:border-[#17112E]"
+                    className="mt-8 inline-flex h-11 w-fit items-center gap-x-2.5 border border-tc-border-dark px-6 text-sm font-medium text-tc-ink transition-colors duration-200 hover:border-tc-ink"
                     to={LINKS.contactSales}
                   >
                     {t('cta')}

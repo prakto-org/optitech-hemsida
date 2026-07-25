@@ -20,11 +20,11 @@ const Vignette = ({ type }) => {
       return (
         <div className="flex items-center gap-x-3" aria-hidden>
           <span className="flex size-14 items-center justify-center rounded-xl bg-white/10 ring-1 ring-white/15">
-            <span className="size-6 rounded-md bg-[#2FBE71]" />
+            <span className="size-6 rounded-md bg-tc-green" />
           </span>
           <span className="h-px w-10 border-t border-dashed border-white/40" />
           <span className="flex size-14 items-center justify-center rounded-xl bg-white/10 ring-1 ring-white/15">
-            <span className="size-6 rounded-full bg-[#8B75D6]" />
+            <span className="size-6 rounded-full bg-tc-violet-light" />
           </span>
         </div>
       );
@@ -33,7 +33,7 @@ const Vignette = ({ type }) => {
         <div className="flex h-20 items-end gap-x-2.5" aria-hidden>
           {[35, 55, 40, 75, 60, 100, 80].map((height, index) => (
             <span
-              className={cn('w-4 rounded-t-sm', index === 5 ? 'bg-[#2FBE71]' : 'bg-white/20')}
+              className={cn('w-4 rounded-t-sm', index === 5 ? 'bg-tc-green' : 'bg-white/20')}
               style={{ height: `${height}%` }}
               key={index}
             />
@@ -56,7 +56,7 @@ const Vignette = ({ type }) => {
               className={cn(
                 'h-7 rounded-full',
                 width,
-                index === 1 ? 'bg-[#2FBE71]' : 'bg-white/15 ring-1 ring-white/20'
+                index === 1 ? 'bg-tc-green' : 'bg-white/15 ring-1 ring-white/20'
               )}
               key={index}
             />
@@ -71,7 +71,7 @@ const Vignette = ({ type }) => {
               <span
                 className={cn(
                   'size-7 shrink-0 rounded-full',
-                  row === 0 ? 'bg-[#2FBE71]' : 'bg-white/15'
+                  row === 0 ? 'bg-tc-green' : 'bg-white/15'
                 )}
               />
               <Bar className={cn('h-1.5', row === 1 ? 'w-24' : 'w-32')} />
@@ -84,9 +84,9 @@ const Vignette = ({ type }) => {
       return (
         <div className="text-center" aria-hidden>
           <span className="flex justify-center gap-x-2.5">
-            <span className="size-8 rounded-full bg-[#2FBE71]" />
-            <span className="size-8 rounded-full bg-[#8B75D6]" />
-            <span className="size-8 rounded-full bg-[#F6F0E6]" />
+            <span className="size-8 rounded-full bg-tc-green" />
+            <span className="size-8 rounded-full bg-tc-violet-light" />
+            <span className="size-8 rounded-full bg-tc-sand" />
           </span>
           <Bar className="mx-auto mt-4 h-1.5 w-28" />
           <Bar className="mx-auto mt-2 h-1.5 w-16" />
@@ -106,19 +106,19 @@ const FeatureGrid = () => {
   return (
     <section className="feature-grid bg-white py-28 safe-paddings lg:py-20 md:py-14">
       <Container size="1152">
-        <h2 className="text-center font-serif text-[52px] leading-[1.08] font-normal tracking-extra-tight text-[#17112E] xl:text-[44px] lg:text-[38px] md:text-[32px]">
+        <h2 className="text-center font-serif text-[52px] leading-[1.08] font-normal tracking-extra-tight text-tc-ink xl:text-[44px] lg:text-[38px] md:text-[32px]">
           {t('title')}
         </h2>
         <ul className="mt-16 grid grid-cols-3 gap-x-8 gap-y-14 lg:mt-12 lg:gap-x-6 md:mt-9 md:grid-cols-1 md:gap-y-9">
           {items.map((item, index) => (
             <li key={item.title}>
-              <div className="flex aspect-[4/3] items-center justify-center rounded-2xl bg-[#241A4D] p-8">
+              <div className="flex aspect-[4/3] items-center justify-center rounded-2xl bg-tc-plum p-8">
                 <Vignette type={VIGNETTE_TYPES[index % VIGNETTE_TYPES.length]} />
               </div>
-              <h3 className="mt-6 text-lg font-semibold tracking-extra-tight text-[#17112E] md:mt-4">
+              <h3 className="mt-6 text-lg font-semibold tracking-extra-tight text-tc-ink md:mt-4">
                 {item.title}
               </h3>
-              <p className="mt-2 text-[15px] leading-normal tracking-extra-tight text-[#4E4763]">
+              <p className="mt-2 text-[15px] leading-normal tracking-extra-tight text-tc-body">
                 {item.description}
               </p>
             </li>

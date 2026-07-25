@@ -18,15 +18,15 @@ const Proof = () => {
   const logos = t.raw('logos');
 
   return (
-    <section className="proof bg-[#1C4634] py-24 safe-paddings lg:py-16 md:py-12">
+    <section className="proof bg-tc-forest py-24 safe-paddings lg:py-16 md:py-12">
       <Container size="1152">
-        <p className="text-center text-sm font-medium tracking-wide text-[#A9D6BC] uppercase">
+        <p className="text-center text-sm font-medium tracking-wide text-tc-forest-label uppercase">
           {t('logosHeading')}
         </p>
         <ul className="mt-10 flex flex-wrap items-center justify-center gap-x-14 gap-y-6 lg:gap-x-10 md:mt-7 md:gap-x-7">
           {logos.map((name, index) => (
             <li
-              className={`${wordmarkStyles[index % wordmarkStyles.length]} text-[#BFE3CE]`}
+              className={`${wordmarkStyles[index % wordmarkStyles.length]} text-tc-forest-text`}
               key={name}
             >
               {name}
@@ -39,10 +39,10 @@ const Proof = () => {
             {t('statTitle')}
           </h2>
           <div className="col-span-4 col-start-9 md:col-span-full md:col-start-auto">
-            <p className="text-base leading-normal tracking-extra-tight text-[#BFE3CE]">
+            <p className="text-base leading-normal tracking-extra-tight text-tc-forest-text">
               {t('statDescription')}
             </p>
-            <p className="mt-6 text-xs leading-normal tracking-extra-tight text-[#7FAE93]">
+            <p className="mt-6 text-xs leading-normal tracking-extra-tight text-tc-forest-muted">
               {t('statSource')}
             </p>
           </div>

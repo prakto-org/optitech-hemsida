@@ -26,14 +26,14 @@ const Hero = () => {
     <section className="hero overflow-hidden bg-white pt-24 safe-paddings lg:pt-16 md:pt-12">
       <Container size="1152">
         <div className="mx-auto max-w-[820px] text-center">
-          <h1 className="font-serif text-[68px] leading-[1.05] font-normal tracking-extra-tight text-[#17112E] xl:text-[56px] lg:text-[44px] md:text-[36px]">
+          <h1 className="font-serif text-[68px] leading-[1.05] font-normal tracking-extra-tight text-tc-ink xl:text-[56px] lg:text-[44px] md:text-[36px]">
             {t('title')}
           </h1>
-          <p className="mx-auto mt-6 max-w-[620px] text-lg leading-normal tracking-extra-tight text-[#4E4763] md:mt-4 md:text-base">
+          <p className="mx-auto mt-6 max-w-[620px] text-lg leading-normal tracking-extra-tight text-tc-body md:mt-4 md:text-base">
             {t('description')}
           </p>
           <Link
-            className="mt-9 inline-flex h-12 items-center gap-x-2.5 bg-primary-1 px-7 text-base font-semibold text-black transition-colors duration-200 hover:bg-[#00e5bf] md:mt-7 md:h-11"
+            className="mt-9 inline-flex h-12 items-center gap-x-2.5 bg-primary-1 px-7 text-base font-semibold text-black transition-colors duration-200 hover:bg-tc-teal md:mt-7 md:h-11"
             to={LINKS.contactSales}
           >
             {t('cta')}
@@ -44,12 +44,12 @@ const Hero = () => {
         {/* Product mockup on organic green blob */}
         <div className="relative mx-auto mt-20 max-w-[980px] pb-24 lg:mt-14 md:mt-10 md:pb-14">
           <div
-            className="absolute top-1/2 left-1/2 h-[115%] w-[130%] -translate-x-1/2 -translate-y-[46%] rotate-[-4deg] bg-[#2FBE71] md:w-[140%]"
+            className="absolute top-1/2 left-1/2 h-[115%] w-[130%] -translate-x-1/2 -translate-y-[46%] rotate-[-4deg] bg-tc-green md:w-[140%]"
             style={{ borderRadius: '48% 52% 57% 43% / 51% 44% 56% 49%' }}
             aria-hidden
           />
           <div
-            className="absolute top-1/2 left-1/2 h-[112%] w-[124%] -translate-x-[52%] -translate-y-[42%] rotate-[7deg] bg-[#27AA63] opacity-60 md:w-[136%]"
+            className="absolute top-1/2 left-1/2 h-[112%] w-[124%] -translate-x-[52%] -translate-y-[42%] rotate-[7deg] bg-tc-green-dark opacity-60 md:w-[136%]"
             style={{ borderRadius: '55% 45% 44% 56% / 46% 57% 43% 54%' }}
             aria-hidden
           />

@@ -74,7 +74,7 @@ const Network = () => {
   const t = useTranslations('products.trustCenter.network');
 
   return (
-    <section className="network overflow-hidden bg-[#250F44] py-28 safe-paddings lg:py-20 md:py-14">
+    <section className="network overflow-hidden bg-tc-plum-deep py-28 safe-paddings lg:py-20 md:py-14">
       <Container size="1152">
         <div className="mx-auto max-w-[640px] text-center">
           <h2 className="font-serif text-[52px] leading-[1.08] font-normal tracking-extra-tight text-white xl:text-[44px] lg:text-[38px] md:text-[32px]">
@@ -96,11 +96,11 @@ const Network = () => {
         >
           {EDGES.map(([from, to]) => (
             <line
+              className="stroke-tc-plum-line"
               x1={NODES[from].x}
               y1={NODES[from].y}
               x2={NODES[to].x}
               y2={NODES[to].y}
-              stroke="#4B3878"
               strokeWidth="1"
               vectorEffect="non-scaling-stroke"
               key={`${from}-${to}`}
@@ -111,7 +111,7 @@ const Network = () => {
         {/* free nodes */}
         {DOTS.map(({ x, y, size }) => (
           <span
-            className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full bg-[#8257DE]"
+            className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full bg-tc-violet"
             style={{ left: `${x}%`, top: `${y}%`, width: size, height: size }}
             key={`${x}-${y}`}
             aria-hidden
@@ -131,7 +131,7 @@ const Network = () => {
       </div>
 
       <Container size="1152">
-        <p className="mt-12 text-center text-sm tracking-extra-tight text-[#8B75D6] md:mt-8">
+        <p className="mt-12 text-center text-sm tracking-extra-tight text-tc-violet-light md:mt-8">
           {t('footnote')}
         </p>
       </Container>
