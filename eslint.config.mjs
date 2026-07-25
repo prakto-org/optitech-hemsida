@@ -16,7 +16,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 export default [
-  { ignores: ['eslint.config.mjs', '.claude/**'] },
+  { ignores: ['eslint.config.mjs', '.claude/**', 'public/rive-local.js'] },
 
   includeIgnoreFile(path.resolve(__dirname, '.gitignore')),
 

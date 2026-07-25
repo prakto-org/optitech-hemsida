@@ -1,0 +1,27 @@
+<!doctype html>
+<html>
+<head><meta charset="utf-8"><style>body{margin:0;background:#000}canvas{width:1184px;height:500px}</style></head>
+<body>
+<canvas id="c" width="2368" height="1000"></canvas>
+<script src="/rive-local.js"></script>
+<script>
+  window.frames_done = false;
+  const r = new rive.Rive({
+    src: '/animations/pages/home/branching.riv',
+    canvas: document.getElementById('c'),
+    autoplay: false,
+    artboard: 'main',
+    animations: 'run',
+    onLoad() {
+      window.riveInstance = r;
+      window.frames_done = true;
+    },
+  });
+  window.snap = (t) => {
+    r.scrub('run', t);
+    r.drawFrame();
+    return document.getElementById('c').toDataURL('image/png');
+  };
+</script>
+</body>
+</html>
