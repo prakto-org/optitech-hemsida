@@ -4,12 +4,12 @@ import { useTranslations } from 'next-intl';
 import Container from 'components/shared/container';
 import Logos from 'components/shared/logos';
 import bg from 'images/pages/home/ai/bg.webp';
-import ideMobile from 'images/pages/home/ai/ide-mobile.jpg';
 
 import Heading from '../heading';
 
-import Animation from './animation';
+import ChatScene from './chat-scene';
 import CopyCodeButton from './copy-code-button';
+import IdeScene from './ide-scene';
 
 const logos = ['claude', 'cursor', 'windsurf', 'cline', 'zed', 'openai', 'vscode'];
 
@@ -29,7 +29,7 @@ const AI = () => {
           <Heading title={t.raw('heading')} />
           <div className="relative mt-[182px] pl-32 xl:mt-[174px] xl:-mr-8 xl:pl-16 lg:-mx-8 lg:mt-[143px] lg:px-0 md:mx-0 sm:mt-11">
             <div className="pointer-events-none relative w-full sm:hidden">
-              <Animation className="absolute -top-[86px] left-1/2 aspect-[941/658] size-[105%]! -translate-x-1/2 xl:-top-[72px] lg:-top-[60px]" />
+              <IdeScene className="inset-0 z-10" />
               <Image
                 className="relative -z-10 w-full outline outline-1 outline-gray-new-30"
                 src={bg}
@@ -41,15 +41,7 @@ const AI = () => {
               />
             </div>
 
-            <Image
-              className="hidden outline outline-1 outline-gray-new-30 sm:block"
-              src={ideMobile}
-              alt={t('ideAlt')}
-              width={704}
-              height={490}
-              sizes="100vw"
-              quality={100}
-            />
+            <ChatScene className="hidden h-[480px] w-full outline outline-1 outline-gray-new-30 sm:flex" />
 
             <div className="mt-px flex items-center justify-between gap-x-4 bg-gray-new-10 px-4 py-3.5 outline outline-1 outline-gray-new-30 lg:px-3.5 lg:py-4 sm:flex-col sm:items-start sm:gap-y-4 sm:px-4 sm:py-4">
               <p className="sm::text-[15px] ml-3 text-[20px] leading-snug tracking-tight text-white lg:text-[18px] sm:ml-0">

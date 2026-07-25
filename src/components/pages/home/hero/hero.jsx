@@ -29,38 +29,23 @@ const logos = [
 const HERO_SERVICE_MEDIA = [
   {
     key: 'gapAnalysis',
-    videoBase: 'postgres-database',
     aspectRatio: 'aspect-square',
-    width: 512,
-    height: 512,
   },
   {
     key: 'aiDocumentation',
-    videoBase: 'authentication',
     aspectRatio: 'aspect-512/390',
-    width: 512,
-    height: 390,
   },
   {
     key: 'evidenceCollection',
-    videoBase: 'compute',
     aspectRatio: 'aspect-512/308',
-    width: 512,
-    height: 308,
   },
   {
     key: 'incidentReporting',
-    videoBase: 'storage',
     aspectRatio: 'aspect-512/696',
-    width: 512,
-    height: 696,
   },
   {
     key: 'vendorManagement',
-    videoBase: 'ai-gateway',
     aspectRatio: 'aspect-512/226',
-    width: 512,
-    height: 226,
   },
 ];
 
@@ -70,6 +55,7 @@ export const useHeroServiceItems = () => {
 
   return HERO_SERVICE_MEDIA.map(({ key, ...media }) => ({
     ...media,
+    animation: key,
     title: t(`${key}.title`),
     description: t(`${key}.description`),
   }));

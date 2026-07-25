@@ -1,141 +1,20 @@
 'use client';
 
-import Image from 'next/image';
 import PropTypes from 'prop-types';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import { cn } from 'utils/cn';
 
-const VIDEO_VERSION = '20260709';
+import HeroServiceAnimation from './hero-animations';
+
 const SLIDER_VIEWPORT_QUERY = '(max-width: 63.9375rem)';
 const COMPACT_SLIDER_VIEWPORT_QUERY = '(max-width: 33.6875rem)';
-const VIDEO_SWITCH_DELAY_MS = 20;
 
 const getScrollPaddingLeft = (element) => {
   const scrollPaddingLeft = Number.parseFloat(window.getComputedStyle(element).scrollPaddingLeft);
 
   return Number.isNaN(scrollPaddingLeft) ? 0 : scrollPaddingLeft;
-};
-
-/*
-  Service video optimization:
-    webm: ffmpeg -i input.mp4 -c:v libvpx-vp9 -crf 18 -b:v 0 -pix_fmt yuv420p -vf "scale=512:-2:flags=lanczos" -deadline best -row-mt 1 -threads 8 -an output.webm
-    mp4:  ffmpeg -i input.mp4 -c:v libx265 -crf 14 -pix_fmt yuv420p -vf "scale=512:-2:flags=lanczos" -preset veryslow -tag:v hvc1 -movflags faststart -an output.mp4
-    poster: ffmpeg -ss 00:00:00 -i sources/input.mp4 -frames:v 1 -vf "scale=512:-2:flags=lanczos" -q:v 1 output.jpg
-*/
-
-const HeroServiceVideo = ({ height, isActive, onEnded, shouldLoop, title, videoBase, width }) => {
-  const videoRef = useRef(null);
-  const endDelayTimeoutRef = useRef(null);
-  const shouldLoopRef = useRef(shouldLoop);
-  const onEndedRef = useRef(onEnded);
-  const posterImagePath = `/videos/pages/home/hero/${videoBase}.jpg`;
-  const posterVideoPath = `${posterImagePath}?updated=${VIDEO_VERSION}`;
-
-  useEffect(() => {
-    shouldLoopRef.current = shouldLoop;
-  }, [shouldLoop]);
-
-  useEffect(() => {
-    onEndedRef.current = onEnded;
-  }, [onEnded]);
-
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    if (!isActive) {
-      video.pause();
-      video.currentTime = 0;
-      return;
-    }
-
-    video.currentTime = 0;
-    const playPromise = video.play();
-    if (playPromise !== undefined) {
-      playPromise.catch((error) => {
-        console.error(`Error attempting to play ${title} video:`, error);
-      });
-    }
-  }, [isActive, title]);
-
-  useEffect(() => () => window.clearTimeout(endDelayTimeoutRef.current), []);
-
-  useEffect(() => {
-    if (!isActive) {
-      window.clearTimeout(endDelayTimeoutRef.current);
-    }
-  }, [isActive]);
-
-  const handleEnded = useCallback(() => {
-    const video = videoRef.current;
-
-    window.clearTimeout(endDelayTimeoutRef.current);
-    endDelayTimeoutRef.current = window.setTimeout(() => {
-      if (shouldLoopRef.current && video) {
-        video.currentTime = 0;
-        const playPromise = video.play();
-        if (playPromise !== undefined) {
-          playPromise.catch((error) => {
-            console.error(`Error attempting to loop ${title} video:`, error);
-          });
-        }
-        return;
-      }
-
-      onEndedRef.current();
-    }, VIDEO_SWITCH_DELAY_MS);
-  }, [title]);
-
-  return (
-    <>
-      <Image
-        className="absolute inset-0 h-full w-full object-cover"
-        src={posterImagePath}
-        alt=""
-        width={width}
-        height={height}
-        loading="eager"
-        decoding="async"
-        aria-hidden="true"
-      />
-      <video
-        className={cn(
-          'absolute inset-0 h-full w-full object-cover transition-opacity duration-200',
-          isActive ? 'opacity-100' : 'opacity-0'
-        )}
-        ref={videoRef}
-        preload="auto"
-        muted
-        playsInline
-        poster={posterVideoPath}
-        width={width}
-        height={height}
-        aria-hidden="true"
-        onEnded={handleEnded}
-      >
-        <source
-          src={`/videos/pages/home/hero/${videoBase}.webm?updated=${VIDEO_VERSION}`}
-          type="video/webm"
-        />
-        <source
-          src={`/videos/pages/home/hero/${videoBase}.mp4?updated=${VIDEO_VERSION}`}
-          type="video/mp4"
-        />
-      </video>
-    </>
-  );
-};
-
-HeroServiceVideo.propTypes = {
-  height: PropTypes.number.isRequired,
-  isActive: PropTypes.bool.isRequired,
-  onEnded: PropTypes.func.isRequired,
-  shouldLoop: PropTypes.bool.isRequired,
-  title: PropTypes.string.isRequired,
-  videoBase: PropTypes.string.isRequired,
-  width: PropTypes.number.isRequired,
 };
 
 const HeroServices = ({ items }) => {
@@ -340,7 +219,7 @@ const HeroServices = ({ items }) => {
       className="grid grid-cols-5 grid-rows-[auto_auto] gap-x-16 gap-y-8 2xl:gap-x-6 xl:gap-x-6 xl:gap-y-6 lg:-mx-5 lg:no-scrollbars lg:flex lg:snap-x lg:snap-mandatory lg:scroll-px-5 lg:gap-x-8 lg:gap-y-0 lg:overflow-x-auto lg:px-5 md:gap-x-6"
       ref={setListRef}
     >
-      {items.map(({ title, description, videoBase, aspectRatio, width, height }, index) => {
+      {items.map(({ title, description, animation, aspectRatio }, index) => {
         const activeIndex = hoveredIndex ?? (isAutoPlayInView ? autoPlayIndex : null);
         const isActive = activeIndex === index;
 
@@ -368,14 +247,11 @@ const HeroServices = ({ items }) => {
                 aspectRatio
               )}
             >
-              <HeroServiceVideo
-                height={height}
+              <HeroServiceAnimation
+                animation={animation}
                 isActive={isActive}
-                onEnded={handleAutoPlayVideoEnd}
                 shouldLoop={!isSliderViewport && hoveredIndex === index}
-                title={title}
-                videoBase={videoBase}
-                width={width}
+                onEnded={handleAutoPlayVideoEnd}
               />
             </span>
           </li>
@@ -395,10 +271,8 @@ HeroServices.propTypes = {
     PropTypes.shape({
       title: PropTypes.string.isRequired,
       description: PropTypes.string.isRequired,
-      videoBase: PropTypes.string.isRequired,
+      animation: PropTypes.string.isRequired,
       aspectRatio: PropTypes.string.isRequired,
-      width: PropTypes.number.isRequired,
-      height: PropTypes.number.isRequired,
     })
   ).isRequired,
 };

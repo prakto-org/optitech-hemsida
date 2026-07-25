@@ -1,0 +1,169 @@
+.ide-scene {
+  pointer-events: none;
+  user-select: none;
+}
+
+/* Idle state shows the finished frame. Transient elements (typing dots, scan
+   line) are part of the choreography only, so they stay hidden until active
+   and fade out again at --do. */
+.ide-scene:not(.is-active) .is-in-out,
+.ide-scene:not(.is-active) .is-scan {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.ide-scene.is-active .is-in {
+  animation: ide-in 0.5s ease both;
+  animation-delay: var(--d, 0s);
+}
+
+.ide-scene.is-active .is-pop {
+  animation: ide-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  animation-delay: var(--d, 0s);
+}
+
+.ide-scene.is-active .is-type {
+  overflow: hidden;
+  white-space: nowrap;
+  animation: ide-type 0.9s steps(24) both;
+  animation-delay: var(--d, 0s);
+}
+
+.ide-scene.is-active .is-fade {
+  animation: ide-fade 0.6s ease both;
+  animation-delay: var(--d, 0s);
+}
+
+/* Enters, stays for a while, then fades away (e.g. the typing indicator). */
+.ide-scene.is-active .is-in-out {
+  animation:
+    ide-in 0.4s ease both,
+    ide-out 0.35s ease forwards;
+  animation-delay: var(--d, 0s), var(--do, 10s);
+}
+
+/* Thin progress line that sweeps while the copilot is "working". */
+.ide-scene.is-active .is-scan {
+  transform-origin: left center;
+  animation:
+    ide-bar 4.6s linear both,
+    ide-out 0.4s ease forwards;
+  animation-delay: var(--d, 0s), var(--do, 10s);
+}
+
+.ide-scene.is-active .is-caret {
+  animation: ide-blink 1.1s steps(1) infinite;
+}
+
+.ide-scene.is-active .is-dot {
+  animation: ide-pulse 1.8s ease-in-out infinite;
+}
+
+.ide-scene.is-active .is-dots > span {
+  animation: ide-pulse 1s ease-in-out infinite;
+}
+
+.ide-scene.is-active .is-dots > span:nth-child(2) {
+  animation-delay: 0.16s;
+}
+
+.ide-scene.is-active .is-dots > span:nth-child(3) {
+  animation-delay: 0.32s;
+}
+
+@keyframes ide-in {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes ide-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes ide-type {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes ide-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ide-out {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@keyframes ide-bar {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes ide-blink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes ide-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ide-scene.is-active .is-in,
+  .ide-scene.is-active .is-pop,
+  .ide-scene.is-active .is-type,
+  .ide-scene.is-active .is-fade,
+  .ide-scene.is-active .is-in-out,
+  .ide-scene.is-active .is-scan,
+  .ide-scene.is-active .is-caret,
+  .ide-scene.is-active .is-dot,
+  .ide-scene.is-active .is-dots > span {
+    animation: none;
+  }
+}

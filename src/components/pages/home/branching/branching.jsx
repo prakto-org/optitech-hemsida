@@ -44,7 +44,7 @@ const Branching = () => {
               'lg:-ml-5 xl:w-[calc(100%+84px)]',
               'sm:-mr-5 sm:-ml-2.5 sm:w-[calc(100%+30px)]'
             )}
-            src="/animations/pages/home/branching.riv?20260114"
+            src="/animations/pages/home/branching.riv?20260725"
             autoBind={false}
             fit={Fit.Contain}
           />

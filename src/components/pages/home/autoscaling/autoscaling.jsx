@@ -23,6 +23,12 @@ const STAT_NUMBERS = [{ number: 54210 }, { prefix: '$', number: 345966 }];
 
 const LEGEND_ICONS = [autoscalingLegendIcon, dbLoadLegendIcon, resourceLegendIcon];
 
+// Covers the "Without Neon" / "With Neon" labels baked into the Rive artboard (1378x450):
+// labels rest at y 158-168.5, the 100%-line sits at y 182
+const CHART_LABEL_CLASSNAME =
+  'pointer-events-none absolute top-[30%] z-10 flex h-[10%] items-center bg-[#E4F1EB] pr-3 text-[14px] leading-none tracking-extra-tight whitespace-nowrap text-[#232D29]';
+const CHART_LABEL_OFFSETS = ['0.85%', '50.8%'];
+
 const Autoscaling = () => {
   const t = useTranslations('home.autoscaling');
   const TABS = [t('tabs.0'), t('tabs.1')];
@@ -77,13 +83,19 @@ const Autoscaling = () => {
             )}
             ref={animationWrapperRef}
           >
-            <div className="aspect-[1378/450] w-[1378px] 3xl:max-w-full md:hidden">
+            <div className="relative aspect-[1378/450] w-[1378px] 3xl:max-w-full md:hidden">
               {isAnimationIntersecting && (
                 <Animation
                   className="aspect-[1378/450] w-[1378px] 3xl:max-w-full md:hidden"
                   state={activeItem}
                 />
               )}
+              {activeItem === 0 &&
+                CHART_LABEL_OFFSETS.map((left, index) => (
+                  <span className={CHART_LABEL_CLASSNAME} style={{ left }} key={index}>
+                    {t(`chartLabels.${index}`)}
+                  </span>
+                ))}
             </div>
             <div className="hidden justify-center md:flex">
               <Image

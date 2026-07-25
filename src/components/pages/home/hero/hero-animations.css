@@ -1,0 +1,126 @@
+.hero-anim {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+
+/* Idle state shows the finished frame (acts as a poster). Animations only run while active. */
+.hero-anim.is-active .ha-in {
+  animation: ha-in 0.45s ease both;
+  animation-delay: var(--d, 0s);
+}
+
+.hero-anim.is-active .ha-fade {
+  animation: ha-fade 0.8s ease both;
+  animation-delay: var(--d, 0s);
+}
+
+.hero-anim.is-active .ha-bar {
+  transform-origin: left center;
+  animation: ha-bar 0.6s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+  animation-delay: var(--d, 0s);
+}
+
+.hero-anim.is-active .ha-grow {
+  transform-origin: center top;
+  animation: ha-grow 1.2s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+  animation-delay: var(--d, 0s);
+}
+
+.hero-anim.is-active .ha-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: ha-draw 1.4s ease both;
+  animation-delay: var(--d, 0s);
+}
+
+.hero-anim.is-active .ha-type {
+  overflow: hidden;
+  animation: ha-type 0.9s steps(18) both;
+  animation-delay: var(--d, 0s);
+}
+
+.hero-anim.is-active .ha-dot {
+  animation: ha-pulse 1.6s ease-in-out infinite;
+}
+
+@keyframes ha-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes ha-fade {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes ha-bar {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@keyframes ha-grow {
+  from {
+    transform: scaleY(0);
+  }
+
+  to {
+    transform: scaleY(1);
+  }
+}
+
+@keyframes ha-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@keyframes ha-type {
+  from {
+    clip-path: inset(0 100% 0 0);
+  }
+
+  to {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+@keyframes ha-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.35;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-anim.is-active .ha-in,
+  .hero-anim.is-active .ha-fade,
+  .hero-anim.is-active .ha-bar,
+  .hero-anim.is-active .ha-grow,
+  .hero-anim.is-active .ha-draw,
+  .hero-anim.is-active .ha-type,
+  .hero-anim.is-active .ha-dot {
+    animation: none;
+  }
+}
