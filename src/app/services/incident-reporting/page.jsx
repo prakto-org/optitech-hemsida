@@ -15,7 +15,7 @@ import getMetadata from 'utils/get-metadata';
 export const metadata = getMetadata(SEO_DATA.serviceIncidentReporting);
 
 const IncidentReportingPage = () => (
-  <Layout headerClassName="absolute!">
+  <Layout>
     <Hero />
     <Steps />
     <RegulatoryMap />

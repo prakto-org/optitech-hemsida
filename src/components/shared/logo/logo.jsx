@@ -100,7 +100,7 @@ const Logo = ({ className = null, width, height, isHeader = false }) => {
         <div
           className={cn(
             'absolute top-10 z-50 flex min-w-[200px] flex-col items-start gap-1',
-            'border border-[#E9DCC9] bg-[#FCF2E6] p-2',
+            'border border-[#E4E5E7] bg-[#F5F5F5] p-2',
             'shadow-[0_10px_20px_0_rgba(0,0,0,0.06)]'
           )}
         >
@@ -112,7 +112,7 @@ const Logo = ({ className = null, width, height, isHeader = false }) => {
                   'group flex w-full items-center gap-x-2 p-3 whitespace-nowrap',
                   'text-left text-[15px] leading-dense tracking-extra-tight text-black-pure',
                   'transition-colors duration-200',
-                  'hover:bg-[#F3E6D3] hover:text-black-pure'
+                  'hover:bg-[#EBEBEB] hover:text-black-pure'
                 )}
                 key={name}
                 href={url}

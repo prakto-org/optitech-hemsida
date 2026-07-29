@@ -4,9 +4,14 @@ import PropTypes from 'prop-types';
 import { forwardRef } from 'react';
 
 import Link from 'components/shared/link';
+import ArrowRightIcon from 'icons/arrow-right.inline.svg';
 import { cn } from 'utils/cn';
 import getNodeText from 'utils/get-node-text';
 import sendGtagEvent from 'utils/send-gtag-event';
+
+// Green CTA buttons share one look: chartreuse fill, black text, right arrow.
+const greenBrand = 'bg-[#C1BB10] text-black hover:bg-[#a9a30e]';
+const GREEN_THEMES = ['primary', 'green-filled', 'with-icon'];
 
 const styles = {
   base: 'inline-flex cursor-pointer items-center justify-center leading-none! text-center whitespace-nowrap transition-colors duration-200',
@@ -23,7 +28,7 @@ const styles = {
     new: 'h-11 px-7 tracking-extra-tight lg:h-9 lg:text-sm lg:px-[18px]',
   },
   theme: {
-    primary: 'bg-primary-1 text-black hover:bg-[#00e5bf]',
+    primary: greenBrand,
     secondary: 'bg-black text-white hover:bg-[#292929] disabled:bg-[#292929]',
     'white-off-filled': 'bg-[#E4F1EB] text-gray-new-8',
     'white-filled': 'bg-white text-black hover:bg-gray-new-80',
@@ -35,13 +40,12 @@ const styles = {
       'bg-black-pure/0.02 text-black-pure border-gray-new-20 hover:border-black-pure dark:bg-white/0.02 border dark:border-gray-new-40 dark:text-white hover:dark:border-white',
     'green-underlined':
       'underline decoration-green-45/40 hover:decoration-green-45/100 text-green-45 transition-colors duration-500',
-    'green-filled': 'bg-green-52 text-black-pure hover:bg-code-green-2',
+    'green-filled': greenBrand,
     blue: 'bg-blue-80 text-black hover:bg-[#C6EAF1]',
     'gray-10': 'bg-gray-new-10 text-white hover:bg-gray-new-20',
     'gray-20': 'bg-gray-new-20 text-white hover:bg-gray-new-40',
     'gray-94-filled': 'bg-gray-new-94 text-black hover:bg-gray-6',
-    'with-icon':
-      'pl-[4.1rem] xl:pl-[4.25rem] lg:pl-[4.25rem] bg-green-45 text-black hover:bg-[#00e5bf]',
+    'with-icon': `pl-[4.1rem] xl:pl-[4.25rem] lg:pl-[4.25rem] ${greenBrand}`,
     'red-filled': 'bg-[#F18484] text-black hover:bg-[#FBA8A8]',
     transparent:
       'bg-transparent text-black-pure hover:bg-gray-new-90 hover:dark:bg-gray-new-10 dark:text-white',
@@ -69,11 +73,14 @@ const Button = forwardRef(
     },
     ref
   ) => {
+    const showArrow = GREEN_THEMES.includes(theme) && !withArrow;
+
     const className = cn(
       styles.base,
       styles.size[size],
       styles.theme[theme],
       getCombinationStyles(size, theme),
+      showArrow && 'group gap-2',
       additionalClassName
     );
 
@@ -103,6 +110,12 @@ const Button = forwardRef(
         {...otherProps}
       >
         {children}
+        {showArrow && (
+          <ArrowRightIcon
+            className="-mb-px size-3.5 shrink-0 transition-transform duration-200 group-hover:translate-x-[3px]"
+            aria-hidden
+          />
+        )}
       </Tag>
     );
   }

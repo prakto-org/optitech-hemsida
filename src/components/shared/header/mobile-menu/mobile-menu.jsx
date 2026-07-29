@@ -126,7 +126,7 @@ const MobileMenu = ({ isDocPage = false, docPageType = null }) => {
 
   return (
     <>
-      <div className="dark absolute top-3 right-7 z-50 hidden gap-5 lg:flex lg:items-center lg:gap-x-4 sm:right-4">
+      <div className="absolute top-3 right-7 z-50 hidden gap-5 lg:flex lg:items-center lg:gap-x-4 sm:right-4">
         {isDocPage && <InkeepTrigger className="mobile-search" docPageType={docPageType} />}
         <LanguageSwitcher />
         <Burger
@@ -137,7 +137,7 @@ const MobileMenu = ({ isDocPage = false, docPageType = null }) => {
         />
       </div>
       {isMobileMenuOpen && (
-        <nav className="dark fixed inset-0 z-40 hidden flex-col justify-between bg-[#394532] safe-paddings lg:flex">
+        <nav className="fixed inset-0 z-40 hidden flex-col justify-between bg-[#F5F5F5] safe-paddings lg:flex dark:bg-black-pure">
           <div
             className={cn('relative h-full pt-14 pb-[101px] sm:pb-[125px]', {
               'pt-[96px]': hasTopbar,
@@ -151,7 +151,7 @@ const MobileMenu = ({ isDocPage = false, docPageType = null }) => {
             </ul>
             <div
               className={cn(
-                'absolute inset-x-0 bottom-0 grid grid-cols-2 gap-x-6 gap-y-3 border-t border-white/10 bg-[#394532] p-8 sm:grid-cols-1 sm:p-5',
+                'absolute inset-x-0 bottom-0 grid grid-cols-2 gap-x-6 gap-y-3 border-t border-[#E4E5E7] bg-[#F5F5F5] p-8 sm:grid-cols-1 sm:p-5 dark:border-white/10 dark:bg-black-pure',
                 { 'pb-20 sm:pb-[68px]': isDocPage }
               )}
             >

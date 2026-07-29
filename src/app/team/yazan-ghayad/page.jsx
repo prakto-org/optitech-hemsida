@@ -7,7 +7,7 @@ import getMetadata from 'utils/get-metadata';
 export const metadata = getMetadata(SEO_DATA.teamYazanGhayad);
 
 const YazanGhayadPage = () => (
-  <Layout headerClassName="absolute!">
+  <Layout>
     <Profile />
     <Join />
   </Layout>

@@ -25,7 +25,7 @@ const ErrorMessage = ({ onClose }) => (
       <h3 className="font-title text-[32px] leading-none font-medium tracking-extra-tight sm:text-[28px]">
         Oops, looks like there&apos;s a technical problem
       </h3>
-      <p className="mt-3.5 max-w-[236px] leading-tight tracking-extra-tight text-gray-new-70">
+      <p className="mt-3.5 max-w-[236px] leading-tight tracking-extra-tight text-gray-new-30">
         Please reach out to us directly at{' '}
         <Link
           className="border-b border-green-45/40 hover:border-green-45"
@@ -37,10 +37,10 @@ const ErrorMessage = ({ onClose }) => (
       </p>
     </div>
     <button className="absolute top-4 right-4 z-20" type="button" onClick={onClose}>
-      <CloseIcon className="size-4 text-white opacity-50 transition-opacity duration-300 hover:opacity-100" />
+      <CloseIcon className="size-4 text-gray-new-20 opacity-50 transition-opacity duration-300 hover:opacity-100" />
       <span className="sr-only">Close error message</span>
     </button>
-    <span className="absolute inset-0 bg-[#0E0E11]/40 backdrop-blur-md" />
+    <span className="absolute inset-0 bg-white/60 backdrop-blur-md" />
   </div>
 );
 
@@ -63,9 +63,9 @@ const schema = yup
   })
   .required();
 
-const labelClassName = 'text-[15px] leading-snug tracking-tight text-gray-new-90 md:text-sm';
+const labelClassName = 'text-[15px] leading-snug tracking-tight text-gray-new-10 md:text-sm';
 const inputClassName =
-  '!mt-0 !h-11 !rounded-none border-gray-new-20 !bg-black-pure !px-4 !text-base !leading-snug !tracking-tight text-white placeholder:!text-gray-new-50 focus:!border-white';
+  '!mt-0 !h-11 !rounded-none !border-gray-new-80 !bg-white !px-4 !text-base !leading-snug !tracking-tight text-black-new placeholder:!text-gray-new-60 focus:!border-gray-new-30';
 const selectClassName = `${inputClassName} !pr-10 !bg-[url(/images/chevron-down-gray.svg)]`;
 const textareaClassName = `${inputClassName} !min-h-[132px] !items-start !py-[11px] xl:!min-h-[120px] focus:outline-offset-2 focus:outline-2 focus:outline-primary-1`;
 
@@ -150,7 +150,7 @@ const ContactForm = () => {
 
   return (
     <form
-      className="relative z-10 grid grid-cols-2 gap-6 gap-y-6 overflow-hidden border border-gray-new-20 bg-black-pure/80 px-8 py-7 xl:gap-5 xl:px-7 xl:py-6 lg:max-w-full md:grid-cols-1 md:px-5 md:py-5"
+      className="relative z-10 grid grid-cols-2 gap-6 gap-y-6 overflow-hidden border border-gray-new-90 bg-white px-8 py-7 xl:gap-5 xl:px-7 xl:py-6 lg:max-w-full md:grid-cols-1 md:px-5 md:py-5"
       method="POST"
       id="contact-sales-form"
       onSubmit={handleSubmit(onSubmit)}
@@ -265,22 +265,20 @@ const ContactForm = () => {
       />
 
       <div className="relative z-0 col-span-full mt-1 flex items-end justify-between gap-6 sm:flex-col sm:items-start sm:gap-4">
-        <p className="max-w-[300px] text-sm leading-[1.5] tracking-tight text-gray-new-60 sm:max-w-full">
+        <p className="max-w-[300px] text-sm leading-[1.5] tracking-tight text-gray-new-40 sm:max-w-full">
           {t.rich('agreement', {
             a1: (chunks) => (
               <Link
-                className="decoration-dashed"
+                className="text-gray-new-30 underline decoration-dashed decoration-gray-new-30/40 underline-offset-4 transition-colors duration-200 hover:decoration-gray-new-30"
                 to={LINKS.websiteTerms}
-                theme="grey-85-underlined"
               >
                 {chunks}
               </Link>
             ),
             a2: (chunks) => (
               <Link
-                className="decoration-dashed"
+                className="text-gray-new-30 underline decoration-dashed decoration-gray-new-30/40 underline-offset-4 transition-colors duration-200 hover:decoration-gray-new-30"
                 to={LINKS.privacyPolicy}
-                theme="grey-85-underlined"
               >
                 {chunks}
               </Link>
@@ -288,9 +286,9 @@ const ContactForm = () => {
           })}
         </p>
         <Button
-          className="min-w-[152px] px-10 sm:w-full sm:min-w-0"
+          className="min-w-[152px] px-10 font-medium sm:w-full sm:min-w-0"
           type="submit"
-          theme="white-filled"
+          theme="white-filled-multi"
           size="new"
           disabled={
             formState === FORM_STATES.LOADING ||

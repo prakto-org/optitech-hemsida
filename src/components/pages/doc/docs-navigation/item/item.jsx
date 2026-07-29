@@ -134,7 +134,7 @@ const Item = ({ nav: title, slug, icon, subnav, items, basePath, activeItems, se
           <ul
             className={cn(
               'relative flex w-max min-w-40 flex-col gap-4 border p-4',
-              'border-[#E9DCC9] bg-[#FCF2E6] shadow-[0px_14px_20px_0px_rgba(0,0,0,.1)]'
+              'border-[#E4E5E7] bg-[#F5F5F5] shadow-[0px_14px_20px_0px_rgba(0,0,0,.1)]'
             )}
           >
             {subnav.map((item, index) => (

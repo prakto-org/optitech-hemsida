@@ -8,7 +8,7 @@ import getMetadata from 'utils/get-metadata';
 export const metadata = getMetadata(SEO_DATA.team);
 
 const TeamPage = () => (
-  <Layout headerClassName="absolute!">
+  <Layout>
     <Hero />
     <People />
     <Join />

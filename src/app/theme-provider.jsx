@@ -15,7 +15,9 @@ const themesSupportPages = ['/docs', '/guides', '/postgresql', '/faqs'];
 const lightThemePages = [
   '/services',
   '/team',
+  '/products/trust-center',
   '/login',
+  '/contact-sales',
   '/privacy-policy',
   '/terms-of-use',
   '/cookie-policy',

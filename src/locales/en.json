@@ -598,7 +598,7 @@
     "incidentReporting": {
       "hero": {
         "label": "NIS2 · GDPR/IMY · DORA · Incident reporting",
-        "title": "24 hours. 72 hours. One month. Three statutory windows. One system.",
+        "title": "24 hours. 72 hours. One month. One system.",
         "description": "NIS2 requires an early warning to CERT-SE/MSB within 24 hours and a full notification within 72. Personal data breaches must be reported to IMY within 72 hours. We keep track of the clock for you.",
         "primaryCta": "Book a technical walkthrough",
         "secondaryCta": "See an example of a completed notification",
@@ -842,8 +842,9 @@
   "products": {
     "trustCenter": {
       "hero": {
+        "label": "Trust center",
         "title": "Show your compliance before anyone asks",
-        "description": "Publish a live trust center backed by your OptiTech compliance program. Security reviews answer themselves, and your buyers get what they need to say yes.",
+        "description": "Publish a live trust center backed by your OptiTech compliance program. Security reviews answer themselves.",
         "cta": "Book a demo",
         "mockup": {
           "url": "trust.nordkraft.se",

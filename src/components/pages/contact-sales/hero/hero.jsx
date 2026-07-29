@@ -25,26 +25,26 @@ const Hero = () => {
   }));
 
   return (
-    <section className="hero relative z-10 grow overflow-hidden bg-black-pure py-40 xl:pt-32 xl:pb-24 lg:py-24 md:py-24">
+    <section className="hero relative z-10 grow overflow-hidden bg-white py-40 xl:pt-32 xl:pb-24 lg:py-24 md:py-24">
       <Container size="1280">
         <div className="flex min-h-[578px] justify-between gap-16 xl:min-h-0 xl:gap-10 lg:flex-col lg:gap-12">
           <div className="flex max-w-[544px] flex-1 flex-col lg:max-w-full">
-            <SectionLabel className="mb-5 lg:mb-[18px] md:mb-4" theme="white">
+            <SectionLabel className="mb-5 lg:mb-[18px] md:mb-4" theme="black">
               {t('label')}
             </SectionLabel>
             <Heading
               className="text-pretty lg:max-w-2xl md:!text-[36px] xs:!text-[32px]"
               tag="h1"
               size="md-new"
-              theme="white"
+              theme="black"
             >
               {t('title')}
             </Heading>
             <div className="mt-auto flex flex-col gap-7 xl:gap-5 lg:gap-7">
-              <p className="max-w-[544px] text-lg leading-normal tracking-tight text-pretty text-gray-new-70 xl:text-base lg:mt-[18px] lg:max-w-xl">
+              <p className="max-w-[544px] text-lg leading-normal tracking-tight text-pretty text-gray-new-30 xl:text-base lg:mt-[18px] lg:max-w-xl">
                 {t('subtitle')}
               </p>
-              <ul className="flex flex-col gap-y-5 border-t border-gray-new-20 pt-7 xl:gap-y-3 xl:pt-5 lg:flex-row lg:flex-wrap lg:gap-x-5 lg:gap-y-3 lg:border-t-0 lg:pt-0 md:gap-x-4 md:gap-y-3.5">
+              <ul className="flex flex-col gap-y-5 border-t border-gray-new-90 pt-7 xl:gap-y-3 xl:pt-5 lg:flex-row lg:flex-wrap lg:gap-x-5 lg:gap-y-3 lg:border-t-0 lg:pt-0 md:gap-x-4 md:gap-y-3.5">
                 {CERTIFICATES.map(({ title, description, icon }) => (
                   <li className="flex items-center gap-3 lg:gap-2.5 sm:gap-1.5" key={title}>
                     <Image
@@ -55,8 +55,8 @@ const Hero = () => {
                       height={36}
                       priority
                     />
-                    <p className="flex items-center gap-1 text-lg leading-normal tracking-tight text-gray-new-60 xl:text-base lg:gap-1.5 lg:leading-none">
-                      <span className="font-medium text-gray-new-90">{title}</span>
+                    <p className="flex items-center gap-1 text-lg leading-normal tracking-tight text-gray-new-40 xl:text-base lg:gap-1.5 lg:leading-none">
+                      <span className="font-medium text-gray-new-10">{title}</span>
                       <span>{description}</span>
                     </p>
                   </li>

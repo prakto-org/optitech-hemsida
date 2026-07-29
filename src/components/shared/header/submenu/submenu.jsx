@@ -19,11 +19,11 @@ const Submenu = ({
   <div
     className={cn(
       'main-navigation-submenu absolute top-full left-0 z-40 -mt-px w-full overflow-hidden',
-      'border-b border-[#E9DCC9] bg-[#FCF2E6]',
+      'bg-[#F5F5F5]',
       'transition-[height] duration-300 ease-[cubic-bezier(0.4,0,0.2,1)]',
       {
         'pointer-events-none': activeMenuIndex === null,
-        'pointer-events-auto!': activeMenuIndex !== null,
+        'pointer-events-auto! border-b border-[#E4E5E7]': activeMenuIndex !== null,
       }
     )}
     style={{ height: `${containerHeight}px` }}

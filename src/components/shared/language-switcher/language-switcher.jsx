@@ -74,7 +74,7 @@ const LanguageSwitcher = ({ className = null }) => {
         <ul
           className={cn(
             'absolute top-full right-0 z-50 mt-3 min-w-[132px] border p-1',
-            'border-[#E9DCC9] bg-[#FCF2E6]'
+            'border-[#E4E5E7] bg-[#F5F5F5]'
           )}
           role="menu"
         >
@@ -85,7 +85,7 @@ const LanguageSwitcher = ({ className = null }) => {
                   'flex w-full items-center justify-between gap-x-4 px-3 py-2 text-sm leading-none tracking-extra-tight transition-colors duration-200',
                   code === locale
                     ? 'font-medium text-black-pure'
-                    : 'text-gray-new-30 hover:bg-[#F3E6D3] hover:text-black-pure'
+                    : 'text-gray-new-30 hover:bg-[#EBEBEB] hover:text-black-pure'
                 )}
                 type="button"
                 role="menuitem"

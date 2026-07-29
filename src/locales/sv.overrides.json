@@ -11,7 +11,7 @@
     "incidentReporting": {
       "hero": {
         "label": "NIS2 · GDPR/IMY · DORA — Incidentrapportering",
-        "title": "24 timmar. 72 timmar. En månad. Tre lagstadgade tidsfönster — ett system.",
+        "title": "24 timmar. 72 timmar. En månad. Ett system.",
         "description": "NIS2 kräver tidig varning till CERT-SE/MSB inom 24 timmar och fullständig anmälan inom 72 timmar. Personuppgiftsincidenter ska anmälas till IMY inom 72 timmar. Vi håller reda på klockan åt er.",
         "primaryCta": "Boka teknisk genomgång",
         "secondaryCta": "Se ett exempel på ifylld anmälan",
@@ -260,8 +260,9 @@
   "products": {
     "trustCenter": {
       "hero": {
+        "label": "Trust center",
         "title": "Visa er efterlevnad innan någon hinner fråga",
-        "description": "Publicera ett levande trust center kopplat till ert OptiTech-program. Säkerhetsgranskningar besvarar sig själva, och era köpare får det de behöver för att säga ja.",
+        "description": "Publicera ett levande trust center kopplat till ert OptiTech-program. Säkerhetsgranskningar besvarar sig själva.",
         "cta": "Boka demo",
         "mockup": {
           "url": "trust.nordkraft.se",

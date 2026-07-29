@@ -12,7 +12,7 @@ import { cn } from 'utils/cn';
 import StatusBadge from './status-badge';
 
 const Footer = ({ hasThemesSupport = false }) => (
-  <footer className="dark relative z-30 mt-auto border-t border-white/10 bg-[#394532] safe-paddings">
+  <footer className="relative z-30 mt-auto border-t border-[#E4E5E7] bg-[#F5F5F5] safe-paddings dark:border-white/10 dark:bg-black-pure">
     <Container className="flex justify-between gap-x-10 py-12 3xl:py-8 sm:py-5" size="1920">
       <div className="flex flex-col items-start lg:w-full">
         <div className="mb-auto lg:mb-11">
