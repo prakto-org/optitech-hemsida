@@ -80,7 +80,7 @@ const Logo = ({ className = null, width, height, isHeader = false }) => {
       >
         <span className="sr-only">OptiTech</span>
         <Image
-          className={cn('object-contain object-left dark:hidden', className)}
+          className={cn('w-auto object-contain object-left dark:hidden', className)}
           src={optitechLogoLight}
           width={width}
           height={height}
@@ -88,7 +88,7 @@ const Logo = ({ className = null, width, height, isHeader = false }) => {
           priority
         />
         <Image
-          className={cn('hidden object-contain object-left dark:block', className)}
+          className={cn('hidden w-auto object-contain object-left dark:block', className)}
           src={optitechLogoDark}
           width={width}
           height={height}

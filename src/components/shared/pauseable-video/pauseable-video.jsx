@@ -36,6 +36,9 @@ const PauseableVideo = forwardRef(
       const playPromise = videoElement.play();
       if (playPromise !== undefined) {
         playPromise.catch((error) => {
+          // AbortError is benign: play() was interrupted by pause() when the
+          // video scrolled out of view before the play promise resolved.
+          if (error.name === 'AbortError') return;
           console.error('Error attempting to play video:', error);
         });
       }

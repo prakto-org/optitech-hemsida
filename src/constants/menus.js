@@ -6,67 +6,82 @@ export default {
       text: 'Product',
       sections: [
         {
-          title: 'Core Primitives',
+          title: 'Build the program',
           items: [
             {
-              title: 'Trust Center',
-              to: LINKS.productTrustCenter,
-              description: 'Show your compliance before anyone asks',
+              title: 'Gap analysis',
+              to: `${LINKS.services}/gap-analysis`,
+              description: 'Know what applies to you',
             },
             {
-              title: 'Incident Reporting',
-              to: LINKS.serviceIncidentReporting,
-              description: 'MSB and IMY deadlines, handled',
+              title: 'Framework library',
+              to: `${LINKS.services}/framework-library`,
+              description: 'Do it once, prove it everywhere',
             },
             {
-              title: 'Database',
-              to: LINKS.postgresOverview,
-              description: 'Serverless Postgres',
+              title: 'Evidence collection',
+              to: `${LINKS.services}/evidence-collection`,
+              description: 'Proof from the tools you use',
             },
             {
-              title: 'Auth',
-              to: LINKS.auth,
-              description: 'Authentication built into your database',
-            },
-            {
-              title: 'Functions',
-              to: LINKS.functionsOverview,
-              description: 'Serverless compute next to your data',
-            },
-            {
-              title: 'Object Storage',
-              to: LINKS.objectStorageOverview,
-              description: 'S3-compatible storage that branches',
-            },
-            {
-              title: 'AI Gateway',
-              to: LINKS.aiGatewayOverview,
-              description: 'One API for frontier and open-source models',
+              title: 'Risk register',
+              to: `${LINKS.services}/risk-register`,
+              description: 'Risk linked to controls',
             },
           ],
         },
         {
-          title: 'Features',
+          title: 'Run it day to day',
           items: [
             {
-              title: 'Lakebase Architecture',
-              to: LINKS.architecture,
-              description: 'Storage-compute separation',
+              title: 'Incident reporting',
+              to: LINKS.serviceIncidentReporting,
+              description: 'MSB and IMY deadlines, handled',
             },
             {
-              title: 'Autoscaling',
-              to: LINKS.autoscaling,
-              description: 'Automatic instance sizing',
+              title: 'Policies & documents',
+              to: `${LINKS.services}/policy-management`,
+              description: 'Templates, reviews, signatures',
             },
             {
-              title: 'Branching',
-              to: LINKS.branching,
-              description: 'Faster Postgres workflows',
+              title: 'Supplier risk',
+              to: `${LINKS.services}/supplier-risk`,
+              description: 'Vendors, contracts, DORA register',
             },
             {
-              title: 'Instant Restore',
-              to: LINKS.instantRestore,
-              description: 'Instant recovery when mistakes happen',
+              title: 'Training & awareness',
+              to: `${LINKS.services}/training`,
+              description: 'Including the board',
+            },
+          ],
+        },
+        {
+          title: 'Prove it',
+          items: [
+            {
+              title: 'Trust Center',
+              to: LINKS.productTrustCenter,
+              description: 'Show compliance before anyone asks',
+            },
+            {
+              title: 'Auditor mode',
+              to: `${LINKS.services}/audit-mode`,
+              description: 'A portal, not a shoebox',
+            },
+            {
+              title: 'Dashboards',
+              to: `${LINKS.services}/dashboards`,
+              description: 'Board-ready reporting',
+            },
+            {
+              title: 'AI copilot',
+              to: `${LINKS.services}/ai-copilot`,
+              description: 'Fluent in Swedish law',
+            },
+            {
+              title: 'All services',
+              to: LINKS.services,
+              description: 'Browse everything',
             },
           ],
         },
@@ -112,6 +127,76 @@ export default {
               title: 'Agents',
               to: `${LINKS.useCases}/ai-agents`,
               description: 'Build full-stack AI agents',
+            },
+          ],
+        },
+      ],
+    },
+    {
+      text: 'Frameworks',
+      sections: [
+        {
+          title: 'Nordic core',
+          items: [
+            {
+              title: 'NIS2',
+              to: `${LINKS.frameworks}/nis2`,
+              description: 'The Swedish Cybersecurity Act',
+            },
+            {
+              title: 'DORA',
+              to: `${LINKS.frameworks}/dora`,
+              description: 'Finance and its ICT providers',
+            },
+            {
+              title: 'GDPR',
+              to: `${LINKS.frameworks}/gdpr`,
+              description: 'RoPA and the IMY breach flow',
+            },
+            {
+              title: 'ISO 27001',
+              to: `${LINKS.frameworks}/iso-27001`,
+              description: 'The full control catalog',
+            },
+            {
+              title: 'EU AI Act',
+              to: `${LINKS.frameworks}/eu-ai-act`,
+              description: 'High-risk AI, phasing in',
+            },
+          ],
+        },
+        {
+          title: 'Also covered',
+          items: [
+            {
+              title: 'CRA',
+              to: `${LINKS.frameworks}/cra`,
+              description: 'Products with digital elements',
+            },
+            {
+              title: 'SOC 2',
+              to: `${LINKS.frameworks}/soc-2`,
+              description: 'What US buyers ask for',
+            },
+            {
+              title: 'ISO 27701',
+              to: `${LINKS.frameworks}/iso-27701`,
+              description: 'Privacy on top of ISO 27001',
+            },
+            {
+              title: 'ISO 22301',
+              to: `${LINKS.frameworks}/iso-22301`,
+              description: 'Business continuity',
+            },
+            {
+              title: 'TISAX',
+              to: `${LINKS.frameworks}/tisax`,
+              description: 'The automotive standard',
+            },
+            {
+              title: 'All frameworks',
+              to: LINKS.frameworks,
+              description: 'Browse everything',
             },
           ],
         },
@@ -193,6 +278,112 @@ export default {
   ],
   footer: [
     {
+      heading: 'Services',
+      items: [
+        {
+          text: 'Gap analysis',
+          to: `${LINKS.services}/gap-analysis`,
+        },
+        {
+          text: 'Framework library',
+          to: `${LINKS.services}/framework-library`,
+        },
+        {
+          text: 'Evidence collection',
+          to: `${LINKS.services}/evidence-collection`,
+        },
+        {
+          text: 'Risk register',
+          to: `${LINKS.services}/risk-register`,
+        },
+        {
+          text: 'Incident reporting',
+          to: LINKS.serviceIncidentReporting,
+        },
+        {
+          text: 'Policies & documents',
+          to: `${LINKS.services}/policy-management`,
+        },
+        {
+          text: 'Supplier risk',
+          to: `${LINKS.services}/supplier-risk`,
+        },
+        {
+          text: 'Training & awareness',
+          to: `${LINKS.services}/training`,
+        },
+        {
+          text: 'Trust Center',
+          to: LINKS.productTrustCenter,
+        },
+        {
+          text: 'Auditor mode',
+          to: `${LINKS.services}/audit-mode`,
+        },
+        {
+          text: 'Dashboards',
+          to: `${LINKS.services}/dashboards`,
+        },
+        {
+          text: 'AI copilot',
+          to: `${LINKS.services}/ai-copilot`,
+        },
+        {
+          text: 'All services',
+          to: LINKS.services,
+        },
+      ],
+    },
+    {
+      heading: 'Frameworks',
+      items: [
+        {
+          text: 'NIS2',
+          to: `${LINKS.frameworks}/nis2`,
+        },
+        {
+          text: 'DORA',
+          to: `${LINKS.frameworks}/dora`,
+        },
+        {
+          text: 'GDPR',
+          to: `${LINKS.frameworks}/gdpr`,
+        },
+        {
+          text: 'ISO 27001',
+          to: `${LINKS.frameworks}/iso-27001`,
+        },
+        {
+          text: 'EU AI Act',
+          to: `${LINKS.frameworks}/eu-ai-act`,
+        },
+        {
+          text: 'CRA',
+          to: `${LINKS.frameworks}/cra`,
+        },
+        {
+          text: 'SOC 2',
+          to: `${LINKS.frameworks}/soc-2`,
+        },
+        {
+          text: 'ISO 27701',
+          to: `${LINKS.frameworks}/iso-27701`,
+        },
+        {
+          text: 'ISO 22301',
+          to: `${LINKS.frameworks}/iso-22301`,
+        },
+        {
+          text: 'TISAX',
+          to: `${LINKS.frameworks}/tisax`,
+        },
+        {
+          text: 'All frameworks',
+          to: LINKS.frameworks,
+        },
+      ],
+    },
+    {
       heading: 'Company',
       items: [
         {
@@ -267,55 +458,6 @@ export default {
           text: 'Facebook',
           to: LINKS.facebook,
           icon: 'facebook-icon',
-        },
-      ],
-    },
-    {
-      heading: 'Compliance',
-      items: [
-        {
-          text: 'CCPA',
-          description: 'Compliant',
-          to: LINKS.certCCPA,
-        },
-        {
-          text: 'GDPR',
-          description: 'Compliant',
-          to: LINKS.certGDPR,
-        },
-        {
-          text: 'ISO 27001',
-          description: 'Certified',
-          to: LINKS.certISO27001,
-        },
-        {
-          text: 'ISO 27701',
-          description: 'Certified',
-          to: LINKS.certISO27701,
-        },
-        {
-          text: 'SOC 2',
-          description: 'Certified',
-          to: LINKS.certSOC2,
-        },
-        {
-          text: 'HIPAA',
-          description: 'Compliant',
-          to: LINKS.certHIPAA,
-          links: [
-            {
-              text: 'Compliance Guide',
-              to: LINKS.hipaaCompliance,
-            },
-            {
-              text: 'OptiTech’s Sub Contractors',
-              to: LINKS.hipaaContractors,
-            },
-          ],
-        },
-        {
-          text: 'Trust Center',
-          to: LINKS.trust,
         },
       ],
     },

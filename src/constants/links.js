@@ -25,6 +25,8 @@ export default {
   scaleTrial: '/scale-trial',
   security: '/security',
   serviceIncidentReporting: '/services/incident-reporting',
+  services: '/services',
+  frameworks: '/frameworks',
   startups: '/startups',
   storage: '/storage',
   subprocessorsSubscribe: '/subscribe-to-subprocessors',
@@ -117,7 +119,7 @@ export default {
   certHIPAA: '/docs/security/hipaa',
 
   // Other
-  status: 'https://neonstatus.com',
+  status: 'https://app.optitech-sverige.se/status',
   cdn: 'https://cdn.neonapi.io',
   apiReference: '/docs/reference/api',
   bugBounty: 'https://hackerone.com/neon_bbp',

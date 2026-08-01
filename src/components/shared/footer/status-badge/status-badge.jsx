@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import { useInView } from 'react-intersection-observer';
 
 import Link from 'components/shared/link';
+import LINKS from 'constants/links';
 import { cn } from 'utils/cn';
 import { getNeonStatus, NEON_STATUS } from 'utils/get-neon-status';
 
@@ -41,7 +42,7 @@ const StatusBadge = () => {
   return (
     <Link
       className="flex items-center justify-center gap-x-1.5 rounded-sm"
-      to="https://neonstatus.com/"
+      to={LINKS.status}
       target="_blank"
       rel="noopener noreferrer"
       ref={ref}

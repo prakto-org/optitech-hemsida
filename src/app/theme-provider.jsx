@@ -14,6 +14,7 @@ suppressScriptTagWarning();
 const themesSupportPages = ['/docs', '/guides', '/postgresql', '/faqs'];
 const lightThemePages = [
   '/services',
+  '/frameworks',
   '/team',
   '/products/trust-center',
   '/login',

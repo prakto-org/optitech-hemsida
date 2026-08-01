@@ -103,3 +103,6 @@ package-lock.json
 # Blog content gets imported automatically
 content/blog
 scripts/docs-checks/neonctl/fragments/
+
+# Internal project notes, not part of the site
+projektminne.md
