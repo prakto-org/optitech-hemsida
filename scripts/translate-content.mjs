@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /**
  * Translate content markdown with the DeepL API into a mirrored tree under content/sv/.
  *

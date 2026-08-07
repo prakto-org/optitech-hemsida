@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // Audits the live Neon OpenAPI spec for example coverage and schema validity.
 // Usage: node scripts/audit-api-spec.mjs [spec-url] > spec-audit.md
 

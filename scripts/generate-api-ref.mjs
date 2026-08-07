@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 // Generates per-operation JSON data files and agent-optimized markdown.
 // Runs in CI — all inputs are publicly accessible.
 //

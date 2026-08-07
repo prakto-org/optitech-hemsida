@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /**
  * Neon docs ↔ API consistency check
  *

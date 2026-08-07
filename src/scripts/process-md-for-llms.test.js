@@ -1,4 +1,6 @@
 import fs from 'fs/promises';
+import os from 'os';
+import path from 'path';
 
 import { describe, it, expect, vi } from 'vitest';
 
@@ -150,7 +152,7 @@ describe('MDX to Markdown Conversion', () => {
   describe('Component conversions', () => {
     // Helper to process inline MDX content
     async function processInlineMdx(mdxContent, pageUrl = 'https://neon.com/test', rootDir) {
-      const tempPath = '/tmp/test-mdx-conversion.md';
+      const tempPath = path.join(os.tmpdir(), 'test-mdx-conversion.md');
       const fullContent = `---
 title: Test
 ---
@@ -325,7 +327,7 @@ Install the package using npm.
   // Test URL conversion
   describe('URL conversion', () => {
     async function processInlineMdx(mdxContent, pageUrl = 'https://neon.com/docs/test') {
-      const tempPath = '/tmp/test-mdx-conversion.md';
+      const tempPath = path.join(os.tmpdir(), 'test-mdx-conversion.md');
       await fs.writeFile(tempPath, `---\ntitle: Test\n---\n${mdxContent}`);
       return (await processFile(tempPath, pageUrl)).content;
     }
@@ -372,7 +374,7 @@ See the [What is PostgreSQL](postgresql-getting-started/what-is-postgresql) page
   // Test recently added components
   describe('Additional component conversions', () => {
     async function processInlineMdx(mdxContent, pageUrl = 'https://neon.com/test') {
-      const tempPath = '/tmp/test-mdx-conversion.md';
+      const tempPath = path.join(os.tmpdir(), 'test-mdx-conversion.md');
       const fullContent = `---
 title: Test
 ---
@@ -622,7 +624,7 @@ Below the line.
   // Test that we don't over-escape
   describe('No over-escaping', () => {
     async function processInlineMdx(mdxContent) {
-      const tempPath = '/tmp/test-mdx-conversion.md';
+      const tempPath = path.join(os.tmpdir(), 'test-mdx-conversion.md');
       await fs.writeFile(tempPath, `---\ntitle: Test\n---\n${mdxContent}`);
       return (await processFile(tempPath)).content;
     }
@@ -647,7 +649,7 @@ See [CONN_MAX_AGE](https://example.com).
   // Test index pointer
   describe('Index pointer', () => {
     it('should not include index pointer in processFile output (moved to page header)', async () => {
-      const tempPath = '/tmp/test-mdx-conversion.md';
+      const tempPath = path.join(os.tmpdir(), 'test-mdx-conversion.md');
       await fs.writeFile(tempPath, `---\ntitle: Test Page\n---\nSome content here.`);
       const { content: result } = await processFile(tempPath);
 
