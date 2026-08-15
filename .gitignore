@@ -56,6 +56,14 @@ jspm_packages/
 .env*
 !.env.example
 
+# SSH keys, certificates, and other secrets — never commit
+*.key
+*.pem
+*.ppk
+ssh-key-*
+id_rsa
+id_ed25519
+
 # next files
 .next/
 
