@@ -1,0 +1,34 @@
+# Netlify configuration for the OptiTech (Next.js 16) site.
+# The Next.js runtime (@netlify/plugin-nextjs / OpenNext) is auto-installed.
+# Do NOT pin it in package.json or add it under [[plugins]] — Netlify keeps it
+# up to date for each Next.js release automatically.
+
+[build]
+  # Must be `npm run build` (not `next build`) so the prebuild/postbuild npm
+  # lifecycle hooks run: API-ref generation, blog bootstrap, docs-icon config,
+  # sitemap generation, and markdown/LLM file copying.
+  command = "npm run build"
+  publish = ".next"
+
+[build.environment]
+  NODE_VERSION = "22"
+  # NEXT_PUBLIC_* tokens are inlined into the client bundle by design. Tell
+  # Netlify's post-build secrets scanner these are safe to appear in output so
+  # the deploy is not failed for "leaking" values that are meant to be public.
+  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_POSTHOG_KEY,NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN,NEXT_PUBLIC_POSTHOG_HOST,NEXT_PUBLIC_INTERCOM_APP_ID,NEXT_PUBLIC_DEFAULT_SITE_URL,NEXT_PUBLIC_GITHUB_PATH,NEXT_PUBLIC_NEON_STATUS_API,NEXT_PUBLIC_VERCEL_ENV"
+
+# The codebase gates draft content and production detection on Vercel's
+# VERCEL_ENV / NEXT_PUBLIC_VERCEL_ENV, which do not exist on Netlify. Map them
+# per Netlify deploy context so drafts stay hidden in production and are visible
+# in previews. (VERCEL_ENV is intentionally left unset in preview contexts so
+# metadata/OG URLs fall back to NEXT_PUBLIC_DEFAULT_SITE_URL instead of an
+# undefined preview host.)
+[context.production.environment]
+  VERCEL_ENV = "production"
+  NEXT_PUBLIC_VERCEL_ENV = "production"
+
+[context.deploy-preview.environment]
+  NEXT_PUBLIC_VERCEL_ENV = "preview"
+
+[context.branch-deploy.environment]
+  NEXT_PUBLIC_VERCEL_ENV = "preview"
