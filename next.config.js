@@ -90,6 +90,25 @@ const defaultConfig = {
           },
         ],
       },
+      // LLM-discovery headers for content pages. Previously appended by middleware on
+      // every page view; served statically here so browser traffic never invokes it
+      // (the middleware matcher in src/proxy.js only fires for agent-looking requests).
+      {
+        source: '/(docs|postgresql|guides|branching|programs|use-cases|faqs)/:path*',
+        headers: [
+          {
+            key: 'X-LLMs-Txt',
+            value: '/docs/llms.txt',
+          },
+          {
+            key: 'Link',
+            value: [
+              '</docs/llms.txt>; rel="llms-txt"',
+              '</docs/llms-full.txt>; rel="llms-full-txt"',
+            ].join(', '),
+          },
+        ],
+      },
       {
         source: '/:all*(svg|jpg|png)',
         locale: false,

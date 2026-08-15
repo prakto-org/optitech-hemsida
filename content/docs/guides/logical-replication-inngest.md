@@ -11,7 +11,7 @@ summary: >-
   credentials to the Inngest integration wizard (credentials are not stored).
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:29.454Z'
 ---
 
 OptiTech's logical replication feature allows you to replicate data from your OptiTech Postgres database to external destinations.
@@ -23,7 +23,7 @@ In this guide, you will learn how to configure your Inngest account for ingestin
 ## Prerequisites
 
 - A [Inngest account](https://www.inngest.com?utm_source=optitech&utm_medium=logical-replication-guide)
-- A [OptiTech account](https://console.optitech.com/)
+- A [OptiTech account](https://app.optitech-sverige.se/)
 - Read the [important notices about logical replication in OptiTech](/docs/guides/logical-replication-neon#important-notices) before you begin
 
 <Admonition type="important" title="Compute and billing">

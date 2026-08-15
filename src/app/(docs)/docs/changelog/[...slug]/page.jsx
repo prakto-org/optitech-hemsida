@@ -14,6 +14,8 @@ import getExcerpt from 'utils/get-excerpt';
 import getFormattedDate from 'utils/get-formatted-date';
 import getMetadata from 'utils/get-metadata';
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   const changelogPosts = await getAllChangelogs();
 

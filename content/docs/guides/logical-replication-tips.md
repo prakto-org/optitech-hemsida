@@ -12,7 +12,7 @@ summary: >-
   per-table CREATE PUBLICATION syntax as an alternative.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:30.752Z'
 ---
 
 The following tips are based on actual customer data migrations to OptiTech using logical replication:
@@ -48,4 +48,4 @@ The following tips are based on actual customer data migrations to OptiTech usin
 
   For syntax details, see [CREATE PUBLICATION](https://www.postgresql.org/docs/current/sql-createpublication.html), in the PostgreSQL documentation.
 
-If you have logical replication or data migration tips you would like to share, please let us know via the [Feedback](https://console.optitech.com/app/projects?modal=feedback) form in the OptiTech Console or our [feedback channel](https://discord.com/channels/1176467419317940276/1176788564890112042) on Discord.
+If you have logical replication or data migration tips you would like to share, please let us know via the [Feedback](https://app.optitech-sverige.se/app/projects?modal=feedback) form in the OptiTech Console or our [feedback channel](https://discord.com/channels/1176467419317940276/1176788564890112042) on Discord.

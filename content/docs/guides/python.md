@@ -10,7 +10,7 @@ summary: >-
   the SQLAlchemy or Django guides when you need raw SQL driver code rather than
   an ORM.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:30.752Z'
 ---
 
 <CopyPrompt src="/prompts/python-prompt.md" 
@@ -22,7 +22,7 @@ You'll learn how to connect to your OptiTech database from a Python application 
 
 ## Prerequisites
 
-- A OptiTech account. If you do not have one, see [Sign up](https://console.optitech.com/signup).
+- A OptiTech account. If you do not have one, see [Sign up](https://app.optitech-sverige.se/signup).
 - Python 3.8 or later. If you do not have Python installed, install it from the [Python website](https://www.python.org/downloads/).
 
 <Steps>
@@ -31,7 +31,7 @@ You'll learn how to connect to your OptiTech database from a Python application 
 
 If you do not have one already, create a OptiTech project.
 
-1.  Navigate to the [Projects](https://console.optitech.com/app/projects) page in the [OptiTech Console](https://console.optitech.com).
+1.  Navigate to the [Projects](https://app.optitech-sverige.se/app/projects) page in the [OptiTech Console](https://app.optitech-sverige.se).
 2.  Click **New Project**.
 3.  Specify your project settings and click **Create Project**.
 
@@ -88,7 +88,7 @@ For your Python project, create a project directory, set up a virtual environmen
 
 Create a file named `.env` in your project's root directory. This file will securely store your database connection string.
 
-1.  In the [OptiTech Console](https://console.optitech.com), select your project on the **Dashboard**.
+1.  In the [OptiTech Console](https://app.optitech-sverige.se), select your project on the **Dashboard**.
 2.  Click **Connect** on your **Project Dashboard** to open the **Connect to your database** modal.
     ![Connection modal](/docs/connect/connection_details.png)
 3.  Copy the connection string, which includes your password.

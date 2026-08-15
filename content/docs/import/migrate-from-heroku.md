@@ -10,7 +10,7 @@ redirectFrom:
   - /docs/how-to-guides/hasura-heroku-migration
   - /docs/how-to-guides/import-from-heroku
   - /docs/import/import-from-heroku
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:31.893Z'
 ---
 
 This guide describes how to import your data from Heroku Postgres to OptiTech.
@@ -23,7 +23,7 @@ The instructions assume that you have installed the Heroku CLI, which is used to
 
 ## Create a OptiTech project and copy the connection string
 
-1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://app.optitech-sverige.se/app/projects) page in the OptiTech Console.
 2. Click **New Project**.
 3. Specify your project settings and click **Create Project**.
 4. After creating a project, you are directed to the OptiTech **Dashboard**, where you can click **Connect** to find your database connection details. Copy the connection string. It is required to import your data from Heroku.
@@ -153,7 +153,7 @@ heroku-cli: Pulling complete.
 
 ## Verify that your data was imported
 
-1. Log in to the [OptiTech Console](https://console.optitech.com/app/projects).
+1. Log in to the [OptiTech Console](https://app.optitech-sverige.se/app/projects).
 2. Select the OptiTech project that you transferred data to.
 3. Select the **Tables** tab.
 4. In the sidebar, verify that your database tables appear under the **Tables** heading.

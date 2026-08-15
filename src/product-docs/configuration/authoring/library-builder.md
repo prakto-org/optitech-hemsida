@@ -117,7 +117,7 @@ To label a result based on the final score (_Bronze_ at 60+, _Silver_ at 80+, _G
 
 A requirement node has **Add reference control** and **Add threat** pickers. Each offers the objects available to the draft — those defined in the same draft, plus objects from libraries the draft **depends on** — with tabs to _link an existing_ object, _create a new_ one, or browse another library. Picking an object from another library automatically records the dependency so the reference resolves at load time.
 
-Bundle controls and threats in the same library as the framework when the framework prescribes its own catalogue (e.g. CIS Controls v8); otherwise ship them separately so the framework stays leaner and users can mix and match.
+Bundle controls and threats in the same library as the framework when the framework prescribes its own catalog (e.g. CIS Controls v8); otherwise ship them separately so the framework stays leaner and users can mix and match.
 
 ## Authoring risk matrices
 
@@ -128,7 +128,7 @@ A risk matrix declares the **probability** scale, the **impact** scale, and the 
 1. Fill in the matrix **name** and optional description.
 2. In the **Probability** section, use **Add level** / **Remove level** (the trash icon) to reach the count you want (a 5×5 needs 5). Per level set the **abbreviation** (`VL`, `L`, `M`, `H`, `VH`), **name**, **description** (anchor it with numbers where you can — _"More than 10 per year"_ is testable, _"Frequent"_ isn't), and a **Color**.
 3. Repeat in the **Impact** section.
-4. In the **Risk** section, set the number of risk classes and each one's name, description, and colour.
+4. In the **Risk** section, set the number of risk classes and each one's name, description, and color.
 
 The editor enforces a minimum of 2 levels per axis.
 
@@ -140,9 +140,9 @@ The **Grid** section maps every `(probability, impact)` pair to a risk level:
 
 Deleting a risk level that cells still point at is the most fragile operation: affected cells fall back to the first risk level. Prefer cloning to a new matrix over destructive level removal on a matrix already in use. (The publishable check surfaces such issues when you **Validate** on the draft page — see below.)
 
-### Apply a colour palette
+### Apply a color palette
 
-Each level section offers four colour palettes — **classic** (green→red), **accessible** (Wong's colourblind-safe set), **warm**, and **cool** — as swatch buttons. Selecting one rewrites every colour in that section in order (overwriting custom hex). Apply the same palette across sections for a coherent look; the _accessible_ palette is the safe default, and keeps risk-level colours monotonic (green → yellow → orange → red).
+Each level section offers four color palettes — **classic** (green→red), **accessible** (Wong's colorblind-safe set), **warm**, and **cool** — as swatch buttons. Selecting one rewrites every color in that section in order (overwriting custom hex). Apply the same palette across sections for a coherent look; the _accessible_ palette is the safe default, and keeps risk-level colors monotonic (green → yellow → orange → red).
 
 ## Authoring journey presets
 
@@ -263,16 +263,16 @@ The builder will let you do almost anything; the choices that age well are narro
 
 - **Prefer breadth over depth.** Two levels suit most standards; three is the realistic limit before navigation hurts. If a section has a single assessable child, flatten it.
 - **Stable `ref_id`s outlive renames.** They appear in mappings, exports, and analyst conversations ("we're failing 5.3.2"). Zero-pad so they sort (`05.03.02`, not `5.3.2` past 9).
-- **The URN namespace identifies the publisher, not the framework** — one namespace per organisation (`acme`), with the ref_id differentiating frameworks. Settle it before publishing widely; once published the identity locks.
+- **The URN namespace identifies the publisher, not the framework** — one namespace per organization (`acme`), with the ref_id differentiating frameworks. Settle it before publishing widely; once published the identity locks.
 - **Add IGs only when there are two real tiers**, and prefer cumulative tiers (IG1 ⊂ IG2 ⊂ IG3). **Match the standard's scoring scale** rather than inventing one, and document each level.
 - **Drive flash-mode scoring from choice `add_score`**, not manual per-requirement scoring — the question layer is the structured-input layer.
 
 **Risk matrices**
 
-- **Pick the size deliberately.** 3×3 for early programmes, 5×5 for mature ones (ISO 27005, EBIOS RM, NIST). Beyond 5×5, discrimination doesn't actually improve.
+- **Pick the size deliberately.** 3×3 for early programs, 5×5 for mature ones (ISO 27005, EBIOS RM, NIST). Beyond 5×5, discrimination doesn't actually improve.
 - **Anchor axis levels with numbers**, keep one term (likelihood / frequency / probability), and mirror the business's own impact grading.
-- **Keep risk-level colours monotonic** and lean on the _accessible_ palette. Make the acceptable-vs-unacceptable boundary visually obvious.
-- **Once in use, changes ripple.** Renaming/recolouring/adding levels is safe; removing a level or changing a cell re-evaluates scenarios that land there — validate before publishing.
+- **Keep risk-level colors monotonic** and lean on the _accessible_ palette. Make the acceptable-vs-unacceptable boundary visually obvious.
+- **Once in use, changes ripple.** Renaming/recoloring/adding levels is safe; removing a level or changing a cell re-evaluates scenarios that land there — validate before publishing.
 
 **Presets**
 
@@ -285,7 +285,7 @@ The builder will let you do almost anything; the choices that age well are narro
 ## Builder vs Excel
 
 - **Builder** — for content that lives primarily on this instance (internal policies, forked variants, in-progress drafts), for iterative editing, and anywhere a translation pass matters (the side-by-side editing and coverage counter are hard to replicate in a spreadsheet).
-- **Excel** — for content you ship as a library file across instances or to the community catalogue, for constructs the builder UI doesn't expose (e.g. per-requirement score overrides), and for the initial conversion of a published standard from its source spreadsheet. See [Excel-driven authoring](excel.md) and [Designing your own libraries](../libraries/custom-libraries.md).
+- **Excel** — for content you ship as a library file across instances or to the community catalog, for constructs the builder UI doesn't expose (e.g. per-requirement score overrides), and for the initial conversion of a published standard from its source spreadsheet. See [Excel-driven authoring](excel.md) and [Designing your own libraries](../libraries/custom-libraries.md).
 
 The two paths compose: an Excel-built library can be imported into a draft and tuned in place, and a builder draft can be exported to YAML for redistribution.
 
@@ -303,7 +303,7 @@ Individual users' most recently typed packager is also remembered locally and ta
 - **No respondent preview inside the builder.** The framework editor here doesn't offer the "preview as respondent" view the standalone builder had; publish the library (or a working copy) to see it rendered.
 - **Everything is RBAC-scoped.** The builder only shows and resolves against libraries and objects you're allowed to see — including during validation and dependency resolution. You see what you're allowed to see.
 - **Migration from the old builders.** In-flight drafts from the previous per-object builders were migrated into draft libraries on upgrade, so existing work is preserved.
-- **Author mappings as a separate library**, not inside a framework, and map at the leaf level — section-to-section mappings rarely survive reorganisations. See the [Mappings concept](../../concepts/mappings.md).
+- **Author mappings as a separate library**, not inside a framework, and map at the leaf level — section-to-section mappings rarely survive reorganizations. See the [Mappings concept](../../concepts/mappings.md).
 
 ## Related
 

@@ -3,6 +3,7 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import Image from 'next/image';
 import { useTranslations } from 'next-intl';
+import { posthog } from 'posthog-js';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -30,9 +31,9 @@ const ErrorMessage = ({ onClose }) => (
         <Link
           className="border-b border-green-45/40 hover:border-green-45"
           theme="green"
-          to="mailto:contact@optitech.com"
+          to="mailto:info@optitech-sverige.se"
         >
-          contact@optitech.com
+          info@optitech-sverige.se
         </Link>
       </p>
     </div>
@@ -130,6 +131,11 @@ const ContactForm = () => {
         await sendGtagEvent('identify', { email });
         await sendGtagEvent(eventName, eventProps);
       }
+
+      posthog.capture('contact_sales_form_submitted', {
+        company_size: companySize,
+        reason_for_contact: reasonForContact,
+      });
 
       doNowOrAfterSomeTime(() => {
         setFormState(FORM_STATES.SUCCESS);
@@ -269,7 +275,7 @@ const ContactForm = () => {
           {t.rich('agreement', {
             a1: (chunks) => (
               <Link
-                className="text-gray-new-30 underline decoration-dashed decoration-gray-new-30/40 underline-offset-4 transition-colors duration-200 hover:decoration-gray-new-30"
+                className="text-gray-new-30 underline decoration-gray-new-30/40 decoration-dashed underline-offset-4 transition-colors duration-200 hover:decoration-gray-new-30"
                 to={LINKS.websiteTerms}
               >
                 {chunks}
@@ -277,7 +283,7 @@ const ContactForm = () => {
             ),
             a2: (chunks) => (
               <Link
-                className="text-gray-new-30 underline decoration-dashed decoration-gray-new-30/40 underline-offset-4 transition-colors duration-200 hover:decoration-gray-new-30"
+                className="text-gray-new-30 underline decoration-gray-new-30/40 decoration-dashed underline-offset-4 transition-colors duration-200 hover:decoration-gray-new-30"
                 to={LINKS.privacyPolicy}
               >
                 {chunks}

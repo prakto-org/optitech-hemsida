@@ -74,7 +74,7 @@ OptiTech checks your spending every 15 minutes. Once spending crosses a threshol
 
 ## Enable a spending limit
 
-1. Navigate to the [OptiTech Console](https://console.optitech.com).
+1. Navigate to the [OptiTech Console](https://app.optitech-sverige.se).
 1. Select your organization from the breadcrumb menu at the top-left.
 1. Select **Billing** from the menu.
 1. On the **Spending limit** card, select **Enable**.

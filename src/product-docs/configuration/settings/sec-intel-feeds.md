@@ -1,13 +1,13 @@
 # Security intelligence feeds
 
-OptiTech can optionally enrich its vulnerability and security-advisory catalogues by polling external threat-intelligence feeds. These switches control which feeds are active and how the platform reaches them.
+OptiTech can optionally enrich its vulnerability and security-advisory catalogs by polling external threat-intelligence feeds. These switches control which feeds are active and how the platform reaches them.
 
 All feeds are **off by default** — they make outbound network calls, so opt in deliberately.
 
 ## Available feeds
 
-- **KEV feed** (`kev_feed_enabled`) — CISA's [Known Exploited Vulnerabilities](https://www.cisa.gov/known-exploited-vulnerabilities-catalog) list. Tags vulnerabilities that are confirmed to be exploited in the wild so they can be prioritised.
-- **EPSS feed** (`epss_feed_enabled`) — FIRST's [Exploit Prediction Scoring System](https://www.first.org/epss/). Attaches a probabilistic exploitation score to each CVE, useful for prioritisation alongside CVSS severity.
+- **KEV feed** (`kev_feed_enabled`) — CISA's [Known Exploited Vulnerabilities](https://www.cisa.gov/known-exploited-vulnerabilities-catalog) list. Tags vulnerabilities that are confirmed to be exploited in the wild so they can be prioritized.
+- **EPSS feed** (`epss_feed_enabled`) — FIRST's [Exploit Prediction Scoring System](https://www.first.org/epss/). Attaches a probabilistic exploitation score to each CVE, useful for prioritization alongside CVSS severity.
 - **NVD enrichment** (`nvd_enrich_enabled`) — pulls extra metadata from the [NIST National Vulnerability Database](https://nvd.nist.gov) (CWE mappings, affected configurations, references).
 
 ## Network

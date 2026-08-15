@@ -1,11 +1,11 @@
 # Documents
 
-**Document management** lets you author, version, and publish documents — policies, procedures, charters, records, meeting minutes — directly inside OptiTech, so the text of your governance programme lives where the rest of your GRC data lives, with revision history and an approval workflow attached.
+**Document management** lets you author, version, and publish documents — policies, procedures, charters, records, meeting minutes — directly inside OptiTech, so the text of your governance program lives where the rest of your GRC data lives, with revision history and an approval workflow attached.
 
 Documents can be **authored in-platform** (a Markdown editor with a draft → published lifecycle), **uploaded** (an existing PDF or file carried through the same lifecycle), or **linked** (a pointer to a document that lives in another system). Whatever the source, a document can be classified, linked to the objects it governs, and referenced by other documents.
 
 {% hint style="info" %}
-Document management is controlled by the `document_management` [feature flag](../configuration/settings/feature-flags.md) (on by default). The **Documents** reading catalogue, the document list, and templates all live behind it.
+Document management is controlled by the `document_management` [feature flag](../configuration/settings/feature-flags.md) (on by default). The **Documents** reading catalog, the document list, and templates all live behind it.
 {% endhint %}
 
 ## Mental model
@@ -32,7 +32,7 @@ A **document container** is the language-independent identity of a document: it 
 
 ## Document types
 
-Every document has a **Document type**, used to group the reading catalogue and to scope the template picker. The built-in types are **Policy**, **Procedure**, **Charter**, **Record**, **Meeting minutes**, and **Other**.
+Every document has a **Document type**, used to group the reading catalog and to scope the template picker. The built-in types are **Policy**, **Procedure**, **Charter**, **Record**, **Meeting minutes**, and **Other**.
 
 ## Content sources
 
@@ -52,7 +52,7 @@ The lifecycle, revision history, and diff mechanics are shared with policy docum
 
 ## Multiple languages
 
-A single document can carry a version per language. One language is the **default** (used for the catalogue title and status); the others are translations. Each language version has its own lifecycle, so a French translation can still be in draft while the English original is published.
+A single document can carry a version per language. One language is the **default** (used for the catalog title and status); the others are translations. Each language version has its own lifecycle, so a French translation can still be in draft while the English original is published.
 
 ## References
 
@@ -71,15 +71,15 @@ This is how a policy or a control points at the document that describes it witho
 
 ## Classification
 
-A document can carry a **Classification** — a level from an [object classification](object-classification.md) scheme such as TLP. Once set, the level shows as a coloured badge on the reading catalogue, in the reader, and in the documents table, and it is stamped on every page of the document's exported PDF (for example `TLP:AMBER`). Classification is optional and independent of the document's type, domain, and lifecycle.
+A document can carry a **Classification** — a level from an [object classification](object-classification.md) scheme such as TLP. Once set, the level shows as a colored badge on the reading catalog, in the reader, and in the documents table, and it is stamped on every page of the document's exported PDF (for example `TLP:AMBER`). Classification is optional and independent of the document's type, domain, and lifecycle.
 
 ## Templates
 
 New authored documents can start from a **document template** — a reusable Markdown body, chosen in the editor's template picker. The picker only offers templates matching the document's type and language. See the [Document templates guide](../guides/documents/document-templates.md).
 
-## Reading catalogue
+## Reading catalog
 
-The **Documents** page is a read-oriented catalogue: published documents shown as tiles, grouped by type, with search and type filters. It is the place to browse and read the published corpus, separate from the authoring workflow.
+The **Documents** page is a read-oriented catalog: published documents shown as tiles, grouped by type, with search and type filters. It is the place to browse and read the published corpus, separate from the authoring workflow.
 
 ## Related
 

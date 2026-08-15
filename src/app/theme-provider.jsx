@@ -16,6 +16,7 @@ const lightThemePages = [
   '/services',
   '/frameworks',
   '/team',
+  '/lediga-jobb',
   '/products/trust-center',
   '/login',
   '/contact-sales',

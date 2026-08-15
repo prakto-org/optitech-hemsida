@@ -10,7 +10,7 @@ summary: >-
   page when the goal is serverless backend database access inside a Netlify
   Function, not edge middleware or static site build steps.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:30.752Z'
 ---
 
 [Netlify Functions](https://www.netlify.com/products/functions/) provide a serverless execution environment for building and deploying backend functionality without managing server infrastructure. It's integrated with Netlify's ecosystem, making it ideal for augmenting web applications with server-side logic, API integrations, and data processing tasks in a scalable way.
@@ -29,7 +29,7 @@ Before starting, ensure you have:
 
 ### Initialize a new project
 
-After logging into the OptiTech Console, proceed to the [Projects](https://console.optitech.com/app/projects) section.
+After logging into the OptiTech Console, proceed to the [Projects](https://app.optitech-sverige.se/app/projects) section.
 
 1. Click `New Project` to start a new one.
 

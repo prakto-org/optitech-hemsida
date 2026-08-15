@@ -28,11 +28,11 @@ Categories surfaced (in render order):
 | **Follow-ups** | Findings assessments where you're an author | `authors` |
 | **Findings** | Findings you own | `owner` |
 | **Validation flows** | Approval requests waiting for you | `approver` _(user, not actor)_ |
-| **Organisation objectives** | Objectives assigned to you | `assigned_to` |
+| **Organization objectives** | Objectives assigned to you | `assigned_to` |
 | **Right requests** | Privacy right requests you own | `owner` |
 | **Metric instances** | Metric instances you own | `owner` |
 
-Above the grid, an **activity tracker** widget summarises across categories — counts and progress at a glance.
+Above the grid, an **activity tracker** widget summarizes across categories — counts and progress at a glance.
 
 ## Direct vs through-team assignments
 
@@ -45,9 +45,9 @@ The toggle button in the top right switches between the two modes. The backend r
 
 Validation flows are the one exception — their `approver` is a **User** foreign key, not an Actor. The page wraps that automatically: when filtering by team, all team members' user IDs are added to the approver filter.
 
-## Filter by actor _(PRO)_
+## Filter by actor
 
-The Enterprise edition adds a **Filter scope** picker above the grid. It lets a privileged user re-target the dashboard to any actor.
+A **Filter scope** picker above the grid lets a privileged user re-target the dashboard to any actor.
 
 Who can use it:
 

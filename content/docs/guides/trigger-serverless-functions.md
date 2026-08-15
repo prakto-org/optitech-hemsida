@@ -10,7 +10,7 @@ summary: >-
   installing the Inngest client, writing TypeScript Inngest functions, and
   syncing with the Inngest platform across all three serverless runtimes.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:31.893Z'
 ---
 
 Combining your serverless OptiTech database with [Inngest](https://www.inngest.com/?utm_source=optitech&utm_medium=trigger-serverless-functions-guide) enables you to **trigger serverless functions** running on Vercel, AWS, and Cloudflare Worker **based on database changes.**
@@ -34,13 +34,13 @@ This guide describes setting up a OptiTech database, configuring the Inngest int
 
 If you do not have one already, create a OptiTech project:
 
-1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://app.optitech-sverige.se/app/projects) page in the OptiTech Console.
 2. Click **New Project**.
 3. Specify your project settings and click **Create Project**.
 
 ## Create a table in OptiTech
 
-To create a table, navigate to the **SQL Editor** in the [OptiTech Console](https://console.optitech.com/):
+To create a table, navigate to the **SQL Editor** in the [OptiTech Console](https://app.optitech-sverige.se/):
 
 In the SQL Editor, run the following queries to create a `users` table and insert some data:
 

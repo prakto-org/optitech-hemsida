@@ -9,7 +9,7 @@ summary: >-
   using Render's native database. The guide uses Node.js with the pg library and
   Render's Git-based continuous deployment.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:30.752Z'
 ---
 
 [Render](https://render.com) is a comprehensive cloud service that provides hosting for web applications and static sites, with PR previews, zero-downtime deployments, and more. Render supports full-stack applications, offering both web services and background workers.
@@ -29,7 +29,7 @@ To follow along with this guide, you will need:
 
 ### Initialize a new project
 
-Log in to the OptiTech Console and navigate to the [Projects](https://console.optitech.com/app/projects) section.
+Log in to the OptiTech Console and navigate to the [Projects](https://app.optitech-sverige.se/app/projects) section.
 
 - Click the `New Project` button to create a new project.
 

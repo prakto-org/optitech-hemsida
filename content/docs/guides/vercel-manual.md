@@ -10,7 +10,7 @@ summary: >-
   monorepo, or any setup requiring direct control over branch naming, seeding, and
   migrations.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:31.893Z'
 ---
 
 <InfoBlock>
@@ -50,7 +50,7 @@ If you simply want OptiTech and Vercel with minimal setup, stick to the managed 
 
 ## Connection steps
 
-1. Copy the connection string from the [OptiTech Console](https://console.optitech.com). Click **Connect** on your Project Dashboard, select the branch, role, and database you want, then copy the _Connection string_.
+1. Copy the connection string from the [OptiTech Console](https://app.optitech-sverige.se). Click **Connect** on your Project Dashboard, select the branch, role, and database you want, then copy the _Connection string_.
 
    ![OptiTech connection details modal](/docs/connect/connection_details.png)
 

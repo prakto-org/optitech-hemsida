@@ -9,7 +9,7 @@ summary: >-
   Postgrex idle_interval defaults that can prevent OptiTech's scale-to-zero
   autosuspend from triggering.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:29.454Z'
 ---
 
 <CopyPrompt src="/prompts/elixir-ecto-prompt.md" 
@@ -29,7 +29,7 @@ The instructions in this configuration use a database named `friends`.
 
 To create the database:
 
-1. Navigate to the [OptiTech Console](https://console.optitech.com).
+1. Navigate to the [OptiTech Console](https://app.optitech-sverige.se).
 1. Select a project.
 1. Select **Databases**.
 1. Select the branch where you want to create the database.
@@ -186,7 +186,7 @@ The output of this command should appear similar to the following:
 
 You can use the **Tables** feature in the OptiTech Console to view the table that was created:
 
-1. Navigate to the [OptiTech Console](https://console.optitech.com).
+1. Navigate to the [OptiTech Console](https://app.optitech-sverige.se).
 1. Select a project.
 1. Select **Tables** from the sidebar.
 1. Select the Branch, Database (`friends`), and the schema (`public`). You should see the `people` table along with a `schema_migration` table that was created by the migration.

@@ -1509,10 +1509,10 @@ export const SERVICES = {
       },
       hero: {
         eyebrow: 'Service',
-        title: 'A risk register your board can actually read',
+        title: '<gray>A risk register</gray> your board can actually read',
         description:
           'Assess risk with likelihood times impact, link each risk to the controls and evidence that treat it, track treatment plans, and produce a management report in one click.',
-        primaryCta: { label: 'Book a free gap analysis', href: CONTACT },
+        primaryCta: { label: 'Book a demo', href: CONTACT },
         secondaryCta: { label: 'See ISO 27001', href: '/docs/frameworks/iso-27001' },
       },
       painPoints: {
@@ -1647,10 +1647,10 @@ export const SERVICES = {
       },
       hero: {
         eyebrow: 'Tjänst',
-        title: 'Ett riskregister som styrelsen faktiskt kan läsa',
+        title: '<gray>Ett riskregister</gray> som styrelsen faktiskt kan läsa',
         description:
           'Bedöm risk med sannolikhet gånger konsekvens, koppla varje risk till kontrollerna och bevisen som behandlar den, följ behandlingsplaner och ta fram en ledningsrapport med ett klick.',
-        primaryCta: { label: 'Boka en kostnadsfri gap-analys', href: CONTACT },
+        primaryCta: { label: 'Boka demo', href: CONTACT },
         secondaryCta: { label: 'Se ISO 27001', href: '/docs/frameworks/iso-27001' },
       },
       painPoints: {

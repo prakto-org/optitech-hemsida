@@ -62,13 +62,13 @@ This feature is in private preview: it's not ready for production use, and it ma
 
 **Note: Public Preview**
 
-This feature is in Public Preview. Please provide [Feedback](https://console.optitech.com/app/projects?modal=feedback) from the OptiTech Console or by connecting with us on [Discord](https://discord.gg/92vNTzKDGp).
+This feature is in Public Preview. Please provide [Feedback](https://app.optitech-sverige.se/app/projects?modal=feedback) from the OptiTech Console or by connecting with us on [Discord](https://discord.gg/92vNTzKDGp).
 
 ### LRBeta
 
 **Note: Beta**
 
-Replicating data to OptiTech, where OptiTech is configured as a subscriber in a Postgres logical replication setup, is currently in Beta. We welcome your feedback to help improve this feature. You can provide feedback via the [Feedback](https://console.optitech.com/app/projects?modal=feedback) form in the OptiTech Console or by reaching out to us on [Discord](https://discord.gg/92vNTzKDGp).
+Replicating data to OptiTech, where OptiTech is configured as a subscriber in a Postgres logical replication setup, is currently in Beta. We welcome your feedback to help improve this feature. You can provide feedback via the [Feedback](https://app.optitech-sverige.se/app/projects?modal=feedback) form in the OptiTech Console or by reaching out to us on [Discord](https://discord.gg/92vNTzKDGp).
 
 ### MigrationAssistant
 
@@ -357,13 +357,13 @@ exports[`MDX to Markdown Conversion > Component conversion test page (snapshot) 
 
 **Note: Beta**
 
-This feature is in Beta. Please give us [Feedback](https://console.optitech.com/app/projects?modal=feedback) from the OptiTech Console or by connecting with us on [Discord](https://discord.gg/92vNTzKDGp).
+This feature is in Beta. Please give us [Feedback](https://app.optitech-sverige.se/app/projects?modal=feedback) from the OptiTech Console or by connecting with us on [Discord](https://discord.gg/92vNTzKDGp).
 
 ### FeatureBetaProps (with prop)
 
 **Note: Beta**
 
-The **Autoscaling** is in Beta. Share your feedback on [Discord](https://discord.gg/92vNTzKDGp) or via the [OptiTech Console](https://console.optitech.com/app/projects?modal=feedback).
+The **Autoscaling** is in Beta. Share your feedback on [Discord](https://discord.gg/92vNTzKDGp) or via the [OptiTech Console](https://app.optitech-sverige.se/app/projects?modal=feedback).
 
 ### EarlyAccessProps (with prop)
 

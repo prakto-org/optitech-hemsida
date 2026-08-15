@@ -5,7 +5,7 @@ enableTableOfContents: true
 isDraft: false
 redirectFrom:
   - /docs/guides/prisma-tutorial
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:34.632Z'
 ---
 
 Prisma is an open source next-generation ORM that consists of the following parts:
@@ -194,7 +194,7 @@ found 0 vulnerabilities
 
 To view the `Elements` table that was created in your `optitechdb` database by the migration performed in the previous step:
 
-1. Navigate to the [OptiTech Console](https://console.optitech.com/).
+1. Navigate to the [OptiTech Console](https://app.optitech-sverige.se/).
 2. Select your project.
 3. Select **Tables**.
 4. Select the `optitechdb` database and default `public` schema. The `Elements` table should be visible in the sidebar. The table has no data at this point. Data is added later in this guide.
@@ -249,7 +249,7 @@ You have a couple of options for adding data to the `Elements` table. You can ad
 
 ### Option A: Add data using the OptiTech SQL Editor
 
-1. Navigate to the [OptiTech Console](https://console.optitech.com/).
+1. Navigate to the [OptiTech Console](https://app.optitech-sverige.se/).
 1. Select your project.
 1. Select the **SQL Editor**.
 1. Select the `main` branch of your project and select the `optitechdb` database.
@@ -425,7 +425,7 @@ Another use case for Introspection is when using plain SQL for schema changes or
 
 Let's assume your database has an extended version of the `Elements` table used in the previous steps. This table is called `Elements_ext`. Let's create that table in the OptiTech SQL Editor:
 
-1. Navigate to the [OptiTech Console](https://console.optitech.com/).
+1. Navigate to the [OptiTech Console](https://app.optitech-sverige.se/).
 1. Select your project.
 1. Select the **SQL Editor**.
 1. Select the `main` branch of your project and select the `optitechdb` database.

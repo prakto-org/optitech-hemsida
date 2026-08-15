@@ -32,17 +32,17 @@ A risk matrix is a JSON definition (probability axis, impact axis, risk levels, 
 A matrix has four pieces:
 
 - **Probability levels** — the ordered scale used for likelihood (e.g. negligible, low, medium, high, very high).
-- **Impact levels** — the ordered scale used for severity (financial, reputational, operational, or whatever scale the organisation uses).
-- **Risk levels** — the resulting categories (e.g. low / medium / high / critical), usually colour-coded.
+- **Impact levels** — the ordered scale used for severity (financial, reputational, operational, or whatever scale the organization uses).
+- **Risk levels** — the resulting categories (e.g. low / medium / high / critical), usually color-coded.
 - **The grid** — the lookup from each `(probability × impact)` cell to a risk level.
 
-The grid is the substance of the matrix; the visual rendering (orientation, colours, layout) is handled by the UI based on the loaded matrix definition.
+The grid is the substance of the matrix; the visual rendering (orientation, colors, layout) is handled by the UI based on the loaded matrix definition.
 
 ## Why a matrix is fixed per risk assessment
 
 When a risk assessment is created, its risk matrix is captured and **stays fixed** for the lifetime of that assessment. Re-evaluating the same scenarios against a different matrix would silently change the risk levels under your feet, which is exactly what auditors don't want.
 
-If you change matrices mid-programme, you create a new risk assessment against the new matrix and migrate the scenarios. The old assessment keeps its history; the new one starts clean against the new scale.
+If you change matrices mid-program, you create a new risk assessment against the new matrix and migrate the scenarios. The old assessment keeps its history; the new one starts clean against the new scale.
 
 ## Three-tier evaluation
 

@@ -78,6 +78,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export const revalidate = 60;
+// Content is in-repo: pages only change on deploy, and unknown slugs must 404
+// without invoking a render (bot probes to /<anything> were burning function CPU).
+export const dynamicParams = false;
 
 export default SinglePage;

@@ -77,6 +77,8 @@ export async function generateStaticParams() {
   }));
 }
 
-export const revalidate = 60;
+// Posts come from the external blog CDN, so dynamicParams stays on for new posts;
+// 300s keeps crawler-driven re-renders 5x cheaper than the old 60s.
+export const revalidate = 300;
 
 export default BlogPage;

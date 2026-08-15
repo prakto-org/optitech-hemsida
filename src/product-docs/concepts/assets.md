@@ -2,7 +2,7 @@
 
 An **asset** is anything of value worth protecting. Assets are first-class objects in OptiTech, decoupled from any specific risk study or audit, so the same asset can participate in many analyses without being duplicated.
 
-Assets are always defined by the organisation and can be attached to the global domain or to a specific domain.
+Assets are always defined by the organization and can be attached to the global domain or to a specific domain.
 
 ## Mental model
 
@@ -29,7 +29,7 @@ The asset is a hub other surfaces point at: risk scenarios impact it, vulnerabil
 
 ## Primary vs supporting assets
 
-- **Primary assets** are core resources directly contributing to the organisation's main objectives — business processes, data, intellectual property.
+- **Primary assets** are core resources directly contributing to the organization's main objectives — business processes, data, intellectual property.
 - **Supporting assets** indirectly aid primary functions — IT systems, services, locations, people.
 
 The distinction matters for risk work: scenarios typically express _what can happen to a primary asset_ via _which supporting assets are involved_.

@@ -110,12 +110,12 @@
       "heading": "<strong>Utvecklat i Sverige, med stöd av experter.</strong> OptiTech grundades av specialister inom säkerhet och regelefterlevnad. All data lagras i datacenter i Sverige och inom EU.",
       "stats": {
         "nis2Count": {
-          "title": "10 000+",
-          "description": "Svenska företag omfattas av NIS2."
+          "title": "AI Governance",
+          "description": "Etisk AI-utrullning med biasdetektering, riskhantering och transparent beslutsfattande."
         },
         "iso": {
-          "title": "ISO 27001",
-          "description": "Vi tillverkar vår egen produkt och certifierar den själva."
+          "title": "ISO\n27001",
+          "description": "Oberoende revisioner bekräftar att dina data är krypterade, övervakade och skyddade av kontroller i företagsklass."
         }
       },
       "labelRight": "De bästa litar på oss",
@@ -846,6 +846,502 @@
         "title": "Se er nuvarande process genom systemets ögon",
         "button": "Begär en genomgång av er rapporteringsprocess"
       }
+    },
+    "gapAnalysis": {
+      "hero": {
+        "label": "Gap-analys",
+        "title": "Vet exakt <gray>var ni står</gray>",
+        "description": "Kör en automatiserad gap-analys mot NIS2, DORA, GDPR, ISO 27001 eller EU:s AI-förordning. Förvandla lagtexten till en prioriterad åtgärdslista ni kan börja med samma dag.",
+        "cta": "Boka demo",
+        "mockup": {
+          "url": "app.optitech.se",
+          "pageTitle": "ISO 27001 gap-analys",
+          "badges": ["NIS2", "ISO 27001", "GDPR"],
+          "documentsHeading": "Krav",
+          "documents": [
+            { "name": "Behörighetspolicy", "access": "Uppfyllt" },
+            { "name": "Riskbedömning", "access": "Gap" },
+            { "name": "Leverantörsregister", "access": "Uppfyllt" },
+            { "name": "Incidentrutin", "access": "Gap" }
+          ],
+          "controlsHeading": "Kontroller",
+          "controls": [
+            { "name": "Kryptering i vila", "status": "Uppfyllt" },
+            { "name": "MFA påtvingad", "status": "Uppfyllt" },
+            { "name": "Test av backup", "status": "Gap" },
+            { "name": "Behörighetsgranskningar", "status": "Delvis" }
+          ],
+          "syncNote": "Poängsätts automatiskt från era anslutna system.",
+          "chat": {
+            "label": "OptiTech AI",
+            "question": "Vilka gap bör vi åtgärda först?",
+            "answer": "Börja med test av backup och behörighetsgranskningar. Båda är ISO 27001-kontroller med stor påverkan och är i dagsläget inte uppfyllda.",
+            "source": "Källa: gap-analys, 42 kontroller bedömda"
+          }
+        }
+      },
+      "proof": {
+        "logosHeading": "Betrott av compliance-team i hela Norden",
+        "logos": ["Nordkraft", "Fjordbank", "Helsia", "Kustdata", "Polaris Health", "Baltic Freight", "Grönlund & Co"],
+        "statTitle": "Timmar till en åtgärdsplan, inte veckor av konsultarbete",
+        "statDescription": "En konsultledd gap-analys tar 20 till 40 timmar av intervjuer och genomgång. OptiTech avgränsar vilka ramverk som gäller och poängsätter era kontroller från anslutna system på en bråkdel av tiden.",
+        "statSource": "Källa: jämförelse mellan konsultledda gap-analyser och OptiTechs automatiserade avgränsning, 2025."
+      },
+      "features": {
+        "label": "Gap-analys",
+        "cta": "Boka demo",
+        "items": [
+          {
+            "title": "Fråga vad som gäller er, på vanlig svenska",
+            "description": "Beskriv er verksamhet så avgränsar OptiTechs AI vilka ramverk och kontroller som är i omfattning, grundat i nordisk lagtext med källan angiven. Ingen gissningslek om ni är en väsentlig eller viktig entitet.",
+            "mockup": {
+              "label": "OptiTech AI",
+              "question": "Omfattas vi av NIS2?",
+              "answer": "Ja. Som medelstor elleverantör är ni en väsentlig entitet enligt cybersäkerhetslagen. 42 kontroller gäller.",
+              "chips": ["Källa: NIS2 / cybersäkerhetslagen", "Avgränsat i denna session"]
+            }
+          },
+          {
+            "title": "Se varje gap, poängsatt och prioriterat",
+            "description": "OptiTech poängsätter varje kontroll som uppfyllt, delvis eller gap, och rangordnar sedan gapen efter påverkan och insats. Ni får en prioriterad åtgärdslista istället för en 60-sidig rapport som ingen läser.",
+            "mockup": {
+              "label": "Gap-analys",
+              "rows": [
+                { "name": "Kryptering i vila", "status": "Uppfyllt", "open": true },
+                { "name": "Behörighetsgranskningar", "status": "Gap", "open": false },
+                { "name": "Test av backup", "status": "Delvis", "open": false }
+              ],
+              "requestTitle": "2 högprioriterade gap",
+              "requestMeta": "ISO 27001 · A.8, A.12",
+              "requestButton": "Tilldela"
+            }
+          },
+          {
+            "title": "En färdplan, inte en 60-sidig rapport",
+            "description": "Varje gap blir en uppgift med en ansvarig och ett slutdatum, sekvenserat från snabba vinster till certifiering. Ni lämnar analysen med en plan, inte en läxa.",
+            "mockup": {
+              "label": "Färdplan",
+              "colorsLabel": "Ramverk",
+              "domainLabel": "Mål",
+              "domain": "ISO 27001 · Q3 2026",
+              "previewTitle": "Er compliance-färdplan",
+              "previewText": "Gap sekvenserade från snabba vinster till certifiering, var och en med ansvarig och slutdatum."
+            }
+          },
+          {
+            "title": "Ombedöm kontinuerligt, inte en gång om året",
+            "description": "Anslut Microsoft 365, Entra ID, AWS med flera, så poängsätter OptiTech kontrollerna på nytt automatiskt. Er gap-analys hålls aktuell istället för att bli inaktuell samma dag som konsulten går.",
+            "mockup": {
+              "label": "Levande kontroller",
+              "synced": "Ompoängsatt för 5 min sedan",
+              "rows": [
+                { "name": "MFA påtvingad", "framework": "ISO 27001 · A.5.17", "status": "Uppfyllt" },
+                { "name": "Behörighetsgranskningar", "framework": "NIS2 · Art. 21", "status": "Gap" },
+                { "name": "Gallringsfrister", "framework": "GDPR · Art. 5", "status": "Delvis" }
+              ]
+            }
+          }
+        ]
+      },
+      "network": {
+        "title": "En analys, alla ramverk ni omfattas av",
+        "description": "Korsmappade kontroller över NIS2, DORA, GDPR, ISO 27001 och EU:s AI-förordning",
+        "frameworks": [
+          { "name": "NIS2", "description": "EU:s cybersäkerhetsdirektiv för väsentliga och viktiga entiteter, med krav på riskhantering och incidentrapportering." },
+          { "name": "DORA", "description": "Digital Operational Resilience Act, som styr ICT-risk, motståndskraftstestning och tredjepartstillsyn för finanssektorn." },
+          { "name": "GDPR", "description": "EU:s förordning för laglig och transparent behandling av personuppgifter och de registrerades rättigheter." },
+          { "name": "ISO 27001", "description": "Den internationella standarden för ett ledningssystem för informationssäkerhet, byggt på riskbedömning och riskbehandling." },
+          { "name": "EU AI Act", "description": "EU:s förordning som klassar AI-system efter risk och ställer krav på högrisk-användning." },
+          { "name": "ISO 27701", "description": "Integritetstillägget till ISO 27001, som lägger till ett ledningssystem för integritet ovanpå ert LIS." },
+          { "name": "SOC 2", "description": "Den amerikanska attestrapporten om kontroller för säkerhet, tillgänglighet, behandlingsintegritet, konfidentialitet och integritet." },
+          { "name": "TISAX", "description": "Fordonsindustrins bedömning och utbyte för informationssäkerhet, baserat på VDA ISA-katalogen." }
+        ],
+        "companies": ["Nordkraft", "Fjordbank", "Helsia", "Kustdata", "Polaris Health", "Baltic Freight", "Grönlund & Co"],
+        "footnote": "Ramverkstäckningen utökas kontinuerligt."
+      },
+      "featureGrid": {
+        "title": "Vad gap-analysen omfattar",
+        "items": [
+          { "title": "Automatiserad avgränsning", "description": "Svara på några frågor så avgör OptiTech vilka ramverk och kontroller som gäller er verksamhet, entitetstyp och sektor." },
+          { "title": "Poängsättning kontroll för kontroll", "description": "Varje krav poängsätts uppfyllt, delvis eller gap, med bevisning eller den saknade biten visad bredvid." },
+          { "title": "Prioriterad åtgärdslista", "description": "Gapen rangordnas efter påverkan och insats så att ni vet vad ni ska åtgärda först, inte bara vad som är fel." },
+          { "title": "Korsmappning mellan ramverk", "description": "En kontroll uppfyller krav i flera ramverk samtidigt, så ni bedömer aldrig samma sak två gånger." },
+          { "title": "Uppskattning av insats och kostnad", "description": "Se det ungefärliga arbetet bakom varje gap i förväg, så att budgetering för compliance slutar vara gissning." },
+          { "title": "Exporterbar rapport", "description": "Dela en ren sammanfattning med styrelsen, en revisor eller en kund direkt från plattformen." }
+        ]
+      },
+      "testimonial": {
+        "text": "Vi bokade en konsult för en gap-analys och fick en offert på sex veckor. OptiTech hade oss avgränsade och poängsatta på en eftermiddag, och åtgärdslistan var redan prioriterad.",
+        "initials": "AL",
+        "name": "Alex Lopez",
+        "position": "IT-chef, nordisk tillverkare",
+        "cta": "Läs kundcaset"
+      },
+      "plans": {
+        "title": "Kom igång med en gap-analys",
+        "description": "Gap-analysen ingår i alla OptiTech-planer. Börja gratis och aktivera sedan de ramverk ni behöver.",
+        "cards": [
+          {
+            "plan": "Ingår i Start",
+            "name": "Gap-analys",
+            "description": "Avgränsa era ramverk och poängsätt era kontroller från dag ett.",
+            "features": ["Automatiserad ramverksavgränsning", "Poängsättning kontroll för kontroll", "Prioriterad åtgärdslista", "Exporterbar sammanfattningsrapport"],
+            "cta": "Se priser"
+          },
+          {
+            "plan": "Enterprise",
+            "name": "Kontinuerlig gap-analys",
+            "description": "Håll analysen levande över alla ramverk ni kör.",
+            "features": ["Obegränsat antal ramverk", "Kontinuerlig ompoängsättning från integrationer", "Korsmappning mellan ramverk", "Uppskattning av insats och kostnad"],
+            "cta": "Prata med sälj"
+          }
+        ]
+      },
+      "resources": {
+        "title": "Se vad en gap-analys kan göra för ert team",
+        "readMore": "Läs mer",
+        "items": [
+          { "type": "Guide", "title": "Så gör ni er första gap-analys", "description": "Vad ni ska förbereda, vilka system ni ska ansluta och hur ni läser resultatet." },
+          { "type": "Rapport", "title": "Den verkliga kostnaden för en konsultledd gap-analys", "description": "Vad en manuell bedömning kostar nordiska team i timmar och budget, och vad som händer när den automatiseras." },
+          { "type": "Blogg", "title": "Från gap-analys till certifiering", "description": "Hur team förvandlar en första avgränsning till en fungerande färdplan mot ISO 27001 eller NIS2." }
+        ]
+      },
+      "cta": {
+        "title": "Se var ni står, idag",
+        "description": "Kör en gap-analys mot de ramverk som gäller er, och förvandla resultatet till en plan ni kan börja med samma dag.",
+        "primaryCta": "Boka demo",
+        "secondaryCta": "Se priser",
+        "badges": [
+          { "name": "SOC 2 Type II", "meta": "Rapport tillgänglig" },
+          { "name": "ISO 27001", "meta": "Certifierad" },
+          { "name": "GDPR", "meta": "Efterlevs" },
+          { "name": "NIS2", "meta": "Redo" }
+        ]
+      }
+    },
+    "frameworkLibrary": {
+      "hero": {
+        "label": "Trust center",
+        "title": "Visa er efterlevnad <gray>innan någon hinner fråga</gray>",
+        "description": "Publicera ett levande trust center kopplat till ert OptiTech-program. Säkerhetsgranskningar besvarar sig själva.",
+        "cta": "Boka demo",
+        "mockup": {
+          "url": "trust.nordkraft.se",
+          "pageTitle": "Säkerhet och förtroende hos Nordkraft",
+          "badges": ["ISO 27001", "NIS2", "GDPR"],
+          "documentsHeading": "Dokument",
+          "documents": [
+            { "name": "Informationssäkerhetspolicy", "access": "Publik" },
+            { "name": "ISO 27001-certifikat", "access": "Publik" },
+            { "name": "Sammanfattning av penetrationstest", "access": "NDA" },
+            { "name": "Kontinuitetsplan", "access": "NDA" }
+          ],
+          "controlsHeading": "Kontroller",
+          "controls": [
+            { "name": "Kryptering i vila", "status": "Övervakad" },
+            { "name": "Behörighetsgranskningar", "status": "Övervakad" },
+            { "name": "Backup och återställning", "status": "Övervakad" },
+            { "name": "Incidenthantering", "status": "Övervakad" }
+          ],
+          "syncNote": "Uppdateras automatiskt från ert compliance-program i OptiTech.",
+          "chat": {
+            "label": "OptiTech AI",
+            "question": "Krypterar ni kunddata i vila?",
+            "answer": "Ja. All kunddata krypteras i vila med AES-256. Kontrollen övervakas kontinuerligt.",
+            "source": "Källa: kontroll CTRL-041, verifierad idag"
+          }
+        }
+      },
+      "proof": {
+        "logosHeading": "Trust centret för ledande nordiska verksamheter",
+        "logos": ["Nordkraft", "Fjordbank", "Helsia", "Kustdata", "Polaris Health", "Baltic Freight", "Grönlund & Co"],
+        "statTitle": "82 % snabbare genomförda säkerhetsgranskningar",
+        "statDescription": "Team som delar bevisning via ett trust center lägger timmar istället för veckor på säkerhetsformulär, och säljcykler mot reglerade köpare blir mätbart kortare.",
+        "statSource": "Källa: aggregerade svarstider för granskningar hos OptiTech-kunder med aktivt trust center, 2025."
+      },
+      "features": {
+        "label": "Trust Center",
+        "cta": "Boka demo",
+        "items": [
+          {
+            "title": "Köparnas säkerhetsfrågor, besvarade av OptiTech AI",
+            "description": "Köpare ställer frågor direkt i ert trust center och får omedelbara svar grundade i era faktiska kontroller och dokument, med källan angiven. Slut på veckolånga mejltrådar med säkerhetsteamet på kopia.",
+            "mockup": {
+              "label": "OptiTech AI",
+              "question": "Var lagras er data, och lämnar den EU?",
+              "answer": "All produktionsdata lagras inom EU (Stockholm och Frankfurt). Ingen kunddata överförs utanför EU/EES.",
+              "chips": ["Källa: Personuppgiftsbiträdesavtal", "Verifierad denna vecka"]
+            }
+          },
+          {
+            "title": "Automatiserad åtkomst till dokumentation",
+            "description": "Publika dokument finns ett klick bort. Känsliga rapporter ligger bakom ett självbetjänat NDA-flöde med e-signering, så en prospekt kan begära, signera och ladda ner utan att någon hos er behöver göra något.",
+            "mockup": {
+              "label": "Dokumentåtkomst",
+              "rows": [
+                { "name": "ISO 27001-certifikat", "status": "Publik", "open": true },
+                { "name": "Penetrationstestrapport", "status": "NDA", "open": false },
+                { "name": "SOC 2-rapport", "status": "NDA", "open": false }
+              ],
+              "requestTitle": "Pentestrapport begärd",
+              "requestMeta": "anna@example.com, NDA signerat",
+              "requestButton": "Godkänn"
+            }
+          },
+          {
+            "title": "Anpassat till ert varumärke, på er domän",
+            "description": "Er logotyp, era färger, er ton, på trust.ertforetag.se. Trust centret upplevs som en naturlig del av er webbplats, inte en tredjepartswidget som skruvats fast i slutet av affären.",
+            "mockup": {
+              "label": "Utseende",
+              "colorsLabel": "Varumärkesfärger",
+              "domainLabel": "Egen domän",
+              "domain": "trust.nordkraft.se",
+              "previewTitle": "Säkerhet hos Nordkraft",
+              "previewText": "Så skyddar vi er data, kontinuerligt verifierat och publicerat för våra kunder."
+            }
+          },
+          {
+            "title": "Sömlöst synkat med ert compliance-program",
+            "description": "Trust centret är inte ännu en sak att underhålla. Kontroller, dokument och ramverksstatus flödar direkt från ert OptiTech-program, så det era köpare ser är alltid det era revisorer ser.",
+            "mockup": {
+              "label": "Kontroller",
+              "synced": "Synkad för 2 min sedan",
+              "rows": [
+                { "name": "Multifaktorautentisering", "framework": "ISO 27001 · A.5.17", "status": "Godkänd" },
+                { "name": "Leverantörsgranskningar", "framework": "NIS2 · Art. 21", "status": "Godkänd" },
+                { "name": "Gallringsfrister", "framework": "GDPR · Art. 5", "status": "Godkänd" }
+              ]
+            }
+          }
+        ]
+      },
+      "network": {
+        "title": "Gå med i Nordens största nätverk av trust centers",
+        "description": "500+ trust center-sidor hostas av OptiTech",
+        "companies": ["Nordkraft", "Fjordbank", "Helsia", "Kustdata", "Polaris Health", "Baltic Freight", "Grönlund & Co"],
+        "footnote": "Fiktiva exempelbolag visas. Kundreferenser lämnas på begäran."
+      },
+      "featureGrid": {
+        "title": "Funktioner i trust centret",
+        "items": [
+          { "title": "CRM- och e-signeringsintegrationer", "description": "Koppla ert CRM och er e-signeringsleverantör så att NDA-förfrågningar, godkännanden och kontoaktivitet hamnar där säljteamet redan arbetar." },
+          { "title": "Besöksinsikter", "description": "Se vilka prospekt som besökt sidan, vad de läst och vilka dokument de begärt, så att sälj vet vem som sitter i en säkerhetsgranskning just nu." },
+          { "title": "ROI-rapportering", "description": "Följ sparade timmar på formulär och svarstider för granskningar, och visa säkerhetsarbetets bidrag till intäkterna i siffror." },
+          { "title": "Egna taggar och filter", "description": "Organisera kontroller och dokument per ramverk, målgrupp eller produktlinje så att varje köpare hittar det som gäller just dem." },
+          { "title": "Prenumerationsuppdateringar", "description": "Kunder prenumererar på ert trust center och notifieras automatiskt när certifikat förnyas eller underbiträden ändras." },
+          { "title": "Granulära åtkomstnivåer", "description": "Publikt, grindat och endast NDA per dokument, med utgående länkar och ett fullständigt spårbarhetslogg över vem som tagit del av vad." }
+        ]
+      },
+      "testimonial": {
+        "text": "Säkerhetsgranskningar var den långsammaste delen av varje affär. Nu skickar vi en länk. De flesta köpare skickar aldrig formuläret överhuvudtaget, och de som gör det får svar samma dag.",
+        "initials": "SL",
+        "name": "Sara Lindqvist",
+        "position": "CISO, Nordkraft",
+        "cta": "Läs kundcaset"
+      },
+      "plans": {
+        "title": "Kom igång med Trust Center",
+        "description": "Ingår i er OptiTech-plan, eller uppgradera för den fulla köparupplevelsen. Allt hålls synkat med ert compliance-program oavsett.",
+        "cards": [
+          {
+            "plan": "Ingår i Growth",
+            "name": "Trust Center",
+            "description": "Ett publikt trust center kopplat till ert levande compliance-program.",
+            "features": ["Hostad trust center-sida", "Levande kontroll- och ramverksstatus", "Publik dokumentdelning", "Prenumerationsuppdateringar"],
+            "cta": "Se priser"
+          },
+          {
+            "plan": "Enterprise",
+            "name": "Advanced Trust Center",
+            "description": "Den fulla köparupplevelsen för team med hög granskningsvolym.",
+            "features": ["OptiTech AI-svar till köpare", "Självbetjänat NDA-flöde med e-signering", "Egen domän och full varumärkesanpassning", "CRM-integration och besöksinsikter"],
+            "cta": "Prata med sälj"
+          }
+        ]
+      },
+      "resources": {
+        "title": "Se vad Trust Center kan göra för ert team",
+        "readMore": "Läs mer",
+        "items": [
+          { "type": "Guide", "title": "Bygg ett trust center era köpare faktiskt använder", "description": "Vad ni bör publicera öppet, vad som ska ligga bakom NDA och hur allt hålls aktuellt utan manuellt arbete." },
+          { "type": "Rapport", "title": "Den verkliga kostnaden för säkerhetsformulär", "description": "Vad granskningscykler kostar nordiska leverantörer i timmar och strandade affärer, och vad som händer när bevisningen är självbetjänad." },
+          { "type": "Blogg", "title": "Från kostnadspost till säljtillgång", "description": "Hur säkerhetsteam gör sitt compliance-program till något säljteamet länkar till i varje affär." }
+        ]
+      },
+      "cta": {
+        "title": "Bli compliant och bygg förtroende, snabbt",
+        "description": "Börja med ert compliance-program, publicera ert trust center och låt nästa säkerhetsgranskning besvara sig själv.",
+        "primaryCta": "Boka demo",
+        "secondaryCta": "Se priser",
+        "badges": [
+          { "name": "SOC 2 Type II", "meta": "Rapport tillgänglig" },
+          { "name": "ISO 27001", "meta": "Certifierad" },
+          { "name": "GDPR", "meta": "Efterlevs" },
+          { "name": "NIS2", "meta": "Redo" }
+        ]
+      }
+    },
+    "evidenceCollection": {
+      "hero": {
+        "label": "Bevisinsamling",
+        "title": "Bevis som <gray>samlar in sig själva</gray>",
+        "description": "OptiTech samlar in efterlevnadsbevis automatiskt från systemen ni redan använder. Kontroller verifieras dygnet runt, så ni är alltid redo för revision utan skärmdumpsmaraton.",
+        "cta": "Boka demo",
+        "mockup": {
+          "url": "app.optitech.se",
+          "pageTitle": "Bevis — senaste 24h",
+          "badges": ["Microsoft 365", "AWS", "Entra ID"],
+          "documentsHeading": "Senaste bevisen",
+          "documents": [
+            { "name": "Export av behörighetsgranskning", "access": "Färskt" },
+            { "name": "Logg för backup-jobb", "access": "Färskt" },
+            { "name": "MFA-statusrapport", "access": "Färskt" },
+            { "name": "Brandväggsregler", "access": "Inaktuellt" }
+          ],
+          "controlsHeading": "Kontroller",
+          "controls": [
+            { "name": "MFA påtvingad", "status": "Verifierad" },
+            { "name": "Kryptering i vila", "status": "Verifierad" },
+            { "name": "Behörighetsgranskningar", "status": "Verifierad" },
+            { "name": "Test av backup", "status": "Verifierad" }
+          ],
+          "syncNote": "Samlas in automatiskt varje timme från era integrationer.",
+          "chat": {
+            "label": "OptiTech AI",
+            "question": "När verifierades MFA senast?",
+            "answer": "För 12 minuter sedan, från Entra ID. Alla 214 konton använder MFA. Beviset är kopplat till kontroll CTRL-017.",
+            "source": "Källa: Entra ID-synk, för 12 min sedan"
+          }
+        }
+      },
+      "proof": {
+        "logosHeading": "Kontinuerliga bevis för ledande nordiska team",
+        "logos": ["Nordkraft", "Fjordbank", "Helsia", "Kustdata", "Polaris Health", "Baltic Freight", "Grönlund & Co"],
+        "statTitle": "90 % mindre manuell bevisinsamling inför revision",
+        "statDescription": "Team som automatiserar bevisinsamling slipper den panikartade jakten på skärmdumpar och kalkylexporter inför revision. Beviset finns redan där, tidsstämplat och kopplat till kontroller.",
+        "statSource": "Källa: rapporterad manuell bevisinsats hos OptiTech-kunder före och efter automatisering, 2025."
+      },
+      "features": {
+        "label": "Bevisinsamling",
+        "cta": "Boka demo",
+        "items": [
+          {
+            "title": "Fråga när något senast verifierades",
+            "description": "OptiTech AI besvarar bevisfrågor direkt och pekar på exakt källa och tidsstämpel. Slut på att gräva i mappar för att bevisa att en kontroll var på plats förra kvartalet.",
+            "mockup": {
+              "label": "OptiTech AI",
+              "question": "Visa bevis på att backuper testades under Q2",
+              "answer": "Tre återställningstester kördes under Q2, det senaste den 14 juni från AWS Backup. Loggarna är kopplade till kontroll CTRL-032.",
+              "chips": ["Källa: AWS Backup", "Bevis bifogat"]
+            }
+          },
+          {
+            "title": "Varje bevis, tidsstämplat och kopplat",
+            "description": "Varje insamlat objekt stämplas med när det kördes, vilket system det kom från och vilka kontroller det uppfyller. När en revisor frågar filtrerar ni istället för att leta.",
+            "mockup": {
+              "label": "Bevislogg",
+              "rows": [
+                { "name": "MFA-statusexport", "status": "Färskt", "open": true },
+                { "name": "Behörighetsgranskning", "status": "Färskt", "open": false },
+                { "name": "Brandväggsregler", "status": "Inaktuellt", "open": false }
+              ],
+              "requestTitle": "Behörighetsgranskning insamlad",
+              "requestMeta": "Entra ID · 08:12 idag",
+              "requestButton": "Visa"
+            }
+          },
+          {
+            "title": "Samlar in enligt schema, så inget blir inaktuellt",
+            "description": "Ställ in hur ofta varje källa körs så håller OptiTech beviset färskt på egen hand. Certifikat, exporter och loggar uppdateras innan de går ut, inte kvällen före revisionen.",
+            "mockup": {
+              "label": "Insamling",
+              "colorsLabel": "Källor",
+              "domainLabel": "Frekvens",
+              "domain": "Varje timme · 14 integrationer",
+              "previewTitle": "Alltid redo för revision",
+              "previewText": "Bevisen uppdateras automatiskt så att er live-status är den revisorerna ser."
+            }
+          },
+          {
+            "title": "Verifierat mot de kontroller som betyder något",
+            "description": "Bevis lagras inte bara, de kontrolleras. OptiTech verifierar varje kontroll mot färska bevis och flaggar i samma stund något driver, kopplat till ramverket det påverkar.",
+            "mockup": {
+              "label": "Levande kontroller",
+              "synced": "Verifierad för 3 min sedan",
+              "rows": [
+                { "name": "MFA påtvingad", "framework": "ISO 27001 · A.5.17", "status": "Verifierad" },
+                { "name": "Behörighetsgranskningar", "framework": "NIS2 · Art. 21", "status": "Verifierad" },
+                { "name": "Gallringsfrister", "framework": "GDPR · Art. 5", "status": "Verifierad" }
+              ]
+            }
+          }
+        ]
+      },
+      "network": {
+        "title": "En integrationshubb, alla beviskällor",
+        "description": "Microsoft 365, Entra ID, AWS, GitHub, Fortnox, BankID med flera, som matar era kontroller",
+        "companies": ["Nordkraft", "Fjordbank", "Helsia", "Kustdata", "Polaris Health", "Baltic Freight", "Grönlund & Co"],
+        "footnote": "Fiktiva exempelbolag visas. Nya integrationer släpps kontinuerligt."
+      },
+      "featureGrid": {
+        "title": "Vad bevisinsamlingen omfattar",
+        "items": [
+          { "title": "Automatiserade integrationer", "description": "Koppla Microsoft 365, Entra ID, AWS, GitHub och dussintals fler, så börjar bevisen flöda utan manuella exporter." },
+          { "title": "Verifiering varje timme", "description": "Kontroller kontrolleras mot färska bevis dygnet runt, inte en gång per kvartal när någon råkar komma ihåg." },
+          { "title": "Tidsstämplad spårbarhet", "description": "Varje insamlat objekt registrerar när det kördes och varifrån det kom, så inget tas på förtroende." },
+          { "title": "Kontrollmappning", "description": "Varje bevis kopplas automatiskt till de kontroller och ramverk det uppfyller." },
+          { "title": "Driftlarm", "description": "När en kontroll slutar vara godkänd får ni ett konkret larm med det fallerande beviset, inte en överraskning vid revisionen." },
+          { "title": "Export med ett klick", "description": "Ge en revisor ett rent, källhänvisat bevispaket direkt från plattformen." }
+        ]
+      },
+      "testimonial": {
+        "text": "Vi brukade lägga de två veckorna före en revision på att ta skärmdumpar. Nu är bevisen redan insamlade, tidsstämplade och kopplade. Revisionsförberedelserna gick från brandkårsutryckning till ett filter.",
+        "initials": "DS",
+        "name": "Dana Smith",
+        "position": "Säkerhetsansvarig, nordiskt SaaS",
+        "cta": "Läs kundcaset"
+      },
+      "plans": {
+        "title": "Kom igång med bevisinsamling",
+        "description": "Automatiserad bevisinsamling ingår i alla OptiTech-planer. Koppla er första integration på några minuter.",
+        "cards": [
+          {
+            "plan": "Ingår i Start",
+            "name": "Bevisinsamling",
+            "description": "Automatiserade bevis från era kärnsystem, kopplade till era kontroller.",
+            "features": ["Kärnintegrationer", "Kontrollverifiering varje timme", "Tidsstämplad bevislogg", "Exporterbart bevispaket"],
+            "cta": "Se priser"
+          },
+          {
+            "plan": "Enterprise",
+            "name": "Avancerad bevisinsamling",
+            "description": "Full täckning för team med många system och ramverk.",
+            "features": ["Obegränsade integrationer", "Egna insamlingsscheman", "Driftlarm och routing", "Revisorsportal för bevis"],
+            "cta": "Prata med sälj"
+          }
+        ]
+      },
+      "resources": {
+        "title": "Se vad bevisinsamling kan göra för ert team",
+        "readMore": "Läs mer",
+        "items": [
+          { "type": "Guide", "title": "Vilka integrationer ni bör koppla först", "description": "Systemen som täcker flest kontroller med minst arbete." },
+          { "type": "Rapport", "title": "Den verkliga kostnaden för manuell bevisinsamling", "description": "Vad skärmdumpssäsongen kostar nordiska team i timmar, och vad som händer när den automatiseras." },
+          { "type": "Blogg", "title": "Från skärmdumpar till kontinuerliga bevis", "description": "Hur team går från punktvisa bevis till en kontrolluppsättning som verifierar sig själv." }
+        ]
+      },
+      "cta": {
+        "title": "Sluta jaga bevis",
+        "description": "Koppla era system och låt OptiTech samla in beviset kontinuerligt, så att varje revision börjar med arbetet redan gjort.",
+        "primaryCta": "Boka demo",
+        "secondaryCta": "Se priser",
+        "badges": [
+          { "name": "SOC 2 Type II", "meta": "Rapport tillgänglig" },
+          { "name": "ISO 27001", "meta": "Certifierad" },
+          { "name": "GDPR", "meta": "Efterlevs" },
+          { "name": "NIS2", "meta": "Redo" }
+        ]
+      }
     }
   },
   "products": {
@@ -1213,6 +1709,169 @@
       ],
       "linkedinLabel": "LinkedIn",
       "linkedinValue": "yazan-ghayad"
+    }
+  },
+  "liaPraktik": {
+    "hero": {
+      "label": "LIA & praktik",
+      "title": "Gör din LIA eller praktik hos OptiTech",
+      "description": "Vi är ett litet team i Stockholm och Malmö som bygger en svensk plattform för regelefterlevnad, allt från NIS2 och DORA till GDPR och ISO 27001. Hos oss sitter du inte vid sidan om och tittar på. Du är med i den riktiga produkten redan från första veckan, tillsammans med människor som gärna delar med sig av det de kan. Vi minns själva hur det är att vara ny, så vi lovar att ta hand om dig på vägen.",
+      "placements": "Vi tar emot LIA, praktik, VFU, APL, prao och examensarbete, oavsett om du pluggar på yrkeshögskola, universitet eller gymnasiet.",
+      "primaryCta": "Ansök nu",
+      "secondaryCta": "Träffa teamet"
+    },
+    "areas": {
+      "label": "Områden",
+      "title": "Vad du kan söka till",
+      "description": "Berätta vad du brinner för, så formar vi uppdraget efter dig. Här är områdena du kan söka till. Du behöver inte kunna allt på förhand, viljan att lära dig är det viktigaste.",
+      "items": [
+        {
+          "title": "Mjukvaruutveckling",
+          "description": "Var med och bygg plattformen i React, Next.js och Node, från knappen någon klickar på till API:erna som samlar in bevis helt automatiskt. Du får skriva kod som faktiskt hamnar i produktion."
+        },
+        {
+          "title": "AI & dataanalys",
+          "description": "Hjälp oss träna copiloten som läser svår lagtext och svarar på vanlig svenska. Du får också gräva i data och förvandla röriga siffror till något folk kan fatta beslut på."
+        },
+        {
+          "title": "IT-säkerhet",
+          "description": "Jobba nära våra säkerhetsspecialister med kontroller, bevis och ramverk som NIS2, DORA och ISO 27001. Du lär dig hur säkerhet funkar i praktiken, inte bara i teorin."
+        },
+        {
+          "title": "Marknad & innehåll",
+          "description": "Ta något knepigt som compliance och gör det begripligt, i text, bild och sociala kanaler. Har du känsla för hur man når fram till folk trivs du här."
+        },
+        {
+          "title": "Sälj & kundframgång",
+          "description": "Prata med nordiska företag som just insett att de omfattas av NIS2 och hjälp dem komma igång. Du sitter med oss i Malmö och ser hur riktiga kundrelationer byggs."
+        },
+        {
+          "title": "Produkt & design",
+          "description": "Var med och forma hur plattformen ser ut och känns, från skisser och flöden till det färdiga gränssnittet. Dina idéer om hur saker borde funka är välkomna."
+        }
+      ]
+    },
+    "benefits": {
+      "label": "Varför OptiTech",
+      "title": "Vad du får hos oss",
+      "description": "Vi vet att en praktik kan vara allt från meningslös kaffekokning till startskottet på en karriär. Vi satsar helhjärtat på det senare.",
+      "items": [
+        {
+          "title": "Riktigt ansvar",
+          "description": "Du jobbar i den skarpa produkten, inte på påhittade uppgifter vid sidan om. Det du gör märks på riktigt."
+        },
+        {
+          "title": "Nära mentorskap",
+          "description": "I ett litet team lär du dig direkt av grundare och specialister. Du är aldrig ensam med en fråga."
+        },
+        {
+          "title": "Modern teknik",
+          "description": "Du får jobba med AI, moln och en stack som används på riktigt, kunskap du bär med dig resten av arbetslivet."
+        },
+        {
+          "title": "Ett uppdrag som betyder något",
+          "description": "Du hjälper nordiska företag att klara NIS2, DORA och GDPR och att stå emot verkliga hot. Ditt jobb gör skillnad."
+        },
+        {
+          "title": "Stockholm eller Malmö",
+          "description": "Jobba på plats med teamet eller på distans, som det passar dig och din skola. Vi är flexibla."
+        },
+        {
+          "title": "En väg in",
+          "description": "Många som gör sin LIA eller praktik hos oss stannar kvar. För en del blir perioden första steget till ett riktigt jobb."
+        }
+      ]
+    },
+    "who": {
+      "label": "Vem vi söker",
+      "title": "För dig som vill lära på riktigt",
+      "description": "Vi bryr oss mer om nyfikenhet och driv än om perfekta betyg. Gillar du att lära nytt och vågar fråga? Då vill vi träffa dig, oavsett var eller vad du pluggar. Din period hos oss kan räknas in i din utbildning.",
+      "programsTitle": "Perioder vi tar emot",
+      "programs": [
+        {
+          "term": "LIA",
+          "definition": "Lärande i arbete för dig som går en yrkeshögskoleutbildning."
+        },
+        {
+          "term": "Praktik",
+          "definition": "Praktik för dig som läser på universitet eller högskola."
+        },
+        {
+          "term": "VFU",
+          "definition": "Verksamhetsförlagd utbildning inom program där vi passar in."
+        },
+        {
+          "term": "APL & prao",
+          "definition": "Arbetsplatsförlagt lärande och prao för dig på gymnasiet eller högstadiet."
+        },
+        {
+          "term": "Examensarbete",
+          "definition": "Exjobb och uppsats där vi gärna ställer upp som fallföretag och delar med oss av data."
+        }
+      ]
+    },
+    "process": {
+      "label": "Så söker du",
+      "title": "Från ansökan till första dagen",
+      "description": "Vi håller det enkelt och mänskligt. Inga krångliga tester eller långa väntetider, bara ett par samtal så vi lär känna varandra.",
+      "steps": [
+        {
+          "title": "Skicka en kort ansökan",
+          "description": "Mejla oss ditt CV och några rader om vad du vill lära dig, vad du pluggar och när din period är. Det behöver inte vara perfekt."
+        },
+        {
+          "title": "Vi hörs",
+          "description": "Vi tar ett kort videosamtal och lär känna varandra. Här får du fråga oss precis vad du vill."
+        },
+        {
+          "title": "Kom och testa",
+          "description": "Träffa teamet, kika på produkten och känn efter om vi passar ihop. Det ska kännas bra för båda."
+        },
+        {
+          "title": "Välkommen",
+          "description": "Vi kommer överens om upplägg och mål, och sedan drar vi igång. Din första dag ordnar vi tillsammans."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Redo att söka din LIA eller praktik?",
+      "description": "Skicka en kort ansökan så hör vi av oss inom några dagar. Berätta vad du vill lära dig och vad som gör dig nyfiken, så tar vi det därifrån.",
+      "primaryCta": "Ansök nu",
+      "secondaryCta": "Träffa teamet",
+      "note": "Skriv till info@optitech-sverige.se"
+    },
+    "apply": {
+      "title": "Ansök om LIA eller praktik",
+      "subtitle": "Fyll i dina uppgifter och bifoga ditt CV. Din ansökan skickas till info@optitech-sverige.se.",
+      "name": "Namn",
+      "namePlaceholder": "Ditt namn",
+      "email": "E-post",
+      "emailPlaceholder": "du@example.com",
+      "phone": "Telefon",
+      "phonePlaceholder": "Frivilligt",
+      "education": "Utbildning eller program",
+      "educationPlaceholder": "t.ex. Fullstackutvecklare, YH",
+      "period": "Praktikperiod",
+      "periodPlaceholder": "t.ex. jan till jun 2027",
+      "message": "Meddelande",
+      "messagePlaceholder": "Berätta vad du vill lära dig",
+      "cv": "CV",
+      "cvHint": "PDF, DOC eller DOCX, upp till 10 MB",
+      "cvChoose": "Välj fil",
+      "cvNone": "Ingen fil vald",
+      "submit": "Skicka ansökan",
+      "submitting": "Skickar...",
+      "cancel": "Avbryt",
+      "close": "Stäng",
+      "required": "Fältet är obligatoriskt",
+      "invalidEmail": "Ange en giltig e-postadress",
+      "fileRequired": "Bifoga ditt CV",
+      "fileTooLarge": "Filen är större än 10 MB",
+      "fileType": "Använd en PDF, DOC eller DOCX",
+      "successTitle": "Tack, din ansökan är på väg",
+      "successBody": "Vi har tagit emot din ansökan och hör av oss via e-post.",
+      "errorTitle": "Något gick fel",
+      "errorBody": "Din ansökan kunde inte skickas. Försök igen, eller mejla oss på info@optitech-sverige.se."
     }
   },
   "header": {

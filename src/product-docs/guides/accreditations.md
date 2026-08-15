@@ -4,7 +4,7 @@ description: Step-by-step walkthrough for managing an accreditation from start t
 
 # Managing an accreditation
 
-An **accreditation** in OptiTech tracks a formal authorisation granted to a system, service, or organisation by an authority — typically the outcome of an audit-and-decision process. It captures who granted it, what's in scope, when it expires, and the evidence behind the decision.
+An **accreditation** in OptiTech tracks a formal authorization granted to a system, service, or organization by an authority — typically the outcome of an audit-and-decision process. It captures who granted it, what's in scope, when it expires, and the evidence behind the decision.
 
 See [Project management](../concepts/project-management.md) for how accreditations sit alongside projects and collections.
 
@@ -51,7 +51,7 @@ The page comes in two halves:
 Standard detail view with sidebar widgets:
 
 - **Authority** — entity link (or free-text name).
-- **Status** and **Category** — colour-coded chips.
+- **Status** and **Category** — color-coded chips.
 - **Checklist** card — clickable; shows the progress percentage from the linked audit. Hidden if no checklist is set.
 - **Decision evidence** — list of attached evidences.
 - **Validation flows** — if the `validation_flows` feature flag is on, shows current approval status. The header also gains a **Request validation** action.

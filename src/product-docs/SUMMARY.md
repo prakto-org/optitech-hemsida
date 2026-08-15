@@ -6,7 +6,7 @@
 
 * [Philosophy](introduction/philosophy.md)
 * [Vocabulary](introduction/vocabulary.md)
-* [Community vs PRO](introduction/editions.md)
+* [Deployment and plans](introduction/editions.md)
 
 ## Concepts
 
@@ -135,7 +135,7 @@
   * [Cyber risk quantification](guides/quantitative-risk.md)
   * [Cyber risk quantification — methodology](guides/quantitative-risk-methodology.md)
   * [Conducting a Business Impact Analysis](guides/bia.md)
-* Programme management
+* Program management
   * [Managing a project](guides/projects.md)
   * [Managing a collection](guides/collections.md)
   * [Managing an accreditation](guides/accreditations.md)
@@ -149,7 +149,7 @@
 
 ## Features
 
-* [Catalogue overview](features/README.md)
+* [Catalog overview](features/README.md)
 * [Analytics](features/analytics.md)
 * [Controls autosuggestion](features/controls-autosuggestion.md)
 * [Multi-level support](features/multi-level-support.md)

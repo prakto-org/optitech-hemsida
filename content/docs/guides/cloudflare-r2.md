@@ -11,7 +11,7 @@ summary: >-
   setup, CORS configuration, metadata schema, and backend endpoints in
   JavaScript (Hono, @aws-sdk/client-s3) and Python (Flask, boto3, psycopg2).
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:28.135Z'
 ---
 
 [Cloudflare R2](https://www.cloudflare.com/en-in/developer-platform/products/r2/) is S3-compatible object storage offering zero egress fees, designed for storing and serving large amounts of unstructured data like images, videos, and documents globally.
@@ -30,7 +30,7 @@ This guide demonstrates how to integrate Cloudflare R2 with OptiTech by storing 
 
 ## Create a OptiTech project
 
-1.  Navigate to the [OptiTech Console](https://console.optitech.com) to create a new OptiTech project.
+1.  Navigate to the [OptiTech Console](https://app.optitech-sverige.se) to create a new OptiTech project.
 2.  Copy the connection string by clicking the **Connect** button on your **Project Dashboard**. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
 
 ## Create a Cloudflare account and R2 bucket

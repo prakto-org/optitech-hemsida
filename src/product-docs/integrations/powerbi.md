@@ -7,7 +7,7 @@ description: >-
 
 # Power BI connector
 
-Compatible with: SaaS or on-premises, CE or Pro. Requires Power BI Desktop (Windows).
+Compatible with: SaaS or on-premises. Requires Power BI Desktop (Windows).
 
 The connector adds **OptiTech** to Power BI's *Get Data* dialog. It handles the technical plumbing for you — API pagination, authentication, data typing, incremental refresh — and serves your data as flat, ready-to-relate tables. Access control is preserved end to end: the connector authenticates with **your** Personal Access Token, so reports only ever contain the domains and objects your account can see in the application.
 

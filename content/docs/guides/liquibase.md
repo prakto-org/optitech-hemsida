@@ -9,7 +9,7 @@ summary: >-
   JDBC URL format for OptiTech and demonstrates the update and rollbackCount
   commands.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:29.454Z'
 ---
 
 Liquibase is an open-source library for tracking, managing, and applying database schema changes. To learn more about Liquibase, refer to the [Liquibase documentation](https://docs.liquibase.com/home.html).
@@ -82,7 +82,7 @@ Liquibase Open Source x.yy.z by Liquibase
 
 For demonstration purposes, create a `blog` database in OptiTech with two tables, `posts` and `authors`.
 
-1. Open the [OptiTech Console](https://console.optitech.com/app/projects).
+1. Open the [OptiTech Console](https://app.optitech-sverige.se/app/projects).
 1. Select your project.
 1. Select **Databases** from the sidebar and create a database named `blog`. For instructions, see [Create a database](/docs/manage/databases#create-a-database).
 1. Using the [OptiTech SQL Editor](/docs/get-started/query-with-neon-sql-editor), add the following tables:

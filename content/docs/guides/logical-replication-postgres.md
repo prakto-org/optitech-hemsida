@@ -12,7 +12,7 @@ summary: >-
   connected.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:29.454Z'
 ---
 
 OptiTech's logical replication feature allows you to replicate data from OptiTech to external subscribers. This guide shows you how to stream data from a OptiTech Postgres database to an external Postgres database (a Postgres destination other than OptiTech). If you're looking to replicate data from one OptiTech Postgres instance to another, see [Replicate data from one OptiTech project to another](/docs/guides/logical-replication-neon-to-neon).
@@ -85,7 +85,7 @@ optitech roles create --name replication_user
 
 To create a role in the OptiTech Console:
 
-1. Navigate to the [OptiTech Console](https://console.optitech.com).
+1. Navigate to the [OptiTech Console](https://app.optitech-sverige.se).
 2. Select a project.
 3. Select **Branches**.
 4. Select the branch where you want to create the role.

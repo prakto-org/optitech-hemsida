@@ -55,7 +55,7 @@ The collection detail page has two parts:
 - **Header** (from `DetailView`) — name, ID, domain, labels, observation, the standard Edit/Delete/Duplicate actions.
 - **Tabbed area** below the header — one tab per relationship category that has at least one related-model entry. Tabs are sorted alphabetically.
 
-Each tab is a filtered table of the objects in that category — same columns and behaviour as the standalone list page, but scoped to this collection.
+Each tab is a filtered table of the objects in that category — same columns and behavior as the standalone list page, but scoped to this collection.
 
 ### Two ways to attach objects
 

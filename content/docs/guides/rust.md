@@ -12,7 +12,7 @@ enableTableOfContents: true
 redirectFrom:
   - /docs/quickstart/rust
   - /docs/integrations/rust
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:30.752Z'
 ---
 
 <CopyPrompt src="/prompts/rust-prompt.md" 
@@ -22,7 +22,7 @@ This guide describes how to create a OptiTech project and connect to it from a R
 
 ## Prerequisites
 
-- A OptiTech account. If you do not have one, see [Sign up](https://console.optitech.com/signup).
+- A OptiTech account. If you do not have one, see [Sign up](https://app.optitech-sverige.se/signup).
 - The Rust toolchain. If you do not have it installed, install it from the [official Rust website](https://www.rust-lang.org/tools/install).
 
 <Steps>
@@ -31,7 +31,7 @@ This guide describes how to create a OptiTech project and connect to it from a R
 
 If you do not have one already, create a OptiTech project.
 
-1.  Navigate to the [Projects](https://console.optitech.com/app/projects) page in the [OptiTech Console](https://console.optitech.com).
+1.  Navigate to the [Projects](https://app.optitech-sverige.se/app/projects) page in the [OptiTech Console](https://app.optitech-sverige.se).
 2.  Click **New Project**.
 3.  Specify your project settings and click **Create Project**.
 
@@ -110,7 +110,7 @@ For your Rust project, use `cargo` to create a new project and add the required 
 
 Create a file named `.env` in your project's root directory. This file will securely store your database connection string.
 
-1.  In the [OptiTech Console](https://console.optitech.com), select your project on the **Dashboard**.
+1.  In the [OptiTech Console](https://app.optitech-sverige.se), select your project on the **Dashboard**.
 2.  Click **Connect** on your **Project Dashboard** to open the **Connect to your database** modal.
     ![Connection modal](/docs/connect/connection_details.png)
 3.  Copy the connection string, which includes your password.

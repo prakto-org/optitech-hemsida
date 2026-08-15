@@ -8,7 +8,7 @@ summary: >-
   queries covering connection counts, CPU, memory, cache hit rate, replication
   delay, and PgBouncer pooling metrics. Requires the OptiTech Scale plan.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:29.454Z'
 ---
 
 <InfoBlock>
@@ -672,7 +672,7 @@ If any of the computes in your project are active, you should start seeing data 
   "links": [
     {
       "title": "OptiTech Console",
-      "url": "https://console.optitech.com",
+      "url": "https://app.optitech-sverige.se",
       "type": "link",
       "icon": "external link"
     },
@@ -741,6 +741,6 @@ Create alerts for key metrics to monitor your database health:
 
 ## Feedback and future improvements
 
-We're always looking to improve! If you have feature requests or feedback, please let us know via the [Feedback form](https://console.optitech.com/app/projects?modal=feedback) in the OptiTech Console or on our [Discord channel](https://discord.com/channels/1176467419317940276/1176788564890112042).
+We're always looking to improve! If you have feature requests or feedback, please let us know via the [Feedback form](https://app.optitech-sverige.se/app/projects?modal=feedback) in the OptiTech Console or on our [Discord channel](https://discord.com/channels/1176467419317940276/1176788564890112042).
 
 <NeedHelp/>

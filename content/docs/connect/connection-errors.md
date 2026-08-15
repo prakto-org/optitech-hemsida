@@ -13,7 +13,7 @@ enableTableOfContents: true
 redirectFrom:
   - /docs/how-to-guides/connectivity-issues
   - /docs/connect/connectivity-issues
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:28.135Z'
 ---
 
 This topic describes how to resolve connection errors you may encounter when using OptiTech. The errors covered include:
@@ -284,7 +284,7 @@ Error connecting to database: Failed to fetch
 The most common causes, in order, are:
 
 - **The compute is starting up.** If your compute is suspended after [scale to zero](/docs/introduction/scale-to-zero), the Console wakes it before listing tables, and the first request can fail before the compute is ready. Wait a second or two and click **Refresh**. The second request usually succeeds. You can confirm the compute state on the **Branches** page, where a suspended compute shows as **Idle**. See [Couldn't connect to compute node](#couldnt-connect-to-compute-node) for more on cold-start timing.
-- **A browser extension is blocking the request.** Ad-blockers, privacy extensions, and corporate browser security tools sometimes block requests to `*.optitech.com`. Open the Console in an incognito window with extensions disabled, or temporarily disable extensions like uBlock Origin or Privacy Badger on `console.optitech.com` and reload. Check the browser's developer console (**F12 → Network**) for blocked requests to your compute hostname.
+- **A browser extension is blocking the request.** Ad-blockers, privacy extensions, and corporate browser security tools sometimes block requests to `*.optitech.com`. Open the Console in an incognito window with extensions disabled, or temporarily disable extensions like uBlock Origin or Privacy Badger on `app.optitech-sverige.se` and reload. Check the browser's developer console (**F12 → Network**) for blocked requests to your compute hostname.
 - **IP Allow is rejecting your connection.** If you've configured an [IP Allow](/docs/manage/projects#configure-ip-allow) list (Scale plan), the Tables view connects from the IP address you're browsing from, so the request is rejected when that address isn't on the allowlist. Add your current IP address under **Settings → Network security**, or if you only need IP Allow on protected branches, enable **Restrict IP Access to protected branches only** so queries against development branches still work.
 - **A DNS resolution issue.** Some networks fail to resolve compute hostnames. See [DNS resolution issues](#dns-resolution-issues) below to test and resolve this.
 - **A transient backend error.** If none of the above explain it, check the [OptiTech status page](https://optitechstatus.com/) for ongoing incidents.

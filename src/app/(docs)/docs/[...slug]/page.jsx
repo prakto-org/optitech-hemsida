@@ -12,6 +12,9 @@ import { getFlatSidebar } from 'utils/get-flat-sidebar';
 import getMetadata from 'utils/get-metadata';
 import getTableOfContents from 'utils/get-table-of-contents';
 
+// All docs are in-repo; unknown slugs 404 without invoking a render.
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   const posts = await getAllPosts();
 

@@ -4,7 +4,7 @@ description: Step-by-step walkthrough for conducting a Business Impact Analysis
 
 # Conducting a Business Impact Analysis
 
-A **Business Impact Analysis** (BIA) measures how badly the organisation hurts when an asset stops working — and how quickly that hurt escalates. Where a risk assessment asks _"what could go wrong?"_, a BIA asks _"if it does, how bad is it after one hour, after one day, after one week?"_.
+A **Business Impact Analysis** (BIA) measures how badly the organization hurts when an asset stops working — and how quickly that hurt escalates. Where a risk assessment asks _"what could go wrong?"_, a BIA asks _"if it does, how bad is it after one hour, after one day, after one week?"_.
 
 See [Business impact analyses](../concepts/business-impact-analyses.md) for the underlying object model.
 
@@ -15,7 +15,7 @@ BIAs live under **Assets management → Business Impact Analysis** in the sideba
 ## Prerequisites
 
 - The `bia` feature flag is on.
-- A **perimeter** representing the scope you're analysing (a service, a process, a department). Create one via [Perimeters](../concepts/perimeters.md) if needed.
+- A **perimeter** representing the scope you're analyzing (a service, a process, a department). Create one via [Perimeters](../concepts/perimeters.md) if needed.
 - **Assets** in scope. Assets must already exist in the inventory — the BIA flow doesn't create them. See [Assets](../concepts/assets.md).
 - A **risk matrix** with an impact scale you want to reuse for severity levels. Any enabled matrix from your library will do.
 
@@ -66,7 +66,7 @@ For each asset you want in scope:
 1. Click **Include asset** (the create button on the asset-assessments table).
 2. Fill in:
    - **Asset** — pick the asset; one BIA can't have the same asset twice (`unique_together = ["bia", "asset"]`).
-   - **Extra dependencies** — additional assets whose disruption would propagate here. The primary/supporting relationships already declared on the asset are picked up automatically; only add dependencies that aren't already modelled.
+   - **Extra dependencies** — additional assets whose disruption would propagate here. The primary/supporting relationships already declared on the asset are picked up automatically; only add dependencies that aren't already modeled.
    - **BIA** — pre-filled and hidden when adding from the BIA's table.
    - **Associated controls** — controls specifically designed to improve _this_ asset's resilience (e.g. backup job, failover, runbook). These are separate from controls already attached to the asset elsewhere.
    - **Recovery documented** — checkbox. Is there a written recovery procedure?
@@ -102,7 +102,7 @@ From the BIA detail page, click **Impact over time** in the actions column. The 
 
 - Rows: each asset assessment in the BIA.
 - Columns: each unique `point_in_time` across the whole BIA (so all rows share an x-axis).
-- Cells: the impact severity at that point, colour-coded by the risk matrix.
+- Cells: the impact severity at that point, color-coded by the risk matrix.
 
 This is the key output you'll show to stakeholders — at a glance, "if X breaks, here's how the room turns red as time passes".
 
@@ -140,13 +140,13 @@ If the `validation_flows` feature flag is on, the actions column shows a **Reque
 ## Best-practice sequence
 
 1. Build the asset inventory first; the BIA reads, it doesn't create.
-2. Use the **primary/supporting** relationships on assets to model upstream dependencies — the BIA will pick them up for free. Reserve **Extra dependencies** on the asset assessment for things not modelled elsewhere.
+2. Use the **primary/supporting** relationships on assets to model upstream dependencies — the BIA will pick them up for free. Reserve **Extra dependencies** on the asset assessment for things not modeled elsewhere.
 3. Pick a risk matrix early and **don't switch matrices** mid-flow unless you're prepared to re-score every threshold.
-4. Capture thresholds at organisationally meaningful steps (e.g. SLA breakpoints, regulatory notification windows) rather than evenly spaced.
+4. Capture thresholds at organizationally meaningful steps (e.g. SLA breakpoints, regulatory notification windows) rather than evenly spaced.
 5. Keep **Authors** small (people who write) and **Reviewers** wider (people who sign off). Lock after the reviewers approve.
 
 ## What's next
 
-- Feed the timeline into your [risk assessments](../concepts/risk-assessments.md) — the same asset criticality should drive scenario prioritisation.
+- Feed the timeline into your [risk assessments](../concepts/risk-assessments.md) — the same asset criticality should drive scenario prioritization.
 - For DORA-regulated entities, the BIA output supports DORA incident-reporting workflows. See [framework-specific features → DORA](../features/framework-specific/dora.md).
 - Track the recovery readiness numbers on the **Recovery insights** widget over time as you close gaps.

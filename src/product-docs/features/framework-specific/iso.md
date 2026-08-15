@@ -4,7 +4,7 @@ description: Capabilities specific to ISO 27001 audits
 
 # ISO 27001
 
-Two OptiTech features are tailored to ISO 27001 deliverables: the **Statement of Applicability** report, and the **issues and objectives** registers used to satisfy the context-of-organisation requirements.
+Two OptiTech features are tailored to ISO 27001 deliverables: the **Statement of Applicability** report, and the **issues and objectives** registers used to satisfy the context-of-organization requirements.
 
 ## Statement of Applicability (SoA)
 
@@ -22,16 +22,16 @@ The SoA reads from the audit you already maintain — no parallel data entry. Ju
 
 ## Issues and objectives
 
-ISO 27001:2022 §4.1 (context of the organisation) and §6.2 (information-security objectives) require explicit registers of:
+ISO 27001:2022 §4.1 (context of the organization) and §6.2 (information-security objectives) require explicit registers of:
 
-- **Organisation issues** — internal and external factors that affect the organisation's ability to achieve its information-security outcomes (regulatory pressure, supply-chain dependencies, technology shifts, internal restructuring, …).
-- **Organisation objectives** — strategic or operational goals that the ISMS supports.
+- **Organization issues** — internal and external factors that affect the organization's ability to achieve its information-security outcomes (regulatory pressure, supply-chain dependencies, technology shifts, internal restructuring, …).
+- **Organization objectives** — strategic or operational goals that the ISMS supports.
 
-Both registers are first-class surfaces in OptiTech, gated by the `organisation_issues` and `organisation_objectives` feature flags. Each entry can be tagged, owned, and linked to the requirements it substantiates inside an audit — which means an auditor reviewing your context-of-organisation clauses sees the same data you used to plan the ISMS.
+Both registers are first-class surfaces in OptiTech, gated by the `organisation_issues` and `organisation_objectives` feature flags. Each entry can be tagged, owned, and linked to the requirements it substantiates inside an audit — which means an auditor reviewing your context-of-organization clauses sees the same data you used to plan the ISMS.
 
-Although these registers were introduced for ISO 27001, they're available for any framework where capturing organisational context and objectives is useful.
+Although these registers were introduced for ISO 27001, they're available for any framework where capturing organizational context and objectives is useful.
 
 ## Related
 
 - [Audits concept](../../concepts/audits.md)
-- [Vocabulary → Organisational issue / Organisational objective](../../introduction/vocabulary.md)
+- [Vocabulary → Organizational issue / Organizational objective](../../introduction/vocabulary.md)

@@ -9,6 +9,8 @@ import { GUIDES_BASE_PATH } from 'constants/guides';
 import { getAllGuides, getAuthors } from 'utils/api-guides';
 import getMetadata from 'utils/get-metadata';
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   return Object.keys(getAuthors()).map((slug) => ({
     slug,

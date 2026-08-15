@@ -4,7 +4,7 @@ description: Fuzzy search across every searchable object in the workspace
 
 # Universal search
 
-The **universal search** is a single full-workspace query that returns matches across every searchable object type — assets, audits, applied controls, evidences, frameworks, risk scenarios, third-party entities, EBIOS RM artefacts, vulnerabilities, and many more — in one ranked, grouped list.
+The **universal search** is a single full-workspace query that returns matches across every searchable object type — assets, audits, applied controls, evidences, frameworks, risk scenarios, third-party entities, EBIOS RM artifacts, vulnerabilities, and many more — in one ranked, grouped list.
 
 Matching is **fuzzy and accent-insensitive**, so you can mistype, drop accents, or only half-remember the exact wording and still land on the right object. It's the answer to "where is _that thing_ I half-remember?" without having to guess which page to land on first.
 
@@ -24,8 +24,8 @@ Universal search covers an explicit registry of object types in the backend (`SE
 
 | Area | Object types |
 |---|---|
-| Organisation | Domains, Perimeters |
-| Catalogue | Frameworks, Threats, Reference controls, Risk matrices, Requirements |
+| Organization | Domains, Perimeters |
+| Catalog | Frameworks, Threats, Reference controls, Risk matrices, Requirements |
 | Assets | Assets, Vulnerabilities |
 | Operations | Applied controls, Policies, Incidents, Findings, Security exceptions, Task templates, Evidences |
 | Governance | Risk acceptances |
@@ -43,7 +43,7 @@ For each model, the search looks at the **name**, **description**, and (where it
 You don't need to type an object's name exactly to find it.
 
 - **Fuzzy scoring.** Every candidate is scored against your query with a fuzzy-matching algorithm (rapidfuzz), so `firewal polcy` still surfaces _Firewall policy_, and a partial query like `iso 270` still surfaces _ISO 27001 audit_. Higher-scoring matches sort first, and the height of the small bar on the left of each result is a visual cue for the score.
-- **Accent-insensitive.** Diacritics are normalised on both sides of the comparison. Typing `referentiel` matches `référentiel`, `securite` matches `sécurité`, and `protege` matches `protégé` — so francophone, hispanophone, lusophone, and similar workspaces don't get punished for typing without accents.
+- **Accent-insensitive.** Diacritics are normalized on both sides of the comparison. Typing `referentiel` matches `référentiel`, `securite` matches `sécurité`, and `protege` matches `protégé` — so francophone, hispanophone, lusophone, and similar workspaces don't get punished for typing without accents.
 - **Case-insensitive.** Capitalisation is ignored: `firewall`, `Firewall`, and `FIREWALL` are equivalent.
 
 This is intentionally generous. The cost of an extra near-miss in the result list is small; the cost of failing to find an object because of a typo or a missing accent is much higher.
@@ -54,7 +54,7 @@ Results are filtered by the **same IAM scoping** as everything else: you only se
 
 ## Reading the results
 
-The page renders matches **grouped by object type**, with a coloured accent and an icon per group. Each row shows:
+The page renders matches **grouped by object type**, with a colored accent and an icon per group. Each row shows:
 
 - The object **name** as the headline.
 - A **reference ID** chip (when the object carries one).

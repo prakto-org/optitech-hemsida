@@ -8,7 +8,7 @@ Because policies are applied controls under the hood, they inherit the full appl
 
 Policies are central to most compliance frameworks — almost every requirement expects a documented policy as part of the substantiating artifacts. Pulling policies onto a dedicated page lets you:
 
-- Maintain the catalogue of published documents independently of the broader action plan.
+- Maintain the catalog of published documents independently of the broader action plan.
 - Track policy review and approval cycles separately from operational controls.
 - Surface policies by domain when responding to audit requests or external reviews.
 
@@ -18,10 +18,10 @@ The Policies page in the platform is a filtered view of applied controls where t
 
 Policies can come from either side of the divide:
 
-- **Author in OptiTech.** Each policy can carry one or more **managed documents** — versioned documents tracked in-platform through a draft → in-review → validated → published → deprecated lifecycle. Useful when you want the policy text to live where the rest of the GRC programme lives, with revision history and approval workflow attached.
+- **Author in OptiTech.** Each policy can carry one or more **managed documents** — versioned documents tracked in-platform through a draft → in-review → validated → published → deprecated lifecycle. Useful when you want the policy text to live where the rest of the GRC program lives, with revision history and approval workflow attached.
 - **Bring an existing document.** If a policy already exists as a file, or lives in Confluence, SharePoint, or a DMS, its managed document can be **uploaded** (the file itself) or **linked** (a pointer to where it lives) — the same lifecycle, versioning, and links apply, without duplicating the source of truth.
 
-Both paths are first-class — you can mix them across an organisation, or even across policies in the same domain. The applied-control machinery (assignee, status, linked requirements, evidence) is the same either way.
+Both paths are first-class — you can mix them across an organization, or even across policies in the same domain. The applied-control machinery (assignee, status, linked requirements, evidence) is the same either way.
 
 ## Versioning, history, and diff
 

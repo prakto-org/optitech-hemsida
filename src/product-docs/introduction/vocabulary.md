@@ -4,15 +4,15 @@ A glossary of the terms used in OptiTech. Where a user-facing term differs from 
 
 ## A
 
-- **Accreditation** — Formal authorisation that a system, environment, or product has met security and compliance requirements. Captured as an object in project-management workflows, often required for go-live.
+- **Accreditation** — Formal authorization that a system, environment, or product has met security and compliance requirements. Captured as an object in project-management workflows, often required for go-live.
 - **Actor** — The unifying handle for anyone who can own or be assigned work in OptiTech. An actor wraps exactly one of three underlying objects: a [User](#u), a [Team](#t), or an [Entity](#e). Auto-created when its underlying object is created — not managed directly. See [Actors and teams](../concepts/actors-and-teams.md).
-- **Applied control** — The main building block of the action plan: a concrete action your team has implemented or will implement. It can be technical, organisational, a process, a policy, a piece of documentation — anything that materially changes risk or compliance posture. Applied controls are always defined by the organisation and can be attached to the global domain or to a specific domain. They may derive from a reference control for consistency, or be created independently.
-- **Asset** — Anything of value worth protecting. **Primary assets** are core resources directly contributing to the organisation's main objectives (business processes, data, intellectual property). **Supporting assets** indirectly aid primary functions (IT systems, services, locations, people).
+- **Applied control** — The main building block of the action plan: a concrete action your team has implemented or will implement. It can be technical, organizational, a process, a policy, a piece of documentation — anything that materially changes risk or compliance posture. Applied controls are always defined by the organization and can be attached to the global domain or to a specific domain. They may derive from a reference control for consistency, or be created independently.
+- **Asset** — Anything of value worth protecting. **Primary assets** are core resources directly contributing to the organization's main objectives (business processes, data, intellectual property). **Supporting assets** indirectly aid primary functions (IT systems, services, locations, people).
 - **Asset assessment** — A per-asset row inside a business impact analysis, capturing recovery posture (documented, tested, targets met), associated controls, evidence, and the escalation thresholds that describe how impact grows over time.
 - **Assessment** — Umbrella term covering **audits** (compliance work), **risk assessments**, **business impact analyses**, and **entity assessments**.
 - **Attack path** — In EBIOS RM, the route an attacker may take from a starting point — through stakeholders or supporting assets — to reach a target objective.
 - **Audit** — The evaluation of a perimeter against a framework, producing a per-requirement view of status, score, and evidence. Internally a `ComplianceAssessment`.
-- **Audit log** — Append-only record of significant actions taken in the platform (creations, edits, permission changes, logins). PRO feature.
+- **Audit log** — Append-only record of significant actions taken in the platform (creations, edits, permission changes, logins).
 - **Auditee mode** — A read-only UX mode aimed at external assessors who need to inspect an audit without being granted full access to the platform. Gated by the `auditee_mode` feature flag.
 
 ## B
@@ -21,14 +21,14 @@ A glossary of the terms used in OptiTech. Where a user-facing term differs from 
 
 ## C
 
-- **Campaign** — An orchestration object for running many audits in parallel — for example, one audit per perimeter against the same framework. PRO feature.
+- **Campaign** — An orchestration object for running many audits in parallel — for example, one audit per perimeter against the same framework.
 - **Catalog object** — A reusable building block of OptiTech: framework, threat, risk matrix, reference control, mapping, security advisory, CWE. Catalog objects are packaged into libraries.
 - **Compliance assessment** — Internal model name for an **audit**. See **Audit**.
 - **Contract** — A third-party agreement attached to a supplier entity or solution, with terms, dates, and renewal information.
 - **Control** — Generic term. Disambiguate against **applied control** (concrete instance) and **reference control** (template).
 - **Current risk** — The risk level given the **applied controls already in place** — the state of risk today. The middle tier of OptiTech's three-tier model: inherent (no controls) → current (existing controls) → residual (existing + planned controls).
-- **Custom field** (also _custom attribute_) — An organisation-defined attribute that can be attached to platform objects (projects, risks, assets, suppliers, contracts, and more) to capture typed, filterable, searchable metadata beyond the built-in fields.
-- **CWE** — Common Weakness Enumeration. A catalogued category of software weakness, used to tag vulnerabilities and security advisories.
+- **Custom field** (also _custom attribute_) — An organization-defined attribute that can be attached to platform objects (projects, risks, assets, suppliers, contracts, and more) to capture typed, filterable, searchable metadata beyond the built-in fields.
+- **CWE** — Common Weakness Enumeration. A cataloged category of software weakness, used to tag vulnerabilities and security advisories.
 
 ## D
 
@@ -39,7 +39,7 @@ A glossary of the terms used in OptiTech. Where a user-facing term differs from 
 - **Data subject** — The category of individuals whose personal data is processed (customers, employees, prospects, etc.). Surfaces in the privacy register and right-request workflows.
 - **Data transfer** — A record of cross-border or cross-entity movement of personal data, with destination, legal basis, and safeguards.
 - **Document revision** — A single revision of a [Managed document](#m). Carries a version number and a lifecycle status (draft → in review → change requested → validated → published → deprecated).
-- **Domain** — The top-level container in OptiTech: a business unit, subsidiary, project, or any boundary used for organising work and isolating permissions via role-based access control. Sub-domains nest underneath. Internally a `Folder`. _Demo_ and _Starter_ are reserved for internal features.
+- **Domain** — The top-level container in OptiTech: a business unit, subsidiary, project, or any boundary used for organizing work and isolating permissions via role-based access control. Sub-domains nest underneath. Internally a `Folder`. _Demo_ and _Starter_ are reserved for internal features.
 
 ## E
 
@@ -54,9 +54,9 @@ A glossary of the terms used in OptiTech. Where a user-facing term differs from 
 ## F
 
 - **Feared event** — In EBIOS RM, the undesirable outcome to be avoided on a primary asset — for example, a confidentiality breach of customer data.
-- **Filtering label** — A free-form tag that can be attached to most objects for categorisation, filtering, and reporting.
+- **Filtering label** — A free-form tag that can be attached to most objects for categorization, filtering, and reporting.
 - **Findings assessment** — A formal record tracking issues raised by an audit, a security review, or an external assessor, used to drive remediation through to closure.
-- **Focus mode** — A workspace mode that filters the entire UI to a single domain, hiding objects belonging to other domains. PRO feature.
+- **Focus mode** — A workspace mode that filters the entire UI to a single domain, hiding objects belonging to other domains.
 - **Folder** — Internal model name for a **domain**. See **Domain**.
 - **Framework** — A set of requirements covering patterns and expectations needed to comply with a regulation, prepare a certification, or establish a foundation. Shipped as a YAML library.
 
@@ -93,8 +93,8 @@ A glossary of the terms used in OptiTech. Where a user-facing term differs from 
 
 - **Operating mode** — In EBIOS RM, a specific way an attacker can carry out an operational scenario, composed of elementary actions.
 - **Operational scenario** — In EBIOS RM, the detailed "how" of a strategic scenario — the assets touched, the steps taken, and the techniques used.
-- **Organisational issue** — A documented context element describing an internal or external problem affecting the organisation.
-- **Organisational objective** — A documented strategic or operational goal of the organisation.
+- **Organizational issue** — A documented context element describing an internal or external problem affecting the organization.
+- **Organizational objective** — A documented strategic or operational goal of the organization.
 
 ## P
 
@@ -104,7 +104,7 @@ A glossary of the terms used in OptiTech. Where a user-facing term differs from 
 - **Policy** — A specific type of applied control: a document describing what is expected from some part of your stakeholders. Lives in OptiTech so its lifecycle can be managed alongside the rest of your controls.
 - **Preset** — A reusable template describing a guided workflow: a set of starter objects to scaffold (audit, risk assessment, etc.) plus an ordered list of steps to follow. Library-backed or authored locally; applied to a domain to produce a [Journey](#j).
 - **Processing** — In a privacy register, an activity that operates on personal data (collection, storage, transfer, deletion). Captures purpose, lawful basis, recipients, and retention.
-- **Processing nature** — A catalogued type of processing operation (collection, storage, transfer, disclosure, deletion, …) used to characterise a processing.
+- **Processing nature** — A cataloged type of processing operation (collection, storage, transfer, disclosure, deletion, …) used to characterise a processing.
 - **Project** — In the project-management module, a planned initiative with deliverables and milestones. Distinct from the legacy meaning of "project" in older OptiTech documentation — see **Perimeter**.
 - **Purpose** — In a privacy register, the lawful reason for which personal data is processed.
 
@@ -118,7 +118,7 @@ A glossary of the terms used in OptiTech. Where a user-facing term differs from 
 
 - **Recap** — The roll-up view of a business impact analysis, aggregating asset assessments and their escalation thresholds into a single readout.
 - **Recovery target** — A documented commitment for restoring an asset after disruption, typically a Recovery Time Objective (RTO) or Recovery Point Objective (RPO). Tracked on an asset assessment as "documented", "tested", and "targets met" flags.
-- **Reference control** — A template for an applied control. Provided by frameworks via libraries, or defined locally. Optional but recommended for keeping applied controls consistent across the organisation.
+- **Reference control** — A template for an applied control. Provided by frameworks via libraries, or defined locally. Optional but recommended for keeping applied controls consistent across the organization.
 - **Representative** — The person responsible for answering the questionnaire or requirements of an entity assessment.
 - **Requirement** — A single normative statement inside a framework.
 - **Requirement assessment** — The evaluation of one requirement inside an audit (status, score, evidence, applied controls).
@@ -127,11 +127,11 @@ A glossary of the terms used in OptiTech. Where a user-facing term differs from 
 - **Responsibility matrix** — An assignment of actors to activities, used in project workflows and accreditation processes. Supports RACI, RASCI, and RAPID conventions.
 - **Responsibility role** — The role attached to an actor on an activity inside a responsibility matrix (e.g. R/A/C/I in RACI, or R/A/S/C/I in RASCI). Defined per matrix.
 - **Right request** — In a privacy register, a data-subject request under GDPR or equivalent (access, rectification, deletion, portability).
-- **Risk acceptance** — Formal record of an organisation's decision to tolerate a residual risk without further treatment. Carries an approval workflow; approval requires the **Approver** role.
+- **Risk acceptance** — Formal record of an organization's decision to tolerate a residual risk without further treatment. Carries an approval workflow; approval requires the **Approver** role.
 - **Risk assessment** (also _risk study_) — A scenario-based evaluation of risk over a perimeter.
 - **Risk matrix** — A configurable lookup table that derives risk level from probability and impact. Imported from a library. The matrix is fixed per risk assessment once the assessment is created.
 - **Risk scenario** — A building block of a risk assessment: combines threats, assets, and existing controls into a story whose probability and impact can be evaluated.
-- **Role** — A bundle of permissions. Four built-in roles ship with the platform; PRO editions also support custom roles.
+- **Role** — A bundle of permissions. Four built-in roles ship with the platform, plus custom roles.
   - **Domain Manager** — can set up and access everything on a domain.
   - **Analyst** — can input and read data, but cannot change a domain's settings.
   - **Reader** — read-only on the domain's items.
@@ -141,7 +141,7 @@ A glossary of the terms used in OptiTech. Where a user-facing term differs from 
 
 ## S
 
-- **Security advisory** — A catalogued security warning published by a vendor or CERT (e.g. CVE entries). Linked to vulnerabilities and affected assets.
+- **Security advisory** — A cataloged security warning published by a vendor or CERT (e.g. CVE entries). Linked to vulnerabilities and affected assets.
 - **Security exception** — A documented, time-bound deviation from a control or policy, approved through a workflow and tracked for review.
 - **Severity** — The shared ordinal scale used to qualify vulnerabilities, incidents, and findings: undefined / info / low / medium / high / critical. Drives SLA escalation and visual emphasis in dashboards.
 - **Solution** — A product or service provided by an entity.
@@ -155,8 +155,8 @@ A glossary of the terms used in OptiTech. Where a user-facing term differs from 
 - **Task occurrence** — A scheduled instance of a task definition, with a due date, a status (pending → in progress → completed/cancelled), and the evidence collected when the task ran. Internally a `TaskNode`.
 - **Task template** — Internal model name for a **task definition**. See **Task definition**.
 - **Team** — A named grouping of users used for collaborative ownership of objects, with a leader, optional deputies, members, and an optional team email for notification routing. Distinct from a [User group](#u) (which is role-scoped to a domain — see the disambiguation in [Actors and teams](../concepts/actors-and-teams.md)).
-- **Terminology** — An organisation's overrides to the platform's default labels, used to align the UI with internal vocabulary.
-- **Threat** — A catalogued source of harm — reusable across scenarios. Optional: assessments can be performed without referencing threats explicitly.
+- **Terminology** — An organization's overrides to the platform's default labels, used to align the UI with internal vocabulary.
+- **Threat** — A cataloged source of harm — reusable across scenarios. Optional: assessments can be performed without referencing threats explicitly.
 
 ## U
 
@@ -166,7 +166,7 @@ A glossary of the terms used in OptiTech. Where a user-facing term differs from 
 
 ## V
 
-- **Validation flow** — A configurable approval workflow that mirrors an organisation's internal review or management-approval process — peer-review, sign-off by a security lead, formal acceptance by a steering committee. Attached to objects whose state changes warrant such review (e.g. risk acceptance, audit close-out), it captures the human approval step inside the platform rather than enforcing it as a hard technical gate.
+- **Validation flow** — A configurable approval workflow that mirrors an organization's internal review or management-approval process — peer-review, sign-off by a security lead, formal acceptance by a steering committee. Attached to objects whose state changes warrant such review (e.g. risk acceptance, audit close-out), it captures the human approval step inside the platform rather than enforcing it as a hard technical gate.
 - **Vulnerability** — A weakness in a system or process that could be exploited by a threat. Tracked with severity, status, and linked applied controls.
 
 ## W

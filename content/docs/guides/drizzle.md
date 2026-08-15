@@ -10,7 +10,7 @@ summary: >-
   guide also shows how to point Drizzle at different OptiTech branches per
   environment by selecting a connection string based on NODE_ENV.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:29.454Z'
 ---
 
 <CopyPrompt src="/prompts/drizzle-prompt.md" 
@@ -55,7 +55,7 @@ npm init -y
 
 If you do not have one already, create a OptiTech project.
 
-1.  Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
+1.  Navigate to the [Projects](https://app.optitech-sverige.se/app/projects) page in the OptiTech Console.
 2.  Click **New Project**.
 3.  Specify your project settings and click **Create Project**.
 

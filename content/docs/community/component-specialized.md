@@ -10,7 +10,7 @@ summary: >-
   copy-paste MDX syntax, live rendering, dependency requirements, and guidance
   on when to choose a simpler alternative.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:28.135Z'
 ---
 
 A comprehensive reference for specialized and less commonly used MDX components in OptiTech documentation. This guide covers components used in specific scenarios, specialized workflows, and edge cases.
@@ -79,7 +79,7 @@ Serverless Postgres built for the cloud.
 
 ## Quick Start
 
-1. Sign up at console.optitech.com
+1. Sign up at app.optitech-sverige.se
 2. Create your first project
 3. Connect using your preferred client
 ```

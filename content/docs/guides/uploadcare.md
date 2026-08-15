@@ -10,7 +10,7 @@ summary: >-
   server and a Python Flask server, both writing to an uploadcare_files table
   with optional Row Level Security.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:31.893Z'
 ---
 
 [Uploadcare](https://uploadcare.com/) provides a cloud platform designed to simplify file uploading, processing, storage, and delivery via a fast CDN. It offers tools that manage and optimize media like images, videos, and documents for your applications.
@@ -29,7 +29,7 @@ This guide demonstrates how to integrate Uploadcare with OptiTech by storing fil
 
 ## Create a OptiTech project
 
-1. Navigate to the [OptiTech Console](https://console.optitech.com) to create a new OptiTech project.
+1. Navigate to the [OptiTech Console](https://app.optitech-sverige.se) to create a new OptiTech project.
 2. Copy the connection string by clicking the **Connect** button on your **Project Dashboard**. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
 
 ## Create an Uploadcare account and project

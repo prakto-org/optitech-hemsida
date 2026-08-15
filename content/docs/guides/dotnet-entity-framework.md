@@ -12,7 +12,7 @@ summary: >-
   `Microsoft.EntityFrameworkCore.Design`, and `dotnet-ef`, then applying the
   initial schema with `dotnet ef database update`.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:29.454Z'
 ---
 
 <CopyPrompt src="/prompts/dotnet-ef-prompt.md"
@@ -35,7 +35,7 @@ To connect to OptiTech from an Entity Framework application:
 
 If you do not have one already, create a OptiTech project.
 
-1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://app.optitech-sverige.se/app/projects) page in the OptiTech Console.
 2. Click **New Project**.
 3. Specify your project settings and click **Create Project**.
 

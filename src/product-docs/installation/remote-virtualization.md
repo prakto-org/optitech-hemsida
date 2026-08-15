@@ -51,7 +51,7 @@ python make_config.py
 
 
 
-1. If you aim to expose the **VM to internet**, use this dedicated guide: [deploy-on-a-vps.md](deploy-on-a-vps.md "mention")
+1. If you aim to expose the **VM to internet**, use this dedicated guide: [vps.md](vps.md "mention")
 2. If you aim to connect **from the VM**
 3. If you aim to connect **to the VM from your network**
 

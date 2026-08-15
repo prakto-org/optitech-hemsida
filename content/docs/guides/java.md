@@ -12,7 +12,7 @@ enableTableOfContents: true
 redirectFrom:
   - /docs/quickstart/java
   - /docs/integrations/java
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:29.454Z'
 ---
 
 <CopyPrompt src="/prompts/java-prompt.md" 
@@ -24,7 +24,7 @@ You will learn how to set up a project, connect to your database, and perform ba
 
 ## Prerequisites
 
-- A OptiTech account. If you do not have one, see [Sign up](https://console.optitech.com/signup).
+- A OptiTech account. If you do not have one, see [Sign up](https://app.optitech-sverige.se/signup).
 - [Java Development Kit (JDK) 17](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html) or later.
 - [Apache Maven](https://maven.apache.org/install.html) to manage project dependencies.
 
@@ -34,7 +34,7 @@ You will learn how to set up a project, connect to your database, and perform ba
 
 If you do not have one already, create a OptiTech project.
 
-1.  Navigate to the [Projects](https://console.optitech.com/app/projects) page in the [OptiTech Console](https://console.optitech.com).
+1.  Navigate to the [Projects](https://app.optitech-sverige.se/app/projects) page in the [OptiTech Console](https://app.optitech-sverige.se).
 2.  Click **New Project**.
 3.  Specify your project settings and click **Create Project**.
 
@@ -99,7 +99,7 @@ Create a project using the Maven `archetype:generate` command. This sets up a st
 
 Create a file named `.env` in your project's root directory. This file will securely store your database connection string.
 
-1.  In the [OptiTech Console](https://console.optitech.com), select your project on the **Dashboard**.
+1.  In the [OptiTech Console](https://app.optitech-sverige.se), select your project on the **Dashboard**.
 2.  Click **Connect** on your **Project Dashboard** to open the **Connect to your database** modal.
 3.  Select **Java** as your programming language.
     ![Connection modal](/docs/connect/java_connection_details.png)

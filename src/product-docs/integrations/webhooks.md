@@ -46,7 +46,7 @@ OptiTech adheres to the [Standard Webhooks v1.0.0](https://www.standardwebhooks.
 
 When configuring an endpoint, you can choose between two payload strategies.
 
-* Thin Payloads (<mark style="color:purple;">PRO</mark>) (Recommended for Security):
+* Thin Payloads (Recommended for Security):
   * What it sends: Only the `id` of the changed resource.
   * How to process: Your system receives the ID, then makes an authenticated API call back to OptiTech to fetch the details.
   * Why choose this: This is the most secure method. It ensures that the receiving system has the correct permissions to view the data and guarantees you are always processing the latest version of the object.

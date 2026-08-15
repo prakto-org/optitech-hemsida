@@ -4,9 +4,9 @@ description: Step-by-step guide to running an EBIOS RM study in OptiTech — fiv
 
 # EBIOS RM study
 
-This guide walks through a full **EBIOS RM** study in OptiTech, workshop by workshop. EBIOS RM is the structured risk-management method published by [ANSSI](https://cyber.gouv.fr/securisation/analyse-des-risques/methode-ebios-rm/); OptiTech supports it with a dedicated object graph rather than forcing it into a generic risk-assessment shape, which lets each workshop produce the artefacts the method calls for while reusing data that already lives in the platform.
+This guide walks through a full **EBIOS RM** study in OptiTech, workshop by workshop. EBIOS RM is the structured risk-management method published by [ANSSI](https://cyber.gouv.fr/securisation/analyze-des-risques/methode-ebios-rm/); OptiTech supports it with a dedicated object graph rather than forcing it into a generic risk-assessment shape, which lets each workshop produce the artifacts the method calls for while reusing data that already lives in the platform.
 
-For the conceptual mental model and the user-facing ↔ internal naming map, read [EBIOS RM (concept)](../concepts/ebios-rm.md) first. For the formal methodology, see ANSSI's [EBIOS RM v1.5 guide](https://cyber.gouv.fr/securisation/analyse-des-risques/methode-ebios-rm/) and the supporting training material.
+For the conceptual mental model and the user-facing ↔ internal naming map, read [EBIOS RM (concept)](../concepts/ebios-rm.md) first. For the formal methodology, see ANSSI's [EBIOS RM v1.5 guide](https://cyber.gouv.fr/securisation/analyze-des-risques/methode-ebios-rm/) and the supporting training material.
 
 ## Prerequisites
 
@@ -21,7 +21,7 @@ Before you start the study, set up:
    - **Threats** to attach to elementary actions and operational scenarios at workshop 4.
    - **Applied controls** to layer in at workshop 3 (stakeholder controls) and workshop 5 (risk treatment).
 
-You don't need everything upfront — the editor lets you create objects inline — but having a clean catalogue makes the study faster and the deliverables tidier.
+You don't need everything upfront — the editor lets you create objects inline — but having a clean catalog makes the study faster and the deliverables tidier.
 
 ## Create the study
 
@@ -51,13 +51,13 @@ In the study landing card, capture the mission, scope, and applicable regulation
 
 Attach the **primary and supporting assets** that fall inside the study. Use **Select asset** to pick from your existing asset inventory rather than re-creating them in EBIOS RM.
 
-> **EBIOS RM vocabulary bridge**: what ANSSI calls **valeur métier** (the missions, processes, and information that carry value for the organisation) maps to a OptiTech **Primary asset**; what ANSSI calls **bien support** (the IT, infrastructure, people, premises supporting those valeurs métiers) maps to a **Supporting asset**. The `type` field on each asset is what you set to mark the distinction. A valeur métier is then composed of one or more biens support through the asset parent/child relationship.
+> **EBIOS RM vocabulary bridge**: what ANSSI calls **valeur métier** (the missions, processes, and information that carry value for the organization) maps to an OptiTech **Primary asset**; what ANSSI calls **bien support** (the IT, infrastructure, people, premises supporting those valeurs métiers) maps to a **Supporting asset**. The `type` field on each asset is what you set to mark the distinction. A valeur métier is then composed of one or more biens support through the asset parent/child relationship.
 
 > **Content reuse — assets**: the assets attached here are the same `Asset` objects you manage under **Assets**. Updates to an asset (owner, description, parent linkage) propagate automatically into the study. Use the [Assets concept page](../concepts/assets.md) to model them once and reuse them across studies.
 
 ### 1.3 Identify feared events
 
-In **Feared events**, declare the undesirable outcomes that would matter to the organisation if they occurred on the primary assets:
+In **Feared events**, declare the undesirable outcomes that would matter to the organization if they occurred on the primary assets:
 
 1. Click **Add feared event**, give it a name and optional reference ID.
 2. Attach the **assets** the event affects.
@@ -82,7 +82,7 @@ WS2 turns "who might attack and what they want" into a structured short list.
 
 In **Workshop 2 → RO/TO couples**, click **Add RO/TO couple** for each pairing:
 
-- **Risk origin** — picked from the terminology catalogue (states, organised crime, hacktivists, insiders, competitors…). Tune the available list under [Terminology](../concepts/terminology.md).
+- **Risk origin** — picked from the terminology catalog (states, organized crime, hacktivists, insiders, competitors…). Tune the available list under [Terminology](../concepts/terminology.md).
 - **Target objective** — what they would seek by attacking you (free text).
 
 ### 2.2 Evaluate RO/TO couples
@@ -158,7 +158,7 @@ WS4 drops into technical detail. This is where attackers' kill chains live.
    - Optional **Threat** — link to a `Threat` object for richer reporting.
    - Optional **Icon** — for the graph editor.
 
-Build a catalogue you can reuse across operating modes and studies.
+Build a catalog you can reuse across operating modes and studies.
 
 ### 4.1 Develop operational scenarios
 
@@ -258,9 +258,9 @@ Operating modes are rated individually, and the operational scenario's likelihoo
 Use _Express_ when:
 
 - You want defensible rationales tied to specific kill chains.
-- You're modelling multiple parallel kill chains per scenario and the worst one should drive the headline likelihood.
+- You're modeling multiple parallel kill chains per scenario and the worst one should drive the headline likelihood.
 
-Switching between methods on an existing study is supported, but only changes propagation behaviour going forward — already-rated scenarios keep their values until something triggers a recompute.
+Switching between methods on an existing study is supported, but only changes propagation behavior going forward — already-rated scenarios keep their values until something triggers a recompute.
 
 ## Reports and exports
 
@@ -272,7 +272,7 @@ Open **Report** from the study page. It's a printable, workshop-by-workshop doss
 - WS1 — assets, feared events with gravity, baseline (per linked audit, with requirement results and applied controls).
 - WS2 — RO/TO couples with motivation, resources, activity, and computed pertinence.
 - WS3 — ecosystem radar (current and residual), stakeholders, strategic scenarios with their attack paths.
-- WS4 — elementary actions catalogue, operational scenarios with operating modes rendered inline (graphs included), kill-chain flow text.
+- WS4 — elementary actions catalog, operational scenarios with operating modes rendered inline (graphs included), kill-chain flow text.
 - WS5 — risk register matrix (inherent / current / residual), action plans from compliance assessments and from the generated risk assessment.
 
 A floating workshop pad on the right-hand side jumps between sections. Click **Export PDF** to open the browser's print dialog with the report's print stylesheet applied — print to file for a clean PDF.
@@ -296,7 +296,7 @@ The **Excel** export produces a multi-sheet workbook covering every workshop:
 | `3.2.1 Strategic Scenarios` | Strategic scenarios |
 | `3.2.2 Attack Paths` | Attack paths with stakeholder coverage |
 | `3.3 Stakeholder Controls` | Applied controls on stakeholders |
-| `4.0 Elementary Actions` | The elementary actions catalogue |
+| `4.0 Elementary Actions` | The elementary actions catalog |
 | `4.1.1 Operational Scenarios` | Operational scenarios with likelihood, gravity, risk level |
 | `4.1.2 Operating Modes` | Operating modes with their kill chains |
 
@@ -308,12 +308,12 @@ The same Excel export is **re-importable** into a different OptiTech instance. T
 2. On instance B, go to **Extra → Data Wizard** and pick **EBIOS RM study (OptiTech format)**. Upload the file.
 3. The wizard recreates the study with all workshops and scaffolds the linked objects (assets, feared events, RO/TOs, stakeholders, strategic scenarios, attack paths, operational scenarios, operating modes, kill chains).
 
-There is also an **EBIOS RM study (ARM format)** import that reads ANSSI's own _Atelier de Risk Manager (ARM)_ Excel files. ARM is a proprietary schema and not all objects map cleanly — header or sheet changes in the source can drop fields silently. Use the OptiTech format whenever the source is itself a OptiTech export.
+There is also an **EBIOS RM study (ARM format)** import that reads ANSSI's own _Atelier de Risk Manager (ARM)_ Excel files. ARM is a proprietary schema and not all objects map cleanly — header or sheet changes in the source can drop fields silently. Use the OptiTech format whenever the source is itself an OptiTech export.
 
 ## Tips and patterns
 
 - **Reuse aggressively.** The point of having an asset inventory, an entity directory, a control library, and an audit module is that you don't re-type them inside the study. Reuse keeps the study consistent with the rest of the GRC picture and saves time on the next iteration.
-- **Keep elementary actions atomic.** A reusable catalogue is worth more than a sprawling per-scenario list. Name them by the act, not by the target (`Phish credentials`, not `Phish admin@example.com`).
+- **Keep elementary actions atomic.** A reusable catalog is worth more than a sprawling per-scenario list. Name them by the act, not by the target (`Phish credentials`, not `Phish admin@example.com`).
 - **One kill chain per operating mode.** Multiple chains in the same mode make the graph hard to read and break independent quotation under _Express_.
 - **Iterate WS1.4 with your audits.** As the audits progress over the year, WS1.4 stays current automatically — the baseline isn't frozen at study creation.
 - **Version the study.** Bump the `version` field at each material revision (new RO/TO, scope change, post-incident reassessment). The exported Excel carries the version, which makes round-trips traceable.
@@ -327,4 +327,4 @@ There is also an **EBIOS RM study (ARM format)** import that reads ANSSI's own _
 - [Third-party risk management](../concepts/third-party-risk.md) — the WS3.1 source.
 - [Applied controls](../concepts/applied-controls.md) — used at WS3.3 and WS5.
 - [Terminology](../concepts/terminology.md) — risk origins, qualifications, stakeholder categories.
-- ANSSI references — [EBIOS RM v1.5 guide and supporting training material](https://cyber.gouv.fr/securisation/analyse-des-risques/methode-ebios-rm/).
+- ANSSI references — [EBIOS RM v1.5 guide and supporting training material](https://cyber.gouv.fr/securisation/analyze-des-risques/methode-ebios-rm/).

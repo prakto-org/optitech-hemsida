@@ -2,7 +2,7 @@
 
 A **library** is a bundled set of catalog objects — frameworks, threats, risk matrices, reference controls, mappings, security advisories, CWE entries — distributed as a YAML file.
 
-Libraries are how content gets into OptiTech. They make the platform extensible: anything from a regulator's framework to a vendor's threat feed to your organisation's internal control catalogue is just another library.
+Libraries are how content gets into OptiTech. They make the platform extensible: anything from a regulator's framework to a vendor's threat feed to your organization's internal control catalog is just another library.
 
 ## Mental model
 
@@ -17,7 +17,7 @@ graph LR
   LL -->|depends on| LL
 ```
 
-A library starts life as a **stored** record — its YAML is parsed and registered but contents stay inactive. Loading it materialises whatever catalog objects the YAML declares — any subset of framework, risk matrix, threats, reference controls, or mapping set (all dashed, all optional). A loaded library can also declare dependencies on other loaded libraries — for example, a framework library that ships its companion reference-control catalogue as a separate dependency.
+A library starts life as a **stored** record — its YAML is parsed and registered but contents stay inactive. Loading it materialises whatever catalog objects the YAML declares — any subset of framework, risk matrix, threats, reference controls, or mapping set (all dashed, all optional). A loaded library can also declare dependencies on other loaded libraries — for example, a framework library that ships its companion reference-control catalog as a separate dependency.
 
 | User-facing | Internal | Notes |
 |---|---|---|
@@ -34,13 +34,13 @@ A library can be in one of two states:
 
 ## What's in a library
 
-A library typically contains a single primary object (for example, one framework) but may bundle related ones — a framework alongside its companion reference-control catalogue and its mapping to a sibling framework.
+A library typically contains a single primary object (for example, one framework) but may bundle related ones — a framework alongside its companion reference-control catalog and its mapping to a sibling framework.
 
 Library content is referenced by **URN** (Uniform Resource Name), an immutable identifier that survives renames and re-imports.
 
 ## Built-in, community, and custom
 
-- **Built-in libraries** ship with the platform — over 100 frameworks plus the standard threat, matrix, and reference-control catalogues.
+- **Built-in libraries** ship with the platform — over 100 frameworks plus the standard threat, matrix, and reference-control catalogs.
 - **Community libraries** are contributed by the wider GRC community and bundled with the platform.
 - **Custom libraries** can be built locally and loaded without sharing them, useful for internal frameworks or control sets.
 

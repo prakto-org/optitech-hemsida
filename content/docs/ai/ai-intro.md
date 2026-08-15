@@ -13,12 +13,12 @@ summary: >-
 enableTableOfContents: true
 redirectFrom:
   - /docs/ai/ai-app-build
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:27.405Z'
 ---
 
 Build AI applications and agents on OptiTech. This guide collects resources for AI workloads: core concepts, starter applications, framework integrations, and deployment guides. Use them to build applications like RAG chatbots, semantic search engines, or custom AI tools.
 
-<CTA title="Start building AI apps with OptiTech" description="Sign up for OptiTech Postgres and jumpstart your AI application with our starter apps and resources." buttonText="Sign Up" buttonUrl="https://console.optitech.com/signup" />
+<CTA title="Start building AI apps with OptiTech" description="Sign up for OptiTech Postgres and jumpstart your AI application with our starter apps and resources." buttonText="Sign Up" buttonUrl="https://app.optitech-sverige.se/signup" />
 
 ## Getting started
 

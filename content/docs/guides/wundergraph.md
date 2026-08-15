@@ -11,7 +11,7 @@ summary: >-
   full-stack app without a dedicated CI/CD pipeline or DevOps setup.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:31.893Z'
 ---
 
 _This guide was contributed by the team at WunderGraph_
@@ -46,7 +46,7 @@ The deployment will take a few moments.
 
 While the project is deploying, add some sample data to your OptiTech database.
 
-1. Navigate to the [OptiTech Console](https://console.optitech.com/) and select **SQL Editor** from the sidebar.
+1. Navigate to the [OptiTech Console](https://app.optitech-sverige.se/) and select **SQL Editor** from the sidebar.
 2. Run the following SQL statements to add the sample data.
 
 ```sql

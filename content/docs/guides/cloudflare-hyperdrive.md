@@ -12,7 +12,7 @@ summary: >-
   behavior in Hyperdrive local connection strings and how to test with
   wrangler dev --remote.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:28.135Z'
 ---
 
 [Cloudflare Hyperdrive](https://developers.cloudflare.com/hyperdrive/) is a serverless application that proxies queries to your database and accelerates them. It works by maintaining a globally distributed pool of database connections, and routing queries to the closest available connection.
@@ -37,7 +37,7 @@ To follow along with this guide, you require:
 
 ### Initialize a new project
 
-1. Log in to the OptiTech Console and navigate to the [Projects](https://console.optitech.com/app/projects) section.
+1. Log in to the OptiTech Console and navigate to the [Projects](https://app.optitech-sverige.se/app/projects) section.
 
 2. Click the **New Project** button to create a new project.
 

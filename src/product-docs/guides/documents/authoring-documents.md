@@ -12,12 +12,12 @@ Documents require the `document_management` [feature flag](../../configuration/s
 
 ## Where documents live
 
-- **Documents** — the reading catalogue: published documents as tiles, grouped by type, with search and type filters. This is where readers browse the published corpus.
+- **Documents** — the reading catalog: published documents as tiles, grouped by type, with search and type filters. This is where readers browse the published corpus.
 - **Manage** (on the Documents page) opens the full document list, where you create and manage documents regardless of status.
 
 ## Create a document
 
-Choose **New document** — from the **Documents** catalogue or the document list — and fill in the essentials: a name, a **Document type** (Policy, Procedure, Charter, Record, Meeting minutes, Other), a **Domain**, and optionally a **Classification** (see [Object classifications](../../concepts/object-classification.md)).
+Choose **New document** — from the **Documents** catalog or the document list — and fill in the essentials: a name, a **Document type** (Policy, Procedure, Charter, Record, Meeting minutes, Other), a **Domain**, and optionally a **Classification** (see [Object classifications](../../concepts/object-classification.md)).
 
 Then pick a **Content source**:
 
@@ -59,11 +59,11 @@ The **Version history** sidebar lists every revision; you can read any past vers
 
 ## Add a language
 
-Use **Add translation** to create another language version of the same document. Each language has its own lifecycle and revisions, so a translation can stay in draft while the original is published. One language is the default (used for the catalogue title and status).
+Use **Add translation** to create another language version of the same document. Each language has its own lifecycle and revisions, so a translation can stay in draft while the original is published. One language is the default (used for the catalog title and status).
 
 ## Export
 
-**Export PDF** produces a PDF of the current document. On the PRO plan the PDF layout (cover page, header/footer, branding) can be customised — see [Custom templates → Document layout templates](../../configuration/settings/custom-templates.md#document-layout-templates).
+**Export PDF** produces a PDF of the current document. The PDF layout (cover page, header/footer, branding) can be customized — see [Custom templates → Document layout templates](../../configuration/settings/custom-templates.md#document-layout-templates).
 
 ## Related
 

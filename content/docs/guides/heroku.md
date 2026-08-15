@@ -9,7 +9,7 @@ summary: >-
   Useful when migrating from Heroku Postgres or hosting a new Node app on
   Heroku with OptiTech.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:29.454Z'
 ---
 
 [Heroku](https://heroku.com) is a popular platform as a service (PaaS) that enables developers to build, run, and operate applications entirely in the cloud. It simplifies the deployment process, making it a favorite among developers for its ease of use and integration capabilities.
@@ -29,7 +29,7 @@ To follow along with this guide, you will need:
 
 ### Initialize a New Project
 
-1. Log in to the OptiTech Console and navigate to the [Projects](https://console.optitech.com/app/projects) section.
+1. Log in to the OptiTech Console and navigate to the [Projects](https://app.optitech-sverige.se/app/projects) section.
 
 2. Click **New Project** to create a new project.
 

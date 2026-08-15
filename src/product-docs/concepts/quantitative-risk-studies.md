@@ -16,7 +16,7 @@ graph LR
   H -.->|assumes| AC[Applied control]
 ```
 
-A study is the container for one quantitative analysis. It comprises scenarios — each one a discrete risk being modelled — and each scenario comprises one or more hypotheses, typically one per risk stage (inherent / current / residual). The hypothesis carries the probability and impact distributions plus the applied controls it assumes are in place — split into existing / added / removed sets so the delta between stages is explicit. Scenarios reference the assets they impact and the vulnerabilities they exploit, mirroring the qualitative side of the platform.
+A study is the container for one quantitative analysis. It comprises scenarios — each one a discrete risk being modeled — and each scenario comprises one or more hypotheses, typically one per risk stage (inherent / current / residual). The hypothesis carries the probability and impact distributions plus the applied controls it assumes are in place — split into existing / added / removed sets so the delta between stages is explicit. Scenarios reference the assets they impact and the vulnerabilities they exploit, mirroring the qualitative side of the platform.
 
 | User-facing | Internal | Notes |
 |---|---|---|

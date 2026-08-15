@@ -5,11 +5,11 @@ description: Guidelines on data import format
 # Data import wizard
 
 {% hint style="info" %}
-## Applicable for: Data import wizard UI (Pro) and CLI (Community or Pro)
+## Applicable for: Data import wizard UI and CLI
 
-Importing existing data from excel sheets is supported on the Pro plan through the UI and CLI, and on Community edition through the dedicated CLI, not a django command. The cli is available on the cli folder with the associated instructions.\
+Importing existing data from excel sheets is supported through the UI and through the dedicated CLI (not a django command). The cli is available on the cli folder with the associated instructions.\
 Keep in mind that the CLI needs to reach the API as it wraps its actions around it.\
-The mention to the API is regarding the fact that users on both plans can still interact with the API directly in case they have some data prep phase on their end for batch import or equivalent.
+The mention to the API is regarding the fact that you can still interact with the API directly in case you have some data prep phase on your end for batch import or equivalent.
 {% endhint %}
 
 {% hint style="warning" %}
@@ -458,7 +458,7 @@ Elementary actions are useful to model a killchain during the 4th workshop of an
 
 ## CyFun self-assessment
 
-The official self-assessment Excel workbook published by Belgium's Centre for Cybersecurity for the **CyFun 2025** framework — BASIC, IMPORTANT, and ESSENTIAL editions are all accepted. The import creates a new audit, loads the CyFun 2025 framework automatically if needed, sets the implementation group from the detected assurance level, and carries over documentation/implementation scores, `N/A` markers, and comments. See [CCB CyFun](../features/framework-specific/cyfun.md) for details.
+The official self-assessment Excel workbook published by Belgium's Center for Cybersecurity for the **CyFun 2025** framework — BASIC, IMPORTANT, and ESSENTIAL editions are all accepted. The import creates a new audit, loads the CyFun 2025 framework automatically if needed, sets the implementation group from the detected assurance level, and carries over documentation/implementation scores, `N/A` markers, and comments. See [CCB CyFun](../features/framework-specific/cyfun.md) for details.
 
 Selected in the wizard as **CyFun self-assessment**; on the CLI: `import-cyfun-assessment`.
 
@@ -468,7 +468,7 @@ Importing a full EBIOS RM study creates the study itself plus the objects across
 
 ### Agile Risk Manager (ARM) — Excel
 
-The Excel export produced by [Agile Risk Manager](https://www.all4tec.com/agile-risk-manager/) (All4Tec). The file contains 91 sheets organised by EBIOS workshop. Both French and English ARM exports are accepted; sheet and column names are matched against known variants.
+The Excel export produced by [Agile Risk Manager](https://www.all4tec.com/agile-risk-manager/) (All4Tec). The file contains 91 sheets organized by EBIOS workshop. Both French and English ARM exports are accepted; sheet and column names are matched against known variants.
 
 Selected in the wizard as **EBIOS RM Study (ARM)**.
 
@@ -806,7 +806,7 @@ Every choice column accepts either the raw key (e.g. `privacy_contract`) or its 
 
 ## Folders
 
-Folders (domains) are the top-level organisational units in OptiTech. Importing them lets you pre-populate a domain hierarchy before importing other objects.
+Folders (domains) are the top-level organizational units in OptiTech. Importing them lets you pre-populate a domain hierarchy before importing other objects.
 
 #### Supported fields
 
@@ -828,7 +828,7 @@ Folders (domains) are the top-level organisational units in OptiTech. Importing 
 
 ## Tasks
 
-Tasks in OptiTech are modelled as **TaskTemplates** (definitions) with **TaskNodes** (individual occurrences). A non-recurrent task has one node; recurrent tasks generate one node per scheduled occurrence.
+Tasks in OptiTech are modeled as **TaskTemplates** (definitions) with **TaskNodes** (individual occurrences). A non-recurrent task has one node; recurrent tasks generate one node per scheduled occurrence.
 
 The wizard imports both in a single multi-sheet Excel file: a **Summary** sheet for the templates, plus one sheet per template that contains its past occurrences. A flat CSV upload is also accepted and imports templates only. On the CLI, the corresponding command is `import-tasks`.
 

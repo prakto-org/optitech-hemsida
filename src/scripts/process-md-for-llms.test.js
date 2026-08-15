@@ -73,16 +73,17 @@ describe('MDX to Markdown Conversion', () => {
       expect(result).not.toContain('<FeatureBeta');
     });
 
-    it('should expand AzureRegionsDeprecation shared content', async () => {
+    it('should convert the data centers page and strip UI-only components', async () => {
       const inputPath = 'content/docs/introduction/regions.md';
       const pageUrl = 'https://neon.com/docs/introduction/regions';
       const projectRoot = process.cwd();
 
       const { content: result } = await processFile(inputPath, pageUrl, projectRoot);
 
-      expect(result).toContain('Azure regions');
-      expect(result).toContain('You can no longer create new projects in Azure regions');
-      expect(result).not.toContain('<AzureRegionsDeprecation');
+      expect(result).toContain('# Data centers');
+      expect(result).toContain('EU data residency');
+      expect(result).not.toContain('<NeedHelp');
+      expect(result).not.toMatch(/\]\(\/docs\//); // No relative /docs/ links
     });
 
     it('should unwrap QuoteBlocksWrapper and preserve all quotes', async () => {

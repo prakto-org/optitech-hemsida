@@ -83,7 +83,7 @@ The shared merge logic lives in `core/mappings/merge.py` (`compute_map_from_merg
 
 - Same-framework "Map from an audit" leaves no provenance trail (no `mapping_inference`).
 - The preview recomputes the merge; confirming recomputes it again (no cached hand-off between the two steps).
-- Coverage is computed per source requirement's path; a target is labelled *full* if any origin source requirement fully covers it.
+- Coverage is computed per source requirement's path; a target is labeled *full* if any origin source requirement fully covers it.
 
 ## Tests
 

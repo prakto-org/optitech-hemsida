@@ -43,14 +43,14 @@ Plus, of course, access to your account settings on OptiTech.
 ## Enable a security key (WebAuthn)
 
 1. Sign in and navigate to **My profile → Settings**.
-2. In the Security section, choose to enrol a security key.
+2. In the Security section, choose to enroll a security key.
 3. When the browser prompts you, present the authenticator:
    - **Hardware key** — insert it and tap when it blinks.
    - **Platform authenticator** — confirm via fingerprint, face recognition, or device PIN.
    - **Passkey** — pick the existing passkey from your password manager.
-4. Give the credential a recognisable name (e.g. "YubiKey blue", "MacBook Touch ID") so you can identify it later if you enrol several.
+4. Give the credential a recognizable name (e.g. "YubiKey blue", "MacBook Touch ID") so you can identify it later if you enroll several.
 
-You can enrol multiple credentials on the same account — common patterns are a hardware key as the primary and a phone/passkey as the backup, or one key kept at the office and another at home.
+You can enroll multiple credentials on the same account — common patterns are a hardware key as the primary and a phone/passkey as the backup, or one key kept at the office and another at home.
 
 ## Important: save your recovery codes
 
@@ -101,11 +101,11 @@ When MFA is enabled, the login flow asks for a second factor after the password.
 ## Next steps
 
 - Test your MFA setup by logging out and back in.
-- If you enrolled a hardware key, **enrol a backup** (a second key, a passkey, or TOTP) — losing the only one is the most common lockout scenario.
+- If you enrolled a hardware key, **enroll a backup** (a second key, a passkey, or TOTP) — losing the only one is the most common lockout scenario.
 - Reach out for support if you encounter any issues during setup.
 
 ## Enforce MFA for all users
 
-Starting v3.13.0 you can enforce MFA for all users by enabling this flag. Users will see a persistent redirect to the MFA configuration page until enrolment is done. The feature doesn't interfere with SSO as long as the user doesn't have both a local account and an SSO one.
+Starting v3.13.0 you can enforce MFA for all users by enabling this flag. Users will see a persistent redirect to the MFA configuration page until enrollment is done. The feature doesn't interfere with SSO as long as the user doesn't have both a local account and an SSO one.
 
 <figure><img src="../.gitbook/assets/image (81).png" alt=""><figcaption></figcaption></figure>

@@ -4,7 +4,7 @@ description: Controls export aligned with France's ANSSI MonServiceSécurisé po
 
 # MonServiceSécurisé
 
-[MonServiceSécurisé](https://monservicesecurise.cyber.gouv.fr/) is the French ANSSI portal that lets public-sector organisations declare and track the security of their digital services. The portal accepts an Excel-based declaration of measures with a specific layout — three columns (_Intitulé_, _Description_, _Catégorie_) and a fixed taxonomy for the category column (_Gouvernance_, _Protection_, _Défense_, _Résilience_).
+[MonServiceSécurisé](https://monservicesecurise.cyber.gouv.fr/) is the French ANSSI portal that lets public-sector organizations declare and track the security of their digital services. The portal accepts an Excel-based declaration of measures with a specific layout — three columns (_Intitulé_, _Description_, _Catégorie_) and a fixed taxonomy for the category column (_Gouvernance_, _Protection_, _Défense_, _Résilience_).
 
 OptiTech exports your applied controls directly into that template.
 

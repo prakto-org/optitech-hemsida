@@ -6,7 +6,7 @@ summary: >-
   pre-built UI components, including enabling Managed Better Auth, creating a React app,
   and configuring the necessary environment variables.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:34.632Z'
 layout: wide
 ---
 
@@ -21,7 +21,7 @@ This quick start is kept in the repo for reference but is not published on [opti
 <TwoColumnLayout.Step title="Enable Auth in your OptiTech project">
 <TwoColumnLayout.Block>
 
-If you don't have a OptiTech project yet, create one at [console.optitech.com](https://console.optitech.com).
+If you don't have a OptiTech project yet, create one at [app.optitech-sverige.se](https://app.optitech-sverige.se).
 
 Go to the **Auth** page in your project dashboard and click **Enable Managed Better Auth**.
 

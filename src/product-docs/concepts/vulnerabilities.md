@@ -1,5 +1,5 @@
 ---
-description: Catalogued weaknesses tracked through detection, triage, and remediation
+description: Cataloged weaknesses tracked through detection, triage, and remediation
 ---
 
 # Vulnerabilities

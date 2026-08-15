@@ -117,7 +117,7 @@ Steps.propTypes = sectionShape;
 Grid.propTypes = sectionShape;
 Showcase.propTypes = { ...sectionShape, scene: PropTypes.node, flip: PropTypes.bool };
 
-const MarketingPage = ({ content, locale = 'en' }) => {
+const MarketingPage = ({ content, locale = 'en', hideHero = false }) => {
   const {
     hero,
     painPoints,
@@ -137,32 +137,39 @@ const MarketingPage = ({ content, locale = 'en' }) => {
 
   return (
     <>
-      <section className="hero relative overflow-hidden bg-[#F7F5EF] pt-[152px] safe-paddings pb-24 xl:pt-[136px] lg:pt-28 md:pt-24">
-        <Container size="1280">
-          <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,0.95fr)] items-center gap-x-16 xl:gap-x-10 lg:grid-cols-1 lg:gap-y-12">
-            <div className="max-w-[600px] lg:max-w-none">
-              {hero.eyebrow && <Eyebrow>{hero.eyebrow}</Eyebrow>}
-              <h1 className="mt-5 font-serif text-[60px] leading-[1.04] font-normal tracking-extra-tight text-black-new xl:text-[52px] lg:text-[44px] md:text-[34px]">
-                {hero.title}
-              </h1>
-              <p className="mt-6 max-w-[540px] text-lg leading-normal tracking-extra-tight text-gray-new-40 lg:mt-5 lg:max-w-none lg:text-base">
-                {hero.description}
-              </p>
-              <div className="mt-9 flex flex-wrap gap-4 md:mt-7 sm:w-full sm:flex-col">
-                <Button theme="secondary" size="new" to={hero.primaryCta.href}>
-                  {hero.primaryCta.label}
-                </Button>
-                {hero.secondaryCta && (
-                  <Button theme="outlined-new" size="new" to={hero.secondaryCta.href}>
-                    {hero.secondaryCta.label}
+      {!hideHero && (
+        <section className="hero relative overflow-hidden bg-[#F7F5EF] pt-[152px] safe-paddings pb-24 xl:pt-[136px] lg:pt-28 md:pt-24">
+          <Container size="1280">
+            <div className="grid grid-cols-[minmax(0,1fr)_minmax(0,0.95fr)] items-center gap-x-16 xl:gap-x-10 lg:grid-cols-1 lg:gap-y-12">
+              <div className="max-w-[600px] lg:max-w-none">
+                {hero.eyebrow && <Eyebrow>{hero.eyebrow}</Eyebrow>}
+                <h1 className="mt-5 font-serif text-[60px] leading-[1.04] font-normal tracking-extra-tight text-black-new xl:text-[52px] lg:text-[44px] md:text-[34px]">
+                  {hero.title}
+                </h1>
+                <p className="mt-6 max-w-[540px] text-lg leading-normal tracking-extra-tight text-gray-new-40 lg:mt-5 lg:max-w-none lg:text-base">
+                  {hero.description}
+                </p>
+                <div className="mt-9 flex flex-wrap gap-4 md:mt-7 sm:w-full sm:flex-col">
+                  <Button theme="secondary" size="new" to={hero.primaryCta.href}>
+                    {hero.primaryCta.label}
                   </Button>
-                )}
+                  {hero.secondaryCta && (
+                    <Button theme="outlined-new" size="new" to={hero.secondaryCta.href}>
+                      {hero.secondaryCta.label}
+                    </Button>
+                  )}
+                </div>
               </div>
+              <Scene
+                variant={visual}
+                label={hero.eyebrow}
+                rows={sceneRows}
+                metrics={sceneMetrics}
+              />
             </div>
-            <Scene variant={visual} label={hero.eyebrow} rows={sceneRows} metrics={sceneMetrics} />
-          </div>
-        </Container>
-      </section>
+          </Container>
+        </section>
+      )}
 
       {stats?.length > 0 && (
         <section className="facts mt-24 safe-paddings xl:mt-20 lg:mt-16 md:mt-12">
@@ -300,6 +307,7 @@ MarketingPage.propTypes = {
     detailVisual: PropTypes.string,
   }).isRequired,
   locale: PropTypes.string,
+  hideHero: PropTypes.bool,
 };
 
 export default MarketingPage;

@@ -13,7 +13,7 @@ summary: >-
   window using the CLI or API.
 redirectFrom:
   - /docs/get-started/projects
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:31.893Z'
 ---
 
 In OptiTech, the project is your main workspace. Within a project, you create branches for different workflows, like environments, features, or previews. Each branch contains its own databases, roles, computes, and replicas. Your [OptiTech Plan](/docs/introduction/plans) determines how many projects you can create and the resource limits within those projects.
@@ -26,7 +26,7 @@ When you add a new project, OptiTech creates the following resources by default:
 - A single primary read-write compute. This is the compute associated with the branch. For more information, see [Manage computes](/docs/manage/computes).
 - A Postgres database that resides on the project's default branch. If you did not specify your own database name when creating the project, the database created is named `optitechdb`.
 - A Postgres role that is named for your database. For example, if your database is named `optitechdb`, the project is created with a default role named `optitechdb_owner`.
-- Storage depends on your [OptiTech plan](/docs/introduction/plans): the Free plan includes 0.5 GB per project (shared across all branches), while paid plans (Launch and Scale) are usage-based: you pay only for what you use. Each branch on paid plans supports a logical data size of up to 16 TB. When a branch reaches this limit, write performance drops, but you can still drop or delete data to reclaim space. To increase this limit, [request a storage increase in the feedback form in console](https://console.optitech.com/app/settings?modal=feedback&modalparams=%22Storage%20limit%20increase%22).
+- Storage depends on your [OptiTech plan](/docs/introduction/plans): the Free plan includes 0.5 GB per project (shared across all branches), while paid plans (Launch and Scale) are usage-based: you pay only for what you use. Each branch on paid plans supports a logical data size of up to 16 TB. When a branch reaches this limit, write performance drops, but you can still drop or delete data to reclaim space. To increase this limit, [request a storage increase in the feedback form in console](https://app.optitech-sverige.se/app/settings?modal=feedback&modalparams=%22Storage%20limit%20increase%22).
 
 ## Create a project
 
@@ -38,7 +38,7 @@ You can create a project from the Console or the OptiTech CLI. To create one wit
 
 <TabItem>
 
-1. Navigate to the [OptiTech Console](https://console.optitech.com).
+1. Navigate to the [OptiTech Console](https://app.optitech-sverige.se).
 2. Click **New Project**.
 3. Specify values for **Project Name**, **Postgres version**, **Cloud service provider**, and **Region**. Project names are limited to 64 characters.
 4. Click **Create Project**.
@@ -65,7 +65,7 @@ The output includes the new project ID and the default connection string. For al
 
 To view your projects:
 
-1. Navigate to the [OptiTech Console](https://console.optitech.com).
+1. Navigate to the [OptiTech Console](https://app.optitech-sverige.se).
 1. From the breadcrumb navigation menu at the top-left of the console, select your organization.
 1. The **Projects** page lists your projects, including any projects that have been shared with you.
 
@@ -423,7 +423,7 @@ Deleting a project is a permanent action, which also deletes any computes, branc
 
 To delete a project:
 
-1. Navigate to the [OptiTech Console](https://console.optitech.com).
+1. Navigate to the [OptiTech Console](https://app.optitech-sverige.se).
 2. Select the project that you want to delete.
 3. Select **Settings**.
 4. Select **Delete**.
@@ -433,7 +433,7 @@ For HIPAA-compliant projects, see [HIPAA Compliance](/docs/security/hipaa#delete
 </Admonition>
 
 <Admonition type="important">
-If you are any of OptiTech's paid plans, deleting all your OptiTech projects won't stop monthly billing. To avoid charges, you also need to downgrade to the Free plan. You can do so from the [Billing](https://console.optitech.com/app/billing#change_plan) page in the OptiTech Console.
+If you are any of OptiTech's paid plans, deleting all your OptiTech projects won't stop monthly billing. To avoid charges, you also need to downgrade to the Free plan. You can do so from the [Billing](https://app.optitech-sverige.se/app/billing#change_plan) page in the OptiTech Console.
 </Admonition>
 
 <Admonition type="note">

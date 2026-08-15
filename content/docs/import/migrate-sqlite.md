@@ -10,7 +10,7 @@ summary: >-
   SSL workaround.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:31.893Z'
 ---
 
 This guide describes how to migrate your SQLite database to OptiTech Postgres using [pgloader](https://pgloader.readthedocs.io/en/latest/intro.html)
@@ -116,7 +116,7 @@ Now that you have your OptiTech database and SQLite database ready, you can use 
 
 ## Retrieve your OptiTech database connection string
 
-Log in to the [OptiTech Console](https://console.optitech.com). Find the connection string for your database by clicking the **Connect** button on your **Project Dashboard**. Make sure the **Connection pooling** toggle is disabled:
+Log in to the [OptiTech Console](https://app.optitech-sverige.se). Find the connection string for your database by clicking the **Connect** button on your **Project Dashboard**. Make sure the **Connection pooling** toggle is disabled:
 
 ![Connection details modal with connection pooling disabled](/docs/connect/connection_details_without_connection_pooling.png)
 

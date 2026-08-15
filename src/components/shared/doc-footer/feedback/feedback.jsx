@@ -1,5 +1,6 @@
 'use client';
 
+import { posthog } from 'posthog-js';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import useSessionStorage from 'react-use/lib/useSessionStorage';
@@ -20,6 +21,9 @@ const Feedback = ({ slug }) => {
       setFeedbackSentData([...feedbackSentData, slug]);
       sendGtagEvent('page_feedback', {
         rate: isPositive ? 'like' : 'dislike',
+      });
+      posthog.capture('docs_page_feedback_submitted', {
+        rating: isPositive ? 'positive' : 'negative',
       });
     }
   };

@@ -10,7 +10,7 @@ This page is the reference for that dropdown. The pre-requisite "Basic audit" wa
 
 ## Field visibility
 
-Audits are routinely shared across two roles: **auditors** (the team running the audit) and **respondents** (the people answering — typically domain owners or third-party contacts). Different organisations want different things visible to each.
+Audits are routinely shared across two roles: **auditors** (the team running the audit) and **respondents** (the people answering — typically domain owners or third-party contacts). Different organizations want different things visible to each.
 
 The **Field visibility** panel inside an audit's edit form lets you switch every assessable field to one of three states:
 
@@ -100,12 +100,12 @@ Per-requirement overrides are defined when the library is authored (Excel conver
 
 #### How scores aggregate
 
-Each requirement assessment is normalised against its own resolved scale before being aggregated into the global audit score:
+Each requirement assessment is normalized against its own resolved scale before being aggregated into the global audit score:
 
-- **Average** and **Average of averages** — every requirement contributes a ratio in `[0..1]` (its score over its own range), the audit weighted-averages those ratios, then denormalises onto the audit's scale. A binary requirement scored 1/1 contributes 100%, exactly like a 5/5 on a 0..5 requirement.
+- **Average** and **Average of averages** — every requirement contributes a ratio in `[0..1]` (its score over its own range), the audit weighted-averages those ratios, then denormalizes onto the audit's scale. A binary requirement scored 1/1 contributes 100%, exactly like a 5/5 on a 0..5 requirement.
 - **Sum** — kept as a raw weighted sum on each requirement's own scale. The audit's theoretical maximum aggregates the per-requirement maxes, so 100% remains achievable when every requirement hits its own ceiling.
 
-The donut display in the requirement tree mirrors the same normalisation: every node shows `score / max` against its resolved range, so an offset scale like 1..4 renders the minimum at 0% (not 25%).
+The donut display in the requirement tree mirrors the same normalization: every node shows `score / max` against its resolved range, so an offset scale like 1..4 renders the minimum at 0% (not 25%).
 
 #### Anchor N/A with mixed scales
 

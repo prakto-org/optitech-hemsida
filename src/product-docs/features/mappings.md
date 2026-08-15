@@ -8,7 +8,7 @@ One common challenge when dealing with audits is reusing your assessment on one 
 
 OptiTech supports this capability and lets you create a projection of the content of an audit, given that a mapping is available.
 
-Mappings are library objects that can be customised, imported, and submitted to the community. To see the available ones, head to the libraries store and filter to mapping:
+Mappings are library objects that can be customized, imported, and submitted to the community. To see the available ones, head to the libraries store and filter to mapping:
 
 ![Mappings library filter view](<../.gitbook/assets/image (1) (1) (1) (1) (1) (1).png>)
 

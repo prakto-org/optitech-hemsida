@@ -4,13 +4,13 @@ description: Automated consistency and quality checks across every audit and ris
 
 # X-rays
 
-**X-rays** is the platform's standing quality-control surface — a single page that scans every audit and risk assessment you have access to and surfaces inconsistencies, missing data, and likely modelling mistakes. It's how you find _"the things you forgot"_ at the end of an assessment campaign without having to open each assessment one by one.
+**X-rays** is the platform's standing quality-control surface — a single page that scans every audit and risk assessment you have access to and surfaces inconsistencies, missing data, and likely modeling mistakes. It's how you find _"the things you forgot"_ at the end of an assessment campaign without having to open each assessment one by one.
 
 The page runs on every load — there's no "trigger" button. Findings are shown grouped by domain, then by assessment type, then by issue type, with a direct link from each finding to the object you need to fix.
 
 ## Where to find it
 
-Sidebar → **X-rays**. Gated by the `xrays` feature flag, **default on** in both community and Enterprise editions.
+Sidebar → **X-rays**. Gated by the `xrays` feature flag, **default on**.
 
 The page is internal-user only; the sidebar entry is hidden for **Respondent** and **Third-party respondent** roles.
 
@@ -31,13 +31,13 @@ Every finding is tagged with one of three severities:
 
 | Tier | Icon | What it means |
 |---|---|---|
-| **Error** | 🐛 (red) | A modelling inconsistency that should be fixed before the assessment is considered complete (e.g. residual risk higher than current risk, expired risk acceptance, control listed in two places). |
+| **Error** | 🐛 (red) | A modeling inconsistency that should be fixed before the assessment is considered complete (e.g. residual risk higher than current risk, expired risk acceptance, control listed in two places). |
 | **Warning** | ⚠️ (amber) | A likely gap that the analyst should confirm or fill in (e.g. compliant requirement with no evidence, applied control without a cost estimate, empty risk assessment). |
 | **Info** | ℹ️ (blue) | Hints and reminders — non-blocking, useful for hygiene (e.g. assessment still in progress, no author assigned, applied control without an external link). |
 
 Within each assessment, findings are first grouped by **issue type** (so 17 controls missing an ETA become one section with 17 entries, not 17 separate sections), then listed individually so you can click straight through to fix each one.
 
-## The catalogue of checks
+## The catalog of checks
 
 Below is the full list of checks the platform runs today — useful when you want to know _why_ a finding showed up, or to predict what x-rays will say before you open the page.
 
@@ -87,11 +87,11 @@ X-rays is designed to be a **one-click-away-from-fixing** surface, not a static 
 3. Click any finding — the link opens the offending object's **edit** page directly (control, scenario, evidence, requirement assessment, risk acceptance).
 4. Fix the issue, save, return to x-rays — the finding is gone on next refresh.
 
-The "go straight to the edit page" behaviour matters: every finding the platform raises is something you can fix in one form. There's no triage step.
+The "go straight to the edit page" behavior matters: every finding the platform raises is something you can fix in one form. There's no triage step.
 
 ## When to use it
 
-- **At assessment close-out** — sweep before declaring an audit or risk assessment _done_; catches missing evidences, undated controls, and modelling mistakes that survive a casual review.
+- **At assessment close-out** — sweep before declaring an audit or risk assessment _done_; catches missing evidences, undated controls, and modeling mistakes that survive a casual review.
 - **Periodically across all domains** — as a hygiene check, especially before reporting cycles or steering-committee reviews.
 - **After bulk imports** — when a CSV or Excel import landed many controls or scenarios, x-rays will surface the fields the import couldn't fill in (cost, effort, ETA, links).
 - **When onboarding a new analyst** — give them x-rays as their first daily routine; the page teaches the platform's expectations through the issues it raises.

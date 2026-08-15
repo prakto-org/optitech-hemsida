@@ -10,7 +10,7 @@ summary: >-
   The setup uses the micronaut-data-jdbc, jdbc-hikari, and flyway Micronaut
   features alongside the org.postgresql JDBC driver.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:30.752Z'
 ---
 
 <CopyPrompt src="/prompts/micronaut-kotlin-prompt.md"
@@ -34,7 +34,7 @@ To create a OptiTech project and access it from a Micronaut Kotlin application, 
 
 If you do not have one already, create a OptiTech project.
 
-1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://app.optitech-sverige.se/app/projects) page in the OptiTech Console.
 2. Click **New Project**.
 3. Specify your project settings and click **Create Project**.
 

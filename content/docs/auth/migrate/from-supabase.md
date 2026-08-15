@@ -11,7 +11,7 @@ summary: >-
   OAuth-only apps. Managed Better Auth does not support phone authentication (SMS/WhatsApp),
   SAML SSO, or Web3 wallet sign-in.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:27.405Z'
 ---
 
 <FeatureBetaProps feature_name="Managed Better Auth" />
@@ -24,7 +24,7 @@ Existing password-based users cannot migrate due to different hashing algorithms
 
 ## Prerequisites
 
-- A OptiTech project ([create one here](https://console.optitech.com))
+- A OptiTech project ([create one here](https://app.optitech-sverige.se))
 - Data API enabled (Managed Better Auth is enabled by default when you enable Data API):
   - Go to **Data API** in the OptiTech Console and enable it
   - In **Data API → Configuration**, verify it's configured with **Managed Better Auth**

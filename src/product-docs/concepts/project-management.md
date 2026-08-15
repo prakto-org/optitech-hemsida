@@ -1,6 +1,6 @@
 # Project management
 
-The **project-management module** brings PMBOK-style planning into OptiTech: a structured way to organise complex, multi-stakeholder initiatives — go-lives, accreditations, transformation programmes — alongside the compliance and risk work they drive.
+The **project-management module** brings PMBOK-style planning into OptiTech: a structured way to organize complex, multi-stakeholder initiatives — go-lives, accreditations, transformation programs — alongside the compliance and risk work they drive.
 
 It's the newest concept in the platform, and the object graph will continue to evolve.
 
@@ -17,7 +17,7 @@ graph LR
   GC -.->|bag of| OBJ[Audits / studies / evidence / policies]
 ```
 
-A project sits in a domain and can stack as a portfolio → programme → project hierarchy (the same model with three values of `kind`). On creation it's auto-paired with a **generic collection** — the flexible bag where the audits, risk studies, findings, evidences, and policies tied to the project accumulate. A **responsibility matrix** can be attached to one or more projects, encoding RACI / RASCI / RAPID assignments of actors to activities (each activity in turn references the work objects it covers). An **accreditation** is the formal authorisation event: it links its decision evidence and its compliance-assessment checklist back to the project's collection.
+A project sits in a domain and can stack as a portfolio → program → project hierarchy (the same model with three values of `kind`). On creation it's auto-paired with a **generic collection** — the flexible bag where the audits, risk studies, findings, evidences, and policies tied to the project accumulate. A **responsibility matrix** can be attached to one or more projects, encoding RACI / RASCI / RAPID assignments of actors to activities (each activity in turn references the work objects it covers). An **accreditation** is the formal authorization event: it links its decision evidence and its compliance-assessment checklist back to the project's collection.
 
 | User-facing | Internal | Notes |
 |---|---|---|
@@ -32,7 +32,7 @@ A project sits in a domain and can stack as a portfolio → programme → projec
 
 Project objects don't replace [Perimeters](perimeters.md) — they sit alongside. Use a perimeter to define the _scope of assessment_; use a project to plan the _work needed to bring that scope into compliance_ or through an accreditation.
 
-A single project typically references many perimeters, audits, applied controls, and findings assessments — it's the cross-cutting view the security organisation works against day-to-day.
+A single project typically references many perimeters, audits, applied controls, and findings assessments — it's the cross-cutting view the security organization works against day-to-day.
 
 ## Budget — high-level on the project, details on the controls
 

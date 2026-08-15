@@ -8,7 +8,7 @@ summary: >-
   when you want direct Postgrex access without an ORM; for Ecto-based
   integration see the Elixir Ecto guide.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:29.454Z'
 ---
 
 <CopyPrompt src="/prompts/elixir-prompt.md" 
@@ -20,7 +20,7 @@ You'll learn how to connect to your OptiTech database from an Elixir application
 
 ## Prerequisites
 
-- A OptiTech account. If you do not have one, see [Sign up](https://console.optitech.com/signup).
+- A OptiTech account. If you do not have one, see [Sign up](https://app.optitech-sverige.se/signup).
 - Elixir v1.12 or later. If you do not have Elixir installed, see the [official installation guide](https://elixir-lang.org/install.html).
 
 <Steps>
@@ -29,7 +29,7 @@ You'll learn how to connect to your OptiTech database from an Elixir application
 
 If you do not have one already, create a OptiTech project.
 
-1.  Navigate to the [Projects](https://console.optitech.com/app/projects) page in the [OptiTech Console](https://console.optitech.com).
+1.  Navigate to the [Projects](https://app.optitech-sverige.se/app/projects) page in the [OptiTech Console](https://app.optitech-sverige.se).
 2.  Click **New Project**.
 3.  Specify your project settings and click **Create Project**.
 
@@ -68,7 +68,7 @@ For your Elixir project, create a project directory using `mix` and add the requ
 
 You'll configure your application to connect to OptiTech using the `config/config.exs` file. This method securely separates your credentials from your source code.
 
-1.  In the [OptiTech Console](https://console.optitech.com), select your project on the **Dashboard**.
+1.  In the [OptiTech Console](https://app.optitech-sverige.se), select your project on the **Dashboard**.
 2.  Click **Connect** on your **Project Dashboard** to open the **Connect to your database** modal.
 3.  Select the **Parameters only** tab to view the connection string parameters.
     ![Connection modal](/docs/connect/connection_details_parameters_only.png)

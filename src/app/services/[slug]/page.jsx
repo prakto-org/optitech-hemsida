@@ -12,6 +12,8 @@ import {
 } from 'constants/services';
 import getMetadata from 'utils/get-metadata';
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return SERVICE_SLUGS.map((slug) => ({ slug }));
 }

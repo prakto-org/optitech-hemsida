@@ -34,6 +34,24 @@ export default {
       'Guided statutory incident reporting: early warning to CERT-SE/MSB within 24 hours, full notification in 72, final report within a month, and the parallel IMY track. OptiTech keeps track of the clock.',
     pathname: LINKS.serviceIncidentReporting,
   },
+  serviceGapAnalysis: {
+    title: 'Gap analysis: know where you stand before the audit — OptiTech',
+    description:
+      'Run an automated gap analysis against NIS2, DORA, GDPR, ISO 27001, and the EU AI Act. Turn the legal text into a prioritized action list you can start on the same day.',
+    pathname: LINKS.serviceGapAnalysis,
+  },
+  serviceFrameworkLibrary: {
+    title: 'Framework library: every regulation, cross-mapped — OptiTech',
+    description:
+      'One library covering NIS2, DORA, GDPR, ISO 27001, and the EU AI Act, built from Nordic legal texts. Evidence you collect once counts everywhere it applies.',
+    pathname: LINKS.serviceFrameworkLibrary,
+  },
+  serviceEvidenceCollection: {
+    title: 'Evidence collection: continuous, automated proof — OptiTech',
+    description:
+      'Collect compliance evidence automatically from your systems around the clock. Controls are verified hourly, and your live status is always ready for auditors and buyers.',
+    pathname: LINKS.serviceEvidenceCollection,
+  },
   productTrustCenter: {
     title: 'Trust Center: Show your compliance before anyone asks — OptiTech',
     description:
@@ -51,6 +69,12 @@ export default {
     description:
       'Yazan Ghayad founded OptiTech in 2024. An economist from Lund University working at the intersection of economics, AI, and compliance automation.',
     pathname: LINKS.teamYazanGhayad,
+  },
+  liaPraktik: {
+    title: 'LIA & internships at OptiTech',
+    description:
+      'Do your LIA, internship, VFU, APL, or prao placement at OptiTech. Join a small Nordic team building compliance automation for NIS2, DORA, GDPR, and ISO 27001, with real responsibility from week one.',
+    pathname: LINKS.liaPraktik,
   },
   blog: {
     title: 'Our Blog — OptiTech',

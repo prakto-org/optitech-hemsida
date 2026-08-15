@@ -59,7 +59,7 @@ Open the user group and click **Add members**. A picker opens listing the users 
 
 * type in the search field to filter by email, first name or last name, or switch to **Browse** for a table view with per-column filters;
 * tick **Include inactive** to also list deactivated users;
-* your selection is kept while you search and change pages, and is summarised at the bottom of the picker;
+* your selection is kept while you search and change pages, and is summarized at the bottom of the picker;
 * click **Add members** to confirm.
 
 <figure><img src="../../.gitbook/assets/user-group-add-members.png" alt="Add members picker on a user group"><figcaption><p>Adding members to a domain user group</p></figcaption></figure>

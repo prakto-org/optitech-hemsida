@@ -40,7 +40,7 @@ const Hero = () => {
               size="lg-new"
               theme="outlined"
               className="shrink-0 font-normal md:w-full"
-              to={LINKS.careers}
+              to={LINKS.liaPraktik}
             >
               {t('secondaryCta')}
             </Button>

@@ -59,6 +59,9 @@ jspm_packages/
 # next files
 .next/
 
+# netlify (local site-link state and build output)
+.netlify
+
 # ignore local sitemap
 public/sitemap.xml
 public/sitemap-0.xml
@@ -100,8 +103,6 @@ package-lock.json
 # Evals directory (test validation for documentation)
 .evals/
 
-# Blog content gets imported automatically
-content/blog
 scripts/docs-checks/neonctl/fragments/
 
 # Internal project notes, not part of the site

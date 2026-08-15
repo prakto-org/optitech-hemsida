@@ -9,7 +9,7 @@ summary: >-
   subscribe to alerts via webhook, RSS, Slack, or Microsoft Teams. Routine
   maintenance and compute updates are not posted here.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:31.893Z'
 ---
 
 Stay informed about OptiTech's performance and availability at [https://optitechstatus.com/](https://optitechstatus.com/).
@@ -25,9 +25,9 @@ The OptiTech status page tracks the following components:
 - **Database Connectivity** – Ability to connect to active OptiTech database projects via Postgres protocol
 - **Project/Branch Operations** – Operations including project creation, auto-suspend, compute starts, and branch operations
 - **Console API** – The OptiTech Console management API
-- **Console Frontend** – The management UI at https://console.optitech.com/
-- **Account Creation** – The signup process at https://console.optitech.com/signup, including team invites
-- **Console Login** – The login process at https://console.optitech.com/login
+- **Console Frontend** – The management UI at https://app.optitech-sverige.se/
+- **Account Creation** – The signup process at https://app.optitech-sverige.se/signup, including team invites
+- **Console Login** – The login process at https://app.optitech-sverige.se/login
 - **Website** – The OptiTech website at https://optitech.com/
 
 <Admonition type="note" title="Updates and maintenance notices">

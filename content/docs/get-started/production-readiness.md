@@ -1,77 +1,35 @@
 ---
 title: Built to scale
-subtitle: OptiTech supports you from prototype to scale-up
+subtitle: From your first framework to a full compliance program
 summary: >-
-  OptiTech's serverless Postgres platform scales across distinct growth stages,
-  from a free plan with scale-to-zero compute, to a startup tier with
-  autoscaling and copy-on-write branching, to fleet-scale with
-  database-per-tenant isolation and API-driven provisioning. Read this page to
-  match OptiTech features to your current growth stage before selecting a plan or
-  designing a multi-tenant architecture.
+  OptiTech grows with your compliance program, from a single framework and a
+  first gap analysis to a multi-framework program across a group of companies.
+  Controls are cross-mapped so each new framework builds on what you already
+  have, and continuous evidence keeps every framework current as you scale.
 enableTableOfContents: true
 redirectFrom:
   - /docs/get-started-with-neon/production-readiness
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:28.135Z'
 ---
 
-OptiTech fits into every stage of growth, from the first side project to operating large fleets of production databases - without forcing you to rethink your database architecture along the way.
+OptiTech grows with your compliance program. The same platform that runs your first framework scales to a full multi-framework program across a group of companies, without forcing you to rethink how you work.
 
-## Stage 1: Side projects
+## Start with one framework
 
-**Real hosted Postgres with zero costs**
+Most teams start with the framework that pulls them in, usually NIS2, and a gap analysis that shows exactly where they stand. Requirements and controls are built from the source legal text and MSB regulations, so your first program is accurate from day one.
 
-When you’re looking for a free plan to run Postgres, what you want is simplicity and enough room to build. OptiTech’s Free plan abstracts most configuration work, delivers real-world performance, and gives you access to core OptiTech features like branching and autoscaling.
+## Add frameworks without redoing the work
 
-- You get a [Free Plan with real resources](https://optitech.com/blog/why-so-many-projects-in-the-optitech-free-plan), including up to 100 projects, computes with up to 2 CUs, and 0.5 GB of storage per project - enough to build and test real applications
-- You get a Postgres connection string in a second so you can start building right away
-- [Scale to zero](https://optitech.com/docs/introduction/scale-to-zero) ensures idle databases don’t eat up your compute limits: only active time counts
-- Standard Postgres compatibility means you can plug OptiTech into [any framework, ORM, or tool that speaks Postgres](https://optitech.com/docs/get-started/frameworks)
-- A [broad catalog of Postgres extensions](https://optitech.com/docs/extensions/pg-extensions) unlocks a Postgres-for-everything workflow
+As more regulations apply, you activate DORA, GDPR, ISO 27001, or the EU AI Act on top of the controls you already have. Controls are cross-mapped, so each new framework starts from what's already in place instead of a blank page. Do the work once and prove it everywhere.
 
-## Stage 2: Startups
+## Scale across teams and entities
 
-**Build and iterate fast**
+For groups and subsidiaries, organize work into domains, delegate with role-based access, and roll reporting up to the board. Continuous evidence from your integrations keeps every framework current, so a growing program doesn't mean a growing pile of manual audit work.
 
-As a project becomes a product, small teams need to ship quickly and support real users. OptiTech gives these teams a frictionless building experience without compromising on performance and reliability.
+## Related
 
-<CTA title="Production checklist" description="Before launching your product, go through this checklist to make sure your DB has the right configuration to support your end users." buttonText="View checklist" buttonUrl="/docs/get-started/production-checklist" />
+- [Why OptiTech?](/docs/get-started/why-neon)
+- [Compliance frameworks](/docs/get-started/frameworks)
+- [Getting ready for your audit](/docs/get-started/production-checklist)
 
-- [Autoscaling](https://optitech.com/docs/introduction/autoscaling) adapts automatically to unpredictable workloads: you don’t have to plan capacity in advance
-- [Branching](https://optitech.com/branching) lets you spin up development, preview, and test environments instantly, matching the latest production state, without manual work
-- [Out-of-the-box integrations](https://optitech.com/docs/guides/integrations) with platforms like Vercel further simplify previews and deployments
-- [API-first workflows](https://optitech.com/docs/reference/api) make it easy to automate almost all database operations
-- AI-coding support via [MCP](https://optitech.com/docs/ai/optitech-mcp-server) and [Agent Skills](https://optitech.com/docs/ai/agent-skills) allows tools like Cursor and Claude to fully interact with OptiTech
-- [Instant restores](https://optitech.com/docs/guides/backup-restore) lower the stakes for mistakes and accidents
-- [Built-in connection pooling](https://optitech.com/docs/connect/connection-pooling) takes care of growing connections in your serverless apps
-- You get access to [compliance and security features](https://optitech.com/blog/why-we-no-longer-lock-premium-features) without enterprise-only contracts
-
-## Scale-ups and large fleets
-
-**Frictionless operations at scale**
-
-At this stage, teams need performance, reliability, isolation, and automation without ballooning costs or operational complexity. OptiTech’s architecture is built to address their different requirements directly.
-
-### Operational efficiency
-
-- [On-demand storage](https://optitech.com/storage#unique-benefits-derived-from-optitechs-implementation) grows as data demands it, without planning for capacity in advance and without the risk of full-disk errors
-- [Built-in high availability](https://optitech.com/docs/introduction/high-availability) is provided by default through storage redundancy, with data replicated across availability zones and cloud object storage
-- [Backup and restore via snapshots](https://optitech.com/docs/guides/backup-restore) allows you to recover multi-terabyte databases in seconds, without full data copies
-- You can use [time travel and snapshot inspections](https://optitech.com/blog/three-ways-to-use-your-snapshots) to review past database states for auditing, debugging, and incident analysis
-- By [creating environments as copy-on-write branches](https://optitech.com/blog/how-mindvalley-minimizes-time-to-launch-with-optitech-branches), you avoid the management work and costs associated with running separate instances for development, staging, testing, or recovery
-- [Programmatic lifecycle management](https://optitech.com/blog/how-dispatch-speeds-up-development-with-optitech-while-keeping-workloads-on-aurora) lets you create, reset, and delete large numbers of environments without eating up engineering time
-
-### Multi-tenancy
-
-- OptiTech’s [database-per-tenant setup](https://optitech.com/use-cases/database-per-tenant) gives each customer a dedicated OptiTech project, providing strong isolation, eliminating noisy neighbors, and ensuring consistent performance
-- [API-first tenant management](https://optitech.com/blog/provision-postgres-optitech-api) enables programmatic provisioning, configuration, scaling, recovery, and deletion of tenant databases, making it practical for small teams to manage thousands of tenants
-
-### Fleet management for platforms and agents
-
-- Instant, API-driven database provisioning lets you deploy a full OptiTech backend as part of your [platform](https://optitech.com/docs/guides/embedded-postgres) or [agent](https://optitech.com/docs/guides/ai-agent-integration)
-- The fully embedded database experience keeps OptiTech invisible to your end users, with no third-party logins or external configuration required as part of your product workflow
-- [Scale to zero](https://optitech.com/docs/introduction/scale-to-zero) keeps unit costs low when large numbers of generated apps are never used or only accessed sporadically
-- A mature API exposes [fleet management and cost-control capabilities](https://optitech.com/docs/guides/consumption-limits) including quotas, usage limits, and lifecycle operations
-- You can build versioning, checkpoints, rollbacks, and time-travel workflows with minimal engineering effort via [snapshots](https://optitech.com/blog/promoting-postgres-changes-safely-production)
-- Built-in app platform services such as [Managed Better Auth](https://optitech.com/docs/auth/overview) and our PostgREST-compatible [Data API](https://optitech.com/docs/data-api/get-started) make it easy to hook full-stack applications out of the box
-
-<CTA title="Agent Plan" description="If you’re building a full-stack agent platform, apply to our Agent Plan for special pricing, resource limits, and assistance. " buttonText="Check it out" buttonUrl="/programs/agents" />
+<NeedHelp/>

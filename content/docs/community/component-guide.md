@@ -8,7 +8,7 @@ summary: >-
   Use this page when choosing between similar components or looking up correct
   prop names and MDX syntax.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:28.135Z'
 ---
 
 A practical guide for the most commonly used MDX components in OptiTech documentation. This guide focuses on components you'll use most frequently when writing documentation.
@@ -605,7 +605,7 @@ Interactive checklists for setup guides and tutorials. CheckList uses CheckItem 
 ```mdx
 <CheckList title="Setup checklist">
   <CheckItem title="Create OptiTech account" href="#signup">
-    Sign up for a free OptiTech account at console.optitech.com
+    Sign up for a free OptiTech account at app.optitech-sverige.se
   </CheckItem>
   <CheckItem title="Install dependencies" href="#install">
     Install the required packages for your project
@@ -623,7 +623,7 @@ Interactive checklists for setup guides and tutorials. CheckList uses CheckItem 
 
 <CheckList title="Setup checklist">
 <CheckItem title="Create OptiTech account" href="#signup">
-  Sign up for a free OptiTech account at console.optitech.com
+  Sign up for a free OptiTech account at app.optitech-sverige.se
 </CheckItem>
 <CheckItem title="Install dependencies" href="#install">
   Install the required packages for your project
@@ -666,13 +666,13 @@ Prominent call-to-action buttons for important actions.
   title="Try OptiTech free"
   description="Start building with serverless Postgres today. No credit card required."
   buttonText="Sign Up"
-  buttonUrl="https://console.optitech.com/signup"
+  buttonUrl="https://app.optitech-sverige.se/signup"
 />
 ```
 
 **Live preview:**
 
-<CTA title="Try OptiTech free" description="Start building with serverless Postgres today. No credit card required." buttonText="Sign Up" buttonUrl="https://console.optitech.com/signup" />
+<CTA title="Try OptiTech free" description="Start building with serverless Postgres today. No credit card required." buttonText="Sign Up" buttonUrl="https://app.optitech-sverige.se/signup" />
 
 ---
 

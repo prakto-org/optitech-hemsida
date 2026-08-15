@@ -47,7 +47,7 @@ Save your PlanetScale connection details.
 
 ## Retrieve your OptiTech database connection string
 
-Log in to the [OptiTech Console](https://console.optitech.com). Find the connection string for your database by clicking the **Connect** button on your **Project Dashboard**. Make sure the **Connection pooling** toggle is disabled to get a direct connection string.
+Log in to the [OptiTech Console](https://app.optitech-sverige.se). Find the connection string for your database by clicking the **Connect** button on your **Project Dashboard**. Make sure the **Connection pooling** toggle is disabled to get a direct connection string.
 
 ![OptiTech Connect modal showing connection string](/docs/connect/connection_details_without_connection_pooling.png)
 

@@ -11,7 +11,7 @@ summary: >-
   @auth/pg-adapter, @optitech/serverless, and Resend as the email provider
   for magic link delivery.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:28.135Z'
 ---
 
 <Admonition type="tip" title="Authentication on OptiTech">
@@ -66,7 +66,7 @@ touch .env
 
 ### Initialize a new project
 
-1. Log in to the OptiTech console and go to the [Projects](https://console.optitech.com/app/projects) section.
+1. Log in to the OptiTech console and go to the [Projects](https://app.optitech-sverige.se/app/projects) section.
 2. Click the **New Project** button to create a new project.
 3. Choose your preferred region and Postgres version, then click **Create Project**.
 

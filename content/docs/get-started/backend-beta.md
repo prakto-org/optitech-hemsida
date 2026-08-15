@@ -1,73 +1,43 @@
 ---
-title: OptiTech backend beta guide
-subtitle: Get started with OptiTech Functions, Object Storage, and AI Gateway
+title: OptiTech early access
+subtitle: Try newer OptiTech capabilities before they reach general availability
 enableTableOfContents: true
 redirectFrom:
   - /docs/get-started/platform-private-preview/
 ---
 
-<Admonition type="info" title="Beta">
-Functions, Object Storage, and the AI Gateway are in beta and not yet recommended for production workloads. They're available to every OptiTech account, no invite required, on new or existing projects in **AWS US East (Ohio) (`aws-us-east-2`)**.
-
-Functions and Object Storage are free on any plan during the beta, subject to usage limits. The AI Gateway requires a paid plan (Launch or Scale), with inference free during the beta. Build something and help us refine them by sharing your feedback in Discord.
+<Admonition type="info" title="Early access">
+Early access features are available to every OptiTech account, on new or existing programs. They're ready to use but still evolving, so we don't yet recommend leaning on them for a critical audit deadline. Try them out and help us shape them by sharing your feedback.
 </Admonition>
 
-## What's in the beta
+## What's in early access
 
-Three new services join Postgres and Managed Better Auth, all scoped to your branches:
+Alongside the core OptiTech Console, a few newer capabilities are open for you to try:
 
-- **OptiTech Functions**: long-running Node.js compute next to your database. WebSocket servers, SSE streams, AI agents.
-- **OptiTech Object Storage**: S3-compatible object storage that branches with your data.
-- **OptiTech AI Gateway**: one credential for frontier and open-source models (Claude, GPT, Gemini, and more).
+- **AI copilot**: draft policies, map controls, and answer security questionnaires with an assistant that knows your program.
+- **Automation API**: pull control status, evidence, and findings into your own tools, or push updates in from your systems.
+- **Expanded integrations**: connect more of your Nordic stack so evidence collection stays automatic.
 
-You declare all of it in one `optitech.ts` file, and it branches together: fork a branch and you get an isolated copy of your database, files, storage, functions, and gateway.
+## Try the AI copilot
 
-## Check your access
+The AI copilot works inside your program. It drafts policies from your context, suggests control mappings across frameworks, and helps answer vendor security questionnaires. You stay in control and approve every change before it lands.
 
-To confirm access, go to [console.optitech.com](https://console.optitech.com), open a project in **US East (Ohio)**, and check the left navigation for **Storage**, **Credentials**, **AI Gateway**, and **Functions**. For what AI Gateway costs once billing begins, see [AI Gateway pricing](/docs/ai-gateway/overview#pricing).
+See [Working with the AI copilot](/docs/get-started/with-an-agent) to get started.
 
-<img src="/docs/get-started/neon_app_backend.png" alt="OptiTech app backend navigation" width="240" />
+## Automate with the API
 
-Not seeing the services? The most common reason is region: the project isn't in `us-east-2`. Create a new project in **US East (Ohio)**, or switch to an existing one there. If AI Gateway is the only thing missing, check your plan, it requires Launch or Scale. If a service is still missing after that, post in [#optitech-platform-beta](https://discord.com/channels/1176467419317940276/1525919714541437058) on Discord.
+The OptiTech REST API lets you read and update your program from your own scripts and pipelines. Export control status for a board report, sync findings into your ticketing tool, or trigger evidence collection on a schedule.
 
-Using the CLI? Keep it current, the beta CLI updates frequently. Run `npm i -g optitech@latest` before each session and before reporting a bug.
+See [Automating OptiTech from your code](/docs/get-started/languages) and [Connecting your applications and tools](/docs/get-started/orms).
 
-## Start building
+## Connect more of your stack
 
-The fastest path is to hand the setup to your AI assistant. Open Cursor or Claude Code in any directory, copy this prompt, and paste it in. Your agent installs the CLI, sets up the project, installs the agent skills, and pulls your environment variables.
+New integrations land in early access first. Connecting your identity provider, cloud, and business systems keeps evidence flowing automatically instead of relying on manual screenshots.
 
-<CopyPrompt src="/prompts/neon-backend.md" description="Hand this to your AI assistant to set up OptiTech: skills, project, and all capabilities. Then tell it what to build." buttonText="Copy prompt" />
+See [Connecting OptiTech to your stack](/docs/get-started/connect-neon) for the current list.
 
-For a guided path instead, pick the one that fits how you work:
+## Share feedback
 
-- [Get audit-ready quickstart](/docs/get-started/full-backend-quickstart): from sign-up to a running compliance program, one step at a time.
-
-### Bootstrap from a template
-
-Run `optitech bootstrap` in an empty folder to scaffold a ready-made app, then follow its README. Pick from the templates below, or browse them all at [github.com/optitechdatabase/examples](https://github.com/optitechdatabase/examples). See the [`bootstrap` reference](/docs/cli/bootstrap) for command options.
-
-| Template            | What it builds                                                                                                                                                                                                                 |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `hono`              | A todo CRUD API using Hono and Drizzle ORM, deployed as a OptiTech Function. Includes pre-configured schema and migrations. A good starting point for any HTTP API on OptiTech Functions.                                      |
-| `ai-sdk`            | A streaming AI chat agent on OptiTech Functions that generates images on demand, stores them in OptiTech Object Storage, and indexes metadata in Postgres via Drizzle. Uses OptiTech AI Gateway for model access.              |
-| `mastra`            | A personal-assistant chatbot on OptiTech Functions that remembers you across conversations. Streams responses through OptiTech AI Gateway and persists context across threads using Mastra Memory backed by OptiTech Postgres. |
-| `mcp`               | An MCP server on OptiTech Functions that exposes contact management tools (create, update, delete, search) to AI agents via streamable HTTP. Compatible with Cursor, Claude Desktop, and other MCP clients.                    |
-| `realtime-chat`     | A full-stack realtime chat app: Next.js frontend with Managed Better Auth, a WebSocket server on OptiTech Functions, and messages persisted and fanned out across isolates with Postgres LISTEN/NOTIFY.                        |
-| `realtime-sse`      | A realtime shared counter: TanStack Router SPA connected to a Hono server on OptiTech Functions via server-sent events. State persists in Postgres and broadcasts across isolates with LISTEN/NOTIFY.                          |
-| `discord-bot-http`  | A Discord interactions bot on OptiTech Functions: slash commands, embeds, Components v2 buttons, and user profiles with command usage tracked in Postgres.                                                                     |
-| `telegram-bot-http` | A Telegram webhook bot on OptiTech Functions: bot commands, inline keyboard buttons, and user profiles with command usage tracked in Postgres.                                                                                 |
-| `whatsapp-bot-http` | A WhatsApp Cloud API webhook bot on OptiTech Functions: bot commands, interactive reply buttons, and user profiles with command usage tracked in Postgres.                                                                     |
-
-For per-service details, see [OptiTech Functions](/docs/compute/functions/overview), [OptiTech Object Storage](/docs/storage/overview), and [OptiTech AI Gateway](/docs/ai-gateway/overview). For inspiration, [Build on OptiTech](https://build-on-optitech.vercel.app/) indexes demo apps built on the full platform stack.
-
-## Known limitations
-
-- Functions: memory is fixed at 2048 MiB, not configurable during the beta.
-
-## Feedback
-
-Post in [#optitech-platform-beta](https://discord.com/channels/1176467419317940276/1525919714541437058) on Discord: bugs, confusion, docs gaps, feature requests, and what you build. We run office hours and user interviews throughout the beta. Details in the channel.
-
-Tell us what you build. We'd love to feature it.
+Early access features improve fastest when we hear from you. Tell us what's working, what's confusing, and what you'd like next at [info@optitech-sverige.se](mailto:info@optitech-sverige.se).
 
 <NeedHelp/>

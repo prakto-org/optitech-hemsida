@@ -1,7 +1,3 @@
-{% hint style="info" %}
-Available on the PRO plan.
-{% endhint %}
-
 # Custom templates
 
 Custom templates let you replace the default content OptiTech uses for outbound emails and for document exports.
@@ -46,9 +42,9 @@ Each Word template is an uploaded `.docx` file containing styled placeholders. T
 
 Document layout templates control how a managed document is rendered to PDF — on **Export PDF** and when a document is published. Each is an uploaded `.html` file (Django template syntax, with CSS in a `<style>` block), registered under the `document_pdf` template key, per language.
 
-When an active template exists for the document's language, the platform renders the document's content into your layout instead of the built-in one — letting you add a **cover page**, **headers and footers**, and your **organisation's logo** (from [Branding](branding.md)). The template receives the document's `title`, rendered `content`, `version`, `document_type`, `date`, and the organisation logo.
+When an active template exists for the document's language, the platform renders the document's content into your layout instead of the built-in one — letting you add a **cover page**, **headers and footers**, and your **organization's logo** (from [Branding](branding.md)). The template receives the document's `title`, rendered `content`, `version`, `document_type`, `date`, and the organization logo.
 
-Download the built-in default first (from the setting) to use as a starting point, then upload your customised version. The built-in layout is used as a fallback when no active template exists for a language, and also if a custom template contains a disallowed tag or fails to render — a broken template never blocks a document from being published or exported.
+Download the built-in default first (from the setting) to use as a starting point, then upload your customized version. The built-in layout is used as a fallback when no active template exists for a language, and also if a custom template contains a disallowed tag or fails to render — a broken template never blocks a document from being published or exported.
 
 ## Operational notes
 

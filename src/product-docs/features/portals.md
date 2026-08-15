@@ -5,7 +5,7 @@ description: Configurable launcher surfaces — internal tile dashboards and pub
 # Portals and trust center
 
 {% hint style="info" %}
-**Feature flag.** Portals are off by default. An administrator enables them under **Settings → Feature flags → `custom_portals`**. With the flag off, the menu entry is hidden and the whole API (authoring and public) is unreachable. Available on both the community and enterprise editions.
+**Feature flag.** Portals are off by default. An administrator enables them under **Settings → Feature flags → `custom_portals`**. With the flag off, the menu entry is hidden and the whole API (authoring and public) is unreachable.
 {% endhint %}
 
 A **portal** is a configurable grid of tiles you compose yourself. Two flavours share the same editor:
@@ -70,7 +70,7 @@ Files published to your trust center — certifications, reports, policies. Mana
 
 ### Landing on a portal
 
-Set **default landing** to a portal so users arrive on `/portal` instead of analytics — configurable per-user (profile preference) or as the organisation default in general settings.
+Set **default landing** to a portal so users arrive on `/portal` instead of analytics — configurable per-user (profile preference) or as the organization default in general settings.
 
 ## For implementers
 
@@ -88,7 +88,6 @@ Set **default landing** to a portal so users arrive on `/portal` instead of anal
 
 - **Owner:** OptiTech
 - **Feature flag:** `custom_portals` — default **off**
-- **Edition:** community and enterprise
 
 ## Related
 

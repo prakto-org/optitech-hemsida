@@ -15,7 +15,7 @@ summary: >-
 redirectFrom:
   - /docs/guides/vercel-previews-integration
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:30.752Z'
 ---
 
 <InfoBlock>
@@ -66,7 +66,7 @@ Before you begin, ensure you have:
 
 ## Connect from OptiTech Console
 
-In the [OptiTech Console](https://console.optitech.com), navigate to **Integrations** and click **Add** under Vercel.
+In the [OptiTech Console](https://app.optitech-sverige.se), navigate to **Integrations** and click **Add** under Vercel.
 
 Click **Install from Vercel Marketplace** to open the integration in Vercel.
 

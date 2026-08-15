@@ -6,12 +6,12 @@ description: Docker Compose or Helm for Kubernetes
 
 ## Config Builder
 
-Customise the local deployment according to your needs:
+Customize the local deployment according to your needs:
 
 {% embed url="https://youtube.com/live/VpUzN6GJrcs" %}
 
 {% hint style="warning" %}
-Make sure to have Docker 27 or above. If you get an error saying the `docker compose` command is not recognised, your Docker version is too old.
+Make sure to have Docker 27 or above. If you get an error saying the `docker compose` command is not recognized, your Docker version is too old.
 {% endhint %}
 
 ## Docker Compose

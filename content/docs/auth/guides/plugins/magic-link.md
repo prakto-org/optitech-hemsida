@@ -11,7 +11,7 @@ summary: >-
   event (`send.magic_link`) to bypass the built-in mailer and deliver links
   through a custom email provider.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:27.405Z'
 ---
 
 <FeatureBetaProps feature_name="Managed Better Auth" />
@@ -35,7 +35,7 @@ Magic Link lets users sign in by clicking a link sent to their email. No passwor
 
 <TabItem>
 
-1. Open the [OptiTech Console](https://console.optitech.com).
+1. Open the [OptiTech Console](https://app.optitech-sverige.se).
 2. Select your project and go to **Auth** > **Plugins**.
 3. Toggle **Magic Link** on.
 4. Configure the options:

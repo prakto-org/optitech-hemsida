@@ -5,17 +5,17 @@ description: Org-defined typed fields on your objects — filterable, searchable
 # Custom fields
 
 {% hint style="info" %}
-Custom fields are a **PRO** capability, gated by the `custom_fields` feature flag (off by default). See [Feature flags](../configuration/settings/feature-flags.md).
+Custom fields are gated by the `custom_fields` feature flag (off by default). See [Feature flags](../configuration/settings/feature-flags.md).
 {% endhint %}
 
-The built-in models cover most needs, but every organisation has attributes of its own — an asset's data classification, a control's vendor, a project's business sponsor code. Custom fields let an administrator define typed, validated fields on selected objects, set values per object, and then filter, search, and report on them like any native field.
+The built-in models cover most needs, but every organization has attributes of its own — an asset's data classification, a control's vendor, a project's business sponsor code. Custom fields let an administrator define typed, validated fields on selected objects, set values per object, and then filter, search, and report on them like any native field.
 
 Custom fields are available on **Projects**, **Assets**, and **Applied controls** (policies share the applied-control fields).
 
 {% hint style="warning" %}
-**Use them sparingly.** OptiTech's built-in data model is already rich — reach for a custom field only when an attribute is genuinely specific to your organisation. Over-using them fragments your data and your reporting, and that complexity is yours to maintain.
+**Use them sparingly.** OptiTech's built-in data model is already rich — reach for a custom field only when an attribute is genuinely specific to your organization. Over-using them fragments your data and your reporting, and that complexity is yours to maintain.
 
-If an attribute is generic enough to be useful to everyone, **tell us** rather than approximating it with a custom field — we'd much rather add it as a first-class, properly-modelled field. [Get in touch](https://optitech-sverige.se/).
+If an attribute is generic enough to be useful to everyone, **tell us** rather than approximating it with a custom field — we'd much rather add it as a first-class, properly-modeled field. [Get in touch](https://optitech-sverige.se/).
 
 **No automatic migration.** If a field you added as a custom field later becomes a native platform field, there is **no automatic data migration** — moving the existing values onto the native field is up to you, manually or via the [API](../integrations/api.md).
 {% endhint %}
@@ -27,7 +27,7 @@ If an attribute is generic enough to be useful to everyone, **tell us** rather t
 - **How to use it.**
   1. Open **Custom fields** and add a definition. You choose the **Model** it attaches to, the **Domain** it applies to, a **Key** (the stable identifier), a **Label**, an optional **Help text**, and a **Field type**.
   2. Pick the **Field type**: **Text**, **Number**, **Date**, **Boolean**, **Choice**, or **Multiple choice**. Choice and multiple-choice fields take a list of options (**Add choice**).
-  3. Tune behaviour with the flags — **Required**, **Visible**, **Searchable**, **Filterable** — and **Order** (where it sits among other custom fields).
+  3. Tune behavior with the flags — **Required**, **Visible**, **Searchable**, **Filterable** — and **Order** (where it sits among other custom fields).
   4. Open any targeted object. Custom fields show in a collapsible **Custom fields** section on the form; fill them in and save. The values then appear on the object's detail page.
 - **What it gives you.**
   - **Domain scoping.** A field set to the **Global** domain applies to every object of that model; a field set to a specific domain applies only within that domain and its sub-domains.
@@ -55,5 +55,5 @@ If an attribute is generic enough to be useful to everyone, **tell us** rather t
 ## Related
 
 - [Working with tables](working-with-tables.md) — columns, filters, and search that surface custom fields.
-- [Terminology](../concepts/terminology.md) — controlled vocabularies, the catalogue's other org-defined metadata.
-- [Feature flags](../configuration/settings/feature-flags.md) · [Community vs PRO](../introduction/editions.md)
+- [Terminology](../concepts/terminology.md) — controlled vocabularies, the catalog's other org-defined metadata.
+- [Feature flags](../configuration/settings/feature-flags.md) · [Deployment and plans](../introduction/editions.md)

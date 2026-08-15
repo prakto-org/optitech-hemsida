@@ -1,6 +1,7 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import { posthog } from 'posthog-js';
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
@@ -151,6 +152,12 @@ const Form = ({
       });
 
       if (response.ok) {
+        posthog.capture('landing_form_submitted', {
+          form_id: hubspotFormId,
+          form_variant: simpleField ? 'simple' : 'standard',
+          is_azure_page: isAzurePage,
+        });
+
         doNowOrAfterSomeTime(() => {
           setState(FORM_STATES.SUCCESS);
           reset();

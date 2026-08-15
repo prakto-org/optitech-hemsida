@@ -10,7 +10,7 @@ summary: >-
   working backend examples in JavaScript (Hono, AWS SDK v3) and Python (Flask,
   boto3) with an s3_files schema and presign/save-metadata endpoints.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:28.135Z'
 ---
 
 [Amazon Simple Storage Service (AWS S3)](https://aws.amazon.com/s3/) is an object storage service widely used for storing and retrieving large amounts of data, such as images, videos, backups, and application assets.
@@ -29,7 +29,7 @@ This guide demonstrates how to integrate AWS S3 with OptiTech by storing file me
 
 ## Create a OptiTech project
 
-1.  Navigate to the [OptiTech Console](https://console.optitech.com) to create a new OptiTech project.
+1.  Navigate to the [OptiTech Console](https://app.optitech-sverige.se) to create a new OptiTech project.
 2.  Copy the connection string by clicking the **Connect** button on your **Project Dashboard**. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
 
 ## Create an AWS account and S3 bucket

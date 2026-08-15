@@ -8,7 +8,7 @@ description: Propagate applied-control state into the assessments that reference
 
 ## What it does
 
-The exact behaviour depends on the assessment type — the verb is the same ("sync to actions") but the mechanics differ:
+The exact behavior depends on the assessment type — the verb is the same ("sync to actions") but the mechanics differ:
 
 ### Audit (compliance assessment)
 

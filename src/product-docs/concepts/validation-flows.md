@@ -1,10 +1,10 @@
 ---
-description: Formal sign-off workflow that routes assessments, policies, evidence, and other artefacts through one or more approvers
+description: Formal sign-off workflow that routes assessments, policies, evidence, and other artifacts through one or more approvers
 ---
 
 # Validation flows
 
-A **validation flow** (labelled **Validations** in the sidebar) is the platform's structured sign-off workflow. It takes one or more objects — an audit, a risk assessment, a policy, a security exception, a contract, an accreditation — bundles them into a single request, and routes that request to a designated approver for a formal decision. The decision and its context are preserved as an audit trail.
+A **validation flow** (labeled **Validations** in the sidebar) is the platform's structured sign-off workflow. It takes one or more objects — an audit, a risk assessment, a policy, a security exception, a contract, an accreditation — bundles them into a single request, and routes that request to a designated approver for a formal decision. The decision and its context are preserved as an audit trail.
 
 It's the answer to _"who approved this, when, and on what evidence?"_ — the question that comes up in every certification audit, every internal review, and every regulator visit.
 

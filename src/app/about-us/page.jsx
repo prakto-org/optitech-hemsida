@@ -24,7 +24,7 @@ const AboutUsPage = () => (
       description="We're looking for people who care deeply about security and compliance to build with us."
       label="Join OptiTech"
       buttonText="View open roles"
-      buttonUrl={LINKS.careers}
+      buttonUrl={LINKS.liaPraktik}
       labelIcon="databricks"
     />
   </Layout>

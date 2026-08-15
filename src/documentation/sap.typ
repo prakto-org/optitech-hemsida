@@ -271,7 +271,7 @@ This plan covers OptiTech’s SaaS offering of OptiTech and the associated manag
 
 - Customers:
   - Manage user accounts, roles, and MFA inside the product.
-  - Configure access settings to align with internal policies and organisation setup.
+  - Configure access settings to align with internal policies and organization setup.
   - Can generate an export of their data as an extra layer of backup or portability needs.
 - Report suspected security issues to #link("security@optitech-sverige.se") promptly.
 - For self-hosted/on-prem deployments, operate and secure the infrastructure stack per vendor guidance (see @dep).
@@ -304,7 +304,7 @@ This plan covers OptiTech’s SaaS offering of OptiTech and the associated manag
 = Deployment Options <dep>
 
 - SaaS (managed by OptiTech): Covered by this plan end-to-end.
-- On-premises (PRO plan): OptiTech provides guidance and reference configurations; customers are responsible for the security of the hosting environment and operations.
+- On-premises: OptiTech provides guidance and reference configurations; customers are responsible for the security of the hosting environment and operations.
 
 
 

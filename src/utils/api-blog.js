@@ -38,8 +38,6 @@ const getCurrentWebsiteBranch = async () => {
 
 const getCdnBaseUrl = () => process.env.BLOG_CDN_URL || DEFAULT_CDN_BASE;
 
-const isLocalDevelopment = () => process.env.NODE_ENV === 'development';
-
 const isProductionWebsite = () => process.env.VERCEL_ENV === 'production';
 
 const getRemoteSnapshot = async (cacheKey, ttlMs, loader) => {
@@ -88,7 +86,7 @@ const getResolvedBlogSnapshot = async ({ previewBranch = null, strictBranch = fa
     return getBranchSnapshot(previewBranch);
   }
 
-  if (isLocalDevelopment() && (await hasLocalBlogContent())) {
+  if (await hasLocalBlogContent()) {
     return readLocalBlogSnapshot();
   }
 

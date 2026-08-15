@@ -1,6 +1,6 @@
 # Privacy register
 
-A **privacy register** is the catalogue of personal-data processing activities the organisation carries out — required by GDPR and equivalent regulations as the foundation of accountable data handling.
+A **privacy register** is the catalog of personal-data processing activities the organization carries out — required by GDPR and equivalent regulations as the foundation of accountable data handling.
 
 OptiTech models the register as a graph of typed objects so it stays queryable, auditable, and reusable across audits.
 
@@ -18,7 +18,7 @@ OptiTech models the register as a graph of typed objects so it stays queryable, 
 
 Privacy operations also need to record events as they happen:
 
-- **Right requests** — data-subject requests under GDPR (access, rectification, erasure, portability) and the organisation's response.
+- **Right requests** — data-subject requests under GDPR (access, rectification, erasure, portability) and the organization's response.
 - **Data breaches** — incidents affecting personal data, with the notification clock and authority correspondence.
 
 ## How it ties into the rest of the platform
@@ -33,5 +33,5 @@ Privacy operations also need to record events as they happen:
 
 - [Domains](domains.md)
 - [Third-party risk](third-party-risk.md)
-- [Terminology](terminology.md) — customise processing nature and personal-data category labels
+- [Terminology](terminology.md) — customize processing nature and personal-data category labels
 - [Vocabulary → Processing / Personal data / Purpose / Right request / Data breach](../introduction/vocabulary.md)

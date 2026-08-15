@@ -9,7 +9,7 @@ summary: >-
   or Managed Better Auth. Collaborators have no organization-level access and are limited
   to the specific projects they have been invited to.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:31.893Z'
 ---
 
 In OptiTech, roles determine what actions you can take within an organization and its projects. This page provides a detailed breakdown of permissions for each role: **Admin**, **Member**, and **Collaborator**.
@@ -85,7 +85,7 @@ The following table shows what each role can do with [snapshots](/docs/guides/sn
 ## Notes and limitations (#notes-and-limitations)
 
 - **Branch management**: All users are currently able to manage [protected branches](/docs/guides/protected-branches), regardless of their role or permission level. Granular permissions for this feature are not yet implemented.
-- **Permissions and roles**: The current permissions system may not meet all needs for granular control. Share your feedback and requirements for more detailed permissions settings via the [Feedback](https://console.optitech.com/app/projects?modal=feedback) form or our [Discord feedback channel](https://discord.com/channels/1176467419317940276/1176788564890112042).
+- **Permissions and roles**: The current permissions system may not meet all needs for granular control. Share your feedback and requirements for more detailed permissions settings via the [Feedback](https://app.optitech-sverige.se/app/projects?modal=feedback) form or our [Discord feedback channel](https://discord.com/channels/1176467419317940276/1176788564890112042).
 - <a id="email-notifications" aria-hidden="true"></a>**Email notifications**: For **organization-owned** projects, OptiTech sends **approaching maximum storage** notification emails to **organization Admins** only, not to all Members. Admins are responsible for billing and plan limits at the organization level, which aligns with who can [manage organization billing](/docs/manage/user-permissions#organization-management).
 
 <NeedHelp/>

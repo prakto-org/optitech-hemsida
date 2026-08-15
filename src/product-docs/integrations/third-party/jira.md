@@ -15,7 +15,7 @@ You can enable one or both of these modes.
 
 ### Prerequisites
 
-* A OptiTech instance.
+* An OptiTech instance.
 * A Jira Cloud account. Any user can create their own API token, but creating an outgoing webhook (required for incoming sync) needs **project admin** permission on the target project.
 * A Jira project with at least one issue type you want to sync against.
 
@@ -77,7 +77,7 @@ You can override any row. Picking a different table clears the suggestions and r
 
 **Field mapping**
 
-Each row maps a OptiTech field (left, with its model name in monospace) to a Jira field id (right). `Name` is required: Jira rejects issue creation without a `Summary`. Leave a row empty to skip syncing that field.
+Each row maps an OptiTech field (left, with its model name in monospace) to a Jira field id (right). `Name` is required: Jira rejects issue creation without a `Summary`. Leave a row empty to skip syncing that field.
 
 **Value mapping**
 

@@ -16,7 +16,7 @@ Kanban mode is currently only available for applied controls.
 
 - **Columns** — one per status: `--` (unset), To do, In progress, On hold, Active, Degraded, Deprecated. The column header shows a running count of controls in that status across all swimlanes.
 - **Swimlanes** — one per domain. Each swimlane can be collapsed or expanded; the swimlane header shows the per-domain count.
-- **Cards** — one per control. Each card shows name, priority badge (P1–P4 with colour), owner initials, and ETA (highlighted red when overdue, except for `active` or `deprecated` controls which are never flagged overdue).
+- **Cards** — one per control. Each card shows name, priority badge (P1–P4 with color), owner initials, and ETA (highlighted red when overdue, except for `active` or `deprecated` controls which are never flagged overdue).
 - **Compact mode** — a toggle in the page header reduces card detail to fit more controls on screen.
 
 ## Moving cards

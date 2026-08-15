@@ -1,10 +1,10 @@
 ---
-description: Step-by-step walkthrough for creating and operating a project, programme, or portfolio
+description: Step-by-step walkthrough for creating and operating a project, program, or portfolio
 ---
 
 # Managing a project
 
-The **Project** object in OptiTech is the unit you use to plan and track a piece of work — from a single delivery up to a full portfolio of programmes. Each project records its charter, schedule, financials, people, scope, linked objects, and a rolling analytics history.
+The **Project** object in OptiTech is the unit you use to plan and track a piece of work — from a single delivery up to a full portfolio of programs. Each project records its charter, schedule, financials, people, scope, linked objects, and a rolling analytics history.
 
 See [Project management](../concepts/project-management.md) for how projects sit alongside accreditations and responsibility matrices.
 
@@ -15,25 +15,25 @@ Projects live under the **Project management** module. If the sidebar doesn't sh
 ## Prerequisites
 
 - The `project_management` feature flag is on.
-- _Optional_: a parent project already exists (if you want to slot the new project under a portfolio or programme).
+- _Optional_: a parent project already exists (if you want to slot the new project under a portfolio or program).
 - _Optional_: actors exist for the owner and sponsor you intend to set. See [Actors and teams](../concepts/actors-and-teams.md).
 
-## Project, programme, or portfolio?
+## Project, program, or portfolio?
 
 Every project carries a **Kind**:
 
-- **Portfolio** — a collection of programmes/projects rolled up for strategic reporting. Portfolios don't expose the **Scope** tab.
-- **Programme** — a coordinated set of projects pursuing a common outcome.
+- **Portfolio** — a collection of programs/projects rolled up for strategic reporting. Portfolios don't expose the **Scope** tab.
+- **Program** — a coordinated set of projects pursuing a common outcome.
 - **Project** — the unit of delivery.
 
-Kind is purely an organisational hint — it changes the icon, the colour accent, and (for portfolios) hides the Scope tab. It does not unlock or hide functionality otherwise. You can change it later from the header **Edit** button.
+Kind is purely an organizational hint — it changes the icon, the color accent, and (for portfolios) hides the Scope tab. It does not unlock or hide functionality otherwise. You can change it later from the header **Edit** button.
 
 ## Create the project
 
 1. From the sidebar, open **Project management → Projects**.
 2. Click **Create a project**.
 3. Fill in the form:
-   - **Kind** — Portfolio, Programme, or Project. Defaults to **Project**.
+   - **Kind** — Portfolio, Program, or Project. Defaults to **Project**.
    - **ID** — an optional short reference (e.g. `PRJ-2026-001`).
    - **Domain** — the folder this project belongs to. Drives IAM scoping.
    - **Assigned to** — the project owner (day-to-day lead). Picks from non-third-party actors.
@@ -56,7 +56,7 @@ The detail page is structured as one card with several editable sections. Each s
 | **KPI tiles** | Status, Health, Priority, Progress | Edit on the **Overview** tab |
 | **Info row** | Owner, Sponsor, Parent project, Sub-projects | Owner/Sponsor on **People** tab; Parent on **Header** |
 | **Overview tab** | Status, Health, Priority, Progress | ✅ |
-| **Charter tab** | Purpose, Objectives, Success criteria, Business case, Approval requirements, Exit criteria, Organisational alignment | ✅ |
+| **Charter tab** | Purpose, Objectives, Success criteria, Business case, Approval requirements, Exit criteria, Organizational alignment | ✅ |
 | **Tracking tab** | Schedule (start/end/ETA/closed), Financials (budget/actual/currency), Tolerances | ✅ |
 | **Scope tab** _(not on Portfolios)_ | Deliverables, Assumptions, Constraints, Dependencies | ✅ |
 | **Linked tab** | Linked collection, Responsibility matrices, Labels | ✅ |
@@ -88,7 +88,7 @@ The **Charter** tab is a stack of free-form Markdown fields:
 - **Business case** — the value rationale.
 - **Approval requirements** — who must sign off, on what, when.
 - **Exit criteria** — what defines "done".
-- **Organisational alignment** — how it ties to strategy / parent programme.
+- **Organizational alignment** — how it ties to strategy / parent program.
 
 Click **Edit** to expand all fields into Markdown editors, fill them in, then **Save**.
 
@@ -123,7 +123,7 @@ When **not** in edit mode, only the dimensions you've filled in are shown.
 
 ## Describe deliverables and constraints (Scope)
 
-The **Scope** tab is hidden for Portfolios. For Programmes and Projects it holds four Markdown fields:
+The **Scope** tab is hidden for Portfolios. For Programs and Projects it holds four Markdown fields:
 
 - **Deliverables** — what the project must produce.
 - **Assumptions** — what's being taken as given.
@@ -165,7 +165,7 @@ Use the **Parent project** picker (in the header edit form) to slot a project un
 - A project can have at most one parent.
 - Currency on a new project defaults to the parent's currency.
 
-A typical hierarchy: **Portfolio → Programme → Project** (with sub-projects under it as needed).
+A typical hierarchy: **Portfolio → Program → Project** (with sub-projects under it as needed).
 
 ## What's next
 

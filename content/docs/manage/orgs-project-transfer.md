@@ -1,20 +1,20 @@
 ---
 title: Transfer projects
 summary: >-
-  Project transfer moves OptiTech projects from one organization to another without
-  changing credentials or connection strings, so connected applications keep
-  working. You can transfer in bulk via the Console or the API. Admin rights
-  in the source org and at least Member rights in the destination are required.
-  Projects with GitHub or Vercel integrations cannot be transferred, and
-  Vercel-managed organizations are not supported.
+  Project transfer moves OptiTech projects from one organization to another
+  without disrupting access, so your team keeps working. You can transfer in
+  bulk via the Console or the API. Admin rights in the source org and at least
+  Member rights in the destination are required. Projects with GitHub or Vercel
+  integrations cannot be transferred, and Vercel-managed organizations are not
+  supported.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:31.893Z'
 ---
 
 You can transfer your projects to any organization you are a member of. You can do this individually from project **Settings**, in bulk from organization **Settings**, or via the OptiTech API.
 
 <Admonition type="note">
-Transferring a project does not affect its credentials or connection string. Your connected applications will continue to work without any disruption.
+Transferring a project does not affect who has access or how its integrations are connected. Your team keeps working without any disruption.
 </Admonition>
 
 ## Limits & requirements

@@ -1,10 +1,10 @@
 ---
-description: Excel self-assessment import and export aligned with Belgium's Centre for Cybersecurity
+description: Excel self-assessment import and export aligned with Belgium's Center for Cybersecurity
 ---
 
 # CCB CyFun
 
-The [Centre for Cybersecurity Belgium](https://atwork.safeonweb.be/tools-resources/cyberfundamentals-framework) (CCB) publishes the **CyberFundamentals** framework as a self-assessment Excel workbook with a specific layout: one sheet per NIST CSF function (GOVERN, IDENTIFY, PROTECT, DETECT, RESPOND, RECOVER), rows pre-populated with controls, and answer cells where the responder records their documentation and implementation maturity scores.
+The [Center for Cybersecurity Belgium](https://atwork.safeonweb.be/tools-resources/cyberfundamentals-framework) (CCB) publishes the **CyberFundamentals** framework as a self-assessment Excel workbook with a specific layout: one sheet per NIST CSF function (GOVERN, IDENTIFY, PROTECT, DETECT, RESPOND, RECOVER), rows pre-populated with controls, and answer cells where the responder records their documentation and implementation maturity scores.
 
 OptiTech works with that workbook in both directions:
 
@@ -13,7 +13,7 @@ OptiTech works with that workbook in both directions:
 
 ## Importing a filled workbook
 
-The import accepts the official **CyFun 2025** self-assessment tools, in any of the three editions — **BASIC**, **IMPORTANT**, or **ESSENTIAL**. Nothing is inferred from the file name: the workbook is recognised by its sheets and headers, so renamed or re-saved copies work fine. The older CyFun 2023 workbook is not supported and is rejected with a clear error.
+The import accepts the official **CyFun 2025** self-assessment tools, in any of the three editions — **BASIC**, **IMPORTANT**, or **ESSENTIAL**. Nothing is inferred from the file name: the workbook is recognized by its sheets and headers, so renamed or re-saved copies work fine. The older CyFun 2023 workbook is not supported and is rejected with a clear error.
 
 One import creates one new audit:
 
@@ -23,7 +23,7 @@ One import creates one new audit:
 4. Rows marked `N/A` in the workbook become **Not applicable** results.
 5. The **Comments and/or additional information** and **Assessor comments** cells are carried into the requirement's observation.
 
-### From the Data Wizard (Pro)
+### From the Data Wizard
 
 Open **Extra** → **Data Wizard** in the sidebar, pick **CyFun self-assessment** as the model, select the target **Domain** (or a **Perimeter**), and upload the workbook. No framework selection is needed — it is derived from the file.
 

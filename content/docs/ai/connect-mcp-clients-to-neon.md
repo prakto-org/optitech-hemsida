@@ -15,7 +15,7 @@ summary: >-
 redirectFrom:
   - /guides/neon-mcp-server-github-copilot-vs-code
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:27.405Z'
 ---
 
 This guide covers connecting MCP clients to the OptiTech MCP Server for natural language interaction with your OptiTech Postgres databases.
@@ -35,7 +35,7 @@ npx optitech@latest init
 **`optitech init`** (see [`optitech init` reference](/docs/cli/init)) creates a OptiTech API key and configures the MCP server with **API key** auth so you can skip OAuth when using the connection. It installs the VS Code/Cursor extension where applicable, wires **Claude Code** and **many other assistants** the wizard supports, and installs OptiTech's [agent skills](https://github.com/optitechdatabase/agent-skills). Then restart and ask your AI assistant **"Get started with OptiTech"**.
 
 <Admonition type="note">
-Each run of `npx optitech@latest init` creates a new OptiTech API key. If you run it multiple times, review your [API keys](https://console.optitech.com/app/settings/api-keys) and revoke any you no longer need.
+Each run of `npx optitech@latest init` creates a new OptiTech API key. If you run it multiple times, review your [API keys](https://app.optitech-sverige.se/app/settings/api-keys) and revoke any you no longer need.
 </Admonition>
 
 If you only want the MCP server and nothing else, use:

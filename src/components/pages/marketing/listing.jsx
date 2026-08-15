@@ -11,8 +11,21 @@ const MarketingListing = ({ eyebrow = null, title, description, items, cta, loca
   return (
     <>
       <section className="hero relative overflow-hidden bg-[#F7F5EF] pt-[152px] safe-paddings pb-24 xl:pt-[136px] lg:pt-28 md:pt-24">
+        <div className="pointer-events-none absolute inset-0" aria-hidden="true">
+          <video
+            className="h-full w-full object-cover"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+          >
+            <source src="/videos/pages/services/hero-bg-services.webm" type="video/webm" />
+          </video>
+          <div className="absolute inset-0 bg-[#F7F5EF]/70" />
+        </div>
         <Container size="1280">
-          <div className="max-w-[820px]">
+          <div className="relative z-10 max-w-[820px]">
             {eyebrow && (
               <span className="font-mono text-[11px] leading-none tracking-[0.14em] text-gray-new-50 uppercase">
                 {eyebrow}

@@ -8,7 +8,7 @@ summary: >-
   page when setting up a new or existing Rails project against OptiTech. A separate
   sibling page covers Rails schema migrations.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:30.752Z'
 ---
 
 <CopyPrompt src="/prompts/ruby-on-rails-prompt.md" 
@@ -28,7 +28,7 @@ This guide was tested using Ruby v3.4.6 and Rails v8.0.3.
 
 If you do not have one already, create a OptiTech project.
 
-1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://app.optitech-sverige.se/app/projects) page in the OptiTech Console.
 2. Click **New Project**.
 3. Specify your project settings and click **Create Project**.
 

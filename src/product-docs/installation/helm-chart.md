@@ -22,7 +22,7 @@ The chart lives at `oci://<optitech-registry>/optitech`.
    helm show values oci://<optitech-registry>/optitech > custom.yaml
    ```
 
-2. **Customise** `custom.yaml`. The most important settings:
+2. **Customize** `custom.yaml`. The most important settings:
 
    - `global.domain` — the hostname your instance will serve on.
    - `global.tls` — set to `true` if you're serving over HTTPS.

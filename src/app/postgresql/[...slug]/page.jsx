@@ -12,6 +12,8 @@ import { getFlatSidebar } from 'utils/get-flat-sidebar';
 import getMetadata from 'utils/get-metadata';
 import getTableOfContents from 'utils/get-table-of-contents';
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   const posts = await getAllPostgresTutorials();
 

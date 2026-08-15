@@ -1,6 +1,7 @@
 'use client';
 
 import { yupResolver } from '@hookform/resolvers/yup';
+import { posthog } from 'posthog-js';
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
@@ -67,6 +68,11 @@ const ProgramForm = ({ type }) => {
           ...(showGithubUrl && { githubUrl }),
         });
       }
+
+      posthog.capture('program_application_submitted', {
+        program_type: type,
+        includes_github_url: showGithubUrl,
+      });
 
       doNowOrAfterSomeTime(() => {
         setFormState(FORM_STATES.SUCCESS);

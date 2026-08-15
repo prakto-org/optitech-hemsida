@@ -9,12 +9,12 @@ description: Filter the entire workspace to a single domain
 It's a viewer-level concern — focus mode never changes anything on the server side, only what each request asks for.
 
 {% hint style="info" %}
-Focus mode is gated by the `focus_mode` feature flag. PRO; default off. See [Feature flags](../configuration/settings/feature-flags.md).
+Focus mode is gated by the `focus_mode` feature flag; default off. See [Feature flags](../configuration/settings/feature-flags.md).
 {% endhint %}
 
 ## Engaging focus
 
-The focus-mode selector lives in the top bar — a crosshair-icon button labelled **All domains** when nothing is focused. Click it to open the picker:
+The focus-mode selector lives in the top bar — a crosshair-icon button labeled **All domains** when nothing is focused. Click it to open the picker:
 
 - A searchable tree of every domain you have access to.
 - A persistent sort toggle (A→Z / Z→A) when not searching.
@@ -49,7 +49,7 @@ Server-side, a middleware validates the UUID, stores it on a per-request context
 ## When to use it
 
 - **Multi-tenant operators** — managing many client domains from one instance, focused on one client at a time.
-- **Large organisations** — when "all of XYZ Corp" is overwhelming and "just my business unit" is what you actually need on a given day.
+- **Large organizations** — when "all of XYZ Corp" is overwhelming and "just my business unit" is what you actually need on a given day.
 - **Demos and onboarding** — pre-populate a domain, focus on it, and the rest of the platform vanishes from the demo flow.
 
 {% hint style="warning" %}

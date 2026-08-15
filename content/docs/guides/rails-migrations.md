@@ -9,7 +9,7 @@ summary: >-
   `rails db:migrate` to create tables, and applying incremental schema changes
   such as adding a new column with a follow-on migration.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:30.752Z'
 ---
 
 [Ruby on Rails](https://rubyonrails.org/) is a popular web application framework for Ruby developers. It provides an ORM (Object-Relational Mapping) layer called `Active Record`, that simplifies database interactions and schema management. Rails also includes a powerful migration system that allows you to define and manage database schema changes over time.
@@ -34,7 +34,7 @@ To follow along with this guide, you will need:
 
 ### Initialize a new project
 
-1. Log in to the OptiTech Console and navigate to the [Projects](https://console.optitech.com/app/projects) section.
+1. Log in to the OptiTech Console and navigate to the [Projects](https://app.optitech-sverige.se/app/projects) section.
 2. Select a project or click the **New Project** button to create a new one.
 
 ### Retrieve your OptiTech database connection string

@@ -11,7 +11,7 @@ enableTableOfContents: true
 isDraft: false
 redirectFrom:
   - /docs/get-started/get-started-branching
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:31.893Z'
 ---
 
 Data resides in a branch. Each OptiTech project is created with a [root branch](#root-branch), which is also designated as your [default branch](#default-branch). Projects created in the OptiTech Console have a root branch named `production`, while projects created via the API or CLI have a root branch named `main`. You can create child branches from your root branch or from previously created branches. A branch can contain multiple databases and roles. OptiTech's [plan allowances](/docs/introduction/plans) define the number of branches you can create.
@@ -226,7 +226,7 @@ The query value may differ slightly from the **Data size** reported in the OptiT
 Data size is your logical data size.
 
 <Admonition type="note">
-Paid plans support a logical data size of up to **16 TB per branch**. When a branch reaches this limit, write performance drops, but you can still drop or delete data to reclaim space. To increase this limit, [request a storage increase in the feedback form in console](https://console.optitech.com/app/settings?modal=feedback&modalparams=%22Storage%20limit%20increase%22).
+Paid plans support a logical data size of up to **16 TB per branch**. When a branch reaches this limit, write performance drops, but you can still drop or delete data to reclaim space. To increase this limit, [request a storage increase in the feedback form in console](https://app.optitech-sverige.se/app/settings?modal=feedback&modalparams=%22Storage%20limit%20increase%22).
 </Admonition>
 
 ## Branch types

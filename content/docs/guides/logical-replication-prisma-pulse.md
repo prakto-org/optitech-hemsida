@@ -12,7 +12,7 @@ summary: >-
   `PrismaOptiTech` driver adapter.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:29.454Z'
 ---
 
 OptiTech's Logical Replication feature enables you to subscribe to changes in your database, supporting things like replication or creating event-driven functionality.
@@ -29,7 +29,7 @@ Set up real-time triggers for your Inngest workflows, re-index your TypeSense se
 
 ## Prerequisites
 
-- A [OptiTech account](https://console.optitech.com/)
+- A [OptiTech account](https://app.optitech-sverige.se/)
 - A [Prisma Data Platform account](https://pris.ly/pdp?utm_source=optitech&utm_medium=pulse-guide)
 - Read the [important notices about logical replication in OptiTech](/docs/guides/logical-replication-neon#important-notices) before you begin
 

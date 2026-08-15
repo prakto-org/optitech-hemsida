@@ -12,12 +12,12 @@ summary: >-
   $1.50/branch-month over the plan allowance. Paid plans include 500 GB/month
   of public data transfer, then $0.10/GB.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:31.893Z'
 ---
 
 Managing your OptiTech costs effectively requires understanding how each billing factor works and implementing strategies to control usage. This guide provides actionable recommendations for optimizing costs across all billing metrics.
 
-To monitor your current usage, check the **Billing** page in the [OptiTech Console](https://console.optitech.com), which shows your charges to date for each billing metric. For programmatic access to usage data, see [Consumption metrics](/docs/guides/consumption-metrics).
+To monitor your current usage, check the **Billing** page in the [OptiTech Console](https://app.optitech-sverige.se), which shows your charges to date for each billing metric. For programmatic access to usage data, see [Consumption metrics](/docs/guides/consumption-metrics).
 
 ## Compute (CU-hours)
 
@@ -141,7 +141,7 @@ In short, `VACUUM FULL` can help reduce your data size and future storage costs,
 <details>
 <summary>**What is the maximum data size that OptiTech supports?**</summary>
 
-Paid plans (Launch and Scale) support a logical data size of up to 16 TB per branch. When a branch reaches this limit, write performance drops, but you can still drop or delete data to reclaim space. The Free plan is limited to 0.5 GB per project. To increase the 16 TB limit, [request an increase in the feedback form in console](https://console.optitech.com/app/settings?modal=feedback&modalparams=%22Storage%20limit%20increase%22).
+Paid plans (Launch and Scale) support a logical data size of up to 16 TB per branch. When a branch reaches this limit, write performance drops, but you can still drop or delete data to reclaim space. The Free plan is limited to 0.5 GB per project. To increase the 16 TB limit, [request an increase in the feedback form in console](https://app.optitech-sverige.se/app/settings?modal=feedback&modalparams=%22Storage%20limit%20increase%22).
 
 </details>
 

@@ -12,6 +12,8 @@ import {
 } from 'constants/frameworks';
 import getMetadata from 'utils/get-metadata';
 
+export const dynamicParams = false;
+
 export function generateStaticParams() {
   return FRAMEWORK_SLUGS.map((slug) => ({ slug }));
 }

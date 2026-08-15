@@ -91,7 +91,11 @@ export async function proxy(req) {
             buildAgent404Response(pathname, {
               context: 'OptiTech Blog',
               extraLinks: [
-                { label: 'Blog index', href: '/blog/llms.txt', description: 'All OptiTech blog posts' },
+                {
+                  label: 'Blog index',
+                  href: '/blog/llms.txt',
+                  description: 'All OptiTech blog posts',
+                },
               ],
             }),
             {
@@ -277,6 +281,13 @@ export async function proxy(req) {
   }
 }
 
+// The content-route matchers below are gated with `has` conditions evaluated in
+// Vercel's routing layer, so the middleware function is only invoked for requests
+// that look like AI agents (isAIAgentRequest then decides authoritatively inside).
+// Regular browser and SEO-crawler page views skip middleware entirely; their static
+// LLM-discovery headers are set via headers() in next.config.js instead.
+// NOTE: everything in `config` must be inline literals — Next.js statically analyzes
+// this export at build time and ignores dynamic values.
 export const config = {
   matcher: [
     '/', // Check if the user is logged in
@@ -285,7 +296,37 @@ export const config = {
     '/docs', // Bare docs root: serve llms.txt for agents; browsers fall through to the /docs→/docs/introduction redirect
     '/blog', // Bare blog root: serve blog/llms.txt for agents; browsers fall through normally
     '/blog/:slug.md', // Individual blog post markdown
-    '/(docs|postgresql|guides|branching|programs|use-cases|faqs)/:path*', // All markdown routes
+    // .md URLs under content routes: always negotiated (markdown response + agent-404s)
+    '/(docs|postgresql|guides|branching|programs|use-cases|faqs)/:path*.md',
+    // HTML content routes, agent gate 1: Accept explicitly requests markdown
+    {
+      source: '/(docs|postgresql|guides|branching|programs|use-cases|faqs)/:path*',
+      has: [{ type: 'header', key: 'accept', value: '.*text/markdown.*' }],
+    },
+    // HTML content routes, agent gate 2: Accept prefers non-HTML formats
+    {
+      source: '/(docs|postgresql|guides|branching|programs|use-cases|faqs)/:path*',
+      has: [
+        {
+          type: 'header',
+          key: 'accept',
+          value: '(?!.*text/html).*(application/json|text/plain|application/xml).*',
+        },
+      ],
+    },
+    // HTML content routes, agent gate 3: known AI agent user-agents
+    // (case-variant mirror of the UA patterns in isAIAgentRequest — has-matching is case-sensitive)
+    {
+      source: '/(docs|postgresql|guides|branching|programs|use-cases|faqs)/:path*',
+      has: [
+        {
+          type: 'header',
+          key: 'user-agent',
+          value:
+            '.*(GPT|gpt|OpenAI|openai|Claude|claude|Anthropic|anthropic|Cursor|cursor|Windsurf|windsurf|Perplexity|perplexity|Copilot|copilot|ai-agent|llm-agent|axios|got|curl).*',
+        },
+      ],
+    },
     '/:path(docs|postgresql|guides|branching|programs|use-cases).md', // Top-level .md index URLs
   ],
 };

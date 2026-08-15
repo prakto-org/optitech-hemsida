@@ -54,7 +54,7 @@ Technical postures deliberately do **less** than [audits](audits.md):
 | Substantiation | Evidences and applied controls per requirement | Observed vs expected values from the measurement |
 | Cadence | Campaign or review cycle | Continuous — every scan is a new run |
 
-The two share the same framework catalogue, so a benchmark imported once can back both a formal audit and a running posture. Use an audit when a human needs to weigh evidence and sign off; use a technical posture when a tool can answer the question and you want it answered often.
+The two share the same framework catalog, so a benchmark imported once can back both a formal audit and a running posture. Use an audit when a human needs to weigh evidence and sign off; use a technical posture when a tool can answer the question and you want it answered often.
 
 ## Runs
 

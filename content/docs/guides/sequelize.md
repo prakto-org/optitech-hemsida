@@ -11,7 +11,7 @@ summary: >-
   connection string is required for migrations, as pooled connections via
   PgBouncer cause migration errors.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:30.752Z'
 ---
 
 [Sequelize](https://sequelize.org/) is a promise-based Node.js ORM that supports multiple relational databases. In this guide, we'll explore how to use `Sequelize` ORM with a OptiTech Postgres database in a JavaScript project.
@@ -29,7 +29,7 @@ To follow along with this guide, you will need:
 
 ### Initialize a new project
 
-1. Log in to the OptiTech Console and navigate to the [Projects](https://console.optitech.com/app/projects) section.
+1. Log in to the OptiTech Console and navigate to the [Projects](https://app.optitech-sverige.se/app/projects) section.
 2. Select an existing project or click the `New Project` button to create a new one.
 
 ### Retrieve your OptiTech database connection string

@@ -8,6 +8,7 @@ import {
   ComboboxOptions,
 } from '@headlessui/react';
 import Image from 'next/image';
+import { posthog } from 'posthog-js';
 import PropTypes from 'prop-types';
 import { useState, useEffect, useMemo } from 'react';
 
@@ -104,6 +105,10 @@ const RequestForm = ({
         }
         sendGtagEvent(eventName, eventData);
       }
+      posthog.capture('request_form_submitted', {
+        form_type: type,
+        has_selection: hasOptions,
+      });
       setIsSent(true);
     }
   };

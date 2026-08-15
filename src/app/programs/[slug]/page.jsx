@@ -7,6 +7,8 @@ import LINKS from 'constants/links';
 import { getPostBySlug, getPostSlugs } from 'utils/api-content';
 import getMetadata from 'utils/get-metadata';
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   const slugs = await getPostSlugs(PROGRAMS_DIR_PATH);
   return slugs.map((slug) => ({

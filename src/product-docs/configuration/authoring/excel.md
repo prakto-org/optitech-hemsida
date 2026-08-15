@@ -18,7 +18,7 @@ For framework scoring, the framework `_meta` tab defines the default `min_score`
 - **The v2 format at a glance** — `_meta` tab, per-object tabs (requirements, matrices, threats, reference controls, mappings), the `depth` / `assessable` columns.
 - **Skeleton generation** — using `prepare_framework_v2.py` to scaffold a valid Excel file rather than starting from a blank sheet.
 - **Conversion workflow** — `convert_library_v2.py my_file.xlsx`, where the YAML lands, how to spot validation errors.
-- **What can be authored in Excel** — frameworks, risk matrices, threat catalogues, reference controls, mappings; what _can't_ (custom code, dynamic logic).
+- **What can be authored in Excel** — frameworks, risk matrices, threat catalogs, reference controls, mappings; what _can't_ (custom code, dynamic logic).
 - **Reviewing in spreadsheet form** — using sheet review, comments, and named ranges to collaborate with non-engineers before conversion.
 - **Excel pitfalls** — auto-formatting numbers as dates, hidden characters from PDF copy-paste, encoding mismatches in non-Latin scripts.
 

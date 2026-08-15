@@ -9,7 +9,7 @@ summary: >-
   (Hono) and Python (Flask), a curl test workflow, and SQL patterns for
   per-user metadata retrieval.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:29.454Z'
 ---
 
 [ImageKit.io](https://imagekit.io/) is a cloud-based image and video optimization and delivery platform. It provides real-time manipulation, storage, and delivery via a global CDN, simplifying media management for web and mobile applications.
@@ -28,7 +28,7 @@ This guide demonstrates how to integrate ImageKit.io with OptiTech. You'll learn
 
 ## Create a OptiTech project
 
-1.  Navigate to the [OptiTech Console](https://console.optitech.com) to create a new OptiTech project.
+1.  Navigate to the [OptiTech Console](https://app.optitech-sverige.se) to create a new OptiTech project.
 2.  Copy the connection string by clicking the **Connect** button on your **Project Dashboard**. For more information, see [Connect from any application](/docs/connect/connect-from-any-app).
 
 ## Create an ImageKit.io account and get credentials

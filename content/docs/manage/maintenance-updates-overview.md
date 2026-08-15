@@ -9,7 +9,7 @@ summary: >-
   select a preferred update window.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:31.893Z'
 ---
 
 OptiTech performs two types of updates: **platform maintenance** and **updates** to your OptiTech [computes](/docs/reference/glossary#compute). While both are essential for maintaining a stable, secure, and optimized environment, they serve different purposes.
@@ -22,7 +22,7 @@ For both types of updates, we strive to minimize disruption to database operatio
 
 ### Where to check for maintenance and updates
 
-| Type                     | Where to check                                                | Details                                                                                                                                                                                                                                        |
-| ------------------------ | ------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Platform maintenance** | [OptiTech Status](https://optitechstatus.com/)                | Check the regional status page where your OptiTech project resides for upcoming platform maintenance. Optionally, subscribe to a regional status page to receive status updates. See [OptiTech Status](/docs/introduction/status) for details. |
-| **Updates**              | [OptiTech Console](https://console.optitech.com/app/projects) | On your OptiTech project dashboard, go to **Settings** > **Updates** to view your update window and check for update notices. Paid plans allow you to select a preferred update window.                                                        |
+| Type                     | Where to check                                                   | Details                                                                                                                                                                                                                                        |
+| ------------------------ | ---------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Platform maintenance** | [OptiTech Status](https://optitechstatus.com/)                   | Check the regional status page where your OptiTech project resides for upcoming platform maintenance. Optionally, subscribe to a regional status page to receive status updates. See [OptiTech Status](/docs/introduction/status) for details. |
+| **Updates**              | [OptiTech Console](https://app.optitech-sverige.se/app/projects) | On your OptiTech project dashboard, go to **Settings** > **Updates** to view your update window and check for update notices. Paid plans allow you to select a preferred update window.                                                        |

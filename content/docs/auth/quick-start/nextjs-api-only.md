@@ -9,7 +9,7 @@ summary: >-
   reference when you need custom sign-up and sign-in forms. Requires Next.js
   App Router.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:27.405Z'
 layout: wide
 redirectFrom:
   - /docs/auth/quick-start/nextjs
@@ -27,7 +27,7 @@ This guide shows you how to integrate Managed Better Auth into a [Next.js](https
 <TwoColumnLayout.Step title="Enable Auth in your OptiTech project">
 <TwoColumnLayout.Block>
 
-If you don't have a OptiTech project yet, create one at [console.optitech.com](https://console.optitech.com).
+If you don't have a OptiTech project yet, create one at [app.optitech-sverige.se](https://app.optitech-sverige.se).
 
 Go to the **Auth** page in your project dashboard and click **Enable Auth**, then copy your Auth URL from the Configuration tab.
 

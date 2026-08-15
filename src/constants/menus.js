@@ -253,8 +253,8 @@ export default {
             },
             {
               title: 'Careers',
-              to: LINKS.careers,
-              description: 'Join the team',
+              to: LINKS.liaPraktik,
+              description: 'LIA & internships with us',
             },
             {
               title: 'Contact sales',
@@ -396,7 +396,7 @@ export default {
         },
         {
           text: 'Careers',
-          to: LINKS.careers,
+          to: LINKS.liaPraktik,
         },
         {
           text: 'Contact Sales',

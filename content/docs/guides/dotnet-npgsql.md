@@ -9,7 +9,7 @@ summary: >-
   injection, and credential storage in appsettings.json. For ORM-based
   alternatives, see the Entity Framework guide.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:29.454Z'
 ---
 
 <CopyPrompt src="/prompts/dotnet-prompt.md" 
@@ -25,7 +25,7 @@ The same configuration steps can be used for any .NET application type, includin
 
 ## Prerequisites
 
-- A OptiTech account. If you do not have one, see [Sign up](https://console.optitech.com/signup).
+- A OptiTech account. If you do not have one, see [Sign up](https://app.optitech-sverige.se/signup).
 - The [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) or later.
   > _Other versions of .NET may work, but this guide is primarily tested with .NET 8._
 
@@ -35,7 +35,7 @@ The same configuration steps can be used for any .NET application type, includin
 
 If you do not have one already, create a OptiTech project.
 
-1.  Navigate to the [Projects](https://console.optitech.com/app/projects) page in the [OptiTech Console](https://console.optitech.com).
+1.  Navigate to the [Projects](https://app.optitech-sverige.se/app/projects) page in the [OptiTech Console](https://app.optitech-sverige.se).
 2.  Click **New Project**.
 3.  Specify your project settings and click **Create Project**.
 
@@ -69,7 +69,7 @@ For your .NET project, you will create a project directory and add the required 
 
 Create a file named `appsettings.json` in your project's root directory. This is the standard .NET approach for storing configuration data like connection strings.
 
-1.  In the [OptiTech Console](https://console.optitech.com), select your project on the **Dashboard**.
+1.  In the [OptiTech Console](https://app.optitech-sverige.se), select your project on the **Dashboard**.
 2.  Click **Connect** on your **Project Dashboard** to open the **Connect to your database** modal.
 3.  Select **.NET** as your connection method.
     ![Connection modal](/docs/connect/dotnet_connection_details.png)

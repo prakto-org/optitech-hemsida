@@ -10,7 +10,7 @@ summary: >-
   for a working end-to-end example of Data API query patterns, RLS setup, and
   ON DELETE CASCADE.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:28.135Z'
 ---
 
 This tutorial uses a note-taking app to show how OptiTech's Data API works with the `@optitech/optitech-js` client library to write queries from your frontend code, with authentication and Row-Level Security (RLS) policies keeping your data secure. The Data API is compatible with PostgREST, so you can use any PostgREST client library.
@@ -36,11 +36,11 @@ This note-taking app is built with React and Vite. It uses Managed Better Auth f
 Before you begin, ensure you have:
 
 - [Bun](https://bun.sh/) (v1.0 or newer) installed
-- A [OptiTech account](https://console.optitech.com/signup) (free tier works)
+- A [OptiTech account](https://app.optitech-sverige.se/signup) (free tier works)
 
 ### Create a OptiTech project with Auth and Data API
 
-1. Go to the [OptiTech Console](https://console.optitech.com) to create a new OptiTech project
+1. Go to the [OptiTech Console](https://app.optitech-sverige.se) to create a new OptiTech project
 2. In the OptiTech Console, navigate to your project and go to the **Data API** page in the left sidebar
 3. Select **Managed Better Auth** as your authentication option (the default), then click **Enable**
 

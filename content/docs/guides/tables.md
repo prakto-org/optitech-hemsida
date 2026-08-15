@@ -9,7 +9,7 @@ summary: >-
   SQL Editor when you want point-and-click record editing, column filtering,
   bulk deletion, or JSON/CSV export.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:30.752Z'
 ---
 
 The **Tables** page in the OptiTech Console offers a dynamic, visual interface for managing data and schemas. Fully interactive, this view lets you add, update, and delete records, filter data, modify columns, drop or truncate tables, export data in both .json and .csv formats, and manage schemas, tables, views, and enums.
@@ -133,5 +133,5 @@ If it's not a DNS resolution issue, other troubleshooting steps you can try incl
 
 If the issue persists, please follow these steps to report the error:
 
-1. [Open a support ticket](https://console.optitech.com/app/projects?modal=support) and provide a detailed description of what you were doing when the error occurred. Please include any screen captures or files that will help us reproduce the issue. We'll work with our partners at Drizzle to investigate and resolve the issue.
+1. [Open a support ticket](https://app.optitech-sverige.se/app/projects?modal=support) and provide a detailed description of what you were doing when the error occurred. Please include any screen captures or files that will help us reproduce the issue. We'll work with our partners at Drizzle to investigate and resolve the issue.
 2. If you're on the Free plan, you can report the issue on [Discord](https://discord.gg/92vNTzKDGp).

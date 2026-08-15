@@ -1,10 +1,6 @@
-{% hint style="info" %}
-Available on the PRO plan.
-{% endhint %}
-
 # Branding
 
-Branding settings let you replace the default OptiTech visuals with your organisation's identity — useful when the platform is deployed for end-customers, when a parent company hosts multiple subsidiaries, or simply to align the UI with internal design guidelines.
+Branding settings let you replace the default OptiTech visuals with your organization's identity — useful when the platform is deployed for end-customers, when a parent company hosts multiple subsidiaries, or simply to align the UI with internal design guidelines.
 
 ## Settings
 

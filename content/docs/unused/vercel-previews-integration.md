@@ -4,7 +4,7 @@ subtitle: Create a database branch for each preview deployment in Vercel
 redirectFrom:
   - /docs/guides/vercel
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:34.632Z'
 ---
 
 <InfoBlock>
@@ -110,7 +110,7 @@ To add the integration:
     1.  Click **Done** to complete the installation.
 
 1.  To view the results of the integration in OptiTech:
-    1. Navigate to the [OptiTech Console](https://console.optitech.com/).
+    1. Navigate to the [OptiTech Console](https://app.optitech-sverige.se/).
     1. Select the project you are connected to.
     1. Select **Branches**.
        You will see the default branch of your project (`main`). If you created a development branch, you will also see a `vercel-dev` branch.

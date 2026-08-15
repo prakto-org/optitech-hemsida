@@ -561,7 +561,7 @@ PJ7[Project 7]
 
 ## Qualifications
 
-Qualifications are qualities/objectives that can be used to qualify risk scenarios or to set security objectives to primary assets. Some of them are hardcoded, but in the PRO version the administrator can define additional values and rename existing ones.
+Qualifications are qualities/objectives that can be used to qualify risk scenarios or to set security objectives to primary assets. Some of them are hardcoded, but administrators can define additional values and rename existing ones.
 
 The following values are preloaded:
 
@@ -1002,7 +1002,7 @@ The risk matrix cannot be changed once the risk assessment is created.
 
 A risk assessment has an _risk_assessment_method_ field that can take the following values: 0 (risk matrix)/1 (Open FAIR). This cannot be changed once the risk assessment is created. Similarly, the risk matrix cannot be changed once the risk assessment is created.
 
-To analyse the risk, each scenario contains Existing Controls, current probability and impact, proposed controls, residual probability and impact. To facilitate using an assistant to estimate probability and impact, or for advanced methods like openfair, the json fields _current_risk_vector_ and _residual_risk_vector_ are aimed at keeping the data used to calculate to the estimation.
+To analyze the risk, each scenario contains Existing Controls, current probability and impact, proposed controls, residual probability and impact. To facilitate using an assistant to estimate probability and impact, or for advanced methods like openfair, the json fields _current_risk_vector_ and _residual_risk_vector_ are aimed at keeping the data used to calculate to the estimation.
 
 A risk scenario contains a treatment option with the values --/open/mitigate/accept/avoid/transfer
 
@@ -1626,7 +1626,7 @@ The frontend for risk study shall propose the following steps:
   - list of operational scenarios
   - The risk assessment is generated automatically, thanks to a dedicated button. When the risk assessment is generated again, automatic versioning is applied, and mitigations can be copied on demand (based on ref_id of operational scenarios).
 - workshop 5: risk treatment
-  - After generation, a risk assessment is fully editable, to allow customisation, and the risk assessment can be managed normally as any other risk assessment.
+  - After generation, a risk assessment is fully editable, to allow customization, and the risk assessment can be managed normally as any other risk assessment.
   - risk treatment is based on the risk assessment.
 
 ```mermaid
@@ -1753,14 +1753,14 @@ erDiagram
 - Objects not coming from library are created in the target domain, even if they come from an upper domain.
 - The export is a zip file containing a json dump of concerned objects and attached evidences.
 - The import is atomic, any error provokes a rollback.
-- The export function is only available in the PRO version.
+- The export function is available for domains.
 - The version of OptiTech is published in the export. The version at import shall be identical.
 
 ### Additional features
 
 - It shall be possible to see the list of objects that would be exported, and to select/deselect some of them while keeping consistency. This should include evidences with their size.
 - It shall be possible to visualize objects that would be imported, and to select/deselect some of them while keeping consistency.  This should include evidences with their size.
-- It shall be possible to optionally export subdomains along with the domain. The import shall be flattened if the target is not a PRO version.
+- It shall be possible to optionally export subdomains along with the domain. The import shall be flattened if the target does not support subdomains.
 
 ## Findings assessments
 

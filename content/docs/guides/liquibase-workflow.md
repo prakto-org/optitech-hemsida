@@ -9,7 +9,7 @@ summary: >-
   setup. OptiTech's copy-on-write branching keeps development changes isolated
   until explicitly promoted.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:29.454Z'
 ---
 
 Liquibase is an open-source database-independent library for tracking, managing, and applying database schema changes. To learn more about Liquibase, refer to the [Liquibase documentation](https://docs.liquibase.com/home.html).
@@ -39,7 +39,7 @@ Enter `Y` to accept the defaults.
 
 For demonstration purposes, create a `blog` database in OptiTech with two tables, `posts` and `authors`.
 
-1. Open the [OptiTech Console](https://console.optitech.com/app/projects).
+1. Open the [OptiTech Console](https://app.optitech-sverige.se/app/projects).
 1. Select your project.
 1. Select **Databases** from the sidebar and create a database named `blog`. For instructions, see [Create a database](/docs/manage/databases#create-a-database).
 1. Using the [OptiTech SQL Editor](/docs/get-started/query-with-neon-sql-editor), add the following tables:
@@ -79,7 +79,7 @@ To create a branch:
 
 ## Retrieve your OptiTech database connection strings
 
-From the [OptiTech Console](https://console.optitech.com/app/projects), retrieve connection strings for your target and source databases by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal.
+From the [OptiTech Console](https://app.optitech-sverige.se/app/projects), retrieve connection strings for your target and source databases by clicking the **Connect** button on your **Project Dashboard** to open the **Connect to your database** modal.
 
 <Admonition type="note">
 The target database is the database on your `feature/blog-schema` branch where you will do your development work. Your source database is where you will apply your schema changes later, once you are satisfied with the changes on your development branch.

@@ -2,249 +2,51 @@
 title: Connecting OptiTech to your stack
 subtitle: Learn how to integrate OptiTech into your application
 summary: >-
-  Connecting to OptiTech uses a standard PostgreSQL connection string retrieved from
-  the Project Dashboard. Code examples cover JavaScript (OptiTech serverless driver,
-  Next.js, Drizzle, Prisma), Python (psycopg2), Go, .NET, Ruby, Rust, and psql.
-  Use a pooled connection string when your application opens many concurrent
-  connections; use a direct connection for migrations or session-level features.
-  Choose this page to get a working DATABASE_URL and a first query running.
+  Connect OptiTech to the tools you already use — Microsoft 365, Entra ID, Google
+  Workspace, AWS, Azure, GitHub, and Swedish systems like Fortnox, Visma, and
+  BankID — so control verification and evidence collection run automatically.
+  OptiTech checks MFA coverage, offboarding, backups, encryption, and patch levels
+  around the clock and alerts you when a control drifts.
 enableTableOfContents: true
 redirectFrom:
   - /docs/get-started-with-neon/connect-neon
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:28.135Z'
 ---
 
-Connecting to OptiTech works like any Postgres database. You use a standard connection string with your language or framework of choice. This guide shows you the essentials to get connected quickly.
+OptiTech connects to the tools you already use so that control verification and evidence collection run automatically, instead of chasing screenshots before an audit.
 
-## Get your connection string
+## How integrations work
 
-From your OptiTech **Project Dashboard**, click the **Connect** button to open the **Connection Details** modal. Select your branch, database, and role. Your connection string appears automatically.
+When you connect a tool, OptiTech reads the signals that prove a control is in place — MFA coverage, offboarding, backup tests, encryption, and patch levels — checks them around the clock, and stores the result as evidence against the controls they support. When a control drifts, you get an alert and a suggested fix.
 
-![Connection details modal](/docs/connect/connection_details.png)
+## Available integrations
 
-The connection string includes everything you need to connect:
+OptiTech connects to the systems where your compliance evidence already lives:
 
-```text
-postgresql://alex:AbC123dEf@ep-cool-darkness-a1b2c3d4.us-east-2.aws.optitech.com/dbname?sslmode=require
-             ^    ^         ^                                                   ^
-       role -|    |         |- hostname                                        |- database
-                  |
-                  |- password
-```
+- **Identity and access** — Microsoft 365, Entra ID, and Google Workspace, for MFA coverage, account lifecycle, and access reviews.
+- **Cloud and infrastructure** — AWS and Azure, for encryption, backups, and configuration checks.
+- **Source code and CI** — GitHub, for change management and review controls.
+- **Swedish business systems** — Fortnox, Visma, BankID, Kivra, and common payroll systems, so onboarding and offboarding checks run against your real employee register instead of a stale export.
 
-<Admonition type="note">
-OptiTech supports both pooled and direct connections. Use a pooled connection string (with `-pooler` in the hostname) if your application creates many concurrent connections. See [Connection pooling](/docs/connect/connection-pooling) for details.
-</Admonition>
+## Connect an integration
 
-## Connect from your application
+1. In the **OptiTech Console**, open **Integrations**.
+2. Choose the tool you want to connect and authorize OptiTech with read access.
+3. OptiTech maps the incoming signals to the controls they support across your frameworks.
+4. Evidence starts collecting automatically, and verification runs continuously from then on.
 
-Use your connection string to connect from any application. Here are examples for various frameworks and languages:
+## What you get
 
-<CodeTabs labels={["OptiTech serverless driver", "Next.js", "Drizzle", "Prisma", "Python", "Go", ".NET", "Ruby", "Rust", "psql"]}>
-
-```javascript
-// Works in Node.js, Next.js, serverless, and edge runtimes
-import { optitech } from '@optitech/serverless';
-
-const sql = optitech(process.env.DATABASE_URL);
-
-const users = await sql`SELECT * FROM users`;
-```
-
-```javascript
-// Next.js example
-import postgres from 'postgres';
-
-let { PGHOST, PGDATABASE, PGUSER, PGPASSWORD } = process.env;
-
-const conn = postgres({
-  host: PGHOST,
-  database: PGDATABASE,
-  username: PGUSER,
-  password: PGPASSWORD,
-  port: 5432,
-  ssl: 'require',
-});
-
-const users = await conn`SELECT * FROM users`;
-```
-
-```javascript
-// Drizzle example with the OptiTech serverless driver
-import { optitech } from '@optitech/serverless';
-import { drizzle } from 'drizzle-orm/optitech-http';
-
-const sql = optitech(process.env.DATABASE_URL);
-
-const db = drizzle(sql);
-
-const result = await db.select().from(...);
-```
-
-```javascript
-// Prisma example with the OptiTech serverless driver
-import { optitech } from '@optitech/serverless';
-import { PrismaOptiTechHTTP } from '@prisma/adapter-optitech';
-import { PrismaClient } from '@prisma/client';
-
-const sql = optitech(process.env.DATABASE_URL);
-
-const adapter = new PrismaOptiTechHTTP(sql);
-
-const prisma = new PrismaClient({ adapter });
-```
-
-```python
-# Python example with psycopg2
-import os
-import psycopg2
-
-# Load the environment variable
-database_url = os.getenv('DATABASE_URL')
-
-# Connect to the PostgreSQL database
-conn = psycopg2.connect(database_url)
-
-with conn.cursor() as cur:
-    cur.execute("SELECT version()")
-    print(cur.fetchone())
-
-# Close the connection
-conn.close()
-```
-
-```go
-// Go example
-package main
-import (
-    "database/sql"
-    "fmt"
-    "log"
-    "os"
-
-    _ "github.com/lib/pq"
-    "github.com/joho/godotenv"
-)
-
-func main() {
-    err := godotenv.Load()
-    if err != nil {
-        log.Fatalf("Error loading .env file: %v", err)
-    }
-
-    connStr := os.Getenv("DATABASE_URL")
-    if connStr == "" {
-        panic("DATABASE_URL environment variable is not set")
-    }
-
-    db, err := sql.Open("postgres", connStr)
-    if err != nil {
-        panic(err)
-    }
-    defer db.Close()
-
-    var version string
-    if err := db.QueryRow("select version()").Scan(&version); err != nil {
-        panic(err)
-    }
-    fmt.Printf("version=%s\n", version)
-}
-```
-
-```csharp
-# .NET example
-
-## Connection string
-"Host=ep-cool-darkness-123456.us-east-2.aws.optitech.com;Database=dbname;Username=alex;Password=AbC123dEf"
-
-## with SSL
-"Host=ep-cool-darkness-123456.us-east-2.aws.optitech.com;Database=dbname;Username=alex;Password=AbC123dEf;SSL Mode=Require;Trust Server Certificate=true"
-
-## Entity Framework (appsettings.json)
-{
-  ...
-  "ConnectionStrings": {
-    "DefaultConnection": "Host=ep-cool-darkness-123456.us-east-2.aws.optitech.com;Database=dbname;Username=alex;Password=AbC123dEf;SSL Mode=Require;Trust Server Certificate=true"
-  },
-  ...
-}
-```
-
-```ruby
-# Ruby example
-require 'pg'
-require 'dotenv'
-
-# Load environment variables from .env file
-Dotenv.load
-
-# Connect to the PostgreSQL database using the environment variable
-conn = PG.connect(ENV['DATABASE_URL'])
-
-# Execute a query
-conn.exec("SELECT version()") do |result|
-  result.each do |row|
-    puts "Result = #{row['version']}"
-  end
-end
-
-# Close the connection
-conn.close
-```
-
-```rust
-// Rust example
-use postgres::Client;
-use openssl::ssl::{SslConnector, SslMethod};
-use postgres_openssl::MakeTlsConnector;
-use std::error;
-use std::env;
-use dotenv::dotenv;
-
-fn main() -> Result<(), Box<dyn error::Error>> {
-    // Load environment variables from .env file
-    dotenv().ok();
-
-    // Get the connection string from the environment variable
-    let conn_str = env::var("DATABASE_URL")?;
-
-    let builder = SslConnector::builder(SslMethod::tls())?;
-    let connector = MakeTlsConnector::new(builder.build());
-    let mut client = Client::connect(&conn_str, connector)?;
-
-    for row in client.query("select version()", &[])? {
-        let ret: String = row.get(0);
-        println!("Result = {}", ret);
-    }
-    Ok(())
-}
-```
-
-```bash
-# psql example connection string
-psql postgresql://username:password@hostname:5432/database?sslmode=require&channel_binding=require
-```
-
-</CodeTabs>
-
-Store your connection string in an environment variable (like `DATABASE_URL`) rather than hardcoding it in your application.
+- **Continuous evidence** instead of audit sprints — controls are checked around the clock, not once a year.
+- **Drift alerts** — when a control stops passing, you get notified with a suggested fix.
+- **One control, every framework** — the same evidence proves the mapped controls across NIS2, DORA, GDPR, ISO 27001, and the EU AI Act.
+- **EU data residency** — all data stays in Swedish and EU data centers under EU ownership.
 
 ## Next steps
 
-This covers the basics. For more connection options and detailed guidance:
-
-<DetailIconCards>
-
-<a href="/docs/connect/connect-intro" description="Comprehensive guide to all connection methods, troubleshooting, and security" icon="network">Connect documentation</a>
-
-<a href="/docs/get-started/frameworks" description="Step-by-step guides for Next.js, Remix, Django, Rails, and more" icon="gamepad">Framework guides</a>
-
-<a href="/docs/get-started/languages" description="Connection examples for JavaScript, Python, Go, Rust, and other languages" icon="code">Language guides</a>
-
-<a href="/docs/serverless/serverless-driver" description="Connect from serverless and edge environments using HTTP or WebSockets" icon="audio-jack">Serverless driver</a>
-
-<a href="/docs/auth/overview" description="Managed Better Auth that branches with your database" icon="lock-landscape">Set up Auth</a>
-
-</DetailIconCards>
+- [Why OptiTech?](/docs/get-started/why-neon) — how frameworks, controls, and evidence fit together.
+- [Compliance frameworks](/docs/get-started/frameworks) — the regulations OptiTech covers and what each means for you.
+- [Tour the OptiTech Console](/docs/get-started/signing-up) — sign up and explore the gap analysis, controls, and incident flows.
+- [Get started with the AI copilot](/docs/get-started/with-an-agent) — let OptiTech AI scope, draft, and answer for you.
 
 <NeedHelp/>

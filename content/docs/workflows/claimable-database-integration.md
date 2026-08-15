@@ -10,7 +10,7 @@ summary: >-
   creation. The feature is in private preview and does not support
   transferring projects into Vercel-managed OptiTech organizations.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:34.632Z'
 ---
 
 ## Overview
@@ -152,7 +152,7 @@ If transfer requests are not enabled for your account, you'll receive:
 Construct a claim URL to share with your user using the following format:
 
 ```http
-https://console.optitech.com/app/claim?p={project_id}&tr={transfer_request_id}&ru={redirect_url}
+https://app.optitech-sverige.se/app/claim?p={project_id}&tr={transfer_request_id}&ru={redirect_url}
 ```
 
 Where:

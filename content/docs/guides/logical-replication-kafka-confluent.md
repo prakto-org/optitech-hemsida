@@ -12,7 +12,7 @@ summary: >-
   prevent scale-to-zero and may increase billing.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:29.454Z'
 ---
 
 OptiTech's logical replication feature allows you to replicate data from your OptiTech Postgres database to external destinations.
@@ -28,7 +28,7 @@ Confluent Cloud Connectors can be set up using the [Confluent Cloud UI](https://
 ## Prerequisites
 
 - A [Confluent Cloud](https://www.confluent.io/confluent-cloud) account
-- A [OptiTech account](https://console.optitech.com/)
+- A [OptiTech account](https://app.optitech-sverige.se/)
 - Read the [important notices about logical replication in OptiTech](/docs/guides/logical-replication-neon#important-notices) before you begin
 
 <Admonition type="important" title="Compute and billing">
@@ -99,7 +99,7 @@ optitech roles create --name replication_user
 
 To create a role in the OptiTech Console:
 
-1. Navigate to the [OptiTech Console](https://console.optitech.com).
+1. Navigate to the [OptiTech Console](https://app.optitech-sverige.se).
 2. Select a project.
 3. Select **Branches**.
 4. Select the branch where you want to create the role.

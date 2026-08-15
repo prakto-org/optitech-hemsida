@@ -103,6 +103,7 @@ module.exports = {
       fontFamily: {
         sans: ['var(--font-inter)', ...defaultTheme.fontFamily.sans],
         title: ['var(--font-esbuild)', ...defaultTheme.fontFamily.sans],
+        serif: ['var(--font-inter)', ...defaultTheme.fontFamily.sans],
         mono: ['var(--font-geist-mono)', ...defaultTheme.fontFamily.mono],
       },
       fontSize: {
@@ -349,6 +350,14 @@ module.exports = {
             transform: 'translateY(-3%)',
           },
         },
+        'ai-engine-breathe': {
+          '0%, 100%': {
+            transform: 'scale(1)',
+          },
+          '50%': {
+            transform: 'scale(1.03)',
+          },
+        },
       }),
       animation: {
         'text-blink': 'text-blink 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
@@ -359,6 +368,7 @@ module.exports = {
         'dialog-hide': 'dialogHide 0.3s cubic-bezier(.16,1,.3,1)',
         'logo-move': 'logoMove 1s cubic-bezier(0.4, 0, 0.6, 1) infinite alternate',
         loading: 'loading 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'ai-engine-breathe': 'ai-engine-breathe 6s ease-in-out infinite',
       },
       typography: () => ({
         DEFAULT: {

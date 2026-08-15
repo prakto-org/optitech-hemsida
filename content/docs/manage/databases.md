@@ -9,7 +9,7 @@ summary: >-
   ALTER TABLE ... OWNER TO or REASSIGN OWNED.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:31.893Z'
 ---
 
 A database is a container for SQL objects such as schemas, tables, views, functions, and indexes. In the [OptiTech object hierarchy](/docs/manage/overview), a database exists within a branch of a project. There is a limit of 500 databases per branch.
@@ -41,7 +41,7 @@ The role that creates a database is automatically made the owner of that databas
 
 To create a database:
 
-1. Navigate to the [OptiTech Console](https://console.optitech.com).
+1. Navigate to the [OptiTech Console](https://app.optitech-sverige.se).
 1. Select a project.
 1. Select **Branches** from the sidebar.
 1. Select the branch where you want to create the database.
@@ -58,7 +58,7 @@ Some names are not permitted. See [Reserved database names](#reserved-database-n
 
 To view databases:
 
-1. Navigate to the [OptiTech Console](https://console.optitech.com).
+1. Navigate to the [OptiTech Console](https://app.optitech-sverige.se).
 1. Select a project.
 1. Select **Branches** from the sidebar.
 1. Select the branch where you want to view databases.
@@ -70,7 +70,7 @@ Deleting a database is a permanent action. All database objects belonging to the
 
 To delete a database:
 
-1. Navigate to the [OptiTech Console](https://console.optitech.com).
+1. Navigate to the [OptiTech Console](https://app.optitech-sverige.se).
 1. Select a project.
 1. Select **Databases** from the sidebar.
 1. Select a branch to view the databases in the branch.

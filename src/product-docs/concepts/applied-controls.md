@@ -1,8 +1,8 @@
 # Applied controls
 
-An **applied control** is the main building block of the action plan: the actual action your team has implemented or will implement to address a security need. It can be technical, organisational, a process, a policy, a piece of documentation — anything that materially changes risk or compliance posture.
+An **applied control** is the main building block of the action plan: the actual action your team has implemented or will implement to address a security need. It can be technical, organizational, a process, a policy, a piece of documentation — anything that materially changes risk or compliance posture.
 
-A single applied control can satisfy any number of requirements across any number of frameworks — it's where _what the framework asks_ meets _what the organisation actually does_.
+A single applied control can satisfy any number of requirements across any number of frameworks — it's where _what the framework asks_ meets _what the organization actually does_.
 
 ## Mental model
 
@@ -20,7 +20,7 @@ graph LR
   AC -->|protects| AS[Assets]
 ```
 
-The applied control sits at the centre — anything that asks for action **points to** it; everything that proves the action took place **hangs off** it. Compliance work (requirement assessments), risk work (scenarios), follow-up work (findings), and operational maintenance (tasks — periodic reviews, evidence refresh, assignee rotation) all reference the same control, while evidences and protected assets accumulate on the other side. This is the [decoupling principle](../introduction/philosophy.md) made concrete: one applied control, many demand-side users.
+The applied control sits at the center — anything that asks for action **points to** it; everything that proves the action took place **hangs off** it. Compliance work (requirement assessments), risk work (scenarios), follow-up work (findings), and operational maintenance (tasks — periodic reviews, evidence refresh, assignee rotation) all reference the same control, while evidences and protected assets accumulate on the other side. This is the [decoupling principle](../introduction/philosophy.md) made concrete: one applied control, many demand-side users.
 
 | User-facing | Internal | Notes |
 |---|---|---|
@@ -31,11 +31,11 @@ The applied control sits at the centre — anything that asks for action **point
 
 ## Applied control
 
-Applied controls are fundamental for both compliance and remediation. They can derive from a **reference control** for consistency, or be created independently. They are always defined by the organisation and can be attached to the global domain or to a specific domain.
+Applied controls are fundamental for both compliance and remediation. They can derive from a **reference control** for consistency, or be created independently. They are always defined by the organization and can be attached to the global domain or to a specific domain.
 
 ## Status lifecycle
 
-The **status** field is what turns an applied control from a static catalogue entry into a live, trackable piece of work. It's the single signal that drives roll-ups across audits, dashboards, action plans, and reporting — so it's worth understanding how it moves.
+The **status** field is what turns an applied control from a static catalog entry into a live, trackable piece of work. It's the single signal that drives roll-ups across audits, dashboards, action plans, and reporting — so it's worth understanding how it moves.
 
 ### Why "Active" — and why no "Done"
 
@@ -65,7 +65,7 @@ stateDiagram-v2
 | **Undefined** | Default — status not yet set | No |
 | **To do** | Planned but not started | No |
 | **In progress** | Being implemented | No |
-| **On hold** | Started then paused — blocked, deprioritised, or waiting on a dependency | No |
+| **On hold** | Started then paused — blocked, deprioritized, or waiting on a dependency | No |
 | **Active** | Implemented and operating as intended | **Yes** |
 | **Degraded** | Was active, now partially failing — gap detected at audit or in operations | Partial |
 | **Deprecated** | Retired or superseded — no longer in scope | No |
@@ -82,18 +82,18 @@ The transitions aren't enforced as a strict state machine — you can move a con
 
 ## Financial tracking
 
-Applied controls carry a structured **cost** field, so the financial weight of your security programme isn't a separate spreadsheet — it's attached to the controls themselves and rolled up wherever they appear (most notably on every [action plan](../features/action-plans.md)).
+Applied controls carry a structured **cost** field, so the financial weight of your security program isn't a separate spreadsheet — it's attached to the controls themselves and rolled up wherever they appear (most notably on every [action plan](../features/action-plans.md)).
 
 The platform models the **build vs run** distinction that controls actually carry in practice:
 
 | Cost type | Meaning | How it's counted |
 |---|---|---|
 | **Build** | One-shot setup cost — buying hardware, integrating a tool, drafting and approving a policy, running a project to roll out the control | Amortised over the configured **amortisation period** (in years) |
-| **Run** | Ongoing operational cost — licence renewals, the time spent every quarter on access reviews, the hours of the team that operates the control | Counted as an annual cost — applied every year for as long as the control runs |
+| **Run** | Ongoing operational cost — license renewals, the time spent every quarter on access reviews, the hours of the team that operates the control | Counted as an annual cost — applied every year for as long as the control runs |
 
 Each side accepts two inputs:
 
-- **Fixed cost** — a money amount (hardware purchase, licence fee, contractor invoice).
+- **Fixed cost** — a money amount (hardware purchase, license fee, contractor invoice).
 - **People days** — a measure of internal effort. The platform converts this to money using the **daily rate** configured in **General settings**, so internal time is comparable with external spend.
 
 From these inputs, the platform computes an **annual cost** for every control:
@@ -115,7 +115,7 @@ The annualised view matters because cybersecurity controls are continuous (see [
 
 ## Reference control
 
-A **reference control** is a template for an applied control. Reference controls facilitate the creation of applied controls and help keep them consistent across the organisation.
+A **reference control** is a template for an applied control. Reference controls facilitate the creation of applied controls and help keep them consistent across the organization.
 
 They can be provided by security frameworks imported from a library, or you can create your own — in the global domain or in a specific domain. Reference controls are optional but recommended.
 

@@ -9,7 +9,7 @@ summary: >-
   `POSTGRES_URL` credential storage in `.env.local`, and a working TypeScript
   query to verify the connection.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:28.135Z'
 ---
 
 This guide describes how to create a OptiTech project and connect to it from a Bun application. Examples are provided for using [Bun's built-in SQL client](https://bun.sh/docs/api/sql) and the [@optitech/serverless](/docs/serverless/serverless-driver) driver. Use the client you prefer.
@@ -24,7 +24,7 @@ The same configuration steps can be used for [Hono](https://hono.dev/docs/gettin
 
 If you do not have one already, create a OptiTech project.
 
-1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://app.optitech-sverige.se/app/projects) page in the OptiTech Console.
 2. Click **New Project**.
 3. Specify your project settings and click **Create Project**.
 

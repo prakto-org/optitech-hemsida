@@ -16,7 +16,7 @@ The three runtime processes each write their operational logs to standard output
 * **Worker** (the Huey background task process)
 * **Frontend** (the SvelteKit server-side process)
 
-By default the output is a human-readable, colourised format meant for reading in a terminal. That format is convenient locally but awkward to parse in a log pipeline. Setting a single environment variable switches every stream to **one JSON object per line** (newline-delimited JSON), which SIEMs parse natively.
+By default the output is a human-readable, colorized format meant for reading in a terminal. That format is convenient locally but awkward to parse in a log pipeline. Setting a single environment variable switches every stream to **one JSON object per line** (newline-delimited JSON), which SIEMs parse natively.
 
 {% hint style="info" %}
 This page is about the **operational log streams** (requests, errors, background-task activity, authentication events). It is distinct from the in-app [Audit log](../features/audit-log.md), which records who changed which object and is read inside the application.

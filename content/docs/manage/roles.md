@@ -11,7 +11,7 @@ enableTableOfContents: true
 isDraft: false
 redirectFrom:
   - /docs/manage/users
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:31.893Z'
 ---
 
 In OptiTech, roles are Postgres roles. Each OptiTech project is created with a Postgres role that is named for your database. For example, if your database is named `optitechdb`, the project is created with a role named `optitechdb_owner`. This role owns the database that is created in your OptiTech project's default branch.
@@ -66,7 +66,7 @@ This section describes how to create, view, and delete roles in the OptiTech Con
 
 To create a role:
 
-1. Navigate to the [OptiTech Console](https://console.optitech.com).
+1. Navigate to the [OptiTech Console](https://app.optitech-sverige.se).
 2. Select a project.
 3. Select **Branches**.
 4. Select the branch where you want to create the role.
@@ -84,7 +84,7 @@ Deleting a role is a permanent action that cannot be undone, and you cannot dele
 
 To delete a role:
 
-1. Navigate to the [OptiTech Console](https://console.optitech.com).
+1. Navigate to the [OptiTech Console](https://app.optitech-sverige.se).
 2. Select a project.
 3. Select **Branches**.
 4. Select the branch where you want to delete a role.
@@ -95,7 +95,7 @@ To delete a role:
 
 To reset a role's password:
 
-1. Navigate to the [OptiTech Console](https://console.optitech.com).
+1. Navigate to the [OptiTech Console](https://app.optitech-sverige.se).
 2. Select a project.
 3. Select **Branches**.
 4. Select the role's branch.

@@ -12,13 +12,13 @@ The dashboard is gated by the [`advanced_analytics` feature flag](../configurati
 
 The platform offers three layers of analytical depth on top of the regular tables and dashboards. This page documents the **per-audit** layer:
 
-| Surface | Scope | Edition | Gating |
-|---|---|---|---|
-| **Audit advanced analytics** (this page) | One audit | Community | `advanced_analytics` flag |
-| **[Framework report](framework-report.md)** | One framework, every live audit using it | Community | None (permission-gated) |
-| **[Insights](insights.md)** menu | Cross-cutting (impact graph, priority/effort, Gantt timeline) | Enterprise (PRO) | None (permission-gated) |
+| Surface | Scope | Gating |
+|---|---|---|
+| **Audit advanced analytics** (this page) | One audit | `advanced_analytics` flag |
+| **[Framework report](framework-report.md)** | One framework, every live audit using it | None (permission-gated) |
+| **[Insights](insights.md)** menu | Cross-cutting (impact graph, priority/effort, Gantt timeline) | None (permission-gated) |
 
-Pick the layer that matches the question you're asking — _is this audit healthy?_, _is this framework healthy across the whole organisation?_, _where should we focus across our entire estate?_
+Pick the layer that matches the question you're asking — _is this audit healthy?_, _is this framework healthy across the whole organization?_, _where should we focus across our entire estate?_
 
 ## Where to find it
 
@@ -34,7 +34,7 @@ Eight analytical surfaces stream into the page — each loads independently, so 
 
 | Section | Visualisation | What it answers |
 |---|---|---|
-| **Compliance by Section** | Normalised stacked bars; optional implementation-score radar; optional documentation-score radar; per-section score table | How does each section of the framework fare — proportion compliant / partial / non-compliant / not-assessed, plus implementation and documentation scores when scoring is enabled |
+| **Compliance by Section** | Normalized stacked bars; optional implementation-score radar; optional documentation-score radar; per-section score table | How does each section of the framework fare — proportion compliant / partial / non-compliant / not-assessed, plus implementation and documentation scores when scoring is enabled |
 | **Controls Coverage** | Donut + breakdown | What fraction of assessable requirements have at least one applied control linked, plus the status mix of those controls |
 | **Compliance Timeline** | Stacked area + score line | Evolution of pass/fail mix and overall score over time |
 | **Comparable Audits** | List | Other audits the platform considers comparable (same framework, similar scope) for benchmarking |

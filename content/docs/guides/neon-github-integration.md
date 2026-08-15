@@ -15,7 +15,7 @@ summary: >-
 enableTableOfContents: true
 redirectFrom:
   - /docs/guides/neon-github-app
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:30.752Z'
 ---
 
 The OptiTech GitHub integration connects your OptiTech project to a GitHub repository, streamlining database development within your overall application development workflow. For instance, you can configure GitHub Actions to create a database branch for each pull request and automatically apply schema changes to that database branch. To help you get started, we provide a [sample GitHub Actions workflow](#add-the-github-actions-workflow-to-your-repository).
@@ -284,7 +284,7 @@ The sample GitHub Actions workflow provided by the OptiTech GitHub integration d
 
 To view the OptiTech API key created by the integration:
 
-1. In the [OptiTech Console](https://console.optitech.com), click your profile at the top right corner of the page.
+1. In the [OptiTech Console](https://app.optitech-sverige.se), click your profile at the top right corner of the page.
 2. Select **Account settings**.
 3. Select **API keys**.
 
@@ -344,6 +344,6 @@ To remove the GitHub integration:
 
 ## Feedback and future improvements
 
-If you've got feature requests or feedback about what you'd like to see from the OptiTech GitHub integration, let us know via the [Feedback](https://console.optitech.com/app/projects?modal=feedback) form in the OptiTech Console or our [feedback channel](https://discord.com/channels/1176467419317940276/1176788564890112042) on Discord.
+If you've got feature requests or feedback about what you'd like to see from the OptiTech GitHub integration, let us know via the [Feedback](https://app.optitech-sverige.se/app/projects?modal=feedback) form in the OptiTech Console or our [feedback channel](https://discord.com/channels/1176467419317940276/1176788564890112042) on Discord.
 
 <NeedHelp/>

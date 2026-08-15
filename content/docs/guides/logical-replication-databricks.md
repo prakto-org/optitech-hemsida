@@ -12,7 +12,7 @@ summary: >-
   supported.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:29.454Z'
 ---
 
 OptiTech's logical replication feature lets you stream changes from your OptiTech Postgres database into external systems. This guide shows how to use Databricks Lakeflow Connect's PostgreSQL connector to replicate data from OptiTech Postgres into Databricks Lakehouse using PostgreSQL logical replication.
@@ -82,7 +82,7 @@ Databricks recommends a dedicated database user for ingestion. Create a role in 
 
 <TabItem>
 
-1. In the [OptiTech Console](https://console.optitech.com), select your project and **Branches**.
+1. In the [OptiTech Console](https://app.optitech-sverige.se), select your project and **Branches**.
 2. Select the branch, then the **Roles & Databases** tab.
 3. Click **Add Role**, enter the role name (e.g. `databricks_replication`), and click **Create**. Save the password.
 

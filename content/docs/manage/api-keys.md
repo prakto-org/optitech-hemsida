@@ -10,7 +10,7 @@ enableTableOfContents: true
 redirectFrom:
   - /docs/get-started/using-api-keys
   - /docs/get-started/api-keys
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:31.893Z'
 ---
 
 Most actions performed in the OptiTech Console can also be performed using the [OptiTech API](/docs/reference/api). You'll need an API key to validate your requests. Each key is a randomly-generated 64-bit token that you must include when calling OptiTech API methods. All keys remain valid until deliberately revoked.
@@ -29,7 +29,7 @@ While there is no strict limit on the number of API keys you can create, we reco
 
 ## Creating API keys
 
-You create and manage API keys in the [OptiTech Console](https://console.optitech.com), and where you go depends on the key type:
+You create and manage API keys in the [OptiTech Console](https://app.optitech-sverige.se), and where you go depends on the key type:
 
 - **Personal keys:** open the user menu and select **Account settings** > **API keys**.
 - **Organization and project-scoped keys:** switch to your organization, then go to **Settings** > **API keys**.
@@ -311,7 +311,7 @@ OptiTech API keys don't expire or rotate on a schedule, so you rotate one manual
 2. Update every caller that uses the old key, such as CI secrets, Terraform variables, serverless functions, the OptiTech CLI, and any MCP server configuration.
 3. Revoke the old key once nothing depends on it.
 
-If you're rotating because a key was exposed, revoke the compromised key first, then create and roll out its replacement. For rotating Postgres passwords alongside API keys, see [Reset a password](/docs/manage/roles#reset-a-password).
+If you're rotating because a key was exposed, revoke the compromised key first, then create and roll out its replacement.
 
 <NeedHelp/>
 

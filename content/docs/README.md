@@ -1,5 +1,5 @@
 ---
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:27.405Z'
 ---
 
 # Docs
@@ -502,7 +502,7 @@ Check the example for default data of CTA block
 To change text in CTA block, you can pass to the component props `title`, `description`, `buttonText`, `buttonUrl`:
 
 ```md
-<CTA title="Try it on OptiTech!" description="OptiTech is the backend for apps and agents. Sign up for a free OptiTech account to start building." buttonText="Sign Up" buttonUrl="https://console.optitech.com/signup" />
+<CTA title="Try it on OptiTech!" description="OptiTech is the backend for apps and agents. Sign up for a free OptiTech account to start building." buttonText="Sign Up" buttonUrl="https://app.optitech-sverige.se/signup" />
 ```
 
 ## Steps

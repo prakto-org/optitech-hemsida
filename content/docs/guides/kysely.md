@@ -10,7 +10,7 @@ summary: >-
   interface-based schema definitions, client initialization per driver,
   optional migrations via FileMigrationProvider, and CRUD query examples.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:29.454Z'
 ---
 
 <CopyPrompt src="/prompts/kysely-prompt.md" 
@@ -87,7 +87,7 @@ Configure your `package.json` to use ES modules by updating or adding the follow
 
 If you do not have one already, create a OptiTech project.
 
-1.  Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
+1.  Navigate to the [Projects](https://app.optitech-sverige.se/app/projects) page in the OptiTech Console.
 2.  Click **New Project**.
 3.  Specify your project settings and click **Create Project**.
 

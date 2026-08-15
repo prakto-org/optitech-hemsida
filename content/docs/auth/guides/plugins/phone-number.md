@@ -11,7 +11,7 @@ summary: >-
   configurable, requests are rate-limited per IP, and an OTP is invalidated
   after too many incorrect attempts.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:27.405Z'
 ---
 
 <FeatureBetaProps feature_name="Managed Better Auth" />
@@ -42,7 +42,7 @@ Managed Better Auth does **not** deliver SMS for you. The plugin requires a `sen
 
 <TabItem>
 
-1. Open the [OptiTech Console](https://console.optitech.com).
+1. Open the [OptiTech Console](https://app.optitech-sverige.se).
 2. Select your project and go to **Auth** > **Plugins**.
 3. Toggle **Phone Authentication** on.
 4. Configure the options:

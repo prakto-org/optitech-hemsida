@@ -11,13 +11,13 @@ A BIA is an assessment scoped to a perimeter. For each asset in scope, the platf
 - **Asset assessment** — the impact of disruption along one or more dimensions (financial, operational, regulatory, reputational).
 - **Escalation thresholds** — the durations after which disruption becomes severe, critical, or unacceptable — often expressed as RTO (Recovery Time Objective) levels.
 
-The output is a prioritised view of which assets your continuity plan must protect first.
+The output is a prioritized view of which assets your continuity plan must protect first.
 
 ## How it ties into the rest of the platform
 
 - BIAs read from the **asset inventory** — assets are first-class objects, not BIA-private records.
-- The criticality output can drive **risk scenario prioritisation** for the same assets.
-- For organisations subject to DORA, BIA results feed into incident-reporting workflows.
+- The criticality output can drive **risk scenario prioritization** for the same assets.
+- For organizations subject to DORA, BIA results feed into incident-reporting workflows.
 
 ## Related
 

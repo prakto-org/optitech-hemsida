@@ -28,7 +28,7 @@ A framework lives inside a loaded library and is read-only. It comprises a tree 
 
 ## Structure
 
-A framework is a tree of **requirement nodes**. Most nodes are _assessable_ — concrete requirements you evaluate one by one — while others act as section or chapter headings that organise the tree. Each assessable node becomes a [requirement assessment](audits.md) inside an audit, carrying its own status, score, and evidence.
+A framework is a tree of **requirement nodes**. Most nodes are _assessable_ — concrete requirements you evaluate one by one — while others act as section or chapter headings that organize the tree. Each assessable node becomes a [requirement assessment](audits.md) inside an audit, carrying its own status, score, and evidence.
 
 ## Scoring scales
 
@@ -75,11 +75,11 @@ framework:
 
 One-off scales that only apply to a single requirement are added as a new entry in the framework's alternatives registry and referenced by name, just like shared scales. The node always carries a reference, never inlined labels.
 
-The audit copies the framework's `scores_definition` (default scale + alternatives) at creation, so per-requirement references resolve against the audit's own copy. This keeps the audit self-contained: customising the audit's scale later doesn't break references on its requirements.
+The audit copies the framework's `scores_definition` (default scale + alternatives) at creation, so per-requirement references resolve against the audit's own copy. This keeps the audit self-contained: customizing the audit's scale later doesn't break references on its requirements.
 
 ### Aggregation across mixed scales
 
-Roll-ups keep mixed scales comparable. Average-based aggregation normalises each requirement score against its effective range before computing the parent or global score, then displays the result on the audit scale. Sum-based aggregation remains a raw weighted sum, so each requirement contributes its own effective maximum.
+Roll-ups keep mixed scales comparable. Average-based aggregation normalizes each requirement score against its effective range before computing the parent or global score, then displays the result on the audit scale. Sum-based aggregation remains a raw weighted sum, so each requirement contributes its own effective maximum.
 
 ## Built-in vs custom
 

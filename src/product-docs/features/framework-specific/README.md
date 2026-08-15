@@ -4,12 +4,12 @@ description: Capabilities tailored to a particular framework or regulator
 
 # Framework-specific features
 
-Most of OptiTech is framework-agnostic — the same audit, applied-control, and evidence machinery works whether you're tracking ISO 27001, SOC 2, or an internal control set. A handful of capabilities, however, are tied to a specific framework or regulator because they implement an artefact the standard mandates in a particular shape.
+Most of OptiTech is framework-agnostic — the same audit, applied-control, and evidence machinery works whether you're tracking ISO 27001, SOC 2, or an internal control set. A handful of capabilities, however, are tied to a specific framework or regulator because they implement an artifact the standard mandates in a particular shape.
 
-This section catalogues those capabilities:
+This section catalogs those capabilities:
 
-- [ISO 27001](iso.md) — Statement of Applicability report; organisation issues and objectives (context of the organisation).
-- [CCB CyFun](cyfun.md) — self-assessment Excel import and export in the format published by Belgium's Centre for Cybersecurity.
+- [ISO 27001](iso.md) — Statement of Applicability report; organization issues and objectives (context of the organization).
+- [CCB CyFun](cyfun.md) — self-assessment Excel import and export in the format published by Belgium's Center for Cybersecurity.
 - [DORA](dora.md) — Register of Information report and structured incident reports aligned with the Digital Operational Resilience Act.
 - [MonServiceSécurisé](monservicesecurise.md) — controls export in the format expected by the French ANSSI portal.
 

@@ -1,21 +1,21 @@
 ---
-description: Catalogued vulnerabilities, weaknesses, and the feeds that enrich them
+description: Cataloged vulnerabilities, weaknesses, and the feeds that enrich them
 ---
 
 # Threat intelligence
 
-The **threat intelligence** layer holds the catalogued knowledge OptiTech uses to prioritise vulnerabilities, qualify incidents, and connect operational findings to the wider security ecosystem. Today it covers security advisories, weakness catalogues, and a small set of public enrichment feeds; the surface is expected to grow significantly in upcoming releases.
+The **threat intelligence** layer holds the cataloged knowledge OptiTech uses to prioritize vulnerabilities, qualify incidents, and connect operational findings to the wider security ecosystem. Today it covers security advisories, weakness catalogs, and a small set of public enrichment feeds; the surface is expected to grow significantly in upcoming releases.
 
 ## Security advisories
 
-A **security advisory** is a catalogued security warning published by a vendor, CERT, or standards body. OptiTech supports four sources today:
+A **security advisory** is a cataloged security warning published by a vendor, CERT, or standards body. OptiTech supports four sources today:
 
 - **CVE** — the MITRE/NIST CVE Program identifiers (`CVE-YYYY-NNNN`).
 - **EUVD** — the EU Vulnerability Database (post-NIS2 European equivalent).
 - **GHSA** — GitHub Security Advisories.
 - **Other** — for sources that don't fit the above.
 
-Each advisory carries the usual identifying metadata (reference ID, published date, references) plus the bits that drive prioritisation:
+Each advisory carries the usual identifying metadata (reference ID, published date, references) plus the bits that drive prioritization:
 
 - **CVSS base score** and **CVSS vector** — severity per the standard scoring system.
 - **EPSS score** and **EPSS percentile** — probabilistic exploitation likelihood from FIRST.
@@ -26,22 +26,22 @@ Advisories are catalog objects: library-backed, root-folder-published, reference
 
 ## CWEs
 
-The **Common Weakness Enumeration** is MITRE's catalogue of software-weakness categories — buffer overflows, missing authentication, improper input validation, and so on. Where a security advisory is "this _specific_ vulnerability in this _specific_ product", a CWE is "this _class_ of flaw". CWEs are catalogued separately and tagged onto advisories and vulnerabilities to enable categorical analysis ("how many of our open vulns are credential-handling bugs?").
+The **Common Weakness Enumeration** is MITRE's catalog of software-weakness categories — buffer overflows, missing authentication, improper input validation, and so on. Where a security advisory is "this _specific_ vulnerability in this _specific_ product", a CWE is "this _class_ of flaw". CWEs are cataloged separately and tagged onto advisories and vulnerabilities to enable categorical analysis ("how many of our open vulns are credential-handling bugs?").
 
 CWEs ship as their own catalog library; loading the CWE library makes the entries available across the platform.
 
 ## How they connect to vulnerabilities
 
-A **vulnerability** in OptiTech is the organisation-specific record — "we have this exposed in our environment, here's the SLA". It links to:
+A **vulnerability** in OptiTech is the organization-specific record — "we have this exposed in our environment, here's the SLA". It links to:
 
 - One or more **security advisories** — the upstream finding(s) it corresponds to.
 - One or more **CWEs** — the weakness categories it belongs to.
 
-This linkage is what lets enrichment feeds work end-to-end: advisories get scores from EPSS, exploitation status from KEV, and category mappings from NVD; vulnerabilities inherit that context via their advisory links and surface it in dashboards and SLA prioritisation. See [Vulnerabilities](vulnerabilities.md).
+This linkage is what lets enrichment feeds work end-to-end: advisories get scores from EPSS, exploitation status from KEV, and category mappings from NVD; vulnerabilities inherit that context via their advisory links and surface it in dashboards and SLA prioritization. See [Vulnerabilities](vulnerabilities.md).
 
 ## Enrichment feeds
 
-Three public feeds enrich the catalogue when enabled — they keep the threat-intel layer current without manual data entry. Configuration is under [Security intelligence feeds](../configuration/settings/sec-intel-feeds.md):
+Three public feeds enrich the catalog when enabled — they keep the threat-intel layer current without manual data entry. Configuration is under [Security intelligence feeds](../configuration/settings/sec-intel-feeds.md):
 
 - **KEV feed** — CISA's Known Exploited Vulnerabilities; flags advisories under active exploitation.
 - **EPSS feed** — FIRST's Exploit Prediction Scoring System; attaches a probabilistic exploitation score.

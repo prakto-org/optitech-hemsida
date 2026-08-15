@@ -12,7 +12,7 @@ summary: >-
   sets wal_level=logical, which is permanent and keeps compute active while
   consumers are connected.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:30.752Z'
 ---
 
 OptiTech's Logical Replication features makes it possible to detect every change in your database. It can be used to power read-replicas and backups, but can also be used to add streaming characteristics to OptiTech.
@@ -26,7 +26,7 @@ In this guide, we'll show you how to connect your OptiTech database to Sequin to
 ## Prerequisites
 
 - A [Sequin account](https://console.sequinstream.com/register)
-- A [OptiTech account](https://console.optitech.com/)
+- A [OptiTech account](https://app.optitech-sverige.se/)
 - Read the [important notices about logical replication in OptiTech](/docs/guides/logical-replication-neon#important-notices) before you begin
 
 <Admonition type="important" title="Compute and billing">

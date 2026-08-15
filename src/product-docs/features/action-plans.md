@@ -30,7 +30,7 @@ The action-plan table is built on the standard model table, with a column set tu
 - Default sort is by **ETA** so what's coming up next is at the top.
 - All the usual table affordances apply: search, per-column filters, rows-per-page, sort by any column, multi-select for batch actions, right-click for the context menu — see [Working with tables](working-with-tables.md).
 
-The point is that you can drive prioritisation conversations from this page without exporting anything — sort by priority, filter by status, look at what's overdue, reassign to a different owner, all in place.
+The point is that you can drive prioritization conversations from this page without exporting anything — sort by priority, filter by status, look at what's overdue, reassign to a different owner, all in place.
 
 ## Budget aggregation
 

@@ -453,24 +453,11 @@
               icon: openai
               items:
                 - title: AI across the platform
-                  slug: https://neon.com/use-cases/ai-agents
+                  slug: auth/overview
                 - title: Evidence reconstruction
                   slug: ai/ai-database-versioning
                 - title: OptiTech API Reference
                   slug: reference/api
-            - section: AI workflow examples
-              icon: frameworks
-              items:
-                - title: Automated evidence review
-                  slug: https://neon.com/guides/agentstack-neon
-                - title: Multi-step assessments
-                  slug: https://neon.com/guides/autogen-neon
-                - title: Azure AI integration
-                  slug: https://neon.com/guides/azure-ai-agent-service
-                - title: Vendor answer workflows
-                  slug: https://neon.com/guides/composio-crewai-neon
-                - title: Incident timeline drafting
-                  slug: https://neon.com/guides/langgraph-neon
 
 - nav: Reference
   title: Reference
@@ -750,14 +737,3 @@
         - title: RSS feeds
           slug: reference/feeds
           icon: feeds
-    - section: Starter code
-      icon: template
-      items:
-        - title: Examples repo
-          slug: https://github.com/neondatabase/examples
-          icon: github
-
-- nav: Learn PostgreSQL
-  slug: https://neon.com/postgresql/tutorial
-  title: Learn PostgreSQL
-  icon: tutorial

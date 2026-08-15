@@ -12,7 +12,7 @@ summary: >-
   Drizzle-kit migration commands, ClerkProvider setup, and Next.js server
   actions backed by the OptiTech serverless driver.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:28.135Z'
 ---
 
 <Admonition type="tip" title="Building on OptiTech?">
@@ -72,7 +72,7 @@ Make sure to add an entry for `.env` to your `.gitignore` file, so that it's not
 
 ### Initialize a new project
 
-1. Log in to the OptiTech console and navigate to the [Projects](https://console.optitech.com/app/projects) section.
+1. Log in to the OptiTech console and navigate to the [Projects](https://app.optitech-sverige.se/app/projects) section.
 2. Select an existing project or click the **New Project** button to create a new one.
 3. Choose the desired region and Postgres version for your project, then click **Create Project**.
 

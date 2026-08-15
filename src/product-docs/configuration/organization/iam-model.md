@@ -41,7 +41,7 @@ Multi-Factor Authentication (MFA) is critical for access protection. OptiTech su
 
 * for local accounts, OptiTech includes native MFA
 * based on **TOTP** (e.g., Google/Microsoft Authenticators) and **WebAuthn / passkeys** (hardware security keys, platform authenticators)
-* recovery codes are issued at enrolment so the user can self-recover from a lost factor
+* recovery codes are issued at enrollment so the user can self-recover from a lost factor
 * if a user loses every factor and runs out of recovery codes, an **administrator can disable their MFA** from the user's edit page — see [Setting up MFA → Admin recovery](../mfa.md#admin-recovery-disabling-another-users-mfa). The link is hidden on your own edit page; to disable your own MFA, use the standard MFA settings page on My profile → Settings.
 
 ***

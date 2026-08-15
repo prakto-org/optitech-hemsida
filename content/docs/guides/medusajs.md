@@ -11,7 +11,7 @@ summary: >-
   and self-hosted environments such as DigitalOcean, AWS EC2, Render, and
   Fly.io.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:30.752Z'
 ---
 
 [Medusa](https://medusajs.com/) is an open-source headless e-commerce platform that provides a flexible backend for building modern e-commerce applications. It uses Postgres as its primary database to store all product, order, and customer data.
@@ -22,7 +22,7 @@ In this guide, you'll learn how to set up and self-host Medusa using [OptiTech](
 
 Before you begin, ensure you have the following:
 
-1.  **OptiTech Account:** You'll need a OptiTech account. If you don't have one, sign up [here](https://console.optitech.com/signup).
+1.  **OptiTech Account:** You'll need a OptiTech account. If you don't have one, sign up [here](https://app.optitech-sverige.se/signup).
 2.  **Node.js & package manager:** A Node-compatible runtime (Node.js v20+, Bun, or Deno) and a package manager (`npm`, `yarn`, `pnpm`, or `bun`).
     > This guide uses Node.js with `npm`, but you can adapt the commands to your preferred runtime and package manager.
 
@@ -32,7 +32,7 @@ Before you begin, ensure you have the following:
 
 You'll first need to create a OptiTech database. Follow these steps:
 
-1.  Create a new OptiTech project from the [OptiTech Console](https://console.optitech.com). For instructions, see [Create a project](/docs/manage/projects#create-a-project).
+1.  Create a new OptiTech project from the [OptiTech Console](https://app.optitech-sverige.se). For instructions, see [Create a project](/docs/manage/projects#create-a-project).
     <Admonition type="tip">
     When creating your OptiTech project, choose a region that is geographically close to your Medusa server to minimize latency and improve overall performance of your Medusa application.
     </Admonition>

@@ -106,12 +106,12 @@
       "heading": "<strong>Built in Sweden, backed by experts.</strong> OptiTech was founded by security and compliance specialists. All data stays in Swedish and EU data centers.",
       "stats": {
         "nis2Count": {
-          "title": "10,000+",
-          "description": "Swedish companies are covered by NIS2."
+          "title": "AI Governance",
+          "description": "Ethical AI deployment with bias detection, risk management, and transparent decision-making."
         },
         "iso": {
-          "title": "ISO 27001",
-          "description": "We run our own product and certify against it ourselves."
+          "title": "ISO\n27001",
+          "description": "Independent audits confirm your data is encrypted, monitored, and protected by enterprise-grade controls."
         }
       },
       "labelRight": "Trusted by the best",
@@ -837,6 +837,502 @@
         "title": "See your current process through the system's eyes",
         "button": "Request a review of your reporting process"
       }
+    },
+    "gapAnalysis": {
+      "hero": {
+        "label": "Gap analysis",
+        "title": "Know exactly <gray>where you stand</gray>",
+        "description": "Run an automated gap analysis against NIS2, DORA, GDPR, ISO 27001, or the EU AI Act. Turn the legal text into a prioritized action list you can start on the same day.",
+        "cta": "Book a demo",
+        "mockup": {
+          "url": "app.optitech.se",
+          "pageTitle": "ISO 27001 gap analysis",
+          "badges": ["NIS2", "ISO 27001", "GDPR"],
+          "documentsHeading": "Requirements",
+          "documents": [
+            { "name": "Access control policy", "access": "Met" },
+            { "name": "Risk assessment", "access": "Gap" },
+            { "name": "Supplier register", "access": "Met" },
+            { "name": "Incident procedure", "access": "Gap" }
+          ],
+          "controlsHeading": "Controls",
+          "controls": [
+            { "name": "Encryption at rest", "status": "Met" },
+            { "name": "MFA enforced", "status": "Met" },
+            { "name": "Backup testing", "status": "Gap" },
+            { "name": "Access reviews", "status": "Partial" }
+          ],
+          "syncNote": "Scored automatically from your connected systems.",
+          "chat": {
+            "label": "OptiTech AI",
+            "question": "Which gaps should we fix first?",
+            "answer": "Start with backup testing and access reviews. Both are high-impact ISO 27001 controls and currently unmet.",
+            "source": "Source: gap analysis, 42 controls assessed"
+          }
+        }
+      },
+      "proof": {
+        "logosHeading": "Trusted by compliance teams across the Nordics",
+        "logos": ["Nordkraft", "Fjordbank", "Helsia", "Kustdata", "Polaris Health", "Baltic Freight", "Grönlund & Co"],
+        "statTitle": "Hours to a scoped action plan, not weeks of consulting",
+        "statDescription": "A consultant-led gap analysis takes 20 to 40 hours of interviews and review. OptiTech scopes which frameworks apply and scores your controls from connected systems in a fraction of the time.",
+        "statSource": "Source: comparison of consultant-led gap analyses and OptiTech's automated scoping, 2025."
+      },
+      "features": {
+        "label": "Gap analysis",
+        "cta": "Book a demo",
+        "items": [
+          {
+            "title": "Ask what applies to you, in plain language",
+            "description": "Describe your business and OptiTech's AI scopes which frameworks and controls are in scope, grounded in Nordic legal text with the source cited. No guesswork about whether you're an essential or important entity.",
+            "mockup": {
+              "label": "OptiTech AI",
+              "question": "Are we in scope for NIS2?",
+              "answer": "Yes. As a mid-size energy supplier you're an essential entity under the Swedish Cybersecurity Act. 42 controls apply.",
+              "chips": ["Source: NIS2 / Cybersecurity Act", "Scoped this session"]
+            }
+          },
+          {
+            "title": "See every gap, scored and prioritized",
+            "description": "OptiTech scores each control as met, partial, or gap, then ranks the gaps by impact and effort. You get a prioritized action list instead of a 60-page report nobody reads.",
+            "mockup": {
+              "label": "Gap analysis",
+              "rows": [
+                { "name": "Encryption at rest", "status": "Met", "open": true },
+                { "name": "Access reviews", "status": "Gap", "open": false },
+                { "name": "Backup testing", "status": "Partial", "open": false }
+              ],
+              "requestTitle": "2 high-priority gaps",
+              "requestMeta": "ISO 27001 · A.8, A.12",
+              "requestButton": "Assign"
+            }
+          },
+          {
+            "title": "A roadmap, not a 60-page report",
+            "description": "Every gap becomes a task with an owner and a due date, sequenced from quick wins to certification. You leave the analysis with a plan, not homework.",
+            "mockup": {
+              "label": "Roadmap",
+              "colorsLabel": "Frameworks",
+              "domainLabel": "Target",
+              "domain": "ISO 27001 · Q3 2026",
+              "previewTitle": "Your compliance roadmap",
+              "previewText": "Gaps sequenced from quick wins to certification, each with an owner and a due date."
+            }
+          },
+          {
+            "title": "Reassess continuously, not once a year",
+            "description": "Connect Microsoft 365, Entra ID, AWS, and more, and OptiTech rescores controls automatically. Your gap analysis stays current instead of going stale the day the consultant leaves.",
+            "mockup": {
+              "label": "Live controls",
+              "synced": "Rescored 5 min ago",
+              "rows": [
+                { "name": "MFA enforced", "framework": "ISO 27001 · A.5.17", "status": "Met" },
+                { "name": "Access reviews", "framework": "NIS2 · Art. 21", "status": "Gap" },
+                { "name": "Data retention", "framework": "GDPR · Art. 5", "status": "Partial" }
+              ]
+            }
+          }
+        ]
+      },
+      "network": {
+        "title": "One analysis, every framework you're covered by",
+        "description": "Cross-mapped controls across NIS2, DORA, GDPR, ISO 27001, and the EU AI Act",
+        "frameworks": [
+          { "name": "NIS2", "description": "The EU cybersecurity directive for essential and important entities, with risk-management and incident-reporting duties." },
+          { "name": "DORA", "description": "The Digital Operational Resilience Act, governing ICT risk, resilience testing, and third-party oversight for the financial sector." },
+          { "name": "GDPR", "description": "The EU regulation for lawful, transparent processing of personal data and the rights of the people it belongs to." },
+          { "name": "ISO 27001", "description": "The international standard for an information security management system, built on risk assessment and treatment." },
+          { "name": "EU AI Act", "description": "The EU regulation that classifies AI systems by risk and sets obligations for high-risk use." },
+          { "name": "ISO 27701", "description": "The privacy extension to ISO 27001, adding a privacy information management system on top of your ISMS." },
+          { "name": "SOC 2", "description": "The US attestation report on controls for security, availability, processing integrity, confidentiality, and privacy." },
+          { "name": "TISAX", "description": "The automotive industry assessment and exchange for information security, based on the VDA ISA catalogue." }
+        ],
+        "companies": ["Nordkraft", "Fjordbank", "Helsia", "Kustdata", "Polaris Health", "Baltic Freight", "Grönlund & Co"],
+        "footnote": "Framework coverage expands continuously."
+      },
+      "featureGrid": {
+        "title": "What the gap analysis covers",
+        "items": [
+          { "title": "Automated scoping", "description": "Answer a few questions and OptiTech determines which frameworks and controls apply to your business, entity type, and sector." },
+          { "title": "Control-by-control scoring", "description": "Every requirement is scored met, partial, or gap, with the evidence or the missing piece shown next to it." },
+          { "title": "Prioritized action list", "description": "Gaps are ranked by impact and effort so you know what to fix first, not just what is wrong." },
+          { "title": "Cross-framework mapping", "description": "One control satisfies requirements in several frameworks at once, so you never assess the same thing twice." },
+          { "title": "Effort and cost estimates", "description": "See the rough work behind each gap up front, so budgeting for compliance stops being guesswork." },
+          { "title": "Exportable report", "description": "Share a clean summary with the board, an auditor, or a customer straight from the platform." }
+        ]
+      },
+      "testimonial": {
+        "text": "We booked a consultant for a gap analysis and got a quote for six weeks. OptiTech had us scoped and scored in an afternoon, and the action list was already prioritized.",
+        "initials": "AL",
+        "name": "Alex Lopez",
+        "position": "Head of IT, Nordic manufacturer",
+        "cta": "Read the case study"
+      },
+      "plans": {
+        "title": "Get started with a gap analysis",
+        "description": "The gap analysis is included on every OptiTech plan. Start free, then activate the frameworks you need.",
+        "cards": [
+          {
+            "plan": "Included in Start",
+            "name": "Gap analysis",
+            "description": "Scope your frameworks and score your controls from day one.",
+            "features": ["Automated framework scoping", "Control-by-control scoring", "Prioritized action list", "Exportable summary report"],
+            "cta": "See pricing"
+          },
+          {
+            "plan": "Enterprise",
+            "name": "Continuous gap analysis",
+            "description": "Keep the analysis live across every framework you run.",
+            "features": ["Unlimited frameworks", "Continuous rescoring from integrations", "Cross-framework mapping", "Effort and cost estimates"],
+            "cta": "Talk to sales"
+          }
+        ]
+      },
+      "resources": {
+        "title": "See what a gap analysis can do for your team",
+        "readMore": "Read more",
+        "items": [
+          { "type": "Guide", "title": "How to run your first gap analysis", "description": "What to prepare, which systems to connect, and how to read the results." },
+          { "type": "Report", "title": "The real cost of a consultant-led gap analysis", "description": "What a manual assessment costs Nordic teams in hours and budget, and what changes when it is automated." },
+          { "type": "Blog", "title": "From gap analysis to certification", "description": "How teams turn a first scoping into a working roadmap toward ISO 27001 or NIS2." }
+        ]
+      },
+      "cta": {
+        "title": "See where you stand, today",
+        "description": "Run a gap analysis against the frameworks that apply to you, and turn the result into a plan you can start the same day.",
+        "primaryCta": "Book a demo",
+        "secondaryCta": "See pricing",
+        "badges": [
+          { "name": "SOC 2 Type II", "meta": "Report available" },
+          { "name": "ISO 27001", "meta": "Certified" },
+          { "name": "GDPR", "meta": "Compliant" },
+          { "name": "NIS2", "meta": "Ready" }
+        ]
+      }
+    },
+    "frameworkLibrary": {
+      "hero": {
+        "label": "Trust center",
+        "title": "Show your compliance <gray>before anyone asks</gray>",
+        "description": "Publish a live trust center backed by your OptiTech compliance program. Security reviews answer themselves.",
+        "cta": "Book a demo",
+        "mockup": {
+          "url": "trust.nordkraft.se",
+          "pageTitle": "Security and trust at Nordkraft",
+          "badges": ["ISO 27001", "NIS2", "GDPR"],
+          "documentsHeading": "Documents",
+          "documents": [
+            { "name": "Information security policy", "access": "Public" },
+            { "name": "ISO 27001 certificate", "access": "Public" },
+            { "name": "Penetration test summary", "access": "NDA" },
+            { "name": "Business continuity plan", "access": "NDA" }
+          ],
+          "controlsHeading": "Controls",
+          "controls": [
+            { "name": "Encryption at rest", "status": "Monitored" },
+            { "name": "Access reviews", "status": "Monitored" },
+            { "name": "Backup and recovery", "status": "Monitored" },
+            { "name": "Incident response", "status": "Monitored" }
+          ],
+          "syncNote": "Updated automatically from your OptiTech compliance program.",
+          "chat": {
+            "label": "OptiTech AI",
+            "question": "Do you encrypt customer data at rest?",
+            "answer": "Yes. All customer data is encrypted at rest with AES-256. The control is monitored continuously.",
+            "source": "Source: control CTRL-041, verified today"
+          }
+        }
+      },
+      "proof": {
+        "logosHeading": "The trust center for leading Nordic businesses",
+        "logos": ["Nordkraft", "Fjordbank", "Helsia", "Kustdata", "Polaris Health", "Baltic Freight", "Grönlund & Co"],
+        "statTitle": "82% faster completion of customer security reviews",
+        "statDescription": "Teams that share evidence through a trust center spend hours instead of weeks on security questionnaires, and sales cycles for regulated buyers get measurably shorter.",
+        "statSource": "Source: aggregated review turnaround times across OptiTech customers with an active trust center, 2025."
+      },
+      "features": {
+        "label": "Trust Center",
+        "cta": "Book a demo",
+        "items": [
+          {
+            "title": "Your buyers' security questions, answered by OptiTech AI",
+            "description": "Buyers ask questions directly on your trust center and get instant answers grounded in your actual controls and documents, with the source cited. No more week-long email threads with your security team in copy.",
+            "mockup": {
+              "label": "OptiTech AI",
+              "question": "Where is your data hosted, and does it leave the EU?",
+              "answer": "All production data is hosted in the EU (Stockholm and Frankfurt). No customer data is transferred outside the EU/EES.",
+              "chips": ["Source: Data processing agreement", "Verified this week"]
+            }
+          },
+          {
+            "title": "Automated access to documentation",
+            "description": "Public documents are one click away. Sensitive reports sit behind a self-serve NDA flow with e-signing, so a prospect can request, sign, and download without anyone on your side lifting a finger.",
+            "mockup": {
+              "label": "Document access",
+              "rows": [
+                { "name": "ISO 27001 certificate", "status": "Public", "open": true },
+                { "name": "Penetration test report", "status": "NDA", "open": false },
+                { "name": "SOC 2 report", "status": "NDA", "open": false }
+              ],
+              "requestTitle": "Pen test report requested",
+              "requestMeta": "anna@example.com, NDA signed",
+              "requestButton": "Approve"
+            }
+          },
+          {
+            "title": "Tailored to your brand, on your domain",
+            "description": "Your logo, your colors, your tone, on trust.yourcompany.se. The trust center reads as a natural part of your website, not a third-party widget bolted on at the end of the deal.",
+            "mockup": {
+              "label": "Appearance",
+              "colorsLabel": "Brand colors",
+              "domainLabel": "Custom domain",
+              "domain": "trust.nordkraft.se",
+              "previewTitle": "Security at Nordkraft",
+              "previewText": "How we protect your data, verified continuously and published for our customers."
+            }
+          },
+          {
+            "title": "Seamlessly synced with your compliance program",
+            "description": "The trust center is not another thing to maintain. Controls, documents, and framework status flow straight from your OptiTech program, so what your buyers see is always what your auditors see.",
+            "mockup": {
+              "label": "Controls",
+              "synced": "Synced 2 min ago",
+              "rows": [
+                { "name": "Multi-factor authentication", "framework": "ISO 27001 · A.5.17", "status": "Passing" },
+                { "name": "Vendor risk reviews", "framework": "NIS2 · Art. 21", "status": "Passing" },
+                { "name": "Data retention limits", "framework": "GDPR · Art. 5", "status": "Passing" }
+              ]
+            }
+          }
+        ]
+      },
+      "network": {
+        "title": "Join the largest network of trust centers in the Nordics",
+        "description": "500+ trust center pages hosted by OptiTech",
+        "companies": ["Nordkraft", "Fjordbank", "Helsia", "Kustdata", "Polaris Health", "Baltic Freight", "Grönlund & Co"],
+        "footnote": "Fictional example companies shown. Customer references are available on request."
+      },
+      "featureGrid": {
+        "title": "Trust center features",
+        "items": [
+          { "title": "CRM and e-sign integrations", "description": "Connect your CRM and e-signing provider so NDA requests, approvals, and account activity land where your sales team already works." },
+          { "title": "Visitor insights", "description": "See which prospects visited, what they read, and which documents they requested, so sales knows who is in a security review right now." },
+          { "title": "ROI reporting", "description": "Track hours saved on questionnaires and review turnaround time, and show security's contribution to revenue in numbers." },
+          { "title": "Custom tags and filters", "description": "Organize controls and documents by framework, audience, or product line so every buyer finds what applies to them." },
+          { "title": "Subscriber updates", "description": "Customers subscribe to your trust center and get notified automatically when certificates renew or subprocessors change." },
+          { "title": "Granular access levels", "description": "Public, gated, and NDA-only tiers per document, with expiring links and a full audit trail of who accessed what." }
+        ]
+      },
+      "testimonial": {
+        "text": "Security reviews used to be the slowest part of every deal. Now we send a link. Most buyers never send the questionnaire at all, and the ones who do get answers the same day.",
+        "initials": "SL",
+        "name": "Sara Lindqvist",
+        "position": "CISO, Nordkraft",
+        "cta": "Read the case study"
+      },
+      "plans": {
+        "title": "Get started with Trust Center",
+        "description": "Included with your OptiTech plan, or step up for the full buyer experience. Everything stays in sync with your compliance program either way.",
+        "cards": [
+          {
+            "plan": "Included in Growth",
+            "name": "Trust Center",
+            "description": "A public trust center backed by your live compliance program.",
+            "features": ["Hosted trust center page", "Live control and framework status", "Public document sharing", "Subscriber updates"],
+            "cta": "See pricing"
+          },
+          {
+            "plan": "Enterprise",
+            "name": "Advanced Trust Center",
+            "description": "The full buyer experience for teams with heavy security review volume.",
+            "features": ["OptiTech AI answers for buyers", "Self-serve NDA flow with e-signing", "Custom domain and full branding", "CRM integration and visitor insights"],
+            "cta": "Talk to sales"
+          }
+        ]
+      },
+      "resources": {
+        "title": "See what Trust Center can do for your team",
+        "readMore": "Read more",
+        "items": [
+          { "type": "Guide", "title": "Building a trust center your buyers actually use", "description": "What to publish openly, what to gate behind an NDA, and how to keep it all current without manual work." },
+          { "type": "Report", "title": "The real cost of security questionnaires", "description": "What review cycles cost Nordic vendors in hours and stalled deals, and what changes when evidence is self-serve." },
+          { "type": "Blog", "title": "From cost center to sales asset", "description": "How security teams turn their compliance program into something the sales team links to in every deal." }
+        ]
+      },
+      "cta": {
+        "title": "Get compliant and build trust, fast",
+        "description": "Start with your compliance program, publish your trust center, and let the next security review answer itself.",
+        "primaryCta": "Book a demo",
+        "secondaryCta": "See pricing",
+        "badges": [
+          { "name": "SOC 2 Type II", "meta": "Report available" },
+          { "name": "ISO 27001", "meta": "Certified" },
+          { "name": "GDPR", "meta": "Compliant" },
+          { "name": "NIS2", "meta": "Ready" }
+        ]
+      }
+    },
+    "evidenceCollection": {
+      "hero": {
+        "label": "Evidence collection",
+        "title": "Proof that <gray>collects itself</gray>",
+        "description": "OptiTech gathers compliance evidence automatically from the systems you already use. Controls are verified around the clock, so you're always audit-ready without the screenshot marathon.",
+        "cta": "Book a demo",
+        "mockup": {
+          "url": "app.optitech.se",
+          "pageTitle": "Evidence — last 24h",
+          "badges": ["Microsoft 365", "AWS", "Entra ID"],
+          "documentsHeading": "Latest evidence",
+          "documents": [
+            { "name": "Access review export", "access": "Fresh" },
+            { "name": "Backup job log", "access": "Fresh" },
+            { "name": "MFA status report", "access": "Fresh" },
+            { "name": "Firewall ruleset", "access": "Stale" }
+          ],
+          "controlsHeading": "Controls",
+          "controls": [
+            { "name": "MFA enforced", "status": "Verified" },
+            { "name": "Encryption at rest", "status": "Verified" },
+            { "name": "Access reviews", "status": "Verified" },
+            { "name": "Backup testing", "status": "Verified" }
+          ],
+          "syncNote": "Collected automatically every hour from your integrations.",
+          "chat": {
+            "label": "OptiTech AI",
+            "question": "When was MFA last verified?",
+            "answer": "12 minutes ago, from Entra ID. All 214 accounts enforce MFA. Evidence is attached to control CTRL-017.",
+            "source": "Source: Entra ID sync, 12 min ago"
+          }
+        }
+      },
+      "proof": {
+        "logosHeading": "Continuous evidence for leading Nordic teams",
+        "logos": ["Nordkraft", "Fjordbank", "Helsia", "Kustdata", "Polaris Health", "Baltic Freight", "Grönlund & Co"],
+        "statTitle": "90% less manual evidence gathering before an audit",
+        "statDescription": "Teams that automate evidence collection stop the pre-audit scramble of screenshots and spreadsheet exports. The proof is already there, timestamped and mapped to controls.",
+        "statSource": "Source: reported manual evidence effort across OptiTech customers before and after automation, 2025."
+      },
+      "features": {
+        "label": "Evidence collection",
+        "cta": "Book a demo",
+        "items": [
+          {
+            "title": "Ask when anything was last verified",
+            "description": "OptiTech AI answers evidence questions instantly and points to the exact source and timestamp. No more digging through folders to prove a control was in place last quarter.",
+            "mockup": {
+              "label": "OptiTech AI",
+              "question": "Show me proof backups were tested in Q2",
+              "answer": "Three restore tests ran in Q2, the latest on 14 June from AWS Backup. Logs are attached to control CTRL-032.",
+              "chips": ["Source: AWS Backup", "Evidence attached"]
+            }
+          },
+          {
+            "title": "Every piece of evidence, timestamped and mapped",
+            "description": "Each collected item is stamped with when it ran, which system it came from, and which controls it satisfies. When an auditor asks, you filter instead of hunt.",
+            "mockup": {
+              "label": "Evidence log",
+              "rows": [
+                { "name": "MFA status export", "status": "Fresh", "open": true },
+                { "name": "Access review", "status": "Fresh", "open": false },
+                { "name": "Firewall ruleset", "status": "Stale", "open": false }
+              ],
+              "requestTitle": "Access review collected",
+              "requestMeta": "Entra ID · 08:12 today",
+              "requestButton": "View"
+            }
+          },
+          {
+            "title": "Collects on a schedule, so nothing goes stale",
+            "description": "Set how often each source runs and OptiTech keeps the evidence fresh on its own. Certificates, exports, and logs refresh before they expire, not the night before the audit.",
+            "mockup": {
+              "label": "Collection",
+              "colorsLabel": "Sources",
+              "domainLabel": "Frequency",
+              "domain": "Hourly · 14 integrations",
+              "previewTitle": "Always audit-ready",
+              "previewText": "Evidence refreshes automatically so your live status is the one auditors see."
+            }
+          },
+          {
+            "title": "Verified against the controls that matter",
+            "description": "Evidence isn't just stored, it's checked. OptiTech verifies each control against fresh evidence and flags the moment something drifts, mapped to the framework it affects.",
+            "mockup": {
+              "label": "Live controls",
+              "synced": "Verified 3 min ago",
+              "rows": [
+                { "name": "MFA enforced", "framework": "ISO 27001 · A.5.17", "status": "Verified" },
+                { "name": "Access reviews", "framework": "NIS2 · Art. 21", "status": "Verified" },
+                { "name": "Data retention", "framework": "GDPR · Art. 5", "status": "Verified" }
+              ]
+            }
+          }
+        ]
+      },
+      "network": {
+        "title": "One integration hub, every source of evidence",
+        "description": "Microsoft 365, Entra ID, AWS, GitHub, Fortnox, BankID, and more, feeding your controls",
+        "companies": ["Nordkraft", "Fjordbank", "Helsia", "Kustdata", "Polaris Health", "Baltic Freight", "Grönlund & Co"],
+        "footnote": "Fictional example companies shown. New integrations ship continuously."
+      },
+      "featureGrid": {
+        "title": "What evidence collection covers",
+        "items": [
+          { "title": "Automated integrations", "description": "Connect Microsoft 365, Entra ID, AWS, GitHub, and dozens more, and evidence starts flowing without manual exports." },
+          { "title": "Hourly verification", "description": "Controls are checked against fresh evidence around the clock, not once a quarter when someone remembers." },
+          { "title": "Timestamped audit trail", "description": "Every collected item records when it ran and where it came from, so nothing is taken on trust." },
+          { "title": "Control mapping", "description": "Each piece of evidence attaches to the controls and frameworks it satisfies, automatically." },
+          { "title": "Drift alerts", "description": "When a control stops passing, you get a concrete alert with the failing evidence, not a surprise at audit time." },
+          { "title": "One-click export", "description": "Hand an auditor a clean, sourced evidence package straight from the platform." }
+        ]
+      },
+      "testimonial": {
+        "text": "We used to spend the two weeks before an audit taking screenshots. Now the evidence is already collected, timestamped, and mapped. Audit prep went from a fire drill to a filter.",
+        "initials": "DS",
+        "name": "Dana Smith",
+        "position": "Security lead, Nordic SaaS",
+        "cta": "Read the case study"
+      },
+      "plans": {
+        "title": "Get started with evidence collection",
+        "description": "Automated evidence collection is included on every OptiTech plan. Connect your first integration in minutes.",
+        "cards": [
+          {
+            "plan": "Included in Start",
+            "name": "Evidence collection",
+            "description": "Automated evidence from your core systems, mapped to your controls.",
+            "features": ["Core integrations", "Hourly control verification", "Timestamped evidence log", "Exportable evidence package"],
+            "cta": "See pricing"
+          },
+          {
+            "plan": "Enterprise",
+            "name": "Advanced evidence collection",
+            "description": "Full coverage for teams with many systems and frameworks.",
+            "features": ["Unlimited integrations", "Custom collection schedules", "Drift alerts and routing", "Auditor evidence portal"],
+            "cta": "Talk to sales"
+          }
+        ]
+      },
+      "resources": {
+        "title": "See what evidence collection can do for your team",
+        "readMore": "Read more",
+        "items": [
+          { "type": "Guide", "title": "Which integrations to connect first", "description": "The systems that cover the most controls with the least setup." },
+          { "type": "Report", "title": "The real cost of manual evidence gathering", "description": "What screenshot season costs Nordic teams in hours, and what changes when it is automated." },
+          { "type": "Blog", "title": "From screenshots to continuous proof", "description": "How teams move from point-in-time evidence to a control set that verifies itself." }
+        ]
+      },
+      "cta": {
+        "title": "Stop chasing evidence",
+        "description": "Connect your systems and let OptiTech collect the proof continuously, so every audit starts with the work already done.",
+        "primaryCta": "Book a demo",
+        "secondaryCta": "See pricing",
+        "badges": [
+          { "name": "SOC 2 Type II", "meta": "Report available" },
+          { "name": "ISO 27001", "meta": "Certified" },
+          { "name": "GDPR", "meta": "Compliant" },
+          { "name": "NIS2", "meta": "Ready" }
+        ]
+      }
     }
   },
   "products": {
@@ -1204,6 +1700,169 @@
       ],
       "linkedinLabel": "LinkedIn",
       "linkedinValue": "yazan-ghayad"
+    }
+  },
+  "liaPraktik": {
+    "hero": {
+      "label": "LIA & internships",
+      "title": "Do your LIA or internship at OptiTech",
+      "description": "We're a small team in Stockholm and Malmö building a Swedish platform for compliance, everything from NIS2 and DORA to GDPR and ISO 27001. Here you don't sit on the sidelines watching. You're in the real product from your first week, working with people who are happy to share what they know. We remember what it's like to be new, so we promise to look after you along the way.",
+      "placements": "We host LIA, internships, VFU, APL, prao, and thesis placements, whether you study at a vocational college, university, or upper secondary school.",
+      "primaryCta": "Apply now",
+      "secondaryCta": "Meet the team"
+    },
+    "areas": {
+      "label": "Areas",
+      "title": "What you can join",
+      "description": "Tell us what you're excited about and we'll shape the work around you. Here are the areas you can join. You don't need to know everything up front, the will to learn matters most.",
+      "items": [
+        {
+          "title": "Software engineering",
+          "description": "Help build the platform in React, Next.js, and Node, from the button someone clicks to the APIs that collect evidence automatically. You'll write code that actually ships to production."
+        },
+        {
+          "title": "AI & data analytics",
+          "description": "Help us train the copilot that reads dense legal text and answers in plain language. You'll also dig into data and turn messy numbers into something people can decide on."
+        },
+        {
+          "title": "IT security",
+          "description": "Work closely with our security specialists on controls, evidence, and frameworks like NIS2, DORA, and ISO 27001. You'll see how security works in practice, not just in theory."
+        },
+        {
+          "title": "Marketing & content",
+          "description": "Take something tricky like compliance and make it clear, across writing, visuals, and social channels. If you have a feel for reaching people, you'll fit right in."
+        },
+        {
+          "title": "Sales & customer success",
+          "description": "Talk to Nordic companies that just realized NIS2 applies to them and help them get started. You'll sit with us in Malmö and see how real customer relationships are built."
+        },
+        {
+          "title": "Product & design",
+          "description": "Help shape how the platform looks and feels, from sketches and flows to the finished interface. Your ideas about how things should work are welcome."
+        }
+      ]
+    },
+    "benefits": {
+      "label": "Why OptiTech",
+      "title": "What you get with us",
+      "description": "We know an internship can be anything from pointless coffee runs to the start of a career. We're all in on the second kind.",
+      "items": [
+        {
+          "title": "Real responsibility",
+          "description": "You work in the live product, not on made-up tasks off to the side. What you do actually shows."
+        },
+        {
+          "title": "Close mentorship",
+          "description": "In a small team you learn straight from founders and specialists. You're never alone with a question."
+        },
+        {
+          "title": "A modern stack",
+          "description": "You'll work with AI, cloud, and a stack that's used for real, knowledge you carry for the rest of your career."
+        },
+        {
+          "title": "A mission that matters",
+          "description": "You help Nordic companies meet NIS2, DORA, and GDPR and stand up to real threats. Your work makes a difference."
+        },
+        {
+          "title": "Stockholm or Malmö",
+          "description": "Work on site with the team or remotely, whatever suits you and your school. We're flexible."
+        },
+        {
+          "title": "A way in",
+          "description": "Many who do their LIA or internship with us stay on. For some, the placement is the first step to a real job."
+        }
+      ]
+    },
+    "who": {
+      "label": "Who we look for",
+      "title": "For people who want to really learn",
+      "description": "We care more about curiosity and drive than about perfect grades. Do you like learning new things and dare to ask? Then we'd love to meet you, wherever or whatever you study. Your placement with us can count toward your program.",
+      "programsTitle": "Placements we host",
+      "programs": [
+        {
+          "term": "LIA",
+          "definition": "Workplace learning for students in higher vocational education (yrkeshögskola)."
+        },
+        {
+          "term": "Internship",
+          "definition": "Placements for university and college students."
+        },
+        {
+          "term": "VFU",
+          "definition": "Supervised placements for programs where we're a good fit."
+        },
+        {
+          "term": "APL & prao",
+          "definition": "Workplace learning and prao for upper and lower secondary school."
+        },
+        {
+          "term": "Thesis",
+          "definition": "Degree projects where we're happy to be your case company and share data."
+        }
+      ]
+    },
+    "process": {
+      "label": "How to apply",
+      "title": "From application to your first day",
+      "description": "We keep it simple and human. No tricky tests or long waits, just a couple of conversations so we get to know each other.",
+      "steps": [
+        {
+          "title": "Send a short application",
+          "description": "Email us your CV and a few lines about what you want to learn, what you study, and when your placement runs. It doesn't have to be perfect."
+        },
+        {
+          "title": "We talk",
+          "description": "We have a short video call and get to know each other. This is your chance to ask us anything."
+        },
+        {
+          "title": "Come and try it",
+          "description": "Meet the team, take a look at the product, and feel out whether we're a good fit. It should feel right for both of us."
+        },
+        {
+          "title": "Welcome",
+          "description": "We agree on the setup and goals, and then we get going. We'll sort out your first day together."
+        }
+      ]
+    },
+    "cta": {
+      "title": "Ready to apply for your LIA or internship?",
+      "description": "Send a short application and we'll get back to you within a few days. Tell us what you want to learn and what makes you curious, and we'll take it from there.",
+      "primaryCta": "Apply now",
+      "secondaryCta": "Meet the team",
+      "note": "Write to info@optitech-sverige.se"
+    },
+    "apply": {
+      "title": "Apply for LIA or an internship",
+      "subtitle": "Fill in your details and attach your CV. Your application is sent to info@optitech-sverige.se.",
+      "name": "Name",
+      "namePlaceholder": "Your name",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "phone": "Phone",
+      "phonePlaceholder": "Optional",
+      "education": "Education or program",
+      "educationPlaceholder": "e.g. Fullstack developer, YH",
+      "period": "Placement period",
+      "periodPlaceholder": "e.g. Jan to Jun 2027",
+      "message": "Message",
+      "messagePlaceholder": "Tell us what you want to learn",
+      "cv": "CV or resume",
+      "cvHint": "PDF, DOC, or DOCX, up to 10 MB",
+      "cvChoose": "Choose file",
+      "cvNone": "No file chosen",
+      "submit": "Send application",
+      "submitting": "Sending...",
+      "cancel": "Cancel",
+      "close": "Close",
+      "required": "This field is required",
+      "invalidEmail": "Enter a valid email address",
+      "fileRequired": "Attach your CV",
+      "fileTooLarge": "The file is larger than 10 MB",
+      "fileType": "Use a PDF, DOC, or DOCX file",
+      "successTitle": "Thanks, your application is on its way",
+      "successBody": "We have received your application and will get back to you by email.",
+      "errorTitle": "Something went wrong",
+      "errorBody": "Your application could not be sent. Try again, or email us at info@optitech-sverige.se."
     }
   },
   "header": {

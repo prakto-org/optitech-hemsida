@@ -57,7 +57,7 @@ Teams are first-class targets for assignments and notification routing. When wor
 
 These two are easy to confuse:
 
-- A **team** is a collaborative group with members, a leader, and deputies. It's about _who works together_. Teams are voluntary, organisational, and can span any domain.
+- A **team** is a collaborative group with members, a leader, and deputies. It's about _who works together_. Teams are voluntary, organizational, and can span any domain.
 - A **user group** is a `(role, domain)` pair on which users get placed. It's about _what permissions someone has where_. User groups are auto-created when a domain is created — one per role per domain.
 
 You join a team for collaboration. You're placed in a user group for access. Both can carry users; they answer different questions.

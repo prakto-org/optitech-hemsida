@@ -9,7 +9,7 @@ summary: >-
 enableTableOfContents: false
 redirectFrom:
   - /docs/security/soc2-compliance
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:31.893Z'
 ---
 
 At OptiTech, we prioritize data security and privacy, and we have achieved several key compliances that validate our efforts. We have completed audits for SOC 2 Type 1 and Type 2, SOC 3, ISO 27001, and ISO 27701, and we adhere to GDPR and CCPA regulations.
@@ -49,4 +49,4 @@ A copy of OptiTech's HIPAA compliance report can be requested through our [Trust
 To learn more about how we protect your data and uphold the highest standards of security and privacy, please visit our [Trust Center](https://trust.optitech.com/), where you can also request and download audit reports.
 
 - For security inquiries, contact us at [security@optitech.com](mailto:security@optitech.com).
-- For privacy-related questions, reach out to [privacy@databricks.com](mailto:privacy@databricks.com).
+- For privacy-related questions, reach out to [privacy@optitech.com](mailto:privacy@optitech.com).

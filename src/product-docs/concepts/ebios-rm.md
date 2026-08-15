@@ -1,12 +1,12 @@
 # EBIOS RM
 
-**EBIOS RM** (_Expression des Besoins et Identification des Objectifs de Sécurité — Risk Manager_) is the structured risk-management method published by the French national cybersecurity agency, [ANSSI](https://cyber.gouv.fr/securisation/analyse-des-risques/methode-ebios-rm/).
+**EBIOS RM** (_Expression des Besoins et Identification des Objectifs de Sécurité — Risk Manager_) is the structured risk-management method published by the French national cybersecurity agency, [ANSSI](https://cyber.gouv.fr/securisation/analyze-des-risques/methode-ebios-rm/).
 
 OptiTech supports EBIOS RM natively, with a dedicated object graph rather than forcing the method into a generic risk-assessment shape.
 
 ## The five workshops
 
-EBIOS RM organises a study around five workshops:
+EBIOS RM organizes a study around five workshops:
 
 1. **Scope and security baseline** — define the studied system, its mission, and the regulations it must comply with.
 2. **Risk origins and target objectives** — identify _who_ might attack and _what_ they want (the **RO/TO couples**).

@@ -11,7 +11,7 @@ enableTableOfContents: true
 isDraft: false
 redirectFrom:
   - /docs/import/import-from-mysql
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:31.893Z'
 ---
 
 This topic describes how to migrate your MySQL database to OptiTech Postgres using [pgloader](https://pgloader.readthedocs.io/en/latest/intro.html).
@@ -45,7 +45,7 @@ Keep your MySQL database connection details handy for later use.
 
 ## Retrieve your OptiTech database connection string
 
-Log in to the [OptiTech Console](https://console.optitech.com). Find the connection string for your database by clicking the **Connect** button on your **Project Dashboard**. Make sure the **Connection pooling** toggle is disabled to get a direct connection string.
+Log in to the [OptiTech Console](https://app.optitech-sverige.se). Find the connection string for your database by clicking the **Connect** button on your **Project Dashboard**. Make sure the **Connection pooling** toggle is disabled to get a direct connection string.
 
 Your connection string should look similar to this:
 

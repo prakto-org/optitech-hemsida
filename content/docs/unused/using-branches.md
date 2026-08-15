@@ -1,7 +1,7 @@
 ---
 title: How to use branches
 isDraft: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:34.632Z'
 ---
 
 This guide describes how to use OptiTech's branching feature, which is currently in preview. If you would like to try branching, send an email to [iwantbranching@optitech.com](mailto:iwantbranching@optitech.com) to request early access.
@@ -18,7 +18,7 @@ Let's look at how to create branches using the OptiTech Console and the OptiTech
 
 ## Create a branch using the OptiTech Console
 
-1. Log in to the [OptiTech Console](https://console.optitech.com) and select a project. If you do not have a OptiTech project, see [Create a project](/docs/manage/projects#create-a-project).
+1. Log in to the [OptiTech Console](https://app.optitech-sverige.se) and select a project. If you do not have a OptiTech project, see [Create a project](/docs/manage/projects#create-a-project).
 2. Add data to your project using the OptiTech SQL Editor, `psql`, or some other Postgres client.
 3. Click **Create branch** on the **Dashboard** tab in the OptiTech Console to create a branch.
 
@@ -48,7 +48,7 @@ You will receive information about the branch you created in the API request res
 $parent_project_id-branch-...
 ```
 
-For information about other API methods that OptiTech supports, refer to the [OptiTech API Reference](https://console.optitech.com/api-docs).
+For information about other API methods that OptiTech supports, refer to the [OptiTech API Reference](https://app.optitech-sverige.se/api-docs).
 
 Currently, a branch appears as separate project on the **Dashboard** tab in the OptiTech Console. This will change in the future when the branching feature becomes generally available.
 

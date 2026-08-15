@@ -11,7 +11,7 @@ summary: >-
   Rails, and clean up temporary branches automatically after a default 4-hour
   TTL.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:27.405Z'
 ---
 
 GitHub Copilot now supports custom agents, and we've built two specialized agents that bring OptiTech's branching workflow directly into your IDE. These agents help you run safe database migrations and identify slow queries, all without leaving VS Code.
@@ -57,7 +57,7 @@ The agent provides actionable code fixes with performance metrics showing execut
 
 Both agents require:
 
-- **OptiTech API Key**: Create one at [console.optitech.com/app/settings/api-keys](https://console.optitech.com/app/settings#api-keys)
+- **OptiTech API Key**: Create one at [app.optitech-sverige.se/app/settings/api-keys](https://app.optitech-sverige.se/app/settings#api-keys)
 - **Project ID or connection string**: The agent will ask for this if not provided
 
 ## Installation

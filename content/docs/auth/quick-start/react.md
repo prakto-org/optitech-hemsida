@@ -9,7 +9,7 @@ summary: >-
   automatically synced to the `optitech_auth.user` table in your OptiTech Postgres
   database.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:27.405Z'
 layout: wide
 redirectFrom:
   - /docs/auth/quick-start/react-router-components
@@ -25,7 +25,7 @@ redirectFrom:
 <TwoColumnLayout.Step title="Create a OptiTech project with Auth enabled">
 <TwoColumnLayout.Block>
 
-If you don't have a OptiTech project yet, create one at [console.optitech.com](https://console.optitech.com).
+If you don't have a OptiTech project yet, create one at [app.optitech-sverige.se](https://app.optitech-sverige.se).
 
 Go to the **Auth** page in your project dashboard and click **Enable Auth**.
 

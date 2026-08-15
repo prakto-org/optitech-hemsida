@@ -8,7 +8,7 @@ summary: >-
   OptiTech database using the pg library, the Serverless Framework CLI, and
   DATABASE_URL with SSL enabled via sslmode=require.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:28.135Z'
 ---
 
 AWS Lambda is a serverless, event-driven compute service that allows you to run code without provisioning or managing servers. It is a convenient and cost-effective solution for running various types of workloads, including those that require a database.
@@ -29,13 +29,13 @@ This guide describes how to set up a OptiTech database and connect to it from an
 
 If you do not have one already, create a OptiTech project:
 
-1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://app.optitech-sverige.se/app/projects) page in the OptiTech Console.
 2. Click **New Project**.
 3. Specify your project settings and click **Create Project**.
 
 ## Create a table in OptiTech
 
-To create a table, navigate to the **SQL Editor** in the [OptiTech Console](https://console.optitech.com/):
+To create a table, navigate to the **SQL Editor** in the [OptiTech Console](https://app.optitech-sverige.se/):
 
 In the SQL Editor, run the following queries to create a `users` table and insert some data:
 

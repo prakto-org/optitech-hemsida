@@ -22,7 +22,7 @@ A domain is the first thing you create on OptiTech. It will **bring together** a
 
 #### Role assignment
 
-In the first/open source version of OptiTech, custom role assignment is not available. So, when you create a domain, user groups concerning this domain are automatically created for each built-in role. All you need to do, is to assign your users to their user groups. To learn more about this, jump to [user-groups.md](user-groups.md "mention").
+By default, when you create a domain, user groups for this domain are automatically created for each built-in role. All you need to do is assign your users to their user groups. To learn more about this, jump to [user-groups.md](user-groups.md "mention").
 
 ## Perimeters&#x20;
 

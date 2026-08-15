@@ -1,10 +1,10 @@
 ---
-description: Guided, step-by-step workflows that bootstrap a domain along a recognised path
+description: Guided, step-by-step workflows that bootstrap a domain along a recognized path
 ---
 
 # Journeys
 
-A **journey** is a guided, step-by-step workflow that walks a domain through a recognised process — getting an organisation ready for ISO 27001 certification, running a DORA readiness assessment, building out a privacy register, and so on.
+A **journey** is a guided, step-by-step workflow that walks a domain through a recognized process — getting an organization ready for ISO 27001 certification, running a DORA readiness assessment, building out a privacy register, and so on.
 
 Journeys remove the "what do I do first?" problem. Instead of staring at an empty domain and assembling the right libraries, assessments, and tasks by hand, you pick a journey, apply it to a domain, and start working through the prescribed steps.
 
@@ -19,7 +19,7 @@ The same preset can be applied to multiple domains and yields a distinct journey
 
 ## Lifecycle
 
-1. **Browse the catalogue.** The presets page lists everything available on the instance — library-backed presets shipped with OptiTech (ISO 27001 starter, DORA readiness, NIS2, sector-specific bundles, etc.) and any presets authored locally. Filter by region tag to narrow the list.
+1. **Browse the catalog.** The presets page lists everything available on the instance — library-backed presets shipped with OptiTech (ISO 27001 starter, DORA readiness, NIS2, sector-specific bundles, etc.) and any presets authored locally. Filter by region tag to narrow the list.
 2. **Apply to a domain.** Pick a target domain (or create one on the fly). Optionally let the journey **create the scaffolded objects** for you and apply any **feature flags** the preset suggests.
 3. **Work the steps.** Each step has a title, description, and either a target object (e.g. "open the SOA review for the ISO audit") or a target URL inside the platform. Mark steps as **in progress**, **done**, or **skipped** as you advance, and add notes.
 4. **Track progress.** The recently-active journeys panel shows a progress ring per journey; the underlying step counts feed dashboards.

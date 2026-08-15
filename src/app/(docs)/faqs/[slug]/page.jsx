@@ -13,6 +13,8 @@ import { getAllFaqSlugs, getLocalizedFaqDir } from 'utils/api-faqs';
 import getMetadata from 'utils/get-metadata';
 import getTableOfContents from 'utils/get-table-of-contents';
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
   const slugs = await getAllFaqSlugs();
   if (!slugs) return notFound();

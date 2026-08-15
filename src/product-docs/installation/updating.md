@@ -9,7 +9,7 @@ description: >-
 
 ## Hands-free
 
-The easiest way to update your on-prem/local instance (pro or community)
+The easiest way to update your on-prem/local instance
 
 **Run the script&#x20;**_**update-optitech**_**:**
 

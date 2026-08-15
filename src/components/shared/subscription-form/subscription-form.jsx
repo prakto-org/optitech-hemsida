@@ -1,6 +1,7 @@
 'use client';
 
 import { m, AnimatePresence, LazyMotion, domAnimation } from 'framer-motion';
+import { posthog } from 'posthog-js';
 import PropTypes from 'prop-types';
 import { useState, useEffect } from 'react';
 import useCookie from 'react-use/lib/useCookie';
@@ -92,6 +93,10 @@ const SubscriptionForm = ({
       })
         .then((response) => {
           if (response.ok) {
+            posthog.capture('newsletter_subscription_submitted', {
+              form_id: formId,
+            });
+
             doNowOrAfterSomeTime(() => {
               setFormState('success');
               setEmail(successText);

@@ -63,7 +63,7 @@ This document describes every column of every tab in the DORA Register of Inform
 - **RT.03.03**: Intra-group contracts — the provider entity's LEI is reported.
 - **RT.04.01**: For each contract: one row for the beneficiary entity (nature = "not a branch"), plus one row per branch whose parent is the beneficiary.
 - **RT.05.01**: Deduplicated provider entities across all non-intra-group contracts. Annual expense is summed.
-- **RT.05.02**: Non-intra-group contracts × solutions. Rank is always `1` (sub-contracting chains not modelled).
+- **RT.05.02**: Non-intra-group contracts × solutions. Rank is always `1` (sub-contracting chains not modeled).
 - **RT.06.01**: All assets with `is_business_function=True`.
 - **RT.07.01**: Non-intra-group contracts × solutions (same scope as RT.05.02).
 - **RT.99.01**: Aggregation counts — currently headers only (placeholder).
@@ -930,7 +930,7 @@ The EBA DPM validation framework defines many rules, but only four cause **submi
 - Type: Numeric
 - Required: Mandatory
 - CSV header: `c0050`
-- OptiTech field: — (Auto: always `1` — sub-contracting chains not modelled)
+- OptiTech field: — (Auto: always `1` — sub-contracting chains not modeled)
 
 #### b_05.02.0060 — Identification code of the recipient of sub-contracted ICT services
 
@@ -1103,7 +1103,7 @@ The EBA DPM validation framework defines many rules, but only four cause **submi
 | `eba_TA:x238` | notary service |
 | `eba_TA:x239` | central maintenance service |
 | `eba_TA:x240` | settlement service |
-| `eba_TA:x241` | Organising a securities lending mechanism, as agent among participants of a securities settlement system |
+| `eba_TA:x241` | Organizing a securities lending mechanism, as agent among participants of a securities settlement system |
 | `eba_TA:x242` | collateral management services |
 | `eba_TA:x243` | general collateral management services |
 | `eba_TA:x244` | Establishing CSD links, providing, maintaining or operating securities accounts in relation to the settlement service, collateral management, other ancillary services |
@@ -1128,7 +1128,7 @@ The EBA DPM validation framework defines many rules, but only four cause **submi
 | `eba_TA:x205` | Retirement-benefit related operations and activities arising therefrom |
 | `eba_TA:x206` | issuance of credit ratings |
 | `eba_TA:x207` | administering the arrangements for determining a benchmark |
-| `eba_TA:x208` | collecting, analysing or processing input data for the purpose of determining a benchmark |
+| `eba_TA:x208` | collecting, analyzing or processing input data for the purpose of determining a benchmark |
 | `eba_TA:x209` | determining a benchmark through the application of a formula or other method of calculation or by an assessment of input data provided for that purpose |
 | `eba_TA:x210` | publication of benchmark |
 | `eba_TA:x211` | Provision of crowdfunding services |

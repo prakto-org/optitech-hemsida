@@ -4,10 +4,6 @@ description: Fine-grained permissions management
 
 # Custom roles
 
-{% hint style="info" %}
-**Enterprise (PRO) feature** — ships in the Enterprise edition and is not reachable on the community edition.
-{% endhint %}
-
 Custom roles allow you to refine access control when very specific permissions need to be granted to a user.
 
 In OptiTech, **domains are the primary mechanism for restricting access**. Custom roles should only be created when domain-based restrictions are insufficient.

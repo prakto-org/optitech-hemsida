@@ -14,7 +14,7 @@ summary: >-
 enableTableOfContents: true
 redirectFrom:
   - /docs/get-started/connection-pooling
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:28.135Z'
 ---
 
 OptiTech uses [PgBouncer](https://www.pgbouncer.org/) to provide connection pooling, enabling up to 10,000 concurrent connections. This guide explains how pooling works, when to use it, and how to avoid common issues.
@@ -197,7 +197,7 @@ You can copy a pooled connection string from the OptiTech Console by clicking **
 
 To get the pooled connection string or switch between pooled and direct from the dashboard:
 
-1. Sign in to the [OptiTech Console](https://console.optitech.com) and select your project.
+1. Sign in to the [OptiTech Console](https://app.optitech-sverige.se) and select your project.
 2. On the **Project Dashboard**, click **Connect**.
 3. In the **Connect to your database** modal, choose a **Branch**, **Compute**, **Database**, and **Role**.
 4. Turn the **Connection pooling** toggle on to get the pooled string, or off to get the direct string, then copy it.

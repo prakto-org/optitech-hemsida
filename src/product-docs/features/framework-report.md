@@ -4,17 +4,17 @@ description: Cross-audit aggregate for one framework — compliance %, average i
 
 # Framework report
 
-The **Framework report** is the answer to _"how is this framework doing across our organisation?"_ Pick any framework loaded into the platform, and the report rolls up every audit using it into a single view: compliance percentage, average implementation score, sections breakdown, and the full list of audits in scope. You can read it as a **Requirements tree** or pivot it **Per domain**, and — when domain-tree inheritance is enabled — fold parent-domain results into a single **Combined view**.
+The **Framework report** is the answer to _"how is this framework doing across our organization?"_ Pick any framework loaded into the platform, and the report rolls up every audit using it into a single view: compliance percentage, average implementation score, sections breakdown, and the full list of audits in scope. You can read it as a **Requirements tree** or pivot it **Per domain**, and — when domain-tree inheritance is enabled — fold parent-domain results into a single **Combined view**.
 
 It's the framework-level layer of the platform's advanced analytics — sandwiched between the [per-audit Advanced Analytics](audit-analytics.md) dashboard and the [estate-wide Insights](insights.md) menu.
 
 ## Where this sits in the analytical stack
 
-| Surface | Scope | Edition | Gating |
-|---|---|---|---|
-| **[Audit advanced analytics](audit-analytics.md)** | One audit | Community | `advanced_analytics` flag |
-| **Framework report** (this page) | One framework, every live audit using it | Community | None (permission-gated) |
-| **[Insights](insights.md)** menu | Cross-cutting (impact graph, priority/effort, Gantt timeline) | Enterprise (PRO) | None (permission-gated) |
+| Surface | Scope | Gating |
+|---|---|---|
+| **[Audit advanced analytics](audit-analytics.md)** | One audit | `advanced_analytics` flag |
+| **Framework report** (this page) | One framework, every live audit using it | None (permission-gated) |
+| **[Insights](insights.md)** menu | Cross-cutting (impact graph, priority/effort, Gantt timeline) | None (permission-gated) |
 
 ## Where to find it
 
@@ -71,7 +71,7 @@ For a requirement, the platform looks up the domain tree from the audit (nearest
 | **Best case (optimistic)** | The strongest verdict anywhere in the chain (`compliant` > `partially compliant` > `non-compliant`) |
 | **Worst case (prudent)** | The weakest verdict anywhere in the chain |
 
-A requirement marked `not assessed` carries no opinion, so it never wins a comparison — it's the gap that ancestors fill. The score follows the same audit that won the result (a score is only meaningful paired with the verdict it was given for), and when audits use different scoring scales every score is normalised onto the **top-most ancestor's scale** before it's shown.
+A requirement marked `not assessed` carries no opinion, so it never wins a comparison — it's the gap that ancestors fill. The score follows the same audit that won the result (a score is only meaningful paired with the verdict it was given for), and when audits use different scoring scales every score is normalized onto the **top-most ancestor's scale** before it's shown.
 
 {% hint style="info" %}
 The same `not assessed` and live-status rules power both this report and the per-audit [Advanced Analytics](audit-analytics.md) inheritance panel, so the two always agree.
@@ -94,7 +94,7 @@ The report respects the same IAM rules as the rest of the platform:
 
 ## When you'd use it
 
-- **Programme-level review** — board-facing or steering-committee read on "how well are we doing against ISO 27001 / SOC 2 / NIS2 across the whole organisation?"
+- **Program-level review** — board-facing or steering-committee read on "how well are we doing against ISO 27001 / SOC 2 / NIS2 across the whole organization?"
 - **Comparing implementation groups** — switch IG filter to see how IG1 / IG2 / IG3 fare separately.
 - **Pre-cycle planning** — spot which audits to refresh by looking at the per-section breakdown.
 

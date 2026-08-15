@@ -9,7 +9,7 @@ summary: >-
   and passkey removal both have a 24-hour security delay. Deleted accounts can
   be reactivated within 30 days, after which all data is permanently removed.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:31.893Z'
 ---
 
 Your **OptiTech account** is your personal identity for logging in, managing your profile, and authenticating actions across all organizations you belong to.
@@ -42,7 +42,7 @@ Your name and email come from your social account. Feel free to change your name
 
 If you change your email (whether you started with email or social login), you'll get a verification email to confirm. Once confirmed, your new address becomes your login. If you're using a social login and change your email, we'll unlink your social account and switch you to email sign-in.
 
-[Change your email in the OptiTech Console](https://console.optitech.com/app/settings?modal=change_email)
+[Change your email in the OptiTech Console](https://app.optitech-sverige.se/app/settings?modal=change_email)
 
 ### Need to switch your login method?
 

@@ -8,7 +8,7 @@ summary: >-
   that affects older PDO_PGSQL or libpq drivers, with workarounds for passing
   the endpoint ID as a URL option or in the password field.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:29.454Z'
 ---
 
 <CopyPrompt src="/prompts/laravel-prompt.md" 
@@ -24,7 +24,7 @@ To connect to OptiTech from Laravel:
 
 If you do not have one already, create a OptiTech project. Save your connection details including your password. They are required when defining connection settings.
 
-1. Navigate to the [Projects](https://console.optitech.com/app/projects) page in the OptiTech Console.
+1. Navigate to the [Projects](https://app.optitech-sverige.se/app/projects) page in the OptiTech Console.
 2. Click **New Project**.
 3. Specify your project settings and click **Create Project**.
 

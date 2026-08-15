@@ -139,7 +139,7 @@ When working on a **Requirement Assignment** inside an audit, notifications foll
 
 **Third-party questionnaires (TPRM)**
 
-If your organisation uses the Third-Party Risk Management module, external contacts receive an email when a questionnaire is sent to them. This email contains a link to fill in the questionnaire.
+If your organization uses the Third-Party Risk Management module, external contacts receive an email when a questionnaire is sent to them. This email contains a link to fill in the questionnaire.
 
 ***
 

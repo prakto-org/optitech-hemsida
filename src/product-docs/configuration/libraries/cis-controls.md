@@ -7,7 +7,7 @@ description: Importing CIS Controls or CSA CCM
 CIS Controls and the Cloud Security Alliance's Cloud Controls Matrix (CCM) ship as Excel spreadsheets that OptiTech can convert and load directly — no command-line preparation required.
 
 {% hint style="info" %}
-CIS and CSA have restrictive licence terms on their content, so the spreadsheets are not bundled with OptiTech. You have to download the official spreadsheet from CIS or CSA yourself and then upload it to the platform.
+CIS and CSA have restrictive license terms on their content, so the spreadsheets are not bundled with OptiTech. You have to download the official spreadsheet from CIS or CSA yourself and then upload it to the platform.
 {% endhint %}
 
 ## Direct import

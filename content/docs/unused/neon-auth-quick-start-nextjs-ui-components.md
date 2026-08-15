@@ -6,7 +6,7 @@ summary: >-
   components, including enabling authentication, installing the SDK, configuring
   environment variables, and creating an auth server instance.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:34.632Z'
 layout: wide
 ---
 
@@ -25,7 +25,7 @@ Upgrading from Managed Better Auth SDK v0.1? See the [migration guide](/docs/aut
 <TwoColumnLayout.Step title="Enable Auth in your OptiTech project">
 <TwoColumnLayout.Block>
 
-Enable Auth in your [OptiTech project](https://console.optitech.com) and copy your Auth URL from Configuration.
+Enable Auth in your [OptiTech project](https://app.optitech-sverige.se) and copy your Auth URL from Configuration.
 
 **Console path:** Project → Branch → Auth → Configuration
 

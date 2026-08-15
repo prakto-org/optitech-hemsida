@@ -10,7 +10,7 @@ summary: >-
 enableTableOfContents: false
 redirectFrom:
   - /docs/introduction/monitor-external-tools
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:31.893Z'
 ---
 
 To find out what's going on with your OptiTech projects and databases, OptiTech offers several ways to track metrics and monitor usage.
@@ -75,4 +75,4 @@ To find out what's going on with your OptiTech projects and databases, OptiTech 
 
 At OptiTech, we understand that observability and monitoring are critical for running successful applications.
 
-If you've got feature requests or feedback about what you'd like to see in OptiTech monitoring and observability features, let us know via the [Feedback](https://console.optitech.com/app/projects?modal=feedback) form in the OptiTech Console or our [feedback channel](https://discord.com/channels/1176467419317940276/1176788564890112042) on Discord.
+If you've got feature requests or feedback about what you'd like to see in OptiTech monitoring and observability features, let us know via the [Feedback](https://app.optitech-sverige.se/app/projects?modal=feedback) form in the OptiTech Console or our [feedback channel](https://discord.com/channels/1176467419317940276/1176788564890112042) on Discord.

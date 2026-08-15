@@ -10,7 +10,7 @@ summary: >-
   Log transmission counts toward network egress billed after 500 GB on paid
   plans.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:28.135Z'
 ---
 
 <InfoBlock>
@@ -696,6 +696,6 @@ Enabling this feature may result in:
 
 ## Feedback and future improvements
 
-We’re always looking to improve! If you have feature requests or feedback, please let us know via the [Feedback form](https://console.optitech.com/app/projects?modal=feedback) in the OptiTech Console or on our [Discord channel](https://discord.com/channels/1176467419317940276/1176788564890112042).
+We’re always looking to improve! If you have feature requests or feedback, please let us know via the [Feedback form](https://app.optitech-sverige.se/app/projects?modal=feedback) in the OptiTech Console or on our [Discord channel](https://discord.com/channels/1176467419317940276/1176788564890112042).
 
 <NeedHelp/>

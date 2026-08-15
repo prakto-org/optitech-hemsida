@@ -5,7 +5,7 @@ description: Stream the audit log to an external SIEM over HTTP or Kafka
 # Audit log forwarding
 
 {% hint style="info" %}
-Audit log forwarding is a **PRO** capability, gated by the `audit_log_forwarding` feature flag. The underlying [audit log](../features/audit-log.md) records every change; this feature ships those records to your SIEM.
+Audit log forwarding is gated by the `audit_log_forwarding` feature flag. The underlying [audit log](../features/audit-log.md) records every change; this feature ships those records to your SIEM.
 {% endhint %}
 
 OptiTech can forward its [audit log](../features/audit-log.md) — every create, update, and delete on a tracked object — to an external SIEM as the events happen. Each change becomes one event, carrying who made it, what changed, when, and the domain it belongs to.

@@ -11,7 +11,7 @@ summary: >-
   files get created and where. The `--agent` flag targets a specific editor
   without the interactive prompt.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:28.135Z'
 redirectFrom:
   - /docs/reference/cli-init
 ---
@@ -64,7 +64,7 @@ Use `--agent` to configure a specific editor, skipping the interactive selection
 
 If you previously authenticated with `optitech auth`, `init` reuses those credentials (from `~/.config/optitechctl/credentials.json`). Otherwise, it opens the browser for OAuth.
 
-`init` creates a new API key each time it runs (named `optitechctl-init-{timestamp}`). If you run it more than once, you can revoke old keys in the [OptiTech Console API Keys settings](https://console.optitech.com/app/settings/api-keys).
+`init` creates a new API key each time it runs (named `optitechctl-init-{timestamp}`). If you run it more than once, you can revoke old keys in the [OptiTech Console API Keys settings](https://app.optitech-sverige.se/app/settings/api-keys).
 
 For Claude Code, if a OptiTech MCP entry already exists in `~/.claude.json`, `init` prompts before overwriting it.
 
@@ -116,7 +116,7 @@ npx optitech@latest init
 
 ## Manual setup
 
-If you prefer to configure manually or need to set up for other IDEs, [create a OptiTech API key](https://console.optitech.com/app/settings?modal=create_api_key) in the OptiTech Console. Example configuration for Claude Code (`~/.claude.json`):
+If you prefer to configure manually or need to set up for other IDEs, [create a OptiTech API key](https://app.optitech-sverige.se/app/settings?modal=create_api_key) in the OptiTech Console. Example configuration for Claude Code (`~/.claude.json`):
 
 ```json
 {

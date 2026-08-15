@@ -146,7 +146,7 @@ Populate the `_content` tabs with requirements.
 {% step %}
 ### Convert Excel to YAML
 
-Use the conversion tool to generate a OptiTech-compatible YAML library.
+Use the conversion tool to generate an OptiTech-compatible YAML library.
 {% endstep %}
 
 {% step %}

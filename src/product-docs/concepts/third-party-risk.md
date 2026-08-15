@@ -1,6 +1,6 @@
 # Third-party risk
 
-**Third-party risk management** (TPRM) is the discipline of evaluating the security and compliance posture of the vendors, suppliers, and service providers your organisation depends on.
+**Third-party risk management** (TPRM) is the discipline of evaluating the security and compliance posture of the vendors, suppliers, and service providers your organization depends on.
 
 OptiTech treats third parties as a first-class concern with their own object graph, separate from internal compliance work.
 
@@ -8,7 +8,7 @@ OptiTech treats third parties as a first-class concern with their own object gra
 
 Four interlocking objects model the third-party landscape:
 
-- **Entity** — a vendor, supplier, or service provider. The unit of organisational identity.
+- **Entity** — a vendor, supplier, or service provider. The unit of organizational identity.
 - **Solution** — a specific product or service provided by an entity. An entity can have many solutions.
 - **Contract** — the formal agreement covering one or more solutions, with dates, renewal terms, and obligations.
 - **Representative** — the person on the entity side who answers questionnaires and signs off on assessments.
@@ -37,11 +37,11 @@ Use this mode when:
 - You want live progress visibility — answers land in the database as they're typed, so the dashboard updates in real time.
 - You want comments, validation flows, and the full audit trail to apply to the vendor's answers automatically.
 
-> Don't confuse this with the [Assignments / respondent mode](../features/assignments.md) feature — that one is for **internal** users splitting one audit across teammates using the `respondent` role within your own organisation. The third-party flow described here is for **external vendors** answering through the auditee surface.
+> Don't confuse this with the [Assignments / respondent mode](../features/assignments.md) feature — that one is for **internal** users splitting one audit across teammates using the `respondent` role within your own organization. The third-party flow described here is for **external vendors** answering through the auditee surface.
 
 ### Offline mode — Excel exchange via the data wizard
 
-Many organisations don't want to expose their OptiTech instance to third parties — for security, network, or contractual reasons. In that case, the platform supports a fully **file-based round trip**:
+Many organizations don't want to expose their OptiTech instance to third parties — for security, network, or contractual reasons. In that case, the platform supports a fully **file-based round trip**:
 
 1. **Export the questionnaire from the framework page.** On the framework backing the entity assessment, use the **Export to Excel** action. You get an `.xlsx` file containing every requirement of the framework, structured so the vendor can fill in the answers, observations, and supporting evidence references in dedicated columns.
 2. **Send the file to the vendor.** Email, secure file share, sneakernet — whatever channel your procurement and security policies allow. The vendor opens the spreadsheet in any tool that can edit Excel.
@@ -52,9 +52,9 @@ Use this mode when:
 
 - Your instance can't be (or shouldn't be) exposed to the vendor's environment.
 - The vendor refuses to log into a third-party platform.
-- You want a tangible artefact — the signed-off Excel — as part of the audit record.
+- You want a tangible artifact — the signed-off Excel — as part of the audit record.
 
-Both modes produce the **same internal state** at the end: a populated entity assessment with per-requirement answers and observations. You can mix them within an organisation (online for one vendor, offline for another) or switch a single vendor from one mode to the other mid-cycle if the situation changes.
+Both modes produce the **same internal state** at the end: a populated entity assessment with per-requirement answers and observations. You can mix them within an organization (online for one vendor, offline for another) or switch a single vendor from one mode to the other mid-cycle if the situation changes.
 
 ## Why a separate model
 

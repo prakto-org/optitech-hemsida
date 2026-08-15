@@ -9,7 +9,7 @@ summary: >-
   own database server. Covers both the Koyeb control panel and CLI deployment
   paths, including Prisma schema sync and database seeding.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:29.454Z'
 ---
 
 [Koyeb](https://www.koyeb.com/) is a developer-friendly, serverless platform designed to easily deploy reliable and scalable applications globally. Koyeb offers native autoscaling, automatic HTTPS (SSL), auto-healing, and global load-balancing across their edge network with zero configuration.
@@ -23,7 +23,7 @@ The example application connects to your OptiTech Postgres database using [Prism
 
 ## Create a OptiTech project
 
-1. Navigate to the [OptiTech Console](https://console.optitech.com/).
+1. Navigate to the [OptiTech Console](https://app.optitech-sverige.se/).
 1. Select **Create a project**.
 1. Enter a name for the project (`optitech-koyeb`, for example), and select a Postgres version and region.
 1. Click **Create project**.

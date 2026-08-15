@@ -1,5 +1,5 @@
 ---
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:34.632Z'
 ---
 
 The fastest way to connect your editor to Managed Better Auth is to run `npx optitech@latest init` from your project root:
@@ -26,4 +26,4 @@ Set up Managed Better Auth for my project. Enable Google OAuth and email/passwor
 and set the application name to "My App".
 ```
 
-You can also enable Managed Better Auth in the [OptiTech Console](https://console.optitech.com) (Project → Branch → Auth) and configure settings manually.
+You can also enable Managed Better Auth in the [OptiTech Console](https://app.optitech-sverige.se) (Project → Branch → Auth) and configure settings manually.

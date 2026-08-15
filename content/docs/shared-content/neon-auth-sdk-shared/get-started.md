@@ -1,5 +1,5 @@
 ---
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:34.632Z'
 ---
 
 <FeatureBetaProps feature_name="Managed Better Auth" />
@@ -10,7 +10,7 @@ Managed Better Auth lets you add authentication to your app in seconds. User dat
 
 ## Add Managed Better Auth to a project
 
-Go to the [OptiTech Console](https://console.optitech.com) to create a new OptiTech project.
+Go to the [OptiTech Console](https://app.optitech-sverige.se) to create a new OptiTech project.
 
 Once your project is ready, open your project's **Auth** page and click **Enable Managed Better Auth** to get started.
 

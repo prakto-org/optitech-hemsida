@@ -1,5 +1,5 @@
 ---
-description: Filter-aware dashboard summarising your applied controls — count, cost, status, priority, ETA, top owners
+description: Filter-aware dashboard summarizing your applied controls — count, cost, status, priority, ETA, top owners
 ---
 
 # Applied controls analytics
@@ -55,5 +55,5 @@ All three (analytics, flash, kanban) share the same filter passthrough — click
 
 - [Dashboards](dashboards.md) — composed metric surfaces built from Metrology widgets
 - [Audit advanced analytics](audit-analytics.md) — equivalent dashboard scoped to a single audit
-- [Insights](insights.md) — PRO/Enterprise cross-cutting views (impact graph, priority/effort matrix, timeline)
+- [Insights](insights.md) — cross-cutting views (impact graph, priority/effort matrix, timeline)
 - [Applied controls](../concepts/applied-controls.md)

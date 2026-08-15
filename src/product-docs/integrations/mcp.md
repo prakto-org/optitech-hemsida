@@ -7,7 +7,7 @@ description: >-
 
 # MCP setup guide
 
-Compatible with: SaaS or on-premises, CE or Pro
+Compatible with: SaaS or on-premises
 
 Tested MCP clients: Claude Desktop, Claude Code, LM Studio, OpenWebUI
 

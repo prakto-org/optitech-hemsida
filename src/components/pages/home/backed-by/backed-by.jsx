@@ -3,26 +3,45 @@ import { useTranslations } from 'next-intl';
 
 import Container from 'components/shared/container';
 import SectionLabel from 'components/shared/section-label';
-import databaseIcon from 'icons/home/database.svg';
-import databricksIcon from 'icons/home/databricks.svg';
 import bgNoise from 'images/pages/home/backed-by/bg-noise.jpg';
+import aiucIcon from 'images/pages/home/backed-by/security-aiuc.png';
+import securityPrivacyIcon from 'images/pages/home/backed-by/security-privacy.png';
 import { cn } from 'utils/cn';
 
 import Quotes from './quotes';
 
 const ITEM_MEDIA = [
-  { key: 'nis2Count', icon: databaseIcon, className: 'w-[216px] xl:w-48' },
-  { key: 'iso', icon: databricksIcon, className: 'w-64 xl:w-[220px]' },
+  {
+    key: 'nis2Count',
+    icon: aiucIcon,
+    className: 'w-[216px] xl:w-48',
+    iconClassName: 'h-16 w-auto brightness-[0.65] lg:h-14 md:h-12 sm:h-11',
+    iconWidth: 96,
+    iconHeight: 122,
+  },
+  {
+    key: 'iso',
+    icon: securityPrivacyIcon,
+    className: 'w-64 xl:w-[220px]',
+    iconClassName: 'size-16 brightness-[0.65] lg:size-14 md:size-12 sm:size-11',
+    iconWidth: 96,
+    iconHeight: 96,
+  },
 ];
 
 const BackedBy = () => {
   const t = useTranslations('home.backedBy');
-  const ITEMS = ITEM_MEDIA.map(({ key, icon, className }) => ({
-    icon,
-    className,
-    title: t(`stats.${key}.title`),
-    description: t(`stats.${key}.description`),
-  }));
+  const ITEMS = ITEM_MEDIA.map(
+    ({ key, icon, className, iconClassName, iconWidth, iconHeight }) => ({
+      icon,
+      className,
+      iconClassName,
+      iconWidth,
+      iconHeight,
+      title: t(`stats.${key}.title`),
+      description: t(`stats.${key}.description`),
+    })
+  );
 
   return (
     <section
@@ -42,23 +61,25 @@ const BackedBy = () => {
               dangerouslySetInnerHTML={{ __html: t.raw('heading') }}
             />
             <ul className="mt-[216px] flex gap-[92px] xl:mt-[136px] xl:gap-16 lg:gap-8 md:gap-5 sm:mt-9 xs:flex-col xs:gap-7">
-              {ITEMS.map(({ icon, title, description, className }) => (
-                <li className={cn(className, 'lg:w-40 sm:w-[220px]')} key={title}>
-                  <Image
-                    className="mb-5 xl:mb-4 lg:mb-3.5 lg:size-7 md:size-6 sm:size-5"
-                    src={icon}
-                    width={32}
-                    height={32}
-                    alt=""
-                  />
-                  <h3 className="text-4xl leading-dense tracking-tighter xl:text-[36px] lg:text-[28px] md:text-[24px]">
-                    {title}
-                  </h3>
-                  <p className="mt-1.5 tracking-extra-tight text-gray-new-40 xl:text-sm xl:leading-snug lg:mt-1 sm:text-balance">
-                    {description}
-                  </p>
-                </li>
-              ))}
+              {ITEMS.map(
+                ({ icon, title, description, className, iconClassName, iconWidth, iconHeight }) => (
+                  <li className={cn(className, 'lg:w-40 sm:w-[220px]')} key={title}>
+                    <Image
+                      className={cn('mb-5 xl:mb-4 lg:mb-3.5', iconClassName)}
+                      src={icon}
+                      width={iconWidth}
+                      height={iconHeight}
+                      alt=""
+                    />
+                    <h3 className="text-4xl leading-dense tracking-tighter whitespace-pre-line xl:text-[36px] lg:text-[28px] md:text-[24px]">
+                      {title}
+                    </h3>
+                    <p className="mt-1.5 tracking-extra-tight text-gray-new-40 xl:text-sm xl:leading-snug lg:mt-1 sm:text-balance">
+                      {description}
+                    </p>
+                  </li>
+                )
+              )}
             </ul>
           </div>
           <div

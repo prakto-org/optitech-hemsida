@@ -53,22 +53,22 @@ Enabling scoring pre-fills every requirement at the scale minimum, so a bare min
 
 In other words, **progress is an auditing-activity signal, not a compliance signal**. An audit can be 100% _in progress_ and still be largely non-compliant — the column tells you the team has gone through every requirement and reached a verdict, not that the verdicts are good. The actual compliance picture lives in the donut and score read-outs computed from the [compliance result](#compliance-result) below.
 
-Only **assessable** requirements count toward the denominator — section titles and headings from the framework are skipped. When the audit is scoped to specific [implementation groups](#implementation-groups), only the requirements inside those groups count, so progress reflects the work you actually committed to rather than the framework's full catalogue.
+Only **assessable** requirements count toward the denominator — section titles and headings from the framework are skipped. When the audit is scoped to specific [implementation groups](#implementation-groups), only the requirements inside those groups count, so progress reflects the work you actually committed to rather than the framework's full catalog.
 
 ### Implementation groups
 
-Several frameworks ship with their requirements pre-tagged into **implementation groups (IG)** — labels that act as filters over the requirement catalogue. They serve two recurring purposes, depending on how the framework's authors used them:
+Several frameworks ship with their requirements pre-tagged into **implementation groups (IG)** — labels that act as filters over the requirement catalog. They serve two recurring purposes, depending on how the framework's authors used them:
 
-- **Maturity tiers** — _basic / intermediate / advanced_ (CIS Controls' IG1 / IG2 / IG3, CyFun's _Basic / Important / Essential_, FedRAMP's _Low / Moderate / High_). Picking IG1 narrows the audit to the minimum baseline; IG2 adds the next tier; IG3 expands to the full catalogue. This is the "how mature do we want to be?" axis.
+- **Maturity tiers** — _basic / intermediate / advanced_ (CIS Controls' IG1 / IG2 / IG3, CyFun's _Basic / Important / Essential_, FedRAMP's _Low / Moderate / High_). Picking IG1 narrows the audit to the minimum baseline; IG2 adds the next tier; IG3 expands to the full catalog. This is the "how mature do we want to be?" axis.
 - **Scope or applicability** — slices like _physical security_, _SaaS_, _cloud_, or framework-specific selectors like ISO 27001's `SoA` group. Picking these narrows the audit to the requirements that actually apply to your context, regardless of maturity.
 
-The two patterns are not exclusive — a single framework can mix them, and several IGs can be combined on the same audit. If no IG is selected the audit covers the full catalogue, and you can change the selection later (adding or removing IGs) without losing the work already done on requirements that stay in scope.
+The two patterns are not exclusive — a single framework can mix them, and several IGs can be combined on the same audit. If no IG is selected the audit covers the full catalog, and you can change the selection later (adding or removing IGs) without losing the work already done on requirements that stay in scope.
 
 Where IGs show up in the platform:
 
 - **Audit scope** — selected at creation, editable afterwards. Anything outside the selection isn't dropped, it's simply hidden from the audit's assessable count.
 - **Progress, score, donut, and analytics** — all roll-ups respect the IG selection. The [Implementation Groups Breakdown](../features/audit-analytics.md) widget in audit analytics shows progress _per IG_ when you want to compare tiers.
-- **Framework report** — the report filter lets you re-slice the audit by IG after the fact, so the same audit can produce an IG1-only view and a full-catalogue view without re-running the assessment.
+- **Framework report** — the report filter lets you re-slice the audit by IG after the fact, so the same audit can produce an IG1-only view and a full-catalog view without re-running the assessment.
 
 See [Multi-level support](../features/multi-level-support.md) for the mechanic of selecting IGs at audit creation, and the framework library's own documentation for which IG taxonomy a given standard ships with.
 
@@ -117,7 +117,7 @@ Beyond the binary compliance result, each requirement assessment can carry a **s
 
 Each requirement assessment uses an **effective scoring scale**. At audit runtime the fallback is the audit's own scoring scale (`ComplianceAssessment`), which is usually initialised from the framework when the audit is created. A requirement can override that audit-level scale with its own `min_score`, `max_score`, and level labels. The scoring UI, documentation score, exports, and tree views use that effective scale for the requirement.
 
-When an audit contains mixed scales, average-based roll-ups normalise each requirement against its effective range before aggregating, then display the result on the audit scale. Sum-based roll-ups stay raw: they add `score x weight`, and their maximum is the sum of each requirement's effective maximum times its weight.
+When an audit contains mixed scales, average-based roll-ups normalize each requirement against its effective range before aggregating, then display the result on the audit scale. Sum-based roll-ups stay raw: they add `score x weight`, and their maximum is the sum of each requirement's effective maximum times its weight.
 
 If **anchor N/A to target** is enabled, not-applicable requirements contribute the audit target projected onto their own effective range. If no target is configured, they contribute their effective maximum.
 

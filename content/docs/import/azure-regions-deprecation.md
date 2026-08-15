@@ -92,6 +92,6 @@ If your migration method uses `pg_dump` and `pg_restore`, the dump itself is a b
 
 ### How do I contact OptiTech about my Azure projects?
 
-Keep an eye on your inbox for communication from us. If you have specific constraints, such as regulatory requirements or migration dependencies, reply to any migration outreach you receive or contact [OptiTech Support](https://console.optitech.com/app/projects?modal=support).
+Keep an eye on your inbox for communication from us. If you have specific constraints, such as regulatory requirements or migration dependencies, reply to any migration outreach you receive or contact [OptiTech Support](https://app.optitech-sverige.se/app/projects?modal=support).
 
 <NeedHelp/>

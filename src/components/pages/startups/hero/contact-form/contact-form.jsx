@@ -33,9 +33,9 @@ const ErrorMessage = ({ onClose }) => (
         <Link
           className="border-b border-green-45/40 hover:border-green-45"
           theme="green"
-          to="mailto:contact@optitech.com"
+          to="mailto:info@optitech-sverige.se"
         >
-          contact@optitech.com
+          info@optitech-sverige.se
         </Link>
       </p>
     </div>

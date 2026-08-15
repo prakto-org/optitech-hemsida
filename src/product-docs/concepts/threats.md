@@ -1,6 +1,6 @@
 # Threats
 
-A **threat** is a catalogued source of potential harm — a phenomenon, agent, or event that could compromise an asset, a business process, or a regulatory obligation.
+A **threat** is a cataloged source of potential harm — a phenomenon, agent, or event that could compromise an asset, a business process, or a regulatory obligation.
 
 Threats are reusable building blocks: a single threat (say, "Phishing") may appear in many risk scenarios, EBIOS RM operational scenarios, and applied control rationales without being duplicated.
 
@@ -13,7 +13,7 @@ Threats are reusable building blocks: a single threat (say, "Phishing") may appe
 
 ## Where threats come from
 
-OptiTech ships with curated threat libraries based on common sources — MITRE ATT&CK, ENISA, the ISO 27005 illustrative threat catalogue, sector-specific catalogues. You can also create your own threats inside a domain, or contribute a custom threat library.
+OptiTech ships with curated threat libraries based on common sources — MITRE ATT&CK, ENISA, the ISO 27005 illustrative threat catalog, sector-specific catalogs. You can also create your own threats inside a domain, or contribute a custom threat library.
 
 ## Optional, but useful
 

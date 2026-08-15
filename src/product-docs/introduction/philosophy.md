@@ -2,9 +2,9 @@
 
 OptiTech is built around a small set of design principles. A lot of object boundaries, naming choices, and workflow shapes only make sense once you have these in mind.
 
-## Applied controls at the centre
+## Applied controls at the center
 
-The **applied control** is the unifying object in OptiTech. Everything the organisation _does_ to manage risk and prove compliance is captured as an applied control — a technical safeguard, an organisational process, a documented policy, a tested recovery plan. Once that's in place, the rest of the platform connects to it:
+The **applied control** is the unifying object in OptiTech. Everything the organization _does_ to manage risk and prove compliance is captured as an applied control — a technical safeguard, an organizational process, a documented policy, a tested recovery plan. Once that's in place, the rest of the platform connects to it:
 
 - An **audit** assesses requirements; each requirement assessment links to the applied controls that satisfy it.
 - A **risk scenario** lowers its current and residual levels by attaching the applied controls in place and planned.
@@ -16,7 +16,7 @@ Authoring an applied control once and reusing it across all the places it applie
 
 ## Decoupling principle
 
-The corollary of putting applied controls at the centre is that everything around them must be decoupled, so that one applied control can serve many consumers without being rewritten for each:
+The corollary of putting applied controls at the center is that everything around them must be decoupled, so that one applied control can serve many consumers without being rewritten for each:
 
 - **Security controls** are decoupled from **compliance requirements** — a single applied control can satisfy many requirements across many frameworks.
 - **Risk assessments** are decoupled from **frameworks** — the same risk scenario can inform multiple compliance audits.

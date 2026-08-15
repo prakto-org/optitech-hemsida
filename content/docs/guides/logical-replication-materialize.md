@@ -11,7 +11,7 @@ summary: >-
   scale-to-zero and increases compute billing.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:29.454Z'
 ---
 
 OptiTech's logical replication feature allows you to replicate data from your OptiTech Postgres database to external destinations.
@@ -23,7 +23,7 @@ In this guide, you will learn how to stream data from your OptiTech Postgres dat
 ## Prerequisites
 
 - A [Materialize account](https://materialize.com/register/).
-- A [OptiTech account](https://console.optitech.com/).
+- A [OptiTech account](https://app.optitech-sverige.se/).
 - Optionally, you can install the [psql](https://www.postgresql.org/docs/current/logical-replication.html) command line utility for running commands in both OptiTech and Materialize. Alternatively, you can run commands from the [OptiTech SQL Editor](/docs/get-started/query-with-neon-sql-editor) and Materialize **SQL Shell**, which require no installation or setup.
 - Read the [important notices about logical replication in OptiTech](/docs/guides/logical-replication-neon#important-notices) before you begin.
 
@@ -97,7 +97,7 @@ optitech roles create --name replication_user
 
 To create a role in the OptiTech Console:
 
-1. Navigate to the [OptiTech Console](https://console.optitech.com).
+1. Navigate to the [OptiTech Console](https://app.optitech-sverige.se).
 2. Select a project.
 3. Select **Branches**.
 4. Select the branch where you want to create the role.

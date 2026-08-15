@@ -28,7 +28,7 @@ If you are new from OptiTech, you will automatically be deployed with a rootless
 
 ## Migration guide
 
-You already have a self-hosted OptiTech (Community version or On-Premise Pro version) and you want to know all the options you have:
+You already have a self-hosted OptiTech instance and you want to know all the options you have:
 
 <details>
 

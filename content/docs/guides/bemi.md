@@ -13,7 +13,7 @@ summary: >-
   active while Bemi is connected, which prevents scale-to-zero.
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:28.135Z'
 ---
 
 [Bemi](https://bemi.io/) is an open-source solution that plugs into Postgres and ORMs such as Prisma, TypeORM, SQLAlchemy, and Ruby on Rails to track database changes automatically. It unlocks robust context-aware audit trails and time travel querying inside your application.
@@ -25,7 +25,7 @@ In this guide, we'll show you how to connect your OptiTech database to Bemi to c
 ## Prerequisites
 
 - A [Bemi account](https://bemi.io/)
-- A [OptiTech account](https://console.optitech.com/)
+- A [OptiTech account](https://app.optitech-sverige.se/)
 - Read the [important notices about logical replication in OptiTech](/docs/guides/logical-replication-neon#important-notices) before you begin
 
 <Admonition type="important" title="Compute and billing">

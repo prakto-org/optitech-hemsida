@@ -4,7 +4,7 @@ description: Step-by-step walkthrough for creating and operating a responsibilit
 
 # Managing a responsibility matrix
 
-A responsibility matrix maps **activities × actors → roles** so a project, programme, or operating procedure has a clear answer to "who does what" at every step. OptiTech supports three taxonomies — **RACI**, **RASCI**, and **RAPID** — and lets you bind each activity to assets, controls, audits, and other GRC objects.
+A responsibility matrix maps **activities × actors → roles** so a project, program, or operating procedure has a clear answer to "who does what" at every step. OptiTech supports three taxonomies — **RACI**, **RASCI**, and **RAPID** — and lets you bind each activity to assets, controls, audits, and other GRC objects.
 
 See [Project management](../concepts/project-management.md) for how matrices sit alongside projects and accreditations.
 
@@ -55,7 +55,7 @@ The actor becomes a new column. Already-attached actors are hidden from the pick
 
 ## Add activities
 
-In edit mode, the last row of the table is an input labelled **Add an activity…**.
+In edit mode, the last row of the table is an input labeled **Add an activity…**.
 
 1. Type the activity name.
 2. Press **Enter**.
@@ -70,7 +70,7 @@ OptiTech uses a click-to-cycle model — there is no per-cell role dropdown:
 - **Click again** → cycles to the next role (RACI: R → A → C → I → empty → R …).
 - **Shift-click** → cycles **backward** through the same sequence.
 
-The legend at the bottom of the matrix lists each role with its colour and a live count of how many cells currently hold it.
+The legend at the bottom of the matrix lists each role with its color and a live count of how many cells currently hold it.
 
 ## Activity details
 
@@ -109,4 +109,4 @@ The matrices then appear as links on the project page. One matrix can be attache
 ## What's next
 
 - Use the matrix to drive ownership when creating tasks, applied controls, and audits.
-- See [Project management](../concepts/project-management.md) for how responsibility matrices sit alongside projects and accreditations in the broader programme view.
+- See [Project management](../concepts/project-management.md) for how responsibility matrices sit alongside projects and accreditations in the broader program view.

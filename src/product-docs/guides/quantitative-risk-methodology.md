@@ -29,7 +29,7 @@ flowchart LR
   L --> A
 ```
 
-The platform runs this loop **100,000 times** by default — that's the Monte Carlo. The output is a 100k-long array of annual loss outcomes, and every metric you see comes from summarising that array.
+The platform runs this loop **100,000 times** by default — that's the Monte Carlo. The output is a 100k-long array of annual loss outcomes, and every metric you see comes from summarizing that array.
 
 ## What you actually type in
 
@@ -67,7 +67,7 @@ $$
 | *μ*, *σ* | The lognormal's parameters — mean and standard deviation of ln(loss) |
 | *z*<sub>05</sub>, *z*<sub>95</sub> | Standard-normal quantiles, approximately −1.6449 and +1.6449 |
 
-You don't need to interact with *μ* and *σ* — they're computed for you. The point of showing the derivation is so you understand _why doubling your UB doesn't double the resulting loss_: the distribution is fit on log-space, so a 10× UB shifts mass in the tail more than it does at the centre.
+You don't need to interact with *μ* and *σ* — they're computed for you. The point of showing the derivation is so you understand _why doubling your UB doesn't double the resulting loss_: the distribution is fit on log-space, so a 10× UB shifts mass in the tail more than it does at the center.
 
 {% hint style="warning" %}
 LB must be **strictly positive** (`> 0`) and UB must be **strictly greater than LB**. The platform refuses to simulate otherwise — a lognormal can't be fit to non-positive values, and a zero-width interval makes the fit degenerate.
@@ -217,4 +217,4 @@ Three numbers in, distribution out — the model is only as good as the inputs. 
 - [Cyber Risk Quantification (click walkthrough)](quantitative-risk.md) — the step-by-step guide for running a study.
 - [Quantitative risk studies](../concepts/quantitative-risk-studies.md) — the object graph (study / scenario / hypothesis).
 - [Applied controls → Financial tracking](../concepts/applied-controls.md#financial-tracking) — the build / run cost model that feeds Treatment cost in ROSI.
-- [Risk assessments](../concepts/risk-assessments.md) — the qualitative sibling for when monetary modelling isn't appropriate.
+- [Risk assessments](../concepts/risk-assessments.md) — the qualitative sibling for when monetary modeling isn't appropriate.

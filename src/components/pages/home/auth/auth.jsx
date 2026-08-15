@@ -1,7 +1,8 @@
+import Image from 'next/image';
 import { useTranslations } from 'next-intl';
 
 import Container from 'components/shared/container';
-import RiveAnimation from 'components/shared/rive-animation';
+import dash from 'images/pages/home/auth/dash.png';
 
 import Heading from '../heading';
 
@@ -19,12 +20,12 @@ const Auth = () => {
       >
         <div className="min-w-0 border-t border-gray-new-20 pt-9 lg:pt-7">
           <Heading icon="auth" title={t.raw('heading')} />
-          <RiveAnimation
-            className="aspect-[1184/580] w-full"
-            wrapperClassName="mt-16 xl:mt-12 lg:mt-10"
-            src="/animations/pages/home/auth.riv?20260107"
-            threshold={0.2}
-            triggerOnce={false}
+          <Image
+            className="mt-16 h-auto w-full rounded-2xl xl:mt-12 lg:mt-10"
+            src={dash}
+            alt="OptiTech compliance overview dashboard showing passing controls, frameworks, and control status"
+            sizes="(max-width: 1600px) 100vw, 1184px"
+            priority
           />
         </div>
       </Container>

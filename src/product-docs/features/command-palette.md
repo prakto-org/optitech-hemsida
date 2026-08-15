@@ -12,7 +12,7 @@ It complements the sidebar and breadcrumbs: pick the sidebar when you want to br
 
 There are two ways to open the palette, and both produce the same UI:
 
-- **The search pill in the top-right** of the application bar — labelled **Search…** with a small `⌘K` / `Ctrl+K` hint chip on its right.
+- **The search pill in the top-right** of the application bar — labeled **Search…** with a small `⌘K` / `Ctrl+K` hint chip on its right.
 - **The keyboard shortcut**:
   - macOS — `⌘ + K`
   - Windows / Linux — `Ctrl + K`

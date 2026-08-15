@@ -11,7 +11,7 @@ summary: >-
 enableTableOfContents: true
 redirectFrom:
   - /docs/guides/project-sharing-guide
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:30.752Z'
 ---
 
 You can invite other users to collaborate with you on a OptiTech project. Project collaboration lets other users access and contribute to your project from all supported OptiTech interfaces, including the OptiTech Console, OptiTech API, and OptiTech CLI. Follow this guide to learn how.
@@ -33,7 +33,7 @@ After a user has provided you with the email address associated with their OptiT
 
 **To invite a collaborator to your project:**
 
-1. Navigate to the [OptiTech Console](https://console.optitech.com/app/projects).
+1. Navigate to the [OptiTech Console](https://app.optitech-sverige.se/app/projects).
 2. Select the project you want to invite collaborators to.
 3. In the OptiTech **Settings**, choose **Collaborators** from the sidebar.
 

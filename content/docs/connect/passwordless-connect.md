@@ -8,7 +8,7 @@ summary: >-
   Passwordless auth connects to the first database on the branch; switching
   databases with `\c` restarts the authentication flow.
 enableTableOfContents: true
-updatedOn: '2026-07-18T10:05:28.819Z'
+updatedOn: '2026-08-15T13:33:28.135Z'
 ---
 
 OptiTech's `psql` passwordless auth feature helps you quickly authenticate a connection to OptiTech without providing a password.
@@ -28,7 +28,7 @@ To connect using OptiTech's `psql` passwordless auth feature:
    ```bash
    NOTICE:  Welcome to OptiTech!
    Authenticate by visiting (will expire in 2m):
-    https://console.optitech.com/psql_session/cd6aebdc9fda9928
+    https://app.optitech-sverige.se/psql_session/cd6aebdc9fda9928
    ```
 
 2. In your browser, navigate to the provided link. Log in to OptiTech if you are not already logged in. You are asked to select a OptiTech account and project (if you have multiple). If your project has more than one compute, you are also asked to select one.

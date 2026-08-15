@@ -10,7 +10,7 @@ summary: >-
   minimal-downtime cutover on busy databases).
 enableTableOfContents: true
 isDraft: false
-updatedOn: '2026-07-18T10:05:35.398Z'
+updatedOn: '2026-08-15T13:33:31.893Z'
 redirectFrom:
   - /docs/guides/migrate-neon-to-another-region
 ---
@@ -29,7 +29,7 @@ Each option below is a different way to move your database into a new OptiTech p
 
 **Best for** smaller databases (roughly **under 10 GB**) and when you want a guided flow in the OptiTech Console.
 
-In the OptiTech Console, open the **[Projects](https://console.optitech.com/app/)** page and start the **Import Data Assistant**. The assistant **creates your new OptiTech project** in the **target region** as part of the same flow. You begin by entering the **connection string for the database you are migrating from**. See **[Import Data Assistant](/docs/import/import-data-assistant)** for instructions.
+In the OptiTech Console, open the **[Projects](https://app.optitech-sverige.se/app/)** page and start the **Import Data Assistant**. The assistant **creates your new OptiTech project** in the **target region** as part of the same flow. You begin by entering the **connection string for the database you are migrating from**. See **[Import Data Assistant](/docs/import/import-data-assistant)** for instructions.
 
 ### pg_dump and pg_restore
 
