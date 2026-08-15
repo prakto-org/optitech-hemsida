@@ -64,7 +64,7 @@
     "@intercom/messenger-js-sdk": "^0.0.20",
     "@neondatabase/serverless": "^0.10.4",
     "@next/bundle-analyzer": "^16.1.6",
-    "@octokit/core": "^6.1.2",
+    "@octokit/core": "^7.0.7",
     "@radix-ui/react-collapsible": "^1.1.12",
     "@radix-ui/react-toast": "^1.2.19",
     "@radix-ui/react-tooltip": "^1.1.4",
