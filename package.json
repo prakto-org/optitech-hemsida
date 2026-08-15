@@ -85,7 +85,7 @@
     "chart.js": "^4.5.1",
     "chartjs-adapter-date-fns": "^3.0.0",
     "clsx": "^2.1.1",
-    "copy-to-clipboard": "^3.3.3",
+    "copy-to-clipboard": "^4.0.2",
     "dotenv": "^16.4.5",
     "file-loader": "^6.2.0",
     "framer-motion": "^12.36.0",
