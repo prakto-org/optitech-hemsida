@@ -115,3 +115,11 @@ scripts/docs-checks/neonctl/fragments/
 
 # Internal project notes, not part of the site
 projektminne.md
+
+# OpenNext
+.open-next
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example

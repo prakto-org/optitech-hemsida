@@ -2736,3 +2736,5 @@ const defaultConfig = {
 const withNextIntl = require('next-intl/plugin')('./src/i18n/request.js');
 
 module.exports = withNextIntl(withBundleAnalyzer(defaultConfig));
+
+import('@opennextjs/cloudflare').then((m) => m.initOpenNextCloudflareForDev());
