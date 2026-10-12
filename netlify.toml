@@ -16,6 +16,12 @@
   # Netlify's post-build secrets scanner these are safe to appear in output so
   # the deploy is not failed for "leaking" values that are meant to be public.
   SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_POSTHOG_KEY,NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN,NEXT_PUBLIC_POSTHOG_HOST,NEXT_PUBLIC_INTERCOM_APP_ID,NEXT_PUBLIC_DEFAULT_SITE_URL,NEXT_PUBLIC_GITHUB_PATH,NEXT_PUBLIC_NEON_STATUS_API,NEXT_PUBLIC_VERCEL_ENV"
+  # The content/ tree (and its generated copies under public/) contains only
+  # documentation examples with placeholder credentials (e.g.
+  # `postgresql://[user]:[password]@...`, truncated `nsk_live_...` samples)
+  # inherited from the upstream public open-source repo. They are not real
+  # secrets, so exclude these paths from the secrets scanner.
+  SECRETS_SCAN_OMIT_PATHS = "content/,public/md/,public/docs/,public/llms/"
 
 # Explicitly enable the Next.js runtime. When netlify.toml defines an explicit
 # build command + publish dir, Netlify can skip auto-injecting this plugin, which
