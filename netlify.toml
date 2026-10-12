@@ -15,7 +15,10 @@
   # NEXT_PUBLIC_* tokens are inlined into the client bundle by design. Tell
   # Netlify's post-build secrets scanner these are safe to appear in output so
   # the deploy is not failed for "leaking" values that are meant to be public.
-  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_POSTHOG_KEY,NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN,NEXT_PUBLIC_POSTHOG_HOST,NEXT_PUBLIC_INTERCOM_APP_ID,NEXT_PUBLIC_DEFAULT_SITE_URL,NEXT_PUBLIC_GITHUB_PATH,NEXT_PUBLIC_NEON_STATUS_API,NEXT_PUBLIC_VERCEL_ENV"
+  # The remaining keys hold non-sensitive, short values (brand name, public
+  # contact email, demo database names, org/topic IDs) that legitimately appear
+  # throughout the repo's public content and would otherwise be false positives.
+  SECRETS_SCAN_OMIT_KEYS = "NEXT_PUBLIC_POSTHOG_KEY,NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN,NEXT_PUBLIC_POSTHOG_HOST,NEXT_PUBLIC_INTERCOM_APP_ID,NEXT_PUBLIC_DEFAULT_SITE_URL,NEXT_PUBLIC_GITHUB_PATH,NEXT_PUBLIC_NEON_STATUS_API,NEXT_PUBLIC_VERCEL_ENV,MAIL_FROM_NAME,MAIL_TO,INKEEP_ORGANIZATION_ID,CUSTOMERIO_CHANGELOG_TOPIC_ID,NEON_BRANCHING_DEMO_DB_PGDATABASE,NEON_BRANCHING_DEMO_DB_PGUSER"
   # The content/ tree (and its generated copies under public/) contains only
   # documentation examples with placeholder credentials (e.g.
   # `postgresql://[user]:[password]@...`, truncated `nsk_live_...` samples)
