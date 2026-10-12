@@ -1,9 +1,10 @@
-import fs from 'fs';
 import path from 'path';
 
-import yaml from 'js-yaml';
+import readYamlFile from './read-yaml';
 
-const readYaml = (filePath) => yaml.load(fs.readFileSync(filePath, 'utf-8'));
+// Reads YAML from disk, falling back to the build-time generated bundle on
+// Cloudflare Workers where .yaml files are not readable (see utils/read-yaml.js).
+const readYaml = (filePath) => readYamlFile(filePath);
 
 // Strips legacy <p> wrappers from WP-migrated quotes.
 const formatQuote = (quote) => {

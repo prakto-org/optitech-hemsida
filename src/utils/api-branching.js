@@ -1,10 +1,7 @@
-const fs = require('fs');
-
-const jsYaml = require('js-yaml');
-
 const { BRANCHING_DIR_PATH } = require('../constants/content');
 
 const { getPostSlugs, getPostBySlug } = require('./api-content');
+const readYamlFile = require('./read-yaml');
 
 const getAllPosts = async () => {
   const slugs = await getPostSlugs(BRANCHING_DIR_PATH);
@@ -32,8 +29,7 @@ const getAllPosts = async () => {
     .filter((item) => process.env.NEXT_PUBLIC_VERCEL_ENV !== 'production' || !item.isDraft);
 };
 
-const getIndexContent = () =>
-  jsYaml.load(fs.readFileSync(`${process.cwd()}/${BRANCHING_DIR_PATH}/index.yaml`, 'utf8'));
+const getIndexContent = () => readYamlFile(`${process.cwd()}/${BRANCHING_DIR_PATH}/index.yaml`);
 
 const getFlattenedPages = () => {
   const indexContent = getIndexContent();

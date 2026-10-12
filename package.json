@@ -8,8 +8,8 @@
   },
   "scripts": {
     "build": "next build",
-    "prebuild": "node scripts/generate-api-ref.mjs scripts/data/api-spec.json && npm run check:api-ref-generated && node scripts/blog-content-cli.js bootstrap && node src/scripts/update-github-stars.js && node src/scripts/generate-docs-icons-config.js && npm run check:content-data && npm run check:pricing-sync && node scripts/docs-checks/neonctl/check-staleness.js",
-    "predev": "node scripts/generate-api-ref.mjs scripts/data/api-spec.json && node scripts/blog-content-cli.js bootstrap && node src/scripts/update-github-stars.js && node src/scripts/generate-docs-icons-config.js && npm run check:content-data && npm run check:pricing-sync && node scripts/docs-checks/neonctl/check-staleness.js",
+    "prebuild": "node scripts/generate-content-manifest.mjs && node scripts/generate-api-ref.mjs scripts/data/api-spec.json && npm run check:api-ref-generated && node scripts/blog-content-cli.js bootstrap && node src/scripts/update-github-stars.js && node src/scripts/generate-docs-icons-config.js && npm run check:content-data && npm run check:pricing-sync && node scripts/docs-checks/neonctl/check-staleness.js",
+    "predev": "node scripts/generate-content-manifest.mjs && node scripts/generate-api-ref.mjs scripts/data/api-spec.json && node scripts/blog-content-cli.js bootstrap && node src/scripts/update-github-stars.js && node src/scripts/generate-docs-icons-config.js && npm run check:content-data && npm run check:pricing-sync && node scripts/docs-checks/neonctl/check-staleness.js",
     "dev": "next dev",
     "dev:build": "next build",
     "blog:bootstrap": "node scripts/blog-content-cli.js bootstrap",

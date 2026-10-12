@@ -1,11 +1,8 @@
-const fs = require('fs');
-
-const jsYaml = require('js-yaml');
-
 const { DOCS_DIR_PATH, CHANGELOG_DIR_PATH } = require('../constants/content');
 
 const { getPostSlugs, getPostBySlug } = require('./api-content');
 const getExcerpt = require('./get-excerpt');
+const readYamlFile = require('./read-yaml');
 
 const getAllPosts = async () => {
   const slugs = await getPostSlugs(DOCS_DIR_PATH);
@@ -53,13 +50,14 @@ let _navigationCache = null;
 
 const getNavigation = () => {
   if (_navigationCache) return _navigationCache;
-  const mainNav = jsYaml.load(
-    fs.readFileSync(`${process.cwd()}/${DOCS_DIR_PATH}/navigation.yaml`, 'utf8')
-  );
-  const apiNavPath = `${process.cwd()}/${DOCS_DIR_PATH}/api-navigation.yaml`;
-  const result = fs.existsSync(apiNavPath)
-    ? mergeApiNavigation(mainNav, jsYaml.load(fs.readFileSync(apiNavPath, 'utf8')))
-    : mainNav;
+  const mainNav = readYamlFile(`${process.cwd()}/${DOCS_DIR_PATH}/navigation.yaml`);
+  let apiNavItems = null;
+  try {
+    apiNavItems = readYamlFile(`${process.cwd()}/${DOCS_DIR_PATH}/api-navigation.yaml`);
+  } catch (_e) {
+    apiNavItems = null;
+  }
+  const result = apiNavItems ? mergeApiNavigation(mainNav, apiNavItems) : mainNav;
   // Skip cache in development so navigation.yaml edits are visible on reload.
   if (process.env.NODE_ENV !== 'development') {
     _navigationCache = result;
@@ -68,7 +66,7 @@ const getNavigation = () => {
 };
 
 const getSDKNavigation = () =>
-  jsYaml.load(fs.readFileSync(`${process.cwd()}/${DOCS_DIR_PATH}/sdk-navigation.yaml`, 'utf8'));
+  readYamlFile(`${process.cwd()}/${DOCS_DIR_PATH}/sdk-navigation.yaml`);
 
 const getNavigationLinks = (slug, flatSidebar) => {
   const posts = [

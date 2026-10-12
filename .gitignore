@@ -123,3 +123,7 @@ projektminne.md
 .wrangler
 .dev.vars*
 !.dev.vars.example
+
+# Generated content slug manifest (scripts/generate-content-manifest.mjs)
+src/data/content-manifest.json
+src/data/yaml-bundle.json

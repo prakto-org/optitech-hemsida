@@ -2,10 +2,7 @@
 	"$schema": "node_modules/wrangler/config-schema.json",
 	"main": ".open-next/worker.js",
 	"name": "optitech-hemsida",
-	"routes": [
-		{ "pattern": "optitech-sverige.se", "custom_domain": true },
-		{ "pattern": "www.optitech-sverige.se", "custom_domain": true }
-	],
+	// "routes" tillfälligt borttaget: Cloudflare API vägrar uppdatera custom domains (code 100117) eftersom apex har manuellt skapade DNS-poster. Befintliga custom domains ligger kvar och pekar på workern.
 	"compatibility_date": "2026-10-12",
 	"compatibility_flags": [
 		"nodejs_compat",

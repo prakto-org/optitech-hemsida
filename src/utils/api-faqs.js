@@ -19,7 +19,12 @@ const getLocalizedFaqDir = (locale, slug) => {
 
 const getFaqFrontmatter = (slug) => {
   try {
-    const source = fs.readFileSync(`${process.cwd()}/${FAQS_DIR_PATH}/${slug}.md`, 'utf-8');
+    // Strip leading '/' from slug: double slashes break the Cloudflare
+    // Workers in-memory filesystem (see api-content.js).
+    const source = fs.readFileSync(
+      `${process.cwd()}/${FAQS_DIR_PATH}/${slug.replace(/^\/+/, '')}.md`,
+      'utf-8'
+    );
     const { data } = matter(source);
     return data;
   } catch (_e) {

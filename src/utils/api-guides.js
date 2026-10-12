@@ -34,7 +34,12 @@ const getAuthor = (id) => {
 
 const getGuideFrontmatter = (slug) => {
   try {
-    const source = fs.readFileSync(`${process.cwd()}/${GUIDES_DIR_PATH}/${slug}.md`, 'utf-8');
+    // Strip leading '/' from slug: double slashes break the Cloudflare
+    // Workers in-memory filesystem (see api-content.js).
+    const source = fs.readFileSync(
+      `${process.cwd()}/${GUIDES_DIR_PATH}/${slug.replace(/^\/+/, '')}.md`,
+      'utf-8'
+    );
     const { data } = matter(source);
     return data;
   } catch (_e) {
@@ -58,6 +63,7 @@ const getGuideNavigationItems = async () => {
         isDraft,
       };
     })
+    .filter(Boolean)
     .filter((item) => process.env.NEXT_PUBLIC_VERCEL_ENV !== 'production' || !item.isDraft)
     .sort((a, b) => (new Date(a.createdAt).getTime() < new Date(b.createdAt).getTime() ? 1 : -1));
 };

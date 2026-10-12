@@ -15,10 +15,36 @@ const getPostSlugs = async (pathname) => {
     return slugCache.get(pathname);
   }
 
-  const files = glob.sync(`${pathname}/**/*.md`, {
-    ignore: ['**/README.md', '**/unused/**', '**/shared-content/**', '**/GUIDE_TEMPLATE.md'],
-  });
-  const slugs = files.map((file) => file.replace(pathname, '').replace('.md', ''));
+  let files = [];
+  try {
+    files = glob.sync(`${pathname}/**/*.md`, {
+      ignore: ['**/README.md', '**/unused/**', '**/shared-content/**', '**/GUIDE_TEMPLATE.md'],
+    });
+  } catch (_e) {
+    files = [];
+  }
+
+  // On Cloudflare Workers (OpenNext) glob either returns nothing (fall back
+  // to the build-time generated slug manifest, see
+  // scripts/generate-content-manifest.mjs) or returns absolute paths rooted
+  // at the worker bundle dir — normalize both to slugs relative to the
+  // content dir, with the leading '/' preserved.
+  let slugs;
+  if (files.length > 0) {
+    slugs = files.map((file) => {
+      const normalized = file.replaceAll('\\', '/');
+      const idx = normalized.lastIndexOf(pathname);
+      const rel = idx >= 0 ? normalized.slice(idx + pathname.length) : normalized;
+      return rel.replace(/\.md$/, '');
+    });
+  } else {
+    try {
+      const manifest = require('../data/content-manifest.json');
+      slugs = manifest[pathname] || [];
+    } catch (_e) {
+      slugs = [];
+    }
+  }
 
   if (shouldUseCache()) {
     slugCache.set(pathname, slugs);
@@ -35,7 +61,13 @@ const getPostBySlug = (slug, pathname) => {
   }
 
   try {
-    const source = fs.readFileSync(`${process.cwd()}/${pathname}/${slug}.md`, 'utf-8');
+    // Slugs from getPostSlugs() start with '/'. Strip it so the path never
+    // contains '//' — Node tolerates double slashes, but the Cloudflare
+    // Workers in-memory filesystem does not.
+    const source = fs.readFileSync(
+      `${process.cwd()}/${pathname}/${slug.replace(/^\/+/, '')}.md`,
+      'utf-8'
+    );
     const { data, content } = matter(source);
     const excerpt = getExcerpt(content, 200);
     const post = { data, content, excerpt };

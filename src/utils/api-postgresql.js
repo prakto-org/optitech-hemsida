@@ -1,10 +1,7 @@
-const fs = require('fs');
-
-const jsYaml = require('js-yaml');
-
 const { POSTGRESQL_DIR_PATH } = require('../constants/content');
 
 const { getPostSlugs, getPostBySlug } = require('./api-content');
+const readYamlFile = require('./read-yaml');
 
 const getAllPosts = async () => {
   const slugs = await getPostSlugs(POSTGRESQL_DIR_PATH);
@@ -24,8 +21,7 @@ const getAllPosts = async () => {
     .filter((item) => process.env.NEXT_PUBLIC_VERCEL_ENV !== 'production' || !item.isDraft);
 };
 
-const getNavigation = () =>
-  jsYaml.load(fs.readFileSync(`${process.cwd()}/${POSTGRESQL_DIR_PATH}/navigation.yaml`, 'utf8'));
+const getNavigation = () => readYamlFile(`${process.cwd()}/${POSTGRESQL_DIR_PATH}/navigation.yaml`);
 
 const getAllPostgresTutorials = async () => {
   const slugs = await getPostSlugs(POSTGRESQL_DIR_PATH);
