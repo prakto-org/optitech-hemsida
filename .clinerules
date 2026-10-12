@@ -1,0 +1,138 @@
+# .clinerules – OptiTech-hemsida
+
+> Instruktioner för AI-agenter (Cline m.fl.) som arbetar i detta repo.
+> Genererad efter genomgång av hela kodbasen 2026-09-21. `CLAUDE.md` finns också,
+> men är delvis föråldrad (beskriver fortfarande Neon/Next.js 14) – denna fil är den
+> aktuella källan för sanning om arbetssätt.
+
+---
+wk-EKZR9IZfUJIjHAZRSom57c.ws-GfJa275EE9K4UmC1pykZra
+
+- **Vad:** OptiTechs marknadsplats + dokumentationsnav. Byggd som en fork av Neons
+  open source-webbplats och håller på att rebrandas till OptiTech (svenskt
+  IT-/compliance-konsultbolag). Live: <https://optitech-sverige.se>
+- **Kontext:** Bolaget satsar på compliance (NIS2, DORA, GDPR, AI Act, ISO 27001) –
+  se affärsplanen i `README.md` och produktanalysen i `projektminne.md`. Ton och
+  innehåll ska vara svenskt, professionellt och compliance-medvetet.
+- **Karaktär:** Extremt innehållstung sajt (1000+ MDX-filer i `content/`, bl.a.
+  `docs/`, `blog/`, `changelog/`, `guides/`, `postgresql/`, `sv/`). Sök alltid
+  efter befintligt innehåll innan du skapar nytt.
+
+## 2. Tech-stack & arkitektur
+
+- **Ramverk:** Next.js 16, React 19, App Router. JavaScript (inte TypeScript) –
+  `jsconfig.json` med `baseUrl: src`, så alla `src/*`-kataloger importeras som bare
+  specifiers (t.ex. `import Hero from 'components/pages/home/hero'`).
+- **Styling:** Tailwind CSS 4 (`tailwind.config.js` + `src/styles/globals.css`),
+  Prettier-plugin sorterar Tailwind-klasser automatiskt.
+- **Innehåll:** MDX i `content/` med frontmatter; `content/docs/README.md` är
+  auktoritativ referens för MDX-komponenter och navigering. Översättningar via
+  next-intl (`src/i18n/`, `src/locales/`) och DeepL-pipeline (`scripts/translate-*.mjs`).
+- **API-routes:** `src/app/api/` – `docs-feedback`, `hubspot` (nyhetsbrev),
+  `lia-application` (jobbansökningar med CV via MailerSend), `og` (OG-bilder).
+- **Tjänster/integrationer:** PostHog (EU) för analytics, Customer.io (tracking +
+  transaktionellt), HubSpot, Intercom, Upstash Redis/QStash, Neon Postgres,
+  GitHub App (blogg-synk från separat repo via `BLOG_REPO_*`).
+- **Både `pages/` och `app/` kan förekomma** (pågående migration från ursprungsrepot)
+  – kontrollera vilken konvention den berörda katalogen följer innan du ändrar.
+
+## 3. Kodstandarder
+
+- **Prettier:** printWidth 100, 2 spaces, semikolon, enkla citattecken,
+  trailing comma es5, `endOfLine: lf`. Markdown formateras om utan embedded
+  language formatting. Tailwind-klasser sorteras av plugin – kör inte om dem manuellt.
+- **ESLint 9 flat config** (`eslint.config.mjs`) med Next.js-plugin; flera regler är
+  medvetet avstängda för marknads/docs-mönster – återaktivera dem inte.
+- **Namngivning:** komponenter i `PascalCase`, hooks `use-*`, utils i kebab-case-filer.
+  Följ mönstren i närliggande filer (t.ex. `src/components/shared/` vs
+  `src/components/pages/`).
+- **Commits:** Conventional Commits (commitlint): `feat:`, `fix:`, `chore:`,
+  `docs:` … – pre-commit-hooken avvisar annat.
+- **Radbrytningar:** Shell-skript måste ha LF (framtvingas av `.gitattributes`).
+  Rör inte `node_modules/` eller genererade filer (t.ex. API-ref-output, sitemaps,
+  `public/llms/`).
+
+## 4. Kommandon (Windows/PowerShell, Node 22 enligt .nvmrc)
+
+| Syfte | Kommando |
+|---|---|
+| Starta dev-server | `npm run dev` (kör predev-genereringar först) |
+| Produktionsbygge | `npm run build` (viktigt: INTE `next build` – prebuild/postbuild-hooks måste köras) |
+| Enhetstester | `npm run test:unit:run` (körs även automatiskt i pre-push) |
+| E2E-tester | `npm run test` (öppnar Cypress; kräver körande sajt + `.env`) |
+| Linta JS | `npm run lint:js` |
+| Formatera/fix JS+CSS | `npm run fix:js` (kör alltid före commit av kodändringar) |
+| Formatera content-markdown | `npm run fix:md` |
+| Kolla brutna länkar | `npm run check:broken-links -- <url>` |
+| Deploy till produktion (VM) | `./scripts/deploy/push.ps1` (från repo-roten, efter commit) |
+| Netlify-deploy | sker via Git-integration mot `main` |
+
+**OBS:** Kör aldrig `npm run fix:all` eller `npm run lint:md` i normala flöden –
+de är avsedda för medvetna, separata städningar.
+
+## 5. Git-workflow
+
+- Standard GitHub-flöde: branch → commit → PR mot `main`.
+- **pre-commit:** lint-staged kör prettier + eslint på JS/CSS; för content-markdown
+  körs `update-frontmatter.js` (stämplar `updatedOn`) + prettier. Inget manuellt
+  steg behövs vid commit.
+- **pre-push:** `npm run test:unit:run` – misslyckade tester avbryter pushen.
+- **Känsliga filer:** `.env`, SSH-nycklar, `.pem`/cert får ALDRIG committas
+  (gitignore:ade). Läs heller aldrig ut hemliga värden ur `.env`/`.env.local`
+  i klartext i svar eller kod.
+
+
+## 6. Deploy & drift
+
+- **Primär produktion:** Oracle Cloud VM (`/opt/optitech`). Deploy sker via
+  `scripts/deploy/push.ps1` som paketerar committad HEAD (`git archive`), laddar upp
+  tillsammans med lokal `.env` och bygger om på servern. Orgen tillåter inte GitHub
+  deploy keys – servern kan inte `git pull`, därav arkivmetoden. Kör alltid deploy
+  först efter commit, och verifiera att `npm run build` gick igenom lokalt innan.
+- **Netlify:** sekundär/preview-hosting via `netlify.toml`. Viktig quirk: koden
+  gate-ar draft-innehåll på Vercels `VERCEL_ENV`, som mappas per deploy-context i
+  netlify.toml – ändra inte dessa miljövariabler utan att förstå konsekvensen.
+- `@netlify/plugin-nextjs` måste ligga kvar i `netlify.toml` – tas den bort
+  publiceras rå `.next` och alla routes ger 404 (har hänt, se git-historik).
+
+## 7. Säkerhet & tillförlitlighet
+
+- **Sekretess:** Aldrig hemligheter i kod, commits eller chatt. `NEXT_PUBLIC_*`-variabler
+  är avsedda att vara publika (vitlistade i Netlifys secrets-scan) – behandla allt
+  annat som känsligt.
+- **Formulär/dataflöden:** `lia-application` hanterar CV:n (personuppgifter) via
+  MailerSend; Customer.io/HubSpot tar emot leads. Vid ändringar: validera input,
+  behåll rate limiting (Upstash), och tänk GDPR – minimera data, ingen loggning av
+  personuppgifter.
+- **Compliance-profil:** Sajten representerar ett compliance-bolag – egen
+  tillförlitlighet är säljargument. Accessibility (WCAG, jsx-a11y-reglerna) och
+  korrekt juridisk terminologi är inte valfritt.
+- **Byggkedjan är skör om den kortsluts:** prebuild genererar API-ref, blogg-bootstrap,
+  docs-ikoner och innehållsvalideringar; postbuild genererar sitemaps och
+  llms-filer. Kringgå aldrig npm-livscykeln.
+- **Externa anrop i scripts:** flera predev/prebuild-steg når GitHub/externa API:er –
+  vid nätverksfel, kontrollera `.env` innan du antar kodfel.
+
+## 8. Befintliga agent-resurser (använd dem!)
+
+- **Skills** (`.agents/skills/<namn>/SKILL.md`): `blog-authoring`, `changelog-authoring`,
+  `docs-validation`, `golden-corpus`, `humanize-content`, `neon-terminology`,
+  `redirect-update`, `skills-sync`. Anropa relevant skill vid innehållsarbete.
+- **Specialistagenter** (`.github/agents/*.agent.md`): bl.a. `frontend-dev`,
+  `rebrand-auditor`, `translation-manager`, `test-runner`, `seo-reviewer`.
+- **Instructions** (`.github/instructions/*.instructions.md`): auto-kopplade regler
+  per filtyp (docs, writing-style, terminology, react-components, testing …).
+- Synka skills efter ändring i workflows: `npm run update:skills`.
+
+## 9. Kända fallgropar
+
+1. `CLAUDE.md` beskriver delvis Neon (ursprungsrepot) – lita på denna fil vid konflikt.
+   Pågående rebrand: vissa Neon-referenser finns kvar avsiktligt tills översyn;
+   `rebrand-auditor`-agenten och `scripts/rebrand-neon-to-optitech.mjs` hanterar det.
+2. `package.json` heter fortfarande `neon-nextjs` – historiskt arv, ändra inte
+   utan explicit instruktion (påverkar scripts).
+3. `npm run build` ≠ `next build`. Alla livscykelhooks måste med.
+4. Ändra inte i `src/` komponentstruktur, CSS eller sajt-arkitektur utan att
+   användaren bett om det – säg till om något ser fel ut och föreslå istället.
+5. Test-alias i `vitest.config.js` speglar `jsconfig.json` – ny `src/*`-katalog
+   måste läggas till i båda.

@@ -123,6 +123,7 @@ const CookieConsent = () => {
   const finishConsent = (categories, action) => {
     storeConsent(categories);
     applyZarazConsent(categories);
+    window.dispatchEvent(new Event('cookieConsentUpdated'));
     sendGtagEvent('cookie_consent', { action });
     setPreferences({ analytics: categories.analytics, marketing: categories.marketing });
     setHasStoredConsent(true);

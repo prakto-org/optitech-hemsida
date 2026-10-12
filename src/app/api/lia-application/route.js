@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 
+import { identifyContact, trackEvent, sendTransactionalEmail } from 'lib/customerio';
+
 export const runtime = 'nodejs';
 
 const MAILERSEND_ENDPOINT = 'https://api.mailersend.com/v1/email';
@@ -9,6 +11,7 @@ const FROM_NAME = process.env.MAIL_FROM_NAME || 'OptiTech';
 const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10 MB
 const ACCEPTED_EXTENSIONS = ['.pdf', '.doc', '.docx'];
 const EMAIL_REGEXP = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const LIA_TRANSACTIONAL_MESSAGE_ID = process.env.CUSTOMERIO_LIA_TRANSACTIONAL_MESSAGE_ID || '2';
 
 // Strip CR/LF so user input can't inject extra email headers.
 const singleLine = (value) =>
@@ -94,6 +97,35 @@ export async function POST(request) {
       console.error('LIA application: MailerSend error', emailResponse.status, detail);
       return NextResponse.json({ error: 'Could not send application.' }, { status: 502 });
     }
+
+    // Sync the applicant to Customer.io. Fail-safe: never blocks the response.
+    await Promise.all([
+      identifyContact({
+        userId: email,
+        traits: {
+          name,
+          email,
+          ...(phone ? { phone } : {}),
+          ...(education ? { education } : {}),
+          ...(period ? { period } : {}),
+        },
+      }),
+      trackEvent({
+        userId: email,
+        event: 'lia_application_submitted',
+        properties: {
+          ...(education ? { education } : {}),
+          ...(period ? { period } : {}),
+          hasCv: attachments.length > 0,
+        },
+      }),
+      sendTransactionalEmail({
+        to: email,
+        transactionalMessageId: LIA_TRANSACTIONAL_MESSAGE_ID,
+        identifiers: { email },
+        messageData: { first_name: name.split(/\s+/)[0] || '' },
+      }),
+    ]);
 
     return NextResponse.json({ ok: true }, { status: 200 });
   } catch (error) {

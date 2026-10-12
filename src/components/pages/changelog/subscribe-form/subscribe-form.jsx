@@ -9,11 +9,11 @@ import { useForm } from 'react-hook-form';
 import * as yup from 'yup';
 
 import Field from 'components/shared/field';
-import { FORM_STATES } from 'constants/forms';
+import { CHANGELOG_SUBSCRIPTION_FORM_ID, FORM_STATES } from 'constants/forms';
 import CheckIcon from 'icons/subscription-form-check.inline.svg';
 import patternImage from 'images/pages/docs/cta/pattern.png';
 import { cn } from 'utils/cn';
-import { doNowOrAfterSomeTime } from 'utils/forms';
+import { doNowOrAfterSomeTime, sendHubspotFormData } from 'utils/forms';
 import sendGtagEvent from 'utils/send-gtag-event';
 
 function getCookie(name) {
@@ -72,6 +72,14 @@ const SubscribeForm = ({ className }) => {
     const loadingAnimationStartedTime = Date.now();
 
     try {
+      // Best-effort sync to Customer.io; never blocks the success UX.
+      await sendHubspotFormData({
+        formId: CHANGELOG_SUBSCRIPTION_FORM_ID,
+        values: [{ name: 'email', value: email }],
+      }).catch((error) => {
+        console.error('Customer.io changelog sync failed', error);
+      });
+
       if (window.zaraz) {
         if (!isRecognized) {
           await sendGtagEvent('identify', { email });

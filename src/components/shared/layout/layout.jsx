@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 
 import CookieConsent from 'components/shared/cookie-consent';
+import CustomerioAnalytics from 'components/shared/customerio-analytics';
 import Footer from 'components/shared/footer';
 import Header from 'components/shared/header';
 import Topbar from 'components/shared/topbar';
@@ -48,6 +49,7 @@ const Layout = ({
       </main>
       <Footer hasThemesSupport={hasThemesSupport} />
       <CookieConsent />
+      <CustomerioAnalytics />
     </div>
   </>
 );

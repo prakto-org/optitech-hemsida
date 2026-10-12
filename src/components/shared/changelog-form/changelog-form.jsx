@@ -6,13 +6,13 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 
 import GradientBorder from 'components/shared/gradient-border';
-import { FORM_STATES } from 'constants/forms';
+import { CHANGELOG_SUBSCRIPTION_FORM_ID, FORM_STATES } from 'constants/forms';
 import warningIcon from 'icons/input-warning.svg';
 import SendIcon from 'icons/send.inline.svg';
 import CheckIcon from 'icons/subscription-form-check.inline.svg';
 import formBg from 'images/pages/blog/form-bg.png';
 import { cn } from 'utils/cn';
-import { doNowOrAfterSomeTime, emailRegexp } from 'utils/forms';
+import { doNowOrAfterSomeTime, emailRegexp, sendHubspotFormData } from 'utils/forms';
 import sendGtagEvent from 'utils/send-gtag-event';
 
 function getCookie(name) {
@@ -78,6 +78,14 @@ const ChangelogForm = ({ isSidebar = false, isBlog = false, className }) => {
       const loadingAnimationStartedTime = Date.now();
 
       try {
+        // Best-effort sync to Customer.io; never blocks the success UX.
+        await sendHubspotFormData({
+          formId: CHANGELOG_SUBSCRIPTION_FORM_ID,
+          values: [{ name: 'email', value: email }],
+        }).catch((error) => {
+          console.error('Customer.io changelog sync failed', error);
+        });
+
         if (window.zaraz) {
           // Send identify event if user is not recognized
           if (!isRecognized) {

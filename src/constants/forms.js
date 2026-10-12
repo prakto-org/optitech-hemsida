@@ -5,6 +5,9 @@ const HUBSPOT_CONTACT_SALES_FORM_ID = '65bbbbd1-cb82-4e67-a007-03ac04fc89ef';
 const HUBSPOT_PARTNERS_FORM_ID = '03763d80-c254-482e-95cc-75ec64e3ef16';
 const HUBSPOT_USE_CASES_FORM_ID = '432da917-7373-491b-ae41-cc03a15a92db';
 
+// Not a HubSpot form — a tag the Customer.io form route uses for changelog signups.
+const CHANGELOG_SUBSCRIPTION_FORM_ID = 'changelog-subscription';
+
 const FORM_STATES = {
   DEFAULT: 'default',
   LOADING: 'loading',
@@ -19,5 +22,6 @@ export {
   HUBSPOT_CONTACT_SALES_FORM_ID,
   HUBSPOT_PARTNERS_FORM_ID,
   HUBSPOT_USE_CASES_FORM_ID,
+  CHANGELOG_SUBSCRIPTION_FORM_ID,
   FORM_STATES,
 };

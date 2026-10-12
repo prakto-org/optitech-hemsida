@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="sv" xmlns="http://www.w3.org/1999/xhtml" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="x-apple-disable-message-reformatting">
+  <meta name="color-scheme" content="light dark">
+  <meta name="supported-color-schemes" content="light dark">
+  <title>OptiTech &ndash; Nyhetsbrev</title>
+
+  <!--[if mso]>
+  <noscript>
+    <xml>
+      <o:OfficeDocumentSettings>
+        <o:PixelsPerInch>96</o:PixelsPerInch>
+        <o:AllowPNG/>
+      </o:OfficeDocumentSettings>
+    </xml>
+  </noscript>
+  <![endif]-->
+
+  <!--[if mso]>
+  <style type="text/css">
+    table { border-collapse: collapse; }
+    td, th, div, p, a, h1, h2, h3 { font-family: Arial, Helvetica, sans-serif !important; }
+  </style>
+  <![endif]-->
+
+  <style type="text/css">
+    /* =========================================================
+       OptiTech Nyhetsbrev
+       Riktig logga: /emails/optitech-logo.png (mörk) + optitech-logo-white.png (ljus)
+       Accenter samplade ur loggan, bakgrund enligt önskemål:
+         lila      #490083   (primär accent, länkar, knapp)
+         lila-mörk #270453   (mörk lila / footer)
+         vinröd    #6B053D   (accent i linjen)
+         ink       #1c1a1f   (rubriker/text)
+         body      #4a4750
+         muted     #8a8691
+         line      #dcebce
+         page      #F4FFED   (mint bakgrund)
+       ========================================================= */
+
+    html, body { margin: 0 !important; padding: 0 !important; height: 100% !important; width: 100% !important; }
+    * { -ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; }
+    table, td { mso-table-lspace: 0pt !important; mso-table-rspace: 0pt !important; }
+    table { border-spacing: 0 !important; border-collapse: collapse !important; table-layout: fixed !important; margin: 0 auto !important; }
+    img { -ms-interpolation-mode: bicubic; border: 0; height: auto; line-height: 100%; outline: none; text-decoration: none; display: block; }
+    a { text-decoration: none; }
+    p { margin: 0; padding: 0; }
+
+    body {
+      background-color: #F4FFED;
+      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+      color: #1c1a1f;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .email-bg { background-color: #F4FFED; width: 100%; }
+    .container { width: 100%; max-width: 600px; margin: 0 auto; }
+
+    /* Typografi */
+    .eyebrow { font-size: 12px; line-height: 16px; font-weight: 700; letter-spacing: 1.8px; text-transform: uppercase; color: #490083; margin: 0; }
+    .h1 { font-size: 30px; line-height: 38px; font-weight: 700; color: #1c1a1f; letter-spacing: -0.4px; margin: 0; }
+    .h2 { font-size: 21px; line-height: 29px; font-weight: 700; color: #1c1a1f; letter-spacing: -0.2px; margin: 0; }
+    .h3 { font-size: 17px; line-height: 24px; font-weight: 700; color: #1c1a1f; margin: 0; }
+    .body-text { font-size: 16px; line-height: 26px; color: #4a4750; margin: 0; }
+    .small { font-size: 13px; line-height: 20px; color: #8a8691; margin: 0; }
+    .link { color: #490083; font-weight: 700; }
+
+    /* Knappar */
+    .btn-primary { background-color: #490083; border-radius: 6px; color: #ffffff !important; display: inline-block; font-size: 15px; font-weight: 700; line-height: 20px; padding: 14px 30px; text-align: center; }
+    .btn-outline { border: 1.5px solid #490083; border-radius: 6px; color: #490083 !important; display: inline-block; font-size: 14px; font-weight: 700; line-height: 20px; padding: 12px 26px; text-align: center; }
+
+    .px { padding-left: 44px; padding-right: 44px; }
+    .divider { border: 0; border-top: 1px solid #dcebce; height: 1px; line-height: 1px; margin: 0; width: 100%; }
+
+    /* Logga-växling: mörk logga i ljust läge, vit logga i mörkt läge */
+    .logo-light { display: block; }
+    .logo-dark { display: none; mso-hide: all; }
+
+    /* Mörkt läge */
+    @media (prefers-color-scheme: dark) {
+      body, .email-bg { background-color: #14121a !important; }
+      .card { background-color: #1e1b26 !important; }
+      .h1, .h2, .h3 { color: #f4f1f8 !important; }
+      .body-text { color: #cbc6d4 !important; }
+      .small { color: #9a94a6 !important; }
+      .divider { border-top-color: #322c3d !important; }
+      .eyebrow, .link { color: #c79ae0 !important; }
+      .header-bar { background-color: #1e1b26 !important; }
+      .quote-block { background-color: #241f2e !important; }
+      .logo-light { display: none !important; }
+      .logo-dark { display: block !important; max-height: none !important; overflow: visible !important; }
+    }
+
+    /* Mobil */
+    @media only screen and (max-width: 600px) {
+      .container { width: 100% !important; max-width: 100% !important; }
+      .px { padding-left: 24px !important; padding-right: 24px !important; }
+      .stack { display: block !important; width: 100% !important; }
+      .h1 { font-size: 25px !important; line-height: 32px !important; }
+      .h2 { font-size: 19px !important; line-height: 26px !important; }
+      .hide-mobile { display: none !important; }
+      .btn-full a { display: block !important; }
+      .logo-right { text-align: left !important; padding-top: 10px !important; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Preheader: dold förhandsvisningstext -->
+  <div style="display:none;max-height:0;overflow:hidden;mso-hide:all;font-size:1px;line-height:1px;color:#F4FFED;opacity:0;">
+    Guider, produktnyheter och konkreta tips inom regelefterlevnad och informationss&auml;kerhet, direkt i din inkorg.
+    &nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;
+  </div>
+
+  <table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="email-bg">
+    <tr>
+      <td align="center" style="padding: 28px 12px;">
+
+        <!-- HUVUDKORT -->
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" class="container card"
+               style="background-color:#ffffff;border-radius:14px;overflow:hidden;box-shadow:0 6px 24px rgba(39,4,83,0.10);">
+
+          <!-- HEADER med riktig logga -->
+          <tr>
+            <td class="px header-bar" style="padding-top:30px;padding-bottom:26px;background-color:#ffffff;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td class="stack" align="left" valign="middle" width="60%">
+                    <a href="https://optitech-sverige.se">
+                      <img src="https://optitech-sverige.se/emails/optitech-logo.png"
+                           alt="OptiTech" width="170" height="30" class="logo-light"
+                           style="width:170px;height:30px;">
+                      <div class="logo-dark" style="display:none;max-height:0;overflow:hidden;">
+                        <img src="https://optitech-sverige.se/emails/optitech-logo-white.png"
+                             alt="OptiTech" width="170" height="30"
+                             style="width:170px;height:30px;">
+                      </div>
+                    </a>
+                  </td>
+                  <td class="stack logo-right" align="right" valign="middle" width="40%">
+                    <p class="small" style="letter-spacing:2px;text-transform:uppercase;font-weight:700;color:#8a8691;">Nyhetsbrev</p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Tunn accentlinje i loggans färger (maroon -> lila) -->
+          <tr>
+            <td style="height:3px;line-height:3px;font-size:3px;background:#490083;background:linear-gradient(90deg,#6B053D 0%,#490083 55%,#270453 100%);">&nbsp;</td>
+          </tr>
+
+          <!-- HERO -->
+          <tr>
+            <td class="px" style="padding-top:40px;padding-bottom:12px;">
+              <p class="eyebrow" style="margin-bottom:14px;">{{ now|date: "%B %Y" }}</p>
+              <h1 class="h1" style="margin-bottom:16px;">V&auml;lkommen till OptiTech</h1>
+              <p class="body-text" style="margin-bottom:26px;">
+                Hej{% if customer.first_name %} {{ customer.first_name }}{% endif %}, kul att ha dig med. H&auml;rifr&aring;n f&aring;r du det viktigaste
+                inom regelefterlevnad och informationss&auml;kerhet: praktiska guider f&ouml;r NIS2, DORA, GDPR och ISO 27001,
+                produktnyheter och konkreta tips f&ouml;r att h&aring;lla ert program revisionsredo &aring;ret runt.
+              </p>
+              <table role="presentation" cellpadding="0" cellspacing="0" class="btn-full">
+                <tr>
+                  <td bgcolor="#490083" style="border-radius:6px;">
+                    <!--[if mso]>
+                    <v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word"
+                      href="https://optitech-sverige.se" style="height:48px;v-text-anchor:middle;width:230px;" arcsize="12%" strokecolor="#490083" fillcolor="#490083">
+                      <w:anchorlock/>
+                      <center style="color:#ffffff;font-family:Arial,sans-serif;font-size:15px;font-weight:bold;">Utforska OptiTech</center>
+                    </v:roundrect>
+                    <![endif]-->
+                    <!--[if !mso]><!-->
+                    <a href="https://optitech-sverige.se" class="btn-primary">Utforska OptiTech</a>
+                    <!--<![endif]-->
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr><td class="px" style="padding-top:38px;padding-bottom:38px;"><hr class="divider"></td></tr>
+
+          <!-- I FOKUS: redaktionellt block med accentkant, ingen platshållarbild -->
+          <tr>
+            <td class="px">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="quote-block"
+                     style="background-color:#ECFADF;border-left:4px solid #490083;border-radius:0 10px 10px 0;">
+                <tr>
+                  <td style="padding:26px 28px;">
+                    <p class="eyebrow" style="margin-bottom:12px;">I fokus</p>
+                    <h2 class="h2" style="margin-bottom:12px;">NIS2: vad nordiska f&ouml;retag beh&ouml;ver veta</h2>
+                    <p class="body-text" style="margin-bottom:18px;">
+                      NIS2 breddar cybers&auml;kerhetskraven i hela EU och l&auml;gger ett verkligt ansvar p&aring; f&ouml;retagsledningen.
+                      Guiden g&aring;r igenom vem som omfattas och hur du g&ouml;r direktivet till ett levande program av kontroller
+                      och bevis, i st&auml;llet f&ouml;r en p&auml;rm ingen l&auml;ser.
+                    </p>
+                    <a href="https://optitech-sverige.se/blog/nis2-efterlevnad-nordiska-foretag" class="link" style="color:#490083;font-size:15px;">
+                      L&auml;s guiden &rarr;
+                    </a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr><td class="px" style="padding-top:38px;padding-bottom:22px;"><p class="eyebrow">Mer fr&aring;n oss</p></td></tr>
+
+          <!-- Länklista: rena rader, hårfina avdelare, inga ikoner -->
+          <tr>
+            <td class="px">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td style="padding-bottom:20px;">
+                    <h3 class="h3" style="margin-bottom:6px;">Automatisera bevisinsamling</h3>
+                    <p class="body-text" style="font-size:15px;line-height:23px;margin-bottom:8px;">
+                      Sluta jaga sk&auml;rmdumpar. S&aring; h&auml;mtar integrationer era bevis enligt schema och kartl&auml;gger dem mot kontroller, en g&aring;ng f&ouml;r alla ramverk.
+                    </p>
+                    <a href="https://optitech-sverige.se/blog/automatisera-bevisinsamling" class="link" style="color:#490083;font-size:14px;">L&auml;s guiden &rarr;</a>
+                  </td>
+                </tr>
+                <tr><td style="padding-bottom:20px;"><hr class="divider"></td></tr>
+                <tr>
+                  <td style="padding-bottom:20px;">
+                    <h3 class="h3" style="margin-bottom:6px;">ISO 27001-certifiering: praktisk guide</h3>
+                    <p class="body-text" style="font-size:15px;line-height:23px;margin-bottom:8px;">
+                      S&aring; tar du ISO 27001 och beh&aring;ller den, genom att driva ett levande ledningssystem i st&auml;llet f&ouml;r en p&auml;rm med inaktuella policyer.
+                    </p>
+                    <a href="https://optitech-sverige.se/blog/iso-27001-certifiering-guide" class="link" style="color:#490083;font-size:14px;">L&auml;s guiden &rarr;</a>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <tr><td class="px" style="padding-top:18px;padding-bottom:38px;"><hr class="divider"></td></tr>
+
+          <!-- Kontakt-CTA: lugnt, inramat block -->
+          <tr>
+            <td class="px" style="padding-bottom:42px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0"
+                     style="border:1px solid #dcebce;border-radius:12px;">
+                <tr>
+                  <td style="padding:30px 30px;text-align:center;">
+                    <h2 class="h2" style="margin-bottom:10px;">Vill ni se OptiTech i praktiken?</h2>
+                    <p class="body-text" style="margin-bottom:22px;">
+                      Boka en demo, s&aring; visar vi hur ni h&aring;ller efterlevnaden levande och revisionsredo &aring;ret runt.
+                    </p>
+                    <table role="presentation" cellpadding="0" cellspacing="0" align="center">
+                      <tr>
+                        <td style="border-radius:6px;">
+                          <a href="https://optitech-sverige.se/kontakt" class="btn-outline">Boka en demo</a>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+          <!-- Signatur -->
+          <tr>
+            <td class="px" style="padding-bottom:36px;">
+              <p class="body-text" style="margin-bottom:4px;">V&auml;nliga h&auml;lsningar,</p>
+              <p class="body-text" style="font-weight:700;color:#1c1a1f;">Teamet p&aring; OptiTech</p>
+            </td>
+          </tr>
+
+          <!-- FOOTER (djup plommon, vit logga) -->
+          <tr>
+            <td style="background-color:#270453;padding:34px 44px;">
+              <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
+                <tr>
+                  <td align="center" style="padding-bottom:20px;">
+                    <img src="https://optitech-sverige.se/emails/optitech-logo-white.png"
+                         alt="OptiTech" width="150" height="26"
+                         style="display:block;margin:0 auto;width:150px;height:26px;">
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center" style="padding-bottom:20px;">
+                    <a href="https://www.linkedin.com/company/optitech-sverige" style="color:#c9bcd6;font-size:13px;font-weight:600;padding:0 10px;">LinkedIn</a>
+                    <span style="color:#5a4468;">&middot;</span>
+                    <a href="https://optitech-sverige.se" style="color:#c9bcd6;font-size:13px;font-weight:600;padding:0 10px;">Webb</a>
+                    <span style="color:#5a4468;">&middot;</span>
+                    <a href="mailto:info@optitech-sverige.se" style="color:#c9bcd6;font-size:13px;font-weight:600;padding:0 10px;">E-post</a>
+                  </td>
+                </tr>
+                <tr><td style="padding-bottom:18px;"><hr style="border:0;border-top:1px solid #43305a;height:1px;line-height:1px;margin:0;width:100%;"></td></tr>
+                <tr>
+                  <td align="center" style="padding-bottom:12px;">
+                    <p style="font-size:12px;line-height:19px;color:#a595b5;margin:0;">
+                      OptiTech Sverige AB &middot; Sverige<br>
+                      <a href="mailto:info@optitech-sverige.se" style="color:#a595b5;">info@optitech-sverige.se</a>
+                    </p>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center">
+                    <p style="font-size:12px;line-height:19px;color:#8a789c;margin:0;">
+                      Du f&aring;r det h&auml;r mejlet f&ouml;r att du prenumererar p&aring; OptiTechs nyhetsbrev.<br>
+                      <a href="{% unsubscribe_url %}" style="color:#c9bcd6;text-decoration:underline;">Avprenumerera</a>
+                      &nbsp;&middot;&nbsp;
+                      <a href="{% manage_preferences_url %}" style="color:#c9bcd6;text-decoration:underline;">Hantera inst&auml;llningar</a>
+                    </p>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+
+        </table>
+        <!-- /HUVUDKORT -->
+
+        <table role="presentation" width="600" cellpadding="0" cellspacing="0" class="container">
+          <tr>
+            <td align="center" style="padding:20px 12px 8px;">
+              <p class="small" style="font-size:12px;">&copy; {{ now|date: "%Y" }} OptiTech Sverige AB. Alla r&auml;ttigheter f&ouml;rbeh&aring;llna.</p>
+            </td>
+          </tr>
+        </table>
+
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
