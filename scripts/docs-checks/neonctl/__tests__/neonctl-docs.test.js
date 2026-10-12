@@ -15,24 +15,31 @@ function relPath(file) {
 }
 
 describe('neonctl docs validation', () => {
-  it('every neonctl/neon example in content/**/*.md uses real commands and options', () => {
-    const schema = loadSchema();
-    const { errors, invocations } = validate({ schema });
+  // This scans every content/**/*.md file, which is fast standalone but can
+  // exceed the default 5s timeout when the full suite runs in parallel on a
+  // loaded machine. Give it explicit headroom to avoid flaky pre-push failures.
+  it(
+    'every neonctl/neon example in content/**/*.md uses real commands and options',
+    { timeout: 30000 },
+    () => {
+      const schema = loadSchema();
+      const { errors, invocations } = validate({ schema });
 
-    if (errors.length > 0) {
-      const lines = [
-        '',
-        `Checked ${invocations.length} invocations against neonctl ${schema.neonctlVersion}: ${errors.length} error(s).`,
-        'Fix the listed invocations, or refresh the schema:',
-        '  node scripts/docs-checks/neonctl/generate-schema.js --src <path-to-neonctl-clone>',
-        '',
-        ...errors.map((e) => `  ${relPath(e.file)}:${e.line}  ${e.message}`),
-        '',
-      ];
+      if (errors.length > 0) {
+        const lines = [
+          '',
+          `Checked ${invocations.length} invocations against neonctl ${schema.neonctlVersion}: ${errors.length} error(s).`,
+          'Fix the listed invocations, or refresh the schema:',
+          '  node scripts/docs-checks/neonctl/generate-schema.js --src <path-to-neonctl-clone>',
+          '',
+          ...errors.map((e) => `  ${relPath(e.file)}:${e.line}  ${e.message}`),
+          '',
+        ];
 
-      console.error(lines.join('\n'));
+        console.error(lines.join('\n'));
+      }
+
+      expect(errors, `${errors.length} doc example(s) failed validation (see above)`).toEqual([]);
     }
-
-    expect(errors, `${errors.length} doc example(s) failed validation (see above)`).toEqual([]);
-  });
+  );
 });
